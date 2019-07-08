@@ -1,1 +1,15 @@
-julia 0.6
+julia 0.7
+Reexport
+Plots
+GR
+Roots
+PolynomialZeros
+ForwardDiff
+ImplicitEquations
+IntervalConstraintProgramming
+Unitful
+HCubature
+QuadGK
+Primes
+Combinatorics
+SpecialFunctions
