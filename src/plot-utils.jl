@@ -232,7 +232,7 @@ The values of `xlim` are used as the range to plot over; `nx` specifies the numb
 @recipe function __(r::Plot_Parametric_Surface; nx=50, ny=50)
 
     F = first(r.args)
-    @show F(1,pi)
+
     xlim = get(plotattributes,:xlims, (-5,5))
     ylim = get(plotattributes,:ylims, (-5,5))
 
@@ -249,6 +249,7 @@ The values of `xlim` are used as the range to plot over; `nx` specifies the numb
     xlims := extrema(ws[1])
     ylims := extrema(ws[2])
     ws
+
 end
 
 """
@@ -287,7 +288,7 @@ p
 end
 
 """
-    vectorfieldplot(F; [xlim=(-5,5)], [ylim=(-5,5)], [nx=5], [ny=5])
+    vectorfieldplot(F; [xlim=(-5,5)], [ylim=(-5,5)], [nx=8], [ny=8])
 
 Create a vector field plot using a grid described by `xlim`, `ylim` with `nx` and `ny` grid points in each direction.
 
@@ -297,7 +298,7 @@ vectorfieldplot(F, xlim=(-4,4), ylim=(-4,4))
 ```
 """
 @userplot VectorFieldPlot
-@recipe function __(V::VectorFieldPlot; nx=5, ny=5)
+@recipe function __(V::VectorFieldPlot; nx=8, ny=8)
 
     ars = V.args
     F = ars[1]
@@ -359,6 +360,9 @@ end
 
 
 
+import Contour # installed with the Plots package, so should be available
+               # import -- not using -- to avoid name collision
+
 """
     Visualize `F(x,y,z) = c` by plotting assorted contour lines
 
@@ -372,54 +376,55 @@ plot_implicit(F, 20, slices=Dict(:x=>:blue, :y=>:red, :z=>:green), nlevels=6) # 
 
 # A heart
 a,b = 1,3
-f(x,y,z) = (x^2+((1+b)*y)^2+z^2-1)^3-x^2*z^3-a*y^2*z^3
-plot_implicit(f, xrng=(-2,2),yrng=(-1,1),zrng=(-1,2))
+F(x,y,z) = (x^2+((1+b)*y)^2+z^2-1)^3-x^2*z^3-a*y^2*z^3
+plot_implicit_surface(F, xlims=(-2,2),ylims=(-1,1),zlims=(-1,2))
 ```
 
 Note: Idea [from](https://stackoverflow.com/questions/4680525/plotting-implicit-equations-in-3d).
 
+Not exported?
 """
-function plot_implicit(F, c=0;
-                       xrng=(-5,5), yrng=xrng, zrng=xrng,
+function plot_implicit_surface(F, c=0;
+                       xlims=(-5,5), ylims=xlims, zlims=xlims,
                        nlevels=25,         # number of levels in a direction
-                       slices=Dict(:z => :blue), # which directions and color
+                       slices=Dict(:z => :blue), # Dict(:x => :color, :y=>:color, :z=>:color)
                        kwargs...          # passed to initial `plot` call
                        )
 
     _linspace(rng, n=150) = range(rng[1], stop=rng[2], length=n)
 
-    X1, Y1, Z1 = _linspace(xrng), _linspace(yrng), _linspace(zrng)
+    X1, Y1, Z1 = _linspace(xlims), _linspace(ylims), _linspace(zlims)
 
     p = Plots.plot(;legend=false,kwargs...)
 
     if :x ∈ keys(slices)
-        for x in _linspace(xrng, nlevels)
+        for x in _linspace(xlims, nlevels)
             local X1 = [F(x,y,z) for y in Y1, z in Z1]
             cnt = Contour.contours(Y1,Z1,X1, [c])
-            for line in lines(levels(cnt)[1])
-                ys, zs = coordinates(line) # coordinates of this line segment
+            for line in Contour.lines(Contour.levels(cnt)[1])
+                ys, zs = Contour.coordinates(line) # coordinates of this line segment
                 plot!(p, x .+ 0 * ys, ys, zs, color=slices[:x])
           end
         end
     end
 
     if :y ∈ keys(slices)
-        for y in _linspace(yrng, nlevels)
+        for y in _linspace(ylims, nlevels)
             local Y1 = [F(x,y,z) for x in X1, z in Z1]
             cnt = Contour.contours(Z1,X1,Y1, [c])
-            for line in lines(levels(cnt)[1])
-                xs, zs = coordinates(line) # coordinates of this line segment
+            for line in Contour.lines(Contour.levels(cnt)[1])
+                xs, zs = Contour.coordinates(line) # coordinates of this line segment
                 plot!(p, xs, y .+ 0 * xs, zs, color=slices[:y])
             end
         end
     end
 
     if :z ∈ keys(slices)
-        for z in _linspace(zrng, nlevels)
+        for z in _linspace(zlims, nlevels)
             local Z1 = [F(x, y, z) for x in X1, y in Y1]
             cnt = Contour.contours(X1, Y1, Z1, [c])
-            for line in lines(levels(cnt)[1])
-                xs, ys = coordinates(line) # coordinates of this line segment
+            for line in Contour.lines(Contour.levels(cnt)[1])
+                xs, ys = Contour.coordinates(line) # coordinates of this line segment
                 plot!(p, xs, ys, z .+ 0 * xs, color=slices[:z])
             end
         end

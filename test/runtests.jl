@@ -65,6 +65,7 @@ end
 
 
 @testset "derivatives" begin
+
     f(x) = x^2
     @test secant(f, 0, 1)(1/2) ≈ 1/2
     @test tangent(f, 1/2)(1) ≈ f(1/2) + 2*(1/2)*(1-1/2)
@@ -79,6 +80,8 @@ end
 
 @testset "integration" begin
 
+    @test quadgk(sin, 0, pi)[1]  ≈ 2
+    @test hcubature(xy -> sin(xy[1])*sin(xy[2]), (0,0), (pi,pi))[1] ≈ 4
     @test riemann(sin, 0, pi, 10_000)  ≈ 2
     @test fubini((x,y) -> 1, (x->-sqrt(1-x^2), x->sqrt(1-x^2)), (-1,1)) ≈ pi
 
@@ -89,37 +92,45 @@ end
 
     if isinteractive()
 
+        pyplot()
         f(x) = 1/x
-
-        trimplot(f, -1, 1)
 
         plotif(f, f, -1, 1)
         plotif(f, f', -1, 1)
+        trimplot(f, -1, 1)
+        signchart(f, -1, 1)
 
-        signchart(sin, 0, 4pi)
+        rr(theta) = cos(theta)
+        plot_polar(rr, 0, 2pi)
 
-        r(t) = [sin(t), cos(t)]
-        ts = range(0, stop=pi/2, length=100)
-        plot(unzip(r.(ts))...)
-        plot(unzip(r, 0, pi/2)...)
-        plot(parametric(r), 0, pi/2)
-        arrow!(r(pi/4), r'(pi/4))
+        rr(t) = [sin(t), cos(t)]
+        plot_parametric_curve(rr, 0, 2pi)
+        arrow!(rr(2pi), rr'(2pi))
 
-        V(x,y) = [x, x-y]
-        vectorfieldplot(V, xlim=(-2,2)) # ylim=(-5,5) plotly not happy, gr is
+        rr(t) = [sin(t), cos(t), t]
+        plot_parametric_curve(rr, 0, 2pi)
+        arrow!(rr(2pi), rr'(2pi))
 
-        V(x,y,z) = [-y, x, 0]
-        vectorfieldplot3d(V)
-
-        P(u,v) = [u*cos(v), u*sin(v), u]
-        surface(parametric_surface(P), ulim=(0, 1), vlim=(0, 2pi)) # gr not happy, plotly is
+        F(u, v) = [u*cos(v), u*sin(v)]
         us = range(0, 1, length=20)
         vs = range(0, 2pi, length=20)
-        surface(unzip(P.(us, vs'))...)
+        plot(legend=false)
+        plot!(unzip(F.(us, vs'))...) # constant angle, draws rays
+        plot!(unzip(F.(us', vs))...) # constant radii, draws circles
 
-        plot(unzip(P.(us, vs'))...) # constant angle, draws rays
-        plot!(unzip(P.(us', vs))...) # constant radii, draws circles
+        pyplot() # surface doesn't work with gr()
+        Phi(u,v) = [u*cos(v), u*sin(v), u]
+        plot_parametric_surface(Phi, xlims=(0, 1), ylims=(0,2pi))
 
+        V(x,y) = [x, x-y]
+        vectorfieldplot(V, xlims=(-2,2))#, nx=8, ny=8) # ylim=(-5,5) plotly not happy, gr is
+
+        V(x,y,z) = [-y, x, 0]
+        vectorfieldplot3d(V, nx=4, ny=4, nz=3)
+
+        a,b = 1, 3
+        F(x,y,z) =  (x^2+((1+b)*y)^2+z^2-1)^3-x^2*z^3-a*y^2*z^3
+        CalculusWithJulia.plot_implicit_surface(F, xlims=(-2,2),ylims=(-1,1),zlims=(-1,2))
     end
 
 end
