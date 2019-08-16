@@ -3,6 +3,7 @@ uuid = "a2e0e22d-7d4c-5312-9169-8b992201a882"
 version = "0.0.1"
 
 [deps]
+Contour = "d38c429a-6771-53c6-b99e-75d170b6e991"
 ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
 HCubature = "19dc6840-f33b-545b-b366-655c7e3ffd49"
 ImplicitEquations = "95701278-4526-5785-aba3-513cca398f19"
