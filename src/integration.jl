@@ -16,13 +16,13 @@ riemann(f, 0, 1, 1000, method="simpsons")   # use Simpson's rule
 """
 function riemann(f::Function, a::Real, b::Real, n::Int; method="right")
     if method == "right"
-        meth(f) = lr -> begin l,r = lr; f(r) * (r-l) end
+        meth = f -> (lr -> begin l,r = lr; f(r) * (r-l) end)
     elseif method == "left"
-        meth(f) = lr -> begin l,r = lr; f(l) * (r-l) end
+        meth = f -> (lr -> begin l,r = lr; f(l) * (r-l) end)
     elseif method == "trapezoid"
-        meth(f) = lr -> begin l,r = lr; (1/2) * (f(l) + f(r)) * (r-l) end
+        meth = f -> (lr -> begin l,r = lr; (1/2) * (f(l) + f(r)) * (r-l) end)
     elseif method == "simpsons"
-        meth(f) = lr -> begin l,r=lr; (1/6) * (f(l) + 4*(f((l+r)/2)) + f(r)) * (r-l) end
+        meth = f -> (lr -> begin l,r=lr; (1/6) * (f(l) + 4*(f((l+r)/2)) + f(r)) * (r-l) end)
     end
 
     xs = a .+ (0:n) * (b-a)/n
