@@ -311,7 +311,8 @@ vectorfieldplot(F, xlim=(-4,4), ylim=(-4,4))
     ps = [[x,y] for x in xs for y in ys]
     vs = (xy -> F(xy[1], xy[2])).(ps)
 
-    λ = 0.9 * min(dx, dy) / maximum(norm.(vs))
+
+    λ = 0.9 * minimum([u/maximum(getindex.(vs,i)) for (i,u) in enumerate((dx,dy))])
 
     seriestype := :quiver
     quiver := unzip(λ * vs)
@@ -330,7 +331,7 @@ Note: the vectors are represented with line, not arrow due to no implementation 
 
 ```
 F(x,y,z) = [-y, x,z]
-vectorfieldplot3d(F, xlim=(-4,4), ylim=(-4,4), zlim=(0,3))
+vectorfieldplot3d(F, xlims=(-4,4), ylims=(-4,4), zlims=(0,3))
 ```
 """
 @userplot VectorFieldPlot3d
@@ -347,7 +348,8 @@ vectorfieldplot3d(F, xlim=(-4,4), ylim=(-4,4), zlim=(0,3))
     ps = [[x,y,z] for x in xs for y in ys for z in zs]
     vs = (xyz -> F(xyz[1], xyz[2], xyz[3])).(ps)
 
-    λ = 0.9 * min(dx, dy, dz) / maximum(norm.(vs))
+
+    λ = 0.9 * minimum([u/maximum(getindex.(vs,i)) for (i,u) in enumerate((dx,dy,dx))])
 
     seriestype := :path3d
     dxs, dys, dzs = unzip(λ * vs)
