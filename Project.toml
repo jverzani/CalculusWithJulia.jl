@@ -1,6 +1,6 @@
 name = "CalculusWithJulia"
 uuid = "a2e0e22d-7d4c-5312-9169-8b992201a882"
-version = "0.0.2"
+version = "0.0.3"
 
 [deps]
 Contour = "d38c429a-6771-53c6-b99e-75d170b6e991"
@@ -18,8 +18,13 @@ SymPy = "24249f21-da20-56a4-8eb1-6a02cf4ae2e6"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
+julia = "1.0"
+Reexport = "≥ 0.2.0"
 Plots = "≥ 0.26.1"
+RecipesBase = "0.7, 0.8, 1.0"
+Roots = "1.0"
+SymPy = "1.0"
+ForwardDiff = "≥ 0.10"
+QuadGK  = "2.3"
+HCubature = "1.4"
 ImplicitEquations = "≥ 0.6.0"
-Roots = "≥ 0.8.0"
-SymPy = "≥ 1.0.5"
-julia = "≥ 1.0.0"
