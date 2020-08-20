@@ -1,4 +1,15 @@
 *.jl.cov
 *.jl.*.cov
 *.jl.mem
+.ipynb_checkpoints
+*.tmp
+*.aux
+*.log
+*.out
+*.tex
 Manifest.toml
+CwJ/**/*.html
+CwJ/**/*.pdf
+CwJ/**/cache
+/*/*/jl_*/
+TODO.md

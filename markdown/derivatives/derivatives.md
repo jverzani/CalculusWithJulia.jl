@@ -1,0 +1,1967 @@
+# Derivatives
+
+
+
+
+
+Before defining the derivative of a function, let's begin with two
+motivating examples.
+
+##### Example: Driving
+
+Imagine motoring along down highway 61 leaving Minnesota on the way to
+New Orleans; though lost in listening to music, still mindful of the
+speedometer and odometer, both prominently placed on the dashboard of
+the car.
+
+The speedometer reads 60 miles per hour, what is the odometer doing?
+Besides recording total distance traveled, it is incrementing
+dutifully every hour by 60 miles. Why? Well, the well-known formula relating distance, time and rate of travel is
+
+$$~
+\text{distance} = \text{ rate } \times \text{ time.}
+~$$
+
+If the rate is a constant $60$ miles/hour, then in one hour the distance traveled is 60 miles.
+
+Of course, the odometer isn't just incrementing once per hour, it is incrementing once every 1/10th of a mile. How much time does that take? Well, we would need to solve $1/10=60 \cdot t$ which means $t=1/600$ hours, better known as once every 6 seconds.
+
+Using some mathematical notation, would give $x(t) = v\cdot t$, where
+$x$ is position at time $t$, $v$ is the velocity and $t$ the time
+traveled in hours. A simple graph of the first three hours of travel would show:
+
+````julia
+
+using CalculusWithJulia
+using Plots
+position(t) = 60 * t
+plot(position, 0, 3)
+````
+
+
+````
+Plot{Plots.PlotlyBackend() n=1}
+````
+
+
+
+````julia
+
+plotly()
+plot(sin, 0, 2pi)
+````
+
+
+````
+Plot{Plots.PlotlyBackend() n=1}
+````
+
+
+
+
+
+Oh no, we hit traffic. In the next 30 minutes we only traveled
+15 miles. We were so busy looking out for traffic, the speedometer was
+not checked. What would the average speed have been? Though in the 30
+minutes, the displayed speed may have varied, the *average speed*
+would simply be the change in distance over the change in time, or
+$\Delta x / \Delta t$. That is
+
+````julia
+
+15/(1/2)
+````
+
+
+````
+30.0
+````
+
+
+
+
+
+
+Now suppose that after $6$ hours of travel the GPS in the car gives us a readout of distance traveled
+as a function of time. The graph looks like this:
+
+````
+Plot{Plots.PlotlyBackend() n=1}
+````
+
+
+
+
+
+We can see with some effort that the slope is steady for the first three hours, is slightly less between $3$ and
+$3.5$ hours, then is a bit steeper for the next half hour. After that, it is flat for the
+about half an hour, then the slope continues on with same value as in the first
+3 hours. What does that say about our speed during our trip?
+
+Based on the graph, what was the average speed over the first three hours? Well, we traveled 180 miles, and took 3 hours:
+
+````julia
+
+180/3
+````
+
+
+````
+60.0
+````
+
+
+
+
+
+What about the next half hour? Squinting shows the amount traveled was 15 miles (195 - 180) and it took 1/2 an hour:
+
+````julia
+
+15/(1/2)
+````
+
+
+````
+30.0
+````
+
+
+
+
+
+And the half hour after that? The average speed is found from the distance traveled, 37.5 miles, divided by the time, 1/2 hour:
+
+````julia
+
+37.5 / (1/2)
+````
+
+
+````
+75.0
+````
+
+
+
+
+
+Okay, so there was some speeding involved.
+
+The next half hour the car did not move. What was the average speed? Well the change in position was 0, but the time was 1/2 hour, so the average was 0.
+
+Perhaps a graph of the speed is a bit more clear. We can do this based on the above:
+
+````julia
+
+function speed(t)
+  if     0   < t <= 3
+     60
+  elseif 3   < t <= 3.5
+     30
+  elseif 3.5 < t <= 4
+     75
+  elseif 4   < t <= 4.5
+     0
+  else
+     60
+  end
+end
+plot(speed, 0, 6)
+````
+
+
+````
+Plot{Plots.PlotlyBackend() n=1}
+````
+
+
+
+
+
+The jumps, as discussed before, are artifacts of the graphing
+algorithm. What is interesting, is we could have derived the graph of
+`speed` from that of `x` by just finding the slopes of the line
+segments, and we could have derived the graph of `x` from that of
+`speed`, just using the simple formula relating distance, rate, and
+time.
+
+````
+CalculusWithJulia.WeaveSupport.Alert("\nWe were pretty loose with some key 
+terms. There is a distinction\nbetween \"speed\" and \"velocity\", this bei
+ng the speed is the absolute\nvalue of velocity. Velocity incorporates a di
+rection as well as a\nmagnitude. Similarly, distance traveled and change in
+ position are not\nthe same thing when there is back tracking involved. The
+ total\ndistance traveled is computed with the speed, the change in positio
+n\nis computed with the velocity. When there is no change of sign, it is\na
+ bit more natural, perhaps, to use the language of speed and\ndistance.\n\n
+", Dict{Any,Any}(:class => "info"))
+````
+
+
+
+
+
+##### Example: Galileo's ball and ramp experiment
+
+One of history's most famous experiments was performed by
+[Galileo](http://en.wikipedia.org/wiki/History_of_experiments) where
+he rolled balls down inclined ramps, making note of distance traveled
+with respect to time. As Galileo had no ultra-accurate measuring device,
+he needed to slow movement down by controlling the angle of the
+ramp. With this, he could measure units of distance per units of time.
+(Click through to *Galileo and Perspective* [Dauben](http://www.mcm.edu/academic/galileo/ars/arshtml/mathofmotion1.html).)
+
+
+Suppose that no matter what the incline was, Galileo observed that in
+units of the distance traveled in the first second that the distance
+traveled between subsequent seconds was $3$ times, then $5$ times, then
+$7$ times, ... This table summarizes.
+
+````
+CalculusWithJulia.WeaveSupport.Table(6×3 DataFrame
+│ Row │ t     │ delta │ distance │
+│     │ Int64 │ Int64 │ Int64    │
+├─────┼───────┼───────┼──────────┤
+│ 1   │ 0     │ 0     │ 0        │
+│ 2   │ 1     │ 1     │ 1        │
+│ 3   │ 2     │ 3     │ 4        │
+│ 4   │ 3     │ 5     │ 9        │
+│ 5   │ 4     │ 7     │ 16       │
+│ 6   │ 5     │ 9     │ 25       │)
+````
+
+
+
+
+
+A graph of distance versus time could be found by interpolating between the measured points:
+
+````julia
+
+ts = [0,1,2,3,4, 5]
+xs = [0,1,4,9,16,25]
+plot(ts, xs)
+````
+
+
+````
+Plot{Plots.PlotlyBackend() n=1}
+````
+
+
+
+
+
+The graph looks almost quadratic. What would the following questions have yielded?
+
+* What is the average speed between $0$ and $3$?
+
+````julia
+
+(9-0) / (3-0)  # (xs[4] - xs[1]) / (ts[4] - ts[1])
+````
+
+
+````
+3.0
+````
+
+
+
+
+
+* What is the average speed between $2$ and $3$?
+
+````julia
+
+(9-4) / (3-2)  # (xs[4] - xs[3]) / (ts[4] - ts[3])
+````
+
+
+````
+5.0
+````
+
+
+
+
+
+From the graph, we can tell that the slope of the line connecting
+$(2,4)$ and $(3,9)$ will be greater than that connecting $(0,0)$ and
+$(3,9)$. In fact, given the shape of the graph (concave up), the line
+connecting $(0,0)$ with any point will have a slope less than or equal
+to any of the line segments.
+
+The average speed between $k$ and $k+1$ for this graph is:
+
+````julia
+
+xs[2]-xs[1], xs[3] - xs[2], xs[4] - xs[3], xs[5] - xs[4]
+````
+
+
+````
+(1, 3, 5, 7)
+````
+
+
+
+
+
+We see it increments by $2$. The acceleration is the rate of change of
+speed. We see the rate of change of speed is constant, as the speed
+increments by 2 each time unit.
+
+Based on this - and given Galileo's insight - it appears the
+acceleration will be a constant and the position as a function of time
+will be quadratic.
+
+## The slope of the secant line
+
+In the above examples, we see that the average speed is computed using
+the slope formula. This can be generalized for any univariate function
+$f(x)$:
+
+> The average rate of change between $a$ and $b$ is $(f(b) - f(a)) /
+> (b - a)$. It is typical to express this as $\Delta y/ \Delta x$,
+> where $\Delta$ means "change".
+
+Geometrically, this is the slope of the line connecting the points
+$(a, f(a))$ and $(b, f(b))$. This line is called a
+[secant](http://en.wikipedia.org/wiki/Secant_line) line, which is just
+a line intersecting two specified points on a curve.
+
+
+Rather than parameterize this problem using $a$ and $b$, we let $c$ and $c+h$ represent the two values for $x$, then the secant-line-slope formula becomes
+
+$$~
+m = \frac{f(c+h) - f(c)}{h}.
+~$$
+
+## The slope of the tangent line
+
+The slope of the secant line represents the average rate of change
+over a given period, $h$. What if this rate is so variable, that it
+makes sense to take smaller and smaller periods $h$? In fact, what if
+$h$ goes to $0$?
+
+````
+CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
+qq4h57w0000gr/T/jl_oMMHR3.gif", L"
+The slope of each secant line represents the *average* rate of change betwe
+en $c$ and $c+h$. As $h$ goes towards $0$, we recover the slope of the tang
+ent line, which represents the *instantatneous* rate of change.
+
+")
+````
+
+
+
+
+
+
+
+The graphic suggests that the slopes of the secant line converge to
+the slope of a "tangent" line. That is, for a given $c$, this
+limit exists:
+
+$$~
+\lim_{h \rightarrow 0} \frac{f(c+h) - f(c)}{h}.
+~$$
+
+We'll define the tangent line at $(c, f(c))$ to be the line through
+the point with the slope from the limit above - provided that limit
+exists. Informally, the tangent line is the line through the point
+that best approximates the function.
+
+````
+CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
+qq4h57w0000gr/T/jl_Cj1Ra4.gif", L"
+The tangent line is the best linear approximation to the function at the po
+int $(c, f(c))$. As the viewing window zooms in on $(c,f(c))$ we
+    can see how the graph and its tangent line get more similar.
+
+")
+````
+
+
+
+
+
+The tangent line is not just a line that intersects the graph in one
+point, nor does it need only intersect the line in just one point.
+
+````
+CalculusWithJulia.WeaveSupport.Alert("This last point was certainly not obv
+ious at\nfirst. [Barrow](http://www.maa.org/sites/default/files/07468342341
+33.di020795.02p0640b.pdf),\nwho had Newton as a pupil and was the first to 
+sketch a proof of part\nof the Fundamental Theorem of Calculus, understood 
+a tangent line to\nbe a line that intersects a curve at only one point.\n",
+ Dict{Any,Any}(:class => "info"))
+````
+
+
+
+
+
+##### Example
+
+What is the slope of the tangent line to $f(x) = \sin(x)$ at $c=0$?
+
+We need to compute the limit $(\sin(c+h) - \sin(c))/h$ which is the
+limit as $h$ goes to $0$ of $\sin(h)/h$. We know this to be 1.
+
+````julia
+
+f(x) = sin(x)
+c = 0
+tl(x) = f(c) + 1 * (x - c)
+plot(f, -pi/2, pi/2)
+plot!(tl, -pi/2, pi/2)
+````
+
+
+````
+Plot{Plots.PlotlyBackend() n=2}
+````
+
+
+
+
+
+## The derivative
+
+The limit of the slope of the secant line gives an operation: for each
+$c$ in the domain of $f$ there is a number (the slope of the tangent
+line) or it does not exist. That is, there is derived function from
+$f$. Call this function the *derivative* of $f$. There are many
+notations for this, here we use the "prime" notation:
+
+$$~
+f'(x) = \lim_{h \rightarrow 0} \frac{f(x+h) - f(x)}{h}.
+~$$
+
+The limit above is identical, only it uses $x$ instead of $c$ to
+emphasize that we are thinking of function now, and not just a value
+at a point.
+
+### Some basic derivatives
+
+- **The power rule**. What is the derivative of the monomial $f(x) = x^n$? We need to look
+  at $(x+h)^n - x^n$ for positive, integer-value $n$. Let's look at a case, $n=5$
+
+````julia
+
+@vars x h real=true
+n = 5
+ex = expand((x+h)^n - x^n)
+````
+
+
+````
+5      4         3  2       2  3        4
+h  + 5⋅h ⋅x + 10⋅h ⋅x  + 10⋅h ⋅x  + 5⋅h⋅x
+````
+
+
+
+
+
+All terms have an `h` in them, so we cancel it out:
+
+````julia
+
+cancel(ex/h, h)
+````
+
+
+````
+4      3         2  2         3      4
+h  + 5⋅h ⋅x + 10⋅h ⋅x  + 10⋅h⋅x  + 5⋅x
+````
+
+
+
+
+
+We see the lone term `5x^4` without an $h$, so as we let $h$ go to $0$, this will be the limit. That is, $f'(x) = 5x^4$.
+
+
+For general integer-value, positive $n$, the binomial theorem gives an
+expansion $(x+h)^n = x^n + nx^{n-1}\cdot h^1 + n\cdot(n-1)x^{n-2}\cdot h^2 + \cdots$. Subtracting $x^n$
+then dividing by $h$ leaves just the term $nx^{n-1}$ without a power
+of $h$, so the limit, in general, is just this term. That is $[x^n]' =
+nx^{n-1}$.
+
+
+It isn't a special case, but when $n=0$, we also have the above
+formula applies, as $x^0$ is the constant $1$, and all constant
+functions will have a derivative of $0$ at all $x$. We will see that in
+general, the power rule applies for any $n$ where $x^n$ is defined.
+
+- What is the derivative of $f(x) = \sin(x)$? We know that $f'(0)= 1$
+  by an earlier example, here we solve in general.
+
+We need to consider the difference $\sin(x+h) - \sin(x)$:
+
+````julia
+
+ex = sympy.expand_trig(sin(x+h) - sin(x))  # expand_trig is not exposed in `SymPy`
+````
+
+
+````
+sin(h)⋅cos(x) + sin(x)⋅cos(h) - sin(x)
+````
+
+
+
+
+
+That used the formula $\sin(x+h) = \sin(x)\cos(h) + \sin(h)\cos(x)$.
+
+We could then rearrange the secant line slope formula to become:
+
+$$~
+\cos(x) \cdot \frac{\sin(h)}{h} + \sin(x) \cdot \frac{\cos(h) - 1}{h}
+~$$
+
+and take a limit. If the answer isn't clear, we can let `SymPy` do this work:
+
+````julia
+
+limit((sin(x+h) - sin(x))/ h, h=>0)
+````
+
+
+````
+cos(x)
+````
+
+
+
+
+
+
+- Let's see what the derivative of $\log(x)$ is. We have
+
+$$~
+\frac{\log(x+h) - \log(x)}{h} = \frac{1}{h}\log(\frac{x+h}{x}) = \log((1+h/x)^{1/h}).
+~$$
+
+Earlier we saw that the limit as $u$ goes to $0$ of $f(u) = (1 +
+u)^{1/u}$ is $e$. Re-expressing the above we can get $1/x \cdot
+\log(f(h/x))$. The limit as $h$ goes to $0$ of this is found from
+the composition rules for limits: as $\lim_{h \rightarrow 0} f(h/x) =
+e$, and since $\log(e)$ is $1$ we get this expression has a limit of $1/x$.
+
+We verify through:
+
+````julia
+
+limit((log(x+h) - log(x))/h, h=>0)
+````
+
+
+````
+1
+─
+x
+````
+
+
+
+````
+CalculusWithJulia.WeaveSupport.Alert(L"
+There are several different
+[notations](http://en.wikipedia.org/wiki/Notation_for_differentiation)
+for derivatives. Some are historical, some just add
+flexibility. We use the prime notation of Lagrange: $f'(x)$, $u'$ and $[\te
+xt{expr}]'$,
+where the first emphasizes that the derivative is a function with a
+value at $x$, the second emphasizes the derivative operates on
+functions, the last emphasize that we are taking the derivative of
+some expression (the \"rule\" part of an unnamed function).
+
+There are many other notations:
+
+- The Leibniz notation uses the infinitesimals: $dy/dx$ to relate to
+  $\Delta y/\Delta x$. This notation is very common, and especially
+  useful when more than one variable is involved.  `SymPy` uses
+  Leibniz notation in some of its output, expressing somethings such
+  as:
+
+$$~
+f'(x) = \frac{d}{d\xi}(f(\xi)) \big|_{\xi=x}.
+~$$
+
+  The notation - $\big|$ - on the right-hand side separates the tasks of fi
+nding the
+  derivative and evaluating the derivative at a specific value.
+
+- Euler used `D` for the operator `D(f)`. This notation is appropriated by 
+an
+  operator in the `CalculusWithJulia` package. This was initially used by
+  [Argobast](http://jeff560.tripod.com/calculus.html).
+
+- Newton used a \"dot\" $\dot{x}(t)$, which is still widely used in physics
+ to indicate  a derivative in time.
+
+
+
+
+", Dict{Any,Any}())
+````
+
+
+
+
+
+## Rules of derivatives
+
+We could proceed in a similar manner to find other derivatives, but
+let's not. If we have a function $f(x) = x^5 \sin(x)$, it would be
+nice to leverage our previous work on the derivatives of $f(x) =x^5$
+and $g(x) = \sin(x)$, rather than derive an answer from scratch.
+
+
+As with limits and continuity, it proves very useful to consider rules
+that make the process of finding derivatives of combinations of
+functions a matter of combining derivatives of the individual functions in some manner.
+
+### Sum rule
+
+Let's consider $k(x) = a\cdot f(x) + b\cdot g(x)$, what is its derivative? That is, in terms of $f$, $g$ and their derivatives, can we express $k'(x)$?
+
+We can rearrange $(k(x+h) - k(x))$ as follows:
+
+$$~
+(a\cdot f(x+h) + b\cdot g(x+h)) - (a\cdot f(x) + b \cdot g(x)) =
+a\cdot (f(x+h) - f(x)) + b \cdot (g(x+h) - g(x)).
+~$$
+
+Dividing by $h$, we see that this becomes
+
+$$~
+a\cdot \frac{f(x+h) - f(x)}{h} + b \cdot \frac{g(x+h) - g(x)}{h} \rightarrow a\cdot f'(x) + b\cdot g'(x).
+~$$
+
+
+
+This holds two rules: the derivative of a constant times a function is
+the constant times the derivative of the function; and the derivative
+of a sum of functions is the sum of the derivative of the functions.
+
+### Product rule
+
+Other rules can be similarly derived. `SymPy` can give us them as
+well. Here we define to symbolic functions `u` and `v` and let `SymPy`
+derive a formula for the derivative of a product of functions:
+
+````julia
+
+u,v = SymFunction("u,v") # make symbolic functions
+f(x) = u(x) * v(x)
+limit((f(x+h) - f(x))/h, h=>0)
+````
+
+
+````
+⎛ d        ⎞│            ⎛ d        ⎞│    
+u(x)⋅⎜───(v(ξ₁))⎟│     + v(x)⋅⎜───(u(ξ₁))⎟│    
+     ⎝dξ₁       ⎠│ξ₁=x        ⎝dξ₁       ⎠│ξ₁=x
+````
+
+
+
+
+
+The output uses some new notation to represent that the derivative of
+$u(x) \cdot v(x)$ is the $u$ times the derivative of $v$ plus $v$
+times the derivative of $u$. A common shorthand is $[uv]' = u'v +
+uv'$.
+
+
+
+### Quotient rule
+
+The derivative of $f(x) = u(x)/v(x)$ - a ratio of functions - can be
+similarly computed. The result will be $[u/v]' = (u'v - uv')/u^2$.
+
+### Chain rule
+
+Finally, the derivative of a composition of functions can be
+computed. This gives a rule called the *chain rule*. Before deriving,
+let's give a slight motivation.
+
+
+Consider the output of a factory for some widget. It depends on two steps:
+an initial manufacturing step and a finishing step. The number of
+employees is important in how much is initially manufactured. Suppose
+$x$ is the number of employees and $g(x)$ is the amount initially
+manufactured. Adding more employees increases the amount made by the
+made-up rule $g(x) = \sqrt{x}$. The finishing step depends on how much
+is made by the employees. If $y$ is the amount made, then $f(y)$ is
+the number of widgets finished. Suppose for some reason that $f(y) =
+y^2.$
+
+How many widgets are made as a function of employees? The composition
+$u(x) = f(g(x))$ would provide that.
+
+What is the effect of adding employees on the rate of output of widgets?
+In this specific case we know the answer, as $(f \circ g)(x) = x$, so
+the answer is just the rate is $1$.
+
+In general, we want to express $\Delta f / \Delta x$ in a form so that we can take a limit.
+
+But what do we know? We know $\Delta g / \Delta x$ and $\Delta f/\Delta y$. Using $y=g(x)$, this suggests that we might have luck with the right side of this equation:
+
+$$~
+\frac{\Delta f}{\Delta x} = \frac{\Delta f}{\Delta y} \cdot \frac{\Delta y}{\Delta x}.
+~$$
+
+
+Interpreting this, we get the *average* rate of change in the
+composition can be thought of as a product: The *average* rate of
+change of the initial step ($\Delta y/ \Delta x$) times the *average*
+rate of the change of the second step evaluated not at $x$, but at
+$y$, $\Delta f/ \Delta y$.
+
+
+Re-expressing using derivative notation with $h$ would be:
+
+
+$$~
+\frac{f(g(x+h)) - f(g(x))}{h} = \frac{f(g(x+h)) - f(g(x))}{g(x+h) - g(x)} \cdot \frac{g(x+h) - g(x)}{h}.
+~$$
+
+The left hand side will converge to the derivative of $u(x)$ or $[f(g(x))]'$.
+
+The right most part of the right side would have a limit $g'(x)$, were
+we to let $h$ go to $0$.
+
+It isn't obvious, but the left part of the right side has the limit
+$f'(g(x))$. This would be clear if *only* $g(x+h) = g(x) + h$, for
+then the expression would be exactly the limit expression with
+$c=g(x)$. But, alas, except to some hopeful students and some special
+cases, it is definitely not the case in general that $g(x+h) = g(x) + h$ - that
+right parentheses actually means something. However, it is *nearly*
+the case that $g(x+h) = g(x) + kh$ for some $k$ and this can be used to formulate a
+proof (one of the two detailed
+[here](http://en.wikipedia.org/wiki/Chain_rule#Proofs) and [here](http://kruel.co/math/chainrule.pdf)).
+
+We can verify this using `SymPy`:
+
+````julia
+
+limit(( u(v(x+h)) - u(v(x)) ) / (v(x+h) - v(x)), h=>0)
+````
+
+
+````
+d           
+─────(u(v(x)))
+dv(x)
+````
+
+
+
+
+
+Combined, we would end up with:
+
+
+> The chain rule: $[f(g(x))]' = f'(g(x)) \cdot g'(x)$. That is the
+> derivative of the outer function evaluated at the inner function
+> times the derivative of the inner function.
+
+
+To see that this works in our specific case, we assume the general
+power rule that $[x^n]' = n x^{n-1}$ to get: $g'(x) = (1/2)x^{-1/2}$,
+$f'(x)=2x$, and $f'(g(x)) = 2(\sqrt{x})$. Together, the product is:
+
+$$~
+2\sqrt{x} \cdot (1/2) 1/\sqrt{x} = 1
+~$$
+
+Which is the same as the derivative of $x$ found by first evaluating the composition.
+
+##### Proof of the Chain Rule
+
+A function is *differentiable* at $a$ if the following limit exists $\lim_{h \rightarrow 0}(f(a+h)-f(a))/h$. Reexpressing this as: $f(a+h) - f(a) - f'(a)h = \epsilon_f(h) h$ where as $h\rightarrow 0$, $\epsilon_f(h) \rightarrow 0$. Then, we have:
+
+$$~
+g(a+h) = g(a) + g'(a)h + \epsilon_g(h) h = g(a) + h',
+~$$
+
+Where $h' = (g'(a) + \epsilon_g(h))h \rightarrow 0$ as $h \rightarrow 0$ will be used to simplify the following:
+
+
+
+$$~
+\begin{align}
+f(g(a+h)) - f(g(a)) &=
+f(g(a) + g'(a)h + \epsilon_g(h)h) - f(g(a)) \\
+&= f(g(a)) + f'(g(a)) (g'(a)h + \epsilon_g(h)h) + \epsilon_f(h')(h') - f(g(a))\\
+&= f'(g(a)) g'(a)h  + f'(g(a))(\epsilon_g(h)h) + \epsilon_f(h')(h').
+\end{align}
+~$$
+
+Rearranging:
+
+$$~
+f(g(a+h)) - f(g(a)) - f'(g(a)) g'(a) h = f'(g(a))\epsilon_g(h))h + \epsilon_f(h')(h') =
+(f'(g(a)) \epsilon_g(h)  + \epsilon_f(h')( (g'(a) + \epsilon_g(h))))h =
+\epsilon(h)h,
+~$$
+
+where $\epsilon(h)$ combines the above terms which go to zero as $h\rightarrow 0$ into one. This is
+the alternative definition of the derivative, showing $(f\circ g)'(a) = f'(g(a)) g'(a)$ when $g$ is differentiable at $a$ and $f$ is differentiable at $g(a)$.
+
+
+##### More examples
+
+- Find the derivative of $x^5 \cdot \sin(x)$.
+
+This is a product of functions, using $[u\cdot v]' = u'v + uv'$ we get:
+
+$$~
+5x^4 \cdot \sin(x) + x^5 \cdot \cos(x)
+~$$
+
+- Find the derivative of $x^5 / \sin(x)$.
+
+This is a quotient of functions. Using $[u/v]' = (u'v - uv')/v^2$ we get
+
+$$~
+(5x^4 \cdot \sin(x) - x^5 \cdot \cos(x)) / (\sin(x))^2.
+~$$
+
+- Find the derivative of $\sin(x^5)$. This is a composition of
+  functions $u(v(x))$ with $v(x) = x^5$. The chain rule says find the
+  derivative of $u$ ($\cos(x)$) and evaluate at $v(x)$ ($\cos(x^5)$)
+  then multiply by the derivative of $v$:
+
+$$~
+\cos(x^5) \cdot 5x^4.
+~$$
+
+- Similarly, but differently, find the derivative of $\sin(x)^5$. Now
+  $v(x) = \sin(x)$, so the derivative of $u(x)$ ($5x^4$) evaluated at
+  $v(x)$ is $5(\sin(x))^4$ so multiplying by $v'$ gives:
+
+$$~
+5(\sin(x))^4 \cdot \cos(x)
+~$$
+
+
+We can verify these with `SymPy`. Rather than take a limit, we will
+use `SymPy`'s `diff` function to compute derivatives.
+
+````julia
+
+diff(x^5 * sin(x))
+````
+
+
+````
+5             4       
+x ⋅cos(x) + 5⋅x ⋅sin(x)
+````
+
+
+
+````julia
+
+diff(x^5/sin(x))
+````
+
+
+````
+5              4 
+  x ⋅cos(x)    5⋅x  
+- ───────── + ──────
+      2       sin(x)
+   sin (x)
+````
+
+
+
+````julia
+
+diff(sin(x^5))
+````
+
+
+````
+4    ⎛ 5⎞
+5⋅x ⋅cos⎝x ⎠
+````
+
+
+
+
+
+and finally,
+
+````julia
+
+diff(sin(x)^5)
+````
+
+
+````
+4          
+5⋅sin (x)⋅cos(x)
+````
+
+
+
+````
+CalculusWithJulia.WeaveSupport.Alert("The `diff` function can be called as 
+`diff(ex)` when there is just one\nfree variable, as in the above examples;
+ as  `diff(ex, var)` when there are parameters in the\nexpression; or, as `
+diff(f)`, where `f` is the name of a univariate function.\n", Dict{Any,Any}
+(:class => "info"))
+````
+
+
+
+
+
+
+
+- Let's see that the derivative of $e^x$ is just itself.
+
+$$~
+\frac{e^{x+h} - e^x}{h} = \frac{e^x \cdot(e^h -1)}{h}.
+~$$
+
+If we know that $\lim_{h \rightarrow 0}(e^h - 1)/h = 1$, we get
+$[e^x]' = e^x$, that is it is a function satisfying $f'=f$.
+
+
+
+- Suppose we knew that $\log(x)$ had derivative of $1/x$, but didn't know the derivative of $e^x$. From their inverse relation, we have: $x=\log(e^x)$, so taking derivatives of both sides would yield:
+
+$$~
+1 = (\frac{1}{e^x}) \cdot [e^x]'.
+~$$
+
+Or solving, $[e^x]' = e^x$. This is a general strategy to find the
+derivative of an *inverse* function.
+
+
+
+- The general product rule:  For any $n$ - not just integer values -  we can re-express $x^n$  using $e$: $x^n = e^{n \log(x)}$. Now the chain rule can be applied:
+
+$$~
+[x^n]' = [e^{n\log(x)}]' = e^{n\log(x)} \cdot (n \frac{1}{x}) = n x^n \cdot \frac{1}{x} = n x^{n-1}.
+~$$
+
+
+##### Examples
+
+* Find the derivative of $f(x) = x^3 (1-x)^2$ using either the power rule or the sum rule.
+
+The power rule expresses $f=u\cdot v$. With $u(x)=x^3$ and $v(x)=(1-x)^2$ we get:
+
+$$~
+u'(x) = 3x^2, \quad v'(x) = 2 \cdot (1-x)^1 \cdot (-1),
+~$$
+
+the last by the chain rule. Combining with $u' v + u v'$ we get:
+$f'(x) = (3x^2)\cdot (1-x)^2 + x^3 \cdot (-2) \cdot (1-x)$.
+
+Otherwise, the polynomial can be expanded to give
+$f(x)=x^5-2x^4+x^3$ which has derivative $f'(x) = 5x^4 - 8x^3 + 3x^2$.
+
+* Find the derivative of $f(x) = (x-1)(x-2)(x-3)(x-4)(x-5)$.
+
+We could expand this, as above, but instead will use the product rule. Let's work symbolically first and treat the case of $3$ products:
+
+$$~
+[u\cdot v\cdot w]' =[ u \cdot (vw)]' = u' (vw) + u [vw]' = u'(vw) + u[v' w + v w'] =
+u' vw + u v' w + uvw'.
+~$$
+
+This pattern generalizes, clearly to
+$$~
+[f_1\cdot f_2 \cdots f_n]' = f_1' f_2 \cdots f_n + f_1 \cdot f_2' \cdot (f_3 \cdots f_n) + \dots +
+f_1 \cdots f_{n-1} \cdot f_n'.
+~$$
+
+There are $n$ terms, each where one of the $f_i$s have a derivative. Were we to multiply top and bottom by $f_i$, we would get each term looks like: $f \cdot f_i'/f_i$.
+
+With this, we can proceed. Each term $x-i$ has derivative $1$, so the answer to $f'(x)$, with $f$ as above, is $f'(x) = f(x)/(x-1) + f(x)/(x-2) + f(x)/(x-3) + f(x)/(x-4) + f(x)/(x-5)$.
+
+* Find the derivative of $f(x) = x \cdot e^{-x^2}$.
+
+Using the product rule and then the chain rule, we have:
+
+$$~
+\begin{align}
+f'(x) &= [x \cdot e^{-x^2}]'\\
+&= [x]' \cdot e^{-x^2} + x \cdot [e^{-x^2}]'\\
+&= 1 \cdot e^{-x^2} + x \cdot (e^{-x^2}) \cdot [-x^2]'\\
+&= e^{-x^2} + x \cdot e^{-x^2} \cdot (-2x)\\
+&= e^{-x^2} (1 - 2x^2).
+\end{align}
+~$$
+
+* Find the derivative of $f(x) = e^{-ax} \cdot \sin(x)$.
+
+Using the  product rule and then the chain rule, we have:
+
+$$~
+\begin{align}
+f'(x) &= [e^{-ax} \cdot \sin(x)]'\\
+&= [e^{-ax}]' \cdot \sin(x) + e^{-ax} \cdot [\sin(x)]'\\
+&= e^{-ax} \cdot [-ax]' \cdot \sin(x) + e^{-ax} \cdot \cos(x)\\
+&= e^{-ax} \cdot (-a)   \cdot \sin(x) + e^{-ax} \cos(x)\\
+&= e^{-ax}(\cos(x) - a\sin(x)).
+\end{align}
+~$$
+
+#### Rules of derivatives and some sample functions
+
+This table summarizes the rules of derivatives that allow derivatives
+of more complicated expressions to be computed with the derivatives of
+their pieces.
+
+````
+CalculusWithJulia.WeaveSupport.Table(6×2 DataFrame. Omitted printing of 1 c
+olumns
+│ Row │ Name           │
+│     │ String         │
+├─────┼────────────────┤
+│ 1   │ Power rule     │
+│ 2   │ constant       │
+│ 3   │ sum/difference │
+│ 4   │ product        │
+│ 5   │ quotient       │
+│ 6   │ chain          │)
+````
+
+
+
+
+
+This table gives some useful derivatives:
+
+````
+CalculusWithJulia.WeaveSupport.Table(5×2 DataFrame
+│ Row │ Function              │ Derivative  │
+│     │ LaTeXString…          │ LaTeXStrin… │
+├─────┼───────────────────────┼─────────────┤
+│ 1   │ $x^n \\text{ all } n$ │ $nx^{n-1}$  │
+│ 2   │ $e^x$                 │ $e^x$       │
+│ 3   │ $\\log(x)$            │ $1/x$       │
+│ 4   │ $\\sin(x)$            │ $\\cos(x)$  │
+│ 5   │ $\\cos(x)$            │ $-\\sin(x)$ │)
+````
+
+
+
+
+
+## Higher-order derivatives
+
+The derivative of a function is an operator, it takes a function and
+returns a new, derived, function. We could repeat this
+operation. The result is called a higher-order derivative. The
+Lagrange notation uses additional "primes" to indicate how many. So
+$f''(x)$ is the second derivative and $f'''(x)$ the third. For even
+higher orders, sometimes the notation is $f^{(n)}(x)$ to indicate an
+$n$th derivative.
+
+##### Examples
+
+Find the second derivative of $e^{-x^2}$.
+
+We need the chain rule *and* the product rule:
+
+$$~
+[e^{-x^2}]'' = [e^{-x^2} \cdot (-2x)]' = (e^{-x^2} \cdot (-2x) \cdot(-2x) + e^{-x^2} \cdot (-2)) =
+e^{-x^2}(4x^2 - 2).
+~$$
+
+This can be verified:
+
+````julia
+
+diff(diff(e^(-x^2))) |> simplify
+````
+
+
+````
+2
+  ⎛   2    ⎞  -x 
+2⋅⎝2⋅x  - 1⎠⋅ℯ
+````
+
+
+
+
+
+Having to iterate the use of `diff` is cumbersome. An alternate notation is either specifying the variable twice: `diff(ex, x, x)` or using a number after the variable: `diff(ex, x, 2)`:
+
+
+````julia
+
+diff(e^(-x^2), x, x) |> simplify
+````
+
+
+````
+2
+  ⎛   2    ⎞  -x 
+2⋅⎝2⋅x  - 1⎠⋅ℯ
+````
+
+
+
+
+
+
+##### Example: Details on symbolic derivatives
+
+The ability to breakdown an expression into operations and their
+arguments is necessary when trying to apply the differentiation
+rules. Such rules are applied from the outside in. Identifying
+the proper "outside" function is usually most of the battle when finding derivatives.
+
+The `SymPy` program has a function that can identify the outside
+function of a symbolic expression. Basic math expressions can be
+parsed as a function being called with one or more arguments. The
+function `SymPy.Introspection.funcname` will return the function, and
+`SymPy.Introspection.args` will return the arguments.
+
+To illustrate, we define some variables and look at the operations:
+
+````julia
+
+args, funcname = SymPy.Introspection.args, SymPy.Introspection.funcname # args, funcname are not exported
+@vars x y z
+````
+
+
+````
+(x, y, z)
+````
+
+
+
+
+
+This shows how addition is identified:
+
+````julia
+
+ex = x + y + z
+funcname(ex)
+````
+
+
+````
+"Add"
+````
+
+
+
+
+
+The arguments are all three variables being added:
+
+````julia
+
+args(ex)
+````
+
+
+````
+(x, y, z)
+````
+
+
+
+
+
+Similarly, with expressions of a single variable
+
+````julia
+
+ex = x^2 + sin(x) + sqrt(x^2 + 2)
+funcname(ex)
+````
+
+
+````
+"Add"
+````
+
+
+
+
+
+and now the arguments are the expressions being added:
+
+````julia
+
+args(ex)
+````
+
+
+````
+(x^2, sqrt(x^2 + 2), sin(x))
+````
+
+
+
+
+
+When addition is the "outside" function, the next step would be to apply the sum rule.
+
+What about multiplication?
+
+````julia
+
+ex = x * y * z
+funcname(ex)
+````
+
+
+````
+"Mul"
+````
+
+
+
+
+
+and
+
+````julia
+
+args(ex)
+````
+
+
+````
+(x, y, z)
+````
+
+
+
+
+
+Like addition, multiplication is not just a binary operation, as it
+is typically viewed mathematically. The output of `args` can be 2 or more expressions.
+
+
+The power rule is an easy to use derivative rule. SymPy recognizes when the "outer" function is a power:
+
+````julia
+
+ex = x^4
+funcname(ex)
+````
+
+
+````
+"Pow"
+````
+
+
+
+
+
+The power rule would be used *if* the variable is not in the exponent, of course, as here.
+
+Exploring the quotient rule offers a surprise:
+
+````julia
+
+ex = x/y
+funcname(ex)
+````
+
+
+````
+"Mul"
+````
+
+
+
+
+
+The surprise? We may have expected division, but see multiplication. SymPy uses a
+different form to represent division, which can be gleaned from
+looking at the resulting arguments:
+
+````julia
+
+args(ex)
+````
+
+
+````
+(x, 1/y)
+````
+
+
+
+
+
+
+And the expression `1/y` is really a power:
+
+````julia
+
+ex = 1/y
+funcname(ex)
+````
+
+
+````
+"Pow"
+````
+
+
+
+
+
+So the quotient rule would be implemented here as a combination of the product rule and the power rule.
+
+To differentiate, we need to recursively apply derivative rules,
+peeling back one level at a time. When would you stop? When a number
+or a free symbol is encountered, as with:
+
+````julia
+
+funcname(x)
+````
+
+
+````
+"Symbol"
+````
+
+
+
+
+
+or
+
+````julia
+
+funcname(Sym(3))
+````
+
+
+````
+"Integer"
+````
+
+
+
+
+
+In each of these cases, `args` returns an empty container:
+
+````julia
+
+args(x), args(Sym(3))
+````
+
+
+````
+((), ())
+````
+
+
+
+
+
+
+
+We can put all this together to create a function to differentiate an
+expression. This function will be called `diffex` (to distinguish
+itself from the more powerful, built-in, `diff` function). The first
+task for `diffex` is to identify the wrapping, outside function, if any, and
+apply the corresponding rule to the arguments. Julia's `Val` types are
+used in the following to specialize based on the type of "outside" function. This is
+technical, but is exactly what is needed as different types of
+functions need different rules of differentiation.
+
+````julia
+
+function diffex(ex)
+    n = length(free_symbols(ex))
+
+    n == 0 && return Sym(0)
+    n > 1 && error("This is a simple example, use diff")
+
+    _diff(Val{Symbol(funcname(ex))}, args(ex)...)
+end
+````
+
+
+````
+diffex (generic function with 1 method)
+````
+
+
+
+
+
+This function identifies the number of symbols in the expression to
+differentiate. If none, $0$ is returned; if more than one, an error is
+thrown, and if one, the outside function is identified.
+
+For sums, we want the sum rule. This is the sum of the individual derivatives, simply implemented as:
+
+````julia
+
+_diff(::Type{Val{:Add}}, xs...) = sum(diffex(ex) for ex in xs)
+````
+
+
+````
+_diff (generic function with 1 method)
+````
+
+
+
+
+
+The product rule is a bit more advanced. We use a formula derived above:
+if $f = f_1 \cdot f_2 \cdots f_n$
+then $f' = \sum f'_i/f_i \cdot f$:
+
+````julia
+
+function _diff(::Type{Val{:Mul}}, fs...)
+    f = prod(fs)
+    sum(diffex(fi)/fi * f for fi in fs)
+end
+````
+
+
+````
+_diff (generic function with 2 methods)
+````
+
+
+
+
+
+The power rule has three cases that could be considered depending on
+where the variable exists (in the base, exponent, or both). The
+following avoids this by reexpressing $a^b = \exp(b \ln(a))$ and then
+applying the *chain* rule:
+
+````julia
+
+_diff(::Type{Val{:Pow}}, a, b) = sympy.powsimp(a^b * diffex(b * log(a)))
+````
+
+
+````
+_diff (generic function with 3 methods)
+````
+
+
+
+
+
+The `powsimp` function is used to encourage SymPy to simplify $a^b/b$ into $a^{b-1}$, which may not otherwise occur. (It is not exposed, so must be qualified by the underlying `sympy` Python object.)
+
+Now to catch some special cases. First, when we encounter the symbol, we want to return `1`, as $d/dx[x] = 1$:
+
+````julia
+
+_diff(::Type{Val{:Symbol}}) = Sym(1)
+````
+
+
+````
+_diff (generic function with 4 methods)
+````
+
+
+
+
+
+For numbers the derivative is $0$. As there are quite a few number
+types, we define a catch all distinguishing them by the fact that the
+`args` call is empty.
+
+
+````julia
+
+_diff(::Any) = Sym(0)
+````
+
+
+````
+_diff (generic function with 5 methods)
+````
+
+
+
+
+
+Now for some specific functions. Here is where the chain rule comes
+in. For example, the derivative when the `log` function is encountered
+has an extra product of `diffex(ex)`:
+
+````julia
+
+_diff(::Type{Val{:log}}, ex) =  1/ex * diffex(ex)
+````
+
+
+````
+_diff (generic function with 6 methods)
+````
+
+
+
+
+
+Similarly, here is the rule for `exp`:
+
+````julia
+
+_diff(::Type{Val{:exp}}, ex) = exp(ex) * diffex(ex)
+````
+
+
+````
+_diff (generic function with 7 methods)
+````
+
+
+
+
+
+Finally, we define values for some trigonometric functions. Many more special
+cases, as these, would be needed to fully implement this approach:
+
+````julia
+
+_diff(::Type{Val{:sin}}, ex) =  cos(ex)   * diffex(ex)
+_diff(::Type{Val{:cos}}, ex) = -sin(ex)   * diffex(ex)
+_diff(::Type{Val{:tan}}, ex) =  sec(ex)^2 * diffex(ex)
+````
+
+
+````
+_diff (generic function with 10 methods)
+````
+
+
+
+
+
+(The chain rule uses fall into a pattern that could be exploited to make the code only depend on a mapping of terms like `:sin -> cos`.)
+
+Here we try it out:
+
+````julia
+
+diffex(x^5 + x^4 + x^3 + x^2 + x + 1)
+````
+
+
+````
+4      3      2          
+5⋅x  + 4⋅x  + 3⋅x  + 2⋅x + 1
+````
+
+
+
+````julia
+
+diffex(sin(x^2) + cos(1/x))
+````
+
+
+````
+⎛1⎞
+              sin⎜─⎟
+       ⎛ 2⎞      ⎝x⎠
+2⋅x⋅cos⎝x ⎠ + ──────
+                 2  
+                x
+````
+
+
+
+
+
+And
+
+````julia
+
+diffex(x^x * exp(x))
+````
+
+
+````
+x               x    x  x
+x ⋅(log(x) + 1)⋅ℯ  + x ⋅ℯ
+````
+
+
+
+
+
+
+
+## Questions
+
+###### Question
+
+The derivative at $c$ is the slope of the tangent line at $x=c$. Answer the following based on this graph:
+
+````julia
+
+fn = x -> -x*exp(x)*sin(pi*x)
+plot(fn, 0, 2)
+````
+
+
+````
+Plot{Plots.PlotlyBackend() n=1}
+````
+
+
+
+
+
+At which of these points $c= 1/2, 1, 3/2$ is the derivative negative?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1/2$", L"
+$1$", L"$3/2$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$1/2
+$", L"$1$", L"$3/2$"], "", false)
+````
+
+
+
+
+
+Which value looks bigger from reading the graph:
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f(1)$", L
+"$f(3/2)$"], 2, "", nothing, [1, 2], LaTeXStrings.LaTeXString[L"$f(1)$", L"
+$f(3/2)$"], "", false)
+````
+
+
+
+
+
+At $0.708 \dots$ and $1.65\dots$ the derivative has a common value. What is it?
+
+````
+CalculusWithJulia.WeaveSupport.Numericq(0, 0.01, "", "[-0.01, 0.01]", -0.01
+, 0.01, "", "")
+````
+
+
+
+
+
+###### Question
+
+Consider the graph of the `airyai` function (from `SpecialFunctions`) over $[-5, 5]$.
+
+````
+Plot{Plots.PlotlyBackend() n=1}
+````
+
+
+
+
+
+At $x = -2.5$  the derivative is postive or negative?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(["positive", "negative"], 1, "", noth
+ing, [1, 2], ["positive", "negative"], "", false)
+````
+
+
+
+
+
+
+At $x=0$ the derivative is postive or negative?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(["positive", "negative"], 2, "", noth
+ing, [1, 2], ["positive", "negative"], "", false)
+````
+
+
+
+
+
+At $x = 2.5$  the derivative is postive or negative?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(["positive", "negative"], 2, "", noth
+ing, [1, 2], ["positive", "negative"], "", false)
+````
+
+
+
+
+
+###### Question
+
+Compute the derivative of $e^x$ using `limit`. What do you get?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"$e^x$", L"$x^e$", L"
+$(e-1)x^e$", L"$e x^{(e-1)}$", "something else"], 1, "", nothing, [1, 2, 3,
+ 4, 5], AbstractString[L"$e^x$", L"$x^e$", L"$(e-1)x^e$", L"$e x^{(e-1)}$",
+ "something else"], "", false)
+````
+
+
+
+
+
+###### Question
+
+Compute the derivative of $x^e$ using `limit`. What do you get?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"$e^x$", L"$x^e$", L"
+$(e-1)x^e$", L"$e x^{(e-1)}$", "something else"], 5, "", nothing, [1, 2, 3,
+ 4, 5], AbstractString[L"$e^x$", L"$x^e$", L"$(e-1)x^e$", L"$e x^{(e-1)}$",
+ "something else"], "", false)
+````
+
+
+
+
+
+###### Question
+
+Compute the derivative of $e^{e\cdot x}$ using `limit`. What do you get?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"$e^x$", L"$x^e$", L"
+$(e-1)x^e$", L"$e x^{(e-1)}$", L"$e \cdot e^{e\cdot x}$", "something else"]
+, 5, "", nothing, [1, 2, 3, 4, 5, 6], AbstractString[L"$e^x$", L"$x^e$", L"
+$(e-1)x^e$", L"$e x^{(e-1)}$", L"$e \cdot e^{e\cdot x}$", "something else"]
+, "", false)
+````
+
+
+
+
+
+###### Question
+
+In the derivation of the derivative of $\sin(x)$, the following limit is needed:
+
+$$~
+L = \lim_{h \rightarrow 0} \frac{\cos(h) - 1}{h}.
+~$$
+
+This is
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L" $0$,  as 
+this expression is the derivative of cosine at $0$. The answer follows, as 
+cosine clearly has a tangent line with slope $0$  at $x=0$.", L" $1$, as th
+is is clearly the analog of the limit of $\sin(h)/h$.", L"Does not exist. T
+he answer is $0/0$ which is undefined"], 1, "", nothing, [1, 2, 3], LaTeXSt
+rings.LaTeXString[L" $0$,  as this expression is the derivative of cosine a
+t $0$. The answer follows, as cosine clearly has a tangent line with slope 
+$0$  at $x=0$.", L" $1$, as this is clearly the analog of the limit of $\si
+n(h)/h$.", L"Does not exist. The answer is $0/0$ which is undefined"], "", 
+false)
+````
+
+
+
+
+
+###### Question
+
+Let $f(x) = (e^x + e^{-x})/2$ and $g(x) = (e^x - e^{-x})/2$. Which is true?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f'(x) =  
+g(x)$", L"$f'(x) = -f(x)$", L"$f'(x) = -g(x)$", L"$f'(x) =  f(x)$"], 1, "",
+ nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$f'(x) =  g(x)$", L"$f'(
+x) = -f(x)$", L"$f'(x) = -g(x)$", L"$f'(x) =  f(x)$"], "", false)
+````
+
+
+
+
+
+
+
+###### Question
+
+Let $f(x) = (e^x + e^{-x})/2$ and $g(x) = (e^x - e^{-x})/2$. Which is true?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f''(x) = 
+-g(x)$", L"$f''(x) = -f(x)$", L"$f''(x) =  g(x)$", L"$f''(x) =  f(x)$"], 4,
+ "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$f''(x) = -g(x)$", L
+"$f''(x) = -f(x)$", L"$f''(x) =  g(x)$", L"$f''(x) =  f(x)$"], "", false)
+````
+
+
+
+
+
+
+
+
+
+###### Question
+
+Consider the function $f$ and its transformation $g(x) = a + f(x)$
+(shift up by $a$). Do $f$ and $g$ have the same derivative?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(["Yes", "No"], 1, "", nothing, [1, 2]
+, ["Yes", "No"], "", false)
+````
+
+
+
+
+
+Consider the function $f$ and its transformation $g(x) = f(x - a)$
+(shift right by $a$). Do $f$ and $g$ have the same derivative?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(["Yes", "No"], 2, "", nothing, [1, 2]
+, ["Yes", "No"], "", false)
+````
+
+
+
+
+
+
+
+Consider the function $f$ and its transformation $g(x) = f(x - a)$
+(shift right by $a$). Is $f'$ at $x$ equal to $g'$ at $x-a$?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(["Yes", "No"], 1, "", nothing, [1, 2]
+, ["Yes", "No"], "", false)
+````
+
+
+
+
+
+Consider the function $f$ and its transformation $g(x) = c f(x)$, $c >
+1$. Do $f$ and $g$ have the same derivative?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(["Yes", "No"], 2, "", nothing, [1, 2]
+, ["Yes", "No"], "", false)
+````
+
+
+
+
+
+Consider the function $f$ and its transformation $g(x) = f(x/c)$, $c >
+1$. Do $f$ and $g$ have the same derivative?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(["Yes", "No"], 2, "", nothing, [1, 2]
+, ["Yes", "No"], "", false)
+````
+
+
+
+
+
+Which of the following is true?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"If the gra
+phs of $f$ and $g$ are rescalings of each other through $g(x)=cf(x)$, $c > 
+1$. Then the tangent line for corresponding points is the same.", L"If the 
+graphs of $f$ and $g$ are translations up and down, the tangent line at cor
+responding points is unchanged.", L"If the graphs of $f$ and $g$ are rescal
+ings of each other through $g(x)=f(x/c)$, $c > 1$. Then the tangent line fo
+r corresponding points is the same."], 2, "", nothing, [1, 2, 3], LaTeXStri
+ngs.LaTeXString[L"If the graphs of $f$ and $g$ are rescalings of each other
+ through $g(x)=cf(x)$, $c > 1$. Then the tangent line for corresponding poi
+nts is the same.", L"If the graphs of $f$ and $g$ are translations up and d
+own, the tangent line at corresponding points is unchanged.", L"If the grap
+hs of $f$ and $g$ are rescalings of each other through $g(x)=f(x/c)$, $c > 
+1$. Then the tangent line for corresponding points is the same."], "", fals
+e)
+````
+
+
+
+
+
+
+
+###### Question
+
+The rate of change of volume with respect to height is $3h$. The rate of change of height with respect to time is $2t$. At at $t=3$ the height is $h=14$ what is the rate of change of volume with respect to time when $t=3$?
+
+````
+CalculusWithJulia.WeaveSupport.Numericq(252, 0, "", "[252.0, 252.0]", 252, 
+252, "", "")
+````
+
+
+
+
+
+
+###### Question
+
+Which equation below is $f(x) = \sin(k\cdot x)$ a solution of ($k > 1$)?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f''(x) = 
+-k^2\cdot f(x)$", L"$f''(x) = k^2\cdot f(x)$", L"$f'(x) = k^2\cdot f(x)$", 
+L"$f'(x) = -k^2\cdot f(x)$"], 1, "", nothing, [1, 2, 3, 4], LaTeXStrings.La
+TeXString[L"$f''(x) = -k^2\cdot f(x)$", L"$f''(x) = k^2\cdot f(x)$", L"$f'(
+x) = k^2\cdot f(x)$", L"$f'(x) = -k^2\cdot f(x)$"], "", false)
+````
+
+
+
+
+
+###### Question
+
+Let $f(x) = e^{k\cdot x}$, $k > 1$. Which equation below is $f(x)$ a solution of?
+
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f''(x) = 
+k^2\cdot f(x)$", L"$f'(x) = k^2\cdot f(x)$", L"$f'(x) = -k^2\cdot f(x)$", L
+"$f''(x) = -k^2\cdot f(x)$"], 1, "", nothing, [1, 2, 3, 4], LaTeXStrings.La
+TeXString[L"$f''(x) = k^2\cdot f(x)$", L"$f'(x) = k^2\cdot f(x)$", L"$f'(x)
+ = -k^2\cdot f(x)$", L"$f''(x) = -k^2\cdot f(x)$"], "", false)
+````
+
+

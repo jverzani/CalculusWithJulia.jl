@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<link
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
+  rel="stylesheet">
+
+<style>
+.julia {display: block; font-family: "Source Code Pro";
+        color:#0033CC;
+        }
+.hljl {font-family: "Source Code Pro";
+        color:#0033CC;
+        }
+body { padding-top: 60px; }
+h5:before {content:"\2746\ ";}
+h6:before {content:"\2742\ ";}
+pre {display: block;}
+th, td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+tr:hover {background-color: #f5f5f5;}
+
+.admonition-title:before {content:"\2746\ ";}
+.admonition-title { color:#0033CC}
+
+</style>
+
+
+<!-- .julia:before {content: "julia> "} -->
+
+<style></style>
+
+
+<script src="https://code.jquery.com/jquery.js"></script>
+
+
+<script  type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ["\$","\$"], ["\\(","\\)"]]
+  },
+  displayAlign: "left",
+  displayIndent: "5%"
+});
+</script>
+<!-- not TeX-AMS-MML_HTMLorMML-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+</script>
+
+
+<script>
+window.PlotlyConfig = {MathJaxConfig: 'local'}
+</script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+
+<script type="text/javascript">
+$( document ).ready(function() {
+  $("h1").each(function(index) {
+       var title = $( this ).text()
+       $("#page_title").html("<strong>" + title + "</strong>");
+       document.title = title
+  });
+  $( "h2" ).each(function( index ) {
+    var nm =  $( this ).text();
+    var id = $.trim(nm).replace(/ /g,'');
+    this.id = id
+    $("#page_dropdown").append("<li><a href='#" + id + "'>" + nm + "</a></li>");
+  });
+  $('[data-toggle="popover"]').popover();
+});
+</script>
+
+</head>
+
+
+<body data-spy="scroll" >
+
+<nav class="navbar navbar-default  navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+         
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="#" id="page_title"></a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+         <li class="dropdown">
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+           Jump to... <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu" id="page_dropdown"></ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<header>
+</header>
+          <div class="title">
+            
+            
+            
+          </div>
+
+
+
+<div class="container-fluid">
+  <div class="span10 offset1">
+<h1>Julia interfaces</h1>
+
+
+<p><code>Julia</code> can be used in many different manners. This describes a few.</p>
+<h2>The <code>REPL</code></h2>
+<p>Base <code>Julia</code> comes with a <code>REPL</code> package, which  provides a means to interact with <code>Julia</code> at the command line.</p>
+
+<pre class="julia-error">
+ERROR: SystemError: opening file &quot;figures/julia-repl.png&quot;: No such file or directory
+</pre>
+
+
+<p>The <code>julia&gt;</code> prompt is where commands are typed. The <code>return</code> key will send a command to the interpreter and the results are displayed in the REPL terminal.</p>
+<p>The REPL has many features for editing, for interacting with the package manager, or interaction with the shell. However it is command-line based, which no support for mouse interaction. For that, other options are available.</p>
+<h2><code>IJulia</code></h2>
+<p>&quot;Project <a href="https://jupyter.org/">Jupyter</a>  exists to develop open-source software, open-standards, and services for interactive computing across dozens of programming languages.&quot; The <code>IJulia</code> package allows <code>Julia</code> to be one of these programming languages. This package must be installed prior to use.</p>
+<p>The Jupyter Project provides two web-based interfaces to <code>Julia</code>: the Jupyter notebook and the newer JupyterLab. The <a href="https://www.juliabox.com/">juliabox</a> project and the <a href="https://mybinder.org/">binder</a> project use Juptyer notebooks for their primary interface to <code>Julia</code>.</p>
+<p>If not installed, these interfaces are available once <code>IJulia</code> is installed. The following command should do this:</p>
+
+
+
+<pre class='hljl'>
+<span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-n'>add</span><span class='hljl-t'> </span><span class='hljl-n'>IJulia</span>
+</pre>
+
+
+<p>Should that not work, then this should as well:</p>
+
+
+
+<pre class='hljl'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>Pkg</span><span class='hljl-t'>
+</span><span class='hljl-n'>Pkg</span><span class='hljl-oB'>.</span><span class='hljl-nf'>add</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;PyCall&quot;</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>Pkg</span><span class='hljl-oB'>.</span><span class='hljl-nf'>add</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;IJulia&quot;</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<hr />
+<p>The notebook interface has &quot;cells&quot; where one or more commands can be entered:</p>
+
+<pre class="julia-error">
+ERROR: SystemError: opening file &quot;figures/julia-jupyter.png&quot;: No such file or directory
+</pre>
+
+
+<p>The notes have blocks of commands, as though they are entered in a notebook.</p>
+<p>In <code>IJulia</code>, a block of commands is sent to the kernel &#40;the <code>Julia</code> interpreter&#41; by typing &quot;shift&#43;return&quot; or clicking on a &quot;run&quot; button. The output is printed below a cell, including graphics.</p>
+<p>When a cell is evaluating, the leading <code>&#91;&#93;</code> has an asterick &#40;<code>&#91;*&#93;</code>&#41; showing the notebook is awaiting the results of the calculation.</p>
+<p>Once a cell is evaluated, the leading <code>&#91;&#93;</code> has a number inserted &#40;e.g., <code>&#91;1&#93;</code>, as in the figure&#41;. This number indicates the order of cell evaluation. Once a notebook is interacted with, the state of the namespace need not reflect the top-to-bottom order of the notebook, but rather reflects the order of cell evaluations.</p>
+<p>To be specific, a variable like <code>x</code> may be redefined in a cell above where the variable is intially defined and this redefinition will hold the current value known to the interpreter. As well, a notebook, when reloaded, may have unevaluated cells with output showing. These will not influence the state of the kernel until they are evaluated.</p>
+<p>When a cell&#39;s commands are evaluated, the last command executed is displayed. If it is desirable that multiple values be displayed, they can be packed into a tuple. This is done by using commas to separate values. <code>IJulia</code> will also display other means to print output &#40;e.g., <code>@show</code>, <code>display</code>, <code>print</code>, ...&#41;.</p>
+<p>To run all cells in a notebook from top to bottom, the &quot;run all&quot; command under the &quot;Cell&quot; menu is available.</p>
+<p>If a calculation takes much longer than anticipated, the &quot;kernel&quot; can be interrupted through a menu item of &quot;Kernel&quot;.</p>
+<p>If the kernal appears unresponsive, it can be restarted through  a menu item of &quot;Kernel&quot;.</p>
+<p>Notebooks can be saved &#40;as <code>*.ipynb</code> files&#41; for sharing or for reuse. Notebooks can be printed at HTML pages, and if the proper underlying software is available, as formatted pages.</p>
+<hr />
+<p>JupyterLab has more features, commonly associated with an integrated development environment &#40;IDE&#41;.</p>
+
+<pre class="julia-error">
+ERROR: SystemError: opening file &quot;figures/julia_jupyterlab.png&quot;: No such file or directory
+</pre>
+
+
+<p>The figure shows a notebook and a menubar in the side menu. In addition to notebooks, JupyterLab offers the change to edit source files, for example, for project development.</p>
+<hr />
+<p>For an integrated development environment, where many features for project development are included, there are two powerful ones being developed for <code>Julia</code> that leverage various free-to-use projects.</p>
+<h3>Juno</h3>
+<p><a href="https://junolab.org/">Juno</a> is a powerful, free environment for the Julia language. Juno is based on the cross-platform, javascript-based <a href="https://atom.io/">Atom</a> editor and provides interfaces for the repl, graphics, help pages, debugging, project management, etc. Atom was developed by GitHub, since acquired by Microsoft.</p>
+<h3>VSCode</h3>
+<p>The <a href="https://github.com/julia-vscode/julia-vscode">VS Code</a> extension provides support for the julia programming language for <a href="https://code.visualstudio.com/">VS Code</a>. VS Code is an open-sourced code editor supported by Microsoft. Similar to <code>Juno</code>, VS Code provides a cross-platform interface to <code>Julia</code> geared towards programming within the language.</p>
+
+  </div>
+</div>
+
+</body>
+</html>

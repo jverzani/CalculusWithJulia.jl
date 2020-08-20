@@ -1,0 +1,813 @@
+# Trigonometric functions
+
+
+
+
+
+We have informally used some of the trigonometric functions in examples
+so far. In this section we quickly review their definitions and some
+basic properties.
+
+The trigonometric functions are used to describe relationships between
+triangles and circles as well as oscillatory motions. With such a wide range of
+utility it is no wonder that they pop up in many places and their
+[origins](https://en.wikipedia.org/wiki/Trigonometric_functions#History)
+date to Hipparcus and Ptolemy over 2000 years ago.
+
+## The 6 basic trigonometric functions
+
+We measure angles in radians, where $360$ degrees is $2\pi$
+radians. By proportions, $180$ degrees is $\pi$ radian, $90$ degrees is $\pi/2$ radians, $60$ degrees is $\pi/3$ radians, etc. In general, $x$ degrees is $2\pi \cdot x / 360$ radians.
+
+For a right triangle with angles $\theta$, $\pi/2 - \theta$, and
+$\pi/2$ we call the side opposite $\theta$ the "opposite" side, the
+shorter adjacent side the "adjacent" side and the longer adjacent side
+the hypotenuse.
+
+
+![](/var/folders/k0/94d1r7xd2xlcw_jkgqq4h57w0000gr/T/trig_functions_2_1.png)
+
+
+
+
+
+
+With these, the basic definitions for the primary
+trigonometric functions are
+
+$$~
+\begin{align}
+\sin(\theta) &= \frac{\text{opposite}}{\text{hypotenuse}} &\quad(\text{the sine function})\\
+\cos(\theta) &= \frac{\text{adjacent}}{\text{hypotenuse}} &\quad(\text{the cosine function})\\
+\tan(\theta) &= \frac{\text{opposite}}{\text{adjacent}}.  &\quad(\text{the tangent function})
+\end{align}
+~$$
+
+````
+CalculusWithJulia.WeaveSupport.Alert("Many students remember these through 
+[SOH-CAH-TOA](http://mathworld.wolfram.com/SOHCAHTOA.html).", Dict{Any,Any}
+(:class => "info"))
+````
+
+
+
+
+
+Some algebra shows that $\tan(\theta) = \sin(\theta)/\cos(\theta)$. There are also 3 reciprocal functions, the cosecant, secant and cotangent.
+
+
+These definitions in terms of sides only apply for $0 \leq \theta \leq \pi/2$. More generally, if we relate any angle taken in the counter clockwise direction for the $x$-axis with a point $(x,y)$ on the *unit* circle, then we can extend these definitions - the point $(x,y)$ is also $(\cos(\theta), \sin(\theta))$.
+
+````
+CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
+qq4h57w0000gr/T/jl_igZuaD.gif", "An angle in radian measure corresponds to 
+a point on the unit circle, whose coordinates define the sine and cosine of
+ the angle.")
+````
+
+
+
+
+
+
+### The trigonometric functions in Julia
+
+Julia has the 6 basic trigonometric functions defined through the functions `sin`, `cos`, `tan`, `csc`, `sec`, and `cot`.
+
+Two right triangles - the one with equal, $\pi/4$, angles; and the
+one with angles $\pi/6$ and $\pi/3$ can have the ratio of their sides
+computed from basic geometry. In particular, this leads to the following values, which are
+usually committed to memory:
+
+$$~
+\begin{align}
+\sin(0) &= 0, \quad \sin(\pi/6) = \frac{1}{2}, \quad \sin(\pi/4) = \frac{\sqrt{2}}{2}, \quad\sin(\pi/3) = \frac{\sqrt{3}}{2},\text{ and } \sin(\pi/2) = 1\\
+\cos(0) &= 1, \quad \cos(\pi/6) =  \frac{\sqrt{3}}{2}, \quad \cos(\pi/4) = \frac{\sqrt{2}}{2}, \quad\cos(\pi/3) = \frac{1}{2},\text{ and } \cos(\pi/2) = 0.
+\end{align}
+~$$
+
+Using the circle definition allows these basic values to inform us of
+values throughout the unit circle.
+
+
+These all follow from the definition involving the unit circle:
+
+
+* If the angle $\theta$ corresponds to a point $(x,y)$ on the unit circle, then the angle $-\theta$ corresponds to $(x, -y)$. So $\sin(\theta) = - \sin(-\theta)$ (an odd function), but $\cos(\theta) = \cos(-\theta)$ (an even function).
+
+* If the angle $\theta$ corresponds to a point $(x,y)$ on the unit circle, then rotating by $\pi$ moves the points to $(-x, -y)$. So $\cos(\theta) = x = - \cos(\theta + \pi)$, and $\sin(\theta) = y = -\sin(\theta + \pi)$.
+
+
+* If the angle $\theta$ corresponds to a point $(x,y)$ on the unit circle, then rotating by $\pi/2$ moves the points to $(-y, x)$. So $\cos(\theta) = x = \sin(\theta + \pi/2)$.
+
+
+
+
+The fact that $x^2 + y^2 = 1$ for the unit circle leads to the
+"Pythagorean identity" for trigonometric functions:
+
+$$~
+\sin(\theta)^2 + \cos(\theta)^2 = 1.
+~$$
+
+This basic fact can be manipulated many ways. For example, dividing through by $\cos(\theta)^2$ gives the related identity: $\tan(\theta)^2 + 1 = \sec(\theta)^2$.
+
+
+`Julia`'s functions can compute values for any angles, including these fundamental ones:
+
+````julia
+
+[cos(theta) for theta in [0, pi/6, pi/4, pi/3, pi/2]]
+````
+
+
+````
+5-element Array{Float64,1}:
+ 1.0
+ 0.8660254037844387
+ 0.7071067811865476
+ 0.5000000000000001
+ 6.123233995736766e-17
+````
+
+
+
+
+
+These are floating point approximations, as can be seen clearly in the last value. Symbolic math can be used if exactness matters:
+
+````julia
+
+using CalculusWithJulia   # to load the `SymPy` package
+using Plots
+cos.([0, PI/6, PI/4, PI/3, PI/2])
+````
+
+
+````
+5-element Array{Sym,1}:
+         1
+ sqrt(3)/2
+ sqrt(2)/2
+       1/2
+         0
+````
+
+
+
+````
+CalculusWithJulia.WeaveSupport.Alert(L"
+For really large values, round off error can play a big role. For example, 
+the *exact* value of $\sin(1000000 \pi)$ is $0$, but the returned value is 
+not quite $0$ `sin(1_000_000 * pi) = -2.231912181360871e-10`. For exact mul
+tiples of $\pi$ with large multiples the `sinpi` and  `cospi` functions are
+ useful.
+
+(Both functions are computed by first employing periodicity to reduce the p
+roblem to a smaller angle. However, for large multiples the floating-point 
+roundoff becomes a problem with the usual functions.)
+
+", Dict{Any,Any}(:class => "info"))
+````
+
+
+
+
+
+##### Example
+
+Measuring the height of a
+[tree](https://lifehacker.com/5875184/is-there-an-easy-way-to-measure-the-height-of-a-tree)
+may be a real-world task for some, but a typical task for trigonometry
+students. How might it be done? If a right triangle can be formed
+where the angle and adjacent side length are known, then the opposite
+side (the height of the tree) can be solved for with the tangent
+function. For example, if standing $100$ feet from the base of the
+tree the tip makes a 15 degree angle the height is given by:
+
+````julia
+
+theta = 15 * 180/pi
+adjacent = 100
+opposite = adjacent * tan(theta)
+````
+
+
+````
+-466.6470644343919
+````
+
+
+
+
+
+Having some means to compute an angle and then a tangent of that angle
+handy is not a given, so the linked to article provides a few other
+methods taking advantage of similar triangles.
+
+You can also measure distance with your
+[thumb](http://www.vendian.org/mncharity/dir3/bodyruler_angle/) or
+fist. How, the fist takes up about $10$ degree of view when held
+straight out. So, pacing off backwards until the fist completely
+occludes the tree will give the distance of the adjacent side of a
+right triangle. If that distance is $30$ paces what is the height of the tree?
+Well, we need some facts. Suppose your pace is $3$ feet. Then the
+adjacent length is $90$ feet. The multiplier is the tangent of $10$
+degrees, or:
+
+````julia
+
+tan(10 * pi/180)
+````
+
+
+````
+0.17632698070846498
+````
+
+
+
+
+
+Which for sake of memory we will say is $1/6$ (a $5$ percent error). So that answer is *roughly* $15$ feet:
+
+````julia
+
+30 * 3 / 6
+````
+
+
+````
+15.0
+````
+
+
+
+
+
+Similarly, you can use your thumb instead of your first. To use your first you can multiply by $1/6$ the adjacent side, to use your thumb about $1/30$ as this approximates the tangent of $2$ degrees:
+
+````julia
+
+1/30, tan(2*pi/180)
+````
+
+
+````
+(0.03333333333333333, 0.03492076949174773)
+````
+
+
+
+
+
+This could be reversed. If you know the height of something a distance
+away that is covered by your thumb or fist, then you would multiply
+that height by the appropriate amount to find your distance.
+
+
+### Basic properties
+
+The sine function is defined for all real $\theta$ and has a range of $[-1,1]$. Clearly as $\theta$ winds around the $x$-axis, the position of the $y$ coordinate begins to repeat itself. We say the sine function is *periodic* with period $2\pi$. A graph will illustrate:
+
+````julia
+
+plot(sin, 0, 4pi)
+````
+
+
+![](/var/folders/k0/94d1r7xd2xlcw_jkgqq4h57w0000gr/T/trig_functions_12_1.png)
+
+
+
+
+The graph shows two periods. The wavy aspect of the graph is why this function is used to model periodic motions, such as the amount of sunlight in a day, or the alternating current powering a computer.
+
+From this graph - or considering when the $y$ coordinate is $0$ - we see that the sine function has zeros at any integer multiple of $\pi$, or $k\pi$, $k$ in $\dots,-2,-1, 0, 1, 2, \dots$.
+
+The cosine function is similar, in that it has the same domain and range, but is "out of phase" with the sine curve. A graph of both shows the two are related:
+
+````julia
+
+plot(sin, 0, 4pi)
+plot!(cos, 0, 4pi)
+````
+
+
+![](/var/folders/k0/94d1r7xd2xlcw_jkgqq4h57w0000gr/T/trig_functions_13_1.png)
+
+
+
+The cosine function is just a shift of the sine function (or vice versa). We see that the zeros of the cosine function happen at points of the form $\pi/2 + k\pi$, $k$ in $\dots,-2,-1, 0, 1, 2, \dots$.
+
+The tangent function does not have all $\theta$ for its domain, rather those points where division by $0$ occurs are excluded. These occur when the cosine is $0$, or again at $\pi/2 + k\pi$, $k$ in $\dots,-2,-1, 0, 1, 2, \dots$. The range of the tangent function will be all real $y$.
+
+The tangent function is also periodic, but not with period $2\pi$, but
+rather just $\pi$. A graph will show this. Here we avoid the vertical
+asymptotes by keeping them out of the plot domain and layering several
+plots.
+
+![](/var/folders/k0/94d1r7xd2xlcw_jkgqq4h57w0000gr/T/trig_functions_14_1.png)
+
+
+
+### Functions using degrees
+
+Trigonometric function are functions of angles which have two common descriptions: in terms of degrees or radians. Degrees are common when right triangles are considered, radians much more common in general, as the relationship with arc-length holds in that $r\theta = l$, where $r$ is the radius of a circle and $l$ the length of the arc formed by angle $\theta$.
+
+The two are related, as a circle of $2\pi$ radians and 360 degrees. So to convert from degrees into radians it takes multiplying by $2\pi/360$ and to convert from radians to degrees it takes multiplying by $360/(2\pi)$. The `deg2rad` and `rad2deg` functions are available for this task.
+
+
+In `Julia`, the functions `sind`, `cosd`, `tand`, `cscd`, `secd`, and `cotd` are available to simplify the task of composing the two operations (that is `sin(deg2rad(x))` is the same as `sind(x)`).
+
+## The sum-and-difference formulas
+
+Consider the point on the unit circle $(x,y) = (\cos(\theta), \sin(\theta))$. In terms of $(x,y)$ (or $\theta$) is there a way to represent the angle found by rotating an additional $\theta$, that is what is $(\cos(2\theta), \sin(2\theta))$?
+
+More generally, suppose we have two angles $\alpha$ and $\beta$, can we
+represent the values of $(\cos(\alpha + \beta), \sin(\alpha + \beta))$
+using the values just involving $\beta$ and $\alpha$ separately?
+
+According to [Wikipedia](https://en.wikipedia.org/wiki/Trigonometric_functions#Identities) the following figure (from [mathalino.com](http://www.mathalino.com/reviewer/derivation-of-formulas/derivation-of-sum-and-difference-of-two-angles)) has ideas that date to Ptolemy:
+
+````
+CalculusWithJulia.WeaveSupport.ImageFile("figures/summary-sum-and-differenc
+e-of-two-angles.jpg", "Geometric picture")
+````
+
+
+
+
+
+To read this, there are three triangles: the bigger (green with pink part) has hypotenuse $1$ (and adjacent and opposite sides that form the hypotenuses of the other two); the next biggest (yellow) hypotenuse $\cos(\beta)$,  adjacent side (of angle $\alpha$) $\cos(\beta)\cdot \cos(\alpha)$, and opposite side $\cos(\beta)\cdot\sin(\alpha)$; and  the smallest (pink) hypotenuse $\sin(\beta)$, adjacent side (of angle $\alpha$) $\sin(\beta)\cdot \cos(\alpha)$, and opposite side $\sin(\beta)\sin(\alpha)$.
+
+This figure shows the following sum formula for sine and cosine:
+
+$$~
+\begin{align}
+\sin(\alpha + \beta) &= \sin(\alpha)\cos(\beta) + \sin(\beta)\cos(\alpha)\\
+\cos(\alpha + \beta) &= \cos(\alpha)\cos(\beta) - \sin(\alpha)\sin(\beta).
+\end{align}
+~$$
+
+Using the fact that $\sin$ is an odd function and $\cos$ an even function, related formulas for the difference $\alpha - \beta$ can be derived.
+
+Taking $\alpha = \beta$ we immediately get the "double-angle" formulas:
+
+$$~
+\begin{align}
+\sin(2\alpha) &= 2\sin(\alpha)\cos(\alpha)\\
+\cos(2\alpha) &= \cos(\alpha)^2 - \sin(\alpha)^2.
+\end{align}
+~$$
+
+The latter looks like the Pythagorean identify, but has a minus sign. In fact, the Pythagorean identify is often used to rewrite this, for example $\cos(2\alpha) = 2\cos(\alpha)^2 - 1$ or $1 - 2\sin(\alpha)^2$.
+
+
+Applying the above with $\alpha = \beta/2$, we get that $\cos(\beta) = 2\cos(\beta/2)^2 -1$, which rearranged yields the "half-angle" formula: $\cos(\beta/2)^2 = (1 + \cos(\beta))/2$.
+
+
+##### Example
+
+Consider the expressions $\cos((n+1)\theta)$ and $\cos((n-1)\theta)$. These can be re-expressed as:
+
+$$~
+\begin{align}
+\cos((n+1)\theta) &= \cos(n\theta + \theta) = \cos(n\theta) \cos(\theta) - \sin(n\theta)\sin(\theta), \text{ and}\\
+\cos((n-1)\theta) &= \cos(n\theta - \theta) = \cos(n\theta) \cos(-\theta) - \sin(n\theta)\sin(-\theta).
+\end{align}
+~$$
+
+But $\cos(-\theta) = \cos(\theta)$, whereas $\sin(-\theta) = -\sin(\theta)$. Using this, we add the two formulas above to get:
+
+$$~
+\cos((n+1)\theta) = 2\cos(n\theta) \cos(\theta)  - \cos((n-1)\theta).
+~$$
+
+That is the angle for a multiple of $n+1$ can be expressed in terms of the angle with a multiple of $n$ and $n-1$. This can be used recursively to find expressions for $\cos(n\theta)$ in terms of polynomials in $\cos(\theta)$.
+
+## Inverse trigonometric functions
+
+The  trigonometric functions are all periodic. In particular they are not monotonic over their entire domain. This means there is no *inverse* function applicable. However, by restricting the domain to where the functions are monotonic, inverse functions can be defined:
+
+* For $\sin(x)$, the restricted domain of $[-\pi/2, \pi/2]$ allows for the arcsine function to be defined. In `Julia` this is implemented with `asin`.
+
+* For $\cos(x)$, the restricted domain of $[0,\pi]$ allows for the arccosine function to be defined. In `Julia` this is implemented with `acos`.
+
+* For $\tan(x)$, the restricted domain of $(-\pi/2, \pi/2)$ allows for the arctangent function to be defined. In `Julia` this is implemented with `atan`.
+
+
+For example, the arcsine function is defined for $-1 \leq x \leq 1$ and has a range of $-\pi/2$ to $\pi/2$:
+
+````julia
+
+plot(asin, -1, 1)
+````
+
+
+![](/var/folders/k0/94d1r7xd2xlcw_jkgqq4h57w0000gr/T/trig_functions_16_1.png)
+
+
+
+
+The arctangent has domain of all real $x$. It has shape given by:
+
+````julia
+
+plot(atan, -10, 10)
+````
+
+
+![](/var/folders/k0/94d1r7xd2xlcw_jkgqq4h57w0000gr/T/trig_functions_17_1.png)
+
+
+
+The horizontal asymptotes are $y=\pi/2$ and $y=-\pi/2$.
+
+### Implications of a restricted domain
+
+Notice that $\sin(\arcsin(x)) = x$ for any $x$ in $[-1,1]$, but, of course,  not for all $x$, as the output of the sine function can't be arbitrarily large.
+
+However, $\arcsin(\sin(x))$ is defined for all $x$, but only equals
+$x$ when $x$ is in $[-\pi/2, \pi/2]$. The output, or range, of the
+$\arcsin$ function is restricted to that interval.
+
+
+This can be limiting at times. A common case is to find the angle in $[0, 2\pi)$ corresponding to a point $(x,y)$. In the simplest case (the first and fourth quadrants) this is just given by $\arctan(y/x)$. But with some work, the correct angle can be found for any pair $(x,y)$. As this is a common desire, the `atan` function with two arguments, `atan(y,x)`, is available. This function returns a value in $(-\pi, \pi]$.
+
+For example, this will not give back $\theta$ without more work to identify the quadrant:
+
+````julia
+
+theta = 3pi/4                     # 2.35619...
+x,y = (cos(theta), sin(theta))    # -0.7071..., 0.7071...
+atan(y/x)
+````
+
+
+````
+-0.7853981633974484
+````
+
+
+
+
+
+But,
+
+````julia
+
+atan(y, x)
+````
+
+
+````
+2.356194490192345
+````
+
+
+
+
+
+
+##### Example
+
+A (white) light shining through a [prism](http://tinyurl.com/y8sczg4t) will be deflected depending on the material of the prism and the angles involved (cf. the link for a figure). The relationship can be analyzed by tracing a ray through the figure and utilizing Snell's law. If the prism has index of refraction $n$ then the ray will deflect by an amount $\delta$ that depends on the angle, $\alpha$ of the prism and the initial angle ($\theta_0$) according to:
+
+$$~
+\delta = \theta_0 - \alpha  + \arcsin(n \sin(\alpha - \arcsin(\frac{1}{n}\sin(\theta_0)))).
+~$$
+
+If $n=1.5$ (glass), $\alpha = \pi/3$ and $\theta_0=\pi/6$, find the deflection (in radians).
+
+We have:
+
+````julia
+
+n, alpha, theta0 = 1.5, pi/3, pi/6
+delta = theta0 - alpha + asin(n * sin(alpha - asin(sin(theta0)/n)))
+````
+
+
+````
+0.8219769749498015
+````
+
+
+
+
+
+For small $\theta_0$ and $\alpha$ the deviation is approximated by $(n-1)\alpha$. Compare this approximation to the actual value when $\theta_0 = \pi/10$ and $\alpha=\pi/15$.
+
+
+We have:
+
+````julia
+
+n, alpha, theta0 = 1.5, pi/15, pi/10
+delta = theta0 - alpha + asin(n * sin(alpha - asin(sin(theta0)/n)))
+delta, (n-1)*alpha
+````
+
+
+````
+(0.10763338241545499, 0.10471975511965977)
+````
+
+
+
+
+
+The approximation error is about 2.7 percent.
+
+
+##### Example
+
+The AMS has an interesting column on
+[rainbows](http://www.ams.org/publicoutreach/feature-column/fcarc-rainbows)
+the start of which uses some formulas from the previous example. Click through to
+see a ray of light passing through a spherical drop of water, as analyzed by Descartes. The
+deflection of the ray occurs when the incident light hits the drop of
+water, then there is an *internal* deflection of the light, and
+finally when the light leaves, there is another deflection. The total
+deflection (in radians) is $D = (i-r) + (\pi - 2r) + (i-r) = \pi - 2i - 4r$. However, the incident angle $i$ and the refracted angle $r$ are related by Snell's law: $\sin(i) = n \sin(r)$. The value $n$ is the index of refraction and is $4/3$ for water. (It was $3/2$ for glass in the previous example.) This gives
+
+$$~
+D = \pi + 2i - 4 \arcsin(\frac{1}{n} \sin(i)).
+~$$
+
+Graphing this for incident angles between $0$ and $\pi/2$ we have:
+
+````julia
+
+n = 4/3
+D(i) = pi + 2i - 4 * asin(sin(i)/n)
+plot(D, 0, pi/2)
+````
+
+
+![](/var/folders/k0/94d1r7xd2xlcw_jkgqq4h57w0000gr/T/trig_functions_22_1.png)
+
+
+
+Descartes was interested in the minimum value of this graph, as it relates to where the light concentrates. This is roughly at $1$ radian or about $57$ degrees:
+
+````julia
+
+rad2deg(1.0)
+````
+
+
+````
+57.29577951308232
+````
+
+
+
+
+
+(Using calculus it can be seen to be $\arccos(((n^2-1)/3)^{1/2})$.)
+
+##### Example: The Chebyshev Polynomials
+
+Consider again this equation derived with the sum-and-difference formula:
+
+
+$$~
+\cos((n+1)\theta) = 2\cos(n\theta) \cos(\theta)  - \cos((n-1)\theta).
+~$$
+
+Let $T_n(x) = \cos(n \arccos(x))$. Calling $\theta = \arccos(x)$ for $-1 \leq x \leq x$ we get a relation between these functions:
+
+$$~
+T_{n+1}(x) = 2x T_n(x) - T_{n-1}(x).
+~$$
+
+We can simplify a few: For example, when $n=0$ we see immediately that $T_0(x) = 1$, the constant function. Whereas with $n=1$ we get $T_1(x) = \cos(\arccos(x)) = x$. Things get more interesting as we get bigger $n$, for example using the equation above we get $T_2(x) = 2xT_1(x) - T_0(x) = 2x\cdot x - 1 = 2x^2 - 1$. Continuing, we'd get $T_3(x) = 2 x T_2(x) - T_1(x) = 2x(2x^2 - 1) - x = 4x^3 -3x$.
+
+A few things become clear from the above two representations:
+
+* Starting from $T_0(x) = 1$ and $T_1(x)=x$ and using the recursive defintion of $T_{n+1}$ we get a family of polynomials where $T_n(x)$ is a degree $n$ polynomial. These are defined for all $x$, not just $-1 \leq x \leq 1$.
+
+* Using the initial definition, we see that the zeros of $T_n(x)$ all occur within $[-1,1]$ and happen when $n\arccos(x) = k\pi + \pi/2$, or $x=\cos((2k+1)/n \cdot \pi/2)$ for $k=0, 1, \dots, n-1$.
+
+Other properties of this polynomial family are not at all obvious. One is that amongst all polynomials of degree $n$ with roots in $[-1,1]$, $T_n(x)$ will be the smallest in magnitude (after we divide by the leading coefficient to make all polynomials considered to be monic). We can check this for one case. Take $n=4$, then we have: $T_4(x) = 8x^4 - 8x^2 + 1$. Compare this with $q(x) = (x+3/5)(x+1/5)(x-1/5)(x-3/5)$ (evenly spaced zeros):
+
+````julia
+
+T4(x) = (8x^4 - 8x^2 + 1) / 8
+q(x) = (x+3/5)*(x+1/5)*(x-1/5)*(x-3/5)
+plot(abs ∘ T4, -1,1)
+plot!(abs ∘ q, -1,1)
+````
+
+
+![](/var/folders/k0/94d1r7xd2xlcw_jkgqq4h57w0000gr/T/trig_functions_24_1.png)
+
+
+
+## Hyperbolic trigonometric functions
+
+Related to the trigonometric functions are the hyperbolic
+trigonometric functions. Instead of associating a point $(x,y)$ on the
+unit circle with an angle $\theta$, we associate a point $(x,y)$ on
+the unit *hyperbola* (with $x^2 - y^2 = 1$. We define the hyperbolic
+sin ($\sinh$) and hyperbolic cosine ($\cosh$) through $(\cosh(\theta),
+\sinh(\theta)) = (x,y)$.
+
+These can be expressed using the exponential function as:
+
+$$~
+\begin{align}
+\sinh(x) &= \frac{e^x - e^{-x}}{2}\\
+\cosh(x) &= \frac{e^x + e^{-x}}{2}.
+\end{align}
+~$$
+
+The hyperbolic tangent is then the ratio of $\sinh$ and $\cosh$. As well, three inverse hyperbolic functions can be defined.
+
+## Questions
+
+###### Question
+
+What is bigger $\sin(1.23456)$ or $\cos(6.54321)$?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\sin(1.23
+456)$", L"$\cos(6.54321)$"], 2, "", nothing, [1, 2], LaTeXStrings.LaTeXStri
+ng[L"$\sin(1.23456)$", L"$\cos(6.54321)$"], "", false)
+````
+
+
+
+
+
+###### Question
+
+Let $x=\pi/4$. What is bigger $\cos(x)$ or $x$?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\cos(x)$"
+, L"$x$"], 2, "", nothing, [1, 2], LaTeXStrings.LaTeXString[L"$\cos(x)$", L
+"$x$"], "", false)
+````
+
+
+
+
+
+###### Question
+
+The cosine function is a simple tranformation of the sine function. Which one?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\cos(x) =
+ \pi/2 \cdot \sin(x)$", L"$\cos(x) = \sin(x + \pi/2)$", L"$\cos(x) = \sin(x
+ - \pi/2)$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\cos(x
+) = \pi/2 \cdot \sin(x)$", L"$\cos(x) = \sin(x + \pi/2)$", L"$\cos(x) = \si
+n(x - \pi/2)$"], "", false)
+````
+
+
+
+
+
+###### Question
+
+Graph the secant function. The vertical asymptotes are at?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"The values
+ $k\pi$ for $k$ in $\dots, -2, -1, 0, 1, 2, \dots$", L"The values $\pi/2 + 
+k\pi$ for $k$ in $\dots, -2, -1, 0, 1, 2, \dots$", L"The values $2k\pi$ for
+ $k$ in $\dots, -2, -1, 0, 1, 2, \dots$"], 2, "", nothing, [1, 2, 3], LaTeX
+Strings.LaTeXString[L"The values $k\pi$ for $k$ in $\dots, -2, -1, 0, 1, 2,
+ \dots$", L"The values $\pi/2 + k\pi$ for $k$ in $\dots, -2, -1, 0, 1, 2, \
+dots$", L"The values $2k\pi$ for $k$ in $\dots, -2, -1, 0, 1, 2, \dots$"], 
+"", false)
+````
+
+
+
+
+
+###### Question
+
+A formula due to [Bhaskara I](http://tinyurl.com/k89ux5q) dates to around 650AD and gives a rational function approximation to the sine function. In degrees, we have
+
+$$~
+\sin(x^\circ) \approx \frac{4x(180-x)}{40500 - x(180-x)}, \quad 0 \leq x \leq 180.
+~$$
+
+Plot both functions over $[0, 180]$. What is the maximum difference between the two to two decimal points? (You may need to plot the difference of the functions to read off an approximate answer.)
+
+````
+CalculusWithJulia.WeaveSupport.Numericq(0.0015, 0.01, "", "[-0.0085, 0.0115
+]", -0.0085, 0.0115, "", "")
+````
+
+
+
+
+
+###### Question
+
+Solve the following equation for a value of $x$ using `acos`:
+
+$$~
+\cos(x/3) = 1/3.
+~$$
+
+````
+CalculusWithJulia.WeaveSupport.Numericq(3.6928782520223242, 0.001, "", "[3.
+69188, 3.69388]", 3.6918782520223243, 3.693878252022324, "", "")
+````
+
+
+
+
+
+###### Question
+
+For any postive integer $n$ the equation $\cos(x) - nx = 0$ has a solution in $[0, \pi/2]$. Graphically estimate the value when $n=10$.
+
+````
+CalculusWithJulia.WeaveSupport.Numericq(0.1, 0.001, "", "[0.099, 0.101]", 0
+.099, 0.101, "", "")
+````
+
+
+
+
+
+###### Question
+
+The sine function is an *odd* function.
+
+* The hyperbolic sine is:
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(["odd", "even", "neither"], 1, "", no
+thing, [1, 2, 3], ["odd", "even", "neither"], "", false)
+````
+
+
+
+
+
+* The hyperbolic cosine is:
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(["odd", "even", "neither"], 2, "", no
+thing, [1, 2, 3], ["odd", "even", "neither"], "", false)
+````
+
+
+
+
+
+* The hyperbolic tangent is:
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(["odd", "even", "neither"], 1, "", no
+thing, [1, 2, 3], ["odd", "even", "neither"], "", false)
+````
+
+
+
+
+
+###### Question
+
+The hyperbolic sine satisfies this formula:
+
+$$~
+\sinh(\theta + \beta) = \sinh(\theta)\cosh(\beta) + \sinh(\beta)\cosh(\theta).
+~$$
+
+Is this identical to the pattern for the regular sine function?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(["Yes", "No"], 1, "", nothing, [1, 2]
+, ["Yes", "No"], "", false)
+````
+
+
+
+
+
+The hyperbolic cosine satisfies this formula:
+
+
+$$~
+\cosh(\theta + \beta) = \cosh(\theta)\cosh(\beta) + \sinh(\beta)\sinh(\theta).
+~$$
+
+Is this identical to the pattern for the regular sine function?
+
+````
+CalculusWithJulia.WeaveSupport.Radioq(["Yes", "No"], 2, "", nothing, [1, 2]
+, ["Yes", "No"], "", false)
+````
+
+

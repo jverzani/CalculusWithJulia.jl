@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<link
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
+  rel="stylesheet">
+
+<style>
+.julia {display: block; font-family: "Source Code Pro";
+        color:#0033CC;
+        }
+.hljl {font-family: "Source Code Pro";
+        color:#0033CC;
+        }
+body { padding-top: 60px; }
+h5:before {content:"\2746\ ";}
+h6:before {content:"\2742\ ";}
+pre {display: block;}
+th, td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+tr:hover {background-color: #f5f5f5;}
+
+.admonition-title:before {content:"\2746\ ";}
+.admonition-title { color:#0033CC}
+
+</style>
+
+
+<!-- .julia:before {content: "julia> "} -->
+
+<style></style>
+
+
+<script src="https://code.jquery.com/jquery.js"></script>
+
+
+<script  type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ["\$","\$"], ["\\(","\\)"]]
+  },
+  displayAlign: "left",
+  displayIndent: "5%"
+});
+</script>
+<!-- not TeX-AMS-MML_HTMLorMML-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+</script>
+
+
+<script>
+window.PlotlyConfig = {MathJaxConfig: 'local'}
+</script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+
+<script type="text/javascript">
+$( document ).ready(function() {
+  $("h1").each(function(index) {
+       var title = $( this ).text()
+       $("#page_title").html("<strong>" + title + "</strong>");
+       document.title = title
+  });
+  $( "h2" ).each(function( index ) {
+    var nm =  $( this ).text();
+    var id = $.trim(nm).replace(/ /g,'');
+    this.id = id
+    $("#page_dropdown").append("<li><a href='#" + id + "'>" + nm + "</a></li>");
+  });
+  $('[data-toggle="popover"]').popover();
+});
+</script>
+
+</head>
+
+
+<body data-spy="scroll" >
+
+<nav class="navbar navbar-default  navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+         
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="#" id="page_title"></a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+         <li class="dropdown">
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+           Jump to... <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu" id="page_dropdown"></ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<header>
+</header>
+          <div class="title">
+            
+            
+            
+          </div>
+
+
+
+<div class="container-fluid">
+  <div class="span10 offset1">
+<h1>Vectors</h1>
+
+
+<p>One of the first models learned in physics are the equations governing the laws of motion with constant acceleration: <span class="math">$x(t) = x_0 + v_0 t + 1/2 \cdot a t^2$</span>. This is a consequence of Newton&#39;s second <a href="http://tinyurl.com/8ylk29t">law</a> of motion applied to the constant acceleration case. A related formula for the velocity is <span class="math">$v(t) = v_0 + at$</span>. The following figure is produced using these formulas applied to both the vertical position and the horizontal position:</p>
+
+
+
+<div class="well well-sm">
+<figure>
+<img src="data:image/gif;base64,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"/>
+<figcaption><div class="markdown"><p>Position, velocity, and acceleration vectors &#40;scaled&#41; for projectile motion. Vectors are drawn with tail on the projectile. The position vector &#40;black&#41; points from the origin to the projectile, the velocity vector &#40;red&#41; is in the direction of the trajectory, and the acceleration vector &#40;green&#41; is a constant pointing downward.</p>
+</div></figcaption>
+</figure>
+</div>
+
+
+
+<p>For the motion in the above figure, the object&#39;s <span class="math">$x$</span> and <span class="math">$y$</span> values change according to the same rule, but, as the acceleration is different in each direction, we get different formula, namely: <span class="math">$x(t) = x_0 + v_{0x} t$</span> and <span class="math">$y(t) = y_0 + v_{0y}t - 1/2 \cdot gt^2$</span>.</p>
+<p>It is common to work with <em>both</em> formulas at once. Mathematically, when graphing, we naturally pair off two values using Cartesian coordinates &#40;e.g., <span class="math">$(x,y)$</span>&#41;. Another means of combining related values is to use a <em>vector</em>. The notation for a vector varies, but to distinguish them from a point we will use <span class="math">$\langle x,~ y\rangle$</span>. With this notation, we can use it to represent the position, the velocity, and the acceleration at time <span class="math">$t$</span> through:</p>
+<p class="math">\[
+~
+\begin{align}
+\vec{x} &= \langle x_0 + v_{0x}t,~ -(1/2) g t^2 + v_{0y}t  + y_0 \rangle,\\
+\vec{v} &= \langle v_{0x},~ -gt + v_{0y} \rangle, \text{ and }\\
+\vec{a} &= \langle 0,~ -g \rangle.
+\end{align}
+~
+\]</p>
+<p>Don&#39;t spend time thinking about the formulas if they are unfamiliar. The point emphasized here is that we have used the notation <span class="math">$\langle x,~ y \rangle$</span> to collect the two values into a single object, which we indicate through a label on the variable name. These are vectors, and we shall see they find use far beyond this application.</p>
+<p>Initially, our primary use of vectors will be as containers, but it is worthwhile to spend some time to discuss properties of vectors and their visualization.</p>
+<p>A line segment in the plane connects two points <span class="math">$(x_0, y_0)$</span> and <span class="math">$(x_1, y_1)$</span>. The length of a line segment &#40;its magnitude&#41; is given by the distance formula <span class="math">$\sqrt{(x_1 - x_0)^2 + (y_1 - y_0)^2}$</span>.  A line segment can be given a direction by assigning an initial point and a terminal point. A directed line segment has both a direction and a magnitude. A vector is an abstraction where just these two properties</p>
+<ul>
+<li><p>a direction and a magnitude - are intrinsic. While a directed line</p>
+</li>
+</ul>
+<p>segment can be represented by a vector, a single vector describes all such line segments found by translation. That is, how the the vector is located when visualized is for convenience, it is not a characteristic of the vector. In the figure above, all vectors are drawn with their tails at the position of the projectile over time.</p>
+<p>We can visualize a &#40;two-dimensional&#41; vector as an arrow in space. This arrow has two components. We represent a vector than mathematically as <span class="math">$\langle x,~ y \rangle$</span>. For example, the vector connecting the point <span class="math">$(x_0, y_0)$</span> to <span class="math">$(x_1, y_1)$</span> is <span class="math">$\langle x_1 - x_0,~ y_1 - y_0 \rangle$</span>.</p>
+<p>The magnitude of a vector comes from the distance formula applied to a line segment, and is <span class="math">$\| \vec{v} \| = \sqrt{x^2 + y^2}$</span>.</p>
+
+
+
+<div class="well well-sm">
+<figure>
+<img src="data:image/gif;base64,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"/>
+<figcaption><div class="markdown"><p>A vector and its unit vector. They share the same direction, but the unit vector has a standardized magnitude.</p>
+</div></figcaption>
+</figure>
+</div>
+
+
+
+<p>We call the values <span class="math">$x$</span> and <span class="math">$y$</span> of the vector <span class="math">$\vec{v} = \langle x,~ y \rangle$</span> the components of the <span class="math">$v$</span>.</p>
+<p>Two operations on vectors are fundamental.</p>
+<ul>
+<li><p>Vectors can be multiplied by a scalar &#40;a real number&#41;: <span class="math">$c\vec{v} = \langle cx,~ cy \rangle$</span>. Geometrically this scales the vector by a factor of <span class="math">$\lvert c \rvert$</span> and switches the direction of the vector by 180 degree when <span class="math">$c < 0$</span>. A <em>unit vector</em> is one with magnitude 1, and, except for the <span class="math">$\vec{0}$</span> vector, can be formed from <span class="math">$\vec{v}$</span> by dividing <span class="math">$\vec{v}$</span> by its magnitude. A vector&#39;s two parts are summarized by its direction given by a unit vector gives and its norm given by the magnitude.</p>
+</li>
+</ul>
+<ul>
+<li><p>Vectors can be added: <span class="math">$\vec{v} + \vec{w} = \langle v_x + w_x,~ v_y + w_y \rangle$</span>. That is, each corresponding component adds to form a new vector. Similarly for subtraction. The <span class="math">$\vec{0}$</span> vector then would be just <span class="math">$\langle 0,~ 0 \rangle$</span> and would satisfy <span class="math">$\vec{0} + \vec{v} = \vec{v}$</span> for any vector <span class="math">$\vec{v}$</span>. The vector addition <span class="math">$\vec{v} + \vec{w}$</span> is visualized by placing the tail of <span class="math">$\vec{w}$</span> at the tip of <span class="math">$\vec{v}$</span> and then considering the new vector with tail coming from <span class="math">$\vec{v}$</span> and tip coming from the position of the tip of <span class="math">$\vec{w}$</span>. Subtraction is different, place both the tails of <span class="math">$\vec{v}$</span> and <span class="math">$\vec{w}$</span> at the same place and the new vector has tail at the tip of <span class="math">$\vec{v}$</span> and tip at the tip of <span class="math">$\vec{w}$</span>.</p>
+</li>
+</ul>
+
+
+
+<div class="well well-sm">
+<figure>
+<img src="data:image/gif;base64,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"/>
+<figcaption><div class="markdown"><p>The sum of two vectors can be visualized by placing the tail of one at the tip of the other</p>
+</div></figcaption>
+</figure>
+</div>
+
+
+
+
+
+<div class="well well-sm">
+<figure>
+<img src="data:image/gif;base64,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"/>
+<figcaption><div class="markdown"><p>The sum of two vectors can be visualized by placing the tail of one at the tip of the other</p>
+</div></figcaption>
+</figure>
+</div>
+
+
+
+<p>The concept of scalar multiplication and addition, allow the decomposition of vectors into standard vectors. The standard unit vectors in two dimensions are <span class="math">$e_x = \langle 1,~ 0 \rangle$</span> and <span class="math">$e_y = \langle 0,~ 1 \rangle$</span>. Any two dimensional vector can be written uniquely as <span class="math">$a e_x + b e_y$</span> for some pair of scalars <span class="math">$a$</span> and <span class="math">$b$</span> &#40;or as, <span class="math">$\langle a, b \rangle$</span>&#41;. This is true more generally where the two vectors are not the standard unit vectors - they can be <em>any</em> two non-parallel vectors.</p>
+
+
+
+<div class="well well-sm">
+<figure>
+<img src="data:image/gif;base64,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"/>
+<figcaption><div class="markdown"><p>The vector &#36;\langle 4,3 \rangle&#36; is written as &#36;2&#36;/&#36;3&#36; &#36;\cdot\langle 1,2 \rangle&#36; &#36;&#43;&#36; &#36;5&#36;/&#36;3&#36; &#36;\cdot\langle 2,1 \rangle&#36;. Any vector &#36;\vec&#123;c&#125;&#36; can be written uniquely as &#36;\alpha\cdot\vec&#123;a&#125; &#43; \beta \cdot \vec&#123;b&#125;&#36; provided &#36;\vec&#123;a&#125;&#36; and &#36;\vec&#123;b&#125;&#36; are not parallel.</p>
+</div></figcaption>
+</figure>
+</div>
+
+
+
+<p>The two operations of scalar multiplication and vector addition are defined in a component-by-component basis. We will see that there are many other circumstances where performing the same action on each component in a vector is desirable.</p>
+<hr />
+<p>When a vector is placed with its tail at the origin, it can be described in terms of the angle it makes with the <span class="math">$x$</span> axis, <span class="math">$\theta$</span>, and its length, <span class="math">$r$</span>. The following formulas apply:</p>
+<p class="math">\[
+~
+r = \sqrt{x^2 + y^2}, \quad \tan(\theta) = y/x.
+~
+\]</p>
+<p>If we are given <span class="math">$r$</span> and <span class="math">$\theta$</span>, then the vector is <span class="math">$v = \langle r \cdot \cos(\theta),~ r \cdot \sin(\theta) \rangle$</span>.</p>
+
+
+
+<div class="well well-sm">
+<figure>
+<img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAEsCAIAAABi1XKVAAAABmJLR0QA/wD/AP+gvaeTAAAeZklEQVR4nO3deVgTd/4H8G8CIVyBcIigoCIonqwiniCKGLQ8HiiiWNHaVVfFsz6tbAXx9lktiFjvolvRWlF07fq0HvUCeVQ8K3IIFUVABAQUEEjQZH5/zO5sflCPoSPxG9+vv2bm803mM0x4M5mZBBHDMAQAgAZiXTcAAPCuEFgAQA0EFgBQA4EFANRAYAEANRBYAEANQ74PqKurS0tLu3nzZm1t7YoVKxpV09PTd+/eXV9fHxISolAoBGoSAICQZhxhJScnL1my5Pz583FxcY1K+fn5Pj4+jo6O3t7eISEhv/76q0BNAgAQQoioeTeOXr58edSoUZWVldoLw8PDnzx5kpCQQAiJjY09derU6dOnhWkTAEDYc1hXr14dOnQoOz106NArV64I+OQAALzPYb1BSUmJjY0NO21ra1tTU/PixQtzc3NCSHl5+ezZs1++fMlWly5d2r9/fwFXrRNqtdrAwEDXXQhM/zZKo9GIRCKRSKTrRoSkf7uJEGJgYCAWv+UQSsjAkkqlDQ0N7LRKpRKLxVKplJ1NTExUKpUzZ85kZ52dnfXgx11XVyeTyXTdhcD0b6NevnxpYGBgaCjkS13n9G83aTQatVrdooHl6OhYUFDAThcUFLRu3VoikXDVdu3ajRs3TsDV6ZxYLH7rz5c6+rdR4v/SdSNC0r8tIoSo1eq3jhFmm0+cOFFUVDR+/PhDhw6x7/sOHDgQFBQkyJMDALB4H2EVFBT4+voqlcqqqioXFxcXF5czZ87MnTs3NjY2NDR0//79np6eVlZWhYWFycnJ76NjAPho8Q4sBwcH7Rus2Dd9ly9ftrGxMTY2vnDhwo0bN5RKZf/+/bkTWAAAguAdWBKJpGPHjo0WtmvXjp0Qi8X9+vUToC8AgCb07bwdAOgxBBYAUAOBBQDUQGABADUQWABADQQWAFADgQUA1EBgAQA1EFgAQA0EFgBQA4EFANRAYAEANRBYAEANBBYAUAOBBQDUQGABADUQWABADQQWAFADgQUA1EBgAQA1EFgAQA0EFgBQA4EFANRAYAEANRBYAEANBBYAUAOBBQDUQGABADUQWABADQQWAFADgQUA1EBgAQA1EFgAQA0EFgBQA4EFANRAYAEANRBYAEANBBYAUAOBBQDUQGABADUQWABADcNmPCYxMTExMVEmk82fP79v377apaSkpOPHjyuVSi8vr7CwMKlUKlCfAAD8j7COHDmyePHiadOmeXp6KhSK/Px8rpSYmDhv3rzAwMC5c+ceOnToyy+/FLJTAPjo8T7Cio2NXb16dWBgICHk2rVru3fvXr9+PVu6cOFCSEjIhAkTCCFLly6NiooStlcA+MjxO8JiGObmzZve3t7srLe39/Xr17nqkCFDUlJSysvLVSrViRMnhg4dKmCjAAD8jrAqKysbGhqsra3ZWRsbmydPnnDVkJCQs2fPtmrVytDQ0N3d/fz589qPPXnypI+PDzsdGRk5aNCgP9e57tXW1opEIl13ITD92yilUmlgYCCRSHTdiJD0bzdpNJp3OeXNL7DMzMwIISqVip2tr683NzfnqmvXrs3NzX3y5ImFhcXSpUuDg4PPnDnDVXv37r1w4UJ2umfPntoPpBTDMHqwFY3o30YZGhrqX2Dp327SaDRqtfqtw/gFlrGxsa2tbX5+frt27Qgh+fn5Tk5OXPWnn36aP3++vb09IeSLL75wdXWtq6szNTVlq/b29r6+vrxWBwCgjfdVwuDg4L179xJC6uvrDx06FBwcTAhJTEzMy8tr37791atX2WFXr161s7Pj0goA4M/jfZUwIiJi+PDhffv2raio6N279/jx4wkhX3/99dq1a9euXTtmzJjevXtbWVndvXt39+7d76FhAPh48Q6stm3bZmRk3LlzRyaTderUiV1469YtU1NTIyOj7Ozs+/fvK5XKzp074/AKAITVnDvdDQwMPDw8tJfI5fL/PJ2hYZcuXQToCwCgCXyWEACogcACAGogsACAGggsAKAGAgsAqIHAAgBqILAAgBoILACgBgILAKiBwAIAaiCwAIAaCCwAoAYCCwCogcACAGogsACAGggsAKAGAgsAqIHAAgBqILAAgBoILACgBgILAKiBwAIAaiCwAIAaCCwAoAYCCwCogcACAGogsACAGggsAKAGAgsAqIHAAgBqILAAgBoILACgBgILAKiBwAIAaiCwAIAaCCwAoAYCCwCogcACAGogsACAGggsAKAGAgsAqME7sBiGiYuL8/PzmzBhQlpaWqNqWVnZkiVLfH19x40bd+7cOYGaBAAghBBDvg/YunXrjh07du3alZ2dPWLEiKysrDZt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"/>
+<figcaption><div class="markdown"><p>A vector &#36;\langle x, y \rangle&#36; can be written as &#36;\langle r\cdot \cos&#40;\theta&#41;, r\cdot\sin&#40;\theta&#41; \rangle&#36; for values &#36;r&#36; and &#36;\theta&#36;. The value &#36;r&#36; is a magnitude, the direction parameterized by &#36;\theta&#36;.</p>
+</div></figcaption>
+</figure>
+</div>
+
+
+
+<h2>Vectors in Julia</h2>
+<p>A vector in <code>Julia</code> can be represented by its individual components, but it is more convenient to combine them into a collection using the <code>&#91;,&#93;</code> notation:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-t'>
+</span><span class='hljl-n'>v</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-p'>]</span><span class='hljl-t'>        </span><span class='hljl-cs'># square brackets, not angles</span>
+</pre>
+
+
+<pre class="output">
+2-element Array&#123;Int64,1&#125;:
+ 1
+ 2
+</pre>
+
+
+<p>The basic vector operations are implemented for vector objects. For example, the vector <code>v</code> has scalar multiplication defined for it:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-ni'>10</span><span class='hljl-t'> </span><span class='hljl-oB'>*</span><span class='hljl-t'> </span><span class='hljl-n'>v</span>
+</pre>
+
+
+<pre class="output">
+2-element Array&#123;Int64,1&#125;:
+ 10
+ 20
+</pre>
+
+
+<p>The <code>norm</code> function returns the magnitude of the vector &#40;by default&#41;:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-k'>import</span><span class='hljl-t'> </span><span class='hljl-n'>LinearAlgebra</span><span class='hljl-oB'>:</span><span class='hljl-t'> </span><span class='hljl-n'>norm</span><span class='hljl-t'>
+</span><span class='hljl-nf'>norm</span><span class='hljl-p'>(</span><span class='hljl-n'>v</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="output">
+2.23606797749979
+</pre>
+
+
+<p>A unit vector is then found by scaling by the reciprocal of the magnitude:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>v</span><span class='hljl-t'> </span><span class='hljl-oB'>/</span><span class='hljl-t'> </span><span class='hljl-nf'>norm</span><span class='hljl-p'>(</span><span class='hljl-n'>v</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="output">
+2-element Array&#123;Float64,1&#125;:
+ 0.4472135954999579
+ 0.8944271909999159
+</pre>
+
+
+<p>In addition, if <code>w</code> is another vector, we can add and subtract:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>w</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-n'>v</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>w</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>v</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-n'>w</span>
+</pre>
+
+
+<pre class="output">
+&#40;&#91;4, 4&#93;, &#91;-5, -2&#93;&#41;
+</pre>
+
+
+<p>We see above that scalar multiplication, addition, and subtraction can be done without new notation. This is because the usual operators have methods defined for vectors.</p>
+<p>Finally, to find an angle <span class="math">$\theta$</span> from a vector <span class="math">$\langle x,~ y\rangle$</span>, we can employ the <code>atan</code> function using two arguments:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-cs'># v  = [x, y]</span><span class='hljl-t'>
+</span><span class='hljl-nf'>norm</span><span class='hljl-p'>(</span><span class='hljl-n'>v</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>atan</span><span class='hljl-p'>(</span><span class='hljl-n'>y</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="output">
+&#40;2.23606797749979, 1.1071487177940904&#41;
+</pre>
+
+
+<h2>Higher dimensional vectors</h2>
+<p>Mathematically, vectors can be generalized to more than 2 dimensions. For example, using 3-dimensional vectors are common when modeling events happening in space, and 4-dimensional vectors are common when modeling space and time.</p>
+<p>In <code>Julia</code> there are many uses for vectors outside of physics applications. A vector in <code>Julia</code> is just a one-dimensional collection of similarly typed values. Such objects find widespread usage. For example:</p>
+<ul>
+<li><p>In plotting graphs with <code>Julia</code>, vectors are used to hold the <span class="math">$x$</span> and <span class="math">$y$</span> coordinates of a collection of points to plot and connect with straight lines. There can be hundreds of such points in a plot.</p>
+</li>
+<li><p>Vectors are a natural container to hold the roots of a polynomial or zeros of a function.</p>
+</li>
+<li><p>Vectors may be used to record the state of an iterative process.</p>
+</li>
+<li><p>Vectors are naturally used to represent a data set, such as arise when collecting survey data.</p>
+</li>
+</ul>
+<p>Creating higher-dimensional vectors is similar to creating a two-dimensional vector, we just include more components:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>fibs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-ni'>8</span><span class='hljl-p'>,</span><span class='hljl-ni'>13</span><span class='hljl-p'>]</span>
+</pre>
+
+
+<pre class="output">
+7-element Array&#123;Int64,1&#125;:
+  1
+  1
+  2
+  3
+  5
+  8
+ 13
+</pre>
+
+
+<p>Later we will discuss different ways to modify the values of a vector to create new ones, similar to how scalar multiplication does.</p>
+<p>As mentioned, vectors in  <code>Julia</code>  are comprised of elements of a similar type, but the type is not limited to numeric values. For example, a vector of strings might be useful for text processing, a vector of Boolean values can naturally arise, some applications are even naturally represented in terms of vectors of vectors. Look at the output of these two vectors:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-p'>[</span><span class='hljl-s'>&quot;one&quot;</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;two&quot;</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;three&quot;</span><span class='hljl-p'>]</span><span class='hljl-t'>  </span><span class='hljl-cs'># Array{T, 1} is shorthand for Vector{T}. Here T - the type - is String</span>
+</pre>
+
+
+<pre class="output">
+3-element Array&#123;String,1&#125;:
+ &quot;one&quot;
+ &quot;two&quot;
+ &quot;three&quot;
+</pre>
+
+
+
+<pre class='hljl'>
+<span class='hljl-p'>[</span><span class='hljl-kc'>true</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-kc'>false</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-kc'>true</span><span class='hljl-p'>]</span><span class='hljl-t'>		</span><span class='hljl-cs'># vector of Bool values</span>
+</pre>
+
+
+<pre class="output">
+3-element Array&#123;Bool,1&#125;:
+ 1
+ 0
+ 1
+</pre>
+
+
+<p>Finally, we mention that if <code>Julia</code> has values of different types it will promote them to a common type if possible. Here we combine three types of numbers, and see that each is promoted to <code>Float64</code>:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nfB'>2.0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>3</span><span class='hljl-oB'>//</span><span class='hljl-ni'>1</span><span class='hljl-p'>]</span>
+</pre>
+
+
+<pre class="output">
+3-element Array&#123;Float64,1&#125;:
+ 1.0
+ 2.0
+ 3.0
+</pre>
+
+
+<p>Whereas, in this example where there is no common type to promote the values to, a catch-all type of <code>Any</code> is used to hold the components.</p>
+
+
+<pre class='hljl'>
+<span class='hljl-p'>[</span><span class='hljl-s'>&quot;one&quot;</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nfB'>3.0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>4</span><span class='hljl-oB'>//</span><span class='hljl-ni'>1</span><span class='hljl-p'>]</span>
+</pre>
+
+
+<pre class="output">
+4-element Array&#123;Any,1&#125;:
+   &quot;one&quot;
+  2
+  3.0
+ 4//1
+</pre>
+
+
+<h2>Indexing</h2>
+<p>Getting the components out of a vector can be done in a manner similar to multiple assignment:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>v</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>v</span>
+</pre>
+
+
+<pre class="output">
+2-element Array&#123;Int64,1&#125;:
+ 1
+ 2
+</pre>
+
+
+<p>When the same number of variable names are on the left hand side of the assignment as in the container on the right, each is assigned in order.</p>
+<p>Though this is convenient for small vectors, it is far from being so if the vector has a large number of components. However, the vector is stored in order with a first, second, third, <span class="math">$\dots$</span> component. <code>Julia</code> allows these values to be referred to by <em>index</em>. This too uses the <code>&#91;&#93;</code> notation, though differently. Here is how we get the second component of <code>v</code>:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>v</span><span class='hljl-p'>[</span><span class='hljl-ni'>2</span><span class='hljl-p'>]</span>
+</pre>
+
+
+<pre class="output">
+2
+</pre>
+
+
+<p>The last value of a vector is usually denoted by <span class="math">$v_n$</span>. In <code>Julia</code>, the <code>length</code> function will return <span class="math">$n$</span>, the number of items in the container. So <code>v&#91;length&#40;v&#41;&#93;</code> will refer to the last component. However, the special keyword <code>end</code> will do so as well, when put into the context of indexing. So <code>v&#91;end&#93;</code> is more idiomatic.</p>
+
+
+<div class="alert alert-info" role="alert">
+
+<div class="markdown"><p>There is <a href="http://julia.readthedocs.org/en/latest/manual/arrays/#indexing">much more</a> to indexing than just indexing by a single integer value. For example, the following can be used for indexing:</p>
+<ul>
+<li><p>a scalar integer &#40;as seen&#41;</p>
+</li>
+<li><p>a range</p>
+</li>
+<li><p>a vector of integers</p>
+</li>
+<li><p>a boolean vector</p>
+</li>
+</ul>
+<p>Some add-on packages extend this further.</p>
+</div>
+
+</div>
+
+
+<h3>Assignment and indexing</h3>
+<p>This notation can also be used for assignment. The following expression replaces the second component with a new value:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>v</span><span class='hljl-p'>[</span><span class='hljl-ni'>2</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>10</span>
+</pre>
+
+
+<pre class="output">
+10
+</pre>
+
+
+<p>The right hand side is returned, not the value for <code>v</code>. We can check that <code>v</code> is now <span class="math">$\langle 1,~ 10 \rangle$</span> by showing it:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>v</span>
+</pre>
+
+
+<pre class="output">
+2-element Array&#123;Int64,1&#125;:
+  1
+ 10
+</pre>
+
+
+<p>The assignment <code>v&#91;2&#93;</code> is different than the initial assignment <code>v&#61;&#91;1,2&#93;</code> in that, <code>v&#91;2&#93;&#61;10</code> modifies the container that <code>v</code> points to, whereas <code>v&#61;&#91;1,2&#93;</code> replaces the binding for <code>v</code>. The indexed assignment is then more memory efficient when vectors are large. This point is also of interest when passing vectors to functions, as a function may modify components of the vector passed to it, though can&#39;t replace the container itself.</p>
+<h2>Some functions useful when working with vectors.</h2>
+<p>As mentioned, the <code>length</code> function returns the number of components in a vector. It is one of several useful functions for vectors.</p>
+<p>The <code>sum</code> and <code>prod</code> function will add and multiply the elements in a vector:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>v</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-ni'>8</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-nf'>sum</span><span class='hljl-p'>(</span><span class='hljl-n'>v</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>prod</span><span class='hljl-p'>(</span><span class='hljl-n'>v</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="output">
+&#40;20, 240&#41;
+</pre>
+
+
+<p>The <code>unique</code> function will throw out any duplicates:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>unique</span><span class='hljl-p'>(</span><span class='hljl-n'>v</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-cs'># drop a `1`</span>
+</pre>
+
+
+<pre class="output">
+5-element Array&#123;Int64,1&#125;:
+ 1
+ 2
+ 3
+ 5
+ 8
+</pre>
+
+
+<p>The functions <code>maximum</code> and <code>minimum</code> will return the largest and smallest values of an appropriate vector.</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>v</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-ni'>4</span><span class='hljl-p'>,</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-ni'>3</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-nf'>maximum</span><span class='hljl-p'>(</span><span class='hljl-n'>v</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="output">
+4
+</pre>
+
+
+<p>&#40;These should not be confused with <code>max</code> and <code>min</code> which give the largest or smallest value over all their arguments.&#41;</p>
+<p>The <code>extrema</code> function returns both the smallest and largest value of a collection:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>extrema</span><span class='hljl-p'>(</span><span class='hljl-n'>v</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="output">
+&#40;1, 4&#41;
+</pre>
+
+
+<p>The <code>sort</code> function will rearrange the values in <code>v</code>:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>sort</span><span class='hljl-p'>(</span><span class='hljl-n'>v</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="output">
+4-element Array&#123;Int64,1&#125;:
+ 1
+ 2
+ 3
+ 4
+</pre>
+
+
+<p>The keyword argument, <code>rev&#61;false</code> can be given to get values in decreasing order:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>sort</span><span class='hljl-p'>(</span><span class='hljl-n'>v</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>rev</span><span class='hljl-oB'>=</span><span class='hljl-kc'>false</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="output">
+4-element Array&#123;Int64,1&#125;:
+ 1
+ 2
+ 3
+ 4
+</pre>
+
+
+<p>For adding a new element to a vector the <code>push&#33;</code> method can be used, as in</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>push!</span><span class='hljl-p'>(</span><span class='hljl-n'>v</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="output">
+5-element Array&#123;Int64,1&#125;:
+ 1
+ 4
+ 2
+ 3
+ 5
+</pre>
+
+
+<p>To append more than one value, the <code>append&#33;</code> function can be used:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>append!</span><span class='hljl-p'>(</span><span class='hljl-n'>v</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>6</span><span class='hljl-p'>,</span><span class='hljl-ni'>8</span><span class='hljl-p'>,</span><span class='hljl-ni'>7</span><span class='hljl-p'>])</span>
+</pre>
+
+
+<pre class="output">
+8-element Array&#123;Int64,1&#125;:
+ 1
+ 4
+ 2
+ 3
+ 5
+ 6
+ 8
+ 7
+</pre>
+
+
+<p>These two functions modify or mutate the values stored within the vector <code>v</code> that passed as an argument. In the <code>push&#33;</code> example above, the value <code>5</code> is added to the vector of 4 elements. In <code>Julia</code>, a convention is to name mutating functions with a trailing exclamation mark. &#40;Again, these do not mutate the binding of <code>v</code> to the container, but do mutate the contents of the container.&#41; There are functions with mutating and non-mutating definitions, an example is <code>sort</code> and <code>sort&#33;</code>.</p>
+<p>If only a mutating function is available, like <code>push&#33;</code>, and this is not desired a copy of the vector can be made. It is not enough to copy by assignment, as with <code>w &#61; v</code>. As both <code>w</code> and <code>v</code> will be bound to the same memory location. Rather, you call <code>copy</code> to make a new container with copied contents, as in <code>w &#61; copy&#40;v&#41;</code>.</p>
+<p>Creating new vectors of a given size is common for programming, though not much use will be made here. There are many different functions to do so: <code>ones</code> to make a vector of ones, <code>zeros</code> to make a vector of zeros, <code>trues</code> and <code>falses</code> to make Boolean vectors of a given size, and <code>similar</code> to make a similar-sized vector &#40;with no particular values assigned&#41;.</p>
+<h2>Applying functions element by element to values in a vector</h2>
+<p>Functions such as <code>sum</code> or <code>length</code> are known as <em>reductions</em> as they reduce the &quot;dimensionality&quot; of the data: a vector is in some sense <span class="math">$1$</span>-dimensional, the sum or length <span class="math">$0$</span>-dimensional.  Applying a reduction is straightforward, it is just a regular function call.</p>
+<p>Other desired operations with vectors act differently. Rather than reduce a collection of values using some formula, the goal is to apply some formula to <em>each</em> of the values, returning a modified vector. A simple example might be to square each element, or subtract the average value from each element. An example comes from statistics. When computing a variance, we start with data <span class="math">$x_1, x_2, \dots, x_n$</span> and along the way form the values <span class="math">$(x_1-\bar{x})^2, (x_2-\bar{x})^2, \dots, (x_n-\bar{x})^2$</span>.</p>
+<p>Such things can be done in <em>many</em> differents ways. Here we describe two, but will primarily utilize the first.</p>
+<h3>Broadcasting a function call</h3>
+<p>If we have a vector, <code>xs</code>, and a function, <code>f</code>, to apply to each value, there is a simple means to achieve this task. By adding a &quot;dot&quot; between the function name and the parenthesis that enclose the arguments, instructs <code>Julia</code> to &quot;broadcast&quot; the function call. The details allow for more flexibility, for this purpose, broadcasting will take each value in <code>xs</code> and apply <code>f</code> to it, returning a vector of the same size as <code>xs</code>. When more than one argument is involved, broadcasting will try to fill out different sized objects.</p>
+<p>For example, the following will find,  using <code>sqrt</code>, the square root each value in a vector:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>4</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>7</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-n'>sqrt</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="output">
+5-element Array&#123;Float64,1&#125;:
+ 1.0
+ 1.0
+ 1.7320508075688772
+ 2.0
+ 2.6457513110645907
+</pre>
+
+
+<p>This would find the sine of each number in <code>xs</code>:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>sin</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="output">
+5-element Array&#123;Float64,1&#125;:
+  0.8414709848078965
+  0.8414709848078965
+  0.1411200080598672
+ -0.7568024953079282
+  0.6569865987187891
+</pre>
+
+
+<p>The <code>^</code> operator is an infix operator. It too can be broadcast by using the form <code>.^</code>, as in:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>.^</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span>
+</pre>
+
+
+<pre class="output">
+5-element Array&#123;Int64,1&#125;:
+  1
+  1
+  9
+ 16
+ 49
+</pre>
+
+
+<p>Here is an example involving the logarithm of a set of numbers. In astronomy, a logarithm with base <span class="math">$100^{1/5}$</span> is used for star <a href="http://tinyurl.com/ycp7k8ay">brightness</a>. We can use broadcasting to find this value for several values at once through:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-ni'>5000</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-ni'>500</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-ni'>50</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>50</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-n'>b</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-ni'>100</span><span class='hljl-p'>)</span><span class='hljl-oB'>^</span><span class='hljl-p'>(</span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-ni'>5</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>log</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>b</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="output">
+6-element Array&#123;Float64,1&#125;:
+ -9.247425010840049
+ -6.747425010840047
+ -4.247425010840047
+ -1.747425010840047
+  1.747425010840047
+  4.247425010840047
+</pre>
+
+
+<p>Broadcasting with multiple arguments allows for mixing of vectors and scalar values, as above, making it convenient when parameters are used.</p>
+<p>As a final example, the task from statistics of centering and then squaring can be done with broadcasting. We go a bit further, showing how to compute the &#40;unbiased&#41; <a href="http://tinyurl.com/p6wa4r8">sample variance</a> of a data set. This has the formula <span class="math">$(1/(n-1))\cdot ((x_1-\bar{x})^2 + \cdots + (x_n + \bar{x})^2)$</span>. It can be computed, with broadcasting, through:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-k'>import</span><span class='hljl-t'> </span><span class='hljl-n'>Statistics</span><span class='hljl-oB'>:</span><span class='hljl-t'> </span><span class='hljl-n'>mean</span><span class='hljl-t'>
+</span><span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>8</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>13</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-n'>n</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>length</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-p'>(</span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-p'>(</span><span class='hljl-n'>n</span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-p'>))</span><span class='hljl-t'> </span><span class='hljl-oB'>*</span><span class='hljl-t'> </span><span class='hljl-nf'>sum</span><span class='hljl-p'>(</span><span class='hljl-n'>abs2</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>.-</span><span class='hljl-t'> </span><span class='hljl-nf'>mean</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>)))</span>
+</pre>
+
+
+<pre class="output">
+19.57142857142857
+</pre>
+
+
+<p>This shows many of the manipulations that can be made with vectors. Rather than write <code>.^2</code>, we follow the  defintion of <code>var</code> and chose the possibly more performant <code>abs2</code> function which, in general, efficiently finds <span class="math">$|x|^2$</span> for various number types. The <code>.-</code> uses broadcasting to subtract a scalar &#40;<code>mean&#40;xs&#41;</code>&#41; from a vector &#40;<code>xs</code>&#41;. Without the <code>.</code>, this would error.</p>
+
+
+<div class="alert alert-info" role="alert">
+
+<div class="markdown"><p>The <code>map</code> function is very much related to broadcasting and similarly named functions are found in many different programming languages. &#40;The &quot;dot&quot; broadcast is mostly limited to <code>Julia</code> and based on a similar usage of a dot in <code>MATLAB</code>.&#41; For those familiar with other programming languages, using <code>map</code> may seem more natural. Its syntax is <code>map&#40;f, xs&#41;</code>.</p>
+</div>
+
+</div>
+
+
+<h3>Comprehensions</h3>
+<p>In mathematics, set notation is often used to describe elements in a set.</p>
+<p>For example, the first 5 cubed numbers can be described by:</p>
+<p class="math">\[
+~
+\{x^3: x \text{ in } 1, 2,\dots, 5\}
+~
+\]</p>
+<p>Comprehension notation is similar. The above could be created in <code>Julia</code> with:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-ni'>4</span><span class='hljl-p'>,</span><span class='hljl-ni'>5</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-p'>[</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>3</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-p'>]</span>
+</pre>
+
+
+<pre class="output">
+5-element Array&#123;Int64,1&#125;:
+   1
+   8
+  27
+  64
+ 125
+</pre>
+
+
+<p>Something similar can be done more succinctly:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>.^</span><span class='hljl-t'> </span><span class='hljl-ni'>3</span>
+</pre>
+
+
+<pre class="output">
+5-element Array&#123;Int64,1&#125;:
+   1
+   8
+  27
+  64
+ 125
+</pre>
+
+
+<p>However, comprehensions have a value when more complicated expressions are desired as they work with an expression of <code>x</code>, and not a pre-defined or user-defined function.</p>
+<p>Another typical example of set notation might include a condition, such as, the numbers divisible by <span class="math">$7$</span> between <span class="math">$1$</span> and <span class="math">$100$</span>. Set notation might be:</p>
+<p class="math">\[
+~
+\{x: rem(x, 7) = 0 \text{ for } x \text{ in } 1, 2, \dots, 100\}.
+~
+\]</p>
+<p>This would be read: &quot;the set of <span class="math">$x$</span> such that the remainder on division by <span class="math">$7$</span> is <span class="math">$0$</span> for all x in <span class="math">$1, 2, \dots, 100$</span>.&quot;</p>
+<p>In <code>Julia</code>, a comprehension can include an <code>if</code> clause to mirror, somewhat, the math notation. For example, the above would become &#40;using <code>1:100</code> as a means to create the numbers <span class="math">$1,2,\dots, 100$</span>, as will be described in a later section&#41;:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-p'>[</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>:</span><span class='hljl-ni'>100</span><span class='hljl-t'> </span><span class='hljl-k'>if</span><span class='hljl-t'> </span><span class='hljl-nf'>rem</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-ni'>7</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>==</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-p'>]</span>
+</pre>
+
+
+<pre class="output">
+14-element Array&#123;Int64,1&#125;:
+  7
+ 14
+ 21
+ 28
+ 35
+ 42
+ 49
+ 56
+ 63
+ 70
+ 77
+ 84
+ 91
+ 98
+</pre>
+
+
+<p>Comprehensions can be a convenient means to describe a collection of numbers, especially when no function is defined, but the simplicity of the broadcast notation &#40;just adding a judicious &quot;.&quot;&#41; leads to its more common use in these notes.</p>
+<h5>Example: creating a &quot;T&quot; table for creating a graph</h5>
+<p>The process of plotting a function is usually first taught by generating a &quot;T&quot; table: values of <span class="math">$x$</span> and corresponding values of <span class="math">$y$</span>. These pairs are then plotted on a Cartesian grid and the points are connected with lines to form the graph. Generating a &quot;T&quot; table in <code>Julia</code> is easy: create the <span class="math">$x$</span> values, then create the <span class="math">$y$</span> values for each <span class="math">$x$</span>.</p>
+<p>To be concrete, let&#39;s generate <span class="math">$7$</span> points to plot <span class="math">$f(x) = x^2$</span> over <span class="math">$[-1,1]$</span>.</p>
+<p>The first task is to create the <code>xs</code>. We will see later, more convenient ways to generate patterned data, but for now, we do this by hand:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>a</span><span class='hljl-p'>,</span><span class='hljl-n'>b</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>n</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>7</span><span class='hljl-t'>
+</span><span class='hljl-n'>d</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>b</span><span class='hljl-oB'>-</span><span class='hljl-n'>a</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>//</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>n</span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-n'>a</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>a</span><span class='hljl-oB'>+</span><span class='hljl-n'>d</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>a</span><span class='hljl-oB'>+</span><span class='hljl-ni'>2</span><span class='hljl-n'>d</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>a</span><span class='hljl-oB'>+</span><span class='hljl-ni'>3</span><span class='hljl-n'>d</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>a</span><span class='hljl-oB'>+</span><span class='hljl-ni'>4</span><span class='hljl-n'>d</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>a</span><span class='hljl-oB'>+</span><span class='hljl-ni'>5</span><span class='hljl-n'>d</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>a</span><span class='hljl-oB'>+</span><span class='hljl-ni'>6</span><span class='hljl-n'>d</span><span class='hljl-p'>]</span><span class='hljl-t'>  </span><span class='hljl-cs'># 7 points</span>
+</pre>
+
+
+<pre class="output">
+7-element Array&#123;Rational&#123;Int64&#125;,1&#125;:
+ -1//1
+ -2//3
+ -1//3
+  0//1
+  1//3
+  2//3
+  1//1
+</pre>
+
+
+<p>To get the corresponding <span class="math">$y$</span> values, we can use a compression &#40;or define a function and broadcast&#41;:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>ys</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>]</span>
+</pre>
+
+
+<pre class="output">
+7-element Array&#123;Rational&#123;Int64&#125;,1&#125;:
+ 1//1
+ 4//9
+ 1//9
+ 0//1
+ 1//9
+ 4//9
+ 1//1
+</pre>
+
+
+<p>Vectors can be compared together by combining them into a separate container, as follows:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-p'>[</span><span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>]</span>
+</pre>
+
+
+<pre class="output">
+7×2 Array&#123;Rational&#123;Int64&#125;,2&#125;:
+ -1//1  1//1
+ -2//3  4//9
+ -1//3  1//9
+  0//1  0//1
+  1//3  1//9
+  2//3  4//9
+  1//1  1//1
+</pre>
+
+
+<p>&#40;If there is a space between objects they are horizontally combined. In our construction of vectors using <code>&#91;&#93;</code> we used a comma for vertical combination. More generally we should use a <code>;</code> for vertical concatenation.&#41;</p>
+<p>In the sequel, we will typically use broadcasting for this task using two steps: one to define a function the second to broadcast it.</p>
+
+
+<div class="alert alert-info" role="alert">
+
+<div class="markdown"><p>The style generally employed here is to use plural variable names for a collection of values, such as the vector of &#36;y&#36; values and singular names when a single value is being referred to, leading to expressions like &quot;<code>x in xs</code>&quot;.</p>
+</div>
+
+</div>
+
+
+<h2>Other container types</h2>
+<p>Vectors in <code>Julia</code> are a container, one of many different types. Another useful type for programming purposes are <em>tuples</em>. If a vector if formed by placing comma-separated values within a <code>&#91;&#93;</code> pair &#40;e.g., <code>&#91;1,2,3&#93;</code>&#41;, a tuple is formed by placing comma-separated values withing a <code>&#40;&#41;</code> pair. I tuple of length <span class="math">$1$</span> uses a convention of a trailing comma to distinguish it from a parethesized expression &#40;e.g. <code>&#40;1,&#41;</code> is a tuple, <code>&#40;1&#41;</code> is just the value <code>1</code>&#41;.</p>
+<p>Tuples are used in programming, as they don&#39;t typically require memory to be used so they can be faster. Internal usages are for function arguments and function return types. Unlike vectors, tuples can be heterogeneous collections. &#40;When commas are used to combine more than one output into a cell, a tuple is being used.&#41;</p>
+<p>Also unlike vectors, tuples can have names which can be used for referening a value, similar to indexing but possibly more convenient. Named tuples as similar to <em>dictionaries</em> which are used to associate a key &#40;like a name&#41; with a value.</p>
+<h2>Questions</h2>
+<h6>Question</h6>
+<p>Which command will create the vector <span class="math">$\vec{v} = \langle 4,~ 3 \rangle$</span>?</p>
+
+
+<form name="WeaveQuestion" data-id="3WM7gNg0" data-controltype="radio">
+<div class="form-group ">
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_3WM7gNg0" value="1"><div class="markdown"><p><code>v &#61; &#123;4, 3&#125;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_3WM7gNg0" value="2"><div class="markdown"><p><code>v &#61; &#40;4,3&#41;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_3WM7gNg0" value="3"><div class="markdown"><p><code>v &#61; &#91;4,3&#93;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_3WM7gNg0" value="4"><div class="markdown"><p><code>v &#61; &#39;4, 3&#39;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_3WM7gNg0" value="5"><div class="markdown"><p><code>v &#61; &lt;4,3&gt;</code></p>
+</div>
+    </label>
+    </div>
+
+<div id="3WM7gNg0_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_3WM7gNg0']").on("change", function() {
+  correct = this.value == 3;
+
+  if(correct) {
+     $("#3WM7gNg0_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+  } else {
+     $("#3WM7gNg0_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
+
+<h6>Question</h6>
+<p>Which command will create the vector with components &quot;4,3,2,1&quot;?</p>
+
+
+<form name="WeaveQuestion" data-id="I5Dnpjfr" data-controltype="radio">
+<div class="form-group ">
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_I5Dnpjfr" value="1"><div class="markdown"><p><code>v &#61; &lt;4,3,2,1&gt;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_I5Dnpjfr" value="2"><div class="markdown"><p><code>v &#61; &#123;4,3,2,1&#125;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_I5Dnpjfr" value="3"><div class="markdown"><p><code>v &#61; &#40;4,3,2,1&#41;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_I5Dnpjfr" value="4"><div class="markdown"><p><code>v &#61; &#39;4, 3, 2, 1&#39;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_I5Dnpjfr" value="5"><div class="markdown"><p><code>v &#61; &#91;4,3,2,1&#93;</code></p>
+</div>
+    </label>
+    </div>
+
+<div id="I5Dnpjfr_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_I5Dnpjfr']").on("change", function() {
+  correct = this.value == 5;
+
+  if(correct) {
+     $("#I5Dnpjfr_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+  } else {
+     $("#I5Dnpjfr_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
+
+<h6>Question</h6>
+<p>What is the magnitude of the vector <span class="math">$\vec{v} = \langle 10,~ 15 \rangle$</span>?</p>
+
+
+<form name='WeaveQuestion' data-id='aVU2O9OK' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="input-group">
+<input id="aVU2O9OK" type="number" class="form-control">
+
+</div>
+
+<div id='aVU2O9OK_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#aVU2O9OK').on('change', function() {
+  correct = Math.abs(this.value - 18.027756377319946) <= 0.001;
+
+  if(correct) {
+     $('#aVU2O9OK_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+  } else {
+     $('#aVU2O9OK_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
+
+
+<h6>Question</h6>
+<p>Which of the following is the unit vector in the direction of <span class="math">$\vec{v} = \langle 3,~ 4 \rangle$</span>?</p>
+
+
+<form name="WeaveQuestion" data-id="kROqtreM" data-controltype="radio">
+<div class="form-group ">
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_kROqtreM" value="1"><div class="markdown"><p><code>&#91;1.0, 1.33333&#93;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_kROqtreM" value="2"><div class="markdown"><p><code>&#91;0.6, 0.8&#93;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_kROqtreM" value="3"><div class="markdown"><p><code>&#91;3, 4&#93;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_kROqtreM" value="4"><div class="markdown"><p><code>&#91;1, 1&#93;</code></p>
+</div>
+    </label>
+    </div>
+
+<div id="kROqtreM_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_kROqtreM']").on("change", function() {
+  correct = this.value == 2;
+
+  if(correct) {
+     $("#kROqtreM_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+  } else {
+     $("#kROqtreM_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
+
+<h6>Question</h6>
+<p>What vector is in the same direction as <span class="math">$\vec{v} = \langle 3,~ 4 \rangle$</span> but is 10 times as long?</p>
+
+
+<form name="WeaveQuestion" data-id="sBqBSP9C" data-controltype="radio">
+<div class="form-group ">
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_sBqBSP9C" value="1"><div class="markdown"><p><code>&#91;9.48683, 12.6491 &#93;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_sBqBSP9C" value="2"><div class="markdown"><p><code>&#91;30, 40&#93;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_sBqBSP9C" value="3"><div class="markdown"><p><code>&#91;3, 4&#93;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_sBqBSP9C" value="4"><div class="markdown"><p><code>&#91;10, 10&#93;</code></p>
+</div>
+    </label>
+    </div>
+
+<div id="sBqBSP9C_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_sBqBSP9C']").on("change", function() {
+  correct = this.value == 2;
+
+  if(correct) {
+     $("#sBqBSP9C_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+  } else {
+     $("#sBqBSP9C_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
+
+<h6>Question</h6>
+<p>If <span class="math">$\vec{v} = \langle 3,~ 4 \rangle$</span> and <span class="math">$\vec{w} = \langle 1,~ 2 \rangle$</span>  find <span class="math">$2\vec{v} + 5 \vec{w}$</span>.</p>
+
+
+<form name="WeaveQuestion" data-id="uk1w2Y99" data-controltype="radio">
+<div class="form-group ">
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_uk1w2Y99" value="1"><div class="markdown"><p><code>&#91;4, 6&#93;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_uk1w2Y99" value="2"><div class="markdown"><p><code>&#91;6, 8&#93;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_uk1w2Y99" value="3"><div class="markdown"><p><code>&#91;5, 10&#93;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_uk1w2Y99" value="4"><div class="markdown"><p><code>&#91;11, 18&#93;</code></p>
+</div>
+    </label>
+    </div>
+
+<div id="uk1w2Y99_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_uk1w2Y99']").on("change", function() {
+  correct = this.value == 4;
+
+  if(correct) {
+     $("#uk1w2Y99_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+  } else {
+     $("#uk1w2Y99_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
+
+<h6>Question</h6>
+<p>Let <code>v</code> be defined by:</p>
+
+
+
+<pre class='hljl'>
+<span class='hljl-n'>v</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>8</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>13</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>21</span><span class='hljl-p'>]</span>
+</pre>
+
+
+<p>What is the length of <code>v</code>?</p>
+
+
+<form name='WeaveQuestion' data-id='tFAfhQCM' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="input-group">
+<input id="tFAfhQCM" type="number" class="form-control">
+
+</div>
+
+<div id='tFAfhQCM_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#tFAfhQCM').on('change', function() {
+  correct = Math.abs(this.value - 8) <= 0;
+
+  if(correct) {
+     $('#tFAfhQCM_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+  } else {
+     $('#tFAfhQCM_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
+
+
+<p>What is the <code>sum</code> of <code>v</code>?</p>
+
+
+<form name='WeaveQuestion' data-id='5pO0bFO1' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="input-group">
+<input id="5pO0bFO1" type="number" class="form-control">
+
+</div>
+
+<div id='5pO0bFO1_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#5pO0bFO1').on('change', function() {
+  correct = Math.abs(this.value - 54) <= 0;
+
+  if(correct) {
+     $('#5pO0bFO1_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+  } else {
+     $('#5pO0bFO1_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
+
+
+<p>What is the <code>prod</code> of <code>v</code>?</p>
+
+
+<form name='WeaveQuestion' data-id='aMxOOBne' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="input-group">
+<input id="aMxOOBne" type="number" class="form-control">
+
+</div>
+
+<div id='aMxOOBne_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#aMxOOBne').on('change', function() {
+  correct = Math.abs(this.value - 65520) <= 0;
+
+  if(correct) {
+     $('#aMxOOBne_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+  } else {
+     $('#aMxOOBne_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
+
+
+<h6>Question</h6>
+<p>From <a href="http://www.transum.org/Maths/Exam/Online_Exercise.asp?Topic&#61;Vectors">transum.org</a>.</p>
+
+<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTc2IiBoZWlnaHQ9IjM4NCIgdmlld0JveD0iMCAwIDIzMDQgMTUzNiI+CjxkZWZzPgogIDxjbGlwUGF0aCBpZD0iY2xpcDA0MCI+CiAgICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjMwNCIgaGVpZ2h0PSIxNTM2Ii8+CiAgPC9jbGlwUGF0aD4KPC9kZWZzPgo8cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDA0MCkiIGQ9IgpNMCAxNTM2IEwyMzA0IDE1MzYgTDIzMDQgMCBMMCAwICBaCiAgIiBmaWxsPSIjZmZmZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIvPgo8ZGVmcz4KICA8Y2xpcFBhdGggaWQ9ImNsaXAwNDEiPgogICAgPHJlY3QgeD0iNDYwIiB5PSIwIiB3aWR0aD0iMTYxNCIgaGVpZ2h0PSIxNTM2Ii8+CiAgPC9jbGlwUGF0aD4KPC9kZWZzPgo8cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDA0MCkiIGQ9IgpNMTExLjIxNyAxNDIzLjA5IEwyMjU2Ljc2IDE0MjMuMDkgTDIyNTYuNzYgNDcuMjQ0MSBMMTExLjIxNyA0Ny4yNDQxICBaCiAgIiBmaWxsPSIjZmZmZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIvPgo8ZGVmcz4KICA8Y2xpcFBhdGggaWQ9ImNsaXAwNDIiPgogICAgPHJlY3QgeD0iMTExIiB5PSI0NyIgd2lkdGg9IjIxNDciIGhlaWdodD0iMTM3NyIvPgogIDwvY2xpcFBhdGg+CjwvZGVmcz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgLTUzMi40NDQsMTQyMy4wOSA1NDAuMzI1LC05NTkuOTQzIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwNDIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwZmY7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAtMTYwNS4yMSwtOTU5Ljk0MyAtNTMyLjQ0NCwxNDIzLjA5IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwNDIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwZmY7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAtMzE3Ljg5MSwxNDIzLjA5IDc1NC44NzksLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDA0MikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIC0xMzkwLjY2LC05NTkuOTQzIC0zMTcuODkxLDE0MjMuMDkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDA0MikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIC0xMDMuMzM3LDE0MjMuMDkgOTY5LjQzMywtOTU5Ljk0MyAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgLTExNzYuMTEsLTk1OS45NDMgLTEwMy4zMzcsMTQyMy4wOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTExLjIxNywxNDIzLjA5IDExODMuOTksLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDA0MikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIC05NjEuNTUyLC05NTkuOTQzIDExMS4yMTcsMTQyMy4wOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMzI1Ljc3MSwxNDIzLjA5IDEzOTguNTQsLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDA0MikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIC03NDYuOTk4LC05NTkuOTQzIDMyNS43NzEsMTQyMy4wOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgNTQwLjMyNSwxNDIzLjA5IDE2MTMuMDksLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDA0MikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIC01MzIuNDQ0LC05NTkuOTQzIDU0MC4zMjUsMTQyMy4wOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgNzU0Ljg3OSwxNDIzLjA5IDE4MjcuNjUsLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDA0MikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIC0zMTcuODkxLC05NTkuOTQzIDc1NC44NzksMTQyMy4wOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgOTY5LjQzMywxNDIzLjA5IDIwNDIuMiwtOTU5Ljk0MyAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgLTEwMy4zMzcsLTk1OS45NDMgOTY5LjQzMywxNDIzLjA5IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwNDIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwZmY7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxMTgzLjk5LDE0MjMuMDkgMjI1Ni43NiwtOTU5Ljk0MyAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTExLjIxNywtOTU5Ljk0MyAxMTgzLjk5LDE0MjMuMDkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDA0MikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIDEzOTguNTQsMTQyMy4wOSAyNDcxLjMxLC05NTkuOTQzIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwNDIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwZmY7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAzMjUuNzcxLC05NTkuOTQzIDEzOTguNTQsMTQyMy4wOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTYxMy4wOSwxNDIzLjA5IDI2ODUuODYsLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDA0MikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIDU0MC4zMjUsLTk1OS45NDMgMTYxMy4wOSwxNDIzLjA5IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwNDIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwZmY7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxODI3LjY1LDE0MjMuMDkgMjkwMC40MiwtOTU5Ljk0MyAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgNzU0Ljg3OSwtOTU5Ljk0MyAxODI3LjY1LDE0MjMuMDkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDA0MikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIDIwNDIuMiwxNDIzLjA5IDMxMTQuOTcsLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDA0MikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIDk2OS40MzMsLTk1OS45NDMgMjA0Mi4yLDE0MjMuMDkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDA0MikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIDIyNTYuNzYsMTQyMy4wOSAzMzI5LjUzLC05NTkuOTQzIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwNDIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwZmY7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxMTgzLjk5LC05NTkuOTQzIDIyNTYuNzYsMTQyMy4wOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTExLjIxNywxMTg0Ljc4IDIyNTYuNzYsMTE4NC43OCAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTExLjIxNyw5NDYuNDgyIDIyNTYuNzYsOTQ2LjQ4MiAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTExLjIxNyw3MDguMTc4IDIyNTYuNzYsNzA4LjE3OCAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTExLjIxNyw0NjkuODc1IDIyNTYuNzYsNDY5Ljg3NSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTExLjIxNywyMzEuNTcyIDIyNTYuNzYsMjMxLjU3MiAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTExLjIxNywtNi43MzA5MiAyMjU2Ljc2LC02LjczMDkyIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwNDIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS13aWR0aDoyMDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDQzMy4wNDgsNzA4LjE3OCA2NDcuNjAyLDcwOC4xNzggCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDA0MikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLXdpZHRoOjIwOyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgNjEzLjA0Miw2OTAuODk4IDY0Ny42MDIsNzA4LjE3OCA2MTMuMDQyLDcyNS40NTggCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDA0MikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLXdpZHRoOjIwOyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgNjQ3LjYwMiw3MDguMTc4IDQzMy4wNDgsNzA4LjE3OCAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2Utd2lkdGg6MjA7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICA1NDAuMzI1LDk0Ni40ODIgNjQ3LjYwMiwxMTg0Ljc4IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwNDIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS13aWR0aDoyMDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDY0OS4xNzIsMTE0Ni4xOCA2NDcuNjAyLDExODQuNzggNjE3LjY1OCwxMTYwLjM2IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwNDIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS13aWR0aDoyMDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDY0Ny42MDIsMTE4NC43OCA1NDAuMzI1LDk0Ni40ODIgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDA0MikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLXdpZHRoOjIwOyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTA3Ni43MSw3MDguMTc4IDE3MjAuMzcsNzA4LjE3OCAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2Utd2lkdGg6MjA7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxNjg1LjgxLDY5MC44OTggMTcyMC4zNyw3MDguMTc4IDE2ODUuODEsNzI1LjQ1OCAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2Utd2lkdGg6MjA7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxNzIwLjM3LDcwOC4xNzggMTA3Ni43MSw3MDguMTc4IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwNDIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS13aWR0aDoyMDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDk2OS40MzMsOTQ2LjQ4MiAxMjkxLjI2LDExODQuNzggCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDA0MikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLXdpZHRoOjIwOyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTI3My43NywxMTUwLjMzIDEyOTEuMjYsMTE4NC43OCAxMjUzLjIxLDExNzguMTEgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDA0MikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLXdpZHRoOjIwOyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTI5MS4yNiwxMTg0Ljc4IDk2OS40MzMsOTQ2LjQ4MiAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2Utd2lkdGg6MjA7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxNTA1LjgyLDExODQuNzggMTYxMy4wOSw5NDYuNDgyIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwNDIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS13aWR0aDoyMDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE1ODMuMTUsOTcwLjkwMiAxNjEzLjA5LDk0Ni40ODIgMTYxNC42Niw5ODUuMDg5IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwNDIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS13aWR0aDoyMDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE2MTMuMDksOTQ2LjQ4MiAxNTA1LjgyLDExODQuNzggCiAgIi8+CjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQwKSIgZD0iTSAwIDAgTTU1Ni43ODUgNzgyLjkzOCBRNTU1LjY3OCA3ODguMjI2IDU1NC4yNDQgNzkxLjI1OSBRNTUxLjk0OCA3OTUuODkxIDU0OC4wNTQgNzk1Ljg5MSBRNTQ1LjEwMyA3OTUuODkxIDU0My4wMTMgNzk0LjA4NyBRNTQwLjkyMiA3OTIuMjg0IDU0MC40MyA3ODkuNTc5IFE1MzUuMDYxIDc5NS44OTEgNTI5LjQ4NiA3OTUuODkxIFE1MjQuNTY3IDc5NS44OTEgNTIxLjQ1MiA3OTIuMTYxIFE1MTguMzM3IDc4OC4zOSA1MTguMzM3IDc4Mi40NDYgUTUxOC4zMzcgNzc2LjQ2MiA1MjEuMjg4IDc3MC43MjQgUTUyNC4yODEgNzY0Ljk4NSA1MjguOTk0IDc2MS40MTkgUTUzMy43MDggNzU3Ljg1MyA1MzguNTQ1IDc1Ny44NTMgUTU0My42NjggNzU3Ljg1MyA1NDYuMjkyIDc2My4yMjIgUTU0Ni40OTcgNzYxLjc0NyA1NDcuNDM5IDc2MC42NCBRNTQ4LjM4MiA3NTkuNTMzIDU0OS44MTcgNzU5LjUzMyBRNTUwLjkyNCA3NTkuNTMzIDU1MS41NzkgNzYwLjE0OCBRNTUyLjIzNSA3NjAuNzIyIDU1Mi4yMzUgNzYxLjc4OCBRNTUyLjIzNSA3NjIuMzIxIDU1MS42NjEgNzY0LjY1NyBMNTQ4LjYyOCA3NzYuMzggTDU0Ni43ODQgNzgzLjk2MyBRNTQ2LjA4NyA3ODYuNzUgNTQ1Ljg4MiA3ODcuNzc1IFE1NDUuNzE4IDc4OC44IDU0NS43MTggNzkwLjE1MiBRNTQ1LjcxOCA3OTQuMDA1IDU0OC4yMTggNzk0LjAwNSBRNTQ5LjQ0OCA3OTQuMDA1IDU1MC40MzIgNzkzLjIyNyBRNTUxLjQxNSA3OTIuNDQ4IDU1Mi4xOTQgNzkwLjgwOCBRNTUyLjk3MyA3ODkuMTY5IDU1My40NjUgNzg3LjY1MiBRNTUzLjk1NyA3ODYuMDk0IDU1NC42MTMgNzgzLjYzNSBRNTU0LjgxOCA3ODIuNjUxIDU1NC45ODEgNzgyLjQwNSBRNTU1LjE4NiA3ODIuMTE5IDU1NS43NiA3ODIuMTE5IFE1NTYuNzg1IDc4Mi4xMTkgNTU2Ljc4NSA3ODIuOTM4IE01NDUuMjY3IDc2Ny4wNzUgUTU0NS4yNjcgNzY2LjcwNyA1NDQuOTggNzY1LjY4MiBRNTQ0LjY5MyA3NjQuNjU3IDU0NC4wMzcgNzYzLjIyMiBRNTQzLjM4MiA3NjEuNzg4IDU0MS45NDcgNzYwLjc2MyBRNTQwLjU1MyA3NTkuNjk3IDUzOC42NjggNzU5LjY5NyBRNTM2LjEyNiA3NTkuNjk3IDUzMy40NjIgNzYxLjg3IFE1MzAuODM5IDc2NC4wNDIgNTI4LjkxMiA3NjcuNzMxIFE1MjcuNDM3IDc3MC42ODMgNTI1LjgzOCA3NzYuODcyIFE1MjQuMjgxIDc4My4wNjEgNTI0LjI4MSA3ODYuMTM1IFE1MjQuMjgxIDc4OC4wMjEgNTI0LjY5IDc4OS43MDIgUTUyNS4xNDEgNzkxLjM0MSA1MjYuNDEyIDc5Mi42OTQgUTUyNy42ODMgNzk0LjAwNSA1MjkuNjUgNzk0LjAwNSBRNTM0LjQ0NiA3OTQuMDA1IDUzOS4xNiA3ODguMDYyIFE1NDAuMDYxIDc4Ny4wMzcgNTQwLjI2NiA3ODYuNjI3IFE1NDAuNTEyIDc4Ni4xNzYgNTQwLjg0IDc4NC45NDcgTDU0NS4wMjEgNzY4LjUxIFE1NDUuMjY3IDc2Ny4yOCA1NDUuMjY3IDc2Ny4wNzUgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwNDApIiBkPSJNIDAgMCBNNjA3LjA0NCA5NTEuMjkgUTYwNy4wNDQgOTU3LjE5MiA2MDQuMDUxIDk2Mi45NzIgUTYwMS4xIDk2OC43MSA1OTYuMzQ1IDk3Mi4zMTcgUTU5MS42MzIgOTc1LjkyNCA1ODYuNzk1IDk3NS45MjQgUTU4Mi4wODEgOTc1LjkyNCA1NzkuMDg5IDk3Mi4zMTcgUTU3Ni4xMzggOTY4LjY2OSA1NzYuMTM4IDk2Mi43MjYgUTU3Ni4xMzggOTYwLjYzNSA1NzYuMzg0IDk1OS4xNiBRNTc2LjYyOSA5NTcuNjg0IDU3Ny40OSA5NTQuMjQxIEw1ODQuMzc2IDkyNi44NiBRNTg1LjU2NSA5MjEuNzM3IDU4NS41NjUgOTIxLjY5NiBRNTg1LjU2NSA5MjEuMjA0IDU4NS4zNiA5MjAuOTU4IFE1ODUuMTk2IDkyMC42NzEgNTg0LjIxMiA5MjAuNDY2IFE1ODMuMjI5IDkyMC4yNjEgNTgxLjM0MyA5MjAuMjYxIFE1ODAuNTY0IDkyMC4yNjEgNTgwLjE5NiA5MjAuMjIgUTU3OS44NjggOTIwLjE3OSA1NzkuNTgxIDkxOS45NzQgUTU3OS4zMzUgOTE5LjcyOCA1NzkuMzM1IDkxOS4yMzYgUTU3OS4zMzUgOTE4LjUzOSA1NzkuNjIyIDkxOC4xNyBRNTc5Ljk1IDkxNy43NjEgNTgwLjE5NiA5MTcuNjc5IFE1ODAuNDQxIDkxNy41OTcgNTgwLjkzMyA5MTcuNTU2IFE1ODEuNjMgOTE3LjUxNSA1ODMuOTY3IDkxNy4zMSBRNTg2LjMwMyA5MTcuMDY0IDU4OC4zMTEgOTE2LjkgUTU5MC4zMiA5MTYuNzM2IDU5MS4xODEgOTE2LjczNiBRNTkxLjY3MyA5MTYuNzM2IDU5MS45MTggOTE2Ljk4MiBRNTkyLjIwNSA5MTcuMTg3IDU5Mi4yMDUgOTE3LjQzMyBMNTkyLjI0NiA5MTcuNjM4IEw1ODYuMDU3IDk0Mi45MjggUTU5MC45MzUgOTM3Ljg4NiA1OTUuODk0IDkzNy44ODYgUTYwMC44NTQgOTM3Ljg4NiA2MDMuOTI4IDk0MS42OTggUTYwNy4wNDQgOTQ1LjUxIDYwNy4wNDQgOTUxLjI5IE02MDAuOTc3IDk0Ny42MDEgUTYwMC45NzcgOTQzLjcwNyA1OTkuNTAxIDk0MS43MzkgUTU5OC4wNjcgOTM5LjczMSA1OTUuNjg5IDkzOS43MzEgUTU5My42ODEgOTM5LjczMSA1OTEuMDU4IDk0MS4yNDcgUTU4OC40MzQgOTQyLjc2NCA1ODUuNjQ3IDk0Ni40NTMgUTU4NS4xMTQgOTQ3LjE1IDU4NC45MDkgOTQ3LjU2IFE1ODQuNzQ1IDk0Ny45NyA1ODQuMzc2IDk0OS4zNjMgTDU4Mi41MzIgOTU3LjExIFE1ODEuMTc5IDk2Mi4zOTggNTgxLjE3OSA5NjUuNTk1IFE1ODEuMTc5IDk2OS45NCA1ODIuNzc4IDk3MS45ODkgUTU4NC4zNzYgOTc0LjAzOSA1ODYuNzk1IDk3NC4wMzkgUTU4OS4zMzYgOTc0LjAzOSA1OTIgOTcxLjc4NCBRNTk0LjY2NSA5NjkuNTMgNTk2LjcxNCA5NjUuNDMxIFE1OTcuOTg1IDk2Mi43MjYgNTk5LjQ2IDk1Ni45MDUgUTYwMC45NzcgOTUxLjA0NCA2MDAuOTc3IDk0Ny42MDEgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwNDApIiBkPSJNIDAgMCBNMTQxMi44OSA3ODUuMjM0IFExNDEzLjIyIDc4NS42MDMgMTQxMy4yMiA3ODUuOTcyIFExNDEzLjIyIDc4Ni4zNCAxNDEyLjQgNzg3LjQwNiBRMTQxMS42MiA3ODguNDcyIDE0MDkuOTQgNzg5LjkwNiBRMTQwOC4yNiA3OTEuMzQxIDE0MDYuMDkgNzkyLjY5NCBRMTQwMy45MiA3OTQuMDQ2IDE0MDAuNzIgNzk0Ljk0OCBRMTM5Ny41MiA3OTUuODkxIDEzOTQuMTYgNzk1Ljg5MSBRMTM4Ny44OSA3OTUuODkxIDEzODQuMiA3OTEuNzUxIFExMzgwLjU1IDc4Ny42MTEgMTM4MC41NSA3ODEuNjY4IFExMzgwLjU1IDc3NS44ODggMTM4My43OSA3NzAuMzU1IFExMzg3LjAzIDc2NC43OCAxMzkyLjI4IDc2MS4zMzcgUTEzOTcuNTIgNzU3Ljg1MyAxNDAzLjA2IDc1Ny44NTMgUTE0MDcuNDQgNzU3Ljg1MyAxNDEwLjE5IDc1OS45MDIgUTE0MTIuOTMgNzYxLjk1MiAxNDEyLjkzIDc2NS4wNjcgUTE0MTIuOTMgNzY3LjQ4NSAxNDExLjU0IDc2OC45NjEgUTE0MTAuMTUgNzcwLjQzNyAxNDA4LjI2IDc3MC40MzcgUTE0MDYuOTUgNzcwLjQzNyAxNDA2LjA1IDc2OS42OTkgUTE0MDUuMTUgNzY4LjkyIDE0MDUuMTUgNzY3LjQ4NSBRMTQwNS4xNSA3NjUuNjQxIDE0MDYuNjYgNzY0LjIwNiBRMTQwNy4yNCA3NjMuNjMyIDE0MDcuODkgNzYzLjM4NiBRMTQwOC41OSA3NjMuMDk5IDE0MDkgNzYzLjA5OSBRMTQwOS40MSA3NjMuMDU5IDE0MTAuMzUgNzYzLjA1OSBRMTQwOS40OSA3NjEuNDYgMTQwNy40NCA3NjAuNTk5IFExNDA1LjQzIDc1OS42OTcgMTQwMy4xNCA3NTkuNjk3IFExMzk5Ljc0IDc1OS42OTcgMTM5Ni41IDc2Mi4wNzUgUTEzOTMuMjYgNzY0LjQxMSAxMzkxLjI5IDc2OC4xIFExMzg5LjMyIDc3MS43MDcgMTM4OC4wNSA3NzYuODMxIFExMzg2Ljc4IDc4MS45MTQgMTM4Ni43OCA3ODQuODY1IFExMzg2Ljc4IDc4OC45MjMgMTM4OC42NyA3OTEuNDY0IFExMzkwLjU1IDc5NC4wMDUgMTM5NC4zMiA3OTQuMDA1IFExMzk1LjA2IDc5NC4wMDUgMTM5NS44NCA3OTMuOTY0IFExMzk2LjY2IDc5My45MjMgMTM5OC43MSA3OTMuNDczIFExNDAwLjggNzkzLjAyMiAxNDAyLjY1IDc5Mi4yNDMgUTE0MDQuNDkgNzkxLjQ2NCAxNDA2LjgzIDc4OS43ODQgUTE0MDkuMiA3ODguMDYyIDE0MTEuMDkgNzg1LjcyNiBRMTQxMS43NSA3ODQuODY1IDE0MTIuMiA3ODQuODY1IFExNDEyLjU2IDc4NC44NjUgMTQxMi44OSA3ODUuMjM0IFoiIGZpbGw9IiMwMDAwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbC1vcGFjaXR5PSIxIiAvPjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwMDQwKSIgZD0iTSAwIDAgTTExNDguNzEgMTEwNS41OCBMMTEzNi42MiAxMTU0LjExIFExMTM2LjEzIDExNTYuMjkgMTEzNi4xMyAxMTU4LjEzIFExMTM2LjEzIDExNjEuOTggMTEzOC42MyAxMTYxLjk4IFExMTM5Ljg2IDExNjEuOTggMTE0MC44NCAxMTYxLjIgUTExNDEuODIgMTE2MC40MyAxMTQyLjYgMTE1OC43OSBRMTE0My4zOCAxMTU3LjE1IDExNDMuODcgMTE1NS42MyBRMTE0NC4zNyAxMTU0LjA3IDExNDUuMDIgMTE1MS42MSBRMTE0NS4yMyAxMTUwLjYzIDExNDUuMzkgMTE1MC4zOCBRMTE0NS42IDExNTAuMSAxMTQ2LjE3IDExNTAuMSBRMTE0Ny4xOSAxMTUwLjEgMTE0Ny4xOSAxMTUwLjkyIFExMTQ2LjA5IDExNTYuMiAxMTQ0LjY1IDExNTkuMjQgUTExNDIuMzYgMTE2My44NyAxMTM4LjQ2IDExNjMuODcgUTExMzUuNTEgMTE2My44NyAxMTMzLjQyIDExNjIuMDYgUTExMzEuMzMgMTE2MC4yNiAxMTMwLjg0IDExNTcuNTYgUTExMjUuNDcgMTE2My44NyAxMTE5LjkgMTE2My44NyBRMTExNC45OCAxMTYzLjg3IDExMTEuODYgMTE2MC4xNCBRMTEwOC43NSAxMTU2LjM3IDExMDguNzUgMTE1MC40MiBRMTEwOC43NSAxMTQ0LjQ0IDExMTEuNyAxMTM4LjcgUTExMTQuNjkgMTEzMi45NiAxMTE5LjQgMTEyOS40IFExMTI0LjEyIDExMjUuODMgMTEyOC45NSAxMTI1LjgzIFExMTM0LjA4IDExMjUuODMgMTEzNi43IDExMzEuMiBMMTE0MS43NCAxMTExLjI4IEwxMTQxLjk5IDExMDkuNjQgUTExNDEuOTkgMTEwOS4xNSAxMTQxLjc4IDExMDguOSBRMTE0MS42MiAxMTA4LjYxIDExNDAuNjQgMTEwOC40MSBRMTEzOS42OSAxMTA4LjIgMTEzNy44MSAxMTA4LjIgUTExMzcuMDMgMTEwOC4yIDExMzYuNjYgMTEwOC4xNiBRMTEzNi4zMyAxMTA4LjEyIDExMzYuMDQgMTEwNy45MiBRMTEzNS43NiAxMTA3LjY3IDExMzUuNzYgMTEwNy4xOCBRMTEzNS43NiAxMTA1Ljc1IDExMzYuOTUgMTEwNS41OCBRMTE0NC44MiAxMTA0LjY4IDExNDcuNiAxMTA0LjY4IFExMTQ4LjEgMTEwNC42OCAxMTQ4LjM4IDExMDQuOTMgUTExNDguNjcgMTEwNS4xMyAxMTQ4LjY3IDExMDUuMzggTDExNDguNzEgMTEwNS41OCBNMTEzNS42OCAxMTM1LjA1IFExMTM1LjY4IDExMzQuNjggMTEzNS4zOSAxMTMzLjY2IFExMTM1LjEgMTEzMi42MyAxMTM0LjQ1IDExMzEuMiBRMTEzMy43OSAxMTI5Ljc3IDExMzIuMzYgMTEyOC43NCBRMTEzMC45NiAxMTI3LjY3IDExMjkuMDggMTEyNy42NyBRMTEyNi41NCAxMTI3LjY3IDExMjMuODcgMTEyOS44NSBRMTEyMS4yNSAxMTMyLjAyIDExMTkuMzIgMTEzNS43MSBRMTExNy44NSAxMTM4LjY2IDExMTYuMjUgMTE0NC44NSBRMTExNC42OSAxMTUxLjA0IDExMTQuNjkgMTE1NC4xMSBRMTExNC42OSAxMTU2IDExMTUuMSAxMTU3LjY4IFExMTE1LjU1IDExNTkuMzIgMTExNi44MiAxMTYwLjY3IFExMTE4LjA5IDExNjEuOTggMTEyMC4wNiAxMTYxLjk4IFExMTI0Ljg1IDExNjEuOTggMTEyOS41NyAxMTU2LjA0IFExMTMwLjQ3IDExNTUuMDEgMTEzMC42OCAxMTU0LjYgUTExMzAuOTIgMTE1NC4xNSAxMTMxLjI1IDExNTIuOTIgTDExMzUuNDMgMTEzNi40OSBRMTEzNS42OCAxMTM1LjI2IDExMzUuNjggMTEzNS4wNSBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDA0MCkiIGQ9Ik0gMCAwIE0xNjI1LjY2IDExNDIuNjkgUTE2MjUuOTggMTE0My4wNiAxNjI1Ljk4IDExNDMuNDMgUTE2MjUuOTggMTE0My44IDE2MjUuMTYgMTE0NC44NiBRMTYyNC4zOSAxMTQ1LjkzIDE2MjIuNyAxMTQ3LjM2IFExNjIxLjAyIDExNDguOCAxNjE4Ljg1IDExNTAuMTUgUTE2MTYuNjggMTE1MS41IDE2MTMuNDggMTE1Mi40IFExNjEwLjI5IDExNTMuMzUgMTYwNi45MiAxMTUzLjM1IFExNjAwLjkgMTE1My4zNSAxNTk3LjI5IDExNDkuMDQgUTE1OTMuNzMgMTE0NC43NCAxNTkzLjczIDExMzguMTQgUTE1OTMuNzMgMTEzMy45MiAxNTk1LjEyIDExMzAuMTkgUTE1OTYuNTEgMTEyNi40MiAxNTk4Ljc3IDExMjMuNzUgUTE2MDEuMDYgMTEyMS4wOSAxNjAzLjkzIDExMTkuMTYgUTE2MDYuODQgMTExNy4xOSAxNjA5Ljg4IDExMTYuMjUgUTE2MTIuOTEgMTExNS4zMSAxNjE1Ljc0IDExMTUuMzEgUTE2MTkuODggMTExNS4zMSAxNjIyLjMgMTExNy40IFExNjI0LjcxIDExMTkuNDkgMTYyNC43MSAxMTIyLjQ0IFExNjI0LjcxIDExMjMuMTQgMTYyNC41MSAxMTI0IFExNjI0LjM0IDExMjQuODYgMTYyMy43NyAxMTI2LjIxIFExNjIzLjI0IDExMjcuNTYgMTYyMS44NCAxMTI4LjkyIFExNjIwLjQ1IDExMzAuMjMgMTYxOC40IDExMzEuMDkgUTE2MTMuODUgMTEzMy4wMSAxNjA1LjU3IDExMzMuMDEgTDE2MDEuMSAxMTMzLjAxIFExNTk5Ljc5IDExMzguMyAxNTk5Ljc5IDExNDEuNzUgUTE1OTkuNzkgMTE0My4xIDE2MDAuMDQgMTE0NC40OSBRMTYwMC4yOCAxMTQ1Ljg0IDE2MDAuOTQgMTE0Ny41NyBRMTYwMS42NCAxMTQ5LjI5IDE2MDMuMTkgMTE1MC4zOSBRMTYwNC43OSAxMTUxLjQ2IDE2MDcuMDkgMTE1MS40NiBRMTYwNy44MyAxMTUxLjQ2IDE2MDguNiAxMTUxLjQyIFExNjA5LjQyIDExNTEuMzggMTYxMS40NyAxMTUwLjkzIFExNjEzLjU2IDExNTAuNDggMTYxNS40MSAxMTQ5LjcgUTE2MTcuMjUgMTE0OC45MiAxNjE5LjU5IDExNDcuMjQgUTE2MjEuOTcgMTE0NS41MiAxNjIzLjg1IDExNDMuMTggUTE2MjQuNTEgMTE0Mi4zMiAxNjI0Ljk2IDExNDIuMzIgUTE2MjUuMzMgMTE0Mi4zMiAxNjI1LjY2IDExNDIuNjkgTTE2MjEuOTMgMTEyMi40NCBRMTYyMS45MyAxMTIwLjE5IDE2MjAuMjUgMTExOC42NyBRMTYxOC42MSAxMTE3LjE1IDE2MTUuNzQgMTExNy4xNSBRMTYxNC44MyAxMTE3LjE1IDE2MTMuNzMgMTExNy4zNiBRMTYxMi42MiAxMTE3LjU2IDE2MTAuNzggMTExOC40MiBRMTYwOC45NyAxMTE5LjI4IDE2MDcuMzcgMTEyMC43MiBRMTYwNS43OCAxMTIyLjExIDE2MDQuMTggMTEyNC44NiBRMTYwMi41OCAxMTI3LjU2IDE2MDEuNjQgMTEzMS4xNyBMMTYwNS4wOCAxMTMxLjE3IFExNjA2LjI3IDExMzEuMTcgMTYwNy4xMyAxMTMxLjE3IFExNjA3Ljk5IDExMzEuMTMgMTYwOS44OCAxMTMwLjk3IFExNjExLjggMTEzMC44IDE2MTMuMiAxMTMwLjUxIFExNjE0LjU5IDExMzAuMTkgMTYxNi4zNSAxMTI5LjUzIFExNjE4LjExIDExMjguODggMTYxOS4yMiAxMTI4LjAxIFExNjIwLjM3IDExMjcuMTEgMTYyMS4xNSAxMTI1LjY4IFExNjIxLjkzIDExMjQuMjQgMTYyMS45MyAxMTIyLjQ0IFoiIGZpbGw9IiMwMDAwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbC1vcGFjaXR5PSIxIiAvPjwvc3ZnPgo="  />
+
+<p>The figure shows <span class="math">$5$</span> vectors.</p>
+<p>Express vector <strong>c</strong> in terms of <strong>a</strong> and <strong>b</strong>:</p>
+
+
+<form name="WeaveQuestion" data-id="UKHuTzdn" data-controltype="radio">
+<div class="form-group ">
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_UKHuTzdn" value="1"><div class="markdown"><p>a &#43; b</p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_UKHuTzdn" value="2"><div class="markdown"><p>3b</p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_UKHuTzdn" value="3"><div class="markdown"><p>b-a</p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_UKHuTzdn" value="4"><div class="markdown"><p>3a</p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_UKHuTzdn" value="5"><div class="markdown"><p>a - b</p>
+</div>
+    </label>
+    </div>
+
+<div id="UKHuTzdn_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_UKHuTzdn']").on("change", function() {
+  correct = this.value == 4;
+
+  if(correct) {
+     $("#UKHuTzdn_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+  } else {
+     $("#UKHuTzdn_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
+
+<p>Express vector <strong>d</strong> in terms of <strong>a</strong> and <strong>b</strong>:</p>
+
+
+<form name="WeaveQuestion" data-id="84zml7dB" data-controltype="radio">
+<div class="form-group ">
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_84zml7dB" value="1"><div class="markdown"><p>3b</p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_84zml7dB" value="2"><div class="markdown"><p>b-a</p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_84zml7dB" value="3"><div class="markdown"><p>a &#43; b</p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_84zml7dB" value="4"><div class="markdown"><p>a - b</p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_84zml7dB" value="5"><div class="markdown"><p>3a</p>
+</div>
+    </label>
+    </div>
+
+<div id="84zml7dB_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_84zml7dB']").on("change", function() {
+  correct = this.value == 3;
+
+  if(correct) {
+     $("#84zml7dB_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+  } else {
+     $("#84zml7dB_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
+
+<p>Express vector <strong>e</strong> in terms of <strong>a</strong> and <strong>b</strong>:</p>
+
+
+<form name="WeaveQuestion" data-id="7TOgnkBJ" data-controltype="radio">
+<div class="form-group ">
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_7TOgnkBJ" value="1"><div class="markdown"><p>3b</p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_7TOgnkBJ" value="2"><div class="markdown"><p>3a</p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_7TOgnkBJ" value="3"><div class="markdown"><p>a - b</p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_7TOgnkBJ" value="4"><div class="markdown"><p>b-a</p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_7TOgnkBJ" value="5"><div class="markdown"><p>a &#43; b</p>
+</div>
+    </label>
+    </div>
+
+<div id="7TOgnkBJ_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_7TOgnkBJ']").on("change", function() {
+  correct = this.value == 3;
+
+  if(correct) {
+     $("#7TOgnkBJ_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+  } else {
+     $("#7TOgnkBJ_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
+
+<h6>Question</h6>
+<p>If <code>xs&#61;&#91;1, 2, 3, 4&#93;</code> and <code>f&#40;x&#41; &#61; x^2</code> which of these will not produce the vector <code>&#91;1, 4, 9, 16&#93;</code>?</p>
+
+
+<form name="WeaveQuestion" data-id="GttePQQC" data-controltype="radio">
+<div class="form-group ">
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_GttePQQC" value="1"><div class="markdown"><p><code>f.&#40;xs&#41;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_GttePQQC" value="2"><div class="markdown"><p><code>map&#40;f, xs&#41;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_GttePQQC" value="3"><div class="markdown"><p><code>&#91;f&#40;x&#41; for x in xs&#93;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_GttePQQC" value="4"><div class="markdown"><p>All three of them work</p>
+</div>
+    </label>
+    </div>
+
+<div id="GttePQQC_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_GttePQQC']").on("change", function() {
+  correct = this.value == 4;
+
+  if(correct) {
+     $("#GttePQQC_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+  } else {
+     $("#GttePQQC_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
+
+<h6>Question</h6>
+<p>Let <span class="math">$f(x) = \sin(x)$</span> and <span class="math">$g(x) = \cos(x)$</span>. In the interval <span class="math">$[0, 2\pi]$</span> the zeros of <span class="math">$g(x)$</span> are given by</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>zs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-n'>pi</span><span class='hljl-oB'>/</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>3</span><span class='hljl-n'>pi</span><span class='hljl-oB'>/</span><span class='hljl-ni'>2</span><span class='hljl-p'>]</span>
+</pre>
+
+
+<pre class="output">
+2-element Array&#123;Float64,1&#125;:
+ 1.5707963267948966
+ 4.71238898038469
+</pre>
+
+
+<p>What construct will give the function values of <span class="math">$f$</span> at the zeros of <span class="math">$g$</span>?</p>
+
+
+<form name="WeaveQuestion" data-id="qecmP0D6" data-controltype="radio">
+<div class="form-group ">
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_qecmP0D6" value="1"><div class="markdown"><p><code>sin&#40;zs&#41;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_qecmP0D6" value="2"><div class="markdown"><p><code>sin.&#40;zs&#41;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_qecmP0D6" value="3"><div class="markdown"><p><code>sin&#40;.zs&#41;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_qecmP0D6" value="4"><div class="markdown"><p><code>.sin&#40;zs&#41;</code></p>
+</div>
+    </label>
+    </div>
+
+<div id="qecmP0D6_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_qecmP0D6']").on("change", function() {
+  correct = this.value == 2;
+
+  if(correct) {
+     $("#qecmP0D6_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+  } else {
+     $("#qecmP0D6_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
+
+<h6>Question</h6>
+<p>If <code>zs &#61; &#91;1,4,9,16&#93;</code> which of these commands will return <code>&#91;1.0, 2.0, 3.0, 4.0&#93;</code>?</p>
+
+
+<form name="WeaveQuestion" data-id="8VkMz1PK" data-controltype="radio">
+<div class="form-group ">
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_8VkMz1PK" value="1"><div class="markdown"><p><code>sqrt&#40;zs&#41;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_8VkMz1PK" value="2"><div class="markdown"><p><code>sqrt.&#40;zs&#41;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_8VkMz1PK" value="3"><div class="markdown"><p><code>zs^&#40;1/2&#41;</code></p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_8VkMz1PK" value="4"><div class="markdown"><p><code>zs^&#40;1./2&#41;</code></p>
+</div>
+    </label>
+    </div>
+
+<div id="8VkMz1PK_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_8VkMz1PK']").on("change", function() {
+  correct = this.value == 2;
+
+  if(correct) {
+     $("#8VkMz1PK_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+  } else {
+     $("#8VkMz1PK_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
+
+  </div>
+</div>
+
+</body>
+</html>
