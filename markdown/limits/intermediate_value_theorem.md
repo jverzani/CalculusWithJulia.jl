@@ -18,7 +18,7 @@ extrema of a function.
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_Vd38Ov.gif", L"
+qq4h57w0000gr/T/jl_PmYSCm.gif", L"
 Illustration of intermediate value theorem. The theorem implies that any ra
 ndomly chosen $y$
 value between $f(a)$ and $f(b)$ will have  at least one $x$ in $[a,b]$
@@ -62,7 +62,7 @@ Here, we use the Bolzano theorem to give an algorithm - the *bisection method* -
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_8fUdAv.gif", L"
+qq4h57w0000gr/T/jl_lqUFlb.gif", L"
 Illustration of the bisection method to find a zero of a function. At
 each step the interval has $f(a)$ and $f(b)$ having opposite signs so
 that the intermediate value theorem guaratees a zero.
@@ -518,8 +518,8 @@ roots(j(x))
 
 ````
 Dict{Any,Any} with 2 entries:
-  1250.00000000000 => 1
   0                => 1
+  1250.00000000000 => 1
 ````
 
 
@@ -1001,9 +1001,9 @@ CalculusWithJulia.WeaveSupport.Numericq(3.0000000000000013, 0.001, "", "[2.
 Compare $x^2$ and $2^x$. They meet at $2$, where do the meet again?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["Only after 2", "Before and after 2"
-, "Only before 2"], 2, "", nothing, [1, 2, 3], ["Only after 2", "Before and
- after 2", "Only before 2"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["Only before 2", "Only after 2", "Be
+fore and after 2"], 3, "", nothing, [1, 2, 3], ["Only before 2", "Only afte
+r 2", "Before and after 2"], "", false)
 ````
 
 
@@ -1015,9 +1015,9 @@ values less than $b$ there is a zero beyond $b$ of $b^x - x^b$ and for values mo
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$b \approx
- 2.7$", L"$b \approx 2.5$", L"$b \approx 2.2$", L"$b \approx 2.9$"], 1, "",
- nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$b \approx 2.7$", L"$b \
-approx 2.5$", L"$b \approx 2.2$", L"$b \approx 2.9$"], "", false)
+ 2.2$", L"$b \approx 2.7$", L"$b \approx 2.9$", L"$b \approx 2.5$"], 2, "",
+ nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$b \approx 2.2$", L"$b \
+approx 2.7$", L"$b \approx 2.9$", L"$b \approx 2.5$"], "", false)
 ````
 
 
@@ -1071,10 +1071,10 @@ D(f) = x -> ForwardDiff.derivative(f, x)
 Let $v_0= 390$. The three times in question can be found from the zeros of `f` and `D(f)`. What are they?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$(0.0, 12.
-1875, 24.375)$", L"$(-4.9731, 0.0, 4.9731)$", L"$(0.0, 625.0, 1250.0)$"], 1
-, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$(0.0, 12.1875, 24.375
-)$", L"$(-4.9731, 0.0, 4.9731)$", L"$(0.0, 625.0, 1250.0)$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$(0.0, 625
+.0, 1250.0)$", L"$(0.0, 12.1875, 24.375)$", L"$(-4.9731, 0.0, 4.9731)$"], 2
+, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$(0.0, 625.0, 1250.0)$
+", L"$(0.0, 12.1875, 24.375)$", L"$(-4.9731, 0.0, 4.9731)$"], "", false)
 ````
 
 
@@ -1119,10 +1119,10 @@ the apex of the flight; and $t_f$, the time the object returns to the
 ground.
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$(0, 2.579
-, 13.187)$", L"$(0, 32.0, 390.0)$", L"$(0, 13.187, 30.0)$"], 1, "", nothing
-, [1, 2, 3], LaTeXStrings.LaTeXString[L"$(0, 2.579, 13.187)$", L"$(0, 32.0,
- 390.0)$", L"$(0, 13.187, 30.0)$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$(0, 32.0,
+ 390.0)$", L"$(0, 2.579, 13.187)$", L"$(0, 13.187, 30.0)$"], 2, "", nothing
+, [1, 2, 3], LaTeXStrings.LaTeXString[L"$(0, 32.0, 390.0)$", L"$(0, 2.579, 
+13.187)$", L"$(0, 13.187, 30.0)$"], "", false)
 ````
 
 
@@ -1293,10 +1293,10 @@ that $c$ is unique? Which of these examples might help you answer this?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f(x) = \s
-in(x),\quad I=[-\pi/2, \pi/2]$", L"$f(x) = \sin(x),\quad I=[0, 2\pi]$", L"$
-f(x) = \sin(x),\quad I=[-2\pi, 2\pi]$"], 3, "", nothing, [1, 2, 3], LaTeXSt
-rings.LaTeXString[L"$f(x) = \sin(x),\quad I=[-\pi/2, \pi/2]$", L"$f(x) = \s
-in(x),\quad I=[0, 2\pi]$", L"$f(x) = \sin(x),\quad I=[-2\pi, 2\pi]$"], "", 
+in(x),\quad I=[-2\pi, 2\pi]$", L"$f(x) = \sin(x),\quad I=[0, 2\pi]$", L"$f(
+x) = \sin(x),\quad I=[-\pi/2, \pi/2]$"], 1, "", nothing, [1, 2, 3], LaTeXSt
+rings.LaTeXString[L"$f(x) = \sin(x),\quad I=[-2\pi, 2\pi]$", L"$f(x) = \sin
+(x),\quad I=[0, 2\pi]$", L"$f(x) = \sin(x),\quad I=[-\pi/2, \pi/2]$"], "", 
 false)
 ````
 

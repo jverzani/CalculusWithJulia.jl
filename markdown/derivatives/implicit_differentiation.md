@@ -83,7 +83,7 @@ r = Eq(f, 2^2)
 
 
 ````
-ImplicitEquations.Pred(Main.##WeaveSandBox#760.f, ==, 4)
+ImplicitEquations.Pred(Main.##WeaveSandBox#682.f, ==, 4)
 ````
 
 
@@ -1200,11 +1200,11 @@ CalculusWithJulia.WeaveSupport.Numericq(1.9129311827723892, 0.001, "", "[1.
 What expression gives $dy/dx$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$b \cdot (
-1 - (x/a)^n)^{1/n}$", L"$ -(y/x) \cdot (x/a)^n \cdot (y/b)^{-n}$", L"$-(x/a
-)^n / (y/b)^n$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$b 
-\cdot (1 - (x/a)^n)^{1/n}$", L"$ -(y/x) \cdot (x/a)^n \cdot (y/b)^{-n}$", L
-"$-(x/a)^n / (y/b)^n$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$-(x/a)^n 
+/ (y/b)^n$", L"$b \cdot (1 - (x/a)^n)^{1/n}$", L"$ -(y/x) \cdot (x/a)^n \cd
+ot (y/b)^{-n}$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$-(
+x/a)^n / (y/b)^n$", L"$b \cdot (1 - (x/a)^n)^{1/n}$", L"$ -(y/x) \cdot (x/a
+)^n \cdot (y/b)^{-n}$"], "", false)
 ````
 
 
@@ -1252,9 +1252,9 @@ What expression yields $dy/dx$ for this curve:
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$-2xy/(x^2
- + a^2)$", L"$2xy / (x^2 + a^2)$", L"$a^3/(x^2 + a^2)$"], 1, "", nothing, [
-1, 2, 3], LaTeXStrings.LaTeXString[L"$-2xy/(x^2 + a^2)$", L"$2xy / (x^2 + a
-^2)$", L"$a^3/(x^2 + a^2)$"], "", false)
+ + a^2)$", L"$a^3/(x^2 + a^2)$", L"$2xy / (x^2 + a^2)$"], 1, "", nothing, [
+1, 2, 3], LaTeXStrings.LaTeXString[L"$-2xy/(x^2 + a^2)$", L"$a^3/(x^2 + a^2
+)$", L"$2xy / (x^2 + a^2)$"], "", false)
 ````
 
 
@@ -1283,10 +1283,10 @@ The figure above shows a problem appearing in L'Hospital's first calculus book. 
 Using Implicit differentiation, find when $dy/dx = 0$.
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$y^2=a/(3x
-)$", L"$y^2 = 3x/a$", L"$y=3x^2/a$", L"$y=a/(3x^2)$"], 3, "", nothing, [1, 
-2, 3, 4], LaTeXStrings.LaTeXString[L"$y^2=a/(3x)$", L"$y^2 = 3x/a$", L"$y=3
-x^2/a$", L"$y=a/(3x^2)$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$y=a/(3x^2
+)$", L"$y=3x^2/a$", L"$y^2=a/(3x)$", L"$y^2 = 3x/a$"], 2, "", nothing, [1, 
+2, 3, 4], LaTeXStrings.LaTeXString[L"$y=a/(3x^2)$", L"$y=3x^2/a$", L"$y^2=a
+/(3x)$", L"$y^2 = 3x/a$"], "", false)
 ````
 
 
@@ -1296,11 +1296,11 @@ x^2/a$", L"$y=a/(3x^2)$"], "", false)
 Substituting the correct value of $y$, above, into the defining equation gives what value for $x$:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$x=(1/3) a
- 2^{1/3}$", L"$x=(1/2) a 2^{1/2}$", L"$x=(1/2) a^3 3^{1/3}$", L"$x=(1/3) a^
-2 2^{1/2}$"], 1, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$x=(
-1/3) a 2^{1/3}$", L"$x=(1/2) a 2^{1/2}$", L"$x=(1/2) a^3 3^{1/3}$", L"$x=(1
-/3) a^2 2^{1/2}$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$x=(1/2) a
+^3 3^{1/3}$", L"$x=(1/3) a 2^{1/3}$", L"$x=(1/3) a^2 2^{1/2}$", L"$x=(1/2) 
+a 2^{1/2}$"], 2, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$x=(
+1/2) a^3 3^{1/3}$", L"$x=(1/3) a 2^{1/3}$", L"$x=(1/3) a^2 2^{1/2}$", L"$x=
+(1/2) a 2^{1/2}$"], "", false)
 ````
 
 

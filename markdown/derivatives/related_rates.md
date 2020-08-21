@@ -23,7 +23,7 @@ The following is a typical "book" problem:
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_SSFz3e.gif", L"
+qq4h57w0000gr/T/jl_p0MlQq.gif", L"
 As $t$ increases, the size of the rectangle grows. The ratio of width to he
 ight is fixed. If we know the rate of change in time for the width ($dw/dt$
 ) and the height ($dh/dt$) can we tell the rate of change of *area* with re
@@ -313,7 +313,7 @@ goes to $0$, the expression will become $-\infty$.
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_4cf18o.gif", L"
+qq4h57w0000gr/T/jl_EXQCoY.gif", L"
 The flight of the ball as being tracked by a stationary outfielder.  This b
 all will go over the head of the player. What can the player tell from the 
 quantity $d\theta/dt$?
@@ -749,10 +749,10 @@ decreasing at a constant rate of $1$ unit/sec, what is $f(x)$?
 [Source.](http://oregonstate.edu/instruct/mth251/cq/Stage9/Practice/ratesProblems.html)
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f(x) = x$
-", L"$f(x) = x^0$", L"$f(x) = x^2$", L"$f(x) = 1/x$"], 3, "", nothing, [1, 
-2, 3, 4], LaTeXStrings.LaTeXString[L"$f(x) = x$", L"$f(x) = x^0$", L"$f(x) 
-= x^2$", L"$f(x) = 1/x$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f(x) = 1/
+x$", L"$f(x) = x^2$", L"$f(x) = x^0$", L"$f(x) = x$"], 2, "", nothing, [1, 
+2, 3, 4], LaTeXStrings.LaTeXString[L"$f(x) = 1/x$", L"$f(x) = x^2$", L"$f(x
+) = x^0$", L"$f(x) = x$"], "", false)
 ````
 
 
@@ -782,9 +782,9 @@ Consider the curve $f(x) = x^2 - \log(x)$. For a given $x$, the tangent line int
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$y = 1 - x
-^2$", L"$y = 1 - \log(x)$", L"$y = 1 - x^2 - \log(x)$", L"$y = x(2x - 1/x)$
-"], 3, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$y = 1 - x^2$"
-, L"$y = 1 - \log(x)$", L"$y = 1 - x^2 - \log(x)$", L"$y = x(2x - 1/x)$"], 
+^2$", L"$y = 1 - \log(x)$", L"$y = x(2x - 1/x)$", L"$y = 1 - x^2 - \log(x)$
+"], 4, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$y = 1 - x^2$"
+, L"$y = 1 - \log(x)$", L"$y = x(2x - 1/x)$", L"$y = 1 - x^2 - \log(x)$"], 
 "", false)
 ````
 
@@ -795,10 +795,10 @@ CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$y = 1 - x
 If $dx/dt = -1$, what is $dy/dt$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$dy/dt = 2
-x + 1/x$", L"$dy/dt = 1 - x^2 - \log(x)$", L"$dy/dt = -2x - 1/x$", L"$dy/dt
- = 1$"], 1, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$dy/dt = 
-2x + 1/x$", L"$dy/dt = 1 - x^2 - \log(x)$", L"$dy/dt = -2x - 1/x$", L"$dy/d
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$dy/dt = 1
+ - x^2 - \log(x)$", L"$dy/dt = 2x + 1/x$", L"$dy/dt = -2x - 1/x$", L"$dy/dt
+ = 1$"], 2, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$dy/dt = 
+1 - x^2 - \log(x)$", L"$dy/dt = 2x + 1/x$", L"$dy/dt = -2x - 1/x$", L"$dy/d
 t = 1$"], "", false)
 ````
 

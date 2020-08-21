@@ -18,7 +18,7 @@ segments that cross the parabola.
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_me9HNd.gif", L"The first triangle has area $1/2$, the se
+qq4h57w0000gr/T/jl_fx7HVO.gif", L"The first triangle has area $1/2$, the se
 cond has area $1/8$, then $2$ have area $(1/8)^2$, $4$ have area $(1/8)^3$,
  ...
 With some algebra, the total area then should be $1/2 \cdot (1 + (1/4) + (1
@@ -1042,7 +1042,7 @@ illustrated below, a value of $\delta=\epsilon^{1/3}$ is used for $c=0$:
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_9Es69W.gif", L"
+qq4h57w0000gr/T/jl_bpKlX9.gif", L"
 Demonstration of $\epsilon$-$\delta$ proof of $\lim_{x \rightarrow 0}
 x^3 = 0$. For any $\epsilon>0$ (the orange lines) there exists a
 $\delta>0$ (the red lines of the box) for which the function $f(x)$
@@ -1176,9 +1176,9 @@ What is $L$?
 
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$e^x$", L"
-$0$", L"$1$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$e^x$"
-, L"$0$", L"$1$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$0$", L"$1
+$", L"$e^x$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$0$", 
+L"$1$", L"$e^x$"], "", false)
 ````
 
 
@@ -1208,9 +1208,9 @@ L = \cos(x) \lim_{h \rightarrow 0}\frac{\sin(h)}{h} + \sin(x) \lim_{h \rightarro
 Using the last result, what is the value of $L$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"$\sin(h)/h$", "0", "
-1", L"$\sin(x)$", L"$\cos(x)$"], 5, "", nothing, [1, 2, 3, 4, 5], AbstractS
-tring[L"$\sin(h)/h$", "0", "1", L"$\sin(x)$", L"$\cos(x)$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString["0", "1", L"$\cos(x)$"
+, L"$\sin(h)/h$", L"$\sin(x)$"], 3, "", nothing, [1, 2, 3, 4, 5], AbstractS
+tring["0", "1", L"$\cos(x)$", L"$\sin(h)/h$", L"$\sin(x)$"], "", false)
 ````
 
 
@@ -1247,16 +1247,16 @@ $0$. Why?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"The functi
-ons $g$ and $h$ both have a limit of $0$ at $x=0$ and the function $f$ is i
-n
+on $f$ has no limit - it oscillates too much near $0$", L"The functions $g$
+ and $h$ both have a limit of $0$ at $x=0$ and the function $f$ is in
 between both $g$ and $h$, so must to have a limit of $0$.
-", L"The functions $g$ and $h$ squeeze each other as $g(x) > h(x)$", L"The 
-function $f$ has no limit - it oscillates too much near $0$"], 1, "", nothi
-ng, [1, 2, 3], LaTeXStrings.LaTeXString[L"The functions $g$ and $h$ both ha
+", L"The functions $g$ and $h$ squeeze each other as $g(x) > h(x)$"], 2, ""
+, nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"The function $f$ has no li
+mit - it oscillates too much near $0$", L"The functions $g$ and $h$ both ha
 ve a limit of $0$ at $x=0$ and the function $f$ is in
 between both $g$ and $h$, so must to have a limit of $0$.
-", L"The functions $g$ and $h$ squeeze each other as $g(x) > h(x)$", L"The 
-function $f$ has no limit - it oscillates too much near $0$"], "", false)
+", L"The functions $g$ and $h$ squeeze each other as $g(x) > h(x)$"], "", f
+alse)
 ````
 
 
@@ -1344,8 +1344,8 @@ the fact that $x$ is measured in radians. Try to find this limit:
 `limit(sind(x)/x, x=>0)`. What is the value?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`0`", "`180/pi`", "`1`", "`pi/180`"
-], 4, "", nothing, [1, 2, 3, 4], ["`0`", "`180/pi`", "`1`", "`pi/180`"], ""
+CalculusWithJulia.WeaveSupport.Radioq(["`180/pi`", "`1`", "`0`", "`pi/180`"
+], 4, "", nothing, [1, 2, 3, 4], ["`180/pi`", "`1`", "`0`", "`pi/180`"], ""
 , false)
 ````
 
@@ -1357,8 +1357,8 @@ CalculusWithJulia.WeaveSupport.Radioq(["`0`", "`180/pi`", "`1`", "`pi/180`"
 What is the limit `limit(sinpi(x)/x, x=>0)`?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`1/pi`", "`0`", "`pi`", "`1`"], 3, 
-"", nothing, [1, 2, 3, 4], ["`1/pi`", "`0`", "`pi`", "`1`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`0`", "`pi`", "`1`", "`1/pi`"], 2, 
+"", nothing, [1, 2, 3, 4], ["`0`", "`pi`", "`1`", "`1/pi`"], "", false)
 ````
 
 
@@ -1401,10 +1401,10 @@ $$~
 
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["Yes, the value is `-11.5123`", "Yes
-, the value is `-9.2061`", "No, the value heads to negative infinity"], 3, 
-"", nothing, [1, 2, 3], ["Yes, the value is `-11.5123`", "Yes, the value is
- `-9.2061`", "No, the value heads to negative infinity"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["No, the value heads to negative inf
+inity", "Yes, the value is `-9.2061`", "Yes, the value is `-11.5123`"], 1, 
+"", nothing, [1, 2, 3], ["No, the value heads to negative infinity", "Yes, 
+the value is `-9.2061`", "Yes, the value is `-11.5123`"], "", false)
 ````
 
 

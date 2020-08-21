@@ -112,7 +112,7 @@ $\psi$) and not just at some $c_i$.
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_DSDWaR.gif", L"
+qq4h57w0000gr/T/jl_JAiRmX.gif", L"
 Surface of revolution of $f(x) = 2 - x^2$ about the $y$ axis. The lines seg
 ments are the images of rotating the secant line connecting $(1/2, f(1/2))$
  and $(3/4, f(3/4))$. These trace out the frustum of a cone which approxima
@@ -417,10 +417,10 @@ $x$ axis. After a $u$-substitution, what integral would  give the surface area g
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$-\int_1^{
-_1} 2\pi u \sqrt{1 + u^2} du$", L"$-\int_1^{_1} 2\pi u^2 \sqrt{1 + u} du$",
- L"$-\int_1^{-1} 2\pi \sqrt{1 + u^2} du$"], 3, "", nothing, [1, 2, 3], LaTe
-XStrings.LaTeXString[L"$-\int_1^{_1} 2\pi u \sqrt{1 + u^2} du$", L"$-\int_1
-^{_1} 2\pi u^2 \sqrt{1 + u} du$", L"$-\int_1^{-1} 2\pi \sqrt{1 + u^2} du$"]
+-1} 2\pi \sqrt{1 + u^2} du$", L"$-\int_1^{_1} 2\pi u^2 \sqrt{1 + u} du$", L
+"$-\int_1^{_1} 2\pi u \sqrt{1 + u^2} du$"], 1, "", nothing, [1, 2, 3], LaTe
+XStrings.LaTeXString[L"$-\int_1^{-1} 2\pi \sqrt{1 + u^2} du$", L"$-\int_1^{
+_1} 2\pi u^2 \sqrt{1 + u} du$", L"$-\int_1^{_1} 2\pi u \sqrt{1 + u^2} du$"]
 , "", false)
 ````
 
@@ -483,9 +483,9 @@ If we let $f(x) = y$ then $f'(x) = x/y$. With this, what does the integral above
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\int_u^{u
-_h} 2\pi y dx$", L"$\int_u^{u+h} 2\pi dx$", L"$\int_u^{u_h} 2\pi x dx$"], 2
-, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\int_u^{u_h} 2\pi y d
-x$", L"$\int_u^{u+h} 2\pi dx$", L"$\int_u^{u_h} 2\pi x dx$"], "", false)
+_h} 2\pi x dx$", L"$\int_u^{u_h} 2\pi y dx$", L"$\int_u^{u+h} 2\pi dx$"], 3
+, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\int_u^{u_h} 2\pi x d
+x$", L"$\int_u^{u_h} 2\pi y dx$", L"$\int_u^{u+h} 2\pi dx$"], "", false)
 ````
 
 

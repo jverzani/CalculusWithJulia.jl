@@ -1824,12 +1824,12 @@ From this graph, the minimum value over this region is
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"is around 
-$(0.7, 0)$ and with a value less than $-0.4$", L"is around $(-0.7, 0)$ and 
-with a value less than $-0.4$", L"is around $(2.0, 0)$ and with a value les
+$(0.7, 0)$ and with a value less than $-0.4$", L"is around $(2.0, 0)$ and w
+ith a value less than $-0.4$", L"is around $(-0.7, 0)$ and with a value les
 s than $-0.4$", L"is around $(-2.0, 0)$ and with a value less than $-0.4$"]
-, 2, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"is around $(0.7,
- 0)$ and with a value less than $-0.4$", L"is around $(-0.7, 0)$ and with a
- value less than $-0.4$", L"is around $(2.0, 0)$ and with a value less than
+, 3, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"is around $(0.7,
+ 0)$ and with a value less than $-0.4$", L"is around $(2.0, 0)$ and with a 
+value less than $-0.4$", L"is around $(-0.7, 0)$ and with a value less than
  $-0.4$", L"is around $(-2.0, 0)$ and with a value less than $-0.4$"], "", 
 false)
 ````
@@ -1866,12 +1866,12 @@ Plot{Plots.PlotlyBackend() n=1}
 Are there any peaks or valleys (local extrema) indicated?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"Yes, the c
-losed loops near $(-1.5, 0)$ and $(1.5, 0)$ will contain these", L"No, the 
-vertical lines parallel to $x=0$ show this function to be flat"], 1, "", no
-thing, [1, 2], LaTeXStrings.LaTeXString[L"Yes, the closed loops near $(-1.5
-, 0)$ and $(1.5, 0)$ will contain these", L"No, the vertical lines parallel
- to $x=0$ show this function to be flat"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"No, the ve
+rtical lines parallel to $x=0$ show this function to be flat", L"Yes, the c
+losed loops near $(-1.5, 0)$ and $(1.5, 0)$ will contain these"], 2, "", no
+thing, [1, 2], LaTeXStrings.LaTeXString[L"No, the vertical lines parallel t
+o $x=0$ show this function to be flat", L"Yes, the closed loops near $(-1.5
+, 0)$ and $(1.5, 0)$ will contain these"], "", false)
 ````
 
 
@@ -1921,10 +1921,10 @@ The road through the pass (on the right) makes a series of switch backs.
 Are these
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["running essentially perpendicular t
-o the contour lines", "running essentially parallel to the contour lines"],
- 2, "", nothing, [1, 2], ["running essentially perpendicular to the contour
- lines", "running essentially parallel to the contour lines"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["running essentially parallel to the
+ contour lines", "running essentially perpendicular to the contour lines"],
+ 1, "", nothing, [1, 2], ["running essentially parallel to the contour line
+s", "running essentially perpendicular to the contour lines"], "", false)
 ````
 
 
@@ -1934,12 +1934,12 @@ o the contour lines", "running essentially parallel to the contour lines"],
 Why?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["By being essentially parallel, the 
-steepness of the roadway can be kept to a passable level", "By being essent
-ially perpendicular, the road can more quickly climb up the mountain"], 1, 
-"", nothing, [1, 2], ["By being essentially parallel, the steepness of the 
-roadway can be kept to a passable level", "By being essentially perpendicul
-ar, the road can more quickly climb up the mountain"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["By being essentially perpendicular,
+ the road can more quickly climb up the mountain", "By being essentially pa
+rallel, the steepness of the roadway can be kept to a passable level"], 2, 
+"", nothing, [1, 2], ["By being essentially perpendicular, the road can mor
+e quickly climb up the mountain", "By being essentially parallel, the steep
+ness of the roadway can be kept to a passable level"], "", false)
 ````
 
 
@@ -1970,13 +1970,13 @@ $$~
 ~$$
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"When any o
-f $f(\vec{x})$, $g(\vec{x})$, or $i(\vec{x})$ are zero", L"When $i(\vec{x})
- = 0$", L"The limit exists everywhere, as the function $f$, $g$, $h$, and $
-i$ have limits at $\vec{c}$ by assumption"], 2, "", nothing, [1, 2, 3], LaT
-eXStrings.LaTeXString[L"When any of $f(\vec{x})$, $g(\vec{x})$, or $i(\vec{
-x})$ are zero", L"When $i(\vec{x}) = 0$", L"The limit exists everywhere, as
- the function $f$, $g$, $h$, and $i$ have limits at $\vec{c}$ by assumption
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"The limit 
+exists everywhere, as the function $f$, $g$, $h$, and $i$ have limits at $\
+vec{c}$ by assumption", L"When any of $f(\vec{x})$, $g(\vec{x})$, or $i(\ve
+c{x})$ are zero", L"When $i(\vec{x}) = 0$"], 3, "", nothing, [1, 2, 3], LaT
+eXStrings.LaTeXString[L"The limit exists everywhere, as the function $f$, $
+g$, $h$, and $i$ have limits at $\vec{c}$ by assumption", L"When any of $f(
+\vec{x})$, $g(\vec{x})$, or $i(\vec{x})$ are zero", L"When $i(\vec{x}) = 0$
 "], "", false)
 ````
 
@@ -2030,11 +2030,11 @@ Let $f(x,y) = \langle \sin(x)\cos(2y), \sin(2x)\cos(y) \rangle$
 Compute $f_x$
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\sin(x)\c
-os(2y)$", L"$\langle \sin(x), \sin(2x) \rangle$", L"$\langle \cos(x)\cos(2y
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\langle \
+sin(x), \sin(2x) \rangle$", L"$\sin(x)\cos(2y)$", L"$\langle \cos(x)\cos(2y
 ), 2\cos(2x)\cos(y)\rangle$", L"$\langle \cos(2y), \cos(y) \rangle$"], 3, "
-", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$\sin(x)\cos(2y)$", L"
-$\langle \sin(x), \sin(2x) \rangle$", L"$\langle \cos(x)\cos(2y), 2\cos(2x)
+", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$\langle \sin(x), \sin
+(2x) \rangle$", L"$\sin(x)\cos(2y)$", L"$\langle \cos(x)\cos(2y), 2\cos(2x)
 \cos(y)\rangle$", L"$\langle \cos(2y), \cos(y) \rangle$"], "", false)
 ````
 
@@ -2045,13 +2045,13 @@ $\langle \sin(x), \sin(2x) \rangle$", L"$\langle \cos(x)\cos(2y), 2\cos(2x)
 Compute $f_y$
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\langle  
--2\sin(2y), -\sin(y) \rangle$", L"$\langle 2\sin(x), \sin(2x)  \rangle$", L
-"$\langle -2\sin(x)\sin(2y), -\sin(2x)\sin(y)  \rangle$", L"$- \sin(2x)\sin
-(y)$"], 3, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$\langle  
--2\sin(2y), -\sin(y) \rangle$", L"$\langle 2\sin(x), \sin(2x)  \rangle$", L
-"$\langle -2\sin(x)\sin(2y), -\sin(2x)\sin(y)  \rangle$", L"$- \sin(2x)\sin
-(y)$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\langle 2
+\sin(x), \sin(2x)  \rangle$", L"$\langle  -2\sin(2y), -\sin(y) \rangle$", L
+"$- \sin(2x)\sin(y)$", L"$\langle -2\sin(x)\sin(2y), -\sin(2x)\sin(y)  \ran
+gle$"], 4, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$\langle 2
+\sin(x), \sin(2x)  \rangle$", L"$\langle  -2\sin(2y), -\sin(y) \rangle$", L
+"$- \sin(2x)\sin(y)$", L"$\langle -2\sin(x)\sin(2y), -\sin(2x)\sin(y)  \ran
+gle$"], "", false)
 ````
 
 
@@ -2149,10 +2149,10 @@ Consider the composition $(f\circ\vec\gamma)(t)$.
 For a climber with GPS coordinates $(x,y)$. What describes her elevation?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$(f\circ\v
-ec\gamma)(x,y)$", L"$\vec\gamma(x,y)$", L"$f(x,y)$"], 3, "", nothing, [1, 2
-, 3], LaTeXStrings.LaTeXString[L"$(f\circ\vec\gamma)(x,y)$", L"$\vec\gamma(
-x,y)$", L"$f(x,y)$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f(x,y)$",
+ L"$\vec\gamma(x,y)$", L"$(f\circ\vec\gamma)(x,y)$"], 1, "", nothing, [1, 2
+, 3], LaTeXStrings.LaTeXString[L"$f(x,y)$", L"$\vec\gamma(x,y)$", L"$(f\cir
+c\vec\gamma)(x,y)$"], "", false)
 ````
 
 
@@ -2162,10 +2162,10 @@ x,y)$", L"$f(x,y)$"], "", false)
 A climber leaves base camp at $t_0$. At time $t > t_0$, what describes her elevation?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\vec\gamm
-a(t)$", L"$(f\circ\vec\gamma)(t)$", L"$f(t)$"], 2, "", nothing, [1, 2, 3], 
-LaTeXStrings.LaTeXString[L"$\vec\gamma(t)$", L"$(f\circ\vec\gamma)(t)$", L"
-$f(t)$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f(t)$", L
+"$\vec\gamma(t)$", L"$(f\circ\vec\gamma)(t)$"], 3, "", nothing, [1, 2, 3], 
+LaTeXStrings.LaTeXString[L"$f(t)$", L"$\vec\gamma(t)$", L"$(f\circ\vec\gamm
+a)(t)$"], "", false)
 ````
 
 
@@ -2175,11 +2175,11 @@ $f(t)$"], "", false)
 What does the vector-valued function $\vec{r}(t) = \langle x(t), y(t), (f\circ\vec\gamma(t))\rangle$ describe:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["The three dimensional position of t
-he climber", "The climbers gradient, pointing in the direction of greatest 
-ascent"], 1, "", nothing, [1, 2], ["The three dimensional position of the c
-limber", "The climbers gradient, pointing in the direction of greatest asce
-nt"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["The climbers gradient, pointing in 
+the direction of greatest ascent", "The three dimensional position of the c
+limber"], 2, "", nothing, [1, 2], ["The climbers gradient, pointing in the 
+direction of greatest ascent", "The three dimensional position of the climb
+er"], "", false)
 ````
 
 
@@ -2190,15 +2190,15 @@ In the figure, the climbers are making a switch back, so as to avoid the steeper
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"Keep $\cos
-(\theta)$ as close to $1$ as possible, so the slope taken is as big as poss
-ible", L"Keep $\cos(\theta)$ smaller than $1$, so that the slope taken is n
-ot too great", L"Keep $\cos(\theta)$ as close to $0$ as possible, so that t
-hey climbers don't waste energy going up and down"], 2, "", nothing, [1, 2,
- 3], LaTeXStrings.LaTeXString[L"Keep $\cos(\theta)$ as close to $1$ as poss
-ible, so the slope taken is as big as possible", L"Keep $\cos(\theta)$ smal
-ler than $1$, so that the slope taken is not too great", L"Keep $\cos(\thet
-a)$ as close to $0$ as possible, so that they climbers don't waste energy g
-oing up and down"], "", false)
+(\theta)$ as close to $0$ as possible, so that they climbers don't waste en
+ergy going up and down", L"Keep $\cos(\theta)$ as close to $1$ as possible,
+ so the slope taken is as big as possible", L"Keep $\cos(\theta)$ smaller t
+han $1$, so that the slope taken is not too great"], 3, "", nothing, [1, 2,
+ 3], LaTeXStrings.LaTeXString[L"Keep $\cos(\theta)$ as close to $0$ as poss
+ible, so that they climbers don't waste energy going up and down", L"Keep $
+\cos(\theta)$ as close to $1$ as possible, so the slope taken is as big as 
+possible", L"Keep $\cos(\theta)$ smaller than $1$, so that the slope taken 
+is not too great"], "", false)
 ````
 
 
@@ -2233,10 +2233,10 @@ What expression below captures point 1 that the steepness should be no more than
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$|\hat{T} 
-\cdot \hat{P}| \leq \cos(\pi/18)$", L"$|\hat{T} \cdot \hat{P}| \leq \sin(\p
-i/18)$", L"$|\hat{T} \cdot \hat{P}| \leq \pi/18$"], 1, "", nothing, [1, 2, 
-3], LaTeXStrings.LaTeXString[L"$|\hat{T} \cdot \hat{P}| \leq \cos(\pi/18)$"
-, L"$|\hat{T} \cdot \hat{P}| \leq \sin(\pi/18)$", L"$|\hat{T} \cdot \hat{P}
+\cdot \hat{P}| \leq \sin(\pi/18)$", L"$|\hat{T} \cdot \hat{P}| \leq \cos(\p
+i/18)$", L"$|\hat{T} \cdot \hat{P}| \leq \pi/18$"], 2, "", nothing, [1, 2, 
+3], LaTeXStrings.LaTeXString[L"$|\hat{T} \cdot \hat{P}| \leq \sin(\pi/18)$"
+, L"$|\hat{T} \cdot \hat{P}| \leq \cos(\pi/18)$", L"$|\hat{T} \cdot \hat{P}
 | \leq \pi/18$"], "", false)
 ````
 
@@ -2248,11 +2248,11 @@ The normal to the surface $z=f(x,y)$ is *not* the normal to the trail tread. Sup
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$|\hat{N} 
-\cdot \hat{M}| \leq \pi/2 - \pi/18$", L"$|\hat{N} \cdot \hat{M}| \leq \cos(
-\pi/2 - \pi/36)$", L"$|\hat{N} \cdot \hat{M}| \leq \sin(\pi/2 - \pi/18)$"],
- 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$|\hat{N} \cdot \hat
-{M}| \leq \pi/2 - \pi/18$", L"$|\hat{N} \cdot \hat{M}| \leq \cos(\pi/2 - \p
-i/36)$", L"$|\hat{N} \cdot \hat{M}| \leq \sin(\pi/2 - \pi/18)$"], "", false
+\cdot \hat{M}| \leq \sin(\pi/2 - \pi/18)$", L"$|\hat{N} \cdot \hat{M}| \leq
+ \pi/2 - \pi/18$", L"$|\hat{N} \cdot \hat{M}| \leq \cos(\pi/2 - \pi/36)$"],
+ 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$|\hat{N} \cdot \hat
+{M}| \leq \sin(\pi/2 - \pi/18)$", L"$|\hat{N} \cdot \hat{M}| \leq \pi/2 - \
+pi/18$", L"$|\hat{N} \cdot \hat{M}| \leq \cos(\pi/2 - \pi/36)$"], "", false
 )
 ````
 
@@ -2295,10 +2295,10 @@ false)
 Let $\vec{v}$ be any non-zero vector. Does $\nabla{f}(\vec{x})\cdot\vec{v}$ give the rate of increase of $f$ per unit of distance in the direction of $\vec{v}$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString["Yes, by definition", 
-L"No, not unless $\vec{v}$ were a unit vector"], 2, "", nothing, [1, 2], Ab
-stractString["Yes, by definition", L"No, not unless $\vec{v}$ were a unit v
-ector"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"No, not unless $\vec
+{v}$ were a unit vector", "Yes, by definition"], 1, "", nothing, [1, 2], Ab
+stractString[L"No, not unless $\vec{v}$ were a unit vector", "Yes, by defin
+ition"], "", false)
 ````
 
 
@@ -2314,11 +2314,11 @@ Let $f(x,y,z) = x^4 + 2xz + 2xy + y^4$ and $\vec\gamma(t) = \langle t, t^2, t^3\
 The value of $\nabla{f}(x,y,z)$ is
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\langle 4
-x^3, 2z, 2y\rangle$", L"$\langle x^3 + 2x + 2x, 2y+ y^3, 2x\rangle$", L"$\l
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\langle x
+^3 + 2x + 2x, 2y+ y^3, 2x\rangle$", L"$\langle 4x^3, 2z, 2y\rangle$", L"$\l
 angle 4x^3 + 2x + 2y, 2x + 4y^3, 2x \rangle$"], 3, "", nothing, [1, 2, 3], 
-LaTeXStrings.LaTeXString[L"$\langle 4x^3, 2z, 2y\rangle$", L"$\langle x^3 +
- 2x + 2x, 2y+ y^3, 2x\rangle$", L"$\langle 4x^3 + 2x + 2y, 2x + 4y^3, 2x \r
+LaTeXStrings.LaTeXString[L"$\langle x^3 + 2x + 2x, 2y+ y^3, 2x\rangle$", L"
+$\langle 4x^3, 2z, 2y\rangle$", L"$\langle 4x^3 + 2x + 2y, 2x + 4y^3, 2x \r
 angle$"], "", false)
 ````
 
@@ -2329,10 +2329,10 @@ angle$"], "", false)
 The value of $\vec\gamma'(t)$ is:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1 + 2y + 
-3t^2$", L"$\langle 1, 2t, 3t^2\rangle$", L"$\langle 1,2, 3 \rangle$"], 2, "
-", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$1 + 2y + 3t^2$", L"$\lan
-gle 1, 2t, 3t^2\rangle$", L"$\langle 1,2, 3 \rangle$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\langle 1
+, 2t, 3t^2\rangle$", L"$\langle 1,2, 3 \rangle$", L"$1 + 2y + 3t^2$"], 1, "
+", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\langle 1, 2t, 3t^2\rang
+le$", L"$\langle 1,2, 3 \rangle$", L"$1 + 2y + 3t^2$"], "", false)
 ````
 
 
@@ -2343,13 +2343,13 @@ The value of $(f\circ\vec\gamma)'(t)$ is found by:
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"Taking the
- dot product of  $\nabla{f}(\vec\gamma(t))$ and $\vec\gamma'(t)$", L"Taking
- the dot product of  $\nabla{f}(\vec\gamma'(t))$ and $\vec\gamma(t)$", L"Ta
-king the dot product of  $\nabla{f}(x,y,z)$ and $\vec\gamma'(t)$"], 1, "", 
+ dot product of  $\nabla{f}(x,y,z)$ and $\vec\gamma'(t)$", L"Taking the dot
+ product of  $\nabla{f}(\vec\gamma(t))$ and $\vec\gamma'(t)$", L"Taking the
+ dot product of  $\nabla{f}(\vec\gamma'(t))$ and $\vec\gamma(t)$"], 2, "", 
 nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"Taking the dot product of  $
-\nabla{f}(\vec\gamma(t))$ and $\vec\gamma'(t)$", L"Taking the dot product o
-f  $\nabla{f}(\vec\gamma'(t))$ and $\vec\gamma(t)$", L"Taking the dot produ
-ct of  $\nabla{f}(x,y,z)$ and $\vec\gamma'(t)$"], "", false)
+\nabla{f}(x,y,z)$ and $\vec\gamma'(t)$", L"Taking the dot product of  $\nab
+la{f}(\vec\gamma(t))$ and $\vec\gamma'(t)$", L"Taking the dot product of  $
+\nabla{f}(\vec\gamma'(t))$ and $\vec\gamma(t)$"], "", false)
 ````
 
 
@@ -2365,8 +2365,8 @@ From the figure, which drawn vector is the gradient at $(1/2, -3/4)$?
 
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["The green one", "The blue one", "Th
-e red one"], 2, "", nothing, [1, 2, 3], ["The green one", "The blue one", "
+CalculusWithJulia.WeaveSupport.Radioq(["The blue one", "The green one", "Th
+e red one"], 1, "", nothing, [1, 2, 3], ["The blue one", "The green one", "
 The red one"], "", false)
 ````
 
@@ -2379,9 +2379,9 @@ From the figure, which drawn vector is the gradient as $(1/2, -3/4)$?
 
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["The red one", "The green one", "The
- blue one"], 3, "", nothing, [1, 2, 3], ["The red one", "The green one", "T
-he blue one"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["The red one", "The blue one", "The 
+green one"], 2, "", nothing, [1, 2, 3], ["The red one", "The blue one", "Th
+e green one"], "", false)
 ````
 
 
@@ -2413,12 +2413,12 @@ If $f$ is a linear function at $\vec{c}$, what does this say about $g$?
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"Linear mea
 ns $H$ is the $0$ matrix, so the gradient couldn't have been $\vec{0}$", L"
-Linear means $H$ is linear, so $g(\vec{x})$ describes a plane", L"Linear me
-ans $H$ is the $0$ matrix, so $g(\vec{x})$ is the constant $f(\vec{c})$"], 
-3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"Linear means $H$ is t
+Linear means $H$ is the $0$ matrix, so $g(\vec{x})$ is the constant $f(\vec
+{c})$", L"Linear means $H$ is linear, so $g(\vec{x})$ describes a plane"], 
+2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"Linear means $H$ is t
 he $0$ matrix, so the gradient couldn't have been $\vec{0}$", L"Linear mean
-s $H$ is linear, so $g(\vec{x})$ describes a plane", L"Linear means $H$ is 
-the $0$ matrix, so $g(\vec{x})$ is the constant $f(\vec{c})$"], "", false)
+s $H$ is the $0$ matrix, so $g(\vec{x})$ is the constant $f(\vec{c})$", L"L
+inear means $H$ is linear, so $g(\vec{x})$ describes a plane"], "", false)
 ````
 
 
@@ -2525,14 +2525,14 @@ Away from $(0,0)$ the mixed partial is $\frac{x^{6} + 9 x^{4} y^{2} - 9 x^{2} y^
 ````
 CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"This is not continuo
 us at $(0,0)$, as the limit along the two paths $x=0$ and $y=0$ are not equ
-ivalent.", L"This is not continuous at $(0,0)$, still the limit along the t
-wo paths $x=0$ and $y=0$ are equivalent.", "As this is the ratio of continu
-ous functions, it is continuous at the origin"], 1, "", nothing, [1, 2, 3],
+ivalent.", "As this is the ratio of continuous functions, it is continuous 
+at the origin", L"This is not continuous at $(0,0)$, still the limit along 
+the two paths $x=0$ and $y=0$ are equivalent."], 1, "", nothing, [1, 2, 3],
  AbstractString[L"This is not continuous at $(0,0)$, as the limit along the
- two paths $x=0$ and $y=0$ are not equivalent.", L"This is not continuous a
-t $(0,0)$, still the limit along the two paths $x=0$ and $y=0$ are equivale
-nt.", "As this is the ratio of continuous functions, it is continuous at th
-e origin"], "", false)
+ two paths $x=0$ and $y=0$ are not equivalent.", "As this is the ratio of c
+ontinuous functions, it is continuous at the origin", L"This is not continu
+ous at $(0,0)$, still the limit along the two paths $x=0$ and $y=0$ are equ
+ivalent."], "", false)
 ````
 
 

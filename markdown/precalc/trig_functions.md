@@ -60,7 +60,7 @@ These definitions in terms of sides only apply for $0 \leq \theta \leq \pi/2$. M
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_igZuaD.gif", "An angle in radian measure corresponds to 
+qq4h57w0000gr/T/jl_glAAGm.gif", "An angle in radian measure corresponds to 
 a point on the unit circle, whose coordinates define the sine and cosine of
  the angle.")
 ````

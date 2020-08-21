@@ -2132,9 +2132,9 @@ $$~
 What is the position at $t=\pi/4$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`[0.570796, 1.0]`", "`[0.0782914, 0
-.292893 ]`", "`[0.181172, 0.5]`"], 2, "", nothing, [1, 2, 3], ["`[0.570796,
- 1.0]`", "`[0.0782914, 0.292893 ]`", "`[0.181172, 0.5]`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`[0.181172, 0.5]`", "`[0.0782914, 0
+.292893 ]`", "`[0.570796, 1.0]`"], 2, "", nothing, [1, 2, 3], ["`[0.181172,
+ 0.5]`", "`[0.0782914, 0.292893 ]`", "`[0.570796, 1.0]`"], "", false)
 ````
 
 
@@ -2145,9 +2145,9 @@ And the position at $\pi/2$?
 
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`[0.181172, 0.5]`", "`[0.570796, 1.
-0]`", "`[0.0782914, 0.292893 ]`"], 2, "", nothing, [1, 2, 3], ["`[0.181172,
- 0.5]`", "`[0.570796, 1.0]`", "`[0.0782914, 0.292893 ]`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`[0.570796, 1.0]`", "`[0.181172, 0.
+5]`", "`[0.0782914, 0.292893 ]`"], 1, "", nothing, [1, 2, 3], ["`[0.570796,
+ 1.0]`", "`[0.181172, 0.5]`", "`[0.0782914, 0.292893 ]`"], "", false)
 ````
 
 
@@ -2160,11 +2160,11 @@ Suppose instead of keeping track of a point on the outer rim of the wheel, a poi
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\langle R
-t - r\sin(t),~ R - r\cos(t) \rangle$", L"$\langle -r\sin(t),~ -r\cos(t) \ra
-ngle$", L"$\langle Rt - R\sin(t),~ R - R\cos(t) \rangle$"], 1, "", nothing,
+t - r\sin(t),~ R - r\cos(t) \rangle$", L"$\langle Rt - R\sin(t),~ R - R\cos
+(t) \rangle$", L"$\langle -r\sin(t),~ -r\cos(t) \rangle$"], 1, "", nothing,
  [1, 2, 3], LaTeXStrings.LaTeXString[L"$\langle Rt - r\sin(t),~ R - r\cos(t
-) \rangle$", L"$\langle -r\sin(t),~ -r\cos(t) \rangle$", L"$\langle Rt - R\
-sin(t),~ R - R\cos(t) \rangle$"], "", false)
+) \rangle$", L"$\langle Rt - R\sin(t),~ R - R\cos(t) \rangle$", L"$\langle 
+-r\sin(t),~ -r\cos(t) \rangle$"], "", false)
 ````
 
 
@@ -2176,10 +2176,10 @@ sin(t),~ R - R\cos(t) \rangle$"], "", false)
 For the  cycloid $\vec{r}(t) = \langle t - \sin(t),~ 1 - \cos(t) \rangle$, find a simplified expression for $\| \vec{r}'(t)\|$.
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1 + \cos(
-t) + \cos(2t)$", L"$1 - \cos(t)$", L"$\sqrt{2 - 2\cos(t)}$", L"$1$"], 3, ""
-, nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$1 + \cos(t) + \cos(2t)
-$", L"$1 - \cos(t)$", L"$\sqrt{2 - 2\cos(t)}$", L"$1$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1$", L"$\
+sqrt{2 - 2\cos(t)}$", L"$1 + \cos(t) + \cos(2t)$", L"$1 - \cos(t)$"], 2, ""
+, nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$1$", L"$\sqrt{2 - 2\co
+s(t)}$", L"$1 + \cos(t) + \cos(2t)$", L"$1 - \cos(t)$"], "", false)
 ````
 
 
@@ -2226,8 +2226,8 @@ Consider the cycloid  $\vec{r}(t) = \langle t - \sin(t),~ 1 - \cos(t) \rangle$
 What is the derivative at $t=\pi/2$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`[0,0]`", "`[2,0]`", "`[1,1]`"], 3,
- "", nothing, [1, 2, 3], ["`[0,0]`", "`[2,0]`", "`[1,1]`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`[0,0]`", "`[1,1]`", "`[2,0]`"], 2,
+ "", nothing, [1, 2, 3], ["`[0,0]`", "`[1,1]`", "`[2,0]`"], "", false)
 ````
 
 
@@ -2280,10 +2280,10 @@ CalculusWithJulia.WeaveSupport.Numericq(7.173709841851994, 0.001, "", "[7.1
 Let $\vec{r}(t) = \langle t, t^2 \rangle$ describe a parabola. What is the arc length between $0 \leq t \leq 1$? First, what is a formula for the speed ($\| \vec{r}'(t)\|$)?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1$", L"$t
- + t^2$", L"$1 + 4t^2$", L"$\sqrt{1 + 4t^2}$"], 4, "", nothing, [1, 2, 3, 4
-], LaTeXStrings.LaTeXString[L"$1$", L"$t + t^2$", L"$1 + 4t^2$", L"$\sqrt{1
- + 4t^2}$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1 + 4t^2$
+", L"$t + t^2$", L"$\sqrt{1 + 4t^2}$", L"$1$"], 3, "", nothing, [1, 2, 3, 4
+], LaTeXStrings.LaTeXString[L"$1 + 4t^2$", L"$t + t^2$", L"$\sqrt{1 + 4t^2}
+$", L"$1$"], "", false)
 ````
 
 
@@ -2320,11 +2320,11 @@ CalculusWithJulia.WeaveSupport.Numericq(2, 0, "", "[2.0, 2.0]", 2, 2, "", "
 The curvature at $1$ will be
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"greater th
-an the curvature at $t=0$", L"the same as the curvature at $t=0$", L"less t
-han the curvature at $t=0$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeX
-String[L"greater than the curvature at $t=0$", L"the same as the curvature 
-at $t=0$", L"less than the curvature at $t=0$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"less than 
+the curvature at $t=0$", L"the same as the curvature at $t=0$", L"greater t
+han the curvature at $t=0$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeX
+String[L"less than the curvature at $t=0$", L"the same as the curvature at 
+$t=0$", L"greater than the curvature at $t=0$"], "", false)
 ````
 
 
@@ -2334,9 +2334,9 @@ at $t=0$", L"less than the curvature at $t=0$"], "", false)
 The curvature as $t\rightarrow \infty$ will be
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$0$", L"$\
-infty$", L"$1$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$0$
-", L"$\infty$", L"$1$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$0$", L"$1
+$", L"$\infty$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$0$
+", L"$1$", L"$\infty$"], "", false)
 ````
 
 
@@ -2348,9 +2348,9 @@ infty$", L"$1$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$0$
 Now, if we have a more general parabola by introducing a parameter $a>0$: $\vec{r}(t) = \langle t, a\cdot t^2 \rangle$, What is the curvature of $\vec{r}(t)$ at $t=0$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$2$", L"$2
-/a$", L"$2a$", L"$1$"], 3, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXStr
-ing[L"$2$", L"$2/a$", L"$2a$", L"$1$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$2a$", L"$
+1$", L"$2/a$", L"$2$"], 1, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXStr
+ing[L"$2a$", L"$1$", L"$2/a$", L"$2$"], "", false)
 ````
 
 
@@ -2412,10 +2412,10 @@ We wish to identify the parameterization. Using $\theta$ an angle in standard po
 What is the $x$ coordinate of point $A$? (Also the $x$ coordinate of $P$.)
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\tan(\the
-ta)$", L"$\cot(\theta)$", L"$2\tan(\theta)$", L"$2\cot(\theta)$"], 4, "", n
-othing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$\tan(\theta)$", L"$\cot(\
-theta)$", L"$2\tan(\theta)$", L"$2\cot(\theta)$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$2\tan(\th
+eta)$", L"$\cot(\theta)$", L"$2\cot(\theta)$", L"$\tan(\theta)$"], 3, "", n
+othing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$2\tan(\theta)$", L"$\cot(
+\theta)$", L"$2\cot(\theta)$", L"$\tan(\theta)$"], "", false)
 ````
 
 
@@ -2425,10 +2425,10 @@ theta)$", L"$2\tan(\theta)$", L"$2\cot(\theta)$"], "", false)
 Using the polar form of a circle, the length between the origin and $B$ is given by $2\cos(\theta-\pi/2) = 2\sin(\theta)$. Using this, what is the $y$ coordinate of $B$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$2$", L"$2
-\sin^2(\theta)$", L"$\sin(\theta)$", L"$2\sin(\theta)$"], 2, "", nothing, [
-1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$2$", L"$2\sin^2(\theta)$", L"$\sin
-(\theta)$", L"$2\sin(\theta)$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$2\sin(\th
+eta)$", L"$2\sin^2(\theta)$", L"$\sin(\theta)$", L"$2$"], 2, "", nothing, [
+1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$2\sin(\theta)$", L"$2\sin^2(\theta
+)$", L"$\sin(\theta)$", L"$2$"], "", false)
 ````
 
 
@@ -2457,10 +2457,10 @@ For $n=2$, the arc length of $\vec{r}$ can be found exactly. What is the arc-len
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\frac{a^{
 2} \sqrt{9 a^{2} + 4}}{3} + \frac{4 \sqrt{9 a^{2} + 4}}{27} - \frac{8}{27}$
-", L"$\sqrt{a^2 + 4}$", L"$\frac{2 a^{\frac{5}{2}}}{5}$"], 1, "", nothing, 
+", L"$\frac{2 a^{\frac{5}{2}}}{5}$", L"$\sqrt{a^2 + 4}$"], 1, "", nothing, 
 [1, 2, 3], LaTeXStrings.LaTeXString[L"$\frac{a^{2} \sqrt{9 a^{2} + 4}}{3} +
- \frac{4 \sqrt{9 a^{2} + 4}}{27} - \frac{8}{27}$", L"$\sqrt{a^2 + 4}$", L"$
-\frac{2 a^{\frac{5}{2}}}{5}$"], "", false)
+ \frac{4 \sqrt{9 a^{2} + 4}}{27} - \frac{8}{27}$", L"$\frac{2 a^{\frac{5}{2
+}}}{5}$", L"$\sqrt{a^2 + 4}$"], "", false)
 ````
 
 
@@ -2547,8 +2547,8 @@ If a car is on a straight road, the $\kappa=0$. Is the acceleration along the $\
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"The $\hat{
-N}$ direction", L"The $\hat{T}$ direction"], 2, "", nothing, [1, 2], LaTeXS
-trings.LaTeXString[L"The $\hat{N}$ direction", L"The $\hat{T}$ direction"],
+T}$ direction", L"The $\hat{N}$ direction"], 1, "", nothing, [1, 2], LaTeXS
+trings.LaTeXString[L"The $\hat{T}$ direction", L"The $\hat{N}$ direction"],
  "", false)
 ````
 
@@ -2573,15 +2573,15 @@ In going around a corner (with non-zero curvature), which is true?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"The accele
-ration in the normal direction depends on both the curvature and the speed 
-($ds/dt$)", L"The acceleration in the normal direction depends only on the 
-curvature and not the speed ($ds/dt$)", L"The acceleration in the normal di
-rection depends only on the speed ($ds/dt$) and not the curvature"], 1, "",
+ration in the normal direction depends only on the speed ($ds/dt$) and not 
+the curvature", L"The acceleration in the normal direction depends only on 
+the curvature and not the speed ($ds/dt$)", L"The acceleration in the norma
+l direction depends on both the curvature and the speed ($ds/dt$)"], 3, "",
  nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"The acceleration in the nor
-mal direction depends on both the curvature and the speed ($ds/dt$)", L"The
- acceleration in the normal direction depends only on the curvature and not
- the speed ($ds/dt$)", L"The acceleration in the normal direction depends o
-nly on the speed ($ds/dt$) and not the curvature"], "", false)
+mal direction depends only on the speed ($ds/dt$) and not the curvature", L
+"The acceleration in the normal direction depends only on the curvature and
+ not the speed ($ds/dt$)", L"The acceleration in the normal direction depen
+ds on both the curvature and the speed ($ds/dt$)"], "", false)
 ````
 
 
@@ -2606,10 +2606,10 @@ Let $\vec\gamma(t) = \langle t, t^2 \rangle = \langle x(t), y(t)\rangle$ be a pa
 * Compute $r(t)$
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1 - 2t$",
- L"$1 + 4t^2$", L"$1 - 4t^2$", L"$1 + 2t$"], 2, "", nothing, [1, 2, 3, 4], 
-LaTeXStrings.LaTeXString[L"$1 - 2t$", L"$1 + 4t^2$", L"$1 - 4t^2$", L"$1 + 
-2t$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1 - 4t^2$
+", L"$1 - 2t$", L"$1 + 2t$", L"$1 + 4t^2$"], 4, "", nothing, [1, 2, 3, 4], 
+LaTeXStrings.LaTeXString[L"$1 - 4t^2$", L"$1 - 2t$", L"$1 + 2t$", L"$1 + 4t
+^2$"], "", false)
 ````
 
 
@@ -2619,9 +2619,9 @@ LaTeXStrings.LaTeXString[L"$1 - 2t$", L"$1 + 4t^2$", L"$1 - 4t^2$", L"$1 +
 * Compute $k(t)$
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$2$", L"$8
-t$", L"$-2$", L"$-8t$"], 1, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXSt
-ring[L"$2$", L"$8t$", L"$-2$", L"$-8t$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$2$", L"$-
+8t$", L"$8t$", L"$-2$"], 1, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXSt
+ring[L"$2$", L"$-8t$", L"$8t$", L"$-2$"], "", false)
 ````
 
 
@@ -2631,10 +2631,10 @@ ring[L"$2$", L"$8t$", L"$-2$", L"$-8t$"], "", false)
 * Compute $X(t)$
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$t - 2(8t)
-/(1-2t)$", L"$t - 2t(1 + 4t^2)/2$", L"$t - 1(1+4t^2)/2$", L"$t - 4t(1+2t)/2
-$"], 2, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$t - 2(8t)/(1
--2t)$", L"$t - 2t(1 + 4t^2)/2$", L"$t - 1(1+4t^2)/2$", L"$t - 4t(1+2t)/2$"]
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$t - 4t(1+
+2t)/2$", L"$t - 2(8t)/(1-2t)$", L"$t - 2t(1 + 4t^2)/2$", L"$t - 1(1+4t^2)/2
+$"], 3, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$t - 4t(1+2t)
+/2$", L"$t - 2(8t)/(1-2t)$", L"$t - 2t(1 + 4t^2)/2$", L"$t - 1(1+4t^2)/2$"]
 , "", false)
 ````
 
@@ -2645,11 +2645,11 @@ $"], 2, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$t - 2(8t)/(1
 * Compute $Y(t)$
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$t^2 - 2t(
-1+4t^2)/2$", L"$t^2 + 2t(1+4t^2)/2$", L"$t^2 - 1(1+4t^2)/2$", L"$t^2 + 1(1 
-+ 4t^2)/2$"], 4, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$t^2
- - 2t(1+4t^2)/2$", L"$t^2 + 2t(1+4t^2)/2$", L"$t^2 - 1(1+4t^2)/2$", L"$t^2 
-+ 1(1 + 4t^2)/2$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$t^2 + 1(1
+ + 4t^2)/2$", L"$t^2 - 2t(1+4t^2)/2$", L"$t^2 + 2t(1+4t^2)/2$", L"$t^2 - 1(
+1+4t^2)/2$"], 1, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$t^2
+ + 1(1 + 4t^2)/2$", L"$t^2 - 2t(1+4t^2)/2$", L"$t^2 + 2t(1+4t^2)/2$", L"$t^
+2 - 1(1+4t^2)/2$"], "", false)
 ````
 
 
@@ -2679,15 +2679,15 @@ Y = y + xp * r2 / k |> simplify
 What is the resulting curve?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"An cubic p
-arabola of the form $\langle ct^3, dt^2\rangle$", L"An ellipse of the form 
-$\langle a\cos(t), b\sin(t)$", L"An astroid of the form $c \langle \cos^3(t
-), \sin^3(t) \rangle$", L"A cyloid of the form $c\langle t + \sin(t), 1 - \
-cos(t)\rangle$"], 3, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"
-An cubic parabola of the form $\langle ct^3, dt^2\rangle$", L"An ellipse of
- the form $\langle a\cos(t), b\sin(t)$", L"An astroid of the form $c \langl
-e \cos^3(t), \sin^3(t) \rangle$", L"A cyloid of the form $c\langle t + \sin
-(t), 1 - \cos(t)\rangle$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"An ellipse
+ of the form $\langle a\cos(t), b\sin(t)$", L"An cubic parabola of the form
+ $\langle ct^3, dt^2\rangle$", L"A cyloid of the form $c\langle t + \sin(t)
+, 1 - \cos(t)\rangle$", L"An astroid of the form $c \langle \cos^3(t), \sin
+^3(t) \rangle$"], 4, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"
+An ellipse of the form $\langle a\cos(t), b\sin(t)$", L"An cubic parabola o
+f the form $\langle ct^3, dt^2\rangle$", L"A cyloid of the form $c\langle t
+ + \sin(t), 1 - \cos(t)\rangle$", L"An astroid of the form $c \langle \cos^
+3(t), \sin^3(t) \rangle$"], "", false)
 ````
 
 

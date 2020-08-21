@@ -14,7 +14,7 @@ points/lines associated with these values.
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_VoIFRt.gif", L"
+qq4h57w0000gr/T/jl_Fswy9n.gif", L"
 After identifying asymptotic behaviours,
 a curve sketch involves identifying the $y$ intercept, if applicable; the $
 x$ intercepts, if possible; and the local extrema. From there a sketch fill
@@ -1129,9 +1129,9 @@ On what intervals (roughly) is the function positive?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L" $(-5, -4.
-2)$ and $(-2.5, 0)$", L"$(-4.2, -2.5)$", L"$(-5, -4.2)$", L"$(-3.2,-1)$"], 
+2)$ and $(-2.5, 0)$", L"$(-4.2, -2.5)$", L"$(-3.2,-1)$", L"$(-5, -4.2)$"], 
 1, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L" $(-5, -4.2)$ and 
-$(-2.5, 0)$", L"$(-4.2, -2.5)$", L"$(-5, -4.2)$", L"$(-3.2,-1)$"], "", fals
+$(-2.5, 0)$", L"$(-4.2, -2.5)$", L"$(-3.2,-1)$", L"$(-5, -4.2)$"], "", fals
 e)
 ````
 
@@ -1183,9 +1183,9 @@ On what interval(s) is this function increasing?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$(-5.0, -3
-.8)$", L"$(-0.17, 0.17)$", L"$(-4.7, -3.0)$", L"$(-3.8, -3.0$"], 3, "", not
+.8)$", L"$(-0.17, 0.17)$", L"$(-3.8, -3.0$", L"$(-4.7, -3.0)$"], 4, "", not
 hing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$(-5.0, -3.8)$", L"$(-0.17, 
-0.17)$", L"$(-4.7, -3.0)$", L"$(-3.8, -3.0$"], "", false)
+0.17)$", L"$(-3.8, -3.0$", L"$(-4.7, -3.0)$"], "", false)
 ````
 
 
@@ -1209,10 +1209,10 @@ On what interval(s) is this function concave up?
 
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$(0.1, 1.0
-)$", L" $(-3.0, -0.6)$ and $(0.6, 3.0)$", L"$(-3.0, 3.0)$", L"$(-0.6, 0.6)$
-"], 2, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$(0.1, 1.0)$",
- L" $(-3.0, -0.6)$ and $(0.6, 3.0)$", L"$(-3.0, 3.0)$", L"$(-0.6, 0.6)$"], 
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L" $(-3.0, -
+0.6)$ and $(0.6, 3.0)$", L"$(0.1, 1.0)$", L"$(-3.0, 3.0)$", L"$(-0.6, 0.6)$
+"], 1, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L" $(-3.0, -0.6)
+$ and $(0.6, 3.0)$", L"$(0.1, 1.0)$", L"$(-3.0, 3.0)$", L"$(-0.6, 0.6)$"], 
 "", false)
 ````
 
@@ -1235,14 +1235,14 @@ Plot{Plots.PlotlyBackend() n=3}
 What kind of *asymptotes* does it appear to have?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"Just a hor
-izontal asymptote, $y=0$", L"Vertical asymptotes at $x=-1$ and $x=1$ and a 
-horizontal asymptote $y=1$", L"Just vertical asymptotes at $x=-1$ and $x=1$
-", L"Vertical asymptotes at $x=-1$ and $x=1$ and a slant asymptote"], 4, ""
-, nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"Just a horizontal asymp
-tote, $y=0$", L"Vertical asymptotes at $x=-1$ and $x=1$ and a horizontal as
-ymptote $y=1$", L"Just vertical asymptotes at $x=-1$ and $x=1$", L"Vertical
- asymptotes at $x=-1$ and $x=1$ and a slant asymptote"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"Vertical a
+symptotes at $x=-1$ and $x=1$ and a slant asymptote", L"Vertical asymptotes
+ at $x=-1$ and $x=1$ and a horizontal asymptote $y=1$", L"Just a horizontal
+ asymptote, $y=0$", L"Just vertical asymptotes at $x=-1$ and $x=1$"], 1, ""
+, nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"Vertical asymptotes at 
+$x=-1$ and $x=1$ and a slant asymptote", L"Vertical asymptotes at $x=-1$ an
+d $x=1$ and a horizontal asymptote $y=1$", L"Just a horizontal asymptote, $
+y=0$", L"Just vertical asymptotes at $x=-1$ and $x=1$"], "", false)
 ````
 
 
@@ -1342,10 +1342,10 @@ CalculusWithJulia.WeaveSupport.Numericq(1, 0, "", "[1.0, 1.0]", 1, 1, "", "
 At $c$, $f'(c) = 0$ and $f''(c) = 1 + c^2$. Is $(c,f(c))$ a relative maximum? ($f$ is a "nice" function.)
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["No, it is a relative minimum", "No,
- the second derivative test is possibly inconclusive", "Yes"], 1, "", nothi
-ng, [1, 2, 3], ["No, it is a relative minimum", "No, the second derivative 
-test is possibly inconclusive", "Yes"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["Yes", "No, the second derivative te
+st is possibly inconclusive", "No, it is a relative minimum"], 3, "", nothi
+ng, [1, 2, 3], ["Yes", "No, the second derivative test is possibly inconclu
+sive", "No, it is a relative minimum"], "", false)
 ````
 
 
@@ -1358,11 +1358,11 @@ test is possibly inconclusive", "Yes"], "", false)
 At $c$, $f'(c) = 0$ and $f''(c) = c^2$. Is $(c,f(c))$ a relative minimum? ($f$ is a "nice" function.)
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString["Yes", "No, it is a re
-lative maximum", L"No, the second derivative test is possibly inconclusive 
-if $c=0$, but otherwise yes"], 3, "", nothing, [1, 2, 3], AbstractString["Y
-es", "No, it is a relative maximum", L"No, the second derivative test is po
-ssibly inconclusive if $c=0$, but otherwise yes"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"No, the second deriv
+ative test is possibly inconclusive if $c=0$, but otherwise yes", "No, it i
+s a relative maximum", "Yes"], 1, "", nothing, [1, 2, 3], AbstractString[L"
+No, the second derivative test is possibly inconclusive if $c=0$, but other
+wise yes", "No, it is a relative maximum", "Yes"], "", false)
 ````
 
 
@@ -1454,20 +1454,20 @@ This plot shows the graph of $f'(x)$. What is true about the critical points and
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"The critic
-al points are at $x=1$ (a relative maximum), $x=2$ (not a relative extrema)
-, and $x=3$ (not a relative extrema).", L"The critical points are at $x=1$ 
-(a relative minimum), $x=2$ (not a relative extrema), and $x=3$ (not a rela
-tive extrema).", L"The critical points are at $x=1$ (a relative minimum), $
-x=2$ (not a relative extrema), and $x=3$ (a relative minimum.", L"The criti
-cal points are at $x=1$ (a relative minimum), $x=2$ (a relative minimum), a
-nd $x=3$ (a relative minimum)."], 2, "", nothing, [1, 2, 3, 4], LaTeXString
-s.LaTeXString[L"The critical points are at $x=1$ (a relative maximum), $x=2
-$ (not a relative extrema), and $x=3$ (not a relative extrema).", L"The cri
-tical points are at $x=1$ (a relative minimum), $x=2$ (not a relative extre
-ma), and $x=3$ (not a relative extrema).", L"The critical points are at $x=
-1$ (a relative minimum), $x=2$ (not a relative extrema), and $x=3$ (a relat
-ive minimum.", L"The critical points are at $x=1$ (a relative minimum), $x=
-2$ (a relative minimum), and $x=3$ (a relative minimum)."], "", false)
+al points are at $x=1$ (a relative minimum), $x=2$ (not a relative extrema)
+, and $x=3$ (a relative minimum.", L"The critical points are at $x=1$ (a re
+lative maximum), $x=2$ (not a relative extrema), and $x=3$ (not a relative 
+extrema).", L"The critical points are at $x=1$ (a relative minimum), $x=2$ 
+(a relative minimum), and $x=3$ (a relative minimum).", L"The critical poin
+ts are at $x=1$ (a relative minimum), $x=2$ (not a relative extrema), and $
+x=3$ (not a relative extrema)."], 4, "", nothing, [1, 2, 3, 4], LaTeXString
+s.LaTeXString[L"The critical points are at $x=1$ (a relative minimum), $x=2
+$ (not a relative extrema), and $x=3$ (a relative minimum.", L"The critical
+ points are at $x=1$ (a relative maximum), $x=2$ (not a relative extrema), 
+and $x=3$ (not a relative extrema).", L"The critical points are at $x=1$ (a
+ relative minimum), $x=2$ (a relative minimum), and $x=3$ (a relative minim
+um).", L"The critical points are at $x=1$ (a relative minimum), $x=2$ (not 
+a relative extrema), and $x=3$ (not a relative extrema)."], "", false)
 ````
 
 
@@ -1480,13 +1480,13 @@ You know $f''(x) = (x-1)^3$. What do you know about $f(x)$?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"The functi
-on is concave down over $(-\infty, 1)$ and concave up over $(1, \infty)", L
-"The function is negative over $(-\infty, 1)$ and positive over $(1, \infty
-)", L"The function is decreasing over $(-\infty, 1)$ and increasing over $(
-1, \infty)"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"The fun
-ction is concave down over $(-\infty, 1)$ and concave up over $(1, \infty)"
-, L"The function is negative over $(-\infty, 1)$ and positive over $(1, \in
-fty)", L"The function is decreasing over $(-\infty, 1)$ and increasing over
+on is negative over $(-\infty, 1)$ and positive over $(1, \infty)", L"The f
+unction is decreasing over $(-\infty, 1)$ and increasing over $(1, \infty)"
+, L"The function is concave down over $(-\infty, 1)$ and concave up over $(
+1, \infty)"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"The fun
+ction is negative over $(-\infty, 1)$ and positive over $(1, \infty)", L"Th
+e function is decreasing over $(-\infty, 1)$ and increasing over $(1, \inft
+y)", L"The function is concave down over $(-\infty, 1)$ and concave up over
  $(1, \infty)"], "", false)
 ````
 
@@ -1571,10 +1571,10 @@ CalculusWithJulia.WeaveSupport.Numericq(8.78889830934488, 0.001, "", "[8.78
 The available resources are quantified by $K$. As $K \rightarrow \infty$ what is the limit of the logistic growth model:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString["The exponential growt
-h model", "The limit does not exist", L"The limit is $P_0$"], 1, "", nothin
-g, [1, 2, 3], AbstractString["The exponential growth model", "The limit doe
-s not exist", L"The limit is $P_0$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"The limit is $P_0$",
+ "The limit does not exist", "The exponential growth model"], 3, "", nothin
+g, [1, 2, 3], AbstractString[L"The limit is $P_0$", "The limit does not exi
+st", "The exponential growth model"], "", false)
 ````
 
 
@@ -1623,15 +1623,15 @@ three features: periodicity, asymptotics, and monotonicity."
 Why would periodicity matter?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"An informative graph
- needs to show several periods, as that will allow proper computation for t
-he $y$ axis range.", "An informative graph only needs to show one or two pe
-riods, as others can be inferred.", "An informative graph need only show a 
-part of the period, as the rest can be inferred."], 2, "", nothing, [1, 2, 
-3], AbstractString[L"An informative graph needs to show several periods, as
- that will allow proper computation for the $y$ axis range.", "An informati
-ve graph only needs to show one or two periods, as others can be inferred."
-, "An informative graph need only show a part of the period, as the rest ca
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString["An informative graph 
+need only show a part of the period, as the rest can be inferred.", L"An in
+formative graph needs to show several periods, as that will allow proper co
+mputation for the $y$ axis range.", "An informative graph only needs to sho
+w one or two periods, as others can be inferred."], 3, "", nothing, [1, 2, 
+3], AbstractString["An informative graph need only show a part of the perio
+d, as the rest can be inferred.", L"An informative graph needs to show seve
+ral periods, as that will allow proper computation for the $y$ axis range."
+, "An informative graph only needs to show one or two periods, as others ca
 n be inferred."], "", false)
 ````
 
@@ -1644,13 +1644,13 @@ Why should asymptotics matter?
 ````
 CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"A vertical asymptote
  can distory the $y$ range, so it is important to avoid too-large values", 
-L"A horizontal asymptote must be plotted from $-\infty$ to $\infty$", "A sl
-ant asymptote must be plotted over a very wide domain so that it can be ide
-ntified."], 1, "", nothing, [1, 2, 3], AbstractString[L"A vertical asymptot
+"A slant asymptote must be plotted over a very wide domain so that it can b
+e identified.", L"A horizontal asymptote must be plotted from $-\infty$ to 
+$\infty$"], 1, "", nothing, [1, 2, 3], AbstractString[L"A vertical asymptot
 e can distory the $y$ range, so it is important to avoid too-large values",
- L"A horizontal asymptote must be plotted from $-\infty$ to $\infty$", "A s
-lant asymptote must be plotted over a very wide domain so that it can be id
-entified."], "", false)
+ "A slant asymptote must be plotted over a very wide domain so that it can 
+be identified.", L"A horizontal asymptote must be plotted from $-\infty$ to
+ $\infty$"], "", false)
 ````
 
 

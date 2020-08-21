@@ -1301,10 +1301,10 @@ Let $F(x,y,z) = \langle \sin(x), e^{xy}, xyz\rangle$. Find the divergence of $F$
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$x y + x e
-^{x y}$", L"$x e^{x y} + \cos{\left (x \right )}$", L"$x y + x e^{x y} + \c
-os{\left (x \right )}$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXStri
-ng[L"$x y + x e^{x y}$", L"$x e^{x y} + \cos{\left (x \right )}$", L"$x y +
- x e^{x y} + \cos{\left (x \right )}$"], "", false)
+^{x y}$", L"$x y + x e^{x y} + \cos{\left (x \right )}$", L"$x e^{x y} + \c
+os{\left (x \right )}$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXStri
+ng[L"$x y + x e^{x y}$", L"$x y + x e^{x y} + \cos{\left (x \right )}$", L"
+$x e^{x y} + \cos{\left (x \right )}$"], "", false)
 ````
 
 
@@ -1318,9 +1318,9 @@ ng[L"$x y + x e^{x y}$", L"$x e^{x y} + \cos{\left (x \right )}$", L"$x y +
 Let $F(x,y,z) = \langle \sin(x), e^{xy}, xyz\rangle$. Find the curl of $F$ symbolically. What is the $x$ component?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$-yz$", L"
-$ye^{xy}$", L"$xz$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L
-"$-yz$", L"$ye^{xy}$", L"$xz$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$xz$", L"$
+-yz$", L"$ye^{xy}$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L
+"$xz$", L"$-yz$", L"$ye^{xy}$"], "", false)
 ````
 
 
@@ -1332,9 +1332,9 @@ $ye^{xy}$", L"$xz$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L
 Let $\phi(x,y,z) = x + 2y + 3z$. We know that $\nabla\times\nabla{\phi}$ is zero by the vanishing property. Compute $\nabla\cdot\nabla{\phi}$.
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$0$", L"$\
-vec{0}$", L"$6$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$0
-$", L"$\vec{0}$", L"$6$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$6$", L"$\
+vec{0}$", L"$0$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$6
+$", L"$\vec{0}$", L"$0$"], "", false)
 ````
 
 
@@ -1356,13 +1356,13 @@ $$~
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"This is $0
-$ for any $f$, as $\nabla\times\nabla$ is $0$ since the cross product of ve
-ctor with itself is the $0$ vector.", L"This is $0$ if the partial derivati
-ves are continuous by Schwarz's (Clairault's) theorem"], 2, "", nothing, [1
-, 2], LaTeXStrings.LaTeXString[L"This is $0$ for any $f$, as $\nabla\times\
-nabla$ is $0$ since the cross product of vector with itself is the $0$ vect
-or.", L"This is $0$ if the partial derivatives are continuous by Schwarz's 
-(Clairault's) theorem"], "", false)
+$ if the partial derivatives are continuous by Schwarz's (Clairault's) theo
+rem", L"This is $0$ for any $f$, as $\nabla\times\nabla$ is $0$ since the c
+ross product of vector with itself is the $0$ vector."], 1, "", nothing, [1
+, 2], LaTeXStrings.LaTeXString[L"This is $0$ if the partial derivatives are
+ continuous by Schwarz's (Clairault's) theorem", L"This is $0$ for any $f$,
+ as $\nabla\times\nabla$ is $0$ since the cross product of vector with itse
+lf is the $0$ vector."], "", false)
 ````
 
 
@@ -1479,9 +1479,9 @@ F_r & r\sin\phi F_\theta & r F_\phi
 For a *radial* function $F = h(r)e_r$. (That is $F_r = h(r)$, $F_\theta=0$, and $F_\phi=0$. What is the curl of $F$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\vec{0}$"
-, L"$re_\phi$", L"$rh'(r)e_\phi$"], 1, "", nothing, [1, 2, 3], LaTeXStrings
-.LaTeXString[L"$\vec{0}$", L"$re_\phi$", L"$rh'(r)e_\phi$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$re_\phi$"
+, L"$\vec{0}$", L"$rh'(r)e_\phi$"], 2, "", nothing, [1, 2, 3], LaTeXStrings
+.LaTeXString[L"$re_\phi$", L"$\vec{0}$", L"$rh'(r)e_\phi$"], "", false)
 ````
 
 

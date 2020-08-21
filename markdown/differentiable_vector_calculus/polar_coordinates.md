@@ -917,9 +917,9 @@ curve traced out by $r(\theta) = \sqrt{\cos(2\theta)}$ between
 $-\pi/4$ and $\pi/4$. What is the answer?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\pi/2$", 
-L"$1$", L"$1/2$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\
-pi/2$", L"$1$", L"$1/2$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1/2$", L"
+$\pi/2$", L"$1$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$1
+/2$", L"$\pi/2$", L"$1$"], "", false)
 ````
 
 

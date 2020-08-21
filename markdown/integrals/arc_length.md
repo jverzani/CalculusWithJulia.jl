@@ -55,7 +55,7 @@ To see why, any partition of the interval $[a,b]$ by $a = t_0 < t_1 < \cdots < t
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_jRf1WO.gif", L"
+qq4h57w0000gr/T/jl_WoSxdS.gif", L"
 The arc length of the parametric curve can be approximated using straight l
 ine segments connecting points. This gives rise to an integral expression d
 efining the length in terms of the functions $f$ and $g$.

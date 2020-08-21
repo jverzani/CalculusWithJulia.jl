@@ -348,7 +348,7 @@ $h$ goes to $0$?
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_oMMHR3.gif", L"
+qq4h57w0000gr/T/jl_Ng57Xc.gif", L"
 The slope of each secant line represents the *average* rate of change betwe
 en $c$ and $c+h$. As $h$ goes towards $0$, we recover the slope of the tang
 ent line, which represents the *instantatneous* rate of change.
@@ -377,7 +377,7 @@ that best approximates the function.
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_Cj1Ra4.gif", L"
+qq4h57w0000gr/T/jl_zhDJwo.gif", L"
 The tangent line is the best linear approximation to the function at the po
 int $(c, f(c))$. As the viewing window zooms in on $(c,f(c))$ we
     can see how the graph and its tangent line get more similar.
@@ -1780,15 +1780,15 @@ L = \lim_{h \rightarrow 0} \frac{\cos(h) - 1}{h}.
 This is
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L" $0$,  as 
-this expression is the derivative of cosine at $0$. The answer follows, as 
-cosine clearly has a tangent line with slope $0$  at $x=0$.", L" $1$, as th
-is is clearly the analog of the limit of $\sin(h)/h$.", L"Does not exist. T
-he answer is $0/0$ which is undefined"], 1, "", nothing, [1, 2, 3], LaTeXSt
-rings.LaTeXString[L" $0$,  as this expression is the derivative of cosine a
-t $0$. The answer follows, as cosine clearly has a tangent line with slope 
-$0$  at $x=0$.", L" $1$, as this is clearly the analog of the limit of $\si
-n(h)/h$.", L"Does not exist. The answer is $0/0$ which is undefined"], "", 
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"Does not e
+xist. The answer is $0/0$ which is undefined", L" $0$,  as this expression 
+is the derivative of cosine at $0$. The answer follows, as cosine clearly h
+as a tangent line with slope $0$  at $x=0$.", L" $1$, as this is clearly th
+e analog of the limit of $\sin(h)/h$."], 2, "", nothing, [1, 2, 3], LaTeXSt
+rings.LaTeXString[L"Does not exist. The answer is $0/0$ which is undefined"
+, L" $0$,  as this expression is the derivative of cosine at $0$. The answe
+r follows, as cosine clearly has a tangent line with slope $0$  at $x=0$.",
+ L" $1$, as this is clearly the analog of the limit of $\sin(h)/h$."], "", 
 false)
 ````
 
@@ -1819,9 +1819,9 @@ Let $f(x) = (e^x + e^{-x})/2$ and $g(x) = (e^x - e^{-x})/2$. Which is true?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f''(x) = 
--g(x)$", L"$f''(x) = -f(x)$", L"$f''(x) =  g(x)$", L"$f''(x) =  f(x)$"], 4,
- "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$f''(x) = -g(x)$", L
-"$f''(x) = -f(x)$", L"$f''(x) =  g(x)$", L"$f''(x) =  f(x)$"], "", false)
+ f(x)$", L"$f''(x) = -f(x)$", L"$f''(x) =  g(x)$", L"$f''(x) = -g(x)$"], 1,
+ "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$f''(x) =  f(x)$", L
+"$f''(x) = -f(x)$", L"$f''(x) =  g(x)$", L"$f''(x) = -g(x)$"], "", false)
 ````
 
 
@@ -1900,16 +1900,16 @@ Which of the following is true?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"If the gra
-phs of $f$ and $g$ are rescalings of each other through $g(x)=cf(x)$, $c > 
-1$. Then the tangent line for corresponding points is the same.", L"If the 
-graphs of $f$ and $g$ are translations up and down, the tangent line at cor
-responding points is unchanged.", L"If the graphs of $f$ and $g$ are rescal
+phs of $f$ and $g$ are translations up and down, the tangent line at corres
+ponding points is unchanged.", L"If the graphs of $f$ and $g$ are rescaling
+s of each other through $g(x)=cf(x)$, $c > 1$. Then the tangent line for co
+rresponding points is the same.", L"If the graphs of $f$ and $g$ are rescal
 ings of each other through $g(x)=f(x/c)$, $c > 1$. Then the tangent line fo
-r corresponding points is the same."], 2, "", nothing, [1, 2, 3], LaTeXStri
-ngs.LaTeXString[L"If the graphs of $f$ and $g$ are rescalings of each other
- through $g(x)=cf(x)$, $c > 1$. Then the tangent line for corresponding poi
-nts is the same.", L"If the graphs of $f$ and $g$ are translations up and d
-own, the tangent line at corresponding points is unchanged.", L"If the grap
+r corresponding points is the same."], 1, "", nothing, [1, 2, 3], LaTeXStri
+ngs.LaTeXString[L"If the graphs of $f$ and $g$ are translations up and down
+, the tangent line at corresponding points is unchanged.", L"If the graphs 
+of $f$ and $g$ are rescalings of each other through $g(x)=cf(x)$, $c > 1$. 
+Then the tangent line for corresponding points is the same.", L"If the grap
 hs of $f$ and $g$ are rescalings of each other through $g(x)=f(x/c)$, $c > 
 1$. Then the tangent line for corresponding points is the same."], "", fals
 e)
@@ -1940,10 +1940,10 @@ CalculusWithJulia.WeaveSupport.Numericq(252, 0, "", "[252.0, 252.0]", 252,
 Which equation below is $f(x) = \sin(k\cdot x)$ a solution of ($k > 1$)?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f''(x) = 
--k^2\cdot f(x)$", L"$f''(x) = k^2\cdot f(x)$", L"$f'(x) = k^2\cdot f(x)$", 
-L"$f'(x) = -k^2\cdot f(x)$"], 1, "", nothing, [1, 2, 3, 4], LaTeXStrings.La
-TeXString[L"$f''(x) = -k^2\cdot f(x)$", L"$f''(x) = k^2\cdot f(x)$", L"$f'(
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f'(x) = k
+^2\cdot f(x)$", L"$f''(x) = -k^2\cdot f(x)$", L"$f''(x) = k^2\cdot f(x)$", 
+L"$f'(x) = -k^2\cdot f(x)$"], 2, "", nothing, [1, 2, 3, 4], LaTeXStrings.La
+TeXString[L"$f'(x) = k^2\cdot f(x)$", L"$f''(x) = -k^2\cdot f(x)$", L"$f''(
 x) = k^2\cdot f(x)$", L"$f'(x) = -k^2\cdot f(x)$"], "", false)
 ````
 
@@ -1957,11 +1957,11 @@ Let $f(x) = e^{k\cdot x}$, $k > 1$. Which equation below is $f(x)$ a solution of
 
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f''(x) = 
-k^2\cdot f(x)$", L"$f'(x) = k^2\cdot f(x)$", L"$f'(x) = -k^2\cdot f(x)$", L
-"$f''(x) = -k^2\cdot f(x)$"], 1, "", nothing, [1, 2, 3, 4], LaTeXStrings.La
-TeXString[L"$f''(x) = k^2\cdot f(x)$", L"$f'(x) = k^2\cdot f(x)$", L"$f'(x)
- = -k^2\cdot f(x)$", L"$f''(x) = -k^2\cdot f(x)$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f'(x) = -
+k^2\cdot f(x)$", L"$f''(x) = k^2\cdot f(x)$", L"$f'(x) = k^2\cdot f(x)$", L
+"$f''(x) = -k^2\cdot f(x)$"], 2, "", nothing, [1, 2, 3, 4], LaTeXStrings.La
+TeXString[L"$f'(x) = -k^2\cdot f(x)$", L"$f''(x) = k^2\cdot f(x)$", L"$f'(x
+) = k^2\cdot f(x)$", L"$f''(x) = -k^2\cdot f(x)$"], "", false)
 ````
 
 

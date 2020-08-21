@@ -1228,8 +1228,8 @@ xstar = solve(gradf, [x,y])
 
 ````
 Dict{Any,Any} with 2 entries:
-  y => y1/3 + y2/3 + y3/3
   x => x1/3 + x2/3 + x3/3
+  y => y1/3 + y2/3 + y3/3
 ````
 
 
@@ -1913,10 +1913,10 @@ ds = solve(diff.(L(x,y,lambda), [x, y, lambda]))
 
 ````
 4-element Array{Dict{Any,Any},1}:
- Dict(y => -1,x => 0,lambda => -1)
- Dict(y => 1,x => 0,lambda => -1)
- Dict(y => 0,x => -1,lambda => 1)
- Dict(y => 0,x => 1,lambda => 1)
+ Dict(lambda => -1,x => 0,y => -1)
+ Dict(lambda => -1,x => 0,y => 1)
+ Dict(lambda => 1,x => -1,y => 0)
+ Dict(lambda => 1,x => 1,y => 0)
 ````
 
 
@@ -2165,8 +2165,8 @@ solve(subs.(∇L, lambda1 .=> 1))
 
 ````
 2-element Array{Dict{Any,Any},1}:
- Dict(y => -3*I,x => 3,lambda2 => 0,z => 0)
- Dict(y => 3*I,x => 3,lambda2 => 0,z => 0)
+ Dict(x => 3,z => 0,y => -3*I,lambda2 => 0)
+ Dict(x => 3,z => 0,y => 3*I,lambda2 => 0)
 ````
 
 
@@ -2183,8 +2183,8 @@ out = solve(subs.(∇L, y .=> 0))
 
 ````
 2-element Array{Dict{Any,Any},1}:
- Dict(x => 1,lambda1 => 1/3,lambda2 => 4/3,z => -1)
- Dict(x => -3,lambda1 => 3,lambda2 => 12,z => -3)
+ Dict(x => 1,z => -1,lambda1 => 1/3,lambda2 => 4/3)
+ Dict(x => -3,z => -3,lambda1 => 3,lambda2 => 12)
 ````
 
 
@@ -2632,10 +2632,10 @@ CalculusWithJulia.WeaveSupport.Numericq(3.0, 0.001, "", "[2.999, 3.001]", 2
 Let $f(x,y,z) = xy + yz + zx - 3$. What equation describes the tangent approximation at $(1,1,1)$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$x + y + z
- = 3$", L"$2x + y - 2z = 1$", L"$x + 2y + 3z = 6$"], 1, "", nothing, [1, 2,
- 3], LaTeXStrings.LaTeXString[L"$x + y + z = 3$", L"$2x + y - 2z = 1$", L"$
-x + 2y + 3z = 6$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$2x + y - 
+2z = 1$", L"$x + 2y + 3z = 6$", L"$x + y + z = 3$"], 3, "", nothing, [1, 2,
+ 3], LaTeXStrings.LaTeXString[L"$2x + y - 2z = 1$", L"$x + 2y + 3z = 6$", L
+"$x + y + z = 3$"], "", false)
 ````
 
 
@@ -2651,10 +2651,10 @@ Find the gradient of $f$:
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\langle 2
-y + y^2, 2x + x^2$", L"$\langle 2xy + y^2 + y, 2xy + x^2 + x\rangle$", L"$y
-^2 + y, x^2 + x$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$
-\langle 2y + y^2, 2x + x^2$", L"$\langle 2xy + y^2 + y, 2xy + x^2 + x\rangl
-e$", L"$y^2 + y, x^2 + x$"], "", false)
+xy + y^2 + y, 2xy + x^2 + x\rangle$", L"$\langle 2y + y^2, 2x + x^2$", L"$y
+^2 + y, x^2 + x$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$
+\langle 2xy + y^2 + y, 2xy + x^2 + x\rangle$", L"$\langle 2y + y^2, 2x + x^
+2$", L"$y^2 + y, x^2 + x$"], "", false)
 ````
 
 
@@ -2935,10 +2935,10 @@ CalculusWithJulia.WeaveSupport.Radioq(["Yes", "No"], 1, "", nothing, [1, 2]
 Which vector is orthogonal to the contour line $x^2 + y^2 = 3$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\langle 2
-x, 2y\rangle$", L"$\langle x^2, 2y \rangle$", L"$\langle 2x, y^2\rangle$"],
- 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\langle 2x, 2y\rang
-le$", L"$\langle x^2, 2y \rangle$", L"$\langle 2x, y^2\rangle$"], "", false
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\langle x
+^2, 2y \rangle$", L"$\langle 2x, y^2\rangle$", L"$\langle 2x, 2y\rangle$"],
+ 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\langle x^2, 2y \ra
+ngle$", L"$\langle 2x, y^2\rangle$", L"$\langle 2x, 2y\rangle$"], "", false
 )
 ````
 

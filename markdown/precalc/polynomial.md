@@ -36,7 +36,7 @@ $$
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_QxtFHZ.gif", "Polynomials of varying even degrees over [
+qq4h57w0000gr/T/jl_Ajbic2.gif", "Polynomials of varying even degrees over [
 -1,1].")
 ````
 
@@ -85,7 +85,7 @@ $$
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_rAo1L1.gif", "Graphs of y = mx for different values of m
+qq4h57w0000gr/T/jl_eo0Bki.gif", "Graphs of y = mx for different values of m
 ")
 ````
 
@@ -547,7 +547,7 @@ larger values of $n$ have greater growth once outside of $[-1,1]$:
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_x7pcvL.gif", L"Demonstration that $x^{10}$ grows faster 
+qq4h57w0000gr/T/jl_H7lb7x.gif", L"Demonstration that $x^{10}$ grows faster 
 than $x^8$, ... and $x^2$  grows faster than $x^0$ (which is constant).")
 ````
 
@@ -588,7 +588,7 @@ of the plot window until the graph appears U-shaped.
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_7AfcZQ.gif", "The previous graph is highlighted in red. 
+qq4h57w0000gr/T/jl_z35bIc.gif", "The previous graph is highlighted in red. 
 Ultimately the leading term (\$x^4\$ here) dominates the graph.")
 ````
 
@@ -926,9 +926,9 @@ CalculusWithJulia.WeaveSupport.Radioq(["Yes", "No"], 1, "", nothing, [1, 2]
 What is the leading term of $p$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString["3", L"$-2x$", L"$5$",
- L"$3x^2$"], 4, "", nothing, [1, 2, 3, 4], AbstractString["3", L"$-2x$", L"
-$5$", L"$3x^2$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"$-2x$", L"$5$", L"$3
+x^2$", "3"], 3, "", nothing, [1, 2, 3, 4], AbstractString[L"$-2x$", L"$5$",
+ L"$3x^2$", "3"], "", false)
 ````
 
 
@@ -1006,8 +1006,8 @@ The polynomial `p` is defined in `Julia` as follows:
 What command will return the value of the polynomial when $x=2$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`p*2`", "`p[2]`", "`p_2`", "`p(x=>2
-)`"], 4, "", nothing, [1, 2, 3, 4], ["`p*2`", "`p[2]`", "`p_2`", "`p(x=>2)`
+CalculusWithJulia.WeaveSupport.Radioq(["`p(x=>2)`", "`p[2]`", "`p_2`", "`p*
+2`"], 1, "", nothing, [1, 2, 3, 4], ["`p(x=>2)`", "`p[2]`", "`p_2`", "`p*2`
 "], "", false)
 ````
 
@@ -1102,9 +1102,9 @@ CalculusWithJulia.WeaveSupport.Numericq(6, 0, "", "[6.0, 6.0]", 6, 6, "", "
 What is the monic polynomial with roots $x=-1$, $x=0$, and $x=2$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`x^3 + x^2 + 2x`", "`x^3 - x^2 - 2x
-`", "`x^3 + x^2 - 2x`", "`x^3 - 3x^2  + 2x`"], 2, "", nothing, [1, 2, 3, 4]
-, ["`x^3 + x^2 + 2x`", "`x^3 - x^2 - 2x`", "`x^3 + x^2 - 2x`", "`x^3 - 3x^2
+CalculusWithJulia.WeaveSupport.Radioq(["`x^3 + x^2 - 2x`", "`x^3 - x^2 - 2x
+`", "`x^3 + x^2 + 2x`", "`x^3 - 3x^2  + 2x`"], 2, "", nothing, [1, 2, 3, 4]
+, ["`x^3 + x^2 - 2x`", "`x^3 - x^2 - 2x`", "`x^3 + x^2 + 2x`", "`x^3 - 3x^2
   + 2x`"], "", false)
 ````
 
@@ -1117,9 +1117,9 @@ CalculusWithJulia.WeaveSupport.Radioq(["`x^3 + x^2 + 2x`", "`x^3 - x^2 - 2x
 Use `expand` to expand the expression `((x-h)^3 - x^3) / h` where `x` and `h` are symbolic constants. What is the value:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`x^3 - x^3/h`", "`0`", "`h^3 + 3h^2
-x + 3hx^2 + x^3 -x^3/h`", "`-h^2 + 3hx  - 3x^2`"], 4, "", nothing, [1, 2, 3
-, 4], ["`x^3 - x^3/h`", "`0`", "`h^3 + 3h^2x + 3hx^2 + x^3 -x^3/h`", "`-h^2
+CalculusWithJulia.WeaveSupport.Radioq(["`h^3 + 3h^2x + 3hx^2 + x^3 -x^3/h`"
+, "`0`", "`x^3 - x^3/h`", "`-h^2 + 3hx  - 3x^2`"], 4, "", nothing, [1, 2, 3
+, 4], ["`h^3 + 3h^2x + 3hx^2 + x^3 -x^3/h`", "`0`", "`x^3 - x^3/h`", "`-h^2
  + 3hx  - 3x^2`"], "", false)
 ````
 

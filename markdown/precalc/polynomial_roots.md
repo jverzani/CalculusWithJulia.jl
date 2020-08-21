@@ -671,9 +671,9 @@ elements(rts)
 
 ````
 4-element Array{Sym,1}:
-  sqrt(sqrt(2)/4 + 1/2)
  -sqrt(sqrt(2)/4 + 1/2)
  -sqrt(1/2 - sqrt(2)/4)
+  sqrt(sqrt(2)/4 + 1/2)
   sqrt(1/2 - sqrt(2)/4)
 ````
 
@@ -691,12 +691,12 @@ N.(elements(solveset(p)))
 
 ````
 4-element Array{BigFloat,1}:
-  0.92387953251128675612818318939678828682241662586364248611509773128053500
-75011054
  -0.92387953251128675612818318939678828682241662586364248611509773128053500
 75011054
  -0.38268343236508977172845998403039886676134456248562704143380063562754603
 39600903
+  0.92387953251128675612818318939678828682241662586364248611509773128053500
+75011054
   0.38268343236508977172845998403039886676134456248562704143380063562754603
 39600903
 ````
@@ -912,9 +912,9 @@ VW`, ...).", Dict{Any,Any}(:class => "info"))
 What is the remainder of dividing $x^4 - x^3 - x^2 + 2$ by $x-2$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$0$", L"$x
--2$", L"$x^3 + x^2 + x + 2$", L"$6$"], 4, "", nothing, [1, 2, 3, 4], LaTeXS
-trings.LaTeXString[L"$0$", L"$x-2$", L"$x^3 + x^2 + x + 2$", L"$6$"], "", f
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$x-2$", L"
+$0$", L"$6$", L"$x^3 + x^2 + x + 2$"], 3, "", nothing, [1, 2, 3, 4], LaTeXS
+trings.LaTeXString[L"$x-2$", L"$0$", L"$6$", L"$x^3 + x^2 + x + 2$"], "", f
 alse)
 ````
 
@@ -928,9 +928,9 @@ alse)
 What is the remainder of dividing $x^4 - x^3 - x^2 + 2$ by $x^3 - 2x$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString["2", L"$x - 1$", L"$x^
-2 - 2x + 2$"], 3, "", nothing, [1, 2, 3], AbstractString["2", L"$x - 1$", L
-"$x^2 - 2x + 2$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"$x^2 - 2x + 2$", L"$
+x - 1$", "2"], 1, "", nothing, [1, 2, 3], AbstractString[L"$x^2 - 2x + 2$",
+ L"$x - 1$", "2"], "", false)
 ````
 
 
@@ -970,12 +970,12 @@ representing $p(x) = q(x)\cdot(x-c) + r$.
 What is $p(x)$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$x^5 + 2x^
-4 + 4x^3 + 8x^2 + 15x + 31$", L"$31$", L"$2x^4 + 4x^3 + 8x^2 + 16x + 30$", 
-L"$x^5 - x + 1$", L"$x^4 +2x^3 + 4x^2 + 8x + 15$"], 4, "", nothing, [1, 2, 
-3, 4, 5], LaTeXStrings.LaTeXString[L"$x^5 + 2x^4 + 4x^3 + 8x^2 + 15x + 31$"
-, L"$31$", L"$2x^4 + 4x^3 + 8x^2 + 16x + 30$", L"$x^5 - x + 1$", L"$x^4 +2x
-^3 + 4x^2 + 8x + 15$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$2x^4 + 4x
+^3 + 8x^2 + 16x + 30$", L"$x^4 +2x^3 + 4x^2 + 8x + 15$", L"$x^5 - x + 1$", 
+L"$31$", L"$x^5 + 2x^4 + 4x^3 + 8x^2 + 15x + 31$"], 3, "", nothing, [1, 2, 
+3, 4, 5], LaTeXStrings.LaTeXString[L"$2x^4 + 4x^3 + 8x^2 + 16x + 30$", L"$x
+^4 +2x^3 + 4x^2 + 8x + 15$", L"$x^5 - x + 1$", L"$31$", L"$x^5 + 2x^4 + 4x^
+3 + 8x^2 + 15x + 31$"], "", false)
 ````
 
 
@@ -986,12 +986,12 @@ L"$x^5 - x + 1$", L"$x^4 +2x^3 + 4x^2 + 8x + 15$"], 4, "", nothing, [1, 2,
 What is $q(x)$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$2x^4 + 4x
-^3 + 8x^2 + 16x + 30$", L"$x^5 - x + 1$", L"$x^5 + 2x^4 + 4x^3 + 8x^2 + 15x
- + 31$", L"$31$", L"$x^4 +2x^3 + 4x^2 + 8x + 15$"], 5, "", nothing, [1, 2, 
-3, 4, 5], LaTeXStrings.LaTeXString[L"$2x^4 + 4x^3 + 8x^2 + 16x + 30$", L"$x
-^5 - x + 1$", L"$x^5 + 2x^4 + 4x^3 + 8x^2 + 15x + 31$", L"$31$", L"$x^4 +2x
-^3 + 4x^2 + 8x + 15$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$31$", L"$
+x^4 +2x^3 + 4x^2 + 8x + 15$", L"$x^5 + 2x^4 + 4x^3 + 8x^2 + 15x + 31$", L"$
+2x^4 + 4x^3 + 8x^2 + 16x + 30$", L"$x^5 - x + 1$"], 2, "", nothing, [1, 2, 
+3, 4, 5], LaTeXStrings.LaTeXString[L"$31$", L"$x^4 +2x^3 + 4x^2 + 8x + 15$"
+, L"$x^5 + 2x^4 + 4x^3 + 8x^2 + 15x + 31$", L"$2x^4 + 4x^3 + 8x^2 + 16x + 3
+0$", L"$x^5 - x + 1$"], "", false)
 ````
 
 
@@ -1002,10 +1002,10 @@ What is $r$?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$x^5 - x +
- 1$", L"$31$", L"$x^5 + 2x^4 + 4x^3 + 8x^2 + 15x + 31$", L"$2x^4 + 4x^3 + 8
-x^2 + 16x + 30$", L"$x^4 +2x^3 + 4x^2 + 8x + 15$"], 2, "", nothing, [1, 2, 
-3, 4, 5], LaTeXStrings.LaTeXString[L"$x^5 - x + 1$", L"$31$", L"$x^5 + 2x^4
- + 4x^3 + 8x^2 + 15x + 31$", L"$2x^4 + 4x^3 + 8x^2 + 16x + 30$", L"$x^4 +2x
+ 1$", L"$x^5 + 2x^4 + 4x^3 + 8x^2 + 15x + 31$", L"$2x^4 + 4x^3 + 8x^2 + 16x
+ + 30$", L"$31$", L"$x^4 +2x^3 + 4x^2 + 8x + 15$"], 4, "", nothing, [1, 2, 
+3, 4, 5], LaTeXStrings.LaTeXString[L"$x^5 - x + 1$", L"$x^5 + 2x^4 + 4x^3 +
+ 8x^2 + 15x + 31$", L"$2x^4 + 4x^3 + 8x^2 + 16x + 30$", L"$31$", L"$x^4 +2x
 ^3 + 4x^2 + 8x + 15$"], "", false)
 ````
 
@@ -1021,10 +1021,10 @@ Let $p=x^4 -9x^3 +30x^2 -44x + 24$
 Factor $p$. What are the factors?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L" $(x+2)$ a
-nd $(x+3)$", L" $2$ and  $3$", L" $(x-2)$ and $(x-3)$"], 3, "", nothing, [1
-, 2, 3], LaTeXStrings.LaTeXString[L" $(x+2)$ and $(x+3)$", L" $2$ and  $3$"
-, L" $(x-2)$ and $(x-3)$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L" $(x-2)$ a
+nd $(x-3)$", L" $2$ and  $3$", L" $(x+2)$ and $(x+3)$"], 1, "", nothing, [1
+, 2, 3], LaTeXStrings.LaTeXString[L" $(x-2)$ and $(x-3)$", L" $2$ and  $3$"
+, L" $(x+2)$ and $(x+3)$"], "", false)
 ````
 
 
@@ -1062,12 +1062,12 @@ CalculusWithJulia.WeaveSupport.Numericq(2, 0, "", "[2.0, 2.0]", 2, 2, "", "
 What are the numeric values of the real roots of $f(x) = x^6 - 5x^5 + x^4 - 3x^3 + x^2 - x + 1$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`[0.578696, 4.91368]`", "`[-0.43423
-5+0.613836im, -0.434235-0.613836im]`", "`[-0.434235, -0.434235,  0.188049, 
-0.188049, 0.578696, 4.91368]`", "`[-0.434235, -0.434235,  0.188049, 0.18804
-9]`"], 1, "", nothing, [1, 2, 3, 4], ["`[0.578696, 4.91368]`", "`[-0.434235
-+0.613836im, -0.434235-0.613836im]`", "`[-0.434235, -0.434235,  0.188049, 0
-.188049, 0.578696, 4.91368]`", "`[-0.434235, -0.434235,  0.188049, 0.188049
+CalculusWithJulia.WeaveSupport.Radioq(["`[-0.434235, -0.434235,  0.188049, 
+0.188049]`", "`[0.578696, 4.91368]`", "`[-0.434235+0.613836im, -0.434235-0.
+613836im]`", "`[-0.434235, -0.434235,  0.188049, 0.188049, 0.578696, 4.9136
+8]`"], 2, "", nothing, [1, 2, 3, 4], ["`[-0.434235, -0.434235,  0.188049, 0
+.188049]`", "`[0.578696, 4.91368]`", "`[-0.434235+0.613836im, -0.434235-0.6
+13836im]`", "`[-0.434235, -0.434235,  0.188049, 0.188049, 0.578696, 4.91368
 ]`"], "", false)
 ````
 
@@ -1210,9 +1210,9 @@ The roots of the [Chebyshev](https://en.wikipedia.org/wiki/Chebyshev_polynomials
 * Based on the relation, figure out $T_2(x)$. It is
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$x$", L"$4
-x^2 - 1$", L"$2x^2$", L"$2x$"], 2, "", nothing, [1, 2, 3, 4], LaTeXStrings.
-LaTeXString[L"$x$", L"$4x^2 - 1$", L"$2x^2$", L"$2x$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$2x^2$", L
+"$x$", L"$4x^2 - 1$", L"$2x$"], 3, "", nothing, [1, 2, 3, 4], LaTeXStrings.
+LaTeXString[L"$2x^2$", L"$x$", L"$4x^2 - 1$", L"$2x$"], "", false)
 ````
 
 

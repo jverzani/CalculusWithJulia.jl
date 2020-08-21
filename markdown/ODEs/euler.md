@@ -85,7 +85,7 @@ get a curve that was close to the actual answer?
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_S8N48R.gif", "Illustration of a function stitching toget
+qq4h57w0000gr/T/jl_xI5mHS.gif", "Illustration of a function stitching toget
 her slope field lines to\napproximate the answer to an initial-value proble
 m. The other function drawn is the actual solution.\n")
 ````
@@ -475,7 +475,7 @@ This simulation also suggests that a curved path is better than the shorter stra
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_k6JLs4.gif", "The race is on. An illustration of beads f
+qq4h57w0000gr/T/jl_RDYfDb.gif", "The race is on. An illustration of beads f
 alling along a path, as can be seen, some paths are faster than others. The
  fastest path would follow a cycloid. See [Bensky and Moelter](https://pdfs
 .semanticscholar.org/66c1/4d8da6f2f5f2b93faf4deb77aafc7febb43a.pdf) for det

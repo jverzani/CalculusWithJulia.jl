@@ -378,10 +378,10 @@ many.
 In the integral of $\int \log(x) dx$ we let $u=\log(x)$ and $dv=dx$. What are $du$ and $v$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$du=1/x dx
-\quad v = x^2/2$", L"$du=1/x dx \quad v = x$", L"$du=x\log(x) dx\quad v = 1
-$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$du=1/x dx\quad 
-v = x^2/2$", L"$du=1/x dx \quad v = x$", L"$du=x\log(x) dx\quad v = 1$"], "
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$du=x\log(
+x) dx\quad v = 1$", L"$du=1/x dx\quad v = x^2/2$", L"$du=1/x dx \quad v = x
+$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$du=x\log(x) dx\
+quad v = 1$", L"$du=1/x dx\quad v = x^2/2$", L"$du=1/x dx \quad v = x$"], "
 ", false)
 ````
 
@@ -395,10 +395,10 @@ In the integral $\int \sec(x)^3 dx$ we let $u=\sec(x)$ and $dv = \sec(x)^2 dx$. 
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$du=\csc(x
-) dx \quad v=\sec(x)^3 / 3$", L"$du=\tan(x)  dx \quad v=\sec(x)\tan(x)$", L
-"$du=\sec(x)\tan(x)dx \quad v=\tan(x)$"], 3, "", nothing, [1, 2, 3], LaTeXS
-trings.LaTeXString[L"$du=\csc(x) dx \quad v=\sec(x)^3 / 3$", L"$du=\tan(x) 
- dx \quad v=\sec(x)\tan(x)$", L"$du=\sec(x)\tan(x)dx \quad v=\tan(x)$"], ""
+) dx \quad v=\sec(x)^3 / 3$", L"$du=\sec(x)\tan(x)dx \quad v=\tan(x)$", L"$
+du=\tan(x)  dx \quad v=\sec(x)\tan(x)$"], 2, "", nothing, [1, 2, 3], LaTeXS
+trings.LaTeXString[L"$du=\csc(x) dx \quad v=\sec(x)^3 / 3$", L"$du=\sec(x)\
+tan(x)dx \quad v=\tan(x)$", L"$du=\tan(x)  dx \quad v=\sec(x)\tan(x)$"], ""
 , false)
 ````
 
@@ -414,10 +414,10 @@ What are $du$ and $v$?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$du=\sin(x
-)dx \quad v=-e^{-x}$", L"$du=-e^{-x} dx \quad v=\sin(x)$", L"$du=-e^{-x} dx
- \quad v=-\sin(x)$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L
-"$du=\sin(x)dx \quad v=-e^{-x}$", L"$du=-e^{-x} dx \quad v=\sin(x)$", L"$du
-=-e^{-x} dx \quad v=-\sin(x)$"], "", false)
+)dx \quad v=-e^{-x}$", L"$du=-e^{-x} dx \quad v=-\sin(x)$", L"$du=-e^{-x} d
+x \quad v=\sin(x)$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L
+"$du=\sin(x)dx \quad v=-e^{-x}$", L"$du=-e^{-x} dx \quad v=-\sin(x)$", L"$d
+u=-e^{-x} dx \quad v=\sin(x)$"], "", false)
 ````
 
 
@@ -551,11 +551,11 @@ hing, [1, 2, 3, 4, 5], ["L", "I", "A", "T", "E"], "", false)
 Find an antiderivative for $\cos^{-1}(x)$ using the integration by parts formula.
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$-\sin^{-1
-}(x)$", L"$x^2/2 \cos^{-1}(x) - x\sqrt{1-x^2}/4 - \cos^{-1}(x)/4$", L"$x\co
-s^{-1}(x)-\sqrt{1 - x^2}$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXS
-tring[L"$-\sin^{-1}(x)$", L"$x^2/2 \cos^{-1}(x) - x\sqrt{1-x^2}/4 - \cos^{-
-1}(x)/4$", L"$x\cos^{-1}(x)-\sqrt{1 - x^2}$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$x\cos^{-1
+}(x)-\sqrt{1 - x^2}$", L"$-\sin^{-1}(x)$", L"$x^2/2 \cos^{-1}(x) - x\sqrt{1
+-x^2}/4 - \cos^{-1}(x)/4$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXS
+tring[L"$x\cos^{-1}(x)-\sqrt{1 - x^2}$", L"$-\sin^{-1}(x)$", L"$x^2/2 \cos^
+{-1}(x) - x\sqrt{1-x^2}/4 - \cos^{-1}(x)/4$"], "", false)
 ````
 
 

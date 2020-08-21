@@ -135,7 +135,7 @@ a < b, c*a < c*b
 
 
 ````
-(true, true)
+(false, false)
 ````
 
 
@@ -180,7 +180,7 @@ a < b, 1/a > 1/b
 
 
 ````
-(false, false)
+(true, true)
 ````
 
 
@@ -543,9 +543,9 @@ The `clamp(x, a, b)` performs this task more generally, and is used as in `clamp
 Is `e^pi` or `pi^e` greater?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`e^pi` is greater than `pi^e`", "`e
-^pi` is equal to `pi^e`", "`e^pi` is less than `pi^e`"], 1, "", nothing, [1
-, 2, 3], ["`e^pi` is greater than `pi^e`", "`e^pi` is equal to `pi^e`", "`e
+CalculusWithJulia.WeaveSupport.Radioq(["`e^pi` is equal to `pi^e`", "`e^pi`
+ is greater than `pi^e`", "`e^pi` is less than `pi^e`"], 2, "", nothing, [1
+, 2, 3], ["`e^pi` is equal to `pi^e`", "`e^pi` is greater than `pi^e`", "`e
 ^pi` is less than `pi^e`"], "", false)
 ````
 
@@ -586,10 +586,10 @@ b$"], "", false)
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(AbstractString["Yes, it is always tru
-e.", L"It is never true, as $1/a$ is negative and $1/b$ is positive", "It c
-an sometimes be true, though not always."], 2, "", nothing, [1, 2, 3], Abst
-ractString["Yes, it is always true.", L"It is never true, as $1/a$ is negat
-ive and $1/b$ is positive", "It can sometimes be true, though not always."]
+e.", "It can sometimes be true, though not always.", L"It is never true, as
+ $1/a$ is negative and $1/b$ is positive"], 3, "", nothing, [1, 2, 3], Abst
+ractString["Yes, it is always true.", "It can sometimes be true, though not
+ always.", L"It is never true, as $1/a$ is negative and $1/b$ is positive"]
 , "", false)
 ````
 
@@ -640,9 +640,9 @@ hing, [1, 2, 3, 4, 5], ["`airyai(-1) < 0`", "`airyai(-2) < 0`", "`airyai(-3
 By trying three different values of $x > 0$ which of these could possibly be always true:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`x^x == (1/e)^(1/e)`", "`x^x >= (1/
-e)^(1/e)`", "`x^x <= (1/e)^(1/e)`"], 2, "", nothing, [1, 2, 3], ["`x^x == (
-1/e)^(1/e)`", "`x^x >= (1/e)^(1/e)`", "`x^x <= (1/e)^(1/e)`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`x^x <= (1/e)^(1/e)`", "`x^x == (1/
+e)^(1/e)`", "`x^x >= (1/e)^(1/e)`"], 3, "", nothing, [1, 2, 3], ["`x^x <= (
+1/e)^(1/e)`", "`x^x == (1/e)^(1/e)`", "`x^x >= (1/e)^(1/e)`"], "", false)
 ````
 
 
@@ -656,9 +656,9 @@ correct for all $p$ and $x$. By trying a few points, which is true
 when $x,y > 0$ and $0 < p < 1$:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`(x+y)^p == x^p + y^p`", "`(x+y)^p 
-< x^p + y^p`", "`(x+y)^p > x^p + y^p`"], 2, "", nothing, [1, 2, 3], ["`(x+y
-)^p == x^p + y^p`", "`(x+y)^p < x^p + y^p`", "`(x+y)^p > x^p + y^p`"], "", 
+CalculusWithJulia.WeaveSupport.Radioq(["`(x+y)^p > x^p + y^p`", "`(x+y)^p <
+ x^p + y^p`", "`(x+y)^p == x^p + y^p`"], 2, "", nothing, [1, 2, 3], ["`(x+y
+)^p > x^p + y^p`", "`(x+y)^p < x^p + y^p`", "`(x+y)^p == x^p + y^p`"], "", 
 false)
 ````
 
@@ -675,9 +675,9 @@ JSTOR,AMM,Vol.97,No.1,1990). Which one?
 
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`a^b + b^a <= 1`", "`a^a + b^b >= a
-^b + b^a`", "`a^a + b^b <= a^b + b^a`"], 2, "", nothing, [1, 2, 3], ["`a^b 
-+ b^a <= 1`", "`a^a + b^b >= a^b + b^a`", "`a^a + b^b <= a^b + b^a`"], "", 
+CalculusWithJulia.WeaveSupport.Radioq(["`a^a + b^b <= a^b + b^a`", "`a^a + 
+b^b >= a^b + b^a`", "`a^b + b^a <= 1`"], 2, "", nothing, [1, 2, 3], ["`a^a 
++ b^b <= a^b + b^a`", "`a^a + b^b >= a^b + b^a`", "`a^b + b^a <= 1`"], "", 
 false)
 ````
 
@@ -703,11 +703,11 @@ CalculusWithJulia.WeaveSupport.Radioq(["Yes", "No"], 2, "", nothing, [1, 2]
 Which of the following is equivalent to $\lvert x - a\rvert > b$:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$ -b < x-a
- \text{ and } x - a < b$", L"$ x - a < -b \text{ or } x - a > b$", L"$-b < 
-x - a < b$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$ -b < 
-x-a \text{ and } x - a < b$", L"$ x - a < -b \text{ or } x - a > b$", L"$-b
- < x - a < b$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$-b < x - 
+a < b$", L"$ x - a < -b \text{ or } x - a > b$", L"$ -b < x-a \text{ and } 
+x - a < b$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$-b < x
+ - a < b$", L"$ x - a < -b \text{ or } x - a > b$", L"$ -b < x-a \text{ and
+ } x - a < b$"], "", false)
 ````
 
 
@@ -754,11 +754,11 @@ CalculusWithJulia.WeaveSupport.Radioq(["Yes", "No"], 2, "", nothing, [1, 2]
 Which of these will show DeMorgan's law holds when both values are `false`:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`!(false & false) == !false | !fals
-e`", "`!(false & false) == !false & !false`", "`!(false & false) == false !
-& false`"], 1, "", nothing, [1, 2, 3], ["`!(false & false) == !false | !fal
-se`", "`!(false & false) == !false & !false`", "`!(false & false) == false 
-!& false`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`!(false & false) == false !& false
+`", "`!(false & false) == !false & !false`", "`!(false & false) == !false |
+ !false`"], 3, "", nothing, [1, 2, 3], ["`!(false & false) == false !& fals
+e`", "`!(false & false) == !false & !false`", "`!(false & false) == !false 
+| !false`"], "", false)
 ````
 
 

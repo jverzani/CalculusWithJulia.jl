@@ -624,9 +624,9 @@ CalculusWithJulia.WeaveSupport.Numericq(0, 0, "", "[0.0, 0.0]", 0, 0, "", "
 Find $\lim_{x \rightarrow 2+} (x-3)/(x-2)$.
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$L=\infty$
-", L"$L=0$", L"$L=-1$", L"$L=-\infty$"], 4, "", nothing, [1, 2, 3, 4], LaTe
-XStrings.LaTeXString[L"$L=\infty$", L"$L=0$", L"$L=-1$", L"$L=-\infty$"], "
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$L=0$", L"
+$L=-\infty$", L"$L=-1$", L"$L=\infty$"], 2, "", nothing, [1, 2, 3, 4], LaTe
+XStrings.LaTeXString[L"$L=0$", L"$L=-\infty$", L"$L=-1$", L"$L=\infty$"], "
 ", false)
 ````
 
@@ -639,9 +639,9 @@ Find $\lim_{x \rightarrow -3-} (x-3)/(x+3)$.
 
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$L=-1$", L
-"$L=0$", L"$L=\infty$", L"$L=-\infty$"], 3, "", nothing, [1, 2, 3, 4], LaTe
-XStrings.LaTeXString[L"$L=-1$", L"$L=0$", L"$L=\infty$", L"$L=-\infty$"], "
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$L=0$", L"
+$L=\infty$", L"$L=-1$", L"$L=-\infty$"], 2, "", nothing, [1, 2, 3, 4], LaTe
+XStrings.LaTeXString[L"$L=0$", L"$L=\infty$", L"$L=-1$", L"$L=-\infty$"], "
 ", false)
 ````
 
@@ -654,14 +654,14 @@ XStrings.LaTeXString[L"$L=-1$", L"$L=0$", L"$L=\infty$", L"$L=-\infty$"], "
 Some functions do not have a limit. Make a graph of $\sin(1/x)$ from $0.0001$ to $1$ and look at the output. Why does a limit not exist?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["The limit does exist - it is any nu
-mber from -1 to 1", "Err, the limit does exists and is 1", "The function os
-cillates too much and its y values do not get close to any one value", "Any
- function that oscillates does not have a limit."], 3, "", nothing, [1, 2, 
-3, 4], ["The limit does exist - it is any number from -1 to 1", "Err, the l
-imit does exists and is 1", "The function oscillates too much and its y val
-ues do not get close to any one value", "Any function that oscillates does 
-not have a limit."], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["The function oscillates too much an
+d its y values do not get close to any one value", "Err, the limit does exi
+sts and is 1", "Any function that oscillates does not have a limit.", "The 
+limit does exist - it is any number from -1 to 1"], 1, "", nothing, [1, 2, 
+3, 4], ["The function oscillates too much and its y values do not get close
+ to any one value", "Err, the limit does exists and is 1", "Any function th
+at oscillates does not have a limit.", "The limit does exist - it is any nu
+mber from -1 to 1"], "", false)
 ````
 
 
@@ -685,9 +685,9 @@ Consider different values of $k$ to see if this limit depends on $k$ or not. Wha
 
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"$k$", L"$\log(k)$", 
-L"$1$", "The limit does not exist"], 3, "", nothing, [1, 2, 3, 4], Abstract
-String[L"$k$", L"$\log(k)$", L"$1$", "The limit does not exist"], "", false
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString["The limit does not ex
+ist", L"$\log(k)$", L"$k$", L"$1$"], 4, "", nothing, [1, 2, 3, 4], Abstract
+String["The limit does not exist", L"$\log(k)$", L"$k$", L"$1$"], "", false
 )
 ````
 
@@ -718,9 +718,9 @@ Consider different values of $k$ to see if the limit depends on $k$ or not. What
 
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"$1$", L"$k$", L"$\lo
-g(k)$", "The limit does not exist"], 2, "", nothing, [1, 2, 3, 4], Abstract
-String[L"$1$", L"$k$", L"$\log(k)$", "The limit does not exist"], "", false
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"$\log(k)$", L"$k$", 
+"The limit does not exist", L"$1$"], 2, "", nothing, [1, 2, 3, 4], Abstract
+String[L"$\log(k)$", L"$k$", "The limit does not exist", L"$1$"], "", false
 )
 ````
 
@@ -758,15 +758,15 @@ gets close to as $x$ gets large. We can't express this directly as a
 limit, as "$L$" is not a number. How might we?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"We can talk about th
-e limit at $\infty$ of $f(x) - (mx + b)$ being $0$", L"We can talk about th
-e limit at $\infty$ of $f(x) - mx$ being $b$", L"We can say $f(x) - mx$ has
- a horizontal asymptote $y=b$", L"We can say $f(x) - (mx+b)$ has a horizont
-al asymptote $y=0$", "Any of the above"], 5, "", nothing, [1, 2, 3, 4, 5], 
-AbstractString[L"We can talk about the limit at $\infty$ of $f(x) - (mx + b
-)$ being $0$", L"We can talk about the limit at $\infty$ of $f(x) - mx$ bei
-ng $b$", L"We can say $f(x) - mx$ has a horizontal asymptote $y=b$", L"We c
-an say $f(x) - (mx+b)$ has a horizontal asymptote $y=0$", "Any of the above
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString["Any of the above", L"
+We can talk about the limit at $\infty$ of $f(x) - (mx + b)$ being $0$", L"
+We can say $f(x) - mx$ has a horizontal asymptote $y=b$", L"We can talk abo
+ut the limit at $\infty$ of $f(x) - mx$ being $b$", L"We can say $f(x) - (m
+x+b)$ has a horizontal asymptote $y=0$"], 1, "", nothing, [1, 2, 3, 4, 5], 
+AbstractString["Any of the above", L"We can talk about the limit at $\infty
+$ of $f(x) - (mx + b)$ being $0$", L"We can say $f(x) - mx$ has a horizonta
+l asymptote $y=b$", L"We can talk about the limit at $\infty$ of $f(x) - mx
+$ being $b$", L"We can say $f(x) - (mx+b)$ has a horizontal asymptote $y=0$
 "], "", false)
 ````
 
@@ -805,12 +805,12 @@ CalculusWithJulia.WeaveSupport.Numericq(-1, 0, "", "[-1.0, -1.0]", -1, -1,
 This shows that
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L" $f(x)$ do
-es not have a limit as $x \rightarrow 0$", L" $f(x)$ has a limit of $-11$ a
-s $x \rightarrow 0$", L" $f(x)$ has a limit of $1$ as $x \rightarrow 0$"], 
-1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L" $f(x)$ does not have
- a limit as $x \rightarrow 0$", L" $f(x)$ has a limit of $-11$ as $x \right
-arrow 0$", L" $f(x)$ has a limit of $1$ as $x \rightarrow 0$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L" $f(x)$ ha
+s a limit of $1$ as $x \rightarrow 0$", L" $f(x)$ has a limit of $-11$ as $
+x \rightarrow 0$", L" $f(x)$ does not have a limit as $x \rightarrow 0$"], 
+3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L" $f(x)$ has a limit o
+f $1$ as $x \rightarrow 0$", L" $f(x)$ has a limit of $-11$ as $x \rightarr
+ow 0$", L" $f(x)$ does not have a limit as $x \rightarrow 0$"], "", false)
 ````
 
 

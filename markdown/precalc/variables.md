@@ -585,10 +585,10 @@ CalculusWithJulia.WeaveSupport.Numericq(0.13157894736842105, 0.001, "", "[0
 Which if these is not a valid variable name (identifier) in `Julia`:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`fahrenheit451`", "`aMiXeDcAsEnAmE`
-", "`5degreesbelowzero`", "`some_really_long_name_that_is_no_fun_to_type`"]
-, 3, "", nothing, [1, 2, 3, 4], ["`fahrenheit451`", "`aMiXeDcAsEnAmE`", "`5
-degreesbelowzero`", "`some_really_long_name_that_is_no_fun_to_type`"], "", 
+CalculusWithJulia.WeaveSupport.Radioq(["`5degreesbelowzero`", "`aMiXeDcAsEn
+AmE`", "`fahrenheit451`", "`some_really_long_name_that_is_no_fun_to_type`"]
+, 1, "", nothing, [1, 2, 3, 4], ["`5degreesbelowzero`", "`aMiXeDcAsEnAmE`",
+ "`fahrenheit451`", "`some_really_long_name_that_is_no_fun_to_type`"], "", 
 false)
 ````
 
@@ -603,8 +603,8 @@ false)
 Which of these symbols is  one of `Julia`'s built-in math constants?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`I`", "`oo`", "`E`", "`pi`"], 4, ""
-, nothing, [1, 2, 3, 4], ["`I`", "`oo`", "`E`", "`pi`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`I`", "`oo`", "`pi`", "`E`"], 3, ""
+, nothing, [1, 2, 3, 4], ["`I`", "`oo`", "`pi`", "`E`"], "", false)
 ````
 
 
@@ -624,9 +624,9 @@ What key sequence will produce this assignment
 
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`\$\\\\delta\$ = 1/10`", "`\\delta[
-tab] = 1/10`", "`delta[tab] = 1/10`"], 2, "", nothing, [1, 2, 3], ["`\$\\\\
-delta\$ = 1/10`", "`\\delta[tab] = 1/10`", "`delta[tab] = 1/10`"], "", fals
+CalculusWithJulia.WeaveSupport.Radioq(["`delta[tab] = 1/10`", "`\$\\\\delta
+\$ = 1/10`", "`\\delta[tab] = 1/10`"], 3, "", nothing, [1, 2, 3], ["`delta[
+tab] = 1/10`", "`\$\\\\delta\$ = 1/10`", "`\\delta[tab] = 1/10`"], "", fals
 e)
 ````
 
@@ -640,9 +640,9 @@ e)
 Which of these three statements will **not** be a valid way to assign three variables at once:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`a=1; b=2; c=3`", "`a=1, b=2, c=3`"
-, "`a,b,c = 1,2,3`"], 2, "", nothing, [1, 2, 3], ["`a=1; b=2; c=3`", "`a=1,
- b=2, c=3`", "`a,b,c = 1,2,3`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`a=1, b=2, c=3`", "`a,b,c = 1,2,3`"
+, "`a=1; b=2; c=3`"], 1, "", nothing, [1, 2, 3], ["`a=1, b=2, c=3`", "`a,b,
+c = 1,2,3`", "`a=1; b=2; c=3`"], "", false)
 ````
 
 

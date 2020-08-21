@@ -214,12 +214,12 @@ distance traveled by an object with constant velocity of $(v_0 +
 v_t)/2$.
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$(v(0) + v
-(t))/2 \cdot \int_0^t du = (v(0) + v(t))/2 \cdot t$", L"$\int_0^t v(u) du =
- v^2/2 \big|_0^t$", L"$\int_0^t (v(0) + v(u))/2 du = v(0)/2\cdot t + x(u)/2
-\ \big|_0^t$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$(v(0
-) + v(t))/2 \cdot \int_0^t du = (v(0) + v(t))/2 \cdot t$", L"$\int_0^t v(u)
- du = v^2/2 \big|_0^t$", L"$\int_0^t (v(0) + v(u))/2 du = v(0)/2\cdot t + x
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\int_0^t 
+v(u) du = v^2/2 \big|_0^t$", L"$(v(0) + v(t))/2 \cdot \int_0^t du = (v(0) +
+ v(t))/2 \cdot t$", L"$\int_0^t (v(0) + v(u))/2 du = v(0)/2\cdot t + x(u)/2
+\ \big|_0^t$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\int
+_0^t v(u) du = v^2/2 \big|_0^t$", L"$(v(0) + v(t))/2 \cdot \int_0^t du = (v
+(0) + v(t))/2 \cdot t$", L"$\int_0^t (v(0) + v(u))/2 du = v(0)/2\cdot t + x
 (u)/2\ \big|_0^t$"], "", false)
 ````
 
@@ -288,10 +288,10 @@ Which is bigger? The average value of $f(x) = x^{10}$ or the average
 value of $g(x) = \lvert x \rvert$ over the interval $[0,1]$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"That of $f
-(x) = x^{10}$.", L"That of $g(x) = \lvert x \rvert$."], 2, "", nothing, [1,
- 2], LaTeXStrings.LaTeXString[L"That of $f(x) = x^{10}$.", L"That of $g(x) 
-= \lvert x \rvert$."], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"That of $g
+(x) = \lvert x \rvert$.", L"That of $f(x) = x^{10}$."], 1, "", nothing, [1,
+ 2], LaTeXStrings.LaTeXString[L"That of $g(x) = \lvert x \rvert$.", L"That 
+of $f(x) = x^{10}$."], "", false)
 ````
 
 
@@ -357,16 +357,16 @@ String["Because the definite integral is only defined for positive area, so
 * Explain why $F(x)$ is increasing.
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"By the fun
-damental theorem of calculus, part I, $F'(x) = f(x) > 0$, hence $F(x)$ is i
-ncreasing", L"By the intermediate value theorem, as $F(x) > 0$, it must be 
-true that $F(x)$ is increasing", L"By the extreme value theorem, $F(x)$ mus
-t reach its maximum, hence it must increase."], 1, "", nothing, [1, 2, 3], 
-LaTeXStrings.LaTeXString[L"By the fundamental theorem of calculus, part I, 
-$F'(x) = f(x) > 0$, hence $F(x)$ is increasing", L"By the intermediate valu
-e theorem, as $F(x) > 0$, it must be true that $F(x)$ is increasing", L"By 
-the extreme value theorem, $F(x)$ must reach its maximum, hence it must inc
-rease."], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"By the ext
+reme value theorem, $F(x)$ must reach its maximum, hence it must increase."
+, L"By the fundamental theorem of calculus, part I, $F'(x) = f(x) > 0$, hen
+ce $F(x)$ is increasing", L"By the intermediate value theorem, as $F(x) > 0
+$, it must be true that $F(x)$ is increasing"], 2, "", nothing, [1, 2, 3], 
+LaTeXStrings.LaTeXString[L"By the extreme value theorem, $F(x)$ must reach 
+its maximum, hence it must increase.", L"By the fundamental theorem of calc
+ulus, part I, $F'(x) = f(x) > 0$, hence $F(x)$ is increasing", L"By the int
+ermediate value theorem, as $F(x) > 0$, it must be true that $F(x)$ is incr
+easing"], "", false)
 ````
 
 
@@ -378,10 +378,10 @@ rease."], "", false)
 For $f(x) = x^2$, which is bigger: the average of the function $f(x)$ over $[0,1]$ or the geometric mean which is the exponential of the average of the logarithm of $f$ over the same interval?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"The averag
-e of $f$", L"The exponential of the average of $\log(f)$"], 1, "", nothing,
- [1, 2], LaTeXStrings.LaTeXString[L"The average of $f$", L"The exponential 
-of the average of $\log(f)$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"The expone
+ntial of the average of $\log(f)$", L"The average of $f$"], 2, "", nothing,
+ [1, 2], LaTeXStrings.LaTeXString[L"The exponential of the average of $\log
+(f)$", L"The average of $f$"], "", false)
 ````
 
 

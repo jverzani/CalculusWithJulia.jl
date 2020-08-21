@@ -1247,9 +1247,9 @@ Let $z\sin(z) = x^3y^2 + z$. Compute $\partial{z}/\partial{x}$ implicitly.
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$2x^3y/ (z
-\cos(z) + \sin(z) + 1)$", L"$3x^2y^2/(z\cos(z) + \sin(z) + 1)$", L"$3x^2y^2
-$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$2x^3y/ (z\cos(z
-) + \sin(z) + 1)$", L"$3x^2y^2/(z\cos(z) + \sin(z) + 1)$", L"$3x^2y^2$"], "
+\cos(z) + \sin(z) + 1)$", L"$3x^2y^2$", L"$3x^2y^2/(z\cos(z) + \sin(z) + 1)
+$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$2x^3y/ (z\cos(z
+) + \sin(z) + 1)$", L"$3x^2y^2$", L"$3x^2y^2/(z\cos(z) + \sin(z) + 1)$"], "
 ", false)
 ````
 
@@ -1264,18 +1264,18 @@ Let $x^4 + y^4 + z^4 + x^2y^2z^2 = 1$. Compute $\partial{z}/\partial{y}$ implici
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\frac{x \
-left(2 x^{2} - z^{2}{\left (x,y \right )}\right)}{\left(x^{2} - 2 z^{2}{\le
-ft (x,y \right )}\right) z{\left (x,y \right )}}$", L"$\frac{x \left(2 x^{2
-} - y^{2} z^{2}{\left (x,y \right )}\right)}{\left(x^{2} y^{2} - 2 z^{2}{\l
-eft (x,y \right )}\right) z{\left (x,y \right )}}$", L"$\frac{y \left(- x^{
-2} z^{2}{\left (x,y \right )} + 2 y^{2}\right)}{\left(x^{2} y^{2} - 2 z^{2}
-{\left (x,y \right )}\right) z{\left (x,y \right )}}$"], 3, "", nothing, [1
-, 2, 3], LaTeXStrings.LaTeXString[L"$\frac{x \left(2 x^{2} - z^{2}{\left (x
-,y \right )}\right)}{\left(x^{2} - 2 z^{2}{\left (x,y \right )}\right) z{\l
-eft (x,y \right )}}$", L"$\frac{x \left(2 x^{2} - y^{2} z^{2}{\left (x,y \r
-ight )}\right)}{\left(x^{2} y^{2} - 2 z^{2}{\left (x,y \right )}\right) z{\
-left (x,y \right )}}$", L"$\frac{y \left(- x^{2} z^{2}{\left (x,y \right )}
- + 2 y^{2}\right)}{\left(x^{2} y^{2} - 2 z^{2}{\left (x,y \right )}\right) 
+left(2 x^{2} - y^{2} z^{2}{\left (x,y \right )}\right)}{\left(x^{2} y^{2} -
+ 2 z^{2}{\left (x,y \right )}\right) z{\left (x,y \right )}}$", L"$\frac{y 
+\left(- x^{2} z^{2}{\left (x,y \right )} + 2 y^{2}\right)}{\left(x^{2} y^{2
+} - 2 z^{2}{\left (x,y \right )}\right) z{\left (x,y \right )}}$", L"$\frac
+{x \left(2 x^{2} - z^{2}{\left (x,y \right )}\right)}{\left(x^{2} - 2 z^{2}
+{\left (x,y \right )}\right) z{\left (x,y \right )}}$"], 2, "", nothing, [1
+, 2, 3], LaTeXStrings.LaTeXString[L"$\frac{x \left(2 x^{2} - y^{2} z^{2}{\l
+eft (x,y \right )}\right)}{\left(x^{2} y^{2} - 2 z^{2}{\left (x,y \right )}
+\right) z{\left (x,y \right )}}$", L"$\frac{y \left(- x^{2} z^{2}{\left (x,
+y \right )} + 2 y^{2}\right)}{\left(x^{2} y^{2} - 2 z^{2}{\left (x,y \right
+ )}\right) z{\left (x,y \right )}}$", L"$\frac{x \left(2 x^{2} - z^{2}{\lef
+t (x,y \right )}\right)}{\left(x^{2} - 2 z^{2}{\left (x,y \right )}\right) 
 z{\left (x,y \right )}}$"], "", false)
 ````
 
@@ -1290,9 +1290,9 @@ Consider the vector field $R:R^2 \rightarrow R^2$ defined by $R(x,y) = \langle x
 What is $\nabla{r}$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$R/r$", L"
-$R$", L"$S/r$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$R/r
-$", L"$R$", L"$S/r$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$R$", L"$R
+/r$", L"$S/r$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$R$"
+, L"$R/r$", L"$S/r$"], "", false)
 ````
 
 
@@ -1303,8 +1303,8 @@ Let $\phi = r^k$. What is $\nabla{\phi}$?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$k r^{k-2}
- R$", L"$kr^k R$", L"$k r^{k-2} S$"], 1, "", nothing, [1, 2, 3], LaTeXStrin
-gs.LaTeXString[L"$k r^{k-2} R$", L"$kr^k R$", L"$k r^{k-2} S$"], "", false)
+ S$", L"$k r^{k-2} R$", L"$kr^k R$"], 2, "", nothing, [1, 2, 3], LaTeXStrin
+gs.LaTeXString[L"$k r^{k-2} S$", L"$k r^{k-2} R$", L"$kr^k R$"], "", false)
 ````
 
 
@@ -1326,8 +1326,8 @@ Let $\phi = \tan^{-1}(y/x)$. What is $\nabla{\phi}$?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$S/r^2$", 
-L"$S$", L"$S/r$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$S
-/r^2$", L"$S$", L"$S/r$"], "", false)
+L"$S/r$", L"$S$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$S
+/r^2$", L"$S/r$", L"$S$"], "", false)
 ````
 
 
@@ -1337,11 +1337,11 @@ L"$S$", L"$S/r$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$S
 Express $S/r^n = \langle F_x, F_y\rangle$. For which $n$ is $\partial{F_y}/\partial{x} - \partial{F_x}/\partial{y} = 0$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"As the lef
-t-hand side becomes $(-n+2)r^{-n}$, only $n=2$.", L"All $n \geq 0$", L"No v
-alues of $n$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"As th
-e left-hand side becomes $(-n+2)r^{-n}$, only $n=2$.", L"All $n \geq 0$", L
-"No values of $n$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"No values 
+of $n$", L"All $n \geq 0$", L"As the left-hand side becomes $(-n+2)r^{-n}$,
+ only $n=2$."], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"No va
+lues of $n$", L"All $n \geq 0$", L"As the left-hand side becomes $(-n+2)r^{
+-n}$, only $n=2$."], "", false)
 ````
 
 

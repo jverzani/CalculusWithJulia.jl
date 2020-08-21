@@ -1869,9 +1869,9 @@ c = \iint_R (1 - (x^2 + y^2)^2 dA
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"Both $a$ a
-nd $c$", L"Both $a$ and $b$", L"Both $b$ and $c$"], 2, "", nothing, [1, 2, 
-3], LaTeXStrings.LaTeXString[L"Both $a$ and $c$", L"Both $a$ and $b$", L"Bo
-th $b$ and $c$"], "", false)
+nd $c$", L"Both $b$ and $c$", L"Both $a$ and $b$"], 3, "", nothing, [1, 2, 
+3], LaTeXStrings.LaTeXString[L"Both $a$ and $c$", L"Both $b$ and $c$", L"Bo
+th $a$ and $b$"], "", false)
 ````
 
 
@@ -1906,11 +1906,11 @@ Let $R$ be a triangular region with vertices $(0,0), (2,0), (1, b)$ where $b \ge
 
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\int_0^b\
-int_{y/b}^{2-y/b} dx dy$", L"$\int_0^2\int_0^{bx} dy dx$", L"$\int_0^2 \int
-_0^{2b - bx} dy dx$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[
-L"$\int_0^b\int_{y/b}^{2-y/b} dx dy$", L"$\int_0^2\int_0^{bx} dy dx$", L"$\
-int_0^2 \int_0^{2b - bx} dy dx$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\int_0^2\
+int_0^{bx} dy dx$", L"$\int_0^2 \int_0^{2b - bx} dy dx$", L"$\int_0^b\int_{
+y/b}^{2-y/b} dx dy$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[
+L"$\int_0^2\int_0^{bx} dy dx$", L"$\int_0^2 \int_0^{2b - bx} dy dx$", L"$\i
+nt_0^b\int_{y/b}^{2-y/b} dx dy$"], "", false)
 ````
 
 
@@ -1923,11 +1923,11 @@ int_0^2 \int_0^{2b - bx} dy dx$"], "", false)
 Let $f(x) \geq 0$ be an integrable function. The area under $f(x)$ over $[a,b]$, $\int_a^b f(x) dx$, is equivalent to?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\int_0^{f
-(x)} \int_a^b dx dy$", L"$\int_a^b \int_0^{f(x)} dy dx$", L"$\int_a^b \int_
-0^{f(x)} dx dy$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\
-int_0^{f(x)} \int_a^b dx dy$", L"$\int_a^b \int_0^{f(x)} dy dx$", L"$\int_a
-^b \int_0^{f(x)} dx dy$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\int_a^b 
+\int_0^{f(x)} dx dy$", L"$\int_a^b \int_0^{f(x)} dy dx$", L"$\int_0^{f(x)} 
+\int_a^b dx dy$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\
+int_a^b \int_0^{f(x)} dx dy$", L"$\int_a^b \int_0^{f(x)} dy dx$", L"$\int_0
+^{f(x)} \int_a^b dx dy$"], "", false)
 ````
 
 
@@ -1941,10 +1941,10 @@ The region $R$ contained within  $|x| + |y| = 1$ is square, but not rectangular 
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$G(u,v) = 
-\langle u-v, u+v \rangle$", L"$G(u,v) = \langle u-v, u \rangle$", L"$G(u,v)
- = \langle u^2-v^2, u^2+v^2 \rangle$"], 1, "", nothing, [1, 2, 3], LaTeXStr
-ings.LaTeXString[L"$G(u,v) = \langle u-v, u+v \rangle$", L"$G(u,v) = \langl
-e u-v, u \rangle$", L"$G(u,v) = \langle u^2-v^2, u^2+v^2 \rangle$"], "", fa
+\langle u-v, u \rangle$", L"$G(u,v) = \langle u^2-v^2, u^2+v^2 \rangle$", L
+"$G(u,v) = \langle u-v, u+v \rangle$"], 3, "", nothing, [1, 2, 3], LaTeXStr
+ings.LaTeXString[L"$G(u,v) = \langle u-v, u \rangle$", L"$G(u,v) = \langle 
+u^2-v^2, u^2+v^2 \rangle$", L"$G(u,v) = \langle u-v, u+v \rangle$"], "", fa
 lse)
 ````
 
@@ -1974,10 +1974,10 @@ Let $G(u, v) = \langle \cosh(u)\cos(v), \sinh(u)\sin(v) \rangle$. Compute the de
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\sin^{2}{
 \left (v \right )} \cosh^{2}{\left (u \right )} + \cos^{2}{\left (v \right 
-)} \sinh^{2}{\left (u \right )}$", L"$\sinh(u)\cosh(v)$", L"$1$"], 1, "", n
+)} \sinh^{2}{\left (u \right )}$", L"$1$", L"$\sinh(u)\cosh(v)$"], 1, "", n
 othing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\sin^{2}{\left (v \right )} 
 \cosh^{2}{\left (u \right )} + \cos^{2}{\left (v \right )} \sinh^{2}{\left 
-(u \right )}$", L"$\sinh(u)\cosh(v)$", L"$1$"], "", false)
+(u \right )}$", L"$1$", L"$\sinh(u)\cosh(v)$"], "", false)
 ````
 
 
@@ -1990,12 +1990,12 @@ othing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\sin^{2}{\left (v \right )}
 Compute the determinant of the Jacobian of the composition of a clockwise rotation by $\theta$, a reflection through the $x$ axis, and then a translation by $\langle a,b\rangle$, using the fact that the Jacobian determinant of *compositions* can be written as product of determinants of the individual Jacobians.
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"It is $r$,
- as the rotation uses polar coordinates", L"It is $r^2 \sin(\phi)$, as the 
-rotations use spherical coordinates", L"It is $1$, as each is area preservi
-ng"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"It is $r$, as t
-he rotation uses polar coordinates", L"It is $r^2 \sin(\phi)$, as the rotat
-ions use spherical coordinates", L"It is $1$, as each is area preserving"],
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"It is $r^2
+ \sin(\phi)$, as the rotations use spherical coordinates", L"It is $r$, as 
+the rotation uses polar coordinates", L"It is $1$, as each is area preservi
+ng"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"It is $r^2 \sin
+(\phi)$, as the rotations use spherical coordinates", L"It is $r$, as the r
+otation uses polar coordinates", L"It is $1$, as each is area preserving"],
  "", false)
 ````
 
@@ -2055,10 +2055,10 @@ e moment of inertia of $R$ about the $x$ axis"], "", false)
 According to [Katz](http://www.jstor.org/stable/2689856) in 1899 Cartan formalized the subject of differential forms (elements such as $dx$ or $du$). Using the rules $dtdt = 0 = dv=dv$ and $dv dt = - dt dv$, what is the product of $dx=mdt + dv\sqrt{1-m^2}$ and $dy=dt\sqrt{1-m^2}-mdv$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$m\sqrt{1-
-m^2}dt^2+(1-2m^2)dtdv -m\sqrt{1-m^2}dv^2$", L"$(1-2m^2)dt dv$", L"$dtdv$"],
- 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$m\sqrt{1-m^2}dt^2+(
-1-2m^2)dtdv -m\sqrt{1-m^2}dv^2$", L"$(1-2m^2)dt dv$", L"$dtdv$"], "", false
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$(1-2m^2)d
+t dv$", L"$dtdv$", L"$m\sqrt{1-m^2}dt^2+(1-2m^2)dtdv -m\sqrt{1-m^2}dv^2$"],
+ 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$(1-2m^2)dt dv$", L"
+$dtdv$", L"$m\sqrt{1-m^2}dt^2+(1-2m^2)dtdv -m\sqrt{1-m^2}dv^2$"], "", false
 )
 ````
 

@@ -679,9 +679,9 @@ be known as the "fundamental theorem of calculus."
 If $f(x) = 1/x$ and $g(x) = x-2$, what is $g(f(x))$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$x - 2$", 
-L"$-2$", L"$1/(x-2)$", L"$1/x - 2$"], 4, "", nothing, [1, 2, 3, 4], LaTeXSt
-rings.LaTeXString[L"$x - 2$", L"$-2$", L"$1/(x-2)$", L"$1/x - 2$"], "", fal
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1/(x-2)$"
+, L"$-2$", L"$1/x - 2$", L"$x - 2$"], 3, "", nothing, [1, 2, 3, 4], LaTeXSt
+rings.LaTeXString[L"$1/(x-2)$", L"$-2$", L"$1/x - 2$", L"$x - 2$"], "", fal
 se)
 ````
 
@@ -694,10 +694,10 @@ se)
 If $f(x) = e^{-x}$ and $g(x) = x^2$ and $h(x) = x-3$, what is $f \circ g \circ h$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$e^{-(x-3)
-^2}$", L"$e^{-x^2 - 3}$", L"$(e^x -3)^2$", L"$e^x+x^2+x-3$"], 1, "", nothin
-g, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$e^{-(x-3)^2}$", L"$e^{-x^2 - 3
-}$", L"$(e^x -3)^2$", L"$e^x+x^2+x-3$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$e^x+x^2+x
+-3$", L"$e^{-(x-3)^2}$", L"$e^{-x^2 - 3}$", L"$(e^x -3)^2$"], 2, "", nothin
+g, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$e^x+x^2+x-3$", L"$e^{-(x-3)^2}
+$", L"$e^{-x^2 - 3}$", L"$(e^x -3)^2$"], "", false)
 ````
 
 
@@ -708,11 +708,11 @@ g, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$e^{-(x-3)^2}$", L"$e^{-x^2 - 3
 If $h(x) = (f \circ g)(x) = \sin^2(x)$ which is  a possibility for $f$ and $g$:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f(x)=x^2;
- \quad g(x) = \sin(x)$", L"$f(x)=\sin(x); \quad g(x) = x^2$", L"$f(x)=x^2; 
-\quad g(x) = \sin^2(x)$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXStr
-ing[L"$f(x)=x^2; \quad g(x) = \sin(x)$", L"$f(x)=\sin(x); \quad g(x) = x^2$
-", L"$f(x)=x^2; \quad g(x) = \sin^2(x)$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f(x)=\sin
+(x); \quad g(x) = x^2$", L"$f(x)=x^2; \quad g(x) = \sin^2(x)$", L"$f(x)=x^2
+; \quad g(x) = \sin(x)$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXStr
+ing[L"$f(x)=\sin(x); \quad g(x) = x^2$", L"$f(x)=x^2; \quad g(x) = \sin^2(x
+)$", L"$f(x)=x^2; \quad g(x) = \sin(x)$"], "", false)
 ````
 
 
@@ -724,11 +724,11 @@ ing[L"$f(x)=x^2; \quad g(x) = \sin(x)$", L"$f(x)=\sin(x); \quad g(x) = x^2$
 Which function would have the same graph as the sine curve shifted over by 4 and up by 6?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$h(x) = 6 
-+ \sin(x + 4)$", L"$h(x) = 6\sin(x-4)$", L"$h(x) = 6 + \sin(x-4)$", L"$h(x)
- = 4 + \sin(6x)$"], 3, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[
-L"$h(x) = 6 + \sin(x + 4)$", L"$h(x) = 6\sin(x-4)$", L"$h(x) = 6 + \sin(x-4
-)$", L"$h(x) = 4 + \sin(6x)$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$h(x) = 6\
+sin(x-4)$", L"$h(x) = 4 + \sin(6x)$", L"$h(x) = 6 + \sin(x-4)$", L"$h(x) = 
+6 + \sin(x + 4)$"], 3, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[
+L"$h(x) = 6\sin(x-4)$", L"$h(x) = 4 + \sin(6x)$", L"$h(x) = 6 + \sin(x-4)$"
+, L"$h(x) = 6 + \sin(x + 4)$"], "", false)
 ````
 
 
@@ -740,13 +740,13 @@ Let $h(x) = 4x^2$ and $f(x) = x^2$. Which is **not** true:
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"The graph 
-of $h(x)$ is the graph of $f(x) shifted up by 4 units", L"The graph of $h(x
-)$ is the graph of $f(x)$ stretched by a factor of 4", L"The graph of $h(x)
-$ is the graph of $f(x)$ scaled by a factor of 2"], 1, "", nothing, [1, 2, 
-3], LaTeXStrings.LaTeXString[L"The graph of $h(x)$ is the graph of $f(x) sh
-ifted up by 4 units", L"The graph of $h(x)$ is the graph of $f(x)$ stretche
-d by a factor of 4", L"The graph of $h(x)$ is the graph of $f(x)$ scaled by
- a factor of 2"], "", false)
+of $h(x)$ is the graph of $f(x)$ scaled by a factor of 2", L"The graph of $
+h(x)$ is the graph of $f(x)$ stretched by a factor of 4", L"The graph of $h
+(x)$ is the graph of $f(x) shifted up by 4 units"], 3, "", nothing, [1, 2, 
+3], LaTeXStrings.LaTeXString[L"The graph of $h(x)$ is the graph of $f(x)$ s
+caled by a factor of 2", L"The graph of $h(x)$ is the graph of $f(x)$ stret
+ched by a factor of 4", L"The graph of $h(x)$ is the graph of $f(x) shifted
+ up by 4 units"], "", false)
 ````
 
 
@@ -758,12 +758,12 @@ d by a factor of 4", L"The graph of $h(x)$ is the graph of $f(x)$ scaled by
 The transformation $h(x) = (1/a) \cdot f((x-b)/a)$ can be viewed in one sequence:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"shifting b
-y $a$, then scaling by $b$, and then scaling by $1/a$", L"scaling by $1/a$,
- then shifting by $b$, then stretching by $1/a$", L"shifting by $a$, then s
-caling by $a$, and then scaling by $b$"], 2, "", nothing, [1, 2, 3], LaTeXS
-trings.LaTeXString[L"shifting by $a$, then scaling by $b$, and then scaling
- by $1/a$", L"scaling by $1/a$, then shifting by $b$, then stretching by $1
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"scaling by
+ $1/a$, then shifting by $b$, then stretching by $1/a$", L"shifting by $a$,
+ then scaling by $b$, and then scaling by $1/a$", L"shifting by $a$, then s
+caling by $a$, and then scaling by $b$"], 1, "", nothing, [1, 2, 3], LaTeXS
+trings.LaTeXString[L"scaling by $1/a$, then shifting by $b$, then stretchin
+g by $1/a$", L"shifting by $a$, then scaling by $b$, and then scaling by $1
 /a$", L"shifting by $a$, then scaling by $a$, and then scaling by $b$"], ""
 , false)
 ````
@@ -805,10 +805,10 @@ CalculusWithJulia.WeaveSupport.Numericq(2, 0, "", "[2.0, 2.0]", 2, 2, "", "
 What is the form of the function graphed?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$2 \sin(\p
-i x)$", L"$\sin(\pi x)$", L"$\sin(2x)$", L"$2 \sin(x)$"], 1, "", nothing, [
-1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$2 \sin(\pi x)$", L"$\sin(\pi x)$",
- L"$\sin(2x)$", L"$2 \sin(x)$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\sin(\pi 
+x)$", L"$2 \sin(x)$", L"$\sin(2x)$", L"$2 \sin(\pi x)$"], 4, "", nothing, [
+1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$\sin(\pi x)$", L"$2 \sin(x)$", L"$
+\sin(2x)$", L"$2 \sin(\pi x)$"], "", false)
 ````
 
 

@@ -944,10 +944,10 @@ The two answers track positive and negative solutions. For the initial condition
 This value is good for what values of $x$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$[1-\sqrt{
-5}, 1 + \sqrt{5}]$", L"$[-1, \infty)$", L"$[-1, 4]$", L"$[-1, 0]$"], 1, "",
- nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$[1-\sqrt{5}, 1 + \sqrt{
-5}]$", L"$[-1, \infty)$", L"$[-1, 4]$", L"$[-1, 0]$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$[-1, 4]$"
+, L"$[-1, \infty)$", L"$[1-\sqrt{5}, 1 + \sqrt{5}]$", L"$[-1, 0]$"], 3, "",
+ nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$[-1, 4]$", L"$[-1, \inf
+ty)$", L"$[1-\sqrt{5}, 1 + \sqrt{5}]$", L"$[-1, 0]$"], "", false)
 ````
 
 
@@ -1075,9 +1075,9 @@ $$~
 can be solved with `SymPy`. What is the value of $c(5)$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$8/9$", L"
-$9/10$", L"$10/9$", L"$3/2$"], 3, "", nothing, [1, 2, 3, 4], LaTeXStrings.L
-aTeXString[L"$8/9$", L"$9/10$", L"$10/9$", L"$3/2$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$10/9$", L
+"$8/9$", L"$3/2$", L"$9/10$"], 1, "", nothing, [1, 2, 3, 4], LaTeXStrings.L
+aTeXString[L"$10/9$", L"$8/9$", L"$3/2$", L"$9/10$"], "", false)
 ````
 
 

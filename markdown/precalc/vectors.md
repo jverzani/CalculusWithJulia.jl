@@ -8,7 +8,7 @@ One of the first models learned in physics are the equations governing the laws 
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_RmYr0O.gif", "\nPosition, velocity, and acceleration vec
+qq4h57w0000gr/T/jl_hzA8lK.gif", "\nPosition, velocity, and acceleration vec
 tors (scaled) for projectile\nmotion. Vectors are drawn with tail on the pr
 ojectile. The position\nvector (black) points from the origin to the projec
 tile, the velocity\nvector (red) is in the direction of the trajectory, and
@@ -79,7 +79,7 @@ $\| \vec{v} \| = \sqrt{x^2 + y^2}$.
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_2G0Efy.png", "A vector and its unit vector. They share t
+qq4h57w0000gr/T/jl_2rQdko.png", "A vector and its unit vector. They share t
 he same direction, but the unit vector has a standardized magnitude.")
 ````
 
@@ -116,7 +116,7 @@ Two operations on vectors are fundamental.
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_e4IJvF.png", "The sum of two vectors can be visualized b
+qq4h57w0000gr/T/jl_8E6rob.png", "The sum of two vectors can be visualized b
 y placing the tail of one at the tip of the other")
 ````
 
@@ -124,7 +124,7 @@ y placing the tail of one at the tip of the other")
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_90XERO.png", "The sum of two vectors can be visualized b
+qq4h57w0000gr/T/jl_J2v7iH.png", "The sum of two vectors can be visualized b
 y placing the tail of one at the tip of the other")
 ````
 
@@ -145,7 +145,7 @@ vectors - they can be *any* two non-parallel vectors.
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_yaId7f.png", L"The vector $\langle 4,3 \rangle$ is writt
+qq4h57w0000gr/T/jl_nRuxQ4.png", L"The vector $\langle 4,3 \rangle$ is writt
 en as
 $2$/$3$ $\cdot\langle 1,2 \rangle$ $+$ $5$/$3$ $\cdot\langle 2,1 \rangle$. 
 Any vector $\vec{c}$ can be
@@ -177,7 +177,7 @@ If we are given $r$ and $\theta$, then the vector is $v = \langle r \cdot \cos(\
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_3I0ngM.png", L"
+qq4h57w0000gr/T/jl_1TJrAK.png", L"
 A vector $\langle x, y \rangle$ can be written as $\langle r\cdot
 \cos(\theta), r\cdot\sin(\theta) \rangle$ for values $r$ and
 $\theta$. The value $r$ is a magnitude, the direction parameterized by
@@ -1109,9 +1109,9 @@ Named tuples as similar to *dictionaries* which are used to associate a key (lik
 Which command will create the vector $\vec{v} = \langle 4,~ 3 \rangle$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`v = '4, 3'`", "`v = {4, 3}`", "`v 
-= [4,3]`", "`v = (4,3)`", "`v = <4,3>`"], 3, "", nothing, [1, 2, 3, 4, 5], 
-["`v = '4, 3'`", "`v = {4, 3}`", "`v = [4,3]`", "`v = (4,3)`", "`v = <4,3>`
+CalculusWithJulia.WeaveSupport.Radioq(["`v = {4, 3}`", "`v = (4,3)`", "`v =
+ <4,3>`", "`v = '4, 3'`", "`v = [4,3]`"], 5, "", nothing, [1, 2, 3, 4, 5], 
+["`v = {4, 3}`", "`v = (4,3)`", "`v = <4,3>`", "`v = '4, 3'`", "`v = [4,3]`
 "], "", false)
 ````
 
@@ -1124,10 +1124,10 @@ CalculusWithJulia.WeaveSupport.Radioq(["`v = '4, 3'`", "`v = {4, 3}`", "`v
 Which command will create the vector with components "4,3,2,1"?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`v = <4,3,2,1>`", "`v = '4, 3, 2, 1
-'`", "`v = {4,3,2,1}`", "`v = (4,3,2,1)`", "`v = [4,3,2,1]`"], 5, "", nothi
-ng, [1, 2, 3, 4, 5], ["`v = <4,3,2,1>`", "`v = '4, 3, 2, 1'`", "`v = {4,3,2
-,1}`", "`v = (4,3,2,1)`", "`v = [4,3,2,1]`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`v = (4,3,2,1)`", "`v = [4,3,2,1]`"
+, "`v = '4, 3, 2, 1'`", "`v = <4,3,2,1>`", "`v = {4,3,2,1}`"], 2, "", nothi
+ng, [1, 2, 3, 4, 5], ["`v = (4,3,2,1)`", "`v = [4,3,2,1]`", "`v = '4, 3, 2,
+ 1'`", "`v = <4,3,2,1>`", "`v = {4,3,2,1}`"], "", false)
 ````
 
 
@@ -1157,9 +1157,9 @@ CalculusWithJulia.WeaveSupport.Numericq(18.027756377319946, 0.001, "", "[18
 Which of the following is the unit vector in the direction of $\vec{v} = \langle 3,~ 4 \rangle$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`[1.0, 1.33333]`", "`[1, 1]`", "`[0
-.6, 0.8]`", "`[3, 4]`"], 3, "", nothing, [1, 2, 3, 4], ["`[1.0, 1.33333]`",
- "`[1, 1]`", "`[0.6, 0.8]`", "`[3, 4]`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`[1, 1]`", "`[3, 4]`", "`[0.6, 0.8]
+`", "`[1.0, 1.33333]`"], 3, "", nothing, [1, 2, 3, 4], ["`[1, 1]`", "`[3, 4
+]`", "`[0.6, 0.8]`", "`[1.0, 1.33333]`"], "", false)
 ````
 
 
@@ -1172,9 +1172,9 @@ CalculusWithJulia.WeaveSupport.Radioq(["`[1.0, 1.33333]`", "`[1, 1]`", "`[0
 What vector is in the same direction as $\vec{v} = \langle 3,~ 4 \rangle$ but is 10 times as long?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`[9.48683, 12.6491 ]`", "`[30, 40]`
-", "`[3, 4]`", "`[10, 10]`"], 2, "", nothing, [1, 2, 3, 4], ["`[9.48683, 12
-.6491 ]`", "`[30, 40]`", "`[3, 4]`", "`[10, 10]`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`[3, 4]`", "`[30, 40]`", "`[10, 10]
+`", "`[9.48683, 12.6491 ]`"], 2, "", nothing, [1, 2, 3, 4], ["`[3, 4]`", "`
+[30, 40]`", "`[10, 10]`", "`[9.48683, 12.6491 ]`"], "", false)
 ````
 
 
@@ -1186,9 +1186,9 @@ CalculusWithJulia.WeaveSupport.Radioq(["`[9.48683, 12.6491 ]`", "`[30, 40]`
 If $\vec{v} = \langle 3,~ 4 \rangle$ and $\vec{w} = \langle 1,~ 2 \rangle$  find $2\vec{v} + 5 \vec{w}$.
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`[4, 6]`", "`[11, 18]`", "`[5, 10]`
-", "`[6, 8]`"], 2, "", nothing, [1, 2, 3, 4], ["`[4, 6]`", "`[11, 18]`", "`
-[5, 10]`", "`[6, 8]`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`[5, 10]`", "`[6, 8]`", "`[4, 6]`",
+ "`[11, 18]`"], 4, "", nothing, [1, 2, 3, 4], ["`[5, 10]`", "`[6, 8]`", "`[
+4, 6]`", "`[11, 18]`"], "", false)
 ````
 
 
@@ -1256,8 +1256,8 @@ The figure shows $5$ vectors.
 Express vector **c** in terms of **a** and **b**:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["a + b", "a - b", "3a", "b-a", "3b"]
-, 3, "", nothing, [1, 2, 3, 4, 5], ["a + b", "a - b", "3a", "b-a", "3b"], "
+CalculusWithJulia.WeaveSupport.Radioq(["3b", "b-a", "a + b", "a - b", "3a"]
+, 5, "", nothing, [1, 2, 3, 4, 5], ["3b", "b-a", "a + b", "a - b", "3a"], "
 ", false)
 ````
 
@@ -1268,8 +1268,8 @@ CalculusWithJulia.WeaveSupport.Radioq(["a + b", "a - b", "3a", "b-a", "3b"]
 Express vector **d** in terms of **a** and **b**:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["3a", "a - b", "b-a", "3b", "a + b"]
-, 5, "", nothing, [1, 2, 3, 4, 5], ["3a", "a - b", "b-a", "3b", "a + b"], "
+CalculusWithJulia.WeaveSupport.Radioq(["3b", "3a", "b-a", "a - b", "a + b"]
+, 5, "", nothing, [1, 2, 3, 4, 5], ["3b", "3a", "b-a", "a - b", "a + b"], "
 ", false)
 ````
 
@@ -1280,8 +1280,8 @@ CalculusWithJulia.WeaveSupport.Radioq(["3a", "a - b", "b-a", "3b", "a + b"]
 Express vector **e** in terms of **a** and **b**:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["3a", "a - b", "b-a", "3b", "a + b"]
-, 2, "", nothing, [1, 2, 3, 4, 5], ["3a", "a - b", "b-a", "3b", "a + b"], "
+CalculusWithJulia.WeaveSupport.Radioq(["a - b", "a + b", "b-a", "3b", "3a"]
+, 1, "", nothing, [1, 2, 3, 4, 5], ["a - b", "a + b", "b-a", "3b", "3a"], "
 ", false)
 ````
 

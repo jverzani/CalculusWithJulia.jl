@@ -44,7 +44,7 @@ this perimeter and their respective areas.
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_7ceBpm.gif", "\nSome possible rectangles that satisfy th
+qq4h57w0000gr/T/jl_WT6aR5.gif", "\nSome possible rectangles that satisfy th
 e constraint on the perimeter and their area.\n\n")
 ````
 
@@ -1309,9 +1309,9 @@ CalculusWithJulia.WeaveSupport.Numericq(17.88854381999832, 0.001, "", "[17.
 A rectangle of sides $w$ and $h$ has fixed area $20$. What is the *largest* perimeter it can have?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"$17.888$", "It can b
-e infinite", "It is also 20"], 2, "", nothing, [1, 2, 3], AbstractString[L"
-$17.888$", "It can be infinite", "It is also 20"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString["It is also 20", L"$17
+.888$", "It can be infinite"], 3, "", nothing, [1, 2, 3], AbstractString["I
+t is also 20", L"$17.888$", "It can be infinite"], "", false)
 ````
 
 
@@ -1463,11 +1463,11 @@ Run the above code. Baseed on the critical points found, what do you guess will 
 minimum value in terms of the values $x_1$, $x_2, \dots$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"The square roots of 
-the values squared, $(x_1^2 + \cdots x_n^2)^2$", "The mean, or average, of 
-the values", "The median, or middle number, of the values"], 2, "", nothing
-, [1, 2, 3], AbstractString[L"The square roots of the values squared, $(x_1
-^2 + \cdots x_n^2)^2$", "The mean, or average, of the values", "The median,
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString["The mean, or average,
+ of the values", L"The square roots of the values squared, $(x_1^2 + \cdots
+ x_n^2)^2$", "The median, or middle number, of the values"], 1, "", nothing
+, [1, 2, 3], AbstractString["The mean, or average, of the values", L"The sq
+uare roots of the values squared, $(x_1^2 + \cdots x_n^2)^2$", "The median,
  or middle number, of the values"], "", false)
 ````
 
@@ -1608,10 +1608,10 @@ CalculusWithJulia.WeaveSupport.Numericq(4.442882938158366, 0.001, "", "[4.4
 The surface area of a sphere of radius $1$ is $4\pi r^2 = 4 \pi$. This is how many times greater than that of the largest cone?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString["about the same", L"ab
-out $2.6$ times as big", L"exactly $\pi$ times", "exactly four times"], 4, 
-"", nothing, [1, 2, 3, 4], AbstractString["about the same", L"about $2.6$ t
-imes as big", L"exactly $\pi$ times", "exactly four times"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString["exactly four times", 
+L"exactly $\pi$ times", "about the same", L"about $2.6$ times as big"], 1, 
+"", nothing, [1, 2, 3, 4], AbstractString["exactly four times", L"exactly $
+\pi$ times", "about the same", L"about $2.6$ times as big"], "", false)
 ````
 
 

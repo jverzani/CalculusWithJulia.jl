@@ -104,7 +104,7 @@ In a previous section, we saw this animation:
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_S8S9LZ.gif", L"The first triangle has area $1/2$, the se
+qq4h57w0000gr/T/jl_NC96lc.gif", L"The first triangle has area $1/2$, the se
 cond has area $1/8$, then $2$ have area $(1/8)^2$, $4$ have area $(1/8)^3$,
  ...
 With some algebra, the total area then should be $1/2 \cdot (1 + (1/4) + (1
@@ -1495,8 +1495,8 @@ radioq(choices, ans)
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$p^2$", L"
-$p$", L"$1-p$", L"$1$"], 3, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXSt
-ring[L"$p^2$", L"$p$", L"$1-p$", L"$1$"], "", false)
+$1$", L"$1-p$", L"$p$"], 3, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXSt
+ring[L"$p^2$", L"$1$", L"$1-p$", L"$p$"], "", false)
 ````
 
 
@@ -1521,9 +1521,9 @@ radioq(choices, ans)
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$2^4/4 - 0
-^4/4$", L"$2^5 - 0^5$", L"$3\cdot 2^3 - 3 \cdot 0^3$", L"$2^5/5 - 0^5/5$"],
- 4, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$2^4/4 - 0^4/4$",
- L"$2^5 - 0^5$", L"$3\cdot 2^3 - 3 \cdot 0^3$", L"$2^5/5 - 0^5/5$"], "", fa
+^4/4$", L"$2^5/5 - 0^5/5$", L"$2^5 - 0^5$", L"$3\cdot 2^3 - 3 \cdot 0^3$"],
+ 2, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$2^4/4 - 0^4/4$",
+ L"$2^5/5 - 0^5/5$", L"$2^5 - 0^5$", L"$3\cdot 2^3 - 3 \cdot 0^3$"], "", fa
 lse)
 ````
 
@@ -1630,9 +1630,9 @@ radioq(choices, ans)
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$(10 - 0) 
-\cdot e^{10} / 100^4$", L"$10/100$", L"$(10 - 0)/100 \cdot (e^{10} - e^{0})
-$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$(10 - 0) \cdot 
-e^{10} / 100^4$", L"$10/100$", L"$(10 - 0)/100 \cdot (e^{10} - e^{0})$"], "
+\cdot e^{10} / 100^4$", L"$(10 - 0)/100 \cdot (e^{10} - e^{0})$", L"$10/100
+$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$(10 - 0) \cdot 
+e^{10} / 100^4$", L"$(10 - 0)/100 \cdot (e^{10} - e^{0})$", L"$10/100$"], "
 ", false)
 ````
 

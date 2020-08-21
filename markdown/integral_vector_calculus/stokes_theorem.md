@@ -1042,10 +1042,10 @@ As already seen, the inverse square law here arises in the electrostatic force f
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"We must ha
-ve $\text{curl}(F) = 1$", L"We must have $\text{curl}(F) = x$", L"We must h
-ave $\text{curl}(F) = 0$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXSt
-ring[L"We must have $\text{curl}(F) = 1$", L"We must have $\text{curl}(F) =
- x$", L"We must have $\text{curl}(F) = 0$"], "", false)
+ve $\text{curl}(F) = x$", L"We must have $\text{curl}(F) = 1$", L"We must h
+ave $\text{curl}(F) = 0$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXSt
+ring[L"We must have $\text{curl}(F) = x$", L"We must have $\text{curl}(F) =
+ 1$", L"We must have $\text{curl}(F) = 0$"], "", false)
 ````
 
 
@@ -1076,10 +1076,10 @@ Applying Green's theorem to the vector field $F = \langle -y, x\rangle$ which al
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$(1/2) \in
-t r^2d\theta$", L"$\int r^2 d\theta$", L"$(1/2) \int r d\theta$", L"$\int r
-d\theta$"], 1, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$(1/2)
- \int r^2d\theta$", L"$\int r^2 d\theta$", L"$(1/2) \int r d\theta$", L"$\i
-nt rd\theta$"], "", false)
+t r d\theta$", L"$(1/2) \int r^2d\theta$", L"$\int rd\theta$", L"$\int r^2 
+d\theta$"], 2, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$(1/2)
+ \int r d\theta$", L"$(1/2) \int r^2d\theta$", L"$\int rd\theta$", L"$\int 
+r^2 d\theta$"], "", false)
 ````
 
 
@@ -1093,8 +1093,8 @@ Let $\vec{r}(t) = \langle \cos^3(t), \sin^3(t)\rangle$, $0\leq t \leq 2\pi$. (Th
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$3\pi/8$",
- L"$\pi/2$", L"$\pi/4$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXStri
-ng[L"$3\pi/8$", L"$\pi/2$", L"$\pi/4$"], "", false)
+ L"$\pi/4$", L"$\pi/2$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXStri
+ng[L"$3\pi/8$", L"$\pi/4$", L"$\pi/2$"], "", false)
 ````
 
 
@@ -1220,8 +1220,8 @@ Using the divergence theorem, compute $\iint F\cdot\hat{N} dS$ where $F(x,y,z) =
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\pi$", L"
-$4\pi$", L"$4/3 \pi$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString
-[L"$\pi$", L"$4\pi$", L"$4/3 \pi$"], "", false)
+$4/3 \pi$", L"$4\pi$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString
+[L"$\pi$", L"$4/3 \pi$", L"$4\pi$"], "", false)
 ````
 
 
@@ -1249,9 +1249,9 @@ $2$", L"$3$"], "", false)
 Let $R(x,y,z) = \langle x, y, z\rangle$ and $\rho = \|R\|^2$. If $F = 2R/\rho^2$ then $F$ is the gradient of a potential. Which one?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\rho$", L
-"$\log(\rho)$", L"$1/\rho$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeX
-String[L"$\rho$", L"$\log(\rho)$", L"$1/\rho$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\log(\rho
+)$", L"$1/\rho$", L"$\rho$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeX
+String[L"$\log(\rho)$", L"$1/\rho$", L"$\rho$"], "", false)
 ````
 
 
@@ -1261,13 +1261,13 @@ String[L"$\rho$", L"$\log(\rho)$", L"$1/\rho$"], "", false)
 Based on this information, for $S$ a surface not including the origin with boundary $C$, a simple closed curve, what is $\oint_C F\cdot\hat{T}ds$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"It is $0$,
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"It is $2\p
+i$, as this is the circumference of the unit circle", L"It is $0$, as, by S
+toke's theorem, it is equivalent to $\iint_S (\nabla\times\nabla{\phi})dS =
+ \iint_S 0 dS = 0$."], 2, "", nothing, [1, 2], LaTeXStrings.LaTeXString[L"I
+t is $2\pi$, as this is the circumference of the unit circle", L"It is $0$,
  as, by Stoke's theorem, it is equivalent to $\iint_S (\nabla\times\nabla{\
-phi})dS = \iint_S 0 dS = 0$.", L"It is $2\pi$, as this is the circumference
- of the unit circle"], 1, "", nothing, [1, 2], LaTeXStrings.LaTeXString[L"I
-t is $0$, as, by Stoke's theorem, it is equivalent to $\iint_S (\nabla\time
-s\nabla{\phi})dS = \iint_S 0 dS = 0$.", L"It is $2\pi$, as this is the circ
-umference of the unit circle"], "", false)
+phi})dS = \iint_S 0 dS = 0$."], "", false)
 ````
 
 
@@ -1279,9 +1279,9 @@ umference of the unit circle"], "", false)
 Consider the circle, $C$ in $R^3$ parameterized by $\langle \cos(t), \sin(t), 0\rangle$. The upper half sphere and the unit disc in the $x-y$ plane are both surfaces with this boundary. Let $F(x,y,z) = \langle -y, x, z\rangle$. Compute $\oint_C F\cdot\hat{T}ds$ using Stokes' theorem. The value is:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$2\pi$", L
-"$0$", L"$2$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$2\pi
-$", L"$0$", L"$2$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$0$", L"$2
+\pi$", L"$2$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$0$",
+ L"$2\pi$", L"$2$"], "", false)
 ````
 
 
@@ -1299,11 +1299,11 @@ From [Illinois](https://faculty.math.illinois.edu/~franklan/Math241_165_Conserva
 What should finish the last sentence?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["the field could be conservative or 
-not. One must work harder to answer the question.", "the field is *not* con
-servative.", "the field *is* conservative"], 1, "", nothing, [1, 2, 3], ["t
-he field could be conservative or not. One must work harder to answer the q
-uestion.", "the field is *not* conservative.", "the field *is* conservative
+CalculusWithJulia.WeaveSupport.Radioq(["the field *is* conservative", "the 
+field could be conservative or not. One must work harder to answer the ques
+tion.", "the field is *not* conservative."], 2, "", nothing, [1, 2, 3], ["t
+he field *is* conservative", "the field could be conservative or not. One m
+ust work harder to answer the question.", "the field is *not* conservative.
 "], "", false)
 ````
 
@@ -1339,10 +1339,10 @@ The one for the curl in $n=3$ is Stoke's theorem: $\iint S \nabla\times{F}dA = \
 * Working left to right along a row of the diagram, applying two steps of these operations yields:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["The row number plus 1", "Zero, by t
-he vanishing properties of these operations", "The maximum number in a row"
-], 2, "", nothing, [1, 2, 3], ["The row number plus 1", "Zero, by the vanis
-hing properties of these operations", "The maximum number in a row"], "", f
+CalculusWithJulia.WeaveSupport.Radioq(["The maximum number in a row", "The 
+row number plus 1", "Zero, by the vanishing properties of these operations"
+], 3, "", nothing, [1, 2, 3], ["The maximum number in a row", "The row numb
+er plus 1", "Zero, by the vanishing properties of these operations"], "", f
 alse)
 ````
 

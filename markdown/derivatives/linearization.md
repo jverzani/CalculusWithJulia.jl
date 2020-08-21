@@ -577,10 +577,10 @@ Note that $\sin(\exp(x))$ is approximately $\sin(1+x)$ but not approximately $1+
 What is the right linear approximation for $\sqrt{1 + x}$ near $0$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1 - (1/2)
- \cdot x$", L"$1 + x^{1/2}$", L"$1 + 1/2$", L"$1 + (1/2)\cdot x$"], 4, "", 
-nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$1 - (1/2) \cdot x$", L"$
-1 + x^{1/2}$", L"$1 + 1/2$", L"$1 + (1/2)\cdot x$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1 + (1/2)
+\cdot x$", L"$1 + 1/2$", L"$1 + x^{1/2}$", L"$1 - (1/2) \cdot x$"], 1, "", 
+nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$1 + (1/2)\cdot x$", L"$1
+ + 1/2$", L"$1 + x^{1/2}$", L"$1 - (1/2) \cdot x$"], "", false)
 ````
 
 
@@ -594,10 +594,10 @@ nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$1 - (1/2) \cdot x$", L"$
 What is the right linear approximation for $(1 + x)^k$ near $0$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1 + k\cdo
-t x$", L"$1 - k \cdot x$", L"$1 + k$", L"$1 + x^k$"], 1, "", nothing, [1, 2
-, 3, 4], LaTeXStrings.LaTeXString[L"$1 + k\cdot x$", L"$1 - k \cdot x$", L"
-$1 + k$", L"$1 + x^k$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1 + x^k$"
+, L"$1 + k$", L"$1 - k \cdot x$", L"$1 + k\cdot x$"], 4, "", nothing, [1, 2
+, 3, 4], LaTeXStrings.LaTeXString[L"$1 + x^k$", L"$1 + k$", L"$1 - k \cdot 
+x$", L"$1 + k\cdot x$"], "", false)
 ````
 
 
@@ -609,9 +609,9 @@ $1 + k$", L"$1 + x^k$"], "", false)
 What is the right linear approximation for $\cos(\sin(x))$ near $0$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1$", L"$x
-$", L"$1 - x^2/2$", L"$1 + x$"], 1, "", nothing, [1, 2, 3, 4], LaTeXStrings
-.LaTeXString[L"$1$", L"$x$", L"$1 - x^2/2$", L"$1 + x$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$x$", L"$1
+ + x$", L"$1 - x^2/2$", L"$1$"], 4, "", nothing, [1, 2, 3, 4], LaTeXStrings
+.LaTeXString[L"$x$", L"$1 + x$", L"$1 - x^2/2$", L"$1$"], "", false)
 ````
 
 
@@ -624,9 +624,9 @@ $", L"$1 - x^2/2$", L"$1 + x$"], 1, "", nothing, [1, 2, 3, 4], LaTeXStrings
 What is the  right linear approximation for $\tan(x)$ near $0$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1 - x$", 
-L"$1 + x$", L"$1$", L"$x$"], 4, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaT
-eXString[L"$1 - x$", L"$1 + x$", L"$1$", L"$x$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1 + x$", 
+L"$1 - x$", L"$x$", L"$1$"], 3, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaT
+eXString[L"$1 + x$", L"$1 - x$", L"$x$", L"$1$"], "", false)
 ````
 
 
@@ -641,9 +641,9 @@ What is the right linear approximation of $\sqrt{25 + x}$ near $x=0$?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1 - (1/2)
- \cdot x$", L"$1 + x$", L"$5 \cdot (1 + (1/2) \cdot (x/25))$", L"$25$"], 3,
+ \cdot x$", L"$25$", L"$5 \cdot (1 + (1/2) \cdot (x/25))$", L"$1 + x$"], 3,
  "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$1 - (1/2) \cdot x$"
-, L"$1 + x$", L"$5 \cdot (1 + (1/2) \cdot (x/25))$", L"$25$"], "", false)
+, L"$25$", L"$5 \cdot (1 + (1/2) \cdot (x/25))$", L"$1 + x$"], "", false)
 ````
 
 

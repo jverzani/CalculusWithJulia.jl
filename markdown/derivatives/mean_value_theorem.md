@@ -544,7 +544,7 @@ the construction of such a graph:
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_k3ODxy.gif", L"
+qq4h57w0000gr/T/jl_g1mlnY.gif", L"
 Illustration of parametric graph of $(g(t), f(t))$ for $-\pi/2 \leq t
 \leq \pi/2$ with $g(x) = \sin(x)$ and  $f(x) = x$. Each point on the
 graph is from some value $t$ in the interval. We can see that the
@@ -648,8 +648,8 @@ CalculusWithJulia.WeaveSupport.Numericq(1.5555555555555556, 0.001, "", "[1.
 Will the function $f(x) = x + 1/x$ satisfy the conditions of the mean value theorem over $[-1/2, 1/2]$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["Yes", "No"], 2, "", nothing, [1, 2]
-, ["Yes", "No"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["No", "Yes"], 1, "", nothing, [1, 2]
+, ["No", "Yes"], "", false)
 ````
 
 
@@ -665,11 +665,11 @@ wanted to prove this with the mean value theorem?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$h(x) = f(
-x) - g(x)$", L"$h(x) = f(x) - (f(b) - f(a)) / (b - a) \cdot g(x)$", L"$h(x)
- = f'(x) - g'(x)$", L"$h(x) = f(x) - (f(b) - f(a)) / (b - a)$"], 1, "", not
-hing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$h(x) = f(x) - g(x)$", L"$h(
-x) = f(x) - (f(b) - f(a)) / (b - a) \cdot g(x)$", L"$h(x) = f'(x) - g'(x)$"
-, L"$h(x) = f(x) - (f(b) - f(a)) / (b - a)$"], "", false)
+x) - (f(b) - f(a)) / (b - a) \cdot g(x)$", L"$h(x) = f(x) - (f(b) - f(a)) /
+ (b - a)$", L"$h(x) = f(x) - g(x)$", L"$h(x) = f'(x) - g'(x)$"], 3, "", not
+hing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$h(x) = f(x) - (f(b) - f(a))
+ / (b - a) \cdot g(x)$", L"$h(x) = f(x) - (f(b) - f(a)) / (b - a)$", L"$h(x
+) = f(x) - g(x)$", L"$h(x) = f'(x) - g'(x)$"], "", false)
 ````
 
 
@@ -683,14 +683,14 @@ Suppose $f''(x) > 0$ on $I$. Why is it impossible that $f'(x) = 0$ at more than 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"By the mean value th
 eorem, we must have $f'(b) - f'(a) > 0$ when ever $b > a$. This means $f'(x
-)$ is increasing and can't double back to have more than one zero.", L"It i
-sn't. The function $f(x) = x^2$ has two zeros and $f''(x) = 2 > 0$", "By th
-e Rolle's theorem, there is at least one, and perhaps more"], 1, "", nothin
+)$ is increasing and can't double back to have more than one zero.", "By th
+e Rolle's theorem, there is at least one, and perhaps more", L"It isn't. Th
+e function $f(x) = x^2$ has two zeros and $f''(x) = 2 > 0$"], 1, "", nothin
 g, [1, 2, 3], AbstractString[L"By the mean value theorem, we must have $f'(
 b) - f'(a) > 0$ when ever $b > a$. This means $f'(x)$ is increasing and can
-'t double back to have more than one zero.", L"It isn't. The function $f(x)
- = x^2$ has two zeros and $f''(x) = 2 > 0$", "By the Rolle's theorem, there
- is at least one, and perhaps more"], "", false)
+'t double back to have more than one zero.", "By the Rolle's theorem, there
+ is at least one, and perhaps more", L"It isn't. The function $f(x) = x^2$ 
+has two zeros and $f''(x) = 2 > 0$"], "", false)
 ````
 
 
@@ -718,11 +718,11 @@ CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$c = 1 / (
 Let $f(x) = x^2$. For $0 < a < b$, find $c$ so that $f'(c) = (f(b) - f(a)) / (b-a)$.
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$c = (a+b)
-/2$", L"$c = 1 / (1/a + 1/b)$", L"$c = a + (\sqrt{5} - 1)/2 \cdot (b-a)$", 
-L"$c = \sqrt{ab}$"], 1, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString
-[L"$c = (a+b)/2$", L"$c = 1 / (1/a + 1/b)$", L"$c = a + (\sqrt{5} - 1)/2 \c
-dot (b-a)$", L"$c = \sqrt{ab}$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$c = a + (
+\sqrt{5} - 1)/2 \cdot (b-a)$", L"$c = (a+b)/2$", L"$c = 1 / (1/a + 1/b)$", 
+L"$c = \sqrt{ab}$"], 2, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString
+[L"$c = a + (\sqrt{5} - 1)/2 \cdot (b-a)$", L"$c = (a+b)/2$", L"$c = 1 / (1
+/a + 1/b)$", L"$c = \sqrt{ab}$"], "", false)
 ````
 
 
@@ -740,13 +740,13 @@ In an example, we used the fact that if $0 < c < x$, for some $c$ given by the m
 Why is it known that $g(x)$ goes to $0$ as $x$ goes to zero (from the right)?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"As $f(x)$ 
-goes to zero by Rolle's theorem it must be that $g(x)$ goes to $0$.", L"The
- squeeze theorem applies, as $0 < g(x) < x$.", L"This follows by the extrem
-e value theorem, as there must be some $c$ in $[0,x]$."], 2, "", nothing, [
-1, 2, 3], LaTeXStrings.LaTeXString[L"As $f(x)$ goes to zero by Rolle's theo
-rem it must be that $g(x)$ goes to $0$.", L"The squeeze theorem applies, as
- $0 < g(x) < x$.", L"This follows by the extreme value theorem, as there mu
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"The squeez
+e theorem applies, as $0 < g(x) < x$.", L"As $f(x)$ goes to zero by Rolle's
+ theorem it must be that $g(x)$ goes to $0$.", L"This follows by the extrem
+e value theorem, as there must be some $c$ in $[0,x]$."], 1, "", nothing, [
+1, 2, 3], LaTeXStrings.LaTeXString[L"The squeeze theorem applies, as $0 < g
+(x) < x$.", L"As $f(x)$ goes to zero by Rolle's theorem it must be that $g(
+x)$ goes to $0$.", L"This follows by the extreme value theorem, as there mu
 st be some $c$ in $[0,x]$."], "", false)
 ````
 
@@ -758,11 +758,11 @@ Since $g(x)$ goes to zero, why is it true that if $f(x)$ goes to $L$ as $x$ goes
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(AbstractString["This follows from the
- limit rules for composition of functions", L"The squeeze theorem applies, 
-as $0 < g(x) < x$", "It isn't true. The limit must be 0"], 1, "", nothing, 
+ limit rules for composition of functions", "It isn't true. The limit must 
+be 0", L"The squeeze theorem applies, as $0 < g(x) < x$"], 1, "", nothing, 
 [1, 2, 3], AbstractString["This follows from the limit rules for compositio
-n of functions", L"The squeeze theorem applies, as $0 < g(x) < x$", "It isn
-'t true. The limit must be 0"], "", false)
+n of functions", "It isn't true. The limit must be 0", L"The squeeze theore
+m applies, as $0 < g(x) < x$"], "", false)
 ````
 
 

@@ -554,9 +554,9 @@ For $\int \sin(x) \cos(x) dx$, let $u=\sin(x)$. What is the resulting substituti
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\int u (1
- - u^2) du$", L"$\int u du$", L"$\int u \cos(x) du$"], 2, "", nothing, [1, 
-2, 3], LaTeXStrings.LaTeXString[L"$\int u (1 - u^2) du$", L"$\int u du$", L
-"$\int u \cos(x) du$"], "", false)
+ - u^2) du$", L"$\int u \cos(x) du$", L"$\int u du$"], 3, "", nothing, [1, 
+2, 3], LaTeXStrings.LaTeXString[L"$\int u (1 - u^2) du$", L"$\int u \cos(x)
+ du$", L"$\int u du$"], "", false)
 ````
 
 
@@ -569,9 +569,9 @@ For $\int \tan(x)^4 \sec(x)2 dx$ what $u$-substitution makes this easy?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$u=\tan(x)
-^4$", L"$u=\sec(x)$", L"$u=\sec(x)^2$", L"$u=\tan(x)$"], 4, "", nothing, [1
-, 2, 3, 4], LaTeXStrings.LaTeXString[L"$u=\tan(x)^4$", L"$u=\sec(x)$", L"$u
-=\sec(x)^2$", L"$u=\tan(x)$"], "", false)
+$", L"$u=\sec(x)^2$", L"$u=\sec(x)$", L"$u=\tan(x)^4$"], 1, "", nothing, [1
+, 2, 3, 4], LaTeXStrings.LaTeXString[L"$u=\tan(x)$", L"$u=\sec(x)^2$", L"$u
+=\sec(x)$", L"$u=\tan(x)^4$"], "", false)
 ````
 
 
@@ -621,9 +621,9 @@ CalculusWithJulia.WeaveSupport.Radioq(["Yes", "No"], 1, "", nothing, [1, 2]
 For  $\int (\log(x))^3/x dx$ the substitution $u=\log(x)$ reduces this to what?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\int u du
-$", L"$\int u^3/x du$", L"$\int u^3 du$"], 3, "", nothing, [1, 2, 3], LaTeX
-Strings.LaTeXString[L"$\int u du$", L"$\int u^3/x du$", L"$\int u^3 du$"], 
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\int u^3 
+du$", L"$\int u^3/x du$", L"$\int u du$"], 1, "", nothing, [1, 2, 3], LaTeX
+Strings.LaTeXString[L"$\int u^3 du$", L"$\int u^3/x du$", L"$\int u du$"], 
 "", false)
 ````
 
@@ -636,8 +636,8 @@ For $\int \tan(x) dx$ what substitution will prove effective?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$u=\sin(x)
-$", L"$u=\tan(x)$", L"$u=\cos(x)$"], 3, "", nothing, [1, 2, 3], LaTeXString
-s.LaTeXString[L"$u=\sin(x)$", L"$u=\tan(x)$", L"$u=\cos(x)$"], "", false)
+$", L"$u=\cos(x)$", L"$u=\tan(x)$"], 2, "", nothing, [1, 2, 3], LaTeXString
+s.LaTeXString[L"$u=\sin(x)$", L"$u=\cos(x)$", L"$u=\tan(x)$"], "", false)
 ````
 
 
@@ -655,10 +655,10 @@ $$~
 What are $a$ and $b$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$a=0,~ b=0
-$", L"$a=1,~ b=1$", L"$a=0,~ b=1$", L"$a=1,~ b=0$"], 3, "", nothing, [1, 2,
- 3, 4], LaTeXStrings.LaTeXString[L"$a=0,~ b=0$", L"$a=1,~ b=1$", L"$a=0,~ b
-=1$", L"$a=1,~ b=0$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$a=1,~ b=1
+$", L"$a=0,~ b=0$", L"$a=1,~ b=0$", L"$a=0,~ b=1$"], 4, "", nothing, [1, 2,
+ 3, 4], LaTeXStrings.LaTeXString[L"$a=1,~ b=1$", L"$a=0,~ b=0$", L"$a=1,~ b
+=0$", L"$a=0,~ b=1$"], "", false)
 ````
 
 
@@ -670,10 +670,10 @@ $", L"$a=1,~ b=1$", L"$a=0,~ b=1$", L"$a=1,~ b=0$"], 3, "", nothing, [1, 2,
 The integral $\int \sqrt{1 - x^2} dx$ lends itself to what substitution?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$u = 1 - x
-^2$", L"$\sec(u) = x$", L"$\tan(u) = x$", L"$\sin(u) = x$"], 4, "", nothing
-, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$u = 1 - x^2$", L"$\sec(u) = x$"
-, L"$\tan(u) = x$", L"$\sin(u) = x$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\sec(u) =
+ x$", L"$\sin(u) = x$", L"$u = 1 - x^2$", L"$\tan(u) = x$"], 2, "", nothing
+, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$\sec(u) = x$", L"$\sin(u) = x$"
+, L"$u = 1 - x^2$", L"$\tan(u) = x$"], "", false)
 ````
 
 
@@ -686,9 +686,9 @@ The integral $\int x/(1+x^2) dx$ lends itself to what substitution?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\sin(u) =
- x$", L"$\sec(u) = x$", L"$u = 1 + x^2$", L"$\tan(u) = x$"], 3, "", nothing
+ x$", L"$\sec(u) = x$", L"$\tan(u) = x$", L"$u = 1 + x^2$"], 4, "", nothing
 , [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$\sin(u) = x$", L"$\sec(u) = x$"
-, L"$u = 1 + x^2$", L"$\tan(u) = x$"], "", false)
+, L"$\tan(u) = x$", L"$u = 1 + x^2$"], "", false)
 ````
 
 
@@ -701,9 +701,9 @@ The integral $\int dx / \sqrt{1 - x^2}$ lends itself to what substitution?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\tan(u) =
- x$", L"$\sin(u) = x$", L"$\sec(u) = x$", L"$u = 1 - x^2$"], 2, "", nothing
-, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$\tan(u) = x$", L"$\sin(u) = x$"
-, L"$\sec(u) = x$", L"$u = 1 - x^2$"], "", false)
+ x$", L"$\sec(u) = x$", L"$\sin(u) = x$", L"$u = 1 - x^2$"], 3, "", nothing
+, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$\tan(u) = x$", L"$\sec(u) = x$"
+, L"$\sin(u) = x$", L"$u = 1 - x^2$"], "", false)
 ````
 
 
@@ -717,10 +717,10 @@ CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\tan(u) =
 The integral $\int dx / \sqrt{x^2 - 16}$ lends itself to what substitution?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\sec(u) =
- x$", L"$\sin(u) = x$", L"$4\sin(u) = x$", L"$4\sec(u) = x$"], 4, "", nothi
-ng, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$\sec(u) = x$", L"$\sin(u) = x
-$", L"$4\sin(u) = x$", L"$4\sec(u) = x$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$4\sec(u) 
+= x$", L"$\sec(u) = x$", L"$4\sin(u) = x$", L"$\sin(u) = x$"], 1, "", nothi
+ng, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$4\sec(u) = x$", L"$\sec(u) = 
+x$", L"$4\sin(u) = x$", L"$\sin(u) = x$"], "", false)
 ````
 
 
@@ -733,10 +733,10 @@ The integral $\int dx / (a^2 + x^2)$ lends itself to what substitution?
 
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\sec(u) =
- x$", L"$a\sec(u) = x$", L"$\tan(u) = x$", L"$\tan(u) = x$"], 3, "", nothin
-g, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$\sec(u) = x$", L"$a\sec(u) = x
-$", L"$\tan(u) = x$", L"$\tan(u) = x$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\tan(u) =
+ x$", L"$\tan(u) = x$", L"$a\sec(u) = x$", L"$\sec(u) = x$"], 1, "", nothin
+g, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$\tan(u) = x$", L"$\tan(u) = x$
+", L"$a\sec(u) = x$", L"$\sec(u) = x$"], "", false)
 ````
 
 
@@ -754,10 +754,10 @@ $$~
 What are $a$ and $b$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$a=1/2,~ b
-= 1$", L"$a=\pi/6,~ b=\pi/2$", L"$a=\pi/3,~ b=\pi/2$", L"$a=\pi/4,~ b=\pi/2
-$"], 2, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$a=1/2,~ b= 1
-$", L"$a=\pi/6,~ b=\pi/2$", L"$a=\pi/3,~ b=\pi/2$", L"$a=\pi/4,~ b=\pi/2$"]
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$a=\pi/6,~
+ b=\pi/2$", L"$a=\pi/4,~ b=\pi/2$", L"$a=\pi/3,~ b=\pi/2$", L"$a=1/2,~ b= 1
+$"], 1, "", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$a=\pi/6,~ b=
+\pi/2$", L"$a=\pi/4,~ b=\pi/2$", L"$a=\pi/3,~ b=\pi/2$", L"$a=1/2,~ b= 1$"]
 , "", false)
 ````
 

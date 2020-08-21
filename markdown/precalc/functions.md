@@ -1161,14 +1161,14 @@ In most cases, this method can fairly quickly find a zero provided two good star
 State the domain and range of $f(x) = |x + 2|$.
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["Domain is all real numbers, range i
+CalculusWithJulia.WeaveSupport.Radioq(["Domain is all non-negative numbers,
+ range is all non-negative numbers", "Domain is all real numbers, range is 
+all real numbers", "Domain is all non-negative numbers, range is all real n
+umbers", "Domain is all real numbers, range is all non-negative numbers"], 
+4, "", nothing, [1, 2, 3, 4], ["Domain is all non-negative numbers, range i
 s all non-negative numbers", "Domain is all real numbers, range is all real
  numbers", "Domain is all non-negative numbers, range is all real numbers",
- "Domain is all non-negative numbers, range is all non-negative numbers"], 
-1, "", nothing, [1, 2, 3, 4], ["Domain is all real numbers, range is all no
-n-negative numbers", "Domain is all real numbers, range is all real numbers
-", "Domain is all non-negative numbers, range is all real numbers", "Domain
- is all non-negative numbers, range is all non-negative numbers"], "", fals
+ "Domain is all real numbers, range is all non-negative numbers"], "", fals
 e)
 ````
 
@@ -1182,16 +1182,16 @@ State the domain and range of $f(x) = 1/(x-2)$.
 
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"Domain is all non-ne
-gative numbers except $-2$, range is all non-negative numbers except $0$", 
-L"Domain is all real numbers except $2$, range is all real numbers except $
-0$", "Domain is all real numbers, range is all real numbers", L"Domain is a
-ll non-negative numbers except $0$, range is all real numbers except $2$"],
- 2, "", nothing, [1, 2, 3, 4], AbstractString[L"Domain is all non-negative 
-numbers except $-2$, range is all non-negative numbers except $0$", L"Domai
-n is all real numbers except $2$, range is all real numbers except $0$", "D
-omain is all real numbers, range is all real numbers", L"Domain is all non-
-negative numbers except $0$, range is all real numbers except $2$"], "", fa
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"Domain is all real n
+umbers except $2$, range is all real numbers except $0$", L"Domain is all n
+on-negative numbers except $0$, range is all real numbers except $2$", "Dom
+ain is all real numbers, range is all real numbers", L"Domain is all non-ne
+gative numbers except $-2$, range is all non-negative numbers except $0$"],
+ 1, "", nothing, [1, 2, 3, 4], AbstractString[L"Domain is all real numbers 
+except $2$, range is all real numbers except $0$", L"Domain is all non-nega
+tive numbers except $0$, range is all real numbers except $2$", "Domain is 
+all real numbers, range is all real numbers", L"Domain is all non-negative 
+numbers except $-2$, range is all non-negative numbers except $0$"], "", fa
 lse)
 ````
 
@@ -1204,10 +1204,10 @@ lse)
 Which of these functions has a domain of all real $x$, but a range of $x > 0$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f(x) = 2^
-x$", L"$f(x) = |x|$", L"$f(x) = 1/x^2$", L"$f(x) = \sqrt{x}$"], 1, "", noth
-ing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$f(x) = 2^x$", L"$f(x) = |x|$
-", L"$f(x) = 1/x^2$", L"$f(x) = \sqrt{x}$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f(x) = 1/
+x^2$", L"$f(x) = \sqrt{x}$", L"$f(x) = |x|$", L"$f(x) = 2^x$"], 4, "", noth
+ing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$f(x) = 1/x^2$", L"$f(x) = \s
+qrt{x}$", L"$f(x) = |x|$", L"$f(x) = 2^x$"], "", false)
 ````
 
 
@@ -1220,11 +1220,11 @@ ing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$f(x) = 2^x$", L"$f(x) = |x|$
 Which of these commands will make a function for $f(x) = \sin(x + \pi/3)$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`f x = sin(x + pi/3)`", "`f: x -> s
-in(x + pi/3)`", "`f(x)  = sin(x + pi/3)`", "`f = sin(x + pi/3)`", "`functio
-n f(x) = sin(x + pi/3)`"], 3, "", nothing, [1, 2, 3, 4, 5], ["`f x = sin(x 
-+ pi/3)`", "`f: x -> sin(x + pi/3)`", "`f(x)  = sin(x + pi/3)`", "`f = sin(
-x + pi/3)`", "`function f(x) = sin(x + pi/3)`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`f x = sin(x + pi/3)`", "`function 
+f(x) = sin(x + pi/3)`", "`f(x)  = sin(x + pi/3)`", "`f = sin(x + pi/3)`", "
+`f: x -> sin(x + pi/3)`"], 3, "", nothing, [1, 2, 3, 4, 5], ["`f x = sin(x 
++ pi/3)`", "`function f(x) = sin(x + pi/3)`", "`f(x)  = sin(x + pi/3)`", "`
+f = sin(x + pi/3)`", "`f: x -> sin(x + pi/3)`"], "", false)
 ````
 
 
@@ -1236,11 +1236,11 @@ x + pi/3)`", "`function f(x) = sin(x + pi/3)`"], "", false)
 Which of these commands will create a function for $f(x) = (1 + x^2)^{-1}$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`def f(x): (1 + x^2)^(-1)`", "`f(x)
- := (1 + x^2)^(-1)`", "`function f(x) = (1 + x^2)^(-1)`", "`f(x) = (1 + x^2
-)^(-1)`", "`f[x] =  (1 + x^2)^(-1)`"], 4, "", nothing, [1, 2, 3, 4, 5], ["`
-def f(x): (1 + x^2)^(-1)`", "`f(x) := (1 + x^2)^(-1)`", "`function f(x) = (
-1 + x^2)^(-1)`", "`f(x) = (1 + x^2)^(-1)`", "`f[x] =  (1 + x^2)^(-1)`"], ""
+CalculusWithJulia.WeaveSupport.Radioq(["`f[x] =  (1 + x^2)^(-1)`", "`f(x) :
+= (1 + x^2)^(-1)`", "`function f(x) = (1 + x^2)^(-1)`", "`def f(x): (1 + x^
+2)^(-1)`", "`f(x) = (1 + x^2)^(-1)`"], 5, "", nothing, [1, 2, 3, 4, 5], ["`
+f[x] =  (1 + x^2)^(-1)`", "`f(x) := (1 + x^2)^(-1)`", "`function f(x) = (1 
++ x^2)^(-1)`", "`def f(x): (1 + x^2)^(-1)`", "`f(x) = (1 + x^2)^(-1)`"], ""
 , false)
 ````
 
@@ -1473,11 +1473,11 @@ CalculusWithJulia.WeaveSupport.Numericq(0, 0, "", "[0.0, 0.0]", 0, 0, "", "
 Will the call `C(1, mu=70)` use a value of `70` for `mu`?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["Yes, this will work just as it does
- for keyword arguments", "No, there will be an error that the function does
- not accept keyword arguments"], 2, "", nothing, [1, 2], ["Yes, this will w
-ork just as it does for keyword arguments", "No, there will be an error tha
-t the function does not accept keyword arguments"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["No, there will be an error that the
+ function does not accept keyword arguments", "Yes, this will work just as 
+it does for keyword arguments"], 1, "", nothing, [1, 2], ["No, there will b
+e an error that the function does not accept keyword arguments", "Yes, this
+ will work just as it does for keyword arguments"], "", false)
 ````
 
 
@@ -1505,15 +1505,15 @@ klamp (generic function with 1 method)
 Can you tell what it does?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`x` is the larger of the minimum of
- `x` and `a` and the value of `b`, aka `max(min(x,a),b)`", "If `x` is in `[
-a,b]` it returns `x`, otherwise it returns `a` when `x` is less than `a` an
-d `b` when  `x` is greater than `b`.", "If `x` is in `[a,b]` it returns `x`
-, otherwise it returns `NaN`"], 2, "", nothing, [1, 2, 3], ["`x` is the lar
-ger of the minimum of `x` and `a` and the value of `b`, aka `max(min(x,a),b
-)`", "If `x` is in `[a,b]` it returns `x`, otherwise it returns `a` when `x
-` is less than `a` and `b` when  `x` is greater than `b`.", "If `x` is in `
-[a,b]` it returns `x`, otherwise it returns `NaN`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["If `x` is in `[a,b]` it returns `x`
+, otherwise it returns `a` when `x` is less than `a` and `b` when  `x` is g
+reater than `b`.", "If `x` is in `[a,b]` it returns `x`, otherwise it retur
+ns `NaN`", "`x` is the larger of the minimum of `x` and `a` and the value o
+f `b`, aka `max(min(x,a),b)`"], 1, "", nothing, [1, 2, 3], ["If `x` is in `
+[a,b]` it returns `x`, otherwise it returns `a` when `x` is less than `a` a
+nd `b` when  `x` is greater than `b`.", "If `x` is in `[a,b]` it returns `x
+`, otherwise it returns `NaN`", "`x` is the larger of the minimum of `x` an
+d `a` and the value of `b`, aka `max(min(x,a),b)`"], "", false)
 ````
 
 
@@ -1675,10 +1675,10 @@ alse)
 `Julia` does not have surface syntax for the *difference* of functions. This is a common thing to want when solving equations. The tools available solve $f(x)=0$, but problems may present as solving for $h(x) = g(x)$ or even $h(x) = c$, for some constant. Which of these solutions is **not** helpful if $h$ and $g$ are already defined?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["Use `x -> h(x) - g(x)` when the dif
-ference is needed", "Define `f(x) = h(x) - g(x)`", "Just use `f = h - g`"],
- 3, "", nothing, [1, 2, 3], ["Use `x -> h(x) - g(x)` when the difference is
- needed", "Define `f(x) = h(x) - g(x)`", "Just use `f = h - g`"], "", false
+CalculusWithJulia.WeaveSupport.Radioq(["Just use `f = h - g`", "Use `x -> h
+(x) - g(x)` when the difference is needed", "Define `f(x) = h(x) - g(x)`"],
+ 1, "", nothing, [1, 2, 3], ["Just use `f = h - g`", "Use `x -> h(x) - g(x)
+` when the difference is needed", "Define `f(x) = h(x) - g(x)`"], "", false
 )
 ````
 

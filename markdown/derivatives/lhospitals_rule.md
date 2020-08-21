@@ -190,7 +190,7 @@ known and is equal to the right.
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_x6F6M3.gif", L"
+qq4h57w0000gr/T/jl_wjn6sA.gif", L"
 Geometric interpretation of $L=\lim_{x \rightarrow 0} x^2 / (\sqrt{1 +
 x} - 1 - x^2)$. At $0$ this limit is indeterminate of the form
 $0/0$. The value for a fixed $x$ can be seen as the slope of a secant
@@ -459,9 +459,9 @@ $$~
 ~$$
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString["No. It is not indeter
-minate", L"Yes. It is of the form $0/0$"], 1, "", nothing, [1, 2], Abstract
-String["No. It is not indeterminate", L"Yes. It is of the form $0/0$"], "",
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"Yes. It is of the fo
+rm $0/0$", "No. It is not indeterminate"], 2, "", nothing, [1, 2], Abstract
+String[L"Yes. It is of the form $0/0$", "No. It is not indeterminate"], "",
  false)
 ````
 
@@ -623,9 +623,9 @@ $$~
 (Hint, express as $\exp^{\tan(\pi/2 \cdot x) \cdot \log(2-x)}$ and take the limit of the resulting exponent.)
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"$1$", "It does not e
-xist", L"${2\pi}$", L"$e^{2/\pi}$", L"$0$"], 4, "", nothing, [1, 2, 3, 4, 5
-], AbstractString[L"$1$", "It does not exist", L"${2\pi}$", L"$e^{2/\pi}$",
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"$1$", L"$e^{2/\pi}$"
+, "It does not exist", L"${2\pi}$", L"$0$"], 2, "", nothing, [1, 2, 3, 4, 5
+], AbstractString[L"$1$", L"$e^{2/\pi}$", "It does not exist", L"${2\pi}$",
  L"$0$"], "", false)
 ````
 

@@ -1758,9 +1758,9 @@ CalculusWithJulia.WeaveSupport.Numericq(0.945250237728822, 0.001, "", "[0.9
 Find `u ×  v`:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`[-1, 6, -7]`", "`[-4, 14, -8]`", "
-`[-5, 10, -5]`"], 3, "", nothing, [1, 2, 3], ["`[-1, 6, -7]`", "`[-4, 14, -
-8]`", "`[-5, 10, -5]`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`[-5, 10, -5]`", "`[-4, 14, -8]`", 
+"`[-1, 6, -7]`"], 1, "", nothing, [1, 2, 3], ["`[-5, 10, -5]`", "`[-4, 14, 
+-8]`", "`[-1, 6, -7]`"], "", false)
 ````
 
 
@@ -1820,11 +1820,11 @@ CalculusWithJulia.WeaveSupport.Radioq(["Yes", "No"], 1, "", nothing, [1, 2]
 What does command `zip(u,v)` return?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["An object of type `Base.Iterators.Z
-ip` that is only realized when used", "A vector of values `[(1, 5), (2, 4),
- (3, 2)]`"], 1, "", nothing, [1, 2], ["An object of type `Base.Iterators.Zi
-p` that is only realized when used", "A vector of values `[(1, 5), (2, 4), 
-(3, 2)]`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["A vector of values `[(1, 5), (2, 4)
+, (3, 2)]`", "An object of type `Base.Iterators.Zip` that is only realized 
+when used"], 2, "", nothing, [1, 2], ["A vector of values `[(1, 5), (2, 4),
+ (3, 2)]`", "An object of type `Base.Iterators.Zip` that is only realized w
+hen used"], "", false)
 ````
 
 
@@ -1854,9 +1854,9 @@ $$~
 ~$$
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"$1$", "Can't say in 
-general", L"$0$"], 1, "", nothing, [1, 2, 3], AbstractString[L"$1$", "Can't
- say in general", L"$0$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"$0$", "Can't say in 
+general", L"$1$"], 3, "", nothing, [1, 2, 3], AbstractString[L"$0$", "Can't
+ say in general", L"$1$"], "", false)
 ````
 
 
@@ -1882,8 +1882,8 @@ Let $\vec{u} = \langle 1, 2, 3 \rangle$ and $\vec{v} = \langle 3, 2, 1 \rangle$.
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$x + 2y + 
-z = 0$", L"$x + 2y + 3z = 6$", L"$-4x + 8y - 4z = 0$"], 3, "", nothing, [1,
- 2, 3], LaTeXStrings.LaTeXString[L"$x + 2y + z = 0$", L"$x + 2y + 3z = 6$",
+3z = 6$", L"$x + 2y + z = 0$", L"$-4x + 8y - 4z = 0$"], 3, "", nothing, [1,
+ 2, 3], LaTeXStrings.LaTeXString[L"$x + 2y + 3z = 6$", L"$x + 2y + z = 0$",
  L"$-4x + 8y - 4z = 0$"], "", false)
 ````
 
@@ -1932,9 +1932,9 @@ If the vector to 3 o'clock is removed, (call this $\langle 1, 0 \rangle$) what e
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\langle 1
-1, 11 \rangle$", L"$\langle 1, 0 \rangle$", L"$\langle -1, 0 \rangle$"], 3,
- "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\langle 11, 11 \rangle
-$", L"$\langle 1, 0 \rangle$", L"$\langle -1, 0 \rangle$"], "", false)
+, 0 \rangle$", L"$\langle 11, 11 \rangle$", L"$\langle -1, 0 \rangle$"], 3,
+ "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\langle 1, 0 \rangle$"
+, L"$\langle 11, 11 \rangle$", L"$\langle -1, 0 \rangle$"], "", false)
 ````
 
 
@@ -1946,11 +1946,11 @@ $", L"$\langle 1, 0 \rangle$", L"$\langle -1, 0 \rangle$"], "", false)
 Let $\vec{u}$ and $\vec{v}$ be unit vectors. Let $\vec{w} = \vec{u} + \vec{v}$. Then $\vec{u} \cdot \vec{w} = \vec{v} \cdot \vec{w}$. What is the value?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\vec{u} +
- \vec{v}$", L"$\vec{u}\cdot\vec{v} + \vec{v}\cdot \vec{v}$", L"$1 + \vec{u}
-\cdot\vec{v}$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\ve
-c{u} + \vec{v}$", L"$\vec{u}\cdot\vec{v} + \vec{v}\cdot \vec{v}$", L"$1 + \
-vec{u}\cdot\vec{v}$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\vec{u}\c
+dot\vec{v} + \vec{v}\cdot \vec{v}$", L"$1 + \vec{u}\cdot\vec{v}$", L"$\vec{
+u} + \vec{v}$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\ve
+c{u}\cdot\vec{v} + \vec{v}\cdot \vec{v}$", L"$1 + \vec{u}\cdot\vec{v}$", L"
+$\vec{u} + \vec{v}$"], "", false)
 ````
 
 
@@ -1981,10 +1981,10 @@ We have $(\vec{u} + \vec{v})\cdot(\vec{u} + \vec{v}) = \vec{u}\cdot \vec{u} + 2 
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\vec{u}\c
-dot\vec{v} = 2$", L"$\vec{u}\cdot\vec{v} = 0$", L"$\vec{u}\cdot\vec{v} = -(
-\vec{u}\cdot\vec{u} \vec{v}\cdot\vec{v})$"], 2, "", nothing, [1, 2, 3], LaT
-eXStrings.LaTeXString[L"$\vec{u}\cdot\vec{v} = 2$", L"$\vec{u}\cdot\vec{v} 
-= 0$", L"$\vec{u}\cdot\vec{v} = -(\vec{u}\cdot\vec{u} \vec{v}\cdot\vec{v})$
+dot\vec{v} = 0$", L"$\vec{u}\cdot\vec{v} = -(\vec{u}\cdot\vec{u} \vec{v}\cd
+ot\vec{v})$", L"$\vec{u}\cdot\vec{v} = 2$"], 1, "", nothing, [1, 2, 3], LaT
+eXStrings.LaTeXString[L"$\vec{u}\cdot\vec{v} = 0$", L"$\vec{u}\cdot\vec{v} 
+= -(\vec{u}\cdot\vec{u} \vec{v}\cdot\vec{v})$", L"$\vec{u}\cdot\vec{v} = 2$
 "], "", false)
 ````
 
@@ -2056,9 +2056,9 @@ simplifies. To what? (Use `SymPy` or randomly generated vectors to see.)
 
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\vec{a}$"
-, L"$\vec{0}$", L"$\vec{a} + \vec{b} + \vec{c}$"], 2, "", nothing, [1, 2, 3
-], LaTeXStrings.LaTeXString[L"$\vec{a}$", L"$\vec{0}$", L"$\vec{a} + \vec{b
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\vec{0}$"
+, L"$\vec{a}$", L"$\vec{a} + \vec{b} + \vec{c}$"], 1, "", nothing, [1, 2, 3
+], LaTeXStrings.LaTeXString[L"$\vec{0}$", L"$\vec{a}$", L"$\vec{a} + \vec{b
 } + \vec{c}$"], "", false)
 ````
 

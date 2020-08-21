@@ -1253,9 +1253,9 @@ $$~
 that uses the least number of parentheses?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`(3 - 2)/ 4 - 1`", "`(3 - 2) / (4 -
- 1)`", "`3 - 2 / (4 - 1)`"], 2, "", nothing, [1, 2, 3], ["`(3 - 2)/ 4 - 1`"
-, "`(3 - 2) / (4 - 1)`", "`3 - 2 / (4 - 1)`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`(3 - 2) / (4 - 1)`", "`3 - 2 / (4 
+- 1)`", "`(3 - 2)/ 4 - 1`"], 1, "", nothing, [1, 2, 3], ["`(3 - 2) / (4 - 1
+)`", "`3 - 2 / (4 - 1)`", "`(3 - 2)/ 4 - 1`"], "", false)
 ````
 
 
@@ -1274,8 +1274,8 @@ $$~
 that uses the least number of parentheses?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`3 * 2 / 4`", "`(3 * 2) / 4`"], 1, 
-"", nothing, [1, 2], ["`3 * 2 / 4`", "`(3 * 2) / 4`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`(3 * 2) / 4`", "`3 * 2 / 4`"], 2, 
+"", nothing, [1, 2], ["`(3 * 2) / 4`", "`3 * 2 / 4`"], "", false)
 ````
 
 
@@ -1294,9 +1294,9 @@ $$~
 that uses the least number of parentheses?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`(2 ^ 4) - 2`", "`2 ^ (4 - 2)`", "`
-2 ^ 4 - 2`"], 2, "", nothing, [1, 2, 3], ["`(2 ^ 4) - 2`", "`2 ^ (4 - 2)`",
- "`2 ^ 4 - 2`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`(2 ^ 4) - 2`", "`2 ^ 4 - 2`", "`2 
+^ (4 - 2)`"], 3, "", nothing, [1, 2, 3], ["`(2 ^ 4) - 2`", "`2 ^ 4 - 2`", "
+`2 ^ (4 - 2)`"], "", false)
 ````
 
 
@@ -1324,10 +1324,10 @@ We saw that `1 / 2 / 3 / 4 / 5 / 6` is about $14$ divided by $10,000$. But what 
 
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`1 / (2 / 3 / 4 / 5 / 6)`", "`1 / 2
- * 3 / 4  * 5 / 6`", "`1 /(2 * 3 * 4 * 5 * 6)`"], 3, "", nothing, [1, 2, 3]
-, ["`1 / (2 / 3 / 4 / 5 / 6)`", "`1 / 2 * 3 / 4  * 5 / 6`", "`1 /(2 * 3 * 4
- * 5 * 6)`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`1 / (2 / 3 / 4 / 5 / 6)`", "`1 /(2
+ * 3 * 4 * 5 * 6)`", "`1 / 2 * 3 / 4  * 5 / 6`"], 2, "", nothing, [1, 2, 3]
+, ["`1 / (2 / 3 / 4 / 5 / 6)`", "`1 /(2 * 3 * 4 * 5 * 6)`", "`1 / 2 * 3 / 4
+  * 5 / 6`"], "", false)
 ````
 
 
@@ -1341,8 +1341,8 @@ One of these three expressions will produce a different answer, select
 that one:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`(2 - 3) - 4`", "`2 - 3 - 4`", "`2 
-- (3 - 4)`"], 3, "", nothing, [1, 2, 3], ["`(2 - 3) - 4`", "`2 - 3 - 4`", "
+CalculusWithJulia.WeaveSupport.Radioq(["`2 - 3 - 4`", "`(2 - 3) - 4`", "`2 
+- (3 - 4)`"], 3, "", nothing, [1, 2, 3], ["`2 - 3 - 4`", "`(2 - 3) - 4`", "
 `2 - (3 - 4)`"], "", false)
 ````
 
@@ -1374,8 +1374,8 @@ that one:
 
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`-1^2`", "`(-1)^2`", "`-(1^2)`"], 2
-, "", nothing, [1, 2, 3], ["`-1^2`", "`(-1)^2`", "`-(1^2)`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`-(1^2)`", "`-1^2`", "`(-1)^2`"], 3
+, "", nothing, [1, 2, 3], ["`-(1^2)`", "`-1^2`", "`(-1)^2`"], "", false)
 ````
 
 
@@ -1562,13 +1562,13 @@ CalculusWithJulia.WeaveSupport.Radioq(["Yes", "No"], 2, "", nothing, [1, 2]
 Why or why not:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["Of course it is correct.", "The pre
-cedence of numeric literal coefficients used for implicit multiplication is
- higher than other binary operators such as multiplication (`*`), and divis
-ion (`/`, ``, and `//`)"], 2, "", nothing, [1, 2], ["Of course it is correc
-t.", "The precedence of numeric literal coefficients used for implicit mult
-iplication is higher than other binary operators such as multiplication (`*
-`), and division (`/`, ``, and `//`)"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["The precedence of numeric literal c
+oefficients used for implicit multiplication is higher than other binary op
+erators such as multiplication (`*`), and division (`/`, ``, and `//`)", "O
+f course it is correct."], 1, "", nothing, [1, 2], ["The precedence of nume
+ric literal coefficients used for implicit multiplication is higher than ot
+her binary operators such as multiplication (`*`), and division (`/`, ``, a
+nd `//`)", "Of course it is correct."], "", false)
 ````
 
 

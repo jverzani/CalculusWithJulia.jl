@@ -331,7 +331,7 @@ This  graphic demonstrates the method and the rapid convergence:
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_1MLpTl.gif", "\nIllustration of Newton's Method convergi
+qq4h57w0000gr/T/jl_znfIji.gif", "\nIllustration of Newton's Method convergi
 ng to a zero of a function.\n\n")
 ````
 
@@ -838,7 +838,7 @@ What can go wrong when one of these isn't the case is illustrated next:
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_zGrjZ1.gif", "\nIllustration of Newton's Method convergi
+qq4h57w0000gr/T/jl_IkIcYt.gif", "\nIllustration of Newton's Method convergi
 ng to a zero of a function,\nbut slowly as the initial guess, is very poor,
  and not close to the\nzero. The algorithm does converge in this illustrati
 on, but not quickly and not to the nearest root from\nthe initial guess.\n\
@@ -849,7 +849,7 @@ n")
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_ZzdrbM.gif", L"
+qq4h57w0000gr/T/jl_VEUHcV.gif", L"
 Illustration of Newton's method failing to coverge as for some $x_i$,
 $f'(x_i)$ is too close to 0. In this instance after a few steps, the
 algorithm just cycles around the local minimum near $0.66$. The values
@@ -869,7 +869,7 @@ cycles can occur.
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_uMTOzI.gif", L"
+qq4h57w0000gr/T/jl_gIbtp7.gif", L"
 Illustration of Newton's Method not converging. Here the second
 derivative is too big near the zero - it blows up near $0$ - and the
 convergence does not occur. Rather the iterates increase in their
@@ -885,7 +885,7 @@ distance from the zero.
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_K58kL8.gif", L"
+qq4h57w0000gr/T/jl_3BAZMl.gif", L"
 The function $f(x) = x^{20} - 1$ has two bad behaviours for Newton's
 method: for $x < 1$ the derivative is nearly $0$ and for $x>1$ the
 second derivative is very big. In this illustration, we have an
@@ -980,9 +980,9 @@ What can be said about $x_1$?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"It must be
- $x_1 > c$", L"It must be $x_1 < x_0$", L"It must be $x_0 < x_1 < c$"], 1, 
-"", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"It must be $x_1 > c$", L
-"It must be $x_1 < x_0$", L"It must be $x_0 < x_1 < c$"], "", false)
+ $x_1 < x_0$", L"It must be $x_0 < x_1 < c$", L"It must be $x_1 > c$"], 3, 
+"", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"It must be $x_1 < x_0$",
+ L"It must be $x_0 < x_1 < c$", L"It must be $x_1 > c$"], "", false)
 ````
 
 
@@ -1006,9 +1006,9 @@ What can be said about $x_1$?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"It must be
- $c < x_1 < x_0$", L"It must be $x_1 > x_0$", L"It must be $x_1 < c$"], 1, 
+ $c < x_1 < x_0$", L"It must be $x_1 < c$", L"It must be $x_1 > x_0$"], 1, 
 "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"It must be $c < x_1 < x_
-0$", L"It must be $x_1 > x_0$", L"It must be $x_1 < c$"], "", false)
+0$", L"It must be $x_1 < c$", L"It must be $x_1 > x_0$"], "", false)
 ````
 
 
@@ -1322,12 +1322,12 @@ Plot{Plots.PlotlyBackend() n=1}
 Starting with $x_0=1$, you can see why Newton's method will fail. Why?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"The tangen
-t lines for $|x| > 0.25$ intersect at $x$ values with $|x| > 0.25$", L"The 
-first derivative is $0$ at $1$", L"It doesn't fail, it converges to $0$"], 
-1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"The tangent lines for
- $|x| > 0.25$ intersect at $x$ values with $|x| > 0.25$", L"The first deriv
-ative is $0$ at $1$", L"It doesn't fail, it converges to $0$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"The first 
+derivative is $0$ at $1$", L"It doesn't fail, it converges to $0$", L"The t
+angent lines for $|x| > 0.25$ intersect at $x$ values with $|x| > 0.25$"], 
+3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"The first derivative 
+is $0$ at $1$", L"It doesn't fail, it converges to $0$", L"The tangent line
+s for $|x| > 0.25$ intersect at $x$ values with $|x| > 0.25$"], "", false)
 ````
 
 
@@ -1562,9 +1562,9 @@ Using `find_zero`, find the value $x$ which maximizes `yp`. Use this to find the
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$(0,0)$", 
-L"$(0, -0.577)$", L"$(0.577, 0.577)$", L"$(-0.577, 1.155)$"], 4, "", nothin
-g, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$(0,0)$", L"$(0, -0.577)$", L"$
-(0.577, 0.577)$", L"$(-0.577, 1.155)$"], "", false)
+L"$(0.577, 0.577)$", L"$(0, -0.577)$", L"$(-0.577, 1.155)$"], 4, "", nothin
+g, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$(0,0)$", L"$(0.577, 0.577)$", 
+L"$(0, -0.577)$", L"$(-0.577, 1.155)$"], "", false)
 ````
 
 

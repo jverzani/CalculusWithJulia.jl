@@ -471,8 +471,8 @@ CalculusWithJulia.WeaveSupport.Numericq(1.205632716049383, 0.001, "", "[1.2
 Which is bigger $e^2$ or $2^e$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$e^2$", L"
-$2^e$"], 1, "", nothing, [1, 2], LaTeXStrings.LaTeXString[L"$e^2$", L"$2^e$
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$2^e$", L"
+$e^2$"], 2, "", nothing, [1, 2], LaTeXStrings.LaTeXString[L"$2^e$", L"$e^2$
 "], "", false)
 ````
 
@@ -502,10 +502,10 @@ ratio $x/z$?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\frac{\lo
-g(2)\log(3)}{\log(5)\log(4)}$", L"$2/5$", L"$\frac{\log(5)\log(4)}{\log(3)\
-log(2)}$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\frac{\l
-og(2)\log(3)}{\log(5)\log(4)}$", L"$2/5$", L"$\frac{\log(5)\log(4)}{\log(3)
-\log(2)}$"], "", false)
+g(5)\log(4)}{\log(3)\log(2)}$", L"$\frac{\log(2)\log(3)}{\log(5)\log(4)}$",
+ L"$2/5$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\frac{\l
+og(5)\log(4)}{\log(3)\log(2)}$", L"$\frac{\log(2)\log(3)}{\log(5)\log(4)}$"
+, L"$2/5$"], "", false)
 ````
 
 
@@ -632,8 +632,8 @@ What statement appears to be true?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\log(1-x)
- \leq -x - x^2/2$", L"$\log(1-x) \geq -x - x^2/2$"], 2, "", nothing, [1, 2]
-, LaTeXStrings.LaTeXString[L"$\log(1-x) \leq -x - x^2/2$", L"$\log(1-x) \ge
+ \geq -x - x^2/2$", L"$\log(1-x) \leq -x - x^2/2$"], 1, "", nothing, [1, 2]
+, LaTeXStrings.LaTeXString[L"$\log(1-x) \geq -x - x^2/2$", L"$\log(1-x) \le
 q -x - x^2/2$"], "", false)
 ````
 
@@ -647,9 +647,9 @@ Suppose $a > 1$. If $\log_a(x) = y$ what is $\log_{1/a}(x)$? (The
 reciprocal property of exponents, $a^{-x} = (1/a)^x$, is at play here.)
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1/y$", L"
-$-1/y$", L"$-y$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$1
-/y$", L"$-1/y$", L"$-y$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$-1/y$", L
+"$1/y$", L"$-y$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$-
+1/y$", L"$1/y$", L"$-y$"], "", false)
 ````
 
 
@@ -661,9 +661,9 @@ $\log_a(x)$ under which transformation?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"Flipped ov
-er the line $y=x$", L"Flipped over the $x$ axis", L"Flipped over the $y$ ax
-is"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"Flipped over th
-e line $y=x$", L"Flipped over the $x$ axis", L"Flipped over the $y$ axis"],
+er the $y$ axis", L"Flipped over the line $y=x$", L"Flipped over the $x$ ax
+is"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"Flipped over th
+e $y$ axis", L"Flipped over the line $y=x$", L"Flipped over the $x$ axis"],
  "", false)
 ````
 
@@ -677,10 +677,10 @@ e line $y=x$", L"Flipped over the $x$ axis", L"Flipped over the $y$ axis"],
 Suppose $x < y$. Then for $a > 0$, $a^y - a^x$ is equal to:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$a^{y-x}$"
-, L"$a^{y-x} \cdot (a^x - 1)$", L"$a^x \cdot (a^{y-x} - 1)$"], 3, "", nothi
-ng, [1, 2, 3], LaTeXStrings.LaTeXString[L"$a^{y-x}$", L"$a^{y-x} \cdot (a^x
- - 1)$", L"$a^x \cdot (a^{y-x} - 1)$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$a^{y-x} \
+cdot (a^x - 1)$", L"$a^x \cdot (a^{y-x} - 1)$", L"$a^{y-x}$"], 2, "", nothi
+ng, [1, 2, 3], LaTeXStrings.LaTeXString[L"$a^{y-x} \cdot (a^x - 1)$", L"$a^
+x \cdot (a^{y-x} - 1)$", L"$a^{y-x}$"], "", false)
 ````
 
 
@@ -704,11 +704,11 @@ x} > 0$"], "", false)
 If $a < 1$ then:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"as $a^x   
-< 1$, $a^y < a^x$", L"$a^{y-x} < 0$", L"as $a^{y-x} < 1$ as $y-x > 0$, $a^y
- < a^x$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"as $a^x   
-< 1$, $a^y < a^x$", L"$a^{y-x} < 0$", L"as $a^{y-x} < 1$ as $y-x > 0$, $a^y
- < a^x$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"as $a^{y-x
+} < 1$ as $y-x > 0$, $a^y < a^x$", L"as $a^x   < 1$, $a^y < a^x$", L"$a^{y-
+x} < 0$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"as $a^{y-x
+} < 1$ as $y-x > 0$, $a^y < a^x$", L"as $a^x   < 1$, $a^y < a^x$", L"$a^{y-
+x} < 0$"], "", false)
 ````
 
 

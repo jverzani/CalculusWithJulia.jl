@@ -253,10 +253,10 @@ f+g,~ f-g,~ f\cdot g,~ f\circ g,~ f/g
 ~$$
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f+g$", L"
-$f\circ g$", L"$f\cdot g$", L"$f-g$", L"$f/g$"], 5, "", nothing, [1, 2, 3, 
-4, 5], LaTeXStrings.LaTeXString[L"$f+g$", L"$f\circ g$", L"$f\cdot g$", L"$
-f-g$", L"$f/g$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f-g$", L"
+$f+g$", L"$f\cdot g$", L"$f\circ g$", L"$f/g$"], 5, "", nothing, [1, 2, 3, 
+4, 5], LaTeXStrings.LaTeXString[L"$f-g$", L"$f+g$", L"$f\cdot g$", L"$f\cir
+c g$", L"$f/g$"], "", false)
 ````
 
 
@@ -318,10 +318,10 @@ everywhere and $g$ is continuous on the range of $f$"], "", false)
 At which values is $f(x) = 1/\sqrt{x-2}$ not continuous?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"When $x > 
-2$", L"For $x \geq 0$", L"When $x \leq 2$", L"When $x \geq 2$"], 3, "", not
-hing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"When $x > 2$", L"For $x \geq
- 0$", L"When $x \leq 2$", L"When $x \geq 2$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"When $x \l
+eq 2$", L"For $x \geq 0$", L"When $x > 2$", L"When $x \geq 2$"], 1, "", not
+hing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"When $x \leq 2$", L"For $x \
+geq 0$", L"When $x > 2$", L"When $x \geq 2$"], "", false)
 ````
 
 
@@ -502,9 +502,9 @@ CalculusWithJulia.WeaveSupport.Numericq(1.0, 0.001, "", "[0.999, 1.001]", 0
 What is $\lim_{x \rightarrow 0.5} f(g(x))$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"$-1.0$", L"$0.0$", "
-Can't tell"], 3, "", nothing, [1, 2, 3], AbstractString[L"$-1.0$", L"$0.0$"
-, "Can't tell"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString["Can't tell", L"$0.0$"
+, L"$-1.0$"], 1, "", nothing, [1, 2, 3], AbstractString["Can't tell", L"$0.
+0$", L"$-1.0$"], "", false)
 ````
 
 

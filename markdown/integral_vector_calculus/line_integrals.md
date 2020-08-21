@@ -1334,7 +1334,7 @@ A1[1]
 
 
 ````
-12.566370611008843
+12.566370614781192
 ````
 
 
@@ -1355,7 +1355,7 @@ A1[1] + A2[1]
 
 
 ````
-1.8214152408546624e-11
+-3.5388802999136715e-11
 ````
 
 
@@ -1425,11 +1425,11 @@ For a plane $ax+by+cz=d$ find the unit normal.
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\langle a
-, b, c\rangle / \| \langle a, b, c\rangle\|$", L"$\langle a, b, c\rangle$",
- L"$\langle d-a, d-b, d-c\rangle / \| \langle d-a, d-b, d-c\rangle\|$"], 1,
+, b, c\rangle / \| \langle a, b, c\rangle\|$", L"$\langle d-a, d-b, d-c\ran
+gle / \| \langle d-a, d-b, d-c\rangle\|$", L"$\langle a, b, c\rangle$"], 1,
  "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\langle a, b, c\rangle
- / \| \langle a, b, c\rangle\|$", L"$\langle a, b, c\rangle$", L"$\langle d
--a, d-b, d-c\rangle / \| \langle d-a, d-b, d-c\rangle\|$"], "", false)
+ / \| \langle a, b, c\rangle\|$", L"$\langle d-a, d-b, d-c\rangle / \| \lan
+gle d-a, d-b, d-c\rangle\|$", L"$\langle a, b, c\rangle$"], "", false)
 ````
 
 
@@ -1439,17 +1439,17 @@ CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\langle a
 Does it depend on $d$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"Yes. Of co
-urse. Different values for $d$ mean different values for $x$, $y$, and $z$ 
-are needed.", L"No. Moving $d$ just shifts the plane up or down the $z$ axi
-s, but won't change the normal vector", L"Yes. The gradient of $F(x,y,z) = 
-ax + by + cz$ will be normal to the level curve $F(x,y,z)=d$, and so this w
-ill depend on $d$."], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L
-"Yes. Of course. Different values for $d$ mean different values for $x$, $y
-$, and $z$ are needed.", L"No. Moving $d$ just shifts the plane up or down 
-the $z$ axis, but won't change the normal vector", L"Yes. The gradient of $
-F(x,y,z) = ax + by + cz$ will be normal to the level curve $F(x,y,z)=d$, an
-d so this will depend on $d$."], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"No. Moving
+ $d$ just shifts the plane up or down the $z$ axis, but won't change the no
+rmal vector", L"Yes. The gradient of $F(x,y,z) = ax + by + cz$ will be norm
+al to the level curve $F(x,y,z)=d$, and so this will depend on $d$.", L"Yes
+. Of course. Different values for $d$ mean different values for $x$, $y$, a
+nd $z$ are needed."], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L
+"No. Moving $d$ just shifts the plane up or down the $z$ axis, but won't ch
+ange the normal vector", L"Yes. The gradient of $F(x,y,z) = ax + by + cz$ w
+ill be normal to the level curve $F(x,y,z)=d$, and so this will depend on $
+d$.", L"Yes. Of course. Different values for $d$ mean different values for 
+$x$, $y$, and $z$ are needed."], "", false)
 ````
 
 
@@ -1478,9 +1478,9 @@ CalculusWithJulia.WeaveSupport.Numericq(26.022394109358302, 0.001, "", "[26
 Compute the value symbolically:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$4\pi$", L
-"$2\pi^2$", L"$2\pi + 2\pi^2$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.La
-TeXString[L"$4\pi$", L"$2\pi^2$", L"$2\pi + 2\pi^2$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$2\pi^2$",
+ L"$2\pi + 2\pi^2$", L"$4\pi$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.La
+TeXString[L"$2\pi^2$", L"$2\pi + 2\pi^2$", L"$4\pi$"], "", false)
 ````
 
 
@@ -1584,8 +1584,8 @@ lse)
 The function $F = \nabla{f}$ is
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["Continuous everywhere", "Not contin
-uous everywhere"], 2, "", nothing, [1, 2], ["Continuous everywhere", "Not c
+CalculusWithJulia.WeaveSupport.Radioq(["Not continuous everywhere", "Contin
+uous everywhere"], 1, "", nothing, [1, 2], ["Not continuous everywhere", "C
 ontinuous everywhere"], "", false)
 ````
 
@@ -1640,10 +1640,10 @@ It is not unusual to see a line integral, $\int F\cdot d\vec{r}$, where $F=\lang
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\int_0^{2
-\pi} (a\cos(t)) \cdot (b\cos(t)) dt$", L"$\int_0^{2\pi} (a\cos(t)) \cdot (a
-\cos(t)) dt$", L"$\int_0^{2\pi} (-b\sin(t)) \cdot (b\cos(t)) dt$"], 1, "", 
+\pi} (a\cos(t)) \cdot (a\cos(t)) dt$", L"$\int_0^{2\pi} (a\cos(t)) \cdot (b
+\cos(t)) dt$", L"$\int_0^{2\pi} (-b\sin(t)) \cdot (b\cos(t)) dt$"], 2, "", 
 nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\int_0^{2\pi} (a\cos(t)) \c
-dot (b\cos(t)) dt$", L"$\int_0^{2\pi} (a\cos(t)) \cdot (a\cos(t)) dt$", L"$
+dot (a\cos(t)) dt$", L"$\int_0^{2\pi} (a\cos(t)) \cdot (b\cos(t)) dt$", L"$
 \int_0^{2\pi} (-b\sin(t)) \cdot (b\cos(t)) dt$"], "", false)
 ````
 
@@ -1753,9 +1753,9 @@ $$~
 Compute this.
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\sqrt{2}/
-24$", L"$1/12$", L"$2/\sqrt{24}$"], 1, "", nothing, [1, 2, 3], LaTeXStrings
-.LaTeXString[L"$\sqrt{2}/24$", L"$1/12$", L"$2/\sqrt{24}$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1/12$", L
+"$2/\sqrt{24}$", L"$\sqrt{2}/24$"], 3, "", nothing, [1, 2, 3], LaTeXStrings
+.LaTeXString[L"$1/12$", L"$2/\sqrt{24}$", L"$\sqrt{2}/24$"], "", false)
 ````
 
 
@@ -1768,9 +1768,9 @@ CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\sqrt{2}/
 Let $\Phi(u,v) = \langle u^2, uv, v^2\rangle$, $(u,v)$ in $[0,1]\times[0,1]$ and $F(x,y,z) = \langle x,y^2,z^3\rangle$. Find  $\int_S (F\cdot\hat{N})dS$
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$0$", L"$1
-7/252$", L"$1/60$", L"$7/36$"], 2, "", nothing, [1, 2, 3, 4], LaTeXStrings.
-LaTeXString[L"$0$", L"$17/252$", L"$1/60$", L"$7/36$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$17/252$",
+ L"$7/36$", L"$1/60$", L"$0$"], 1, "", nothing, [1, 2, 3, 4], LaTeXStrings.
+LaTeXString[L"$17/252$", L"$7/36$", L"$1/60$", L"$0$"], "", false)
 ````
 
 

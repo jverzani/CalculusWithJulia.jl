@@ -15,7 +15,7 @@ introduced with definitions to handle the two cases above.
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_FVKZkq.gif", L"
+qq4h57w0000gr/T/jl_D3vRVN.gif", L"
 Area under $1/\sqrt{x}$ over $[a,b]$ increases as $a$ gets closer to $0$. W
 ill it grow unbounded or have a limit?
 
@@ -538,10 +538,10 @@ $\infty$ can be seen to be related through the $u$-substitution
 $u=1/x$. With this $u$-substitution, what becomes of $\int_0^1 x^{-2/3} dx$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\int_1^\i
-nfty u^{2/3}/u^2 \cdot du$", L"$\int_0^1 u^{2/3} \cdot du$", L"$\int_0^\inf
-ty 1/u \cdot du$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$
-\int_1^\infty u^{2/3}/u^2 \cdot du$", L"$\int_0^1 u^{2/3} \cdot du$", L"$\i
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\int_0^1 
+u^{2/3} \cdot du$", L"$\int_1^\infty u^{2/3}/u^2 \cdot du$", L"$\int_0^\inf
+ty 1/u \cdot du$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$
+\int_0^1 u^{2/3} \cdot du$", L"$\int_1^\infty u^{2/3}/u^2 \cdot du$", L"$\i
 nt_0^\infty 1/u \cdot du$"], "", false)
 ````
 

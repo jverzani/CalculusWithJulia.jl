@@ -13,3 +13,7 @@ CwJ/**/*.pdf
 CwJ/**/cache
 /*/*/jl_*/
 TODO.md
+docs/build/
+docs/site/
+pdf/**/_figures*
+pdf/**/figures

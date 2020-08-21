@@ -370,15 +370,15 @@ The key here is that the shape of $f(x)$ near $x=c$ is somewhat related to the s
 Is it possible that a function have two different inverses?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"Yes, the f
-unction $f(x) = x^2, x \geq 0$ will have a different inverse than the same 
-function $f(x) = x^2,  x \leq 0$", L"No, for all $x$ in the domain an an in
-verse, the value of any inverse will be the same, hence all inverse functio
-ns would be identical."], 2, "", nothing, [1, 2], LaTeXStrings.LaTeXString[
-L"Yes, the function $f(x) = x^2, x \geq 0$ will have a different inverse th
-an the same function $f(x) = x^2,  x \leq 0$", L"No, for all $x$ in the dom
-ain an an inverse, the value of any inverse will be the same, hence all inv
-erse functions would be identical."], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"No, for al
+l $x$ in the domain an an inverse, the value of any inverse will be the sam
+e, hence all inverse functions would be identical.", L"Yes, the function $f
+(x) = x^2, x \geq 0$ will have a different inverse than the same function $
+f(x) = x^2,  x \leq 0$"], 1, "", nothing, [1, 2], LaTeXStrings.LaTeXString[
+L"No, for all $x$ in the domain an an inverse, the value of any inverse wil
+l be the same, hence all inverse functions would be identical.", L"Yes, the
+ function $f(x) = x^2, x \geq 0$ will have a different inverse than the sam
+e function $f(x) = x^2,  x \leq 0$"], "", false)
 ````
 
 
@@ -407,10 +407,10 @@ ction $f(x)=(x+1)/2 + 1$ and so is monotonic."], "", false)
 Is the function $f(x) = x^5 - x - 1$ one-to-one?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"Yes, a gra
-ph over $(-100, 100)$ will show this.", L"No, a graph over $(-2,2)$ will sh
-ow this."], 2, "", nothing, [1, 2], LaTeXStrings.LaTeXString[L"Yes, a graph
- over $(-100, 100)$ will show this.", L"No, a graph over $(-2,2)$ will show
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"No, a grap
+h over $(-2,2)$ will show this.", L"Yes, a graph over $(-100, 100)$ will sh
+ow this."], 1, "", nothing, [1, 2], LaTeXStrings.LaTeXString[L"No, a graph 
+over $(-2,2)$ will show this.", L"Yes, a graph over $(-100, 100)$ will show
  this."], "", false)
 ````
 
@@ -560,14 +560,14 @@ What is the inverse of this function?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"The functi
-on that takes square of the value, then subtracts $1$, and finally multipli
-es by $2$.", L"The function that divides by $2$, adds $1$, and then takes t
-he square root of the value.", L"The function that multiplies by $2$, subtr
-acts $1$ and then squares the value."], 3, "", nothing, [1, 2, 3], LaTeXStr
-ings.LaTeXString[L"The function that takes square of the value, then subtra
-cts $1$, and finally multiplies by $2$.", L"The function that divides by $2
-$, adds $1$, and then takes the square root of the value.", L"The function 
-that multiplies by $2$, subtracts $1$ and then squares the value."], "", fa
+on that multiplies by $2$, subtracts $1$ and then squares the value.", L"Th
+e function that takes square of the value, then subtracts $1$, and finally 
+multiplies by $2$.", L"The function that divides by $2$, adds $1$, and then
+ takes the square root of the value."], 1, "", nothing, [1, 2, 3], LaTeXStr
+ings.LaTeXString[L"The function that multiplies by $2$, subtracts $1$ and t
+hen squares the value.", L"The function that takes square of the value, the
+n subtracts $1$, and finally multiplies by $2$.", L"The function that divid
+es by $2$, adds $1$, and then takes the square root of the value."], "", fa
 lse)
 ````
 
@@ -639,9 +639,9 @@ Find the inverse function of $f(x) = (x^3 + 4)/5$.
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f^{-1}(x)
- = (5y-4)^3$", L"$f^{-1}(x) = 5/(x^3 + 4)$", L"$f^{-1}(x) = (5y-4)^{1/3}$"]
-, 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$f^{-1}(x) = (5y-4)
-^3$", L"$f^{-1}(x) = 5/(x^3 + 4)$", L"$f^{-1}(x) = (5y-4)^{1/3}$"], "", fal
+ = (5y-4)^{1/3}$", L"$f^{-1}(x) = 5/(x^3 + 4)$", L"$f^{-1}(x) = (5y-4)^3$"]
+, 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$f^{-1}(x) = (5y-4)
+^{1/3}$", L"$f^{-1}(x) = 5/(x^3 + 4)$", L"$f^{-1}(x) = (5y-4)^3$"], "", fal
 se)
 ````
 
@@ -656,9 +656,9 @@ Find the inverse function of $f(x) = x^\pi + e,  x \geq 0$.
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f^{-1}(x)
- = (x-\pi)^{e}$", L"$f^{-1}(x) = (x-e)^{\pi}$", L"$f^{-1}(x) = (x-e)^{1/\pi
-}$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$f^{-1}(x) = (x
--\pi)^{e}$", L"$f^{-1}(x) = (x-e)^{\pi}$", L"$f^{-1}(x) = (x-e)^{1/\pi}$"],
+ = (x-\pi)^{e}$", L"$f^{-1}(x) = (x-e)^{1/\pi}$", L"$f^{-1}(x) = (x-e)^{\pi
+}$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$f^{-1}(x) = (x
+-\pi)^{e}$", L"$f^{-1}(x) = (x-e)^{1/\pi}$", L"$f^{-1}(x) = (x-e)^{\pi}$"],
  "", false)
 ````
 
@@ -670,9 +670,9 @@ CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f^{-1}(x)
 What is the *domain* of the inverse function for $f(x) = x^2 + 7,  x \geq 0$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$[0, \inft
-y)$", L"$(-\infty, \infty)$", L"$[7, \infty)$"], 3, "", nothing, [1, 2, 3],
- LaTeXStrings.LaTeXString[L"$[0, \infty)$", L"$(-\infty, \infty)$", L"$[7, 
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$(-\infty,
+ \infty)$", L"$[7, \infty)$", L"$[0, \infty)$"], 2, "", nothing, [1, 2, 3],
+ LaTeXStrings.LaTeXString[L"$(-\infty, \infty)$", L"$[7, \infty)$", L"$[0, 
 \infty)$"], "", false)
 ````
 
@@ -686,9 +686,9 @@ What is the *range* of the inverse function for $f(x) =  x^2 + 7,  x \geq 0$?
 
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$[7, \inft
-y)$", L"$[0, \infty)$", L"$(-\infty, \infty)$"], 2, "", nothing, [1, 2, 3],
- LaTeXStrings.LaTeXString[L"$[7, \infty)$", L"$[0, \infty)$", L"$(-\infty, 
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$[0, \inft
+y)$", L"$[7, \infty)$", L"$(-\infty, \infty)$"], 1, "", nothing, [1, 2, 3],
+ LaTeXStrings.LaTeXString[L"$[0, \infty)$", L"$[7, \infty)$", L"$(-\infty, 
 \infty)$"], "", false)
 ````
 
@@ -764,12 +764,12 @@ CalculusWithJulia.WeaveSupport.Numericq(0.34285714285714286, 0.001, "", "[0
 The last two answers should be the same, why?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString["As the latter is more
- complicated than the former.", L"As $f4(f3(f2(f1(x))))=(f4 \circ f3 \circ 
-f2 \circ f1)(x)$", L"As $f4(f3(f2(f1(x))))=(f1 \circ f2 \circ f3 \circ f4)(
-x)$"], 2, "", nothing, [1, 2, 3], AbstractString["As the latter is more com
-plicated than the former.", L"As $f4(f3(f2(f1(x))))=(f4 \circ f3 \circ f2 \
-circ f1)(x)$", L"As $f4(f3(f2(f1(x))))=(f1 \circ f2 \circ f3 \circ f4)(x)$"
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"As $f4(f3(f2(f1(x)))
+)=(f4 \circ f3 \circ f2 \circ f1)(x)$", "As the latter is more complicated 
+than the former.", L"As $f4(f3(f2(f1(x))))=(f1 \circ f2 \circ f3 \circ f4)(
+x)$"], 1, "", nothing, [1, 2, 3], AbstractString[L"As $f4(f3(f2(f1(x))))=(f
+4 \circ f3 \circ f2 \circ f1)(x)$", "As the latter is more complicated than
+ the former.", L"As $f4(f3(f2(f1(x))))=(f1 \circ f2 \circ f3 \circ f4)(x)$"
 ], "", false)
 ````
 
@@ -784,8 +784,8 @@ What is $g2(x)=f2^{-1}(x)$?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$g2(x) = x
- -1$", L"$g2(x) = x$", L"$g2(x) = x^{-1}$"], 3, "", nothing, [1, 2, 3], LaT
-eXStrings.LaTeXString[L"$g2(x) = x -1$", L"$g2(x) = x$", L"$g2(x) = x^{-1}$
+ -1$", L"$g2(x) = x^{-1}$", L"$g2(x) = x$"], 2, "", nothing, [1, 2, 3], LaT
+eXStrings.LaTeXString[L"$g2(x) = x -1$", L"$g2(x) = x^{-1}$", L"$g2(x) = x$
 "], "", false)
 ````
 
@@ -797,9 +797,9 @@ What is $g3(x)=f3^{-1}(x)$?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$c^2/(b\cd
-ot c - a\cdot d) \cdot  x$", L"$(b\cdot c-a\cdot d)/c^2 \cdot  x$", L"$c^2 
+ot c - a\cdot d) \cdot  x$", L"$c^2 x$", L"$(b\cdot c-a\cdot d)/c^2 \cdot  
 x$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$c^2/(b\cdot c 
-- a\cdot d) \cdot  x$", L"$(b\cdot c-a\cdot d)/c^2 \cdot  x$", L"$c^2 x$"],
+- a\cdot d) \cdot  x$", L"$c^2 x$", L"$(b\cdot c-a\cdot d)/c^2 \cdot  x$"],
  "", false)
 ````
 

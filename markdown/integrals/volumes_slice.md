@@ -803,9 +803,9 @@ What is the volume?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1/3 \cdot
- w^2\cdot h$", L"$1/3 \cdot b\cdot h$", L"$l\cdot w \cdot h/ 3$"], 1, "", n
-othing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$1/3 \cdot w^2\cdot h$", L"$1
-/3 \cdot b\cdot h$", L"$l\cdot w \cdot h/ 3$"], "", false)
+ b\cdot h$", L"$1/3 \cdot w^2\cdot h$", L"$l\cdot w \cdot h/ 3$"], 2, "", n
+othing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$1/3 \cdot b\cdot h$", L"$1/3
+ \cdot w^2\cdot h$", L"$l\cdot w \cdot h/ 3$"], "", false)
 ````
 
 
@@ -834,10 +834,10 @@ quadrants bounded by the ellipse $(x/a)^2 + (y/b)^2=1$ and the $x$
 axis around the $x$ axis. What is the volume of this ellipsoid? Find it symbolically.
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\pi/3 \cd
-ot a b^2$", L"$4/3 \cdot \pi a b^2$", L"$4/3 \cdot \pi a^2 b$"], 2, "", not
-hing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$\pi/3 \cdot a b^2$", L"$4/3 \c
-dot \pi a b^2$", L"$4/3 \cdot \pi a^2 b$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$4/3 \cdot
+ \pi a^2 b$", L"$\pi/3 \cdot a b^2$", L"$4/3 \cdot \pi a b^2$"], 3, "", not
+hing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$4/3 \cdot \pi a^2 b$", L"$\pi/
+3 \cdot a b^2$", L"$4/3 \cdot \pi a b^2$"], "", false)
 ````
 
 

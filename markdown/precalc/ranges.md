@@ -862,7 +862,7 @@ rand()
 
 
 ````
-0.849831750264304
+0.2960327537236582
 ````
 
 
@@ -878,7 +878,7 @@ rand()
 
 
 ````
-0.3892330686985783
+0.967559838581693
 ````
 
 
@@ -896,16 +896,16 @@ rand(10)
 
 ````
 10-element Array{Float64,1}:
- 0.1614380775823825
- 0.7526994972719843
- 0.1952528431542968
- 0.5530197576473228
- 0.796714097933976
- 0.8765526563601742
- 0.3304474525514549
- 0.8729960433234165
- 0.8481833046581799
- 0.46526673514951367
+ 0.9643394098608322
+ 0.869016751757943
+ 0.3447598003518937
+ 0.5709305001343623
+ 0.4253571976547965
+ 0.7814996664874292
+ 0.7984323597544105
+ 0.8773812712164601
+ 0.18782387696526892
+ 0.5471007896770659
 ````
 
 
@@ -933,8 +933,8 @@ requency - about 1 out of every $10^{19}$ numbers - so we say $(0,1)$.
 Which of these will produce the odd numbers between 1 and 99?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`1:3:99`", "`1:2:99`", "`1:99`"], 2
-, "", nothing, [1, 2, 3], ["`1:3:99`", "`1:2:99`", "`1:99`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`1:99`", "`1:2:99`", "`1:3:99`"], 2
+, "", nothing, [1, 2, 3], ["`1:99`", "`1:2:99`", "`1:3:99`"], "", false)
 ````
 
 
@@ -947,9 +947,9 @@ CalculusWithJulia.WeaveSupport.Radioq(["`1:3:99`", "`1:2:99`", "`1:99`"], 2
 Which of these will create the sequence $2, 9, 16, 23, \dots, 72$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`2:9:72`", "`2:7:72`", "`2:72`", "`
-72:-7:2`"], 2, "", nothing, [1, 2, 3, 4], ["`2:9:72`", "`2:7:72`", "`2:72`"
-, "`72:-7:2`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`2:9:72`", "`72:-7:2`", "`2:72`", "
+`2:7:72`"], 4, "", nothing, [1, 2, 3, 4], ["`2:9:72`", "`72:-7:2`", "`2:72`
+", "`2:7:72`"], "", false)
 ````
 
 
@@ -975,9 +975,9 @@ CalculusWithJulia.WeaveSupport.Numericq(53, 0, "", "[53.0, 53.0]", 53, 53,
 The range operation (`a:h:b`) can also be used to countdown. Which of these will do so, counting down from `10` to `1`? (You can call `collect` to visualize the generated numbers.)
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`1:10`", "`10:-1:1`", "`1:-1:10`", 
-"`10:1`"], 2, "", nothing, [1, 2, 3, 4], ["`1:10`", "`10:-1:1`", "`1:-1:10`
-", "`10:1`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`10:1`", "`1:10`", "`1:-1:10`", "`1
+0:-1:1`"], 4, "", nothing, [1, 2, 3, 4], ["`10:1`", "`1:10`", "`1:-1:10`", 
+"`10:-1:1`"], "", false)
 ````
 
 
@@ -1026,12 +1026,12 @@ CalculusWithJulia.WeaveSupport.Radioq(["Yes", "No"], 1, "", nothing, [1, 2]
 What if parenthese are left off? Explain the output of `1:4 + 2:5`?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["It is just random", "Addition happe
-ns prior to the use of `:` so this is like `1:(4+2):5`", "It gives the corr
-ect answer, a generator for the vector `[3,5,7,9]`"], 2, "", nothing, [1, 2
-, 3], ["It is just random", "Addition happens prior to the use of `:` so th
-is is like `1:(4+2):5`", "It gives the correct answer, a generator for the 
-vector `[3,5,7,9]`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["It gives the correct answer, a gene
+rator for the vector `[3,5,7,9]`", "It is just random", "Addition happens p
+rior to the use of `:` so this is like `1:(4+2):5`"], 3, "", nothing, [1, 2
+, 3], ["It gives the correct answer, a generator for the vector `[3,5,7,9]`
+", "It is just random", "Addition happens prior to the use of `:` so this i
+s like `1:(4+2):5`"], "", false)
 ````
 
 
@@ -1043,9 +1043,9 @@ vector `[3,5,7,9]`"], "", false)
 How is `a:b-1` interpreted:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["as `(a:b) - 1`, which is `(a-1):(b-
-1)`", "as `a:(b-1)`"], 2, "", nothing, [1, 2], ["as `(a:b) - 1`, which is `
-(a-1):(b-1)`", "as `a:(b-1)`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["as `a:(b-1)`", "as `(a:b) - 1`, whi
+ch is `(a-1):(b-1)`"], 1, "", nothing, [1, 2], ["as `a:(b-1)`", "as `(a:b) 
+- 1`, which is `(a-1):(b-1)`"], "", false)
 ````
 
 
@@ -1057,10 +1057,10 @@ CalculusWithJulia.WeaveSupport.Radioq(["as `(a:b) - 1`, which is `(a-1):(b-
 Create the sequence $10, 100, 1000, \dots, 1,000,000$ using a list comprehension. Which of these works?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`[i^10 for i in [1:6]]`", "`[10^i f
-or i in [10, 100, 1000]]`", "`[10^i for i in 1:6]`"], 3, "", nothing, [1, 2
-, 3], ["`[i^10 for i in [1:6]]`", "`[10^i for i in [10, 100, 1000]]`", "`[1
-0^i for i in 1:6]`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`[10^i for i in [10, 100, 1000]]`",
+ "`[10^i for i in 1:6]`", "`[i^10 for i in [1:6]]`"], 2, "", nothing, [1, 2
+, 3], ["`[10^i for i in [10, 100, 1000]]`", "`[10^i for i in 1:6]`", "`[i^1
+0 for i in [1:6]]`"], "", false)
 ````
 
 
@@ -1072,9 +1072,9 @@ or i in [10, 100, 1000]]`", "`[10^i for i in 1:6]`"], 3, "", nothing, [1, 2
 Create the sequence $0.1, 0.01, 0.001, \dots, 0.0000001$ using a list comprehension. Which of these will work:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`[i^(1/10) for i in 1:7]`", "`[(1/1
-0)^i for i in 1:7]`", "`[10^-i for i in 1:7]`"], 2, "", nothing, [1, 2, 3],
- ["`[i^(1/10) for i in 1:7]`", "`[(1/10)^i for i in 1:7]`", "`[10^-i for i 
+CalculusWithJulia.WeaveSupport.Radioq(["`[10^-i for i in 1:7]`", "`[i^(1/10
+) for i in 1:7]`", "`[(1/10)^i for i in 1:7]`"], 3, "", nothing, [1, 2, 3],
+ ["`[10^-i for i in 1:7]`", "`[i^(1/10) for i in 1:7]`", "`[(1/10)^i for i 
 in 1:7]`"], "", false)
 ````
 
@@ -1087,10 +1087,10 @@ in 1:7]`"], "", false)
 Evaluate the expression $x^3 - 2x + 3$ for each of the values $-5, -4, \dots, 4, 5$ using a comprehension. Which of these will work?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["`[x^3 - 2x + 3 for x in -5:5]`", "`
-[x^3 - 2x + 3 for x in -(5:5)]`", "`[x^3 - 2x + 3 for i in -5:5]`"], 1, "",
- nothing, [1, 2, 3], ["`[x^3 - 2x + 3 for x in -5:5]`", "`[x^3 - 2x + 3 for
- x in -(5:5)]`", "`[x^3 - 2x + 3 for i in -5:5]`"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["`[x^3 - 2x + 3 for i in -5:5]`", "`
+[x^3 - 2x + 3 for x in -5:5]`", "`[x^3 - 2x + 3 for x in -(5:5)]`"], 2, "",
+ nothing, [1, 2, 3], ["`[x^3 - 2x + 3 for i in -5:5]`", "`[x^3 - 2x + 3 for
+ x in -5:5]`", "`[x^3 - 2x + 3 for x in -(5:5)]`"], "", false)
 ````
 
 

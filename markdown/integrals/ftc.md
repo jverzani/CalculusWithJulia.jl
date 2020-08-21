@@ -432,7 +432,7 @@ The value of $a$ does not matter, as long as the integral is defined.
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_YVaWTs.gif", L"
+qq4h57w0000gr/T/jl_xPifoA.gif", L"
 Illustration showing $F(x) = \int_a^x f(u) du$ is a function that
 accumulates area. The value of $A$ is the area over $[x_{n-1}, x_n]$
 and also the difference $F(x_n) - F(x_{n-1})$.
@@ -1064,10 +1064,10 @@ $", L"$A(x) \cdot A'(x) = f(x)$"], "", false)
 Solving, we get:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$A'(x) = A
-(x)$", L"$A(x) = f(x)$", L"$A(x) = A^2(x) / f(x)$", L"$A'(x) = f(x)$"], 4, 
-"", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$A'(x) = A(x)$", L"$A
-(x) = f(x)$", L"$A(x) = A^2(x) / f(x)$", L"$A'(x) = f(x)$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$A'(x) = f
+(x)$", L"$A'(x) = A(x)$", L"$A(x) = f(x)$", L"$A(x) = A^2(x) / f(x)$"], 1, 
+"", nothing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$A'(x) = f(x)$", L"$A
+'(x) = A(x)$", L"$A(x) = f(x)$", L"$A(x) = A^2(x) / f(x)$"], "", false)
 ````
 
 

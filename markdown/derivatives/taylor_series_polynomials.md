@@ -22,7 +22,7 @@ line approximation.
 
 ````
 CalculusWithJulia.WeaveSupport.ImageFile("/var/folders/k0/94d1r7xd2xlcw_jkg
-qq4h57w0000gr/T/jl_eYqBaT.gif", L"
+qq4h57w0000gr/T/jl_8EBckV.gif", L"
 Illustration of the Taylor polynomial of degree $k$, $T_k(x)$, at $c=0$ and
  its graph overlayed on that of the function $1 - \cos(x)$.
 
@@ -1179,11 +1179,11 @@ Compute the Taylor polynomial  of degree 10 for $\sin(x)$ about $c=0$ using `Sym
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\sum_{k=1
-}^{10} (-1)^{n+1} x^n/n$", L"$\sum_{k=0}^{10} x^n/n!$", L"$\sum_{k=0}^{4} (
--1)^k/(2k+1)! \cdot x^{2k+1}$", L"$\sum_{k=0}^{10} x^k$"], 3, "", nothing, 
+}^{10} (-1)^{n+1} x^n/n$", L"$\sum_{k=0}^{10} x^k$", L"$\sum_{k=0}^{4} (-1)
+^k/(2k+1)! \cdot x^{2k+1}$", L"$\sum_{k=0}^{10} x^n/n!$"], 3, "", nothing, 
 [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$\sum_{k=1}^{10} (-1)^{n+1} x^n/n$
-", L"$\sum_{k=0}^{10} x^n/n!$", L"$\sum_{k=0}^{4} (-1)^k/(2k+1)! \cdot x^{2
-k+1}$", L"$\sum_{k=0}^{10} x^k$"], "", false)
+", L"$\sum_{k=0}^{10} x^k$", L"$\sum_{k=0}^{4} (-1)^k/(2k+1)! \cdot x^{2k+1
+}$", L"$\sum_{k=0}^{10} x^n/n!$"], "", false)
 ````
 
 
@@ -1195,12 +1195,12 @@ k+1}$", L"$\sum_{k=0}^{10} x^k$"], "", false)
 Compute the Taylor polynomial  of degree 10 for $e^x$ about $c=0$ using `SymPy`. Based on the form, which formula seems appropriate:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\sum_{k=1
-}^{10} (-1)^{n+1} x^n/n$", L"$\sum_{k=0}^{10} x^k$", L"$\sum_{k=0}^{4} (-1)
-^k/(2k+1)! \cdot x^{2k+1}$", L"$\sum_{k=0}^{10} x^n/n!$"], 4, "", nothing, 
-[1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$\sum_{k=1}^{10} (-1)^{n+1} x^n/n$
-", L"$\sum_{k=0}^{10} x^k$", L"$\sum_{k=0}^{4} (-1)^k/(2k+1)! \cdot x^{2k+1
-}$", L"$\sum_{k=0}^{10} x^n/n!$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\sum_{k=0
+}^{10} x^k$", L"$\sum_{k=1}^{10} (-1)^{n+1} x^n/n$", L"$\sum_{k=0}^{10} x^n
+/n!$", L"$\sum_{k=0}^{4} (-1)^k/(2k+1)! \cdot x^{2k+1}$"], 3, "", nothing, 
+[1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$\sum_{k=0}^{10} x^k$", L"$\sum_{k
+=1}^{10} (-1)^{n+1} x^n/n$", L"$\sum_{k=0}^{10} x^n/n!$", L"$\sum_{k=0}^{4}
+ (-1)^k/(2k+1)! \cdot x^{2k+1}$"], "", false)
 ````
 
 
@@ -1214,12 +1214,12 @@ CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\sum_{k=1
 Compute the Taylor polynomial  of degree 10 for $1/(1-x)$ about $c=0$ using `SymPy`. Based on the form, which formula seems appropriate:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\sum_{k=0
-}^{4} (-1)^k/(2k+1)! \cdot x^{2k+1}$", L"$\sum_{k=0}^{10} x^n/n!$", L"$\sum
-_{k=1}^{10} (-1)^{n+1} x^n/n$", L"$\sum_{k=0}^{10} x^k$"], 4, "", nothing, 
-[1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$\sum_{k=0}^{4} (-1)^k/(2k+1)! \cd
-ot x^{2k+1}$", L"$\sum_{k=0}^{10} x^n/n!$", L"$\sum_{k=1}^{10} (-1)^{n+1} x
-^n/n$", L"$\sum_{k=0}^{10} x^k$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$\sum_{k=1
+}^{10} (-1)^{n+1} x^n/n$", L"$\sum_{k=0}^{10} x^n/n!$", L"$\sum_{k=0}^{10} 
+x^k$", L"$\sum_{k=0}^{4} (-1)^k/(2k+1)! \cdot x^{2k+1}$"], 3, "", nothing, 
+[1, 2, 3, 4], LaTeXStrings.LaTeXString[L"$\sum_{k=1}^{10} (-1)^{n+1} x^n/n$
+", L"$\sum_{k=0}^{10} x^n/n!$", L"$\sum_{k=0}^{10} x^k$", L"$\sum_{k=0}^{4}
+ (-1)^k/(2k+1)! \cdot x^{2k+1}$"], "", false)
 ````
 
 
@@ -1231,9 +1231,9 @@ ot x^{2k+1}$", L"$\sum_{k=0}^{10} x^n/n!$", L"$\sum_{k=1}^{10} (-1)^{n+1} x
 Let $T_5(x)$ be the Taylor polynomial of degree 5 for the function $\sqrt{1+x}$ about $x=0$. What is the coefficient of the $x^5$ term?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$-5/128$",
- L"$7/256$", L"$2/15$", L"$1/5!$"], 2, "", nothing, [1, 2, 3, 4], LaTeXStri
-ngs.LaTeXString[L"$-5/128$", L"$7/256$", L"$2/15$", L"$1/5!$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$7/256$", 
+L"$-5/128$", L"$2/15$", L"$1/5!$"], 1, "", nothing, [1, 2, 3, 4], LaTeXStri
+ngs.LaTeXString[L"$7/256$", L"$-5/128$", L"$2/15$", L"$1/5!$"], "", false)
 ````
 
 
@@ -1247,10 +1247,10 @@ The 5th order Taylor polynomial for $\sin(x)$ about $c=0$ is: $x - x^3/3! + x^5/
 They are:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$x^2$", L"
-$x^2 - x^6/3! + x^{10}/5!$", L"$x^2 \cdot (x - x^3/3! + x^5/5!)$"], 2, "", 
-nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$x^2$", L"$x^2 - x^6/3! + x^
-{10}/5!$", L"$x^2 \cdot (x - x^3/3! + x^5/5!)$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$x^2 \cdot
+ (x - x^3/3! + x^5/5!)$", L"$x^2$", L"$x^2 - x^6/3! + x^{10}/5!$"], 3, "", 
+nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"$x^2 \cdot (x - x^3/3! + x^5
+/5!)$", L"$x^2$", L"$x^2 - x^6/3! + x^{10}/5!$"], "", false)
 ````
 
 
@@ -1271,8 +1271,8 @@ If this is true, then formally evaluating at $x=0$ gives $f(0) = a$, so $a$ is d
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$f''''(0) 
-= e$", L"$f''''(0) = 0$", L"$f''''(0) = 4\cdot 3\cdot2 e$"], 3, "", nothing
-, [1, 2, 3], LaTeXStrings.LaTeXString[L"$f''''(0) = e$", L"$f''''(0) = 0$",
+= 0$", L"$f''''(0) = e$", L"$f''''(0) = 4\cdot 3\cdot2 e$"], 3, "", nothing
+, [1, 2, 3], LaTeXStrings.LaTeXString[L"$f''''(0) = 0$", L"$f''''(0) = e$",
  L"$f''''(0) = 4\cdot 3\cdot2 e$"], "", false)
 ````
 
@@ -1327,9 +1327,9 @@ CalculusWithJulia.WeaveSupport.Radioq(["A critical point", "An end point"],
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(["The intermediate value theorem", "T
-he mean value theorem", "The extreme value theorem"], 3, "", nothing, [1, 2
-, 3], ["The intermediate value theorem", "The mean value theorem", "The ext
-reme value theorem"], "", false)
+he extreme value theorem", "The mean value theorem"], 2, "", nothing, [1, 2
+, 3], ["The intermediate value theorem", "The extreme value theorem", "The 
+mean value theorem"], "", false)
 ````
 
 
@@ -1339,9 +1339,9 @@ reme value theorem"], "", false)
 * What is the *largest* possible value of the error:
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1/6!\cdot
- e^1 \cdot 1^6$", L"$1^6 \cdot 1 \cdot 1^6$"], 1, "", nothing, [1, 2], LaTe
-XStrings.LaTeXString[L"$1/6!\cdot e^1 \cdot 1^6$", L"$1^6 \cdot 1 \cdot 1^6
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$1^6 \cdot
+ 1 \cdot 1^6$", L"$1/6!\cdot e^1 \cdot 1^6$"], 2, "", nothing, [1, 2], LaTe
+XStrings.LaTeXString[L"$1^6 \cdot 1 \cdot 1^6$", L"$1/6!\cdot e^1 \cdot 1^6
 $"], "", false)
 ````
 

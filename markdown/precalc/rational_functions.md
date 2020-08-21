@@ -745,10 +745,10 @@ The rational expression $(x^3 - 2x + 3) / (x^2 - x + 1)$ would have
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"A horizont
-al asymptote $y=0$", L"A slant asymptote with slope $m=1$", L"A horizontal 
-asymptote $y=1$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"A 
-horizontal asymptote $y=0$", L"A slant asymptote with slope $m=1$", L"A hor
-izontal asymptote $y=1$"], "", false)
+al asymptote $y=0$", L"A horizontal asymptote $y=1$", L"A slant asymptote w
+ith slope $m=1$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"A 
+horizontal asymptote $y=0$", L"A horizontal asymptote $y=1$", L"A slant asy
+mptote with slope $m=1$"], "", false)
 ````
 
 
@@ -761,11 +761,11 @@ izontal asymptote $y=1$"], "", false)
 The rational expression $(x^2 - x + 1)/ (x^3 - 2x + 3)$ would have
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"A horizont
-al asymptote $y=0$", L"A horizontal asymptote $y=1$", L"A slant asymptote w
-ith slope $m=1$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"A 
-horizontal asymptote $y=0$", L"A horizontal asymptote $y=1$", L"A slant asy
-mptote with slope $m=1$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"A slant as
+ymptote with slope $m=1$", L"A horizontal asymptote $y=0$", L"A horizontal 
+asymptote $y=1$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"A 
+slant asymptote with slope $m=1$", L"A horizontal asymptote $y=0$", L"A hor
+izontal asymptote $y=1$"], "", false)
 ````
 
 
@@ -780,11 +780,11 @@ mptote with slope $m=1$"], "", false)
 The rational expression $(x^2 - x + 1)/ (x^2 - 3x + 3)$ would have
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"A slant as
-ymptote with slope $m=1$", L"A horizontal asymptote $y=0$", L"A horizontal 
-asymptote $y=1$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"A 
-slant asymptote with slope $m=1$", L"A horizontal asymptote $y=0$", L"A hor
-izontal asymptote $y=1$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"A horizont
+al asymptote $y=0$", L"A horizontal asymptote $y=1$", L"A slant asymptote w
+ith slope $m=1$"], 2, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"A 
+horizontal asymptote $y=0$", L"A horizontal asymptote $y=1$", L"A slant asy
+mptote with slope $m=1$"], "", false)
 ````
 
 
@@ -806,10 +806,10 @@ would have
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"A horizont
-al asymptote $y=1$", L"A slant asymptote with slope $m=1$", L"A horizontal 
-asymptote $y=0$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"A 
-horizontal asymptote $y=1$", L"A slant asymptote with slope $m=1$", L"A hor
-izontal asymptote $y=0$"], "", false)
+al asymptote $y=1$", L"A horizontal asymptote $y=0$", L"A slant asymptote w
+ith slope $m=1$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"A 
+horizontal asymptote $y=1$", L"A horizontal asymptote $y=0$", L"A slant asy
+mptote with slope $m=1$"], "", false)
 ````
 
 
@@ -829,11 +829,11 @@ $$~
 would have
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"A slant as
-ymptote with slope $m=1$", L"A vertical asymptote $x=1$", L"A vertical asym
-ptote $x=5$"], 3, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"A slan
-t asymptote with slope $m=1$", L"A vertical asymptote $x=1$", L"A vertical 
-asymptote $x=5$"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"A vertical
+ asymptote $x=5$", L"A slant asymptote with slope $m=1$", L"A vertical asym
+ptote $x=1$"], 1, "", nothing, [1, 2, 3], LaTeXStrings.LaTeXString[L"A vert
+ical asymptote $x=5$", L"A slant asymptote with slope $m=1$", L"A vertical 
+asymptote $x=1$"], "", false)
 ````
 
 
@@ -854,9 +854,9 @@ $$~
 has a slant asymptote. What is the equation of that line?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$y = 3x$",
- L"$y = (1/3)x$", L"$y = (1/3)x - (1/3)$"], 3, "", nothing, [1, 2, 3], LaTe
-XStrings.LaTeXString[L"$y = 3x$", L"$y = (1/3)x$", L"$y = (1/3)x - (1/3)$"]
+CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"$y = (1/3)
+x$", L"$y = 3x$", L"$y = (1/3)x - (1/3)$"], 3, "", nothing, [1, 2, 3], LaTe
+XStrings.LaTeXString[L"$y = (1/3)x$", L"$y = 3x$", L"$y = (1/3)x - (1/3)$"]
 , "", false)
 ````
 
@@ -906,13 +906,13 @@ Consider the two graphs of $f(x) = 1/x$ over $[10,20]$ and $[100, 200]$:
 The two shapes are basically identical and do not look like straight lines. How does this reconcile with the fact that $f(x)=1/x$ has a horizontal asymptote $y=0$?
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(AbstractString[L"The $y$-axis scale s
-hows that indeed the $y$ values are getting close to $0$.", "The horizontal
- asymptote is not a straight line.", L"The graph is always decreasing, henc
-e it will eventually reach $-\infty$."], 1, "", nothing, [1, 2, 3], Abstrac
-tString[L"The $y$-axis scale shows that indeed the $y$ values are getting c
-lose to $0$.", "The horizontal asymptote is not a straight line.", L"The gr
-aph is always decreasing, hence it will eventually reach $-\infty$."], "", 
+CalculusWithJulia.WeaveSupport.Radioq(AbstractString["The horizontal asympt
+ote is not a straight line.", L"The graph is always decreasing, hence it wi
+ll eventually reach $-\infty$.", L"The $y$-axis scale shows that indeed the
+ $y$ values are getting close to $0$."], 3, "", nothing, [1, 2, 3], Abstrac
+tString["The horizontal asymptote is not a straight line.", L"The graph is 
+always decreasing, hence it will eventually reach $-\infty$.", L"The $y$-ax
+is scale shows that indeed the $y$ values are getting close to $0$."], "", 
 false)
 ````
 
@@ -954,10 +954,10 @@ CalculusWithJulia.WeaveSupport.Numericq(2.0803236058942502, 0.001, "", "[2.
 What is more accurate: the peak amount is
 
 ````
-CalculusWithJulia.WeaveSupport.Radioq(["between 8 and 16 hours", "between 0
- and 8 hours", "between 16 and 24 hours", "after one day"], 2, "", nothing,
- [1, 2, 3, 4], ["between 8 and 16 hours", "between 0 and 8 hours", "between
- 16 and 24 hours", "after one day"], "", false)
+CalculusWithJulia.WeaveSupport.Radioq(["between 16 and 24 hours", "between 
+8 and 16 hours", "between 0 and 8 hours", "after one day"], 3, "", nothing,
+ [1, 2, 3, 4], ["between 16 and 24 hours", "between 8 and 16 hours", "betwe
+en 0 and 8 hours", "after one day"], "", false)
 ````
 
 
@@ -968,10 +968,10 @@ This graph has
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"a horizont
-al asymptote $y=20$", L"a slant asymptote with slope $50$", L"a horizontal 
-asymptote $y=0$", L"a vertical asymptote with $x = 20^{1/3}$"], 3, "", noth
-ing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"a horizontal asymptote $y=20$
-", L"a slant asymptote with slope $50$", L"a horizontal asymptote $y=0$", L
+al asymptote $y=0$", L"a horizontal asymptote $y=20$", L"a slant asymptote 
+with slope $50$", L"a vertical asymptote with $x = 20^{1/3}$"], 1, "", noth
+ing, [1, 2, 3, 4], LaTeXStrings.LaTeXString[L"a horizontal asymptote $y=0$"
+, L"a horizontal asymptote $y=20$", L"a slant asymptote with slope $50$", L
 "a vertical asymptote with $x = 20^{1/3}$"], "", false)
 ````
 
@@ -998,14 +998,14 @@ Why?
 
 ````
 CalculusWithJulia.WeaveSupport.Radioq(LaTeXStrings.LaTeXString[L"The $\sin(
-x)$ oscillates, but the rational function has a slant asymptote", L"The $\s
-in(x)$ oscillates, but the rational function has a non-zero horizontal asym
+x)$ oscillates, but the rational function has a non-zero horizontal asympto
+te", L"The $\sin(x)$ oscillates, but the rational function has a slant asym
 ptote", L"The $\sin(x)$ oscillates, but the rational function has a horizon
 tal asymptote of $0$", L"The $\sin(x)$ oscillates, but the rational functio
-n eventually follows $7/60 \cdot x^3$"], 1, "", nothing, [1, 2, 3, 4], LaTe
+n eventually follows $7/60 \cdot x^3$"], 2, "", nothing, [1, 2, 3, 4], LaTe
 XStrings.LaTeXString[L"The $\sin(x)$ oscillates, but the rational function 
-has a slant asymptote", L"The $\sin(x)$ oscillates, but the rational functi
-on has a non-zero horizontal asymptote", L"The $\sin(x)$ oscillates, but th
+has a non-zero horizontal asymptote", L"The $\sin(x)$ oscillates, but the r
+ational function has a slant asymptote", L"The $\sin(x)$ oscillates, but th
 e rational function has a horizontal asymptote of $0$", L"The $\sin(x)$ osc
 illates, but the rational function eventually follows $7/60 \cdot x^3$"], "
 ", false)

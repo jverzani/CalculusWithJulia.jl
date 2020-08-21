@@ -608,12 +608,12 @@ ie = implicit_equation(f, -5:5, -10:10)
 
 
 ````
-MDBM.MDBM_Problem{MDBM.MemF{typeof(Main.##WeaveSandBox#1644.f),MDBM.var"#17
+MDBM.MDBM_Problem{MDBM.MemF{typeof(Main.##WeaveSandBox#1566.f),MDBM.var"#17
 #19",Float64,Bool,Tuple{Float64,Float64}},2,1,1,StaticArrays.SArray{Tuple{4
 },StaticArrays.SArray{Tuple{2},Bool,1,2},1,4},StaticArrays.SArray{Tuple{3,4
 },Float64,2,12},Int64,Float64,Tuple{MDBM.Axis{Float64},MDBM.Axis{Float64}}}
-(MDBM.MemF{typeof(Main.##WeaveSandBox#1644.f),MDBM.var"#17#19",Float64,Bool
-,Tuple{Float64,Float64}}(Main.##WeaveSandBox#1644.f, MDBM.var"#17#19"(), MD
+(MDBM.MemF{typeof(Main.##WeaveSandBox#1566.f),MDBM.var"#17#19",Float64,Bool
+,Tuple{Float64,Float64}}(Main.##WeaveSandBox#1566.f, MDBM.var"#17#19"(), MD
 BM.MDBMcontainer{Float64,Bool,Tuple{Float64,Float64}}[MDBM.MDBMcontainer{Fl
 oat64,Bool,Tuple{Float64,Float64}}(-154.0, true, (-5.0, -10.0)), MDBM.MDBMc
 ontainer{Float64,Bool,Tuple{Float64,Float64}}(-149.0, true, (-5.0, -9.0)), 
@@ -637,7 +637,7 @@ Tuple{Float64,Float64}}(126.0, true, (5.0, 6.0)), MDBM.MDBMcontainer{Float6
 {Float64,Bool,Tuple{Float64,Float64}}(116.0, true, (5.0, 8.0)), MDBM.MDBMco
 ntainer{Float64,Bool,Tuple{Float64,Float64}}(111.0, true, (5.0, 9.0)), MDBM
 .MDBMcontainer{Float64,Bool,Tuple{Float64,Float64}}(106.0, true, (5.0, 10.0
-))], [18892]), MDBM.Axes{2,Tuple{MDBM.Axis{Float64},MDBM.Axis{Float64}}}(([
+))], [18952]), MDBM.Axes{2,Tuple{MDBM.Axis{Float64},MDBM.Axis{Float64}}}(([
 -5.0, -4.9375, -4.875, -4.8125, -4.75, -4.6875, -4.625, -4.5625, -4.5, -4.4
 375  …  4.4375, 4.5, 4.5625, 4.625, 4.6875, 4.75, 4.8125, 4.875, 4.9375, 5.
 0], [-10.0, -9.9375, -9.875, -9.8125, -9.75, -9.6875, -9.625, -9.5625, -9.5
