@@ -4,6 +4,7 @@ version = "0.0.4"
 
 [deps]
 Base64 = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+ColorTypes = "3da002f7-5984-5a60-b8a6-cbb66c0b333f"
 Contour = "d38c429a-6771-53c6-b99e-75d170b6e991"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
@@ -30,6 +31,7 @@ Weave = "44d3d7a6-8a23-5bf8-98c5-b353f8df5ec9"
 
 [compat]
 ForwardDiff = "≥ 0.10"
+ColorTypes = "≥ 0.10.4"
 HCubature = "1"
 ImplicitEquations = "≥ 0.6.0"
 Plots = "1"
