@@ -11,7 +11,6 @@ using Weave
 using Mustache
 import Markdown
 using JSON
-using Latexify
 using Reexport
 @reexport using LaTeXStrings
 using SymPy
