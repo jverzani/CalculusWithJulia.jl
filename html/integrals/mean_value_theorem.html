@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<link
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
+  rel="stylesheet">
+
+<style>
+.julia {display: block; font-family: "Source Code Pro";
+        color:#0033CC;
+        }
+.hljl {font-family: "Source Code Pro";
+        color:#0033CC;
+        }
+body { padding-top: 60px; }
+h5:before {content:"\2746\ ";}
+h6:before {content:"\2742\ ";}
+pre {display: block;}
+th, td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+tr:hover {background-color: #f5f5f5;}
+
+.admonition-title:before {content:"\2746\ ";}
+.admonition-title { color:#0033CC}
+
+</style>
+
+
+<!-- .julia:before {content: "julia> "} -->
+
+<style></style>
+
+
+<script src="https://code.jquery.com/jquery.js"></script>
+
+
+<script  type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ["\$","\$"], ["\\(","\\)"]]
+  },
+  displayAlign: "left",
+  displayIndent: "5%"
+});
+</script>
+<!-- not TeX-AMS-MML_HTMLorMML-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+</script>
+
+
+<script>
+window.PlotlyConfig = {MathJaxConfig: 'local'}
+</script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+
+<script type="text/javascript">
+$( document ).ready(function() {
+  $("h1").each(function(index) {
+       var title = $( this ).text()
+       $("#page_title").html("<strong>" + title + "</strong>");
+       document.title = title
+  });
+  $( "h2" ).each(function( index ) {
+    var nm =  $( this ).text();
+    var id = $.trim(nm).replace(/ /g,'');
+    this.id = id
+    $("#page_dropdown").append("<li><a href='#" + id + "'>" + nm + "</a></li>");
+  });
+  $('[data-toggle="popover"]').popover();
+});
+</script>
+
+</head>
+
+
+<body data-spy="scroll" >
+
+<nav class="navbar navbar-default  navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+         
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="#" id="page_title"></a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+         <li class="dropdown">
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+           Jump to... <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu" id="page_dropdown"></ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<header>
+</header>
+          <div class="title">
+            
+            
+            
+          </div>
+
+
+
+<div class="container-fluid">
+  <div class="span10 offset1">
+<h1>Average of a function and the mean value theorem for integrals</h1>
+
+
+<p>Let <span class="math">$f(x)$</span> be a continuous function over the interval <span class="math">$[a,b]$</span> with <span class="math">$a < b$</span>.</p>
+<p>The average value of <span class="math">$f$</span> over <span class="math">$[a,b]$</span> is defined by:</p>
+<p class="math">\[
+~
+\frac{1}{b-a} \int_a^b f(x) dx.
+~
+\]</p>
+<p>If <span class="math">$f$</span> is a constant, this is just the contant value, as would be expected. If <span class="math">$f$</span> is <em>piecewise</em> linear, then this is the weighted average of these constants.</p>
+<h2>Examples</h2>
+<h5>Average velocity</h5>
+<p>The average velocity between times <span class="math">$a < b$</span>, is simply the change in position during the time interval divided by the change in time. In notation, this would be <span class="math">$(x(b) - x(a)) / (b-a)$</span>. If <span class="math">$v(t) = x'(t)$</span> is the velocity, then by the second part of the fundamental theorem of calculus, we have, in agreement with the definition above, that:</p>
+<p class="math">\[
+~
+\text{average velocity} = \frac{x(b) - x(a)}{b-a} = \frac{1}{b-a} \int_a^b v(t) dt.
+~
+\]</p>
+<p>The average speed is the change in <em>total</em> distance over time, which is given by</p>
+<p class="math">\[
+~
+\text{average speed} =  \frac{1}{b-a} \int_a^b \lvert v(t)\rvert dt.
+~
+\]</p>
+<p>Let <span class="math">$\bar{v}$</span> be the average velocity. Then we have <span class="math">$\bar{v} \cdot(b-a) = x(b) - x(a)$</span>, or the change in position can be written as a constant &#40;<span class="math">$\bar{v}$</span>&#41; times the time, as though we had a constant velocity.  This is an old intuition. <a href="http://www.math.harvard.edu/~knill/teaching/math1a_2011/exhibits/bressoud/">Bressoud</a> comments on the special case known to scholars at Merton College around 1350 that the distance traveled by an object under uniformly increasing velocity starting at <span class="math">$v_0$</span> and ending at <span class="math">$v_t$</span> is equal to the distance traveled by an object with constant velocity of <span class="math">$(v_0 + v_t)/2$</span>.</p>
+<h5>Example</h5>
+<p>What is the average value of <span class="math">$f(x)=\sin(x)$</span> over <span class="math">$[0, \pi]$</span>?</p>
+<p class="math">\[
+~
+\text{average} = \frac{1}{\pi-0} \int_0^\pi \sin(x) dx = \frac{1}{\pi} (-\cos(x)) \big|_0^\pi = \frac{2}{\pi}
+~
+\]</p>
+<p>Visually, we have:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>CalculusWithJulia</span><span class='hljl-t'>
+</span><span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>Plots</span><span class='hljl-t'>
+</span><span class='hljl-nf'>plot</span><span class='hljl-p'>(</span><span class='hljl-n'>sin</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>pi</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>plot!</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-&gt;</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-oB'>/</span><span class='hljl-n'>pi</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-n'>pi</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+    <div id="8313fd67-c791-4778-857d-94e095a60e9f" style="width:576px;height:384px;"></div>
+    <script>
+    PLOT = document.getElementById('8313fd67-c791-4778-857d-94e095a60e9f');
+    Plotly.plot(PLOT, [
+    {
+        "xaxis": "x1",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y1",
+        "x": [
+            0.0,
+            0.015340112644426933,
+            0.030680225288853866,
+            0.17252171697354257,
+            0.31436320865823125,
+            0.39960403291889857,
+            0.48484485717956594,
+            0.5569148892483315,
+            0.6289849213170972,
+            0.7072731766942932,
+            0.7855614320714894,
+            0.8577362788103786,
+            0.9299111255492679,
+            1.0072901891756778,
+            1.0846692528020878,
+            1.1743204864101577,
+            1.2639717200182279,
+            1.3436431565239784,
+            1.423314593029729,
+            1.4931792632139245,
+            1.5630439333981199,
+            1.639215177553415,
+            1.71538642170871,
+            1.7920103724793233,
+            1.8686343232499367,
+            1.9533518991288894,
+            2.038069475007842,
+            2.11867611078605,
+            2.1992827465642577,
+            2.2830949451205087,
+            2.3669071436767597,
+            2.437459162487701,
+            2.508011181298642,
+            2.6802832177626836,
+            2.8422240131314496,
+            3.1016657253491733,
+            3.141592653589793
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y1",
+        "zmin": null,
+        "legendgroup": "y1",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            0.015339511014701464,
+            0.03067541242093728,
+            0.17166717434870798,
+            0.3092109495508594,
+            0.38905360195643246,
+            0.4660711028717981,
+            0.528569798326157,
+            0.5883242430613824,
+            0.64976343137182,
+            0.7072222201480519,
+            0.7563636858789748,
+            0.8015668055511774,
+            0.8453874952692148,
+            0.88414893600324,
+            0.9224276439123988,
+            0.953297448140898,
+            0.9743114618127554,
+            0.9891442673157648,
+            0.9969893076459937,
+            0.999969950348809,
+            0.9976603433323025,
+            0.9895650509231215,
+            0.9756317894726576,
+            0.955973171617894,
+            0.9277136899890839,
+            0.892799925717166,
+            0.8536308148768001,
+            0.8089183002652021,
+            0.7568615568015717,
+            0.699491362414812,
+            0.6473736431477508,
+            0.5920349014277694,
+            0.44512104927186746,
+            0.2949169869941366,
+            0.03991632077017152,
+            1.2246467991473532e-16
+        ],
+        "type": "scatter"
+    },
+    {
+        "xaxis": "x1",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y1",
+        "x": [
+            0.0,
+            0.06136045057770773,
+            0.6287264173164625,
+            0.9696897143591319,
+            1.2579698426341943,
+            1.5711228641429789,
+            1.8598222510985358,
+            2.1693385056041756,
+            2.5279434400364558,
+            2.846629186059458,
+            3.1260878667962397,
+            3.43077284341742,
+            3.7372686464998734,
+            4.076138950015684,
+            4.398565493128515,
+            4.733814287353519,
+            5.016022362597284,
+            5.360566435525367,
+            5.684448026262899,
+            6.203331450698347,
+            6.283185307179586
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y2",
+        "zmin": null,
+        "legendgroup": "y2",
+        "zmax": null,
+        "line": {
+            "color": "rgba(227, 111, 71, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.6366197723675814,
+            0.6366197723675814,
+            0.6366197723675814,
+            0.6366197723675814,
+            0.6366197723675814,
+            0.6366197723675814,
+            0.6366197723675814,
+            0.6366197723675814,
+            0.6366197723675814,
+            0.6366197723675814,
+            0.6366197723675814,
+            0.6366197723675814,
+            0.6366197723675814,
+            0.6366197723675814,
+            0.6366197723675814,
+            0.6366197723675814,
+            0.6366197723675814,
+            0.6366197723675814,
+            0.6366197723675814,
+            0.6366197723675814,
+            0.6366197723675814
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": true,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            0.0,
+            1.0,
+            2.0,
+            3.0,
+            4.0,
+            5.0,
+            6.0
+        ],
+        "visible": true,
+        "ticks": "inside",
+        "range": [
+            -0.18849555921538758,
+            6.471680866394974
+        ],
+        "domain": [
+            0.06856347817633907,
+            0.9931649168853893
+        ],
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "ticktext": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+        ],
+        "zeroline": false,
+        "type": "-",
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y1"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [],
+    "height": 384,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            0.0,
+            0.25,
+            0.5,
+            0.75,
+            1.0
+        ],
+        "visible": true,
+        "ticks": "inside",
+        "range": [
+            -0.02999909851046427,
+            1.0299690488592732
+        ],
+        "domain": [
+            0.0391878098571012,
+            0.989747375328084
+        ],
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "ticktext": [
+            "0.00",
+            "0.25",
+            "0.50",
+            "0.75",
+            "1.00"
+        ],
+        "zeroline": false,
+        "type": "-",
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x1"
+    },
+    "legend": {
+        "yanchor": "auto",
+        "xanchor": "auto",
+        "bordercolor": "rgba(0, 0, 0, 1.000)",
+        "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "font": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "tracegroupgap": 0,
+        "y": 1.0,
+        "borderwidth": 1,
+        "traceorder": "normal",
+        "x": 1.0
+    },
+    "width": 576
+}
+);
+    </script>
+
+
+<h5>Example</h5>
+<p>What is the average value of the function <span class="math">$f$</span> which is <span class="math">$1$</span> between <span class="math">$[0,3]$</span>, <span class="math">$2$</span> between <span class="math">$(3,5]$</span> and <span class="math">$1$</span> between <span class="math">$(5,6]$</span>?</p>
+<p>Though not continuous, <span class="math">$f(x)$</span> is integrable as it contains only jumps. The integral from <span class="math">$[0,6]$</span> can be computed with geometry: <span class="math">$3\cdot 3 + 2 \cdot 2 + 1 \cdot 1 = 14$</span>. The average then is <span class="math">$14/(6-0) = 7/3$</span>.</p>
+<h5>Example</h5>
+<p>What is the average value of the function <span class="math">$e^{-x}$</span> between <span class="math">$0$</span> and <span class="math">$\log(2)$</span>?</p>
+<p class="math">\[
+~
+\text{average} = \frac{1}{\log(2) - 0} \int_0^{\log(2)} e^{-x} dx
+= \frac{1}{\log(2)} (-e^{-x}) \big|_0^{\log(2)}
+= -\frac{1}{\log(2)} (\frac{1}{2} - 1)
+= \frac{1}{2\log(2)}.
+~
+\]</p>
+<p>Visualizing, we have</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>plot</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-&gt;</span><span class='hljl-t'> </span><span class='hljl-nf'>exp</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>log</span><span class='hljl-p'>(</span><span class='hljl-ni'>2</span><span class='hljl-p'>))</span><span class='hljl-t'>
+</span><span class='hljl-nf'>plot!</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-&gt;</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-p'>(</span><span class='hljl-ni'>2</span><span class='hljl-oB'>*</span><span class='hljl-nf'>log</span><span class='hljl-p'>(</span><span class='hljl-ni'>2</span><span class='hljl-p'>)),</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>log</span><span class='hljl-p'>(</span><span class='hljl-ni'>2</span><span class='hljl-p'>))</span>
+</pre>
+
+
+
+    <div id="74ac78b6-69a3-47eb-beb3-b5e0a9260a81" style="width:576px;height:384px;"></div>
+    <script>
+    PLOT = document.getElementById('74ac78b6-69a3-47eb-beb3-b5e0a9260a81');
+    Plotly.plot(PLOT, [
+    {
+        "xaxis": "x1",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y1",
+        "x": [
+            0.0,
+            0.006769149919424832,
+            0.06935971520822208,
+            0.10697403604474018,
+            0.13877646560176607,
+            0.17332281802186952,
+            0.20517149927419048,
+            0.23931665155911683,
+            0.278877159022201,
+            0.31403386943914136,
+            0.34486313631025534,
+            0.37847531264741074,
+            0.4122872553760938,
+            0.4496706817711548,
+            0.485240068693577,
+            0.5222239781507202,
+            0.5533565521753865,
+            0.5913658963301499,
+            0.6270958009055353,
+            0.6843378787853243,
+            0.6931471805599453
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y1",
+        "zmin": null,
+        "legendgroup": "y1",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            1.0,
+            0.9932537091679455,
+            0.9329910086538161,
+            0.8985490025735416,
+            0.8704225761001543,
+            0.8408661242870591,
+            0.8145076169674478,
+            0.7871655856946868,
+            0.7566328430247939,
+            0.7304942863086576,
+            0.7083172897519052,
+            0.6849048793346111,
+            0.662134047166552,
+            0.6378381687746676,
+            0.6155494048834306,
+            0.5931998164447524,
+            0.5750164946919873,
+            0.5535706479918976,
+            0.5341408018477831,
+            0.5044241089320427,
+            0.5
+        ],
+        "type": "scatter"
+    },
+    {
+        "xaxis": "x1",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y1",
+        "x": [
+            0.0,
+            0.006769149919424832,
+            0.06935971520822208,
+            0.10697403604474018,
+            0.13877646560176607,
+            0.17332281802186952,
+            0.20517149927419048,
+            0.23931665155911683,
+            0.278877159022201,
+            0.31403386943914136,
+            0.34486313631025534,
+            0.37847531264741074,
+            0.4122872553760938,
+            0.4496706817711548,
+            0.485240068693577,
+            0.5222239781507202,
+            0.5533565521753865,
+            0.5913658963301499,
+            0.6270958009055353,
+            0.6843378787853243,
+            0.6931471805599453
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y2",
+        "zmin": null,
+        "legendgroup": "y2",
+        "zmax": null,
+        "line": {
+            "color": "rgba(227, 111, 71, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.7213475204444817,
+            0.7213475204444817,
+            0.7213475204444817,
+            0.7213475204444817,
+            0.7213475204444817,
+            0.7213475204444817,
+            0.7213475204444817,
+            0.7213475204444817,
+            0.7213475204444817,
+            0.7213475204444817,
+            0.7213475204444817,
+            0.7213475204444817,
+            0.7213475204444817,
+            0.7213475204444817,
+            0.7213475204444817,
+            0.7213475204444817,
+            0.7213475204444817,
+            0.7213475204444817,
+            0.7213475204444817,
+            0.7213475204444817,
+            0.7213475204444817
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": true,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            0.0,
+            0.2,
+            0.4,
+            0.6000000000000001
+        ],
+        "visible": true,
+        "ticks": "inside",
+        "range": [
+            -0.020794415416798356,
+            0.7139415959767437
+        ],
+        "domain": [
+            0.05313137941090697,
+            0.9931649168853892
+        ],
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "ticktext": [
+            "0.0",
+            "0.2",
+            "0.4",
+            "0.6"
+        ],
+        "zeroline": false,
+        "type": "-",
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y1"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [],
+    "height": 384,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            0.5,
+            0.6000000000000001,
+            0.7000000000000001,
+            0.8,
+            0.9,
+            1.0
+        ],
+        "visible": true,
+        "ticks": "inside",
+        "range": [
+            0.485,
+            1.015
+        ],
+        "domain": [
+            0.0391878098571012,
+            0.989747375328084
+        ],
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "ticktext": [
+            "0.5",
+            "0.6",
+            "0.7",
+            "0.8",
+            "0.9",
+            "1.0"
+        ],
+        "zeroline": false,
+        "type": "-",
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x1"
+    },
+    "legend": {
+        "yanchor": "auto",
+        "xanchor": "auto",
+        "bordercolor": "rgba(0, 0, 0, 1.000)",
+        "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "font": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "tracegroupgap": 0,
+        "y": 1.0,
+        "borderwidth": 1,
+        "traceorder": "normal",
+        "x": 1.0
+    },
+    "width": 576
+}
+);
+    </script>
+
+
+<h2>The mean value theorem for integrals</h2>
+<p>If <span class="math">$f(x)$</span> is assumed integrable, the average value of <span class="math">$f(x)$</span> is defined, as above. Re-expressing gives that there exists a <span class="math">$K$</span> with</p>
+<p class="math">\[
+~
+K \cdot (b-a) = \int_a^b f(x) dx.
+~
+\]</p>
+<p>When we assume that <span class="math">$f(x)$</span> is continuous, we can describe <span class="math">$K$</span> as a value in the range of <span class="math">$f$</span>:</p>
+<blockquote>
+<p><strong>The mean value theorem for integrals</strong>: Let <span class="math">$f(x)$</span> be a continuous function on <span class="math">$[a,b]$</span> with <span class="math">$a < b$</span>. Then there exists <span class="math">$c$</span> with <span class="math">$a \leq c \leq b$</span> with <span class="math">$~ f(c) \cdot (b-a) = \int_a^b f(x) dx.~$</span></p>
+</blockquote>
+<p>The proof comes from the intermediate value theorem and the extreme value theorem. Since <span class="math">$f$</span> is continuous on a closed interval, there exists values <span class="math">$m$</span> and <span class="math">$M$</span> with <span class="math">$f(c_m) = m \leq f(x) \leq M=f(c_M)$</span>, for some <span class="math">$c_m$</span> and <span class="math">$c_M$</span> in the interval <span class="math">$[a,b]$</span>. Since <span class="math">$m \leq f(x) \leq M$</span>, we must have:</p>
+<p class="math">\[
+~
+m \cdot (b-a) \leq K\cdot(b-a) \leq M\cdot(b-a).
+~
+\]</p>
+<p>So in particular <span class="math">$K$</span> is in <span class="math">$[m, M]$</span>. But <span class="math">$m$</span> and <span class="math">$M$</span> correspond to values of <span class="math">$f(x)$</span>, so by the intermediate value theorem, <span class="math">$K=f(c)$</span> for some <span class="math">$c$</span> that must lie in between <span class="math">$c_m$</span> and <span class="math">$c_M$</span>, which means as well that it must be in <span class="math">$[a,b]$</span>.</p>
+<h5>Proof of second part of Fundamental Theorem of Calculus</h5>
+<p>The mean value theorem is exactly what is needed to prove formally the second part of the Fundamental Theorem of Calculus. Again, suppose <span class="math">$f(x)$</span> is continuous on <span class="math">$[a,b]$</span> with <span class="math">$a < b$</span>. For any <span class="math">$a < x < b$</span>, we define <span class="math">$F(x) = \int_a^x f(u) du$</span>. Then the derivative of <span class="math">$F$</span> is <span class="math">$f$</span>.</p>
+<p>Let <span class="math">$h>0$</span>. Then consider the forward difference <span class="math">$(F(x+h) - F(x))/h$</span>. Rewriting gives:</p>
+<p class="math">\[
+~
+\frac{\int_a^{x+h} f(u) du - \int_a^x f(u) du}{h}  =\frac{\int_x^{x+h} f(u) du}{h} = f(\xi(h)).
+~
+\]</p>
+<p>The value <span class="math">$\xi(h)$</span> is just the <span class="math">$c$</span> corresponding to a given value in <span class="math">$[x, x+h]$</span> guaranteed by the mean value theorem.  We only know that <span class="math">$x \leq \xi(h) \leq x+h$</span>. But this is plenty - it says that <span class="math">$\lim_{h \rightarrow 0+} \xi(h) = x$</span>. Using the fact that <span class="math">$f$</span> is continuous and the known properties of limits of compositions of functions this gives <span class="math">$\lim_{h \rightarrow 0+} f(\xi(h)) = f(x)$</span>. But this means that the &#40;right&#41; limit of the secant line expression exists and is equal to <span class="math">$f(x)$</span>, which is what we want to prove. Repeating a similar argument when <span class="math">$h < 0$</span>, finishes the proof.</p>
+<p>The basic notion used is simply that for small <span class="math">$h$</span>, this expression is well approximated by the left Riemann sum taken over <span class="math">$[x, x+h]$</span>:</p>
+<p class="math">\[
+~
+f(\xi(h)) \cdot h = \int_x^{x+h} f(u) du.
+~
+\]</p>
+<h2>Questions</h2>
+<h6>Question</h6>
+<p>Between <span class="math">$0$</span> and <span class="math">$1$</span> a function is constantly <span class="math">$1$</span>. Between <span class="math">$1$</span> and <span class="math">$2$</span> the function is constantly <span class="math">$2$</span>. What is the average value of the function over the interval <span class="math">$[0,2]$</span>?</p>
+
+
+<form name='WeaveQuestion' data-id='uH2Vr6XE' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="input-group">
+<input id="uH2Vr6XE" type="number" class="form-control">
+
+</div>
+
+<div id='uH2Vr6XE_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#uH2Vr6XE').on('change', function() {
+  correct = Math.abs(this.value - 1.5) <= 0.001;
+
+  if(correct) {
+     $('#uH2Vr6XE_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+  } else {
+     $('#uH2Vr6XE_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
+
+
+<h6>Question</h6>
+<p>Between <span class="math">$0$</span> and <span class="math">$2$</span> a function is constantly <span class="math">$1$</span>. Between <span class="math">$2$</span> and <span class="math">$3$</span> the function is constantly <span class="math">$2$</span>. What is the average value of the function over the interval <span class="math">$[0,3]$</span>?</p>
+
+
+<form name='WeaveQuestion' data-id='xQAGq3C0' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="input-group">
+<input id="xQAGq3C0" type="number" class="form-control">
+
+</div>
+
+<div id='xQAGq3C0_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#xQAGq3C0').on('change', function() {
+  correct = Math.abs(this.value - 1.0) <= 0.001;
+
+  if(correct) {
+     $('#xQAGq3C0_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+  } else {
+     $('#xQAGq3C0_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
+
+
+<h6>Question</h6>
+<p>What integral will show the intuition of the Merton College scholars that the distance traveled by an object under uniformly increasing velocity starting at <span class="math">$v_0$</span> and ending at <span class="math">$v_t$</span> is equal to the distance traveled by an object with constant velocity of <span class="math">$(v_0 + v_t)/2$</span>.</p>
+
+
+<form name="WeaveQuestion" data-id="JvZFNo7H" data-controltype="radio">
+<div class="form-group ">
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_JvZFNo7H" value="1"><div class="markdown">&#36;\int_0^t &#40;v&#40;0&#41; &#43; v&#40;u&#41;&#41;/2 du &#61; v&#40;0&#41;/2\cdot t &#43; x&#40;u&#41;/2\ \big|_0^t&#36;
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_JvZFNo7H" value="2"><div class="markdown">&#36;&#40;v&#40;0&#41; &#43; v&#40;t&#41;&#41;/2 \cdot \int_0^t du &#61; &#40;v&#40;0&#41; &#43; v&#40;t&#41;&#41;/2 \cdot t&#36;
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_JvZFNo7H" value="3"><div class="markdown">&#36;\int_0^t v&#40;u&#41; du &#61; v^2/2 \big|_0^t&#36;
+</div>
+    </label>
+    </div>
+
+<div id="JvZFNo7H_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_JvZFNo7H']").on("change", function() {
+  correct = this.value == 3;
+
+  if(correct) {
+     $("#JvZFNo7H_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+  } else {
+     $("#JvZFNo7H_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
+
+<h6>Question</h6>
+<p>Find the average value of <span class="math">$\cos(x)$</span> over the interval <span class="math">$[-\pi/2, \pi/2]$</span>.</p>
+
+
+<form name='WeaveQuestion' data-id='byPch7lK' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="input-group">
+<input id="byPch7lK" type="number" class="form-control">
+
+</div>
+
+<div id='byPch7lK_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#byPch7lK').on('change', function() {
+  correct = Math.abs(this.value - 0.6366197723675814) <= 0.001;
+
+  if(correct) {
+     $('#byPch7lK_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+  } else {
+     $('#byPch7lK_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
+
+
+<h6>Question</h6>
+<p>Find the average value of <span class="math">$\cos(x)$</span> over the interval <span class="math">$[0, \pi]$</span>.</p>
+
+
+<form name='WeaveQuestion' data-id='Ca3nENOJ' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="input-group">
+<input id="Ca3nENOJ" type="number" class="form-control">
+
+</div>
+
+<div id='Ca3nENOJ_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#Ca3nENOJ').on('change', function() {
+  correct = Math.abs(this.value - 8.779656151956583e-17) <= 0.001;
+
+  if(correct) {
+     $('#Ca3nENOJ_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+  } else {
+     $('#Ca3nENOJ_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
+
+
+<h6>Question</h6>
+<p>Find the average value of <span class="math">$f(x) = e^{-2x}$</span> between <span class="math">$0$</span> and <span class="math">$2$</span>.</p>
+
+
+<form name='WeaveQuestion' data-id='g6FtkVSi' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="input-group">
+<input id="g6FtkVSi" type="number" class="form-control">
+
+</div>
+
+<div id='g6FtkVSi_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#g6FtkVSi').on('change', function() {
+  correct = Math.abs(this.value - 0.24542109027781647) <= 0.001;
+
+  if(correct) {
+     $('#g6FtkVSi_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+  } else {
+     $('#g6FtkVSi_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
+
+
+<h6>Question</h6>
+<p>Find the average value of <span class="math">$f(x) = \sin(x)^2$</span> over the <span class="math">$0$</span>, <span class="math">$\pi$</span>.</p>
+
+
+<form name='WeaveQuestion' data-id='RXpkdVPY' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="input-group">
+<input id="RXpkdVPY" type="number" class="form-control">
+
+</div>
+
+<div id='RXpkdVPY_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#RXpkdVPY').on('change', function() {
+  correct = Math.abs(this.value - 0.5) <= 0.001;
+
+  if(correct) {
+     $('#RXpkdVPY_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+  } else {
+     $('#RXpkdVPY_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
+
+
+<h6>Question</h6>
+<p>Which is bigger? The average value of <span class="math">$f(x) = x^{10}$</span> or the average value of <span class="math">$g(x) = \lvert x \rvert$</span> over the interval <span class="math">$[0,1]$</span>?</p>
+
+
+<form name="WeaveQuestion" data-id="3sPpKdn0" data-controltype="radio">
+<div class="form-group ">
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_3sPpKdn0" value="1"><div class="markdown"><p>That of &#36;g&#40;x&#41; &#61; \lvert x \rvert&#36;.</p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_3sPpKdn0" value="2"><div class="markdown"><p>That of &#36;f&#40;x&#41; &#61; x^&#123;10&#125;&#36;.</p>
+</div>
+    </label>
+    </div>
+
+<div id="3sPpKdn0_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_3sPpKdn0']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#3sPpKdn0_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+  } else {
+     $("#3sPpKdn0_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
+
+<h6>Question</h6>
+<p>Define a family of functions over the interval <span class="math">$[0,1]$</span> by <span class="math">$f(x; a,b) = x^a \cdot (1-x)^b$</span>. Which has a greater average, <span class="math">$f(x; 2,3)$</span> or <span class="math">$f(x; 3,4)$</span>?</p>
+
+
+<form name="WeaveQuestion" data-id="v5pOynEH" data-controltype="radio">
+<div class="form-group ">
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_v5pOynEH" value="1"><div class="markdown">&#36;f&#40;x; 2,3&#41;&#36;
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_v5pOynEH" value="2"><div class="markdown">&#36;f&#40;x; 3,4&#41;&#36;
+</div>
+    </label>
+    </div>
+
+<div id="v5pOynEH_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_v5pOynEH']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#v5pOynEH_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+  } else {
+     $("#v5pOynEH_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
+
+<h6>Question</h6>
+<p>Suppose the average value of <span class="math">$f(x)$</span> over <span class="math">$[a,b]$</span> is <span class="math">$100$</span>. What is the average value of <span class="math">$100 f(x)$</span> over <span class="math">$[a,b]$</span>?</p>
+
+
+<form name='WeaveQuestion' data-id='xxtWSPcP' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="input-group">
+<input id="xxtWSPcP" type="number" class="form-control">
+
+</div>
+
+<div id='xxtWSPcP_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#xxtWSPcP').on('change', function() {
+  correct = Math.abs(this.value - 10000) <= 0;
+
+  if(correct) {
+     $('#xxtWSPcP_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+  } else {
+     $('#xxtWSPcP_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
+
+
+<h6>Question</h6>
+<p>Suppose <span class="math">$f(x)$</span> is continuous and positive on <span class="math">$[a,b]$</span>.</p>
+<ul>
+<li><p>Explain why for any <span class="math">$x > a$</span> it must be that:</p>
+</li>
+</ul>
+<p class="math">\[
+~
+F(x) = \int_a^x f(x) dx > 0
+~
+\]</p>
+
+
+<form name="WeaveQuestion" data-id="HhhKGAy4" data-controltype="radio">
+<div class="form-group ">
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_HhhKGAy4" value="1"><div class="markdown"><p>Because the definite integral is only defined for positive area, so it is always positive</p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_HhhKGAy4" value="2"><div class="markdown"><p>Because the mean value theorem says this is &#36;f&#40;c&#41; &#40;x-a&#41;&#36; for some &#36;c&#36; and both terms are positive by the assumptions</p>
+</div>
+    </label>
+    </div>
+
+<div id="HhhKGAy4_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_HhhKGAy4']").on("change", function() {
+  correct = this.value == 2;
+
+  if(correct) {
+     $("#HhhKGAy4_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+  } else {
+     $("#HhhKGAy4_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
+
+<ul>
+<li><p>Explain why <span class="math">$F(x)$</span> is increasing.</p>
+</li>
+</ul>
+
+
+<form name="WeaveQuestion" data-id="1RGOSrqa" data-controltype="radio">
+<div class="form-group ">
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_1RGOSrqa" value="1"><div class="markdown"><p>By the extreme value theorem, &#36;F&#40;x&#41;&#36; must reach its maximum, hence it must increase.</p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_1RGOSrqa" value="2"><div class="markdown"><p>By the intermediate value theorem, as &#36;F&#40;x&#41; &gt; 0&#36;, it must be true that &#36;F&#40;x&#41;&#36; is increasing</p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_1RGOSrqa" value="3"><div class="markdown"><p>By the fundamental theorem of calculus, part I, &#36;F&#39;&#40;x&#41; &#61; f&#40;x&#41; &gt; 0&#36;, hence &#36;F&#40;x&#41;&#36; is increasing</p>
+</div>
+    </label>
+    </div>
+
+<div id="1RGOSrqa_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_1RGOSrqa']").on("change", function() {
+  correct = this.value == 3;
+
+  if(correct) {
+     $("#1RGOSrqa_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+  } else {
+     $("#1RGOSrqa_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
+
+<h6>Question</h6>
+<p>For <span class="math">$f(x) = x^2$</span>, which is bigger: the average of the function <span class="math">$f(x)$</span> over <span class="math">$[0,1]$</span> or the geometric mean which is the exponential of the average of the logarithm of <span class="math">$f$</span> over the same interval?</p>
+
+
+<form name="WeaveQuestion" data-id="lfzoKnzO" data-controltype="radio">
+<div class="form-group ">
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_lfzoKnzO" value="1"><div class="markdown"><p>The average of &#36;f&#36;</p>
+</div>
+    </label>
+    </div>
+    <div  class="radio">
+    <label>
+      <input type="radio" name="radio_lfzoKnzO" value="2"><div class="markdown"><p>The exponential of the average of &#36;\log&#40;f&#41;&#36;</p>
+</div>
+    </label>
+    </div>
+
+<div id="lfzoKnzO_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_lfzoKnzO']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#lfzoKnzO_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+  } else {
+     $("#lfzoKnzO_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
+
+  </div>
+</div>
+
+</body>
+</html>

@@ -49,7 +49,6 @@ This package reexports `QuadGK`, for one-dimensional integrals; `HCubature`, for
 module CalculusWithJulia
 
 using Reexport
-@reexport using Plots
 using RecipesBase
 import ImplicitEquations # handle conflict with SymPy in plot-utils.jl
 import ImplicitEquations: Pred
@@ -69,8 +68,19 @@ include("multidimensional.jl")
 include("derivatives.jl")
 include("integration.jl")
 include("plot-utils.jl")
+include("WeaveSupport/WeaveSupport.jl")
 
-export unzip, divergence, gradient, curl, ∇
+using Requires
+
+function __init__()
+    @require SimplePlots="307c2aad-90be-4152-b348-f51955fac6ce" include("simpleplots.jl")
+    @require Plots="91a5bcdd-55d7-5caf-9e0b-520d859cae80" include("plots.jl")
+    @require AbstractPlotting="537997a7-5e4e-5d89-9595-2241ea00577e" include("makie.jl")
+    #@require MDBM="" include("implicit_equation.jl")    
+end
+
+
+export unzip, parametric_grid, divergence, gradient, curl, ∇
 export tangent, secant, D
 export riemann, fubini
 export plotif, trimplot, signchart,

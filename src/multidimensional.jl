@@ -58,6 +58,16 @@ end
 unzip(v,vs...) = unzip([v, vs...])
 unzip(r::Function, a, b, n=100) = unzip(r.(range(a, stop=b, length=n)))
 
+"""
+    parametric_grid(us, vs, r)
+
+Create matrices for `xs`, `ys`, `zs` from `r(u,v) = [x(u,v), y(u,v), z(u,v)]`
+
+Used to plot parametrically defined surfaces.
+"""
+function parametric_grid(us, vs, r)
+    unzip(r.(us, vs'))
+end
 
 ## -----------------------------------
 
