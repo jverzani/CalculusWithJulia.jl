@@ -1,6 +1,9 @@
 # Calculus with Julia
 
-This is a set of notes for learning [calculus](http://en.wikipedia.org/wiki/Calculus). Since the mid 90s there has been a push to teach calculus using many different points of view. The [Harvard](http://www.math.harvard.edu/~knill/pedagogy/harvardcalculus/) style rule of four says that as much as possible the conversation should include a graphical, numerical, algebraic, and verbal component. These notes use the programming language [Julia](http://julialang.org) to illustrate the graphical, numerical, and, at times, the algebraic aspects of calculus.
+
+`CalculusWithJulia.jl` is a package for a set of notes for learning [calculus](http://en.wikipedia.org/wiki/Calculus) using the `Julia` languge. The package contains some support functions and the files that generate the notes being read now.
+
+Since the mid 90s there has been a push to teach calculus using many different points of view. The [Harvard](http://www.math.harvard.edu/~knill/pedagogy/harvardcalculus/) style rule of four says that as much as possible the conversation should include a graphical, numerical, algebraic, and verbal component. These notes use the programming language [Julia](http://julialang.org) to illustrate the graphical, numerical, and, at times, the algebraic aspects of calculus.
 
 There are many examples of integrating a computer algebra system (such as `Mathematica`, `Maple`, or `Sage`) into the calculus conversation. Computer algebra systems can be magical. The popular [WolframAlpha](http://www.wolframalpha.com/) website calls the full power of `Mathematica` while allowing an informal syntax that is flexible enough to be used as a backend for Apple's Siri feature. ("Siri what is the graph of x squared minus 4?")
 For learning purposes, computer algebra systems model very well the algebraic/symbolic treatment of the material while providing means to illustrate the numeric aspects.
