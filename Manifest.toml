@@ -492,6 +492,12 @@ git-tree-sha1 = "b7f762e9820b7fab47544c36f26f54ac59cf8abf"
 uuid = "bd369af6-aec1-5ad0-b16a-f7cc5008161c"
 version = "1.0.5"
 
+[[Tectonic]]
+deps = ["Pkg"]
+git-tree-sha1 = "e3e5e7dfbe3b7d9ff767264f84e5eca487e586cb"
+uuid = "9ac5f52a-99c6-489f-af81-462ef484790f"
+version = "0.2.0"
+
 [[Test]]
 deps = ["Distributed", "InteractiveUtils", "Logging", "Random"]
 uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
