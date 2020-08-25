@@ -58,7 +58,7 @@ function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebo
     if :script ∈ build_list
         println("Building Script")
         dir = joinpath(repo_directory,"script",folder)
-        isdir(dir) || mkdir(dir)
+        isdir(dir) || mkpath(dir)
         args[:doctype] = "script"
         tangle(tmp;out_path=dir)
     end
@@ -66,7 +66,7 @@ function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebo
     if :html ∈ build_list
         println("Building HTML")
         dir = joinpath(repo_directory,"html",folder)
-        isdir(dir) || mkdir(dir)
+        isdir(dir) || mkpath(dir)
 
         figdir = joinpath(jmddir,"figures")
         htmlfigdir = joinpath(dir, "figures")
@@ -93,7 +93,7 @@ function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebo
         
         println("Building PDF")
         dir = joinpath(repo_directory,"pdf",folder)
-        isdir(dir) || mkdir(dir)
+        isdir(dir) || mkpath(dir)
 
         fig_path = "_figures_" * bnm
         figdir = joinpath(jmddir,"figures")
@@ -139,7 +139,7 @@ function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebo
     if :github ∈ build_list
         println("Building Github Markdown")
         dir = joinpath(repo_directory,"markdown",folder)
-        isdir(dir) || mkdir(dir)
+        isdir(dir) || mkpath(dir)
         args[:doctype] = "github"
         weave(tmp,doctype = "github",out_path=dir, args=args;
               fig_path=tempdir(),
@@ -149,7 +149,7 @@ function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebo
     if :notebook ∈ build_list
         println("Building Notebook")
         dir = joinpath(repo_directory,"notebook",folder)
-        isdir(dir) || mkdir(dir)
+        isdir(dir) || mkpath(dir)
         args[:doctype] = "notebook"
         Weave.convert_doc(tmp,joinpath(dir,file[1:end-4]*".ipynb"))
     end

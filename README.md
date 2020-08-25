@@ -3,11 +3,20 @@
 `Julia` package to provide notes and features for using `Julia` to address typical problems from the undergraduate calculus sequence. 
 
 
-The notes may be read at [Calculus with Julia](https://calculuswithjulia.github.io). 
-
-In addition to html pages, there are other versions of the same material, such as `ipynb` notebooks.
+The notes may be read at [Calculus with Julia](http://juliahub.com/docs/CalculusWithJulia). 
 
 The notes expect that this package is installed, as it also provides a handful of conveniences for the task.
+
+In addition to the html pages, there are other versions of the same material that can be generated, such as `ipynb` notebooks or `pdf` files. These are available by installing the package and running
+
+```
+CalculusWithJulia.WeaveSupport.weave_all()
+```
+
+The named argument `build_list` defaults to `build_list=(:script,:html,:pdf,:github,:notebook)` which has all the output formats specified. This can be customized as desired. 
+
+The files are built in the package directory, available through the command `pathof(CalculusWithJulia)`.
+
 
 
 ## Contributing
