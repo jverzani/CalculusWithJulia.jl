@@ -6,7 +6,6 @@ import Base64: base64encode
 using Random
 
 using Weave
-using Tectonic
 
 using Mustache
 import Markdown
@@ -90,6 +89,8 @@ function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebo
     end
     
     if :pdf ∈ build_list
+
+        eval(quote using Tectonic end) # load Tectonic; wierd testing error
         
         println("Building PDF")
         dir = joinpath(repo_directory,"pdf",folder)
@@ -112,9 +113,8 @@ function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebo
                   kwargs...)
 
             texfile = joinpath(dir, bnm * ".tex")
-            Tectonic.tectonic() do path
-                run(`$path $texfile`)
-            end
+            Base.invokelatest(Tectonic.tectonic, bin -> run(`$bin $texfile`))
+
             
             # clean up
             for ext in (".tex",)
@@ -155,6 +155,17 @@ function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebo
     end
 end
 
+"""
+    weave_all(; force=false, build_list=(:script,:html,:pdf,:github,:notebook))
+
+Run `weave` on all source files. 
+
+* `force`: by default, only run `weave` on files with `html` file older than the source file in `CwJ`
+* `build_list`: list of output types to be built. The default is all types
+
+The files will be built as subdirectories in the package directory. This is returned by `pathof(CalculusWithJulia)`. 
+
+"""
 function weave_all(;force=false, build_list=(:script,:html,:pdf,:github,:notebook))
     for folder in readdir(joinpath(repo_directory,"CwJ"))
         folder == "test.jmd" && continue
@@ -186,36 +197,6 @@ function _footer(folder=nothing, file=nothing; remove_homedir=true)
 
 end
 
-# """
-# Notes:
-# * rename?
-# * to use with *non* jmd files, include
-# ---
-# options:
-#   eval : true
-#   echo : true
-#   line_width : 1000
-# ---
-# * cache=:user should cache blocks marked with `cache=true`
-# """
-# function mmd(f; cache=:user) # :off to turn off
-
-#     ## hack the evaluation module to load this package
-#     PKG = "CwJWeaveTpl"
-#     sandbox = "WeaveSandBox$(rand(1:10^10))"
-#     mod = Core.eval(Main, Meta.parse("module $sandbox\nusing $PKG\nend"))
-
-#     Weave.rcParams[:chunk_defaults][:line_width] = 1000  # set chunk options
-
-#     # run weave
-#     weave(f,
-#           template = tpl_tokens,
-#           informat="markdown",
-#           doctype="md2html",
-#           mod = mod,
-#           cache=cache
-#           )
-# end
 
 macro q_str(x)
     "`$x`"
