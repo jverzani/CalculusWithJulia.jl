@@ -1,6 +1,6 @@
 using CalculusWithJulia
 
-CalculusWithJulia.WeaveSupport.weave_all(force=false, build_list=(:script,:html,:github, :notebook))
+CalculusWithJulia.WeaveSupport.weave_all(force=false, build_list=(:html,))
 builddir = joinpath(@__DIR__, "build")
 htmldir = joinpath(@__DIR__, "..", "html")
 isdir(builddir) || mkdir(builddir)
