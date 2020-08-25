@@ -6,7 +6,7 @@ import Base64: base64encode
 using Random
 
 using Weave
-
+using Tectonic
 
 using Mustache
 import Markdown
@@ -106,11 +106,16 @@ function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebo
 
         args[:doctype] = "pdf"
         try
-            weave(tmp,doctype="md2pdf",out_path=dir,args=args;
+            weave(tmp,doctype="md2tex",out_path=dir,args=args;
                   template=latexfile,
                   fig_path=fig_path,
                   kwargs...)
 
+            texfile = joinpath(dir, bnm * ".tex")
+            Tectonic.tectonic() do path
+                run(`$path $texfile`)
+            end
+            
             # clean up
             for ext in (".tex",)
                 f = joinpath(dir, bnm * ext)
