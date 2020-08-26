@@ -15,5 +15,7 @@ CwJ/**/cache
 TODO.md
 docs/build/
 docs/site/
-pdf/**/_figures*
-pdf/**/figures
+markdown/*
+notebook/*
+pdf/*
+script/*
