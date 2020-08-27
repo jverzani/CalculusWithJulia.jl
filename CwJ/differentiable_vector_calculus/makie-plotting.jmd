@@ -5,6 +5,7 @@
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
 using AbstractPlotting
+Base.showable(m::MIME"image/png", p::AbstractPlotting.Scene) = true # instruct weave to make graphs
 nothing
 ```
 
