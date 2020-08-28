@@ -501,40 +501,6 @@ making of a "tuple," or a container of different objects, for example
 """)
 ```
 
-
-<script>
-// XXX This seems to be no longer needed, as 2^(-1) is defined when -1 is a numeric literal
-//
-// `Julia`'s design embraces *polymorphism*, a term to indicate that the
-// same function may have different implementations and the one
-// ultimately called depends on the number and types of the
-// arguments. Polymorphism is also commonly referred to as *multiple
-// dispatch*. This is a great convenience for the user who only needs to
-// remember one function name for related uses, that may differ only in
-// technicalities.  For example, there are about $200$ methods
-// implemented for the generic function `+`. This may be expected from
-// mathematical analogy: the details of the operation of addition are
-// different for integers, than rational numbers, than polynomials,
-// though all can be added.
-//
-//
-//
-// The power operator, `^`, provides a concrete example. For integer
-// bases there is a different implementation than there is for real
-// bases. When the base is an integer, the answer may or may not be an
-// integer:
-//
-// ```julia;
-// 2^(-1), 2^2
-// ```
-//
-// However, for floating point bases the answer is always a floating point number
-//
-// ```julia;
-// 2.0^(-1), 2.0^2
-// ```
-</script>
-
 ### Multiple arguments
 
 For the logarithm, we mentioned that `log` is the natural log and
