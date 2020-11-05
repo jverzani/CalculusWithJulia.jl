@@ -362,8 +362,7 @@ end
 
 
 
-import Contour # installed with the Plots package, so should be available
-               # import -- not using -- to avoid name collision
+import Contour 
 
 """
     Visualize `F(x,y,z) = c` by plotting assorted contour lines

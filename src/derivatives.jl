@@ -3,7 +3,7 @@
 """
     tangent(f::Function, c)
 
-Returns a function describing the tangent line to the graph of f at x=c.
+Returns a function describing the tangent line to the graph of `f` at `x=c`.
 
 Example. Where does the tangent line intersect the y axis?
 ```
@@ -19,9 +19,11 @@ tangent(f,c) = x -> f(c) + f'(c) * (x-c)
 
 """
     secant(f::Function, a, b)
-Returns a function describing the secant line to the graph of f at x=a and x=b.
 
-Example. Where does the secant line intersect the y axis?
+Returns a function describing the secant line to the graph of `f` at `x=a` and `x=b`.
+
+Example. Where does the secant line intersect the `y` axis?
+
 ```
 f(x) = sin(x)
 a, b = pi/4, pi/3
@@ -32,9 +34,6 @@ sl(0)
 
 """
 secant(f, a, b) = x -> f(a) + (f(b) - f(a)) / (b-a) * (x - a)
-
-
-
 
 
 

@@ -73,7 +73,6 @@ end
 
 
 ## The gradient in SymPy.
-## We avoid name collision with  ForwardDiff.gradient we use `grad`
 import ForwardDiff: gradient
 gradient(ex::SymPy.Sym, vars::AbstractArray=free_symbols(ex)) = diff.(ex, [vars...])
 gradient(f::Function) = (x, xs...) -> ForwardDiff.gradient(f, vcat(x, xs...))

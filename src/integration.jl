@@ -54,10 +54,10 @@ Computes numeric integral of `f` over region specified by `dz`, `dy`, `dx`. Thes
 f(x,y,z) = x * y^2 * z^3
 fubini(f, (0,1), (0,2), (0,3))  # int_0^3 int_0^2 int_0^1 f(x,y,z) dz dy dx
 g(v) = f(v...)
-hcubature(g, (0,0,0), (3,2,1))  # same. Not order switched
+hcubature(g, (0,0,0), (3,2,1))  # same. Note order switched
 
 # triangular like region
-fubini(f, (0, y->y), (0, x->x), (0,3))
+fubini(f, (0, (x,y)->y), (0, x->x), (0,3))
 ```
 """
 fubini(f, dx)     = quadgk(FWrapper(f), dx...)[1]

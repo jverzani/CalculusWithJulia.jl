@@ -557,6 +557,49 @@ returned by `find_zeros` are approximate zeros. Bear in mind that if $f$ is not
 continous the algorithm might find jumping points that are not zeros and may not even be in the domain of the function.)
 
 
+### Using IntervalRootFinding
+
+The `IntervalRootFinding` package provides a more *rigorous* alternative to `find_zeros`. This packages leverages the interval arithmetic features of `IntervalArithmetic`. That package finds rigorous bounds on the range of $f$ over an interval $[a,b]$. With this, a basic algorithm for root finding might follow this:
+
+check if $f([a,b])$ contains $0$:
+
+* If it does, split the interval in half and repeat.
+* If it doesn't, there is no possible zero in that interval
+
+The `IntervalRootFinding` package provides a function `roots`, with usage similar to `find_zeros` only intervals are specified with the notation `a..b`. In the following, we *qualify* `roots` to not conflict with the `roots` function from `SymPy`, which has already been loaded:
+
+```julia
+using IntervalArithmetic
+import IntervalRootFinding
+f(x) = sin(x) - 0.1*x^2 + 1
+IntervalRootFinding.roots(f, -10..10)
+```
+
+The "zeros" are returned with an enclosing interval and a flag, which for the above indicates a unique zero in the interval.
+
+Compare to `find_zeros`:
+
+```julia
+find_zeros(f, -10, 10)
+```
+
+For this example, `find_zeros` is easier to work with, but for other examples, using IntervalRootFinding is more efficient and offers a guarantee on the values found.
+
+For example, here is a function that is positive for *every* floating point number, but has two zeros snuck in at values within the floating point neighbors of $15/11$
+
+```julia
+g(x) = x^2 + 1 +log(abs( 11*x-15 ))/99
+```
+
+The `find_zeros` function will fail on identifying any potential zeros of this function. Even the basic call of `roots` will fail, due to it relying on some smoothness of `f`. However, explicitly asking for `Bisection` shows the *potential* for one or more zeros near $15/11$:
+
+```julia
+IntervalRootFinding.roots(g, -10..10, IntervalRootFinding.Bisection)
+```
+
+
+
+
 ## Extreme value theorem
 
 The Extreme Value Theorem is another consequence of continuity.
@@ -764,7 +807,7 @@ function, but later will be known as the derivative. Here is its definition:
 
 ```julia; eval=false
 using ForwardDiff
-D(f) = x -> ForwardDiff.derivative(f, x)
+D(f) = x -> ForwardDiff.derivative(f, float(x))
 ```
 
 Let $v_0= 390$. The three times in question can be found from the zeros of `f` and `D(f)`. What are they?
