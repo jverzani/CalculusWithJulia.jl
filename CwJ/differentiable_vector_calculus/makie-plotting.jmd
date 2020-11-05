@@ -5,6 +5,7 @@
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
 using AbstractPlotting
+Base.showable(m::MIME"image/png", p::AbstractPlotting.Scene) = true # instruct weave to make graphs
 nothing
 ```
 
@@ -613,6 +614,21 @@ end
 
 With the data suitably massaged, we can directly plot either a `surface` or `wireframe` plot.
 
+----
+
+As an aside, The above can be done more campactly with nested list comprehensions:
+
+```
+xs, ys, zs = [[pt[i] for pt in r.(us, vs')] for i in 1:3]
+```
+
+Or using the `unzip` function directly after broadcasting:
+
+```
+xs, ys, zs = unzip(r.(us, vs'))
+```
+   
+----
 
 For example, a sphere can be parameterized by $r(u,v) = (\sin(u)\cos(v), \sin(u)\sin(v), \cos(u))$ and visualized through:
 
