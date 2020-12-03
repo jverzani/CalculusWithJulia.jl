@@ -19,3 +19,5 @@ markdown/*
 notebook/*
 pdf/*
 script/*
+.travis.yml
+appveyor.yml
