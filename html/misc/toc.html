@@ -149,6 +149,12 @@ $( document ).ready(function() {
 <div class="container-fluid">
   <div class="span10 offset1">
     <h1>Calculus with Julia</h1>
+
+<pre class="julia-error">
+ERROR: syntax: &quot;//&quot; is not a unary operator
+</pre>
+
+
 <p><code>CalculusWithJulia.jl</code> is a package for a set of notes for learning <a href="http://en.wikipedia.org/wiki/Calculus">calculus</a> using the <code>Julia</code> languge. The package contains some support functions and the files that generate the notes being read now.</p>
 <p>Since the mid 90s there has been a push to teach calculus using many different points of view. The <a href="http://www.math.harvard.edu/~knill/pedagogy/harvardcalculus/">Harvard</a> style rule of four says that as much as possible the conversation should include a graphical, numerical, algebraic, and verbal component. These notes use the programming language <a href="http://julialang.org">Julia</a> to illustrate the graphical, numerical, and, at times, the algebraic aspects of calculus.</p>
 <p>There are many examples of integrating a computer algebra system &#40;such as <code>Mathematica</code>, <code>Maple</code>, or <code>Sage</code>&#41; into the calculus conversation. Computer algebra systems can be magical. The popular <a href="http://www.wolframalpha.com/">WolframAlpha</a> website calls the full power of <code>Mathematica</code> while allowing an informal syntax that is flexible enough to be used as a backend for Apple&#39;s Siri feature. &#40;&quot;Siri what is the graph of x squared minus 4?&quot;&#41; For learning purposes, computer algebra systems model very well the algebraic/symbolic treatment of the material while providing means to illustrate the numeric aspects. Theses notes are a bit different in that <code>Julia</code> is primarily used for the numeric style of computing and the algebraic/symbolic treatment is added on. Doing the symbolic treatment by hand can be very beneficial while learning, and computer algebra systems make those exercises seem kind of pointless, as the finished product can be produced much easier.</p>

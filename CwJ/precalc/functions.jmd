@@ -96,15 +96,17 @@ The `DomainError` is one of many different error types `Julia` has, in this case
 
 
 
-### Using `IntervalArithmetics` to identify the range
+### Using `IntervalArithmetics` to help identify the range
 
-A mathmetical interval is a set of values of the form
+Identifying the range of a function can be a difficult task. We see that in some cases, a package can be of assistance.
 
-* an open interval: ``a<x<b``, or ``(a,b)``;
+A mathematical interval is a set of values of the form
+
+* an open interval: ``a < x < b``, or ``(a,b)``;
 * a closed interval: ``a \leq x \leq b``, or ``[a,b]``;
 * or a half-open interval: ``a < x \leq b`` or ``a \leq x < b``, repectively ``(a,b]`` or ``[a,b)``.
 
-The all contain all real numbers between the endpoints, the distinction is whether the endpoints are included or not.
+They all contain all real numbers between the endpoints, the distinction is whether the endpoints are included or not.
 
 A domain is some set, but typically that set is an interval such as *all real numbers* (``(-\infty,\infty)``), *all non-negative numbers* (``[0,\infty)``), or, say, *all positive numbers* (``(0,\infty)``).
 
@@ -124,7 +126,7 @@ The main feature of the package is not to construct intervals, but rather to *ri
 
 For example the function ``f(x) = x^2 + 2`` had a domain of all real ``x``, the range can be found with:
 
-```
+```julia
 ab = -Inf..Inf
 f(x) = x^2 + 2
 f(ab)
@@ -134,7 +136,7 @@ For such an elementary function, this range could also be observed from inspecti
 
 The above example correctly identifies the range (under the assumption ``\infty`` is treated like a floating point value), but in general it is only a **bound** on the range. We will see later that the function ``f(x)=x^x`` has a minimum value at ``1/e`` and is defined to be ``1`` at ``x=0``, so the range should be ``[1/e,\infty)`` over the domain ``[0,\infty)``, but instead we find:
 
-```
+```julia
 f(x) = x^x
 f(0..Inf)
 ```
@@ -145,7 +147,7 @@ That is a larger interval than necessary is found. The `IntervalArithmetic` manu
 
 These identified bounds are  *rigorous* bounds at the *floating point* level. This can cause some surprises at times, as here:
 
-```
+```julia
 sin(0..pi)
 ```
 
@@ -296,23 +298,18 @@ The `ternary` operator can be used to define an explicit domain. For example, a 
 h(t) = 0 <= t <= sqrt(10/16) ? 10.0 - 16t^2 : error("t is not in the domain")
 ```
 
-We might also have used `NaN` instead of an error, or $0$, as the
-falling body would come to rest when it hits the ground.
-
-
-
 #### Nesting ternary operators
 
 The function `s(x)` isn't quite so easy to implement, as there isn't an "otherwise" case. We could use an `if` statement, but instead illustrate using a second, nested ternary operator:
 
 ```julia;
-s(x) = x < 0 ? -1 : (x > 0 ? 1 : error("0 is not in the domain"))
+s(x) = x < 0 ? 1 :
+    x > 0 ? 1 : error("0 is not in the domain")
 ```
 
 With nested ternary operators, the advantage over the `if` condition
 is not very compelling, but for simple cases the ternary operator is
-quite useful. (The extra parentheses around the expression when `x<0`
-is not true are actually unnecessary, though added here for clarity.)
+quite useful.
 
 ## Functions defined with the "function" keyword
 
@@ -360,10 +357,10 @@ Here $g$ is the gravitational constant $9.8$ and $v_0$, $\theta$ and $k$ paramet
 
 ```julia;
 function f(x)
-  g, v0, theta, k = 9.8, 200, 45, 1/2
-  a = v0 * cosd(theta)
+  g, v0, theta, k = 9.8, 200, 45*pi/180, 1/2
+  a = v0 * cos(theta)
 
-  (g/(k*a) + tand(theta))* x + (g/k^2) * log(1 - k/a*x)
+  (g/(k*a) + tan(theta))* x + (g/k^2) * log(1 - k/a*x)
 end
 f(100)
 ```
@@ -479,9 +476,9 @@ Keywords are used to mark the parameters whose values are to be changed from the
 In the example for multi-line functions we hard coded many variables inside the body of the function. In practice it can be better to pass these in as parameters along the lines of:
 
 ```julia;
-function f(x; g = 9.8, v0 = 200, theta = 45, k = 1/2)
-  a = v0 * cosd(theta)
-  (g/(k*a) + tand(theta))* x + (g/k^2) * log(1 - k/a*x)
+function f(x; g = 9.8, v0 = 200, theta = 45*pi/180, k = 1/2)
+  a = v0 * cos(theta)
+  (g/(k*a) + tan(theta))* x + (g/k^2) * log(1 - k/a*x)
 end
 ```
 
@@ -523,7 +520,7 @@ Multiple dispatch is very common in mathematics. For example, we learn different
 `Julia` is similarly structured.  `Julia` terminology would be to call the operation "`+`" a *generic function* and the different implementations *methods* of "`+`". This allows the user to just need to know a smaller collection of generic concepts yet still have the power of detail-specific implementations.  To see how many different methods are defined in the base `Julia` language for the `+` operator, we can use the command `methods(+)`. As there are so many ($\approx 200$) and that number is growing, we illustrate how many different logarithm methods are implemented for "numbers:"
 
 ```julia;
-methods(log, (Number,)) |> collect
+methods(log, (Number,))
 ```
 
 (The arguments have *type annotations* such as `x::Float64` or
@@ -570,7 +567,7 @@ the concept of *generic* functions with multiple dispatch rules to
 decide which rule to call.
 
 
-For example, jumping ahead a bit, the `plot` function of `Plots` (loaded with the accompanying `CalculusWithJulia` package) expects functions of a single numeric
+For example, jumping ahead a bit, the `plot` function of `Plots`  expects functions of a single numeric
 variable. Behind the scenes, then the function `A(w)` will be used in this graph:
 
 ```julia;

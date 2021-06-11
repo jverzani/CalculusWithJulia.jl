@@ -1,5 +1,18 @@
 # Calculus with Julia
 
+```julia; echo=false
+import CalculusWithJulia
+logo_url = https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/misc/logo.png
+txt = """
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="$logo_url" alt="Card image cap">
+  <div class="card-body">
+    <p class="card-text">Calculus with Julia</p>
+  </div>
+</div>
+"""
+CalculusWithJulia.WeaveSupport.HTMLoutput(txt)
+```
 
 `CalculusWithJulia.jl` is a package for a set of notes for learning [calculus](http://en.wikipedia.org/wiki/Calculus) using the `Julia` languge. The package contains some support functions and the files that generate the notes being read now.
 
