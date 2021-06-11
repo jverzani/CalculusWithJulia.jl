@@ -383,7 +383,7 @@ at a point.
   at $(x+h)^n - x^n$ for positive, integer-value $n$. Let's look at a case, $n=5$
 
 ```julia
-@vars x h real=true
+@syms x::real h::real
 n = 5
 ex = expand((x+h)^n - x^n)
 ```
@@ -491,6 +491,54 @@ f'(x) = \frac{d}{d\xi}(f(\xi)) \big|_{\xi=x}.
 """)
 ```
 
+
+### Derivative of inverse functions
+
+The graph of an inverse function is related to the graph of the function through the symmetry ``y=x``.
+
+For example, the graph of ``e^x`` and ``\log(x)`` have this symmetry, emphasized below:
+
+```julia;
+f(x) = exp(x)
+f′(x) = exp(x)
+f⁻¹(x) = log(x)  # using Unicode typed with "f^\-^\1"
+xs = range(0, 2, length=25)
+ys = f.(xs)
+plot(f, 0, 2, aspect_ratio=:equal, xlim=(0,8), ylim=(0,8), legend=false)
+scatter!(xs, ys)
+plot!(f⁻¹, extrema(ys)...)
+scatter!(ys, xs, color=:blue)
+plot!(identity, linestyle=:dot) # the line y=x
+x₀, y₀ = xs[13], ys[13]
+plot!([x₀, y₀],[y₀, x₀], linestyle=:dash)
+ys′ = @.  y₀ + f(x)*(xs - x₀)
+plot!(xs, ys′, linestyle=:dash)
+g(y) = 1/f′(f⁻¹(y))
+xs′ = @. x₀ + g(y₀) * (ys - y₀)
+plot!(ys, xs′, linestyle=:dash)
+```
+
+The point ``(1, e)`` on the graph of ``e^x`` matches the point ``(e, 1)`` on the graph of the inverse function, ``\log(x)``. The slope of the tangent line at ``x=1`` to ``e^x`` is given by ``e`` as well. What is the slope of the tangent line to ``log(x)`` at ``x=e``?
+
+As seen, the value can be computed, but how?
+
+Finding the derivative of the inverse function can be achieved from the chain rule using the identify ``f^{-1}(f(x)) = x`` for all ``x`` in the domain of ``f``.
+
+The chain rule applied to both sides, yields:
+
+```math
+1 = [f\^{-1}]'(f(x)) \cdot f'(x)
+```
+
+Solving, we see that ``[f\^{-1}(f(x))]' = 1/f'(x)`` or interms of ``y``
+
+```math
+[f^{-1}]'(y) = \frac{1}{f'(f\^{-1}(y))}.
+```
+
+So the reciprocal of the slope of the tangent line of ``f`` at the mirror image point. In the above, we see if the slope of the tangent line at ``(1,e)`` to ``f`` is ``e``, then the slope of the tangent line to ``f^{-1}(x)`` at ``(e,1)`` would be ``1/e``.
+
+
 ## Rules of derivatives
 
 We could proceed in a similar manner to find other derivatives, but
@@ -533,7 +581,7 @@ well. Here we define to symbolic functions `u` and `v` and let `SymPy`
 derive a formula for the derivative of a product of functions:
 
 ```julia
-u,v = SymFunction("u,v") # make symbolic functions
+@syms u() v()
 f(x) = u(x) * v(x)
 limit((f(x+h) - f(x))/h, h=>0)
 ```
@@ -917,7 +965,7 @@ To illustrate, we define some variables and look at the operations:
 
 ```julia
 args, funcname = SymPy.Introspection.args, SymPy.Introspection.funcname # args, funcname are not exported
-@vars x y z
+@syms x y z
 ```
 
 This shows how addition is identified:

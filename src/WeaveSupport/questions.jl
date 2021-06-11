@@ -130,7 +130,7 @@ True of false questions:
 Example:
 
 ```
-booleanq(true, reminder="Does it hurt...")
+booleanq(true, "Does it hurt...")
 ```
 
 """
@@ -226,9 +226,9 @@ $('{{{selector}}}').on('change', function() {
   correct = {{{correct}}};
 
   if(correct) {
-     $('#{{ID}}_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#{{ID}}_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#{{ID}}_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#{{ID}}_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -251,13 +251,23 @@ function show(io::IO, m::MIME"text/latex", x::Numericq)
     println(io, "")
 end
 
-
 html_templates["Radioq"] = mt"""
+{{#items}}
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_{{ID}}" id="radio_{{ID}}_{{value}}" value="{{value}}">
+  <label class="form-check-label" for="radio_{{ID}}_{{value}}">
+    {{{label}}}
+  </label>
+</div>
+{{/items}}
+"""
+
+html_templates["3Radioq"] = mt"""
 {{#items}}
 <div class="radio">
 <label class='radio{{inline}}'>
 <input type='radio' name='radio_{{ID}}' value='{{value}}'>
-{{{label}}}
+<label class="form-check-label" for="radio_{{ID}}_{{value}}"><span>&nbsp;{{{label}}}</span></label>
 </label>
 </div>
 {{/items}}
@@ -269,8 +279,9 @@ html_templates["question_tpl"] = mt"""
 <div class="form-group {{status}}">
 {{{form}}}
 {{#hint}}
-<span class="help-inline"><span id="{{ID}}_hint" class="glyphicon glyphicon-gift"></span></span>
-<script>$("#{{ID}}_hint").tooltip({title:"{{{hint}}}", html:true, placement:"right"});</script>
+<i class="bi bi-gift-fill"></i>
+
+<!--<script>$("#{{ID}}_hint").tooltip({title:"{{{hint}}}", html:true, placement:"right"});</script>-->
 {{/hint}}
 <div id="{{ID}}_message"></div>
 </div>
@@ -286,9 +297,9 @@ $("{{{selector}}}").on("change", function() {
   correct = {{{correct}}};
 
   if(correct) {
-     $("#{{ID}}_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#{{ID}}_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#{{ID}}_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#{{ID}}_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 """
@@ -306,8 +317,11 @@ tohtml(io::IO, x) = show(io, bestmime(x), x)
 function markdown(x)
     length(x) == 0 && return("")
     x = Markdown.parse(x)
-    x = sprint(io -> tohtml(io, x))
-#    x[4:end-4]                  # strip out <p></p>
+#    x = sprint(io -> tohtml(io, x))
+    x = sprint(io -> Markdown.html(io, x))
+    if x[1:3] == "<p>"
+        x =x[4:end-5]                  # strip out <p></p>
+    end
     x
 end
 
@@ -315,15 +329,7 @@ end
 function show(io::IO, m::MIME"text/html", x::Radioq)
     ID = randstring()
 
-    tpl = mt"""
-    {{#items}}
-    <div  class="radio{{inline}}">
-    <label>
-      <input type="radio" name="radio_{{ID}}" value="{{value}}">{{{label}}}
-    </label>
-    </div>
-    {{/items}}
-"""
+    tpl = html_templates["Radioq"]
 
 
 choices = string.(x.choices)
@@ -333,7 +339,7 @@ choices = string.(x.choices)
     ## make items
     for i in 1:length(choices)
         item = Dict("no"=>i,
-                "label"=>markdown(choices[i]),
+                "label"=>markdown(choices[i]),#[vcat(1:22,26:end-4)],
                 "value"=>i
                 )
         push!(items, item)
@@ -361,8 +367,8 @@ function show(io::IO, m::MIME"text/latex", x::Radioq)
         print(io, "\\item ")
         print(io, markdown_to_latex(choice))
     end
-    
-    println(io, "\\end{enumerate}")    
+
+    println(io, "\\end{enumerate}")
 end
 
 

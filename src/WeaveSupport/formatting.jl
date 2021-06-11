@@ -73,6 +73,53 @@ mutable struct Outputonly
     x
 end
 
+
+"""
+    JSXGraph(f; [ID], [CLASS], [WIDTH], [HEIGHT]
+
+Show jsxgraph commands contained in file `f`.
+"""
+function JSXGraph(f, caption="JSXGraph Demo"; ID="jsxgraph", CLASS="jsxgraph", WIDTH=600, HEIGHT=400)
+    JSXGRAPH(read(f, String),
+             markdown(caption),
+             ID, CLASS, WIDTH, HEIGHT)
+end
+
+mutable struct JSXGRAPH
+    FILE_CONTENTS
+    CAPTION
+    ID
+    CLASS
+    WIDTH
+    HEIGHT
+end
+
+
+
+jsxgraph_tpl = """
+<div class="card">
+   <div class="card-header">{{{CAPTION}}}</div>
+
+  <div class="card-body">
+    <div id="{{ID}}" class='{{CLASS}}' style='width:{{WIDTH}}px; height:{{HEIGHT}}px'></div>
+  </div>
+</div>
+
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/1.2.2/jsxgraphcore.js' type='text/javascript'>
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/1.2.2/geogebra.min.js' type='text/javascript'>
+</script>
+
+<script>
+{{{FILE_CONTENTS}}}
+</script>
+
+"""
+
+Base.show(io::IO, ::MIME"text/html", x::JSXGRAPH) = Mustache.render(io, jsxgraph_tpl, x)
+Base.show(io::IO, x::JSXGRAPH) = print(io, "JSXGraph unavailable")
+
 ## Bootstrap things
 abstract type Bootstrap end
 Base.show(io::IO, ::MIME"text/html", x::Bootstrap) = print(io, """$(x.x)""")
@@ -117,7 +164,7 @@ $(markdown_to_latex(x.x))
 \\end{mdframed}
 """)
 end
-    
+
 
 
 
@@ -142,7 +189,7 @@ function Base.show(io::IO, ::MIME"text/html", x::Example)
     tpl = """
 <div class="alert alert-danger" role="alert">
 
-<span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+<i class="bi bi-snow"></i>
 
 <span class="text-uppercase">example:</span>$nm$txt
 
@@ -176,27 +223,29 @@ The text, title, and label can use Markdown.
 LaTeX markup does not work, as MathJax rendering is not supported in the popup.
 
 """
-popup(x; title=" ", icon="share-alt", label=" ") = Popup(x, title, icon, label)
+popup(x; title=" ", icon="star", label="click me") = Popup(x, title, icon, label)
 
-popup_html_tpl=mt"""
-<button type="button" class="btn btn-sm" aria-label="Left Align"\
-data-toggle="popover"\
-title='{{{title}}}'\
-data-html=true\
-data-content='{{{body}}}'\
->\
-<span class="glyphicon glyphicon-{{icon}}" aria-hidden="true"></span>{{#button_label}} {{{button_label}}}{{/button_label}}\
-</button>\
+
+popup_html_tpl = mt"""
+<button type='button'
+ class='btn btn btn-secondary'
+ data-bs-toggle='popover'
+ title='{{{title}}}'
+ data-bs-placement='right'
+ data-bs-content='{{{body}}}'
+>
+<i class='bi bi-{{icon}}'></i>
+{{{button_label}}}
+</button>
 """
-
+# issue with formatted content
 function Base.show(io::IO, ::MIME"text/html", x::Popup)
     d = Dict()
-    d["title"] = sprint(io -> show(io, "text/html", Markdown.parse(x.title)))
+    d["title"] = x.title #sprint(io -> show(io, "text/html", Markdown.parse(x.title)))
     d["icon"] = x.icon
-    label = sprint(io -> show(io, "text/html", Markdown.parse(x.label)))
-    d["button_label"] = strip_p(label)
-    d["body"] = sprint(io -> show(io, "text/html", Markdown.parse(x.x)))
-    println(d)
+    label = x.label #sprint(io -> show(io, "text/html", Markdown.parse(x.label)))
+    d["button_label"] = label
+    d["body"] = x.x #sprint(io -> show(io, "text/html", Markdown.parse(x.x)))
     Mustache.render(io, popup_html_tpl, d)
 end
 
@@ -265,7 +314,7 @@ tpl="""
   $header\\\\
   \\midrule\\\\
 {{#:DF}}    $row\\\\
-{{/:DF}}  
+{{/:DF}}
   \\bottomrule
   \\end{tabular}
   \\label{tab:$label}
@@ -280,7 +329,7 @@ function Base.show(io::IO, ::MIME"text/latex", x::Table)
     d = markdown_to_latex.(x.x)
     println(io, df_to_table(d))
 end
-  
+
 
 
 mutable struct NamedTable <: Bootstrap
@@ -313,4 +362,3 @@ function Base.show(io::IO, ::MIME"text/latex", x::NamedTable)
     d = markdown_to_latex.(x.x)
     println(io, df_to_table(d))
 end
-  

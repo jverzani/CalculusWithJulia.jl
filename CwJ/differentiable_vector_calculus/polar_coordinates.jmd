@@ -323,7 +323,7 @@ So the area of the cardioid, which is parameterized over $[0, 2\pi]$ is found by
 ```julia;
 using SymPy
 r(theta) = 2(1 + cos(theta))
-@vars theta
+@syms theta
 (1//2) * integrate(r(theta)^2, (theta, 0, 2PI))
 ```
 
@@ -338,7 +338,7 @@ that leaf?
 An antiderivative exists for arbitrary $a$ and $b$:
 
 ```julia;
-@vars a b
+@syms a b
 r(theta) = -b*cos(theta) + 4a*cos(theta)*sin(theta)^2
 integrate(r(theta)^2, theta) / 2
 ```
@@ -377,7 +377,7 @@ $\cos(\theta) = -1/2$. This is $\pi/2 + \pi/6$ and $3\pi/2 -
 \pi/6$. The inner loop is traversed between those values and has area:
 
 ```julia;
-@vars a b
+@syms a b
 r(theta) =  b + 2a*cos(theta)
 ex = integrate(r(theta)^2 / 2, (theta, PI/2 + PI/6, 3PI/2 - PI/6))
 inner = ex(a=>1, b=>1)

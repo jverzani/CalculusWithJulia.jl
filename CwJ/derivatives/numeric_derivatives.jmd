@@ -50,7 +50,7 @@ We can compare to the actual with:
 
 ```julia;
 using CalculusWithJulia
-@vars x
+@syms x
 df = diff(f(x), x)
 actual = N(df(c))
 abs(actual - approx)
@@ -122,7 +122,7 @@ ds_value, fwd, ds_value - fwd
 Finally, `SymPy` gives an exact value we use to compare:
 
 ```julia;
-@vars x
+@syms x
 actual = diff(f(x), x) |> subs(x, PI/4) |> N
 actual - ds_value, actual - fwd
 ```
@@ -174,7 +174,7 @@ For example
 f(x) = exp(-x)*sin(x)
 c = pi
 h = 0.1
-@vars x
+@syms x
 
 fp = diff(f(x),x)
 fp, fp(c)

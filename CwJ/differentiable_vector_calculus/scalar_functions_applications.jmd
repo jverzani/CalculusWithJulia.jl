@@ -36,7 +36,7 @@ These two vectors will lie in the plane. The normal vector is found by their cro
 
 ```julia;
 using SymPy
-@vars f_x f_y
+@syms f_x f_y
 n = [1, 0, f_x] × [0, 1, f_y]
 ```
 
@@ -157,7 +157,7 @@ Let $z = f(x,y) = \sin(x)\cos(x-y)$. Find an equation for the tangent plane at $
 We have many possible forms to express this in, but we will use the functional description:
 
 ```julia;
-@vars x y
+@syms x y
 vars = [x, y]
 f(x,y) = sin(x) * cos(x-y)
 f(x) = f(x...)
@@ -350,7 +350,7 @@ cx + dy &= v
 A method to solve this by hand would be to solve for $y$ from one equation, replace this expression into the second equation and then solve for $x$. From there, $y$ can be found. A more advanced method expresses the problem in a matrix formulation of the form $Mx=b$ and solves that equation. This form of solving is implemented in `Julia`, through the "backslash" operator. Here is the general solution:
 
 ```julia;
-@vars a b c d u v
+@syms a b c d u v
 M = [a b; c d]
 B = [u, v]
 M \ B .|> simplify
@@ -580,16 +580,14 @@ Let $f(x,y,z) = x^4 -x^3 + y^2 + z^2 = 0$ be a surface with point $(2,2,2)$. Fin
 To find $\partial{z}/\partial{x}$ we have:
 
 ```julia;
-Z = SymFunction("Z")
-@vars x y
+@syms x y Z()
 solve(diff(x^4 -x^3 + y^2 + Z(x,y)^2, x), diff(Z(x,y),x))
 ```
 
 Similarly, for $\partial{z}/\partial{y}$:
 
 ```julia;
-Z = SymFunction("Z")
-@vars x y
+@syms x y Z()
 solve(diff(x^4 -x^3 + y^2 + Z(x,y)^2, y), diff(Z(x,y),y))
 ```
 
@@ -1793,9 +1791,7 @@ length(MultiIndices(3, k+1))
 Finally, to see how compact the notation issue, suppose $f:R^3 \rightarrow R$, we have the third-order Taylor series expands to 20 terms as follows:
 
 ```julia;
-F = SymFunction("F")
-a = Sym["a$i" for i in 1:3]    # n=3
-dx = Sym["dx$i" for i in 1:3]
+@syms F() a[1:3] dx[1:3]
 
 sum(partial(F(a...), α, a) / factorial(α) * dx^α for k in 0:3 for α in MultiIndex.(MultiIndices(3, k)))  # 3rd order
 ```
@@ -1905,7 +1901,7 @@ Does this accurately find the gradient of $f$?
 
 ```julia; results="hidden"
 f(x,y) = x + 2x^2 + x^3 + y + 2x*y + y^2
-@vars x y real=true
+@syms x::real y::real
 gradf = gradient(f(x,y), [x,y])
 ```
 

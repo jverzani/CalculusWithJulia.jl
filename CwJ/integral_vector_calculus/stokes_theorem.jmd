@@ -205,7 +205,7 @@ F(v) = F(v...)
 
 r(t) = [a*cos(t),b*sin(t)]
 
-@vars a b t positive=true
+@syms a::positive b::positive t::positive
 (1//2) * integrate( F(r(t)) ⋅ diff.(r(t),t), (t, 0, 2PI))
 ```
 
@@ -286,7 +286,7 @@ Let $R(x,y) = \langle -y, x\rangle$ be a rotation field and $F(x,y) = R(x,y)/(R(
 R(x,y) = [-y,x]
 F(x,y) = R(x,y)/(R(x,y)⋅R(x,y))
 
-@vars x y real=true
+@syms x::real y::real
 Fx, Fy = F(x,y)
 diff(Fy, x) - diff(Fx, y) |> simplify
 ```
@@ -664,7 +664,7 @@ Let $F(x,y,z) = \langle x^2, 0, y^2\rangle$ and $C$ be the circle $x^2 + z^2 = 1
 We can use Stoke's theorem with the surface being just the disc, so that $\hat{N} = \hat{j}$. This makes the computation easy:
 
 ```julia;
-@vars x y z real=true
+@syms x::real y::real z::real
 F(x,y,z) = [x^2, 0, y^2]
 CurlF = curl(F(x,y,z), [x,y,z])
 ```
@@ -674,7 +674,7 @@ We have $\nabla\times{F}\cdot\hat{N} = 0$, so the answer is $0$.
 We could have directly computed this. Let $r(t) = \langle \cos(t), 0, \sin(t)\rangle$. Then we have:
 
 ```julia;
-@vars t real=true
+@syms t::real
 r(t) = [cos(t), 0, sin(t)]
 rp = diff.(r(t), t)
 integrand = F(r(t)...) ⋅ rp
@@ -763,7 +763,7 @@ To verify that $F$ is conservative, we find its curl to see that it is $\vec{0}$
 
 ```julia;
 F(x,y,z) = [y*z^2, x*z^2, 2*x*y*z]
-@vars x y z real=true
+@syms x::real y::real z::real
 curl(F(x,y,z), [x,y,z])
 ```
 
@@ -792,7 +792,7 @@ So $h'(z) = 0$. This value can be any constant, even $0$ which we take, so that 
 Let $F(x,y,z) = \nabla(xy^2z^3) = \langle y^2z^3, 2xyz^3, 3xy^2z^2\rangle$. Show that the line integrals around the unit circle in the $x-y$ plane and the $y-z$ planes are $0$, as $F$ is conservative.
 
 ```julia;
-@vars x y z t
+@syms x y z t
 Fxyz = ∇(x*y^2*z^3)
 r(t) = [cos(t), sin(t), 0]
 rp = diff.(r(t), t)
@@ -865,7 +865,7 @@ We need to compute two terms and show they are equal. We begin with the volume i
 
 ```julia;
 F(x,y,z) = [x*y, y*z, z*x]
-@vars x y z real=true
+@syms x::real y::real z::real
 DivF = divergence(F(x,y,z), [x,y,z])
 integrate(DivF, (x, -1,1), (y,-1,1), (z, -1,1))
 ```
@@ -890,7 +890,7 @@ As such, the two sides of the Divergence theorem are both $0$, so the theorem is
 We have the heat flow is simply:
 
 ```julia;
-@vars x y z real=true
+@syms x::real y::real z::real
 R(x,y,z) = norm([x,y,z])
 T(x,y,z) = log(1/R(x,y,z))
 HeatFlow = -diff.(T(x,y,z), [x,y,z])
@@ -911,7 +911,7 @@ Finally, the surface integral over the surface of the sun is an integral over a 
 Finally, though $F$ is not continuous at the origin, the divergence theorem's result holds. Using spherical coordinates we have:
 
 ```julia;
-@vars rho rho_0 phi theta real=true
+@syms rho::real rho_0::real phi::real theta::real
 Jac = rho^2 * sin(phi)
 integrate(1/rho^2 * Jac, (rho, 0, rho_0), (theta, 0, 2PI), (phi, 0, PI))
 ```
@@ -996,7 +996,7 @@ R(x,y,z) = [x,y,z]
 F(x,y,z) = R(x,y,z) / norm(R(x,y,z))^3
 
 
-@vars x y z real=true
+@syms x::real y::real z::real
 divergence(F(x,y,z), [x,y,z]) |> simplify
 ```
 
@@ -1072,7 +1072,7 @@ Let $\vec{r}(t) = \langle \cos^3(t), \sin^3(t)\rangle$, $0\leq t \leq 2\pi$. (Th
 
 ```julia; echo=false
 r(t) = [cos(t)^3, sin(t)^3]
-@vars x y t real=true
+@syms x::real y::real t::real
 F(x,y) = [-y,x]/2
 F_t = subs.(F(x,y), x.=>r(t)[1], y.=>r(t)[2])
 Tangent = diff.(r(t),t)

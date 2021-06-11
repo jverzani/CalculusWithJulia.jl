@@ -187,7 +187,7 @@ This integral is done by a trig substitution, but gets involved. We let `SymPy` 
 ```julia;
 using CalculusWithJulia  # loads `SymPy`, `QuadGK`, `ForwardDiff`
 using Plots
-@vars x
+@syms x
 F = integrate(2 * PI * x^2 * sqrt(1 + (2x)^2), x)
 ```
 
@@ -238,7 +238,7 @@ $$~
 We do this with `SymPy`:
 
 ```julia;
-@vars M
+@syms M
 ex = integrate(2PI * (1/x) * sqrt(1 + (-1/x)^2), (x, 1, M))
 ```
 

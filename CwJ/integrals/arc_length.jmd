@@ -164,7 +164,7 @@ Let $f(x) = x^2$. The arc length of the graph of $f(x)$ over $[0,1]$ is then $L=
 ```julia;
 using CalculusWithJulia  # loads `SymPy`, `Roots`, `QuadGK`, `ForwardDiff`
 using Plots
-@vars x
+@syms x
 F = integrate(sqrt(1 + (2x)^2), x)
 ```
 
@@ -210,7 +210,7 @@ L = \int_{1/e}^e \sqrt{1 + (\frac{1}{x})^2} dx.
 This has a *messy* antiderivative, so we let `SymPy` compute for us:
 
 ```julia;
-@vars x
+@syms x
 ex = integrate(sqrt(1 + (1/x)^2), (x, 1/Sym(e), e))    # 1/Sym(e) keeps as symbolic value
 ```
 

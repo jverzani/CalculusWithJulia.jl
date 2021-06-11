@@ -1,5 +1,9 @@
 # Replacing the calculator with a computer
 
+```julia; echo=false;
+import CalculusWithJulia
+using CalculusWithJulia.WeaveSupport
+```
 
 Let us consider a basic calculator with buttons to add, subtract,
 multiply, divide, and take square roots. Using such a simple thing is
@@ -10,14 +14,10 @@ way. In this section we describe how.
 
 The following image is the calculator that Google presents upon searching for "calculator."
 
-```julia; echo=false; 
-using CalculusWithJulia
-using CalculusWithJulia.WeaveSupport
-#CalculusWithJulia.WeaveSupport.ImageFile("figures/calculator.png", "Screenshot of a calculator provided by the Google search engine.")
-nothing
-```
+```julia; echo=false;
+ImageFile("figures/calculator.png", "Screenshot of a calculator provided by the Google search engine.")
 
-![Screenshot of a calculator provided by the Google search engine](figures/calculator.png)
+```
 
 
 This calculator should have a familiar appearance with a keypad of
@@ -360,7 +360,11 @@ pi
 
 Whereas, `e` is is not simply the character `e`, but *rather* a [unicode](../unicode.html) character typed in as `\euler[tab]`.
 
-However, when the accompanying package, `CalculusWithJulia`, is loaded, the character `e` will refer to the Euler constant (as it brings in the `Base.MathConstants` package):
+```julia
+ℯ
+```
+
+However, when the accompanying package, `CalculusWithJulia`, is loaded, the character `e` will refer to a floating point approximation to the Euler constant .
 
 ```julia;
 using CalculusWithJulia
@@ -372,7 +376,7 @@ In the sequel, we will just use `e` for this constant (though more commonly the 
 Mathematically these are irrational values with decimal expansions that do not repeat. `Julia` represents these values internally with additional accuracy beyond that which is displayed. Math constants can be used as though they were numbers, such is done with this expression:
 
 ```julia;
-e^(1/(2*pi))
+ℯ^(1/(2*pi))
 ```
 
 
@@ -953,8 +957,8 @@ Which is greater $e^\pi$ or $\pi^e$?
 
 ```julia; echo=false;
 choices = [
-L"exp(\pi)",
-L"\pi^exp(1)"
+L"e^{\pi}",
+L"\pi^{e}"
 ];
 ans = exp(pi) - pi^exp(1) > 0 ? 1 : 2;
 radioq(choices, ans)
@@ -1022,7 +1026,7 @@ Why or why not:
 
 ```julia; echo=false;
 choices = [
-"The precedence of numeric literal coefficients used for implicit multiplication is higher than other binary operators such as multiplication (`*`), and division (`/`, `\`, and `//`)",
+"The precedence of numeric literal coefficients used for implicit multiplication is higher than other binary operators such as multiplication (`*`), and division (`/`, `\\`, and `//`)",
 "Of course it is correct."
 ]
 ans=1

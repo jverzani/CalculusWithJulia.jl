@@ -305,7 +305,7 @@ function surface_contour(xs, ys, f; offset=0)
     lvl = level(cl) # the z-value of this contour level
     for line in lines(cl)
         _xs, _ys = coordinates(line) # coordinates of this line segment
-        _zs = offset * _xs
+        _zs = offset .+ (0 .* _xs)
         plot!(p, _xs, _ys, _zs, alpha=0.5)        # add curve on x-y plane
     end
   end
@@ -625,7 +625,7 @@ The partial derivatives are more directly found with `SymPy`. As with univariate
 
 ```julia;
 using SymPy
-@vars x y
+@syms x y
 ex = x^2 - 2x*y
 diff(ex, x)
 ```
@@ -1241,7 +1241,7 @@ The placement of $x$ and $y$ indicating the order is different in the two notati
 We can compute these for an example easily enough:
 
 ```julia;
-@vars x y
+@syms x y
 f(x, y) = exp(x) * cos(y)
 ex = f(x,y)
 diff(ex, x, x), diff(ex, x, y), diff(ex, y, x), diff(ex, y, y)
@@ -1944,9 +1944,8 @@ radioq(choices, ans)
 Consider the following code which computes the mixed partials for the discrete derivative:
 
 ```julia;
-@vars x y Δ real=true
+@syms x::real y::real Δ::real G()
 
-G = SymPy.SymFunction("G")
 Dx(f,h) = (subs(f, x=>x+h) - f)/h
 Dy(f,h) = (subs(f, y=>y+h) - f)/h
 

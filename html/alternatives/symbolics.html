@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+
+
+<style>
+.julia {display: block; font-family: "Source Code Pro";
+        color:#0033CC;
+        }
+.hljl {font-family: "Source Code Pro";
+        color:#0033CC;
+      }
+.output, .julia-error {
+    border-left: thick solid #ff0000;
+    padding: 5px;
+    background-color: #f5f5f5;
+}
+body { padding-top: 60px; }
+.output {color:#0033CC;}
+h5:before {content:"\2746\ ";}
+h6:before {content:"\2742\ ";}
+pre {display: block;}
+th, td {
+  padding: 5px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+tr:hover {background-color: #f5f5f5;}
+
+.admonition-title:before {content:"\2746\ ";}
+.admonition-title { color:#0033CC}
+
+
+</style>
+
+<!-- .julia:before {content: "julia> "} -->
+
+<style></style>
+
+<script src="https://code.jquery.com/jquery.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/katex.min.css" integrity="sha384-ThssJ7YtjywV52Gj4JE/1SQEDoMEckXyhkFVwaf4nDSm5OBlXeedVYjuuUd0Yua+" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/katex.min.js" integrity="sha384-Bi8OWqMXO1ta+a4EPkZv7bYGIes7C3krGSZoTGNTAnAn5eYQc7IIXrJ/7ck1drAi" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+	onload="renderMathInElement(document.body);"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          // customised options
+          // • auto-render specific keys, e.g.:
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true},
+	      {left: "\\begin{equation}", right: "\\end{equation}", display: true},
+              {left: "\\begin{align}", right: "\\end{align}", display: true},
+	      {left: "\\begin{alignat}", right: "\\end{alignat}", display: true},
+	      {left: "\\begin{gather}", right: "\\end{gather}", display: true}
+          ],
+          // • rendering keys, e.g.:
+          throwOnError : false
+        });
+    });
+</script>
+<script>
+window.PlotlyConfig = {MathJaxConfig: 'local'}
+</script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<!-- highlight Julia Code -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/julia.min.js"></script>
+
+<script type="text/javascript">
+$( document ).ready(function() {
+  $("h1").each(function(index) {
+       var title = $( this ).text()
+       $("#page_title").html("<strong>" + title + "</strong>");
+       document.title = title
+  });
+  $( "h2" ).each(function( index ) {
+    var nm =  $( this ).text();
+    var id = $.trim(nm).replace(/ /g,'');
+    this.id = id
+    $("#page_dropdown").append("<li><a class='dropdown-item' href='#" + id + "'>" + nm + "</a></li>");
+  });
+    $('[data-toggle="popover"]').popover();
+});
+</script>
+
+
+
+</head>
+
+
+<body data-spy="scroll" >
+
+  <header class="navbar navbar-expand-md navbar-dark bd-navbar">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top navbar-nav">
+    <div class="container-fluid">
+
+      <a class="navbar-brand" href="https://juliahub.com/docs/CalculusWithJulia/">Calculus with Julia</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <ul class="nav navbar-nav navbar-right">
+      <li class="nav-item dropdown">
+	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+	   role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Jump to...
+          </a>
+
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" role="menu" id="page_dropdown"></ul>
+      </li>
+    </ul>
+
+    </div>
+  </div>
+</nav>
+
+</header>
+          <div class="title">
+            
+            
+            
+          </div>
+
+
+
+<div class="container-fluid">
+  <div class="span10 offset1">
+    <h1>Symbolics.jl</h1>
+<p>The <code>Symbolics.jl</code> package is a Computer Algebra System &#40;CAS&#41; built entirely in <code>Julia</code>. This package is under heavy development.</p>
+<h2>Algebraic manipulations</h2>
+<h3>construction</h3>
+<p>@variables</p>
+<p>SymbolicUtils.@syms  assumptions</p>
+<p>x is a <code>Num</code>, <code>Symbolics.value&#40;x&#41;</code> is of type &#96;SymbolicUtils&#123;Real, Nothing&#125;</p>
+<p>relation to SymbolicUtils Num wraps things; Term</p>
+<h3>Substitute</h3>
+<h3>Simplify</h3>
+<p>simplify expand</p>
+<p>rewrite rules</p>
+<h3>Solving equations</h3>
+<p>solve_for</p>
+<h2>Expressions to functions</h2>
+<p>build_function</p>
+<h2>Derivatives</h2>
+<p>1-&gt;1: Symbolics.derivative&#40;x^2 &#43; cos&#40;x&#41;, x&#41;</p>
+<p>1-&gt;3: Symbolics.derivative.&#40;&#91;x^2, x, cos&#40;x&#41;&#93;, x&#41;</p>
+<p>3 -&gt; 1: Symbolics.gradient&#40;x*y^z, &#91;x,y,z&#93;&#41;</p>
+<p>2 -&gt; 2: Symbolics.jacobian&#40;&#91;x,y^z&#93;, &#91;x,y&#93;&#41;</p>
+<h1>higher order</h1>
+<p>1 -&gt; 1: D&#40;ex, x, n&#61;1&#41; &#61; foldl&#40;&#40;ex,_&#41; -&gt; Symbolics.derivative&#40;ex, x&#41;, 1:n, init&#61;ex&#41;</p>
+<p>2 -&gt; 1: &#40;2nd&#41; Hessian</p>
+<h2>Differential equations</h2>
+<h2>Integrals</h2>
+<p>WIP</p>
+<h2>––</h2>
+<h1>follow sympy tutorial</h1>
+<p>using Symbolics import SymbolicUtils</p>
+<p>@variables x y z</p>
+<h1>substitution</h1>
+<p>ex &#61; cos&#40;x&#41; &#43; 1 substitute&#40;ex, Dict&#40;x&#61;&gt;y&#41;&#41;</p>
+<p>substitute&#40;ex, Dict&#40;x&#61;&gt;0&#41;&#41; # does eval</p>
+<p>ex &#61; x^y substitute&#40;ex, Dict&#40;y&#61;&gt; x^y&#41;&#41;</p>
+<h1>expand trig</h1>
+<p>r1 &#61; @rule sin&#40;2 * ~x&#41; &#61;&gt; 2sin&#40;~x&#41;*cos&#40;~x&#41; r2 &#61; @rule cos&#40;2 * ~x&#41; &#61;&gt; cos&#40;~x&#41;^2 - sin&#40;~x&#41;^2 expand_trig&#40;ex&#41; &#61; simplify&#40;ex, RuleSet&#40;&#91;r1, r2&#93;&#41;&#41;</p>
+<p>ex &#61; sin&#40;2x&#41; &#43; cos&#40;2x&#41; expand_trig&#40;ex&#41;</p>
+<h2>Multiple</h2>
+<p>@variables x y z ex &#61; x^3 &#43; 4x*y -z substitute&#40;ex, Dict&#40;x&#61;&gt;2, y&#61;&gt;4, z&#61;&gt;0&#41;&#41;</p>
+<h1>Converting Strings to Expressions</h1>
+<h1>what is sympify?</h1>
+<h1>evalf</h1>
+<h1>lambdify: symbolic expression -&gt; function</h1>
+<p>ex &#61; x^3 &#43; 4x*y -z λ &#61; build_function&#40;ex, x,y,z, expression&#61;Val&#40;false&#41;&#41; λ&#40;2,4,0&#41;</p>
+<h1>pretty printing</h1>
+<p>using Latexify latexify&#40;ex&#41;</p>
+<h1>Simplify</h1>
+<p>@variables x y z t</p>
+<p>simplify&#40;sin&#40;x&#41;^2 &#43; cos&#40;x&#41;^2&#41;</p>
+<p>simplify&#40;&#40;x^3 &#43; x^2 - x - 1&#41; / &#40;x^2 &#43; 2x &#43; 1&#41;&#41; # fails, no factor simplify&#40;&#40;&#40;x&#43;1&#41;*&#40;x^2-1&#41;&#41;/&#40;&#40;x&#43;1&#41;^2&#41;&#41;            # works</p>
+<p>import SpecialFunctions: gamma</p>
+<p>simplify&#40;gamma&#40;x&#41; / gamma&#40;x-2&#41;&#41;                # fails</p>
+<h1>Polynomial</h1>
+<h2>expand</h2>
+<p>expand&#40;&#40;x&#43;1&#41;^2&#41; expand&#40;&#40;x&#43;2&#41;<em>&#40;x-3&#41;&#41; expand&#40;&#40;x&#43;1&#41;</em>&#40;x-2&#41; - &#40;x-1&#41;*x&#41;</p>
+<h2>factor</h2>
+<h3>not defined</h3>
+<h2>collect</h2>
+<p>COLLECT_RULES &#61; &#91;     @rule&#40;~x*x^&#40;~n::SymbolicUtils.isnonnegint&#41; &#61;&gt; &#40;~x, ~n&#41;&#41;     @rule&#40;~x * x &#61;&gt; &#40;~x, 1&#41;&#41; &#93; function _collect&#40;ex, x&#41;     d &#61; Dict&#40;&#41;</p>
+<pre><code>exs &#61; expand&#40;ex&#41;
+if SymbolicUtils.operation&#40;Symbolics.value&#40;ex&#41;&#41; &#33;&#61; &#43;
+    d&#91;0&#93; &#61;&gt; ex
+else
+    for aᵢ ∈ SymbolicUtils.arguments&#40;Symbolics.value&#40;expand&#40;ex&#41;&#41;&#41;
+        u &#61; simplify&#40;aᵢ, RuleSet&#40;COLLECT_RULES&#41;&#41;
+        if isa&#40;u, Tuple&#41;
+            a,n &#61; u
+        else
+            a,n &#61; u,0
+        end
+        d&#91;n&#93; &#61; get&#40;d, n, 0&#41; &#43; a
+    end
+end
+d</code></pre>
+<p>end</p>
+<h2>cancel – no factor</h2>
+<h2>apart – no factor</h2>
+<h2>Trignometric simplification</h2>
+<p>INVERSE<em>TRIG</em>RUELS &#61; &#91;@rule&#40;cos&#40;acos&#40;~x&#41;&#41; &#61;&gt; ~x&#41;                       @rule&#40;acos&#40;cos&#40;~x&#41;&#41; &#61;&gt; abs&#40;rem2pi&#40;~x, RoundNearest&#41;&#41;&#41;                       @rule&#40;sin&#40;asin&#40;~x&#41;&#41; &#61;&gt; ~x&#41;                       @rule&#40;asin&#40;sin&#40;~x&#41;&#41; &#61;&gt; abs&#40;rem2pi&#40;x &#43; pi/2, RoundNearest&#41;&#41; - pi/2&#41;                       &#93;</p>
+<p>@variables θ simplify&#40;cos&#40;acos&#40;θ&#41;&#41;, RuleSet&#40;INVERSE<em>TRIG</em>RUELS&#41;&#41;</p>
+<h1>Copy from https://github.com/JuliaSymbolics/SymbolicUtils.jl/blob/master/src/simplify_rules.jl</h1>
+<h1>the TRIG_RULES are applied by simplify by default</h1>
+<p>HTRIG_RULES &#61; &#91;                @acrule&#40;-sinh&#40;~x&#41;^2 &#43; cosh&#40;~x&#41;^2 &#61;&gt; one&#40;~x&#41;&#41;                @acrule&#40;sinh&#40;~x&#41;^2 &#43; 1        &#61;&gt; cosh&#40;~x&#41;^2&#41;                @acrule&#40;cosh&#40;~x&#41;^2 &#43; -1        &#61;&gt; -sinh&#40;~x&#41;^2&#41;</p>
+<pre><code>           @acrule&#40;tanh&#40;~x&#41;^2 &#43; 1*sech&#40;~x&#41;^2 &#61;&gt; one&#40;~x&#41;&#41;
+           @acrule&#40;-tanh&#40;~x&#41;^2 &#43;  1 &#61;&gt; sech&#40;~x&#41;^2&#41;
+           @acrule&#40;sech&#40;~x&#41;^2 &#43; -1 &#61;&gt; -tanh&#40;~x&#41;^2&#41;
+
+           @acrule&#40;coth&#40;~x&#41;^2 &#43; -1*csch&#40;~x&#41;^2 &#61;&gt; one&#40;~x&#41;&#41;
+           @acrule&#40;coth&#40;~x&#41;^2 &#43; -1 &#61;&gt; csch&#40;~x&#41;^2&#41;
+           @acrule&#40;csch&#40;~x&#41;^2 &#43;  1 &#61;&gt; coth&#40;~x&#41;^2&#41;
+
+@acrule&#40;tanh&#40;~x&#41; &#61;&gt; sinh&#40;~x&#41;/cosh&#40;~x&#41;&#41;
+
+@acrule&#40;sinh&#40;-~x&#41; &#61;&gt; -sinh&#40;~x&#41;&#41;
+@acrule&#40;cosh&#40;-~x&#41; &#61;&gt; -cosh&#40;~x&#41;&#41;
+       &#93;</code></pre>
+<p>trigsimp&#40;ex&#41; &#61; simplify&#40;simplify&#40;ex, RuleSet&#40;HTRIG_RULES&#41;&#41;&#41;</p>
+<p>trigsimp&#40;sin&#40;x&#41;^2 &#43; cos&#40;x&#41;^2&#41; trigsimp&#40;sin&#40;x&#41;^4 -2cos&#40;x&#41;^2*sin&#40;x&#41;^2 &#43; cos&#40;x&#41;^4&#41; # no factor trigsimp&#40;cosh&#40;x&#41;^2 &#43; sinh&#40;x&#41;^2&#41; trigsimp&#40;sinh&#40;x&#41;/tanh&#40;x&#41;&#41;</p>
+<p>EXPAND<em>TRIG</em>RULES &#61; &#91;</p>
+<pre><code>@acrule&#40;sin&#40;~x&#43;~y&#41; &#61;&gt; sin&#40;~x&#41;*cos&#40;~y&#41;   &#43; cos&#40;~x&#41;*sin&#40;~y&#41;&#41;</code></pre>
+<p>@acrule&#40;sinh&#40;~x&#43;~y&#41; &#61;&gt; sinh&#40;~x&#41;<em>cosh&#40;~y&#41; &#43; cosh&#40;~x&#41;</em>sinh&#40;~y&#41;&#41;</p>
+<pre><code>    @acrule&#40;sin&#40;2*~x&#41;   &#61;&gt; 2sin&#40;~x&#41;*cos&#40;~x&#41;&#41;
+@acrule&#40;sinh&#40;2*~x&#41; &#61;&gt; 2sinh&#40;~x&#41;*cosh&#40;~x&#41;&#41;</code></pre>
+<p>@acrule&#40;cos&#40;~x&#43;~y&#41;  &#61;&gt; cos&#40;~x&#41;<em>cos&#40;~y&#41;   - sin&#40;~x&#41;</em>sin&#40;~y&#41;&#41; @acrule&#40;cosh&#40;~x&#43;~y&#41; &#61;&gt; cosh&#40;~x&#41;<em>cosh&#40;~y&#41; &#43; sinh&#40;~x&#41;</em>sinh&#40;~y&#41;&#41;</p>
+<pre><code>    @acrule&#40;cos&#40;2*~x&#41;   &#61;&gt; cos&#40;~x&#41;^2 - sin&#40;~x&#41;^2&#41;
+@acrule&#40;cosh&#40;2*~x&#41; &#61;&gt; cosh&#40;~x&#41;^2 &#43; sinh&#40;~x&#41;^2&#41;</code></pre>
+<p>@acrule&#40;tan&#40;~x&#43;~y&#41;  &#61;&gt; &#40;tan&#40;~x&#41;  - tan&#40;~y&#41;&#41;  / &#40;1 &#43; tan&#40;~x&#41;<em>tan&#40;~y&#41;&#41;&#41;     @acrule&#40;tanh&#40;~x&#43;~y&#41; &#61;&gt; &#40;tanh&#40;~x&#41; &#43; tanh&#40;~y&#41;&#41; / &#40;1 &#43; tanh&#40;~x&#41;</em>tanh&#40;~y&#41;&#41;&#41;</p>
+<pre><code>@acrule&#40;tan&#40;2*~x&#41; &#61;&gt; 2*tan&#40;~x&#41;/&#40;1 - tan&#40;~x&#41;^2&#41;&#41;
+@acrule&#40;tanh&#40;2*~x&#41; &#61;&gt; 2*tanh&#40;~x&#41;/&#40;1 &#43; tanh&#40;~x&#41;^2&#41;&#41;</code></pre>
+<p>&#93;</p>
+<p>expandtrig&#40;ex&#41; &#61; simplify&#40;simplify&#40;ex, RuleSet&#40;EXPAND<em>TRIG</em>RULES&#41;&#41;&#41;</p>
+<p>expandtrig&#40;sin&#40;x&#43;y&#41;&#41; expandtrig&#40;tan&#40;2x&#41;&#41;</p>
+<h1>powers</h1>
+<h1>in genearl x^a*x^b &#61; x^&#40;a&#43;b&#41;</h1>
+<p>@variables x y a b simplify&#40;x^a*x^b - x^&#40;a&#43;b&#41;&#41; # 0</p>
+<h1>x^a*y^a &#61; &#40;xy&#41;^a When x,y &gt;&#61;0, a ∈ R</h1>
+<p>simplify&#40;x^a<em>y^a - &#40;x</em>y&#41;^a&#41;</p>
+<h2>??? How to specify such assumptions?</h2>
+<h1>&#40;x^a&#41;^b &#61; x^&#40;ab&#41; only if b ∈ Int</h1>
+<p>@syms x a b simplify&#40;&#40;x^a&#41;^b - x^&#40;a*b&#41;&#41;</p>
+<p>@syms x a b::Int simplify&#40;&#40;x^a&#41;^b - x^&#40;a*b&#41;&#41; # nope</p>
+<p>ispositive&#40;x&#41; &#61; isa&#40;x, Real&#41; &amp;&amp; x &gt; 0 <em>isinteger&#40;x&#41; &#61; isa&#40;x, Integer&#41; _isinteger&#40;x::SymbolicUtils.Sym&#123;T,S&#125;&#41; where &#123;T &lt;: Integer, S&#125; &#61; true POWSIMP</em>RULES &#61; &#91; @acrule&#40;&#40;~x::ispositive&#41;^&#40;~a::isreal&#41; * &#40;~y::ispositive&#41;^&#40;~a::isreal&#41; &#61;&gt; &#40;~x*~y&#41;^~a&#41; @rule&#40;&#40;&#40;~x&#41;^&#40;~a&#41;&#41;^&#40;~b::<em>isinteger&#41; &#61;&gt; ~x^&#40;~a * ~b&#41;&#41; &#93; powsimp&#40;ex&#41; &#61; simplify&#40;simplify&#40;ex, RuleSet&#40;POWSIMP</em>RULES&#41;&#41;&#41;</p>
+<p>@syms x a b::Int simplify&#40;&#40;x^a&#41;^b - x^&#40;a*b&#41;&#41; # nope</p>
+<p>EXPAND<em>POWER</em>RULES &#61; &#91; @rule&#40;&#40;~x&#41;^&#40;~a &#43; ~b&#41; &#61;&gt; &#40;_~&#41;^&#40;~a&#41; * &#40;~x&#41;^&#40;~b&#41;&#41; @rule&#40;&#40;~x*~y&#41;^&#40;~a&#41; &#61;&gt; &#40;~x&#41;^&#40;~a&#41; * &#40;~y&#41;^&#40;~a&#41;&#41;</p>
+<h2>... more on simplification...</h2>
+<h2>Calculus</h2>
+<p>@variables x y z import Symbolics: derivative derivative&#40;cos&#40;x&#41;, x&#41; derivative&#40;exp&#40;x^2&#41;, x&#41;</p>
+<h1>multiple derivative</h1>
+<p>Symbolics.derivative&#40;ex, x, n::Int&#41; &#61; reduce&#40;&#40;ex,_&#41; -&gt; derivative&#40;ex, x&#41;, 1:n, init&#61;ex&#41; # helper derivative&#40;x^4, x, 3&#41;</p>
+<p>ex &#61; exp&#40;x<em>y</em>z&#41;</p>
+<p>using Chain @chain ex begin     derivative&#40;x, 3&#41;     derivative&#40;y, 3&#41;     derivative&#40;z, 3&#41; end</p>
+<h1>using Differential operator</h1>
+<p>expr &#61; exp&#40;x<em>y</em>z&#41; expr |&gt; Differential&#40;x&#41;^2 |&gt; Differential&#40;y&#41;^3 |&gt; expand_derivatives</p>
+<h1>no integrate</h1>
+<h1>no limit</h1>
+<h1>Series</h1>
+<p>function series&#40;ex, x, x0&#61;0, n&#61;5&#41;     Σ &#61; zero&#40;ex&#41;     for i ∈ 0:n         ex &#61; expand_derivatives&#40;&#40;Differential&#40;x&#41;&#41;&#40;ex&#41;&#41;         Σ &#43;&#61; substitute&#40;ex, Dict&#40;x&#61;&gt;0&#41;&#41; * x^i / factorial&#40;i&#41;     end     Σ end</p>
+<h1>finite differences</h1>
+<h1>Solvers</h1>
+<p>@variables  x y z  a eq &#61; x ~ a Symbolics.solve_for&#40;eq, x&#41;</p>
+<p>eqs &#61; &#91;x &#43; y &#43; z ~ 1        x &#43; y &#43; 2z ~ 3        x &#43; 2y &#43; 3z ~ 3        &#93; vars &#61; &#91;x,y,z&#93; xs &#61; Symbolics.solve_for&#40;eqs, vars&#41;</p>
+<p>&#91;reduce&#40;&#40;ex, r&#41;-&gt;substitute&#40;ex, r&#41;, Pair.&#40;vars, xs&#41;, init&#61;ex.lhs&#41; for ex ∈ eqs&#93; &#61;&#61; &#91;eq.rhs for eq ∈ eqs&#93;</p>
+<p>A &#61; &#91;1 1; 1 2&#93; b &#61; &#91;1, 3&#93; xs &#61; Symbolics.solve_for&#40;A<em>&#91;x,y&#93; .~ b, &#91;x,y&#93;&#41; A</em>xs - b</p>
+<p>A &#61; &#91;1 1 1; 1 1 2&#93; b &#61; &#91;1,3&#93; A<em>&#91;x,y,z&#93; - b Symbolics.solve_for&#40;A</em>&#91;x,y,z&#93; .~ b, &#91;x,y,z&#93;&#41; # fails, singular</p>
+<h1>nonlinear solve</h1>
+<h1>use <code>λ &#61; mk_function&#40;ex, args, expression&#61;Val&#40;false&#41;&#41;</code></h1>
+<h1>polynomial roots</h1>
+<h1>differential equations</h1>
+
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('pre.hljl').forEach(el => {   // first, find all the div.code blocks
+  hljs.highlightElement(el);                              // then highlight each
+  });
+
+  var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+  var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
+  });
+</script>
+
+
+</body>
+</html>

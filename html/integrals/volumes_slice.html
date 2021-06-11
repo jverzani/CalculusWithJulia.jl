@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
 
-
-<link
-  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
-  rel="stylesheet">
 
 <style>
 .julia {display: block; font-family: "Source Code Pro";
@@ -16,13 +16,19 @@
         }
 .hljl {font-family: "Source Code Pro";
         color:#0033CC;
-        }
+      }
+.output, .julia-error {
+    border-left: thick solid #ff0000;
+    padding: 5px;
+    background-color: #f5f5f5;
+}
 body { padding-top: 60px; }
+.output {color:#0033CC;}
 h5:before {content:"\2746\ ";}
 h6:before {content:"\2742\ ";}
 pre {display: block;}
 th, td {
-  padding: 15px;
+  padding: 5px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
@@ -31,36 +37,55 @@ tr:hover {background-color: #f5f5f5;}
 .admonition-title:before {content:"\2746\ ";}
 .admonition-title { color:#0033CC}
 
-</style>
 
+</style>
 
 <!-- .julia:before {content: "julia> "} -->
 
 <style></style>
 
-
 <script src="https://code.jquery.com/jquery.js"></script>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/katex.min.css" integrity="sha384-ThssJ7YtjywV52Gj4JE/1SQEDoMEckXyhkFVwaf4nDSm5OBlXeedVYjuuUd0Yua+" crossorigin="anonymous">
 
-<script  type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {
-    inlineMath: [ ["\$","\$"], ["\\(","\\)"]]
-  },
-  displayAlign: "left",
-  displayIndent: "5%"
-});
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/katex.min.js" integrity="sha384-Bi8OWqMXO1ta+a4EPkZv7bYGIes7C3krGSZoTGNTAnAn5eYQc7IIXrJ/7ck1drAi" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+	onload="renderMathInElement(document.body);"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          // customised options
+          // • auto-render specific keys, e.g.:
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true},
+	      {left: "\\begin{equation}", right: "\\end{equation}", display: true},
+              {left: "\\begin{align}", right: "\\end{align}", display: true},
+	      {left: "\\begin{alignat}", right: "\\end{alignat}", display: true},
+	      {left: "\\begin{gather}", right: "\\end{gather}", display: true}
+          ],
+          // • rendering keys, e.g.:
+          throwOnError : false
+        });
+    });
 </script>
-<!-- not TeX-AMS-MML_HTMLorMML-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
-</script>
-
-
 <script>
 window.PlotlyConfig = {MathJaxConfig: 'local'}
 </script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
+<!-- highlight Julia Code -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/julia.min.js"></script>
 
 <script type="text/javascript">
 $( document ).ready(function() {
@@ -73,47 +98,45 @@ $( document ).ready(function() {
     var nm =  $( this ).text();
     var id = $.trim(nm).replace(/ /g,'');
     this.id = id
-    $("#page_dropdown").append("<li><a href='#" + id + "'>" + nm + "</a></li>");
+    $("#page_dropdown").append("<li><a class='dropdown-item' href='#" + id + "'>" + nm + "</a></li>");
   });
-  $('[data-toggle="popover"]').popover();
+    $('[data-toggle="popover"]').popover();
 });
 </script>
+
+
 
 </head>
 
 
 <body data-spy="scroll" >
 
-<nav class="navbar navbar-default  navbar-fixed-top">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-         
-    </div>
+  <header class="navbar navbar-expand-md navbar-dark bd-navbar">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top navbar-nav">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="https://juliahub.com/docs/CalculusWithJulia/">
+      <img src="data:image/gif;base64,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"/>
+      Calculus with Julia</a>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="#" id="page_title"></a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-         <li class="dropdown">
-           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-           Jump to... <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu" id="page_dropdown"></ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <ul class="nav navbar-nav navbar-right">
+      <li class="nav-item dropdown">
+	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+	   role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Jump to...
+          </a>
+
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" role="menu" id="page_dropdown"></ul>
+      </li>
+    </ul>
+
+    </div>
+  </div>
 </nav>
 
-<header>
 </header>
           <div class="title">
             
@@ -125,7 +148,7 @@ $( document ).ready(function() {
 
 <div class="container-fluid">
   <div class="span10 offset1">
-<h1>Volumes by slicing</h1>
+    <h1>Volumes by slicing</h1>
 
 
 
@@ -318,14 +341,15 @@ Vol &#40;generic function with 1 method&#41;
 
 
 <pre class='hljl'>
-<span class='hljl-nd'>@vars</span><span class='hljl-t'> </span><span class='hljl-n'>r</span><span class='hljl-t'> </span><span class='hljl-n'>h</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-t'>
+<span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>r</span><span class='hljl-t'> </span><span class='hljl-n'>h</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-t'>
 </span><span class='hljl-n'>R</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>r</span><span class='hljl-oB'>*</span><span class='hljl-p'>(</span><span class='hljl-ni'>1</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-oB'>/</span><span class='hljl-n'>h</span><span class='hljl-p'>)</span><span class='hljl-t'>
 </span><span class='hljl-nf'>integrate</span><span class='hljl-p'>(</span><span class='hljl-n'>pi</span><span class='hljl-oB'>*</span><span class='hljl-n'>R</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>y</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>h</span><span class='hljl-p'>))</span>
 </pre>
 
 
 
-<div class="well well-sm">\begin{equation*}\frac{\pi h r^{2}}{3}\end{equation*}</div>
+<div class="well well-sm">$\frac{\pi h r^{2}}{3}$
+</div>
 
 <p>The frustum of a cone is simply viewed as a cone with its top cut off. If the original height would have been <span class="math">$h_0$</span> and the actual height <span class="math">$h_1$</span>, then the volume remaining is just <span class="math">$\pi h_1 r^2/3 - \pi h_0 r^2/3 = \pi r^2 (h_1-h_0)/3$</span>.</p>
 <p>It is not unusual to parameterize a cone by the angle <span class="math">$\theta$</span> it makes and the height. Since <span class="math">$r/h=\tan\theta$</span>, this gives the formula <span class="math">$V = \pi/3\cdot h^3\tan(\theta)^2$</span>.</p>
@@ -509,16 +533,17 @@ V = \int_0^h C(u) du = C(0) \int_0^h (1 - \frac{u}{h})^2 du = C(0) \int_0^1 v^2 
 <p>With the formula for the volume of solids based on cross sections, this is a trivial observation, as the functions giving the cross-sectional area are identical. Still, it can be surprising. Consider a sphere with an interior cylinder bored out of it.  &#40;The <a href="http://tinyurl.com/o237v83">Napkin</a> ring problem.&#41; The bore has height <span class="math">$h$</span> - for larger radius spheres this means very wide bores.</p>
 
 
-    <div id="034d3c9e-bc89-4f1d-87e2-9d973cd89640" style="width:576px;height:384px;"></div>
+    <div id="07bce165-1f83-4673-862a-d635d53ae8ac" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('034d3c9e-bc89-4f1d-87e2-9d973cd89640');
+    
+        var PLOT = document.getElementById('07bce165-1f83-4673-862a-d635d53ae8ac');
     Plotly.plot(PLOT, [
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             -5.0,
             -4.989933382359421,
@@ -738,11 +763,11 @@ V = \int_0^h C(u) du = C(0) \int_0^h (1 - \frac{u}{h})^2 du = C(0) \int_0^1 v^2 
         "type": "scatter"
     },
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             3.0,
             3.0744021783877606,
@@ -962,11 +987,11 @@ V = \int_0^h C(u) du = C(0) \int_0^h (1 - \frac{u}{h})^2 du = C(0) \int_0^1 v^2 
         "type": "scatter"
     },
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             3.0,
             3.0
@@ -990,11 +1015,11 @@ V = \int_0^h C(u) du = C(0) \int_0^h (1 - \frac{u}{h})^2 du = C(0) \int_0^1 v^2 
         "type": "scatter"
     },
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             3.0,
             4.58257569495584
@@ -1018,11 +1043,11 @@ V = \int_0^h C(u) du = C(0) \int_0^h (1 - \frac{u}{h})^2 du = C(0) \int_0^1 v^2 
         "type": "scatter"
     },
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             0.0,
             3.0
@@ -1046,11 +1071,11 @@ V = \int_0^h C(u) du = C(0) \int_0^h (1 - \frac{u}{h})^2 du = C(0) \int_0^1 v^2 
         "type": "scatter"
     },
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             0.0,
             3.0
@@ -1088,8 +1113,6 @@ V = \int_0^h C(u) du = C(0) \int_0^h (1 - \frac{u}{h})^2 du = C(0) \int_0^1 v^2 
             4.0,
             6.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -7.99013571380222,
             7.989916381556868
@@ -1098,13 +1121,32 @@ V = \int_0^h C(u) du = C(0) \int_0^h (1 - \frac{u}{h})^2 du = C(0) \int_0^1 v^2 
             0.03769928064547487,
             0.9931649168853894
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−6",
+            "−4",
+            "−2",
+            "0",
+            "2",
+            "4",
+            "6"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -1112,24 +1154,7 @@ V = \int_0^h C(u) du = C(0) \int_0^h (1 - \frac{u}{h})^2 du = C(0) \int_0^1 v^2 
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "-6",
-            "-4",
-            "-2",
-            "0",
-            "2",
-            "4",
-            "6"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y1"
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [
@@ -1200,8 +1225,6 @@ V = \int_0^h C(u) du = C(0) \int_0^h (1 - \frac{u}{h})^2 du = C(0) \int_0^1 v^2 
             2.0,
             4.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -5.299332876671538,
             5.299332876671538
@@ -1210,13 +1233,30 @@ V = \int_0^h C(u) du = C(0) \int_0^h (1 - \frac{u}{h})^2 du = C(0) \int_0^1 v^2 
             0.0391878098571012,
             0.989747375328084
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−4",
+            "−2",
+            "0",
+            "2",
+            "4"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -1224,26 +1264,13 @@ V = \int_0^h C(u) du = C(0) \int_0^h (1 - \frac{u}{h})^2 du = C(0) \int_0^1 v^2 
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "-4",
-            "-2",
-            "0",
-            "2",
-            "4"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x1"
+        "type": "-"
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -1290,28 +1317,28 @@ V = \int_0^h C(u) du = C(0) \int_0^h (1 - \frac{u}{h})^2 du = C(0) \int_0^1 v^2 
 </ul>
 
 
-<form name='WeaveQuestion' data-id='PlKjtLFt' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='GI5Bgi8x' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="PlKjtLFt" type="number" class="form-control">
+<input id="GI5Bgi8x" type="number" class="form-control">
 
 </div>
 
-<div id='PlKjtLFt_message'></div>
+<div id='GI5Bgi8x_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#PlKjtLFt').on('change', function() {
+$('#GI5Bgi8x').on('change', function() {
   correct = Math.abs(this.value - 15157.98160668533) <= 10.0;
 
   if(correct) {
-     $('#PlKjtLFt_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#GI5Bgi8x_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#PlKjtLFt_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#GI5Bgi8x_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1368,28 +1395,28 @@ s_vol &#40;generic function with 1 method&#41;
 </ul>
 
 
-<form name='WeaveQuestion' data-id='Cx9sGRam' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='4c6ZVK0c' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="Cx9sGRam" type="number" class="form-control">
+<input id="4c6ZVK0c" type="number" class="form-control">
 
 </div>
 
-<div id='Cx9sGRam_message'></div>
+<div id='4c6ZVK0c_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#Cx9sGRam').on('change', function() {
+$('#4c6ZVK0c').on('change', function() {
   correct = Math.abs(this.value - 9.168923214523724) <= 0.001;
 
   if(correct) {
-     $('#Cx9sGRam_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#4c6ZVK0c_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#Cx9sGRam_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#4c6ZVK0c_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1401,28 +1428,28 @@ $('#Cx9sGRam').on('change', function() {
 </ul>
 
 
-<form name='WeaveQuestion' data-id='dhtuKf8f' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='Cex9K6Bq' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="dhtuKf8f" type="number" class="form-control">
+<input id="Cex9K6Bq" type="number" class="form-control">
 
 </div>
 
-<div id='dhtuKf8f_message'></div>
+<div id='Cex9K6Bq_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#dhtuKf8f').on('change', function() {
+$('#Cex9K6Bq').on('change', function() {
   correct = Math.abs(this.value - 5.603662378152273) <= 0.001;
 
   if(correct) {
-     $('#dhtuKf8f_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#Cex9K6Bq_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#dhtuKf8f_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#Cex9K6Bq_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1434,28 +1461,28 @@ $('#dhtuKf8f').on('change', function() {
 </ul>
 
 
-<form name='WeaveQuestion' data-id='tZyZxLAF' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='fpCq0Cv1' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="tZyZxLAF" type="number" class="form-control">
+<input id="fpCq0Cv1" type="number" class="form-control">
 <span class="input-group-addon">percent</span>
 </div>
 
-<div id='tZyZxLAF_message'></div>
+<div id='fpCq0Cv1_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#tZyZxLAF').on('change', function() {
+$('#fpCq0Cv1').on('change', function() {
   correct = Math.abs(this.value - 1.2452583062560607) <= 2;
 
   if(correct) {
-     $('#tZyZxLAF_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#fpCq0Cv1_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#tZyZxLAF_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#fpCq0Cv1_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1467,28 +1494,28 @@ $('#tZyZxLAF').on('change', function() {
 </ul>
 
 
-<form name='WeaveQuestion' data-id='m999V3u4' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='8uECxxrB' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="m999V3u4" type="number" class="form-control">
+<input id="8uECxxrB" type="number" class="form-control">
 <span class="input-group-addon">percent</span>
 </div>
 
-<div id='m999V3u4_message'></div>
+<div id='8uECxxrB_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#m999V3u4').on('change', function() {
+$('#8uECxxrB').on('change', function() {
   correct = Math.abs(this.value - 38.505616912184344) <= 2;
 
   if(correct) {
-     $('#m999V3u4_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#8uECxxrB_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#m999V3u4_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#8uECxxrB_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1501,28 +1528,28 @@ $('#m999V3u4').on('change', function() {
 </ul>
 
 
-<form name='WeaveQuestion' data-id='JnagF6c0' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='kuRbtkoT' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="JnagF6c0" type="number" class="form-control">
+<input id="kuRbtkoT" type="number" class="form-control">
 
 </div>
 
-<div id='JnagF6c0_message'></div>
+<div id='kuRbtkoT_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#JnagF6c0').on('change', function() {
+$('#kuRbtkoT').on('change', function() {
   correct = Math.abs(this.value - 10.37133536401327) <= 0.001;
 
   if(correct) {
-     $('#JnagF6c0_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#kuRbtkoT_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#JnagF6c0_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#kuRbtkoT_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1534,28 +1561,28 @@ $('#JnagF6c0').on('change', function() {
 </ul>
 
 
-<form name='WeaveQuestion' data-id='jIsRy3se' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='jNUCTsfM' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="jIsRy3se" type="number" class="form-control">
+<input id="jNUCTsfM" type="number" class="form-control">
 
 </div>
 
-<div id='jIsRy3se_message'></div>
+<div id='jNUCTsfM_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#jIsRy3se').on('change', function() {
+$('#jNUCTsfM').on('change', function() {
   correct = Math.abs(this.value - 6.372119100356652) <= 0.001;
 
   if(correct) {
-     $('#jIsRy3se_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#jNUCTsfM_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#jIsRy3se_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#jNUCTsfM_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1567,28 +1594,28 @@ $('#jIsRy3se').on('change', function() {
 </ul>
 
 
-<form name='WeaveQuestion' data-id='AGh9sYGm' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='aJtIfOvm' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="AGh9sYGm" type="number" class="form-control">
+<input id="aJtIfOvm" type="number" class="form-control">
 <span class="input-group-addon">percent</span>
 </div>
 
-<div id='AGh9sYGm_message'></div>
+<div id='aJtIfOvm_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#AGh9sYGm').on('change', function() {
+$('#aJtIfOvm').on('change', function() {
   correct = Math.abs(this.value - 1.4160264667459228) <= 2;
 
   if(correct) {
-     $('#AGh9sYGm_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#aJtIfOvm_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#AGh9sYGm_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#aJtIfOvm_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1600,28 +1627,28 @@ $('#AGh9sYGm').on('change', function() {
 </ul>
 
 
-<form name='WeaveQuestion' data-id='tOlSALeI' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='MwYQFdB7' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="tOlSALeI" type="number" class="form-control">
+<input id="MwYQFdB7" type="number" class="form-control">
 <span class="input-group-addon">percent</span>
 </div>
 
-<div id='tOlSALeI_message'></div>
+<div id='MwYQFdB7_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#tOlSALeI').on('change', function() {
+$('#MwYQFdB7').on('change', function() {
   correct = Math.abs(this.value - 37.31833223550184) <= 2;
 
   if(correct) {
-     $('#tOlSALeI_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#MwYQFdB7_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#tOlSALeI_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#MwYQFdB7_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1637,32 +1664,32 @@ V = \int_0^h w^2 (1 - \frac{y}{h})^2 dy?
 \]</p>
 
 
-<form name="WeaveQuestion" data-id="jqVCmmih" data-controltype="radio">
+<form name="WeaveQuestion" data-id="9StgRNgB" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_jqVCmmih" value="1"><div class="markdown"><p>Yes</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_9StgRNgB" id="radio_9StgRNgB_1" value="1">
+  <label class="form-check-label" for="radio_9StgRNgB_1">
+    Yes
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_jqVCmmih" value="2"><div class="markdown"><p>No</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_9StgRNgB" id="radio_9StgRNgB_2" value="2">
+  <label class="form-check-label" for="radio_9StgRNgB_2">
+    No
+  </label>
 </div>
-    </label>
-    </div>
 
-<div id="jqVCmmih_message"></div>
+<div id="9StgRNgB_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_jqVCmmih']").on("change", function() {
+$("input:radio[name='radio_9StgRNgB']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#jqVCmmih_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#9StgRNgB_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#jqVCmmih_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#9StgRNgB_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1672,38 +1699,41 @@ $("input:radio[name='radio_jqVCmmih']").on("change", function() {
 <p>What is the volume?</p>
 
 
-<form name="WeaveQuestion" data-id="tg0FXdpM" data-controltype="radio">
+<form name="WeaveQuestion" data-id="QQgigUhP" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_tg0FXdpM" value="1"><div class="markdown">&#36;1/3 \cdot w^2\cdot h&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_tg0FXdpM" value="2"><div class="markdown">&#36;1/3 \cdot b\cdot h&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_tg0FXdpM" value="3"><div class="markdown">&#36;l\cdot w \cdot h/ 3&#36;
-</div>
-    </label>
-    </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_QQgigUhP" id="radio_QQgigUhP_1" value="1">
+  <label class="form-check-label" for="radio_QQgigUhP_1">
+    &#36;l\cdot w \cdot h/ 3&#36;
 
-<div id="tg0FXdpM_message"></div>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_QQgigUhP" id="radio_QQgigUhP_2" value="2">
+  <label class="form-check-label" for="radio_QQgigUhP_2">
+    &#36;1/3 \cdot b\cdot h&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_QQgigUhP" id="radio_QQgigUhP_3" value="3">
+  <label class="form-check-label" for="radio_QQgigUhP_3">
+    &#36;1/3 \cdot w^2\cdot h&#36;
+
+  </label>
+</div>
+
+<div id="QQgigUhP_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_tg0FXdpM']").on("change", function() {
-  correct = this.value == 1;
+$("input:radio[name='radio_QQgigUhP']").on("change", function() {
+  correct = this.value == 3;
 
   if(correct) {
-     $("#tg0FXdpM_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#QQgigUhP_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#tg0FXdpM_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#QQgigUhP_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1714,28 +1744,28 @@ $("input:radio[name='radio_tg0FXdpM']").on("change", function() {
 <p>An ellipsoid is formed by rotating the region in the first and second quadrants bounded by the ellipse <span class="math">$(x/2)^2 + (y/3)^2=1$</span> and the <span class="math">$x$</span> axis around the <span class="math">$x$</span> axis. What is the volume of this ellipsoid? Find it numerically.</p>
 
 
-<form name='WeaveQuestion' data-id='Ufz0yh1T' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='StBm2683' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="Ufz0yh1T" type="number" class="form-control">
+<input id="StBm2683" type="number" class="form-control">
 
 </div>
 
-<div id='Ufz0yh1T_message'></div>
+<div id='StBm2683_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#Ufz0yh1T').on('change', function() {
+$('#StBm2683').on('change', function() {
   correct = Math.abs(this.value - 75.39822368615503) <= 0.001;
 
   if(correct) {
-     $('#Ufz0yh1T_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#StBm2683_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#Ufz0yh1T_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#StBm2683_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1745,38 +1775,41 @@ $('#Ufz0yh1T').on('change', function() {
 <p>An ellipsoid is formed by rotating the region in the first and second quadrants bounded by the ellipse <span class="math">$(x/a)^2 + (y/b)^2=1$</span> and the <span class="math">$x$</span> axis around the <span class="math">$x$</span> axis. What is the volume of this ellipsoid? Find it symbolically.</p>
 
 
-<form name="WeaveQuestion" data-id="DmZpqDZS" data-controltype="radio">
+<form name="WeaveQuestion" data-id="31RlJzbT" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_DmZpqDZS" value="1"><div class="markdown">&#36;4/3 \cdot \pi a b^2&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_DmZpqDZS" value="2"><div class="markdown">&#36;4/3 \cdot \pi a^2 b&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_DmZpqDZS" value="3"><div class="markdown">&#36;\pi/3 \cdot a b^2&#36;
-</div>
-    </label>
-    </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_31RlJzbT" id="radio_31RlJzbT_1" value="1">
+  <label class="form-check-label" for="radio_31RlJzbT_1">
+    &#36;4/3 \cdot \pi a^2 b&#36;
 
-<div id="DmZpqDZS_message"></div>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_31RlJzbT" id="radio_31RlJzbT_2" value="2">
+  <label class="form-check-label" for="radio_31RlJzbT_2">
+    &#36;\pi/3 \cdot a b^2&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_31RlJzbT" id="radio_31RlJzbT_3" value="3">
+  <label class="form-check-label" for="radio_31RlJzbT_3">
+    &#36;4/3 \cdot \pi a b^2&#36;
+
+  </label>
+</div>
+
+<div id="31RlJzbT_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_DmZpqDZS']").on("change", function() {
-  correct = this.value == 1;
+$("input:radio[name='radio_31RlJzbT']").on("change", function() {
+  correct = this.value == 3;
 
   if(correct) {
-     $("#DmZpqDZS_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#31RlJzbT_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#DmZpqDZS_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#31RlJzbT_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1787,28 +1820,28 @@ $("input:radio[name='radio_DmZpqDZS']").on("change", function() {
 <p>A solid is generated by rotating the region enclosed by the graph <span class="math">$y=\sqrt{x}$</span>, the lines <span class="math">$x=1$</span>, <span class="math">$x=2$</span>, and <span class="math">$y=1$</span> about the <span class="math">$x$</span> axis. Find the volume of the solid.</p>
 
 
-<form name='WeaveQuestion' data-id='7Az63AKx' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='3U7Qi6qL' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="7Az63AKx" type="number" class="form-control">
+<input id="3U7Qi6qL" type="number" class="form-control">
 
 </div>
 
-<div id='7Az63AKx_message'></div>
+<div id='3U7Qi6qL_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#7Az63AKx').on('change', function() {
+$('#3U7Qi6qL').on('change', function() {
   correct = Math.abs(this.value - 1.5707963267948963) <= 0.001;
 
   if(correct) {
-     $('#7Az63AKx_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#3U7Qi6qL_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#7Az63AKx_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#3U7Qi6qL_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1824,16 +1857,17 @@ $('#7Az63AKx').on('change', function() {
 
 
 
-    <div id="607ef423-a9be-409d-b547-b19b4ea0fee4" style="width:576px;height:384px;"></div>
+    <div id="b99c5aef-34e8-4b04-8c78-eb0d9ccd60f3" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('607ef423-a9be-409d-b547-b19b4ea0fee4');
+    
+        var PLOT = document.getElementById('b99c5aef-34e8-4b04-8c78-eb0d9ccd60f3');
     Plotly.plot(PLOT, [
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             0.0,
             0.009765819019788131,
@@ -1903,11 +1937,11 @@ $('#7Az63AKx').on('change', function() {
         "type": "scatter"
     },
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             0.0,
             0.009765819019788131,
@@ -1981,8 +2015,6 @@ $('#7Az63AKx').on('change', function() {
             0.75,
             1.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -0.03,
             1.03
@@ -1991,20 +2023,9 @@ $('#7Az63AKx').on('change', function() {
             0.08399557694177116,
             0.9931649168853893
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "0.00",
             "0.25",
@@ -2013,14 +2034,27 @@ $('#7Az63AKx').on('change', function() {
             "1.00"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y1"
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -2042,8 +2076,6 @@ $('#7Az63AKx').on('change', function() {
             -0.25,
             0.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -1.03,
             0.03
@@ -2052,13 +2084,30 @@ $('#7Az63AKx').on('change', function() {
             0.0391878098571012,
             0.989747375328084
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−1.00",
+            "−0.75",
+            "−0.50",
+            "−0.25",
+            "0.00"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -2066,68 +2115,63 @@ $('#7Az63AKx').on('change', function() {
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "-1.00",
-            "-0.75",
-            "-0.50",
-            "-0.25",
-            "0.00"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x1"
+        "type": "-"
     },
     "legend": {
         "yanchor": "auto",
         "xanchor": "auto",
         "bordercolor": "rgba(0, 0, 0, 1.000)",
         "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
         "font": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "borderwidth": 1,
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
         "traceorder": "normal",
         "x": 1.0
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
 
-<form name='WeaveQuestion' data-id='Hay6zG4W' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='5xqeL1OD' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="Hay6zG4W" type="number" class="form-control">
+<input id="5xqeL1OD" type="number" class="form-control">
 
 </div>
 
-<div id='Hay6zG4W_message'></div>
+<div id='5xqeL1OD_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#Hay6zG4W').on('change', function() {
+$('#5xqeL1OD').on('change', function() {
   correct = Math.abs(this.value - -3.2309774707332535) <= 0.001;
 
   if(correct) {
-     $('#Hay6zG4W_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#5xqeL1OD_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#Hay6zG4W_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#5xqeL1OD_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -2138,28 +2182,28 @@ $('#Hay6zG4W').on('change', function() {
 <p>&#40;Be careful, the radius in the formula <span class="math">$V=\int_a^b \pi r(u)^2 du$</span> is from the line <span class="math">$x=\log(2)$</span>.&#41;</p>
 
 
-<form name='WeaveQuestion' data-id='7OKHvnG2' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='nUs8H5p6' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="7OKHvnG2" type="number" class="form-control">
+<input id="nUs8H5p6" type="number" class="form-control">
 
 </div>
 
-<div id='7OKHvnG2_message'></div>
+<div id='nUs8H5p6_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#7OKHvnG2').on('change', function() {
+$('#nUs8H5p6').on('change', function() {
   correct = Math.abs(this.value - 12.56637058324514) <= 0.001;
 
   if(correct) {
-     $('#7OKHvnG2_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#nUs8H5p6_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#7OKHvnG2_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#nUs8H5p6_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -2169,28 +2213,28 @@ $('#7OKHvnG2').on('change', function() {
 <p>Find the volume of rotating the region bounded by the line <span class="math">$y=x$</span>, <span class="math">$x=1$</span> and the <span class="math">$x$</span>-axis around the line <span class="math">$y=x$</span>. &#40;The Theorem of Pappus is convenient and the fact that the centroid of the triangular region lies at <span class="math">$(2/3, 1/3)$</span>.&#41;</p>
 
 
-<form name='WeaveQuestion' data-id='izOETUoH' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='H4AO9wQN' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="izOETUoH" type="number" class="form-control">
+<input id="H4AO9wQN" type="number" class="form-control">
 
 </div>
 
-<div id='izOETUoH_message'></div>
+<div id='H4AO9wQN_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#izOETUoH').on('change', function() {
+$('#H4AO9wQN').on('change', function() {
   correct = Math.abs(this.value - 0.740480489693061) <= 0.001;
 
   if(correct) {
-     $('#izOETUoH_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#H4AO9wQN_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#izOETUoH_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#H4AO9wQN_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -2219,28 +2263,28 @@ rad &#40;generic function with 1 method&#41;
 <p>With this, find the volume.</p>
 
 
-<form name='WeaveQuestion' data-id='wGJSs8kl' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='AJuNdsHz' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="wGJSs8kl" type="number" class="form-control">
+<input id="AJuNdsHz" type="number" class="form-control">
 
 </div>
 
-<div id='wGJSs8kl_message'></div>
+<div id='AJuNdsHz_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#wGJSs8kl').on('change', function() {
+$('#AJuNdsHz').on('change', function() {
   correct = Math.abs(this.value - 0.07404804896930604) <= 0.001;
 
   if(correct) {
-     $('#wGJSs8kl_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#AJuNdsHz_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#wGJSs8kl_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#AJuNdsHz_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -2250,28 +2294,28 @@ $('#wGJSs8kl').on('change', function() {
 <p>Repeat &#40;find the volume&#41; only this time with the function <span class="math">$f(x) = x^{20}$</span>.</p>
 
 
-<form name='WeaveQuestion' data-id='Z3XfLHup' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='E8bcPBa8' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="Z3XfLHup" type="number" class="form-control">
+<input id="E8bcPBa8" type="number" class="form-control">
 
 </div>
 
-<div id='Z3XfLHup_message'></div>
+<div id='E8bcPBa8_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#Z3XfLHup').on('change', function() {
+$('#E8bcPBa8').on('change', function() {
   correct = Math.abs(this.value - 0.5927127644771495) <= 0.001;
 
   if(correct) {
-     $('#Z3XfLHup_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#E8bcPBa8_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#Z3XfLHup_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#E8bcPBa8_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -2279,6 +2323,18 @@ $('#Z3XfLHup').on('change', function() {
 
   </div>
 </div>
+
+<script>
+  document.querySelectorAll('pre.hljl').forEach(el => {   // first, find all the div.code blocks
+  hljs.highlightElement(el);                              // then highlight each
+  });
+
+  var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+  var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
+  });
+</script>
+
 
 </body>
 </html>

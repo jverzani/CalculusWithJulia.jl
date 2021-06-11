@@ -1,5 +1,18 @@
 # Calculus with Julia
 
+```julia; echo=false
+import CalculusWithJulia
+logo_url = https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/misc/logo.png
+txt = """
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="$logo_url" alt="Card image cap">
+  <div class="card-body">
+    <p class="card-text">Calculus with Julia</p>
+  </div>
+</div>
+"""
+CalculusWithJulia.WeaveSupport.HTMLoutput(txt)
+```
 
 `CalculusWithJulia.jl` is a package for a set of notes for learning [calculus](http://en.wikipedia.org/wiki/Calculus) using the `Julia` languge. The package contains some support functions and the files that generate the notes being read now.
 
@@ -76,7 +89,7 @@ A graphing calculator makes it very easy to produce a graph. `Julia`, using the 
 
 - [Transformations of Functions](precalc/transformations.html)
 
-- [Inverse Runctions](precalc/inversefunctions.html)
+- [Inverse Functions](precalc/inversefunctions.html)
 
 #### Polynomials
 
@@ -89,8 +102,11 @@ Polynomials play an important role in calculus. They give a family of functions 
 The roots of a univariate polynomial are the values of $x$ for which $p(x)=0$. Roots are related to its factors. In calculus, the zeros of a derived function are used to infer properties of a function. This section shows some tools in `SymPy` to find factors and roots, when they are available, and introduces the `Roots` package for estimating roots numerically.
 
 
-
 - [Polynomial Roots](precalc/polynomial_roots.html)
+
+The `Polynomials` package provides methods for working with polynomials of different types.
+
+- [The `Polynomials` package](precalc/polynomials_package.html)
 
 A rational expression is the ratio of two polynomial expressions. This section covers some additional details that arise when graphing such expressions.
 
@@ -265,7 +281,7 @@ For reference purposes, there are examples of creating graphics for `Plots` and 
 
 - [Two- and three-dimensional graphics with Plots](differentiable_vector_calculus/plots-plotting.html)
 
-- [Two- and three-dimensional graphics with Makie](differentiable_vector_calculus/makie-plotting.html)
+- [Two- and three-dimensional graphics with Makie](alternatives/makie-plotting.html)
 
 
 ## Bibliography

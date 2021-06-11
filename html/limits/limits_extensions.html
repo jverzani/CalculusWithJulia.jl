@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
 
-
-<link
-  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
-  rel="stylesheet">
 
 <style>
 .julia {display: block; font-family: "Source Code Pro";
@@ -16,13 +16,19 @@
         }
 .hljl {font-family: "Source Code Pro";
         color:#0033CC;
-        }
+      }
+.output, .julia-error {
+    border-left: thick solid #ff0000;
+    padding: 5px;
+    background-color: #f5f5f5;
+}
 body { padding-top: 60px; }
+.output {color:#0033CC;}
 h5:before {content:"\2746\ ";}
 h6:before {content:"\2742\ ";}
 pre {display: block;}
 th, td {
-  padding: 15px;
+  padding: 5px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
@@ -31,36 +37,55 @@ tr:hover {background-color: #f5f5f5;}
 .admonition-title:before {content:"\2746\ ";}
 .admonition-title { color:#0033CC}
 
-</style>
 
+</style>
 
 <!-- .julia:before {content: "julia> "} -->
 
 <style></style>
 
-
 <script src="https://code.jquery.com/jquery.js"></script>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/katex.min.css" integrity="sha384-ThssJ7YtjywV52Gj4JE/1SQEDoMEckXyhkFVwaf4nDSm5OBlXeedVYjuuUd0Yua+" crossorigin="anonymous">
 
-<script  type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {
-    inlineMath: [ ["\$","\$"], ["\\(","\\)"]]
-  },
-  displayAlign: "left",
-  displayIndent: "5%"
-});
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/katex.min.js" integrity="sha384-Bi8OWqMXO1ta+a4EPkZv7bYGIes7C3krGSZoTGNTAnAn5eYQc7IIXrJ/7ck1drAi" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+	onload="renderMathInElement(document.body);"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          // customised options
+          // • auto-render specific keys, e.g.:
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true},
+	      {left: "\\begin{equation}", right: "\\end{equation}", display: true},
+              {left: "\\begin{align}", right: "\\end{align}", display: true},
+	      {left: "\\begin{alignat}", right: "\\end{alignat}", display: true},
+	      {left: "\\begin{gather}", right: "\\end{gather}", display: true}
+          ],
+          // • rendering keys, e.g.:
+          throwOnError : false
+        });
+    });
 </script>
-<!-- not TeX-AMS-MML_HTMLorMML-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
-</script>
-
-
 <script>
 window.PlotlyConfig = {MathJaxConfig: 'local'}
 </script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
+<!-- highlight Julia Code -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/julia.min.js"></script>
 
 <script type="text/javascript">
 $( document ).ready(function() {
@@ -73,47 +98,45 @@ $( document ).ready(function() {
     var nm =  $( this ).text();
     var id = $.trim(nm).replace(/ /g,'');
     this.id = id
-    $("#page_dropdown").append("<li><a href='#" + id + "'>" + nm + "</a></li>");
+    $("#page_dropdown").append("<li><a class='dropdown-item' href='#" + id + "'>" + nm + "</a></li>");
   });
-  $('[data-toggle="popover"]').popover();
+    $('[data-toggle="popover"]').popover();
 });
 </script>
+
+
 
 </head>
 
 
 <body data-spy="scroll" >
 
-<nav class="navbar navbar-default  navbar-fixed-top">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-         
-    </div>
+  <header class="navbar navbar-expand-md navbar-dark bd-navbar">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top navbar-nav">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="https://juliahub.com/docs/CalculusWithJulia/">
+      <img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAADsAAAAwCAYAAACv4gJwAAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TtVIqDu0g4pChOlkQleKoVShChVArtOpgcukXNGlIUlwcBdeCgx+LVQcXZ10dXAVB8APEzc1J0UVK/F9aaBHjwXE/3t173L0DhEaFaVbPBKDptplOJsRsblUMvKIPQYQRhyAzy5iTpBQ8x9c9fHy9i/Es73N/jgE1bzHAJxLPMsO0iTeI45u2wXmfOMJKskp8Tjxu0gWJH7mutPiNc9FlgWdGzEx6njhCLBa7WOliVjI14mniqKrplC9kW6xy3uKsVWqsfU/+wlBeX1nmOs0RJLGIJUgQoaCGMiqwEaNVJ8VCmvYTHv5h1y+RSyFXGYwcC6hCg+z6wf/gd7dWYWqylRRKAL0vjvMxCgR2gWbdcb6PHad5AvifgSu94682gJlP0usdLXoEDG4DF9cdTdkDLneAoSdDNmVX8tMUCgXg/Yy+KQeEb4HgWqu39j5OH4AMdZW6AQ4OgbEiZa97vLu/u7d/z7T7+wFQOXKZ0cNEOAAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAAuIwAALiMBeKU/dgAAAAd0SU1FB+UGChM4DoTnuYAAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAKU0lEQVRo3u2ZeXRU1R3Hf/e+dbY3k8lMlklC9mASImspIaxFEESpS23V4lbKUU4LaJVWj1utWtBqtXrqUsCVntODtFUULSjIIpsBWUP2bZJMMskkM5NZ3pu33f7RVgso2Z7H2Hr/vvf9fp+Ze+/v9/1egG/H/+ZAX3WAklwMy36WatIBKFYrwp7IYrtJ9Th0pKgh7lSg27JVIihGGCDSHXd3qd9Y2J9fZwU8MTe/DU1dxYNQipBGElgMxZEUowBTFt0s0DpniyM9ZtY7txcyB17+9S864t842OVzFkLh7OLpNSa49whTPT6q1+kXSiMHz1ImxB3binT54dsf+mPwq8iJ+io+uvuOI2AtwN8/IPiu38OcnKDqLQPGCREvVWumzWNk19g7ypdXb963NTzqYZ+8+UaIu6NX7HBULzxI1c2mNB8/6MVaj/2YmeLSdJKzouKqk3/d+0F01MLedo0FrGPLyz+x9tx0kKqZSWmd/JAT0gJJx8zI5NKYossW8vt2fdgijzrYB1faQS5JKfBTxWv3McfLhgP6n4G1gMPHW5MdibyMxYvbD+3eEVGMyBEbBesYY0LdMP3mo0ztBDwC0H8NAiH1qKuKTyyp1yxTjMrRMFgCCBy6uzBCWg2rlTIKM6nSnMxRB2tSLwKMdGLkHeDDoV6rLiSPOtiC0BqKBk0xElYHovOAyKiDZdVkHhBoRpcylpiYUQerYlFGgLDRsCqS1VEH22z/g6ISxBjMikQw7mQYBtvPHQKdYEOblFTdJogoER11sAAA/Tjmo1GSYd/kicD7+IOtow7WqgCxkoObJ2lTvAQ79JF+j6GLomNlx75U3H1q1LWL7+6Mwqr5dDsjFcdELskRQP3piEjDkpAqkxe8VCw+ngZt96+753DnqBQCb30YgRXzs6oyY4Vur5nIYYhnDxVYZfKCl0tF+yfH3c/f9dALdUbmN+Rt/LerJ0P9dbOSm2+Z+4U374/u2wLjxHkv/rjv4uO5qPhjHSfpgwfND14uFR2siJT8ee/7vuNfq55tWXYJEsJkktglzZOjasGdU3K7dY7EKrv6z5r36oFXyOrypZ+YtbiVoj05nVTQCeTCboudKlPmiWOPlYrmJ598afOxnQ3bvj5bpv762RapR5onB9V0IEAAADCHCJfMVgrp/InM9bvOa+vWP+aBKpg6p4H1rKQIFMSpWJ+PCgWiSJExQSiZmMzpapJHAYq4NHTAg46se+JXlf4vy2FJWhk8cGMJiIS2IEpUPKFsOf+lp42DPb3qMqiOjS8LyqZbdZWYEqzGW1F3eT9t6+ZjliqEEGI5VFOAvRtmbdxwXk3c+JgHzrB4jEIE3i3NdCYrqS6e2EwEND2C+yLdXLM/wh6OW0DvWbemPXTu+n33TQd7aEaqCGmXBmh7uSLbx4uKLZ3Gmsoy/Y08E/o0RQrvIXz93iC/X5y3rnp4sAue+lSY5j18a0GXd0xRy/6GkEf2sJK+xO5X7RqDoCeLrbL3qf+I40K+PrPYcyrjove3ZM3/IHC7w5Dm/cyKe2wn2XHrcDT1CiJbiDnGkXNlgUYRiFtFirCRqNXS8sQ4sebVvBefJYOGHVd0EXznurXjJvV4b5p69M1mhEXiz2Irkv1KBRfVz7rUQmlMSGHR226v3NHtmeDcVzxX7bDbnnvt/isTw5aLYIJTyx8oOs3lric9+TmMTA3qx4sLccolnHlrrOj/ZcaGB8UBYTtWLEBvk+/NM/eHF5TVbG8Ip9F2mcVLXO1yFvqSezVhxVpvGvNxaqt8UKGd9P7SS7OnJaoeX7zptUBEG1p/QSGAyhW/LW1CY99g/NlOShtaqRbNMrE5qw9naVW3lj7/lPilsI1LZ/PeeM7iOj73kim1W4915nLFtrC6yNqrDWizEAwQyGRbuYT+Dh1xJ07lTS+ZE3zvWSGNrc5c/9Hgm5M7144JS2XvCv50YbhKVuZUnEhp2pPBb7pl1hPbtLPqbOXScqi5ekZG1Bu/9rSpcFFJ544znbncZe4O+arBgAIAIB3A7ZWzsQrL+tN6c1JC/p5qavINwVZxQePS2dygzujylSASz92CP80+EsnOJmgdhTPnInHO3LOaip3XfxfMQZgs+qTFbZaLsziqGycs2s3pTYkJdGLoEa29qsnlU67h2cpxbYIrUw7IOdE28draH8wc0F6xElcGEl2LEBm5O2GJmNUwSr2t95anP9u9eFtdB+gySdJlHbwe68SStkOzk3yKaySBaIlAelNiUqpWPTfgLrJrcc0CaGCt28Y7rtSjybQhDQQBECX3pH4mkvcZ7O+PtgNtoZsBAcSQDWhZM6xfdsR8Hd6kojGUmYrzTtp/obm7HymDLkhdZI4zhr0/oYiTqrU4F5x1Znkn4yU2AexR1BVx0gGjgmm0fFpDmMIcbilc/9EFtyYVmi5IUnKpke0hL9EQ0NLKN6/J+xx2S2u3IttcnRwBVWFQrRGBJAETc1yrQ0AQKzBN8gAuq6BQOo9Uo20dYEGlfvi7ps9h1+ysAs1mbyIACAHUqPzId1JMoDrsXWqEsJTIO9kBNak7nqJQWI4aDcvjePg8iRdKtjaoLAJ3m9wdcdJ9Iw2iMLgGAEHAIjRn/2nngJ0Fm3DKGCf6jARVKR3xWPSdB/vTE72JoCO1B2lAZHZkW1myYcIl9Nqo4DE3unMHJcBX7NlIVFppNBI2YVKRRZbrz4P1790ELUJ6o8wKNCCoUbnhb+W4nepM6lTCDXnTMuqcxfsHs+ZN7wmIc9JRjdKN87IZCStU6MgXOhUxE729uqCiwN2mdEWcdGi4QWQG1+iIQe1moevQy3cN+hwWJFpeT7g7DTm3Kq2Dydq2nRb2Nn0h7MrGZ4JhkyMQ5zN4hUPD8n8SFkxYRa89nT+/JF8J7NBOvDPotTdseLwvm2p4PGaPjdidVF2+WJnU+psZj35e8s6CnfzKLpjVu2fr8expE1SKqdWGUd9jDsovauMZigZphrr/zFDWNoky5IqJNxy2+n0Kqw37HMUcETwGNzx6sK619YKGm8MWbZjoP3KigV+YFXabYkMN5BcKg5229PSJ3R/uWPb+4SE/dKVsvFfPVBtWx10dbRpFhgwsmmSKsjdtSobWv9y0e8PZbey5k/sQSA6to3FKS0I7PnZqVorFR+xSS++AEg8w8tnHFyDCNk2pefckk21q3umLDOufKX1hbWj36oevDnnCj8TimfNNQQfGOhpA1mmgO/wiY2p/Nok5sCH/mTfIoJyKM1dUlIodYgVBCGpy5uWHOVtSSizgz/ZVdlCapP/38qg1w9SQPj5PollTkb+6ztlX009ZKM1WZHstf+OuEb3AdfzkMYgw1MwGLn1VLJZZbg7atXMVkcJoWE3qUZxc25Y8sfu514/vb3+ocvvgPaiGG+eYRL84Ff6NRRCG2pSZ7npbeppOMwjRJpoQnYASUy2qqkz2H2lOijV/ZsNgHvdVvHfoVMigh3jv7atRC5NWWsemLBI0SOaIbiKA9BhGUQ1r3nFS69+PVtUFlu9+E74d/4/jnwl6l8LhlFUrAAAAAElFTkSuQmCC"/>
+      Calculus with Julia</a>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="#" id="page_title"></a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-         <li class="dropdown">
-           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-           Jump to... <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu" id="page_dropdown"></ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <ul class="nav navbar-nav navbar-right">
+      <li class="nav-item dropdown">
+	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+	   role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Jump to...
+          </a>
+
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" role="menu" id="page_dropdown"></ul>
+      </li>
+    </ul>
+
+    </div>
+  </div>
 </nav>
 
-<header>
 </header>
           <div class="title">
             
@@ -125,7 +148,7 @@ $( document ).ready(function() {
 
 <div class="container-fluid">
   <div class="span10 offset1">
-<h1>Limits, issues, extensions of the concept</h1>
+    <h1>Limits, issues, extensions of the concept</h1>
 
 
 <p>The limit of a function at <span class="math">$c$</span> need not exist for one of many different reasons. Some of these reasons can be handled with extensions to the concept of the limit, others are just problematic in terms of limits. This section covers examples of each.</p>
@@ -148,16 +171,17 @@ f(x) = \sin(1/x)
 <p>A graph shows the issue:</p>
 
 
-    <div id="5777f05d-faeb-4c58-a298-1f3c22c889c4" style="width:576px;height:384px;"></div>
+    <div id="cee8f3ae-e9bb-4eb1-a14c-cda229a8916d" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('5777f05d-faeb-4c58-a298-1f3c22c889c4');
+    
+        var PLOT = document.getElementById('cee8f3ae-e9bb-4eb1-a14c-cda229a8916d');
     Plotly.plot(PLOT, [
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             -1.0,
             -0.997997997997998,
@@ -2189,8 +2213,6 @@ f(x) = \sin(1/x)
             0.5,
             1.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -1.06,
             1.06
@@ -2199,13 +2221,30 @@ f(x) = \sin(1/x)
             0.06856347817633907,
             0.9931649168853893
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−1.0",
+            "−0.5",
+            "0.0",
+            "0.5",
+            "1.0"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -2213,22 +2252,7 @@ f(x) = \sin(1/x)
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "-1.0",
-            "-0.5",
-            "0.0",
-            "0.5",
-            "1.0"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y1"
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -2250,8 +2274,6 @@ f(x) = \sin(1/x)
             0.5,
             1.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -1.0599968652001384,
             1.0599968652001384
@@ -2260,13 +2282,30 @@ f(x) = \sin(1/x)
             0.0391878098571012,
             0.989747375328084
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−1.0",
+            "−0.5",
+            "0.0",
+            "0.5",
+            "1.0"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -2274,42 +2313,37 @@ f(x) = \sin(1/x)
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "-1.0",
-            "-0.5",
-            "0.0",
-            "0.5",
-            "1.0"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x1"
+        "type": "-"
     },
     "legend": {
         "yanchor": "auto",
         "xanchor": "auto",
         "bordercolor": "rgba(0, 0, 0, 1.000)",
         "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
         "font": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "borderwidth": 1,
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
         "traceorder": "normal",
         "x": 1.0
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -2333,16 +2367,17 @@ f(x) = \sin(1/x)
 
 
 
-    <div id="fde3bc7c-e59f-4c1b-910b-f122245e18d2" style="width:576px;height:384px;"></div>
+    <div id="4a3eefec-8848-4d73-b1a1-a606217960a3" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('fde3bc7c-e59f-4c1b-910b-f122245e18d2');
+    
+        var PLOT = document.getElementById('4a3eefec-8848-4d73-b1a1-a606217960a3');
     Plotly.plot(PLOT, [
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             -1.0,
             -0.9902341809802119,
@@ -2864,43 +2899,43 @@ f(x) = \sin(1/x)
         "type": "scatter"
     },
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
-            -5.0,
-            -4.9023418098021185,
-            -3.9993508283162718,
-            -3.456690886943761,
-            -2.997878812842343,
-            -2.499480299669486,
-            -2.0400009546537183,
-            -1.5473905359351015,
-            -0.9766530566146772,
-            -0.7230509977522314,
-            -0.46944893888978556,
-            -0.3582558628167891,
-            -0.24706278674379273,
-            -0.1358697106707963,
-            -0.024676634597799892,
-            0.03593851554607441,
-            0.09655366568994872,
-            0.15716881583382303,
-            0.21778396597769734,
-            0.33901426626544595,
-            0.46024456655319457,
-            0.7041461770406577,
-            0.9480477875281209,
-            1.4873766262440427,
-            2.0005344074484346,
-            2.5340994351135055,
-            2.983247536668451,
-            3.531606459863641,
-            4.047080021287085,
-            4.872908640160599,
-            5.0
+            -1.06,
+            -1.0392964636780493,
+            -0.8478623756030496,
+            -0.7328184680320774,
+            -0.6355503083225766,
+            -0.529889823529931,
+            -0.4324802023865883,
+            -0.3280467936182415,
+            -0.20705044800231154,
+            -0.15328681152347304,
+            -0.09952317504463454,
+            -0.0759502429171593,
+            -0.05237731078968406,
+            -0.028804378662208818,
+            -0.005231446534733577,
+            0.007618965295767775,
+            0.020469377126269128,
+            0.03331978895677048,
+            0.04617020078727183,
+            0.07187102444827453,
+            0.09757184810927724,
+            0.14927898953261942,
+            0.20098613095596163,
+            0.31532384476373704,
+            0.42411329437906814,
+            0.5372290802440631,
+            0.6324484777737117,
+            0.7487005694910919,
+            0.857980964512862,
+            1.033056631714047,
+            1.06
         ],
         "showlegend": true,
         "mode": "lines",
@@ -2915,78 +2950,78 @@ f(x) = \sin(1/x)
             "width": 1
         },
         "y": [
-            5.0,
-            4.9023418098021185,
-            3.9993508283162718,
-            3.456690886943761,
-            2.997878812842343,
-            2.499480299669486,
-            2.0400009546537183,
-            1.5473905359351015,
-            0.9766530566146772,
-            0.7230509977522314,
-            0.46944893888978556,
-            0.3582558628167891,
-            0.24706278674379273,
-            0.1358697106707963,
-            0.024676634597799892,
-            0.03593851554607441,
-            0.09655366568994872,
-            0.15716881583382303,
-            0.21778396597769734,
-            0.33901426626544595,
-            0.46024456655319457,
-            0.7041461770406577,
-            0.9480477875281209,
-            1.4873766262440427,
-            2.0005344074484346,
-            2.5340994351135055,
-            2.983247536668451,
-            3.531606459863641,
-            4.047080021287085,
-            4.872908640160599,
-            5.0
+            1.06,
+            1.0392964636780493,
+            0.8478623756030496,
+            0.7328184680320774,
+            0.6355503083225766,
+            0.529889823529931,
+            0.4324802023865883,
+            0.3280467936182415,
+            0.20705044800231154,
+            0.15328681152347304,
+            0.09952317504463454,
+            0.0759502429171593,
+            0.05237731078968406,
+            0.028804378662208818,
+            0.005231446534733577,
+            0.007618965295767775,
+            0.020469377126269128,
+            0.03331978895677048,
+            0.04617020078727183,
+            0.07187102444827453,
+            0.09757184810927724,
+            0.14927898953261942,
+            0.20098613095596163,
+            0.31532384476373704,
+            0.42411329437906814,
+            0.5372290802440631,
+            0.6324484777737117,
+            0.7487005694910919,
+            0.857980964512862,
+            1.033056631714047,
+            1.06
         ],
         "type": "scatter"
     },
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
-            -5.0,
-            -4.9023418098021185,
-            -3.9993508283162718,
-            -3.456690886943761,
-            -2.997878812842343,
-            -2.499480299669486,
-            -2.0400009546537183,
-            -1.5473905359351015,
-            -0.9766530566146772,
-            -0.7230509977522314,
-            -0.46944893888978556,
-            -0.3582558628167891,
-            -0.24706278674379273,
-            -0.1358697106707963,
-            -0.024676634597799892,
-            0.03593851554607441,
-            0.09655366568994872,
-            0.15716881583382303,
-            0.21778396597769734,
-            0.33901426626544595,
-            0.46024456655319457,
-            0.7041461770406577,
-            0.9480477875281209,
-            1.4873766262440427,
-            2.0005344074484346,
-            2.5340994351135055,
-            2.983247536668451,
-            3.531606459863641,
-            4.047080021287085,
-            4.872908640160599,
-            5.0
+            -1.1236000000000002,
+            -1.1016542514987324,
+            -0.8987341181392327,
+            -0.7767875761140022,
+            -0.6736833268219313,
+            -0.5616832129417269,
+            -0.45842901452978363,
+            -0.3477296012353361,
+            -0.21947347488245028,
+            -0.16248402021488145,
+            -0.10549456554731262,
+            -0.08050725749218887,
+            -0.055519949437065105,
+            -0.03053264138194135,
+            -0.0055453333268175925,
+            0.008076103213513845,
+            0.021697539753845283,
+            0.03531897629417672,
+            0.04894041283450816,
+            0.07618328591517104,
+            0.1034261589958339,
+            0.15823572890457666,
+            0.21304529881331938,
+            0.3342432754495613,
+            0.4495600920418123,
+            0.569462825058707,
+            0.6703953864401344,
+            0.7936226036605575,
+            0.9094598223836339,
+            1.09504002961689,
+            1.1236000000000002
         ],
         "showlegend": true,
         "mode": "lines",
@@ -3001,37 +3036,37 @@ f(x) = \sin(1/x)
             "width": 1
         },
         "y": [
-            -5.0,
-            -4.9023418098021185,
-            -3.9993508283162718,
-            -3.456690886943761,
-            -2.997878812842343,
-            -2.499480299669486,
-            -2.0400009546537183,
-            -1.5473905359351015,
-            -0.9766530566146772,
-            -0.7230509977522314,
-            -0.46944893888978556,
-            -0.3582558628167891,
-            -0.24706278674379273,
-            -0.1358697106707963,
-            -0.024676634597799892,
-            -0.03593851554607441,
-            -0.09655366568994872,
-            -0.15716881583382303,
-            -0.21778396597769734,
-            -0.33901426626544595,
-            -0.46024456655319457,
-            -0.7041461770406577,
-            -0.9480477875281209,
-            -1.4873766262440427,
-            -2.0005344074484346,
-            -2.5340994351135055,
-            -2.983247536668451,
-            -3.531606459863641,
-            -4.047080021287085,
-            -4.872908640160599,
-            -5.0
+            -1.1236000000000002,
+            -1.1016542514987324,
+            -0.8987341181392327,
+            -0.7767875761140022,
+            -0.6736833268219313,
+            -0.5616832129417269,
+            -0.45842901452978363,
+            -0.3477296012353361,
+            -0.21947347488245028,
+            -0.16248402021488145,
+            -0.10549456554731262,
+            -0.08050725749218887,
+            -0.055519949437065105,
+            -0.03053264138194135,
+            -0.0055453333268175925,
+            -0.008076103213513845,
+            -0.021697539753845283,
+            -0.03531897629417672,
+            -0.04894041283450816,
+            -0.07618328591517104,
+            -0.1034261589958339,
+            -0.15823572890457666,
+            -0.21304529881331938,
+            -0.3342432754495613,
+            -0.4495600920418123,
+            -0.569462825058707,
+            -0.6703953864401344,
+            -0.7936226036605575,
+            -0.9094598223836339,
+            -1.09504002961689,
+            -1.1236000000000002
         ],
         "type": "scatter"
     }
@@ -3042,29 +3077,44 @@ f(x) = \sin(1/x)
         "showticklabels": true,
         "gridwidth": 0.5,
         "tickvals": [
-            -4.0,
-            -2.0,
+            -1.0,
+            -0.5,
             0.0,
-            2.0,
-            4.0
+            0.5,
+            1.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
-            -5.3,
-            5.3
+            -1.191016,
+            1.191016
         ],
         "domain": [
-            0.03769928064547487,
-            0.9931649168853894
+            0.06856347817633907,
+            0.9931649168853893
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−1.0",
+            "−0.5",
+            "0.0",
+            "0.5",
+            "1.0"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -3072,22 +3122,7 @@ f(x) = \sin(1/x)
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "-4",
-            "-2",
-            "0",
-            "2",
-            "4"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y1"
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -3103,29 +3138,44 @@ f(x) = \sin(1/x)
         "showticklabels": true,
         "gridwidth": 0.5,
         "tickvals": [
-            -4.0,
-            -2.0,
+            -1.0,
+            -0.5,
             0.0,
-            2.0,
-            4.0
+            0.5,
+            1.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
-            -5.3,
-            5.3
+            -1.189108,
+            1.125508
         ],
         "domain": [
             0.0391878098571012,
             0.989747375328084
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−1.0",
+            "−0.5",
+            "0.0",
+            "0.5",
+            "1.0"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -3133,42 +3183,37 @@ f(x) = \sin(1/x)
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "-4",
-            "-2",
-            "0",
-            "2",
-            "4"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x1"
+        "type": "-"
     },
     "legend": {
         "yanchor": "auto",
         "xanchor": "auto",
         "bordercolor": "rgba(0, 0, 0, 1.000)",
         "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
         "font": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "borderwidth": 1,
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
         "traceorder": "normal",
         "x": 1.0
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -3185,16 +3230,17 @@ f(x) = \sin(1/x)
 
 
 
-    <div id="7606890d-e0c3-471d-831d-44b5ae59b5c2" style="width:576px;height:384px;"></div>
+    <div id="a1262f0a-287a-47f5-bdef-1ba62cdbe8d0" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('7606890d-e0c3-471d-831d-44b5ae59b5c2');
+    
+        var PLOT = document.getElementById('a1262f0a-287a-47f5-bdef-1ba62cdbe8d0');
     Plotly.plot(PLOT, [
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             -2.0,
             -1.9609367239208475,
@@ -3324,8 +3370,6 @@ f(x) = \sin(1/x)
             1.0,
             2.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -2.12,
             2.12
@@ -3334,13 +3378,30 @@ f(x) = \sin(1/x)
             0.06856347817633907,
             0.9931649168853893
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−2",
+            "−1",
+            "0",
+            "1",
+            "2"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -3348,22 +3409,7 @@ f(x) = \sin(1/x)
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "-2",
-            "-1",
-            "0",
-            "1",
-            "2"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y1"
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -3385,8 +3431,6 @@ f(x) = \sin(1/x)
             0.5,
             1.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -1.06,
             1.06
@@ -3395,13 +3439,30 @@ f(x) = \sin(1/x)
             0.0391878098571012,
             0.989747375328084
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−1.0",
+            "−0.5",
+            "0.0",
+            "0.5",
+            "1.0"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -3409,42 +3470,37 @@ f(x) = \sin(1/x)
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "-1.0",
-            "-0.5",
-            "0.0",
-            "0.5",
-            "1.0"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x1"
+        "type": "-"
     },
     "legend": {
         "yanchor": "auto",
         "xanchor": "auto",
         "bordercolor": "rgba(0, 0, 0, 1.000)",
         "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
         "font": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "borderwidth": 1,
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
         "traceorder": "normal",
         "x": 1.0
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -3464,7 +3520,7 @@ f(x) = \sin(1/x)
 
 
 <pre class='hljl'>
-<span class='hljl-nd'>@vars</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'>
+<span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'>
 </span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>abs</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-oB'>/</span><span class='hljl-n'>x</span><span class='hljl-t'>
 </span><span class='hljl-nf'>limit</span><span class='hljl-p'>(</span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>=&gt;</span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>dir</span><span class='hljl-oB'>=</span><span class='hljl-s'>&quot;+&quot;</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>limit</span><span class='hljl-p'>(</span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>=&gt;</span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>dir</span><span class='hljl-oB'>=</span><span class='hljl-s'>&quot;-&quot;</span><span class='hljl-p'>)</span>
 </pre>
@@ -3494,16 +3550,17 @@ f(x) = \sin(1/x)
 
 
 
-    <div id="e1ce00f9-7c40-4a58-bb8d-d655dae83506" style="width:576px;height:384px;"></div>
+    <div id="8ebdb680-4aca-48ef-8782-898ff3ee1940" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('e1ce00f9-7c40-4a58-bb8d-d655dae83506');
+    
+        var PLOT = document.getElementById('8ebdb680-4aca-48ef-8782-898ff3ee1940');
     Plotly.plot(PLOT, [
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             -5.0,
             -4.975585452450529,
@@ -4029,8 +4086,6 @@ f(x) = \sin(1/x)
             2.0,
             4.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -5.3,
             5.3
@@ -4039,13 +4094,30 @@ f(x) = \sin(1/x)
             0.03769928064547487,
             0.9931649168853894
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−4",
+            "−2",
+            "0",
+            "2",
+            "4"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -4053,22 +4125,7 @@ f(x) = \sin(1/x)
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "-4",
-            "-2",
-            "0",
-            "2",
-            "4"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y1"
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -4090,8 +4147,6 @@ f(x) = \sin(1/x)
             2.0,
             4.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -5.3,
             5.3
@@ -4100,13 +4155,30 @@ f(x) = \sin(1/x)
             0.0391878098571012,
             0.989747375328084
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−4",
+            "−2",
+            "0",
+            "2",
+            "4"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -4114,42 +4186,37 @@ f(x) = \sin(1/x)
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "-4",
-            "-2",
-            "0",
-            "2",
-            "4"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x1"
+        "type": "-"
     },
     "legend": {
         "yanchor": "auto",
         "xanchor": "auto",
         "bordercolor": "rgba(0, 0, 0, 1.000)",
         "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
         "font": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "borderwidth": 1,
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
         "traceorder": "normal",
         "x": 1.0
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -4159,13 +4226,14 @@ f(x) = \sin(1/x)
 
 
 <pre class='hljl'>
-<span class='hljl-nd'>@vars</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-n'>real</span><span class='hljl-oB'>=</span><span class='hljl-kc'>true</span><span class='hljl-t'>
+<span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>::</span><span class='hljl-n'>real</span><span class='hljl-t'>
 </span><span class='hljl-nf'>limit</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>dir</span><span class='hljl-oB'>=</span><span class='hljl-s'>&quot;+&quot;</span><span class='hljl-p'>)</span>
 </pre>
 
 
 
-<div class="well well-sm">\begin{equation*}1\end{equation*}</div>
+<div class="well well-sm">$1$
+</div>
 
 <p>This agrees with the IEEE convention of assigning <code>0^0</code> to be <code>1</code>.</p>
 <p>However, not all such functions with indeterminate forms of <span class="math">$0^0$</span> will have a limit of <span class="math">$1$</span>.</p>
@@ -4173,16 +4241,17 @@ f(x) = \sin(1/x)
 <p>Consider this funny graph:</p>
 
 
-    <div id="f67ffcb6-7286-4f96-ab8a-302a404bf615" style="width:576px;height:384px;"></div>
+    <div id="cdb2a35a-196a-43f2-967b-033a32ca75d9" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('f67ffcb6-7286-4f96-ab8a-302a404bf615');
+    
+        var PLOT = document.getElementById('cdb2a35a-196a-43f2-967b-033a32ca75d9');
     Plotly.plot(PLOT, [
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             -2.0,
             -1.990234180980212,
@@ -4244,11 +4313,11 @@ f(x) = \sin(1/x)
         "type": "scatter"
     },
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             -1.0,
             -0.9902341809802119,
@@ -4301,7 +4370,7 @@ f(x) = \sin(1/x)
             0.7037990968274516,
             0.7408578116170998,
             0.7814609827358966,
-            0.8173603256083466,
+            0.8173603256083465,
             0.8634326732690114,
             0.9091074382712052,
             0.9873712840346219,
@@ -4310,11 +4379,11 @@ f(x) = \sin(1/x)
         "type": "scatter"
     },
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             0.0,
             0.009765819019788131,
@@ -4376,11 +4445,11 @@ f(x) = \sin(1/x)
         "type": "scatter"
     },
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             1.0,
             1.009765819019788,
@@ -4442,11 +4511,11 @@ f(x) = \sin(1/x)
         "type": "scatter"
     },
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             2.0,
             2.0097658190197882,
@@ -4521,8 +4590,6 @@ f(x) = \sin(1/x)
             2.0,
             3.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -2.15,
             3.15
@@ -4531,13 +4598,31 @@ f(x) = \sin(1/x)
             0.03769928064547487,
             0.9931649168853894
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−2",
+            "−1",
+            "0",
+            "1",
+            "2",
+            "3"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -4545,23 +4630,7 @@ f(x) = \sin(1/x)
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "-2",
-            "-1",
-            "0",
-            "1",
-            "2",
-            "3"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y1"
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -4585,8 +4654,6 @@ f(x) = \sin(1/x)
             3.0,
             4.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -2.18,
             4.18
@@ -4595,23 +4662,12 @@ f(x) = \sin(1/x)
             0.0391878098571012,
             0.989747375328084
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
-            "-2",
-            "-1",
+            "−2",
+            "−1",
             "0",
             "1",
             "2",
@@ -4619,18 +4675,33 @@ f(x) = \sin(1/x)
             "4"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x1"
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -4657,7 +4728,8 @@ f(x) = \sin(1/x)
 
 
 
-<div class="well well-sm">\begin{equation*}\left\langle -1, 1\right\rangle\end{equation*}</div>
+<div class="well well-sm">$\left\langle -1, 1\right\rangle$
+</div>
 
 <p>&#40;We used <code>SymPy</code>&#39;s <code>oo</code> for <span class="math">$\infty$</span> and not <code>Inf</code>.&#41;</p>
 <hr />
@@ -4665,13 +4737,14 @@ f(x) = \sin(1/x)
 
 
 <pre class='hljl'>
-<span class='hljl-nd'>@vars</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-n'>real</span><span class='hljl-oB'>=</span><span class='hljl-kc'>true</span><span class='hljl-t'>
+<span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>::</span><span class='hljl-n'>real</span><span class='hljl-t'>
 </span><span class='hljl-nf'>limit</span><span class='hljl-p'>(</span><span class='hljl-nf'>exp</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-oB'>*</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>=&gt;</span><span class='hljl-n'>oo</span><span class='hljl-p'>)</span>
 </pre>
 
 
 
-<div class="well well-sm">\begin{equation*}0\end{equation*}</div>
+<div class="well well-sm">$0$
+</div>
 
 <hr />
 <p>We have rational functions will have the expected limit. In this example <span class="math">$m = n$</span>, so we get a horizontal asymptote that is not <span class="math">$y=0$</span>:</p>
@@ -4683,7 +4756,8 @@ f(x) = \sin(1/x)
 
 
 
-<div class="well well-sm">\begin{equation*}\frac{1}{4}\end{equation*}</div>
+<div class="well well-sm">$\frac{1}{4}$
+</div>
 
 <hr />
 <p>Though rational functions can have only one &#40;at most&#41; horizontal asymptote, this isn&#39;t true for all functions. Consider the following <span class="math">$f(x) = x / \sqrt{x^2 + 4}$</span>. It has different limits:</p>
@@ -4707,16 +4781,17 @@ f(x) = \sin(1/x)
 <p>Consider the function <span class="math">$f(x) = 1/x^2$</span>. This will have a limit at every point except possibly <span class="math">$0$</span>, where division by <span class="math">$0$</span> is possible. In this case, there is a vertical asymptote. The limit at <span class="math">$0$</span> is <span class="math">$\infty$</span>, in the extended sense above. For <span class="math">$M>0$</span>, we can take any <span class="math">$0 < \delta < 1/\sqrt{M}$</span>. The following graph shows <span class="math">$M=25$</span> where the function values are outside of the box, as <span class="math">$f(x) > M$</span> for those <span class="math">$x$</span> values with <span class="math">$0 < |x-0| < 1/\sqrt{M}$</span>.</p>
 
 
-    <div id="04f7c288-15ef-4d2c-bd3b-a4ac650a9873" style="width:576px;height:384px;"></div>
+    <div id="b8a3cbbe-8f29-44b6-91ac-e5eb67e39efd" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('04f7c288-15ef-4d2c-bd3b-a4ac650a9873');
+    
+        var PLOT = document.getElementById('b8a3cbbe-8f29-44b6-91ac-e5eb67e39efd');
     Plotly.plot(PLOT, [
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             -1.0,
             -0.9804683619604238,
@@ -4802,11 +4877,11 @@ f(x) = \sin(1/x)
         "type": "scatter"
     },
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             0.1415914279409049,
             0.14235362047367822,
@@ -4898,11 +4973,11 @@ f(x) = \sin(1/x)
         "type": "scatter"
     },
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             -0.2,
             0.2
@@ -4926,11 +5001,11 @@ f(x) = \sin(1/x)
         "type": "scatter"
     },
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             -0.2,
             -0.2
@@ -4954,11 +5029,11 @@ f(x) = \sin(1/x)
         "type": "scatter"
     },
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             0.2,
             0.2
@@ -4994,8 +5069,6 @@ f(x) = \sin(1/x)
             0.5,
             1.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -1.06,
             1.06
@@ -5004,13 +5077,30 @@ f(x) = \sin(1/x)
             0.03769928064547487,
             0.9931649168853894
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−1.0",
+            "−0.5",
+            "0.0",
+            "0.5",
+            "1.0"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -5018,22 +5108,7 @@ f(x) = \sin(1/x)
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "-1.0",
-            "-0.5",
-            "0.0",
-            "0.5",
-            "1.0"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y1"
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -5056,8 +5131,6 @@ f(x) = \sin(1/x)
             40.0,
             50.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -1.4996008985620186,
             51.48629751729598
@@ -5066,20 +5139,9 @@ f(x) = \sin(1/x)
             0.0391878098571012,
             0.989747375328084
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "0",
             "10",
@@ -5089,18 +5151,33 @@ f(x) = \sin(1/x)
             "50"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x1"
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -5108,16 +5185,17 @@ f(x) = \sin(1/x)
 <p>The function <span class="math">$f(x)=1/x$</span> requires us to talk about left and right limits of infinity, with the natural generalization. We can see that the left limit at <span class="math">$0$</span> is <span class="math">$-\infty$</span> and the right limit <span class="math">$\infty$</span>:</p>
 
 
-    <div id="0ec05bfc-28f4-41a8-833c-6c13d1dd2c8a" style="width:576px;height:384px;"></div>
+    <div id="a5af6745-5299-43ca-921b-74a595f78d46" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('0ec05bfc-28f4-41a8-833c-6c13d1dd2c8a');
+    
+        var PLOT = document.getElementById('a5af6745-5299-43ca-921b-74a595f78d46');
     Plotly.plot(PLOT, [
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             0.02,
             0.021196312829924048,
@@ -5235,11 +5313,11 @@ f(x) = \sin(1/x)
         "type": "scatter"
     },
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             -1.0,
             -0.9904294973606077,
@@ -5361,8 +5439,6 @@ f(x) = \sin(1/x)
             0.5,
             1.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -1.06,
             1.06
@@ -5371,13 +5447,30 @@ f(x) = \sin(1/x)
             0.05313137941090697,
             0.9931649168853892
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−1.0",
+            "−0.5",
+            "0.0",
+            "0.5",
+            "1.0"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -5385,22 +5478,7 @@ f(x) = \sin(1/x)
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "-1.0",
-            "-0.5",
-            "0.0",
-            "0.5",
-            "1.0"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y1"
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -5422,8 +5500,6 @@ f(x) = \sin(1/x)
             20.0,
             40.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -53.0,
             53.0
@@ -5432,13 +5508,30 @@ f(x) = \sin(1/x)
             0.0391878098571012,
             0.989747375328084
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−40",
+            "−20",
+            "0",
+            "20",
+            "40"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -5446,26 +5539,13 @@ f(x) = \sin(1/x)
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "-40",
-            "-20",
-            "0",
-            "20",
-            "40"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x1"
+        "type": "-"
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -5495,16 +5575,17 @@ f(x) = \sin(1/x)
 
 
 
-    <div id="8e69654e-2b59-4938-bb45-02f73324ad6f" style="width:576px;height:384px;"></div>
+    <div id="9ebdbd0c-3175-4030-a61f-dfc8c1521d3c" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('8e69654e-2b59-4938-bb45-02f73324ad6f');
+    
+        var PLOT = document.getElementById('9ebdbd0c-3175-4030-a61f-dfc8c1521d3c');
     Plotly.plot(PLOT, [
     {
-        "xaxis": "x1",
+        "xaxis": "x",
         "colorbar": {
             "title": ""
         },
-        "yaxis": "y1",
+        "yaxis": "y",
         "x": [
             0.01,
             0.011208520103698782,
@@ -5618,8 +5699,6 @@ f(x) = \sin(1/x)
             0.75,
             1.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -0.019699999999999995,
             1.0297
@@ -5628,20 +5707,9 @@ f(x) = \sin(1/x)
             0.03769928064547487,
             0.9931649168853894
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "0.00",
             "0.25",
@@ -5650,14 +5718,27 @@ f(x) = \sin(1/x)
             "1.00"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y1"
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -5679,8 +5760,6 @@ f(x) = \sin(1/x)
             0.0,
             1.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -3.576198122933073,
             1.1332873239689245
@@ -5689,13 +5768,30 @@ f(x) = \sin(1/x)
             0.0391878098571012,
             0.989747375328084
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−3",
+            "−2",
+            "−1",
+            "0",
+            "1"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -5703,42 +5799,37 @@ f(x) = \sin(1/x)
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "-3",
-            "-2",
-            "-1",
-            "0",
-            "1"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x1"
+        "type": "-"
     },
     "legend": {
         "yanchor": "auto",
         "xanchor": "auto",
         "bordercolor": "rgba(0, 0, 0, 1.000)",
         "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
         "font": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "borderwidth": 1,
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
         "traceorder": "normal",
         "x": 1.0
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -5751,7 +5842,8 @@ f(x) = \sin(1/x)
 
 
 
-<div class="well well-sm">\begin{equation*}-\infty\end{equation*}</div>
+<div class="well well-sm">$-\infty$
+</div>
 
 <h2>Limits of sequences</h2>
 <p>After all this, we still can&#39;t formalize the basic question asked in the introduction to limits: what is the area contained in a parabola. For that we developed a sequence of sums: <span class="math">$s_n = 1/2 \dot((1/4)^0 + (1/4)^1 + (1/4)^2 + \cdots + (1/4)^n)$</span>. This isn&#39;t a function of <span class="math">$x$</span>, but rather depends only on non-negative integer values of <span class="math">$n$</span>. However, the same idea as a limit at infinity can be used to define a limit.</p>
@@ -5763,68 +5855,24 @@ f(x) = \sin(1/x)
 
 
 <pre class='hljl'>
-<span class='hljl-nd'>@vars</span><span class='hljl-t'> </span><span class='hljl-n'>i</span><span class='hljl-t'> </span><span class='hljl-n'>n</span><span class='hljl-t'> </span><span class='hljl-n'>integer</span><span class='hljl-oB'>=</span><span class='hljl-kc'>true</span><span class='hljl-t'>
+<span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>i</span><span class='hljl-oB'>::</span><span class='hljl-n'>integer</span><span class='hljl-t'> </span><span class='hljl-n'>n</span><span class='hljl-oB'>::</span><span class='hljl-p'>(</span><span class='hljl-n'>integer</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>positive</span><span class='hljl-p'>)</span><span class='hljl-t'>
 </span><span class='hljl-nf'>s</span><span class='hljl-p'>(</span><span class='hljl-n'>n</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>//</span><span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>*</span><span class='hljl-t'> </span><span class='hljl-nf'>summation</span><span class='hljl-p'>((</span><span class='hljl-ni'>1</span><span class='hljl-oB'>//</span><span class='hljl-ni'>4</span><span class='hljl-p'>)</span><span class='hljl-oB'>^</span><span class='hljl-n'>i</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>i</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>n</span><span class='hljl-p'>))</span><span class='hljl-t'>    </span><span class='hljl-cs'># rationals make for an exact answer</span><span class='hljl-t'>
 </span><span class='hljl-nf'>limit</span><span class='hljl-p'>(</span><span class='hljl-nf'>s</span><span class='hljl-p'>(</span><span class='hljl-n'>n</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>n</span><span class='hljl-oB'>=&gt;</span><span class='hljl-n'>oo</span><span class='hljl-p'>)</span>
 </pre>
 
 
 
-<div class="well well-sm">\begin{equation*}\frac{2}{3}\end{equation*}</div>
+<div class="well well-sm">$\frac{2}{3}$
+</div>
 
 <h2>Summary</h2>
 <p>The following table captures the various changes to the definition of the limit to accommodate some of the possible behaviors.</p>
 
+<pre class="julia-error">
+ERROR: ArgumentError: Package DataFrames not found in current path:
+- Run &#96;import Pkg; Pkg.add&#40;&quot;DataFrames&quot;&#41;&#96; to install the DataFrames package.
 
-
-<div class="table-responsive">
-<table class="table table-hover">
-<tr><th>Type</th><th>Notation</th><th>V</th><th>U</th></tr>
-
-<tr><td><div class="markdown"><p>limit</p>
-</div></td><td><div class="markdown">&#36;\lim_&#123;x\rightarrow c&#125;f&#40;x&#41; &#61; L&#36;
-</div></td><td><div class="markdown">&#36;&#40;L-\epsilon, L&#43;\epsilon&#41;&#36;
-</div></td><td><div class="markdown">&#36;&#40;c - \delta, c&#43;\delta&#41;&#36;
-</div></td></tr>
-<tr><td><div class="markdown"><p>right limit</p>
-</div></td><td><div class="markdown">&#36;\lim_&#123;x\rightarrow c&#43;&#125;f&#40;x&#41; &#61; L&#36;
-</div></td><td><div class="markdown">&#36;&#40;L-\epsilon, L&#43;\epsilon&#41;&#36;
-</div></td><td><div class="markdown">&#36;&#40;c, c&#43;\delta&#41;&#36;
-</div></td></tr>
-<tr><td><div class="markdown"><p>left limit</p>
-</div></td><td><div class="markdown">&#36;\lim_&#123;x\rightarrow c-&#125;f&#40;x&#41; &#61; L&#36;
-</div></td><td><div class="markdown">&#36;&#40;L-\epsilon, L&#43;\epsilon&#41;&#36;
-</div></td><td><div class="markdown">&#36;&#40;c - \delta, c&#41;&#36;
-</div></td></tr>
-<tr><td><div class="markdown"><p>limit at &#36;\infty&#36;</p>
-</div></td><td><div class="markdown">&#36;\lim_&#123;x\rightarrow \infty&#125;f&#40;x&#41; &#61; L&#36;
-</div></td><td><div class="markdown">&#36;&#40;L-\epsilon, L&#43;\epsilon&#41;&#36;
-</div></td><td><div class="markdown">&#36;&#40;M, \infty&#41;&#36;
-</div></td></tr>
-<tr><td><div class="markdown"><p>limit at &#36;-\infty&#36;</p>
-</div></td><td><div class="markdown">&#36;\lim_&#123;x\rightarrow -\infty&#125;f&#40;x&#41; &#61; L&#36;
-</div></td><td><div class="markdown">&#36;&#40;L-\epsilon, L&#43;\epsilon&#41;&#36;
-</div></td><td><div class="markdown">&#36;&#40;-\infty, M&#41;&#36;
-</div></td></tr>
-<tr><td><div class="markdown"><p>limit of &#36;\infty&#36;</p>
-</div></td><td><div class="markdown">&#36;\lim_&#123;x\rightarrow c&#125;f&#40;x&#41; &#61; \infty&#36;
-</div></td><td><div class="markdown">&#36;&#40;M, \infty&#41;&#36;
-</div></td><td><div class="markdown">&#36;&#40;c - \delta, c&#43;\delta&#41;&#36;
-</div></td></tr>
-<tr><td><div class="markdown"><p>limit of &#36;-\infty&#36;</p>
-</div></td><td><div class="markdown">&#36;\lim_&#123;x\rightarrow c&#125;f&#40;x&#41; &#61; -\infty&#36;
-</div></td><td><div class="markdown">&#36;&#40;-\infty, M&#41;&#36;
-</div></td><td><div class="markdown">&#36;&#40;c - \delta, c&#43;\delta&#41;&#36;
-</div></td></tr>
-<tr><td><div class="markdown"><p>limit of a sequence</p>
-</div></td><td><div class="markdown">&#36;\lim_&#123;n \rightarrow \infty&#125; a_n &#61; L&#36;
-</div></td><td><div class="markdown">&#36;&#40;L-\epsilon, L&#43;\epsilon&#41;&#36;
-</div></td><td><div class="markdown">&#36;&#40;M, \infty&#41;&#36;
-</div></td></tr>
-
-</table>
-</div>
-
+</pre>
 
 
 <h2>Questions</h2>
@@ -5833,32 +5881,32 @@ f(x) = \sin(1/x)
 <p>Does this function have a limit at every <span class="math">$c > 0$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="LTs8Prv1" data-controltype="radio">
+<form name="WeaveQuestion" data-id="BoTada9h" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio inline">
-    <label>
-      <input type="radio" name="radio_LTs8Prv1" value="1"><div class="markdown"><p>Yes</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_BoTada9h" id="radio_BoTada9h_1" value="1">
+  <label class="form-check-label" for="radio_BoTada9h_1">
+    Yes
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio inline">
-    <label>
-      <input type="radio" name="radio_LTs8Prv1" value="2"><div class="markdown"><p>No</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_BoTada9h" id="radio_BoTada9h_2" value="2">
+  <label class="form-check-label" for="radio_BoTada9h_2">
+    No
+  </label>
 </div>
-    </label>
-    </div>
 
-<div id="LTs8Prv1_message"></div>
+<div id="BoTada9h_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_LTs8Prv1']").on("change", function() {
+$("input:radio[name='radio_BoTada9h']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#LTs8Prv1_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#BoTada9h_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#LTs8Prv1_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#BoTada9h_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -5868,32 +5916,32 @@ $("input:radio[name='radio_LTs8Prv1']").on("change", function() {
 <p>Does this function have a limit at <span class="math">$c=0$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="PKDrdzHt" data-controltype="radio">
+<form name="WeaveQuestion" data-id="n2HSh8r7" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio inline">
-    <label>
-      <input type="radio" name="radio_PKDrdzHt" value="1"><div class="markdown"><p>Yes</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_n2HSh8r7" id="radio_n2HSh8r7_1" value="1">
+  <label class="form-check-label" for="radio_n2HSh8r7_1">
+    Yes
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio inline">
-    <label>
-      <input type="radio" name="radio_PKDrdzHt" value="2"><div class="markdown"><p>No</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_n2HSh8r7" id="radio_n2HSh8r7_2" value="2">
+  <label class="form-check-label" for="radio_n2HSh8r7_2">
+    No
+  </label>
 </div>
-    </label>
-    </div>
 
-<div id="PKDrdzHt_message"></div>
+<div id="n2HSh8r7_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_PKDrdzHt']").on("change", function() {
+$("input:radio[name='radio_n2HSh8r7']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#PKDrdzHt_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#n2HSh8r7_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#PKDrdzHt_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#n2HSh8r7_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -5903,32 +5951,32 @@ $("input:radio[name='radio_PKDrdzHt']").on("change", function() {
 <p>Does this function have a right limit at <span class="math">$c=0$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="IVwX7Bte" data-controltype="radio">
+<form name="WeaveQuestion" data-id="UAOKkCA8" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio inline">
-    <label>
-      <input type="radio" name="radio_IVwX7Bte" value="1"><div class="markdown"><p>Yes</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_UAOKkCA8" id="radio_UAOKkCA8_1" value="1">
+  <label class="form-check-label" for="radio_UAOKkCA8_1">
+    Yes
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio inline">
-    <label>
-      <input type="radio" name="radio_IVwX7Bte" value="2"><div class="markdown"><p>No</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_UAOKkCA8" id="radio_UAOKkCA8_2" value="2">
+  <label class="form-check-label" for="radio_UAOKkCA8_2">
+    No
+  </label>
 </div>
-    </label>
-    </div>
 
-<div id="IVwX7Bte_message"></div>
+<div id="UAOKkCA8_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_IVwX7Bte']").on("change", function() {
+$("input:radio[name='radio_UAOKkCA8']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#IVwX7Bte_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#UAOKkCA8_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#IVwX7Bte_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#UAOKkCA8_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -5938,32 +5986,32 @@ $("input:radio[name='radio_IVwX7Bte']").on("change", function() {
 <p>Does this function have a left limit at <span class="math">$c=0$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="ct9lFyNC" data-controltype="radio">
+<form name="WeaveQuestion" data-id="OQTA4t4K" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio inline">
-    <label>
-      <input type="radio" name="radio_ct9lFyNC" value="1"><div class="markdown"><p>Yes</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_OQTA4t4K" id="radio_OQTA4t4K_1" value="1">
+  <label class="form-check-label" for="radio_OQTA4t4K_1">
+    Yes
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio inline">
-    <label>
-      <input type="radio" name="radio_ct9lFyNC" value="2"><div class="markdown"><p>No</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_OQTA4t4K" id="radio_OQTA4t4K_2" value="2">
+  <label class="form-check-label" for="radio_OQTA4t4K_2">
+    No
+  </label>
 </div>
-    </label>
-    </div>
 
-<div id="ct9lFyNC_message"></div>
+<div id="OQTA4t4K_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_ct9lFyNC']").on("change", function() {
+$("input:radio[name='radio_OQTA4t4K']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#ct9lFyNC_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#OQTA4t4K_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#ct9lFyNC_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#OQTA4t4K_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -5974,28 +6022,28 @@ $("input:radio[name='radio_ct9lFyNC']").on("change", function() {
 <p>Find <span class="math">$\lim_{x \rightarrow \infty} \sin(x)/x$</span>.</p>
 
 
-<form name='WeaveQuestion' data-id='qfVvdyAl' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='SNNKsnL2' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="qfVvdyAl" type="number" class="form-control">
+<input id="SNNKsnL2" type="number" class="form-control">
 
 </div>
 
-<div id='qfVvdyAl_message'></div>
+<div id='SNNKsnL2_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#qfVvdyAl').on('change', function() {
+$('#SNNKsnL2').on('change', function() {
   correct = Math.abs(this.value - 0) <= 0;
 
   if(correct) {
-     $('#qfVvdyAl_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#SNNKsnL2_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#qfVvdyAl_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#SNNKsnL2_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -6005,28 +6053,28 @@ $('#qfVvdyAl').on('change', function() {
 <p>Find <span class="math">$\lim_{x \rightarrow \infty} (1-\cos(x))/x^2$</span>.</p>
 
 
-<form name='WeaveQuestion' data-id='j29dNwqp' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='p328dYHc' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="j29dNwqp" type="number" class="form-control">
+<input id="p328dYHc" type="number" class="form-control">
 
 </div>
 
-<div id='j29dNwqp_message'></div>
+<div id='p328dYHc_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#j29dNwqp').on('change', function() {
+$('#p328dYHc').on('change', function() {
   correct = Math.abs(this.value - 0) <= 0;
 
   if(correct) {
-     $('#j29dNwqp_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#p328dYHc_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#j29dNwqp_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#p328dYHc_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -6036,28 +6084,28 @@ $('#j29dNwqp').on('change', function() {
 <p>Find <span class="math">$\lim_{x \rightarrow \infty} \log(x)/x$</span>.</p>
 
 
-<form name='WeaveQuestion' data-id='IpoLahxV' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='BkHIY5HC' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="IpoLahxV" type="number" class="form-control">
+<input id="BkHIY5HC" type="number" class="form-control">
 
 </div>
 
-<div id='IpoLahxV_message'></div>
+<div id='BkHIY5HC_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#IpoLahxV').on('change', function() {
+$('#BkHIY5HC').on('change', function() {
   correct = Math.abs(this.value - 0) <= 0;
 
   if(correct) {
-     $('#IpoLahxV_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#BkHIY5HC_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#IpoLahxV_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#BkHIY5HC_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -6067,44 +6115,48 @@ $('#IpoLahxV').on('change', function() {
 <p>Find <span class="math">$\lim_{x \rightarrow 2+} (x-3)/(x-2)$</span>.</p>
 
 
-<form name="WeaveQuestion" data-id="hfwWv0yK" data-controltype="radio">
+<form name="WeaveQuestion" data-id="7VZVA8vf" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_hfwWv0yK" value="1"><div class="markdown">&#36;L&#61;-\infty&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_hfwWv0yK" value="2"><div class="markdown">&#36;L&#61;-1&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_hfwWv0yK" value="3"><div class="markdown">&#36;L&#61;\infty&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_hfwWv0yK" value="4"><div class="markdown">&#36;L&#61;0&#36;
-</div>
-    </label>
-    </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_7VZVA8vf" id="radio_7VZVA8vf_1" value="1">
+  <label class="form-check-label" for="radio_7VZVA8vf_1">
+    &#36;L&#61;\infty&#36;
 
-<div id="hfwWv0yK_message"></div>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_7VZVA8vf" id="radio_7VZVA8vf_2" value="2">
+  <label class="form-check-label" for="radio_7VZVA8vf_2">
+    &#36;L&#61;-1&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_7VZVA8vf" id="radio_7VZVA8vf_3" value="3">
+  <label class="form-check-label" for="radio_7VZVA8vf_3">
+    &#36;L&#61;-\infty&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_7VZVA8vf" id="radio_7VZVA8vf_4" value="4">
+  <label class="form-check-label" for="radio_7VZVA8vf_4">
+    &#36;L&#61;0&#36;
+
+  </label>
+</div>
+
+<div id="7VZVA8vf_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_hfwWv0yK']").on("change", function() {
-  correct = this.value == 1;
+$("input:radio[name='radio_7VZVA8vf']").on("change", function() {
+  correct = this.value == 3;
 
   if(correct) {
-     $("#hfwWv0yK_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#7VZVA8vf_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#hfwWv0yK_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#7VZVA8vf_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -6114,44 +6166,48 @@ $("input:radio[name='radio_hfwWv0yK']").on("change", function() {
 <p>Find <span class="math">$\lim_{x \rightarrow -3-} (x-3)/(x+3)$</span>.</p>
 
 
-<form name="WeaveQuestion" data-id="lxzI31UY" data-controltype="radio">
+<form name="WeaveQuestion" data-id="i12Fdjq2" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_lxzI31UY" value="1"><div class="markdown">&#36;L&#61;\infty&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_lxzI31UY" value="2"><div class="markdown">&#36;L&#61;-\infty&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_lxzI31UY" value="3"><div class="markdown">&#36;L&#61;-1&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_lxzI31UY" value="4"><div class="markdown">&#36;L&#61;0&#36;
-</div>
-    </label>
-    </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_i12Fdjq2" id="radio_i12Fdjq2_1" value="1">
+  <label class="form-check-label" for="radio_i12Fdjq2_1">
+    &#36;L&#61;-1&#36;
 
-<div id="lxzI31UY_message"></div>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_i12Fdjq2" id="radio_i12Fdjq2_2" value="2">
+  <label class="form-check-label" for="radio_i12Fdjq2_2">
+    &#36;L&#61;-\infty&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_i12Fdjq2" id="radio_i12Fdjq2_3" value="3">
+  <label class="form-check-label" for="radio_i12Fdjq2_3">
+    &#36;L&#61;\infty&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_i12Fdjq2" id="radio_i12Fdjq2_4" value="4">
+  <label class="form-check-label" for="radio_i12Fdjq2_4">
+    &#36;L&#61;0&#36;
+
+  </label>
+</div>
+
+<div id="i12Fdjq2_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_lxzI31UY']").on("change", function() {
-  correct = this.value == 1;
+$("input:radio[name='radio_i12Fdjq2']").on("change", function() {
+  correct = this.value == 3;
 
   if(correct) {
-     $("#lxzI31UY_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#i12Fdjq2_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#lxzI31UY_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#i12Fdjq2_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -6162,44 +6218,44 @@ $("input:radio[name='radio_lxzI31UY']").on("change", function() {
 <p>Some functions do not have a limit. Make a graph of <span class="math">$\sin(1/x)$</span> from <span class="math">$0.0001$</span> to <span class="math">$1$</span> and look at the output. Why does a limit not exist?</p>
 
 
-<form name="WeaveQuestion" data-id="RSSzeA07" data-controltype="radio">
+<form name="WeaveQuestion" data-id="VLfolSLi" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_RSSzeA07" value="1"><div class="markdown"><p>Any function that oscillates does not have a limit.</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_VLfolSLi" id="radio_VLfolSLi_1" value="1">
+  <label class="form-check-label" for="radio_VLfolSLi_1">
+    The limit does exist - it is any number from -1 to 1
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_RSSzeA07" value="2"><div class="markdown"><p>The function oscillates too much and its y values do not get close to any one value</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_VLfolSLi" id="radio_VLfolSLi_2" value="2">
+  <label class="form-check-label" for="radio_VLfolSLi_2">
+    Err, the limit does exists and is 1
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_RSSzeA07" value="3"><div class="markdown"><p>The limit does exist - it is any number from -1 to 1</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_VLfolSLi" id="radio_VLfolSLi_3" value="3">
+  <label class="form-check-label" for="radio_VLfolSLi_3">
+    The function oscillates too much and its y values do not get close to any one value
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_RSSzeA07" value="4"><div class="markdown"><p>Err, the limit does exists and is 1</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_VLfolSLi" id="radio_VLfolSLi_4" value="4">
+  <label class="form-check-label" for="radio_VLfolSLi_4">
+    Any function that oscillates does not have a limit.
+  </label>
 </div>
-    </label>
-    </div>
 
-<div id="RSSzeA07_message"></div>
+<div id="VLfolSLi_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_RSSzeA07']").on("change", function() {
-  correct = this.value == 2;
+$("input:radio[name='radio_VLfolSLi']").on("change", function() {
+  correct = this.value == 3;
 
   if(correct) {
-     $("#RSSzeA07_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#VLfolSLi_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#RSSzeA07_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#VLfolSLi_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -6217,44 +6273,47 @@ $("input:radio[name='radio_RSSzeA07']").on("change", function() {
 <p>Consider different values of <span class="math">$k$</span> to see if this limit depends on <span class="math">$k$</span> or not. What is <span class="math">$L$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="WOpkpSGq" data-controltype="radio">
+<form name="WeaveQuestion" data-id="mTy7ccPL" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_WOpkpSGq" value="1"><div class="markdown">&#36;k&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_WOpkpSGq" value="2"><div class="markdown">&#36;\log&#40;k&#41;&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_WOpkpSGq" value="3"><div class="markdown"><p>The limit does not exist</p>
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_WOpkpSGq" value="4"><div class="markdown">&#36;1&#36;
-</div>
-    </label>
-    </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_mTy7ccPL" id="radio_mTy7ccPL_1" value="1">
+  <label class="form-check-label" for="radio_mTy7ccPL_1">
+    &#36;1&#36;
 
-<div id="WOpkpSGq_message"></div>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_mTy7ccPL" id="radio_mTy7ccPL_2" value="2">
+  <label class="form-check-label" for="radio_mTy7ccPL_2">
+    The limit does not exist
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_mTy7ccPL" id="radio_mTy7ccPL_3" value="3">
+  <label class="form-check-label" for="radio_mTy7ccPL_3">
+    &#36;k&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_mTy7ccPL" id="radio_mTy7ccPL_4" value="4">
+  <label class="form-check-label" for="radio_mTy7ccPL_4">
+    &#36;\log&#40;k&#41;&#36;
+
+  </label>
+</div>
+
+<div id="mTy7ccPL_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_WOpkpSGq']").on("change", function() {
-  correct = this.value == 4;
+$("input:radio[name='radio_mTy7ccPL']").on("change", function() {
+  correct = this.value == 1;
 
   if(correct) {
-     $("#WOpkpSGq_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#mTy7ccPL_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#WOpkpSGq_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#mTy7ccPL_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -6277,44 +6336,47 @@ f &#40;generic function with 1 method&#41;
 <p>Consider different values of <span class="math">$k$</span> to see if the limit depends on <span class="math">$k$</span> or not. What is <span class="math">$L$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="FU4V5AyZ" data-controltype="radio">
+<form name="WeaveQuestion" data-id="Kr8ZVU6P" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_FU4V5AyZ" value="1"><div class="markdown">&#36;k&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_FU4V5AyZ" value="2"><div class="markdown">&#36;1&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_FU4V5AyZ" value="3"><div class="markdown"><p>The limit does not exist</p>
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_FU4V5AyZ" value="4"><div class="markdown">&#36;\log&#40;k&#41;&#36;
-</div>
-    </label>
-    </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_Kr8ZVU6P" id="radio_Kr8ZVU6P_1" value="1">
+  <label class="form-check-label" for="radio_Kr8ZVU6P_1">
+    &#36;1&#36;
 
-<div id="FU4V5AyZ_message"></div>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_Kr8ZVU6P" id="radio_Kr8ZVU6P_2" value="2">
+  <label class="form-check-label" for="radio_Kr8ZVU6P_2">
+    &#36;\log&#40;k&#41;&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_Kr8ZVU6P" id="radio_Kr8ZVU6P_3" value="3">
+  <label class="form-check-label" for="radio_Kr8ZVU6P_3">
+    The limit does not exist
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_Kr8ZVU6P" id="radio_Kr8ZVU6P_4" value="4">
+  <label class="form-check-label" for="radio_Kr8ZVU6P_4">
+    &#36;k&#36;
+
+  </label>
+</div>
+
+<div id="Kr8ZVU6P_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_FU4V5AyZ']").on("change", function() {
-  correct = this.value == 1;
+$("input:radio[name='radio_Kr8ZVU6P']").on("change", function() {
+  correct = this.value == 4;
 
   if(correct) {
-     $("#FU4V5AyZ_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#Kr8ZVU6P_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#FU4V5AyZ_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#Kr8ZVU6P_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -6330,50 +6392,50 @@ x^4/x^3,\quad x^{100+1}/x^{100}, \quad x/\log(x), \quad 3^x / 2^x, \quad e^x/x^{
 \]</p>
 
 
-<form name="WeaveQuestion" data-id="3BRYXl3F" data-controltype="radio">
+<form name="WeaveQuestion" data-id="pKrF5jK7" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_3BRYXl3F" value="1"><div class="markdown"><p>the first one</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_pKrF5jK7" id="radio_pKrF5jK7_1" value="1">
+  <label class="form-check-label" for="radio_pKrF5jK7_1">
+    the first one
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_3BRYXl3F" value="2"><div class="markdown"><p>the first and second ones</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_pKrF5jK7" id="radio_pKrF5jK7_2" value="2">
+  <label class="form-check-label" for="radio_pKrF5jK7_2">
+    the first and second ones
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_3BRYXl3F" value="3"><div class="markdown"><p>the first, second and third ones</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_pKrF5jK7" id="radio_pKrF5jK7_3" value="3">
+  <label class="form-check-label" for="radio_pKrF5jK7_3">
+    the first, second and third ones
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_3BRYXl3F" value="4"><div class="markdown"><p>the first, second, third, and fourth ones</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_pKrF5jK7" id="radio_pKrF5jK7_4" value="4">
+  <label class="form-check-label" for="radio_pKrF5jK7_4">
+    the first, second, third, and fourth ones
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_3BRYXl3F" value="5"><div class="markdown"><p>all of them</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_pKrF5jK7" id="radio_pKrF5jK7_5" value="5">
+  <label class="form-check-label" for="radio_pKrF5jK7_5">
+    all of them
+  </label>
 </div>
-    </label>
-    </div>
 
-<div id="3BRYXl3F_message"></div>
+<div id="pKrF5jK7_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_3BRYXl3F']").on("change", function() {
+$("input:radio[name='radio_pKrF5jK7']").on("change", function() {
   correct = this.value == 5;
 
   if(correct) {
-     $("#3BRYXl3F_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#pKrF5jK7_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#3BRYXl3F_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#pKrF5jK7_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -6384,50 +6446,50 @@ $("input:radio[name='radio_3BRYXl3F']").on("change", function() {
 <p>A slant asymptote is a line <span class="math">$mx + b$</span> for which the graph of <span class="math">$f(x)$</span> gets close to as <span class="math">$x$</span> gets large. We can&#39;t express this directly as a limit, as &quot;<span class="math">$L$</span>&quot; is not a number. How might we?</p>
 
 
-<form name="WeaveQuestion" data-id="Gi9hEY7G" data-controltype="radio">
+<form name="WeaveQuestion" data-id="pryopTar" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_Gi9hEY7G" value="1"><div class="markdown"><p>We can say &#36;f&#40;x&#41; - &#40;mx&#43;b&#41;&#36; has a horizontal asymptote &#36;y&#61;0&#36;</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_pryopTar" id="radio_pryopTar_1" value="1">
+  <label class="form-check-label" for="radio_pryopTar_1">
+    Any of the above
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_Gi9hEY7G" value="2"><div class="markdown"><p>We can talk about the limit at &#36;\infty&#36; of &#36;f&#40;x&#41; - &#40;mx &#43; b&#41;&#36; being &#36;0&#36;</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_pryopTar" id="radio_pryopTar_2" value="2">
+  <label class="form-check-label" for="radio_pryopTar_2">
+    We can talk about the limit at &#36;\infty&#36; of &#36;f&#40;x&#41; - mx&#36; being &#36;b&#36;
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_Gi9hEY7G" value="3"><div class="markdown"><p>We can say &#36;f&#40;x&#41; - mx&#36; has a horizontal asymptote &#36;y&#61;b&#36;</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_pryopTar" id="radio_pryopTar_3" value="3">
+  <label class="form-check-label" for="radio_pryopTar_3">
+    We can say &#36;f&#40;x&#41; - mx&#36; has a horizontal asymptote &#36;y&#61;b&#36;
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_Gi9hEY7G" value="4"><div class="markdown"><p>We can talk about the limit at &#36;\infty&#36; of &#36;f&#40;x&#41; - mx&#36; being &#36;b&#36;</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_pryopTar" id="radio_pryopTar_4" value="4">
+  <label class="form-check-label" for="radio_pryopTar_4">
+    We can say &#36;f&#40;x&#41; - &#40;mx&#43;b&#41;&#36; has a horizontal asymptote &#36;y&#61;0&#36;
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_Gi9hEY7G" value="5"><div class="markdown"><p>Any of the above</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_pryopTar" id="radio_pryopTar_5" value="5">
+  <label class="form-check-label" for="radio_pryopTar_5">
+    We can talk about the limit at &#36;\infty&#36; of &#36;f&#40;x&#41; - &#40;mx &#43; b&#41;&#36; being &#36;0&#36;
+  </label>
 </div>
-    </label>
-    </div>
 
-<div id="Gi9hEY7G_message"></div>
+<div id="pryopTar_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Gi9hEY7G']").on("change", function() {
-  correct = this.value == 5;
+$("input:radio[name='radio_pryopTar']").on("change", function() {
+  correct = this.value == 1;
 
   if(correct) {
-     $("#Gi9hEY7G_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#pryopTar_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Gi9hEY7G_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#pryopTar_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -6440,28 +6502,28 @@ $("input:radio[name='radio_Gi9hEY7G']").on("change", function() {
 <p>What is <span class="math">$\lim_{x_n \rightarrow 0} f(x_n)$</span>?</p>
 
 
-<form name='WeaveQuestion' data-id='6466yKt4' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='1tQjqt9u' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="6466yKt4" type="number" class="form-control">
+<input id="1tQjqt9u" type="number" class="form-control">
 
 </div>
 
-<div id='6466yKt4_message'></div>
+<div id='1tQjqt9u_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#6466yKt4').on('change', function() {
+$('#1tQjqt9u').on('change', function() {
   correct = Math.abs(this.value - 1) <= 0;
 
   if(correct) {
-     $('#6466yKt4_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#1tQjqt9u_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#6466yKt4_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#1tQjqt9u_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -6470,28 +6532,28 @@ $('#6466yKt4').on('change', function() {
 <p>What is <span class="math">$\lim_{x_n \rightarrow 0} f(y_n)$</span>?</p>
 
 
-<form name='WeaveQuestion' data-id='PRbQoXWJ' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='jMDijelr' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="PRbQoXWJ" type="number" class="form-control">
+<input id="jMDijelr" type="number" class="form-control">
 
 </div>
 
-<div id='PRbQoXWJ_message'></div>
+<div id='jMDijelr_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#PRbQoXWJ').on('change', function() {
+$('#jMDijelr').on('change', function() {
   correct = Math.abs(this.value - -1) <= 0;
 
   if(correct) {
-     $('#PRbQoXWJ_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#jMDijelr_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#PRbQoXWJ_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#jMDijelr_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -6500,38 +6562,38 @@ $('#PRbQoXWJ').on('change', function() {
 <p>This shows that</p>
 
 
-<form name="WeaveQuestion" data-id="IIL6HXgb" data-controltype="radio">
+<form name="WeaveQuestion" data-id="igCzsZ6g" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_IIL6HXgb" value="1"><div class="markdown"><p>&#36;f&#40;x&#41;&#36; has a limit of &#36;-11&#36; as &#36;x \rightarrow 0&#36;</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_igCzsZ6g" id="radio_igCzsZ6g_1" value="1">
+  <label class="form-check-label" for="radio_igCzsZ6g_1">
+    &#36;f&#40;x&#41;&#36; has a limit of &#36;-11&#36; as &#36;x \rightarrow 0&#36;
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_IIL6HXgb" value="2"><div class="markdown"><p>&#36;f&#40;x&#41;&#36; has a limit of &#36;1&#36; as &#36;x \rightarrow 0&#36;</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_igCzsZ6g" id="radio_igCzsZ6g_2" value="2">
+  <label class="form-check-label" for="radio_igCzsZ6g_2">
+    &#36;f&#40;x&#41;&#36; does not have a limit as &#36;x \rightarrow 0&#36;
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_IIL6HXgb" value="3"><div class="markdown"><p>&#36;f&#40;x&#41;&#36; does not have a limit as &#36;x \rightarrow 0&#36;</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_igCzsZ6g" id="radio_igCzsZ6g_3" value="3">
+  <label class="form-check-label" for="radio_igCzsZ6g_3">
+    &#36;f&#40;x&#41;&#36; has a limit of &#36;1&#36; as &#36;x \rightarrow 0&#36;
+  </label>
 </div>
-    </label>
-    </div>
 
-<div id="IIL6HXgb_message"></div>
+<div id="igCzsZ6g_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_IIL6HXgb']").on("change", function() {
-  correct = this.value == 3;
+$("input:radio[name='radio_igCzsZ6g']").on("change", function() {
+  correct = this.value == 2;
 
   if(correct) {
-     $("#IIL6HXgb_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#igCzsZ6g_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#IIL6HXgb_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#igCzsZ6g_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -6540,6 +6602,18 @@ $("input:radio[name='radio_IIL6HXgb']").on("change", function() {
 
   </div>
 </div>
+
+<script>
+  document.querySelectorAll('pre.hljl').forEach(el => {   // first, find all the div.code blocks
+  hljs.highlightElement(el);                              // then highlight each
+  });
+
+  var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+  var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
+  });
+</script>
+
 
 </body>
 </html>
