@@ -69,8 +69,7 @@ numbers between the start and end are specified by `a:b`, as in
 ```
 
 But wait, nothing printed? This is because `1:10` is efficiently
-stored. Basically, only the current state and a means to generate the
-next value are kept. To expand the values, you have to ask for them
+stored. Basically, a recipe to generate the next number from the previous number is created and `1:10` just stores the start and end point and that recipe is used to generate the set of all values. To expand the values, you have to ask for them
 to be `collect`ed (though this typically isn't needed in practice):
 
 ```julia;
@@ -156,11 +155,6 @@ and
 collect(xs)
 ```
 
-```julia;echo=false;
-note("""
-For `Julia` version `1.0` the stop value is also specified with a keyword, as in `range(-1, stop=1, length=9)`. An adjustment will need to be made if that version is used.
-""")
-```
 
 ## Filtering and modifying arithmetic progressions
 
@@ -197,13 +191,12 @@ requires us to write a function akin to `iseven`, which isn't hard (e.g.,
 `is_seven(x)=x%7==0`), but isn't something we continue with just yet.
 
 For another example, here is an inefficient way to list the prime
-numbers between 100 and 200. This uses an inefficient `isprime`
-function (which simply checks all possible factors do not divide `n`
-evenly), defined below. For real-world usage, the `Primes` package
-provides an alternative.
+numbers between 100 and 200. This uses the `isprime`
+function from the `Primes` package
+
 
 ```julia;
-isprime(n) =  all(!iszero(rem(n, i)) for i in 2:floor(Int,sqrt(n)))
+using Primes
 filter(isprime, 100:200)
 ```
 
