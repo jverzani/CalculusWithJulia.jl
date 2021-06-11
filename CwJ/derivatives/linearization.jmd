@@ -334,7 +334,7 @@ satisfies $0 < \xi < e < x$, so is in $[0,x]$.
 `SymPy` can find the tangent line expression as a special case of its `series` function (which implements Taylor series). Here we see the answer provided for $e^{\sin(x)}$:
 
 ```julia;
-@vars x
+@syms x
 series(exp(sin(x)), x, 0, 2)
 ```
 

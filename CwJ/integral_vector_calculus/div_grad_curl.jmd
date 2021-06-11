@@ -477,7 +477,7 @@ f(v) = f(v...)
 F(x,y,z) = [x, y, z]
 F(v) = F(v...)
 
-@vars x y z
+@syms x y z
 ∇(f(x,y,z))  # symbolic operation on the symbolic expression f(x,y,z)
 ```
 
@@ -556,7 +556,7 @@ The radial vector field $F(x,y,z) = \langle x, y, z \rangle$ is also an example 
 
 ```julia;
 F(x,y,z) = [x,y,z]
-@vars x y z real=true
+@syms x::real y::real z::real
 ∇ ⋅ F(x,y,z)
 ```
 
@@ -591,7 +591,7 @@ In the vector field above, the shape along the curved edges has constant magnitu
 Now, were the field on the right edge less, it might be that the two balance out and there is no divergence. This occurs with the inverse square laws, such as for gravity and electric field:
 
 ```julia;
-@vars x y z real=true
+@syms x::real y::real z::real
 R = [x,y,z]
 Rhat = R/norm(R)
 VF = (1/norm(R)^2) * Rhat
@@ -671,7 +671,7 @@ Following Strang, in general the curl can point in any direction, so the amount 
 If $\vec{a}$ is some vector and $\hat{r} = \langle x, y, z\rangle$ is the radial vector, then $\vec{a} \times \vec{r}$ has a curl, which is given by:
 
 ```julia;
-@vars x y z a1 a2 a3
+@syms x y z a1 a2 a3
 a = [a1, a2, a3]
 r = [x, y, z]
 curl(a × r, [x,y, z])
@@ -693,7 +693,7 @@ We will see that this can be anticipated, as $F = (1/2) \nabla(x^2+y^2+z^2)$ is 
 In fact, the curl of any radial field will be $\vec{0}$. Here we represent a radial field as a scalar function of $\vec{r}$ time $\hat{r}$:
 
 ```julia;
-H = SymFunction("H")
+@syms H()
 R = sqrt(x^2 + y^2 + z^2)
 Rhat = [x, y, z]/R
 curl(H(R) * Rhat, [x, y, z])
@@ -861,9 +861,9 @@ p
 We will get from the *approximate* surface integral of the *approximate* curl the following terms:
 
 ```julia;
-@vars x y z Δx Δy Δz
+@syms x y z Δx Δy Δz
 p1, p2, p3, p4=(x, y, z), (x + Δx, y, z), (x + Δx, y + Δy, z), (x, y + Δy, z)
-F_z = SymFunction("F_z")
+@syms F_z()
 ex = (-F_z(p2...) + F_z(p3...))*Δz +   # face A
 (-F_z(p3...) + F_z(p4...))*Δz +   # face B
 (F_z(p1...) - F_z(p4...))*Δz  +   # face C

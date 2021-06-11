@@ -240,7 +240,7 @@ The `integrate` function in `SymPy` can handle most problems which involve subst
 * This integral, $\int_0^2 4x/\sqrt{x^2 +1}dx$, involves a substitution for $x^2 + 1$:
 
 ```julia;
-@vars x t real=true
+@syms x::real t::real
 f(x) = 4x / sqrt(x^2 + 1)
 integrate(f(x), (x, 0, 2))
 ```
@@ -308,7 +308,7 @@ We can help `SymPy` out by substitution:
 
 ```julia;
 u(x) = x * log(x)
-@vars w dw
+@syms w dw
 ex = f(x)
 ex = ex(u(x) => w, diff(u(x),x) => dw)
 ```

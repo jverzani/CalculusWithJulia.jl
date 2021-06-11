@@ -167,7 +167,7 @@ In fact, it isn't hard to see that an integral of $x^m e^x$, $m$ a positive inte
 
 ```julia;
 using CalculusWithJulia   # loads `SymPy`
-@vars x
+@syms x
 integrate(x^10 * exp(x), x)
 ```
 

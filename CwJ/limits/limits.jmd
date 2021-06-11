@@ -433,7 +433,7 @@ notation $\lim_{x \rightarrow c}f(x)$.)
 For example, the limit at $0$ of $(1-\cos(x))/x^2$ is easily handled:
 
 ```julia;
-@vars x real=true
+@syms x::real
 f(x) = (1 - cos(x)) / x^2
 limit(f(x), x=>0)		# f(x) is a symbolic expression when x is
 ```
@@ -472,7 +472,7 @@ limit(f, 0)
 Finally, for the third we define a new variable and proceed:
 
 ```julia;
-@vars rho real=true
+@syms rho::real
 limit( (x^(1-rho) - 1) / (1 - rho), rho=>1)
 ```
 

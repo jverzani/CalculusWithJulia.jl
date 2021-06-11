@@ -186,7 +186,7 @@ by noting the radius, as a function of $y$, will be $R = r(1 -
 y/h)$. This gives the well-known volume of a cone:
 
 ```julia;
-@vars r h x y
+@syms r h x y
 R = r*(1 - y/h)
 integrate(pi*R^2, (y, 0, h))
 ```

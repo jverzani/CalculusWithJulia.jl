@@ -132,7 +132,7 @@ The `SymPy` function `limit` has a keyword argument `dir="+"` or
 
 
 ```julia;
-@vars x
+@syms x
 f(x) = abs(x)/x
 limit(f(x), x=>0, dir="+"), limit(f(x), x=>0, dir="-")
 ```
@@ -175,7 +175,7 @@ $f(x) = x^x$ at $x=0$. This function is not well defined for all $x <
 has a right limit $\lim_{x \rightarrow 0+} x^x = 1$. `SymPy` can verify:
 
 ```julia;
-@vars x real=true
+@syms x::real
 limit(x^x, x, 0, dir="+")
 ```
 
@@ -246,7 +246,7 @@ limit(sin(x), x=>oo)
 However, a damped oscillation, such as $f(x) = e^{-x} \sin(x)$ will have a limit:
 
 ```julia;
-@vars x real=true
+@syms x::real
 limit(exp(-x)*sin(x), x=>oo)
 ```
 
@@ -358,7 +358,7 @@ integers.
 `SymPy` is happy to compute limits of sequences. Defining this one involving a sum is best done with the `summation` function:
 
 ```julia;
-@vars i n integer=true
+@syms i::integer n::(integer, positive)
 s(n) = 1//2 * summation((1//4)^i, (i, 0, n))    # rationals make for an exact answer
 limit(s(n), n=>oo)
 ```

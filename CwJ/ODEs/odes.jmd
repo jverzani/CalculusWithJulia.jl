@@ -7,7 +7,10 @@ using Plots
 nothing
 ```
 
-Some relationships are easiest to describe in terms of derivatives. For example:
+Some relationships are easiest to describe in terms of rates or derivatives. For example:
+
+* Knowing the speed of a car and how long it has been driving can
+  summarize the car's location.
 
 * One of Newton's famous laws, $F=ma$, describes the force on an
    object of mass $m$ in terms of the acceleration. The acceleration
@@ -15,16 +18,17 @@ Some relationships are easiest to describe in terms of derivatives. For example:
    position. So if we know the rates of change of $v(t)$ or $x(t)$, we
    can differentiate to find $F$.
 
-
-
-
 * Newton's law of [cooling](http://tinyurl.com/z4lmetp). This
   describes the temperature change in an object due to a difference in
   temperature with the object's surroundings. The formula being,
   $T'(t) = -r \left(T(t) - T_a \right)$, where $T(t)$ is temperature at time $t$
   and $T_a$ the ambient temperature.
 
-* [Hooke's law](http://tinyurl.com/kbz7r8l) relates force on an object to the position on the object, through $F = k x$. This is appropriate for many systems involving springs. Combined with Newton's law $F=ma$, this leads to an equation that $x$ must satisfy: $m x''(t) = k x(t)$.
+* [Hooke's law](http://tinyurl.com/kbz7r8l) relates force on an object
+  to the position on the object, through $F = k x$. This is
+  appropriate for many systems involving springs. Combined with
+  Newton's law $F=ma$, this leads to an equation that $x$ must
+  satisfy: $m x''(t) = k x(t)$.
 
 ## Motion with constant acceleration
 
@@ -310,16 +314,16 @@ there is a different function, `dsolve`. The basic idea is to describe
 the differential equation using a symbolic function and then call
 `dsolve` to solve the expression.
 
-Symbolic functions are defined by `SymFunction` (or the macro `@symfuns`):
+Symbolic functions are defined by the  `@syms` macro (also see `?symbols`) using parentheses to distinguish a function from a variable:
 
 ```julia;
 using CalculusWithJulia   # loads `SymPy`
 using Plots
-u = SymFunction("u")
+@syms x u() # a symbolic variable and a symbolic function
 ```
 
 
-We will use this to sole the following, known as the *logistic equation*:
+We will solve the following, known as the *logistic equation*:
 
 $$~
 u'(x) = a u(1-u), \quad a > 0
@@ -330,26 +334,28 @@ $u=1$ the rate of change is $0$, so we expect the function might be
 bounded within that range. If not, when $u$ gets bigger than $1$, then
 the slope is negative and when $u$ gets less than $0$, the slope is
 positive, so there will at least be a drift back to the range
-$[0,1]$. Let's see exactly what happens. We define some variables,
+$[0,1]$. Let's see exactly what happens. We define a parameter,
 restricting `a` to be positive:
 
 
 
 ```julia;
-@vars x y
-@vars a positive=true
+@syms a::positive
 ```
 
 
 Our equation can be specified by an expression equaling $0$:
 
 ```julia;
-eqn = u'(x) - a * u(x) * (1 - u(x))
+eqn = u'(x) ⩵ a * u(x) * (1 - u(x)) # use l \Equal[tab] r, Eq(l,r), or just l - r
 ```
 
 In the above, we evaluate the symbolic function at the variable `x`
-through the use of `u(x)` in the expression. Finally, we call `dsolve`
-to find a solution (if possible):
+through the use of `u(x)` in the expression. The equation above uses the Unicode `\Equal[tab]` operator to combine the left- and right-hand sides as an equation in `SymPy`. This is a shortcut for `Eq(l,r)`, but just using `l-r` suffices, as the default assumption for an equation is that it is set to `0`.
+
+
+
+To finish, we call `dsolve` to find a solution (if possible):
 
 ```julia;
 out = dsolve(eqn)
@@ -361,12 +367,25 @@ that when $a > 0$, as $x$ goes to positive infinity the solution goes
 to $1$, and when $x$ goes to negative infinity, the solution goes to $0$
 and otherwise is trapped in between, as expected.
 
+The limits are confirmed by verifying the that right-hand side behaves as expected:
+
+```julia;
+limit(rhs(out), x => oo), limit(rhs(out), x => -oo)
+```
+
+We can confirm that the solution is always increasing, hence trapped within ``[0,1]`` by observing that the derivative is positive when `C₁` is:
+
+```juila;
+diff(rhs(out),x)
+```
+
+
+
 Suppose that $u(0) = 1/2$. Can we solve for $C_1$ symbolically? We can use `solve`, but first we will need to get the symbol for `C_1`:
 
 ```julia;
-rhs(x) = x.rhs        # convenience to extract right hand side of an equation
 eq = rhs(out)    # just the right hand side
-C1 = first(setdiff(free_symbols(eq), (x,a))) # fish out constant
+C1 = first(setdiff(free_symbols(eq), (x,a))) # fish out constant, it is not x or a
 c1 = solve(eq(x=>0) - 1//2, C1)
 ```
 
@@ -393,8 +412,8 @@ Hooke's law relates the force on an object to its position via $F=ma = -kx$, or 
 Suppose $k > 0$. Then we can solve, similar to the above, with:
 
 ```julia;
-@vars k m positive=true
-eqn = u''(x) + k/m*u(x)
+@syms k::positive m::positive
+eqn = u''(x) ⩵ - k/m*u(x)
 dsolve(eqn)
 ```
 
@@ -408,7 +427,7 @@ conditions on the function and its derivative (expressed through
 `u'`):
 
 ```julia;
-@vars a positive=true
+@syms a::positive
 dsolve(eqn, x, ics = ((u, 0, -a), (u', 0, 0)))
 ```
 
@@ -428,12 +447,29 @@ $$~
 Can this second-order equation be solved by `SymPy`?
 
 ```julia;
-@vars g l positive=true
-eqn = u''(x) + g/l*sin(u(x))
-dsolve(eqn)
+@syms g::positive l::positive x theta()=>"θ"
+eqn = theta''(x) + g/l*sin(theta(x))
 ```
 
-That long error message can be summarized: no easy answer is forthcoming for this equation. In general, for the first-order initial value problem characterized by $y'(x) = F(y,x)$, there are conditions ([Peano](http://tinyurl.com/h663wba) and [Picard-Lindelof](http://tinyurl.com/3rbde5e)) that can guarantee the existence (and uniqueness) of equation locally, but there may not be an accompanying method to actually find it. This particular problem has a solution, but it can not be written in terms of elementary functions.
+```julia;
+try
+  dsolve(eqn)
+catch err
+  "Unable to solve equation"
+end
+```
+
+
+We suppressed a long error message using a `try-catch` block, but the message can be quickly summarized: no easy answer is forthcoming for this equation.
+
+In general, for the first-order initial value problem characterized by
+$y'(x) = F(y,x)$, there are conditions
+([Peano](http://tinyurl.com/h663wba) and
+[Picard-Lindelof](http://tinyurl.com/3rbde5e)) that can guarantee the
+existence (and uniqueness) of equation locally, but there may not be
+an accompanying method to actually find it. This particular problem
+has a solution, but it can not be written in terms of elementary
+functions.
 
 However, as [Huygens](https://en.wikipedia.org/wiki/Christiaan_Huygens) first noted, if the angles involved are small, then we approximate the solution through the linearization $\sin(\theta(t)) \approx \theta(t)$. The resulting equation for an approximate answer is just that of Hooke:
 
@@ -494,37 +530,64 @@ $$~
 This yields the second-order equation:
 
 $$~
-y''(x) = \frac{w}{H} \sqrt{1 + y'(x)}.
+y''(x) = \frac{w}{H} \sqrt{1 + y'(x)^2}.
 ~$$
 
-This equation can be solved exactly, though with some work, as a direct approach fails:
+We enter into `Julia`:
 
 ```julia;
-u = SymFunction("u")
-@vars x w H positive=true
-out = dsolve(u''(x) - w/H * sqrt(1 + u'(x)^2))
+@syms w::positive H::positive x::positive y()
+eqn = y''(x) ⩵ (w/H) * sqrt(1 + y'(x)^2)  
 ```
 
-To help `SymPy` out we break the problem into steps. For the first step we solve for the derivative.
-Let $u = y'$, then we have $u'(x) = (w/H)\sqrt{1 + u(x)^2}$:
+Unfortunately, `SymPy` needs a bit of help with this problem, by breaking the problem into
+steps.
+
+For the first step we solve for the derivative.  Let $u = y'$,
+then we have $u'(x) = (w/H)\sqrt{1 + u(x)^2}$:
 
 ```julia;
-out = dsolve(u'(x) - w/H * sqrt(1 + u(x)^2))
+@syms u()
+eqn = subs(eqn, y'(x) => u(x))
 ```
 
-So $y'(x) = \sinh(C_1 + w \cdot x/H)$. This can be solved by direct
-integration as there is no $u(x)$ term on the right hand
-side. Repurposing `u` to represent `y` now, we have the equation and solution:
+and can solve via:
 
 ```julia;
-eqn = u'(x) - rhs(out)
-out1 = dsolve(eqn)
+out = dsolve(eqn)
+```
+
+So $y'(x) = u(x) = \sinh(C_1 + w \cdot x/H)$. This can be solved by direct
+integration as there is no $y(x)$ term on the right hand
+side. 
+
+```julia;
+eqn = y'(x) ⩵ rhs(out)
+```
+
+We see a simple linear transformation involving the  hyperbolic sine. To avoid, `SymPy` struggling with the above equation, and knowing the hyperbolic sine is the derivative of the hyperbolic cosine, we anticipate an answer and verify it:
+
+```julia;
+@syms C1
+y = (H/w)*cosh(C1 + w*x/H)
+diff(y,x) == rhs(out) # == not \Equal[tab]
 ```
 
 The shape is a hyperbolic cosine, known as the catenary.
 
 
-If the chain has a uniform load, sufficient to make the weight of the chain negligible, then how does the above change? Then the vertical tension comes from $Udx$ and not $w ds$, so the equation becomes instead:
+```julia; echo=false
+imgfile = "figures/verrazano-narrows-bridge-anniversary-historic-photos-2.jpeg"
+caption = """
+The cables of an unloaded suspension bridge have a different shape than a loaded suspension bridge. As seen, the cables in this [figure](https://www.brownstoner.com/brooklyn-life/verrazano-narrows-bridge-anniversary-historic-photos/) would be modeled by a catenary.
+"""
+ImageFile(imgfile, caption)
+```
+
+
+----
+
+If the chain has a uniform load -- like a suspension bridge with a deck -- sufficient to make the weight of the chain negligible, then how does the above change? Then the vertical tension comes from $Udx$ and not $w ds$, so the equation becomes instead:
 
 $$~
 \frac{Udx}{H} = d(y'(x)).
@@ -553,9 +616,8 @@ x(t) = x_0 + v_0 \cos(\alpha) t, \quad y(t) = y_0 + v_0\sin(\alpha)t - \frac{1}{
 Furthermore, we can solve for $t$ from $x(t)$, to get an equation describing $y(x)$. Here are all the steps:
 
 ```julia;
-@vars x0 y0 v0 alpha g real=true
-@vars x y t
-u = SymFunction("u")
+@syms x0::real y0::real v0::real alpha::real g::real
+@syms x y t u()
 a1 = dsolve(u''(t) + 0, u(t), ics=((u, 0, x0), (u', 0, v0 * cos(alpha))))
 a2 = dsolve(u''(t) - g, u(t), ics=((u, 0, y0), (u', 0, v0 * sin(alpha))))
 ts = solve(x - rhs(a1), t)[1]
@@ -563,23 +625,31 @@ y = simplify(rhs(a2)(t => ts))
 ```
 
 Though messy, it can be seen that the answer is a quadratic polynomial in $x$ yielding the familiar
-parabolic motion for a trajectory.
+parabolic motion for a trajectory. The coefficients of this polynomial are:
+
+```julia;
+sympy.Poly(y, x).coeffs()
+```
+
 
 
 In a resistive medium, there are drag forces at play. If this force is
 proportional to the velocity, say, with proportion $\gamma$, then the
 equations become:
 
-$$~
-x''(t) = -\gamma x'(t), \quad y''(t) = -\gamma y'(t) -g, \quad x(0) = x_0, y(0)=y_0, x'(0) = v_0\cos(\alpha), y'(0) = v_0 \sin(\alpha).
-~$$
+```math
+\begin{align*}
+x''(t) &= -\gamma x'(t), & \quad y''(t) &= -\gamma y'(t) -g, \\
+x(0) &= x_0, &\quad y(0) &= y_0,\\
+x'(0) &= v_0\cos(\alpha),&\quad y'(0) &= v_0 \sin(\alpha).
+\end{align*}
+```
 
 
 We now attempt to solve these:
 
 ```julia;
-@vars gamma
-u = SymFunction("u")
+@syms gamma, u()
 a1 = dsolve(u''(t) + gamma * u'(t),     u(t), ics=((u, 0, x0), (u', 0, v0 * cos(alpha))))
 a2 = dsolve(u''(t) + gamma * u'(t) + g, u(t), ics=((u, 0, y0), (u', 0, v0 * sin(alpha))))
 ts = solve(x - rhs(a1), t)[1]
@@ -603,9 +673,9 @@ $-\gamma x + v_0 \cos(\alpha) = 0$.
 If we fix some parameters, we can plot.
 
 ```julia;
-v_0, gam, alp = 200, 1/2, pi/4
-soln = y(v0=>v_0, gamma=>gam, alpha=>alp, g=>9.8)
-plot(soln, 0, v_0 * cos(alp) / gam - 1/10, legend=false)
+v₀, γ, α = 200, 1/2, pi/4
+soln = y(v0=>v₀, gamma=>γ, alpha=>α, g=>9.8)
+plot(soln, 0, v₀ * cos(α) / γ - 1/10, legend=false)
 ```
 
 We can see that the resistance makes the path quite non-symmetric.
@@ -619,7 +689,7 @@ The solution, $y(x)$, is known through its derivative. A useful tool to visualiz
 For example, in a previous example we found a solution to  $y'(x) = x\cdot y(x)$. Suppose $x_0=1$ and $y_0=1$. Then a direction field plot is drawn through:
 
 ```julia;
-@vars x y
+@syms x y
 x0, y0 = 1, 1
 F(y, x) = y*x
 
@@ -674,8 +744,7 @@ u' = \frac{1-x}{u}
 gives
 
 ```julia;
-u = SymFunction("u")
-@vars x
+@syms x u()
 dsolve(u'(x) - (1-x)/u(x))
 ```
 
@@ -705,8 +774,7 @@ y'(x) = y(x)^2, \quad y(1) = 1.
 What is $y(3/2)$?
 
 ```julia; echo=false
-u = SymFunction("u")
-@vars x
+@syms x u()
 out = dsolve(u'(x) - u(x)^2, u(x), ics=(u, 1, 1))
 val = N(rhs(out(3/2)))
 numericq(val)
@@ -736,7 +804,7 @@ A population is modeled by $y(x)$. The rate of population growth is generally pr
 Solve the initial value problem
 
 $$~
-y'(x) = k\cdot y(x) \cdot (1 - y(x)/M),
+y'(x) = k\cdot y(x) \cdot (1 - \frac{y(x)}{M}),
 ~$$
 
 when $k=1$, $M=100$, and $y(0) = 20$. Find the value of $y(5)$.
@@ -796,8 +864,7 @@ $$~
 can be solved with `SymPy`. What is the value of $c(5)$?
 
 ```julia; echo=false
-u = SymFunction("u")
-@vars x
+@syms x u()
 eqn = diff(x^2*u'(x), x)
 out = dsolve(eqn, u(x), ics=((u, 1, 2), (u, 10, 1))) |> rhs
 out(5)  # 10/9
@@ -817,8 +884,8 @@ in - what can be said about `limit(y, gamma=>0)`?
 ```julia; echo=false
 choices = [
 "The limit is a quadratic polynomial in `x`, mirroring the first part of that example.",
-"The limit does not exists, but the limit to `oo` gives a quadratic polynomial in `x`, mirroring the first part of that example.",
-"The limit does not exist, as there is a singularity, as seen by setting `gamma=0`."
+"The limit does not exist, but the limit to `oo` gives a quadratic polynomial in `x`, mirroring the first part of that example.",
+"The limit does not exist -- there is a singularity -- as seen by setting `gamma=0`."
 ]
 ans = 1
 radioq(choices, ans)

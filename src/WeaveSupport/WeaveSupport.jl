@@ -13,6 +13,10 @@ using JSON
 using Reexport
 @reexport using LaTeXStrings
 using SymPy
+function Base.show(io::IO, ::MIME"text/latex", x::SymPy.SymbolicObject) 
+    print(io, SymPy.as_markdown(sympy.latex(x)))
+end
+
 
 using Pkg
 
@@ -178,7 +182,7 @@ function weave_folder(folder; force=false, build_list=(:script,:html,:pdf,:githu
         !occursin(r".jmd$", basename(file)) && continue
         println("Building $(joinpath(folder,file))")
         try
-            weave_file(folder,file; force=force, build_list=(:script,:html,:pdf,:github,:notebook))
+            weave_file(folder,file; force=force, build_list=build_list)
         catch
         end
     end

@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
 
-
-<link
-  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
-  rel="stylesheet">
 
 <style>
 .julia {display: block; font-family: "Source Code Pro";
@@ -16,13 +16,19 @@
         }
 .hljl {font-family: "Source Code Pro";
         color:#0033CC;
-        }
+      }
+.output, .julia-error {
+    border-left: thick solid #ff0000;
+    padding: 5px;
+    background-color: #f5f5f5;
+}
 body { padding-top: 60px; }
+.output {color:#0033CC;}
 h5:before {content:"\2746\ ";}
 h6:before {content:"\2742\ ";}
 pre {display: block;}
 th, td {
-  padding: 15px;
+  padding: 5px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
@@ -31,36 +37,55 @@ tr:hover {background-color: #f5f5f5;}
 .admonition-title:before {content:"\2746\ ";}
 .admonition-title { color:#0033CC}
 
-</style>
 
+</style>
 
 <!-- .julia:before {content: "julia> "} -->
 
 <style></style>
 
-
 <script src="https://code.jquery.com/jquery.js"></script>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/katex.min.css" integrity="sha384-ThssJ7YtjywV52Gj4JE/1SQEDoMEckXyhkFVwaf4nDSm5OBlXeedVYjuuUd0Yua+" crossorigin="anonymous">
 
-<script  type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {
-    inlineMath: [ ["\$","\$"], ["\\(","\\)"]]
-  },
-  displayAlign: "left",
-  displayIndent: "5%"
-});
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/katex.min.js" integrity="sha384-Bi8OWqMXO1ta+a4EPkZv7bYGIes7C3krGSZoTGNTAnAn5eYQc7IIXrJ/7ck1drAi" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+	onload="renderMathInElement(document.body);"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          // customised options
+          // • auto-render specific keys, e.g.:
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true},
+	      {left: "\\begin{equation}", right: "\\end{equation}", display: true},
+              {left: "\\begin{align}", right: "\\end{align}", display: true},
+	      {left: "\\begin{alignat}", right: "\\end{alignat}", display: true},
+	      {left: "\\begin{gather}", right: "\\end{gather}", display: true}
+          ],
+          // • rendering keys, e.g.:
+          throwOnError : false
+        });
+    });
 </script>
-<!-- not TeX-AMS-MML_HTMLorMML-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
-</script>
-
-
 <script>
 window.PlotlyConfig = {MathJaxConfig: 'local'}
 </script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
+<!-- highlight Julia Code -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/julia.min.js"></script>
 
 <script type="text/javascript">
 $( document ).ready(function() {
@@ -73,47 +98,45 @@ $( document ).ready(function() {
     var nm =  $( this ).text();
     var id = $.trim(nm).replace(/ /g,'');
     this.id = id
-    $("#page_dropdown").append("<li><a href='#" + id + "'>" + nm + "</a></li>");
+    $("#page_dropdown").append("<li><a class='dropdown-item' href='#" + id + "'>" + nm + "</a></li>");
   });
-  $('[data-toggle="popover"]').popover();
+    $('[data-toggle="popover"]').popover();
 });
 </script>
+
+
 
 </head>
 
 
 <body data-spy="scroll" >
 
-<nav class="navbar navbar-default  navbar-fixed-top">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-         
-    </div>
+  <header class="navbar navbar-expand-md navbar-dark bd-navbar">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top navbar-nav">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="https://juliahub.com/docs/CalculusWithJulia/">
+      <img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAADsAAAAwCAYAAACv4gJwAAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TtVIqDu0g4pChOlkQleKoVShChVArtOpgcukXNGlIUlwcBdeCgx+LVQcXZ10dXAVB8APEzc1J0UVK/F9aaBHjwXE/3t173L0DhEaFaVbPBKDptplOJsRsblUMvKIPQYQRhyAzy5iTpBQ8x9c9fHy9i/Es73N/jgE1bzHAJxLPMsO0iTeI45u2wXmfOMJKskp8Tjxu0gWJH7mutPiNc9FlgWdGzEx6njhCLBa7WOliVjI14mniqKrplC9kW6xy3uKsVWqsfU/+wlBeX1nmOs0RJLGIJUgQoaCGMiqwEaNVJ8VCmvYTHv5h1y+RSyFXGYwcC6hCg+z6wf/gd7dWYWqylRRKAL0vjvMxCgR2gWbdcb6PHad5AvifgSu94682gJlP0usdLXoEDG4DF9cdTdkDLneAoSdDNmVX8tMUCgXg/Yy+KQeEb4HgWqu39j5OH4AMdZW6AQ4OgbEiZa97vLu/u7d/z7T7+wFQOXKZ0cNEOAAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAAuIwAALiMBeKU/dgAAAAd0SU1FB+UGChM4DoTnuYAAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAKU0lEQVRo3u2ZeXRU1R3Hf/e+dbY3k8lMlklC9mASImspIaxFEESpS23V4lbKUU4LaJVWj1utWtBqtXrqUsCVntODtFUULSjIIpsBWUP2bZJMMskkM5NZ3pu33f7RVgso2Z7H2Hr/vvf9fp+Ze+/v9/1egG/H/+ZAX3WAklwMy36WatIBKFYrwp7IYrtJ9Th0pKgh7lSg27JVIihGGCDSHXd3qd9Y2J9fZwU8MTe/DU1dxYNQipBGElgMxZEUowBTFt0s0DpniyM9ZtY7txcyB17+9S864t842OVzFkLh7OLpNSa49whTPT6q1+kXSiMHz1ImxB3binT54dsf+mPwq8iJ+io+uvuOI2AtwN8/IPiu38OcnKDqLQPGCREvVWumzWNk19g7ypdXb963NTzqYZ+8+UaIu6NX7HBULzxI1c2mNB8/6MVaj/2YmeLSdJKzouKqk3/d+0F01MLedo0FrGPLyz+x9tx0kKqZSWmd/JAT0gJJx8zI5NKYossW8vt2fdgijzrYB1faQS5JKfBTxWv3McfLhgP6n4G1gMPHW5MdibyMxYvbD+3eEVGMyBEbBesYY0LdMP3mo0ztBDwC0H8NAiH1qKuKTyyp1yxTjMrRMFgCCBy6uzBCWg2rlTIKM6nSnMxRB2tSLwKMdGLkHeDDoV6rLiSPOtiC0BqKBk0xElYHovOAyKiDZdVkHhBoRpcylpiYUQerYlFGgLDRsCqS1VEH22z/g6ISxBjMikQw7mQYBtvPHQKdYEOblFTdJogoER11sAAA/Tjmo1GSYd/kicD7+IOtow7WqgCxkoObJ2lTvAQ79JF+j6GLomNlx75U3H1q1LWL7+6Mwqr5dDsjFcdELskRQP3piEjDkpAqkxe8VCw+ngZt96+753DnqBQCb30YgRXzs6oyY4Vur5nIYYhnDxVYZfKCl0tF+yfH3c/f9dALdUbmN+Rt/LerJ0P9dbOSm2+Z+4U374/u2wLjxHkv/rjv4uO5qPhjHSfpgwfND14uFR2siJT8ee/7vuNfq55tWXYJEsJkktglzZOjasGdU3K7dY7EKrv6z5r36oFXyOrypZ+YtbiVoj05nVTQCeTCboudKlPmiWOPlYrmJ598afOxnQ3bvj5bpv762RapR5onB9V0IEAAADCHCJfMVgrp/InM9bvOa+vWP+aBKpg6p4H1rKQIFMSpWJ+PCgWiSJExQSiZmMzpapJHAYq4NHTAg46se+JXlf4vy2FJWhk8cGMJiIS2IEpUPKFsOf+lp42DPb3qMqiOjS8LyqZbdZWYEqzGW1F3eT9t6+ZjliqEEGI5VFOAvRtmbdxwXk3c+JgHzrB4jEIE3i3NdCYrqS6e2EwEND2C+yLdXLM/wh6OW0DvWbemPXTu+n33TQd7aEaqCGmXBmh7uSLbx4uKLZ3Gmsoy/Y08E/o0RQrvIXz93iC/X5y3rnp4sAue+lSY5j18a0GXd0xRy/6GkEf2sJK+xO5X7RqDoCeLrbL3qf+I40K+PrPYcyrjove3ZM3/IHC7w5Dm/cyKe2wn2XHrcDT1CiJbiDnGkXNlgUYRiFtFirCRqNXS8sQ4sebVvBefJYOGHVd0EXznurXjJvV4b5p69M1mhEXiz2Irkv1KBRfVz7rUQmlMSGHR226v3NHtmeDcVzxX7bDbnnvt/isTw5aLYIJTyx8oOs3lric9+TmMTA3qx4sLccolnHlrrOj/ZcaGB8UBYTtWLEBvk+/NM/eHF5TVbG8Ip9F2mcVLXO1yFvqSezVhxVpvGvNxaqt8UKGd9P7SS7OnJaoeX7zptUBEG1p/QSGAyhW/LW1CY99g/NlOShtaqRbNMrE5qw9naVW3lj7/lPilsI1LZ/PeeM7iOj73kim1W4915nLFtrC6yNqrDWizEAwQyGRbuYT+Dh1xJ07lTS+ZE3zvWSGNrc5c/9Hgm5M7144JS2XvCv50YbhKVuZUnEhp2pPBb7pl1hPbtLPqbOXScqi5ekZG1Bu/9rSpcFFJ544znbncZe4O+arBgAIAIB3A7ZWzsQrL+tN6c1JC/p5qavINwVZxQePS2dygzujylSASz92CP80+EsnOJmgdhTPnInHO3LOaip3XfxfMQZgs+qTFbZaLsziqGycs2s3pTYkJdGLoEa29qsnlU67h2cpxbYIrUw7IOdE28draH8wc0F6xElcGEl2LEBm5O2GJmNUwSr2t95anP9u9eFtdB+gySdJlHbwe68SStkOzk3yKaySBaIlAelNiUqpWPTfgLrJrcc0CaGCt28Y7rtSjybQhDQQBECX3pH4mkvcZ7O+PtgNtoZsBAcSQDWhZM6xfdsR8Hd6kojGUmYrzTtp/obm7HymDLkhdZI4zhr0/oYiTqrU4F5x1Znkn4yU2AexR1BVx0gGjgmm0fFpDmMIcbilc/9EFtyYVmi5IUnKpke0hL9EQ0NLKN6/J+xx2S2u3IttcnRwBVWFQrRGBJAETc1yrQ0AQKzBN8gAuq6BQOo9Uo20dYEGlfvi7ps9h1+ysAs1mbyIACAHUqPzId1JMoDrsXWqEsJTIO9kBNak7nqJQWI4aDcvjePg8iRdKtjaoLAJ3m9wdcdJ9Iw2iMLgGAEHAIjRn/2nngJ0Fm3DKGCf6jARVKR3xWPSdB/vTE72JoCO1B2lAZHZkW1myYcIl9Nqo4DE3unMHJcBX7NlIVFppNBI2YVKRRZbrz4P1790ELUJ6o8wKNCCoUbnhb+W4nepM6lTCDXnTMuqcxfsHs+ZN7wmIc9JRjdKN87IZCStU6MgXOhUxE729uqCiwN2mdEWcdGi4QWQG1+iIQe1moevQy3cN+hwWJFpeT7g7DTm3Kq2Dydq2nRb2Nn0h7MrGZ4JhkyMQ5zN4hUPD8n8SFkxYRa89nT+/JF8J7NBOvDPotTdseLwvm2p4PGaPjdidVF2+WJnU+psZj35e8s6CnfzKLpjVu2fr8expE1SKqdWGUd9jDsovauMZigZphrr/zFDWNoky5IqJNxy2+n0Kqw37HMUcETwGNzx6sK619YKGm8MWbZjoP3KigV+YFXabYkMN5BcKg5229PSJ3R/uWPb+4SE/dKVsvFfPVBtWx10dbRpFhgwsmmSKsjdtSobWv9y0e8PZbey5k/sQSA6to3FKS0I7PnZqVorFR+xSS++AEg8w8tnHFyDCNk2pefckk21q3umLDOufKX1hbWj36oevDnnCj8TimfNNQQfGOhpA1mmgO/wiY2p/Nok5sCH/mTfIoJyKM1dUlIodYgVBCGpy5uWHOVtSSizgz/ZVdlCapP/38qg1w9SQPj5PollTkb+6ztlX009ZKM1WZHstf+OuEb3AdfzkMYgw1MwGLn1VLJZZbg7atXMVkcJoWE3qUZxc25Y8sfu514/vb3+ocvvgPaiGG+eYRL84Ff6NRRCG2pSZ7npbeppOMwjRJpoQnYASUy2qqkz2H2lOijV/ZsNgHvdVvHfoVMigh3jv7atRC5NWWsemLBI0SOaIbiKA9BhGUQ1r3nFS69+PVtUFlu9+E74d/4/jnwl6l8LhlFUrAAAAAElFTkSuQmCC"/>
+      Calculus with Julia</a>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="#" id="page_title"></a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-         <li class="dropdown">
-           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-           Jump to... <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu" id="page_dropdown"></ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <ul class="nav navbar-nav navbar-right">
+      <li class="nav-item dropdown">
+	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+	   role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Jump to...
+          </a>
+
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" role="menu" id="page_dropdown"></ul>
+      </li>
+    </ul>
+
+    </div>
+  </div>
 </nav>
 
-<header>
 </header>
           <div class="title">
             
@@ -125,7 +148,7 @@ $( document ).ready(function() {
 
 <div class="container-fluid">
   <div class="span10 offset1">
-<h1>Implications of continuity</h1>
+    <h1>Implications of continuity</h1>
 
 
 <p>Continuity for functions is a valued property which carries implications. In this section we discuss two: the intermediate value theorem and the extreme value theorem. These two theorems speak to some fundamental applications of calculus: finding zeros of a function and finding extrema of a function.</p>
@@ -293,9 +316,10 @@ bisection &#40;generic function with 1 method&#41;
 
 
 
-    <div id="f87a8164-a19c-4180-bb56-c0b10e06cb45" style="width:576px;height:384px;"></div>
+    <div id="de4f8619-cb27-4448-a0bf-d1f00ae9af73" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('f87a8164-a19c-4180-bb56-c0b10e06cb45');
+    
+        var PLOT = document.getElementById('de4f8619-cb27-4448-a0bf-d1f00ae9af73');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -363,7 +387,7 @@ bisection &#40;generic function with 1 method&#41;
             -1212.8854245149628,
             -1307.5464258616464,
             -1356.3952605835555,
-            -1357.4216402138036,
+            -1357.4216402138034,
             -1294.7545035258277,
             -1138.5381145664746,
             -999.7551822883752,
@@ -405,8 +429,6 @@ bisection &#40;generic function with 1 method&#41;
             9.0,
             10.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             4.85,
             10.15
@@ -415,20 +437,9 @@ bisection &#40;generic function with 1 method&#41;
             0.08399557694177116,
             0.9931649168853893
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "5",
             "6",
@@ -438,14 +449,27 @@ bisection &#40;generic function with 1 method&#41;
             "10"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y"
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -467,30 +491,17 @@ bisection &#40;generic function with 1 method&#41;
             7500.0,
             10000.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
-            -1758.9382632644192,
+            -1758.938263264419,
             12427.982417857333
         ],
         "domain": [
             0.0391878098571012,
             0.989747375328084
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "0",
             "2500",
@@ -499,34 +510,57 @@ bisection &#40;generic function with 1 method&#41;
             "10000"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x"
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "legend": {
         "yanchor": "auto",
         "xanchor": "auto",
         "bordercolor": "rgba(0, 0, 0, 1.000)",
         "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
         "font": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "borderwidth": 1,
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
         "traceorder": "normal",
         "x": 1.0
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -555,9 +589,10 @@ bisection &#40;generic function with 1 method&#41;
 
 
 
-    <div id="b7fad12b-27b8-4fa7-a854-ae99c6f2915d" style="width:576px;height:384px;"></div>
+    <div id="66c6aa00-98d3-479e-98ee-b35d62f7d929" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('b7fad12b-27b8-4fa7-a854-ae99c6f2915d');
+    
+        var PLOT = document.getElementById('66c6aa00-98d3-479e-98ee-b35d62f7d929');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -680,8 +715,6 @@ bisection &#40;generic function with 1 method&#41;
             2.0,
             3.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -3.18,
             3.18
@@ -690,20 +723,9 @@ bisection &#40;generic function with 1 method&#41;
             0.05313137941090697,
             0.9931649168853892
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "−3",
             "−2",
@@ -714,14 +736,27 @@ bisection &#40;generic function with 1 method&#41;
             "3"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y"
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -743,8 +778,6 @@ bisection &#40;generic function with 1 method&#41;
             10.0,
             20.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -24.44,
             26.44
@@ -753,20 +786,9 @@ bisection &#40;generic function with 1 method&#41;
             0.0391878098571012,
             0.989747375328084
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "−20",
             "−10",
@@ -775,34 +797,57 @@ bisection &#40;generic function with 1 method&#41;
             "20"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x"
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "legend": {
         "yanchor": "auto",
         "xanchor": "auto",
         "bordercolor": "rgba(0, 0, 0, 1.000)",
         "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
         "font": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "borderwidth": 1,
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
         "traceorder": "normal",
         "x": 1.0
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -832,9 +877,10 @@ bisection &#40;generic function with 1 method&#41;
 
 
 
-    <div id="086adf1f-8822-4431-b1ae-a630053f3c06" style="width:576px;height:384px;"></div>
+    <div id="6f203e20-e6d2-4bfa-ac3f-e19d632cf7f8" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('086adf1f-8822-4431-b1ae-a630053f3c06');
+    
+        var PLOT = document.getElementById('6f203e20-e6d2-4bfa-ac3f-e19d632cf7f8');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -965,27 +1011,27 @@ bisection &#40;generic function with 1 method&#41;
         },
         "yaxis": "y",
         "x": [
-            -5.0,
-            -4.9023418098021185,
-            -3.9993508283162718,
-            -3.456690886943761,
-            -2.997878812842343,
-            -2.499480299669486,
-            -2.0400009546537183,
-            -1.5473905359351015,
-            -0.9766530566146772,
-            -0.46944893888978556,
-            -0.024676634597799892,
-            0.46024456655319457,
-            0.9480477875281209,
-            1.4873766262440427,
-            2.0005344074484346,
-            2.5340994351135055,
-            2.983247536668451,
-            3.531606459863641,
-            4.047080021287085,
-            4.872908640160599,
-            5.0
+            -3.3300882128051805,
+            -3.26504613519281,
+            -2.6636382104497303,
+            -2.302217115584501,
+            -1.9966401796129345,
+            -1.664697976813623,
+            -1.3586766266407326,
+            -1.0305893968647546,
+            -0.6504681663665374,
+            -0.3126612755821549,
+            -0.016435074001166786,
+            0.30653100121728455,
+            0.6314165524846852,
+            0.9906190742114446,
+            1.3323912099110458,
+            1.6877549317895502,
+            1.98689549154794,
+            2.3521122088517084,
+            2.6954266950334924,
+            3.2454431249350666,
+            3.3300882128051805
         ],
         "showlegend": true,
         "mode": "lines",
@@ -1000,27 +1046,27 @@ bisection &#40;generic function with 1 method&#41;
             "width": 1
         },
         "y": [
-            -5.0,
-            -4.9023418098021185,
-            -3.9993508283162718,
-            -3.456690886943761,
-            -2.997878812842343,
-            -2.499480299669486,
-            -2.0400009546537183,
-            -1.5473905359351015,
-            -0.9766530566146772,
-            -0.46944893888978556,
-            -0.024676634597799892,
-            0.46024456655319457,
-            0.9480477875281209,
-            1.4873766262440427,
-            2.0005344074484346,
-            2.5340994351135055,
-            2.983247536668451,
-            3.531606459863641,
-            4.047080021287085,
-            4.872908640160599,
-            5.0
+            -3.3300882128051805,
+            -3.26504613519281,
+            -2.6636382104497303,
+            -2.302217115584501,
+            -1.9966401796129345,
+            -1.664697976813623,
+            -1.3586766266407326,
+            -1.0305893968647546,
+            -0.6504681663665374,
+            -0.3126612755821549,
+            -0.016435074001166786,
+            0.30653100121728455,
+            0.6314165524846852,
+            0.9906190742114446,
+            1.3323912099110458,
+            1.6877549317895502,
+            1.98689549154794,
+            2.3521122088517084,
+            2.6954266950334924,
+            3.2454431249350666,
+            3.3300882128051805
         ],
         "type": "scatter"
     }
@@ -1031,29 +1077,48 @@ bisection &#40;generic function with 1 method&#41;
         "showticklabels": true,
         "gridwidth": 0.5,
         "tickvals": [
-            -4.0,
+            -3.0,
             -2.0,
+            -1.0,
             0.0,
+            1.0,
             2.0,
-            4.0
+            3.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
-            -5.3,
-            5.3
+            -3.5298935055734915,
+            3.5298935055734915
         ],
         "domain": [
             0.03769928064547487,
             0.9931649168853894
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−3",
+            "−2",
+            "−1",
+            "0",
+            "1",
+            "2",
+            "3"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -1061,22 +1126,7 @@ bisection &#40;generic function with 1 method&#41;
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "−4",
-            "−2",
-            "0",
-            "2",
-            "4"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y"
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -1092,29 +1142,48 @@ bisection &#40;generic function with 1 method&#41;
         "showticklabels": true,
         "gridwidth": 0.5,
         "tickvals": [
-            -4.0,
+            -3.0,
             -2.0,
+            -1.0,
             0.0,
+            1.0,
             2.0,
-            4.0
+            3.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
-            -5.3,
-            5.3
+            -3.5298935055734915,
+            3.5298935055734915
         ],
         "domain": [
             0.0391878098571012,
             0.989747375328084
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−3",
+            "−2",
+            "−1",
+            "0",
+            "1",
+            "2",
+            "3"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -1122,42 +1191,37 @@ bisection &#40;generic function with 1 method&#41;
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "−4",
-            "−2",
-            "0",
-            "2",
-            "4"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x"
+        "type": "-"
     },
     "legend": {
         "yanchor": "auto",
         "xanchor": "auto",
         "bordercolor": "rgba(0, 0, 0, 1.000)",
         "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
         "font": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "borderwidth": 1,
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
         "traceorder": "normal",
         "x": 1.0
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -1209,9 +1273,10 @@ plan2 &#40;generic function with 1 method&#41;
 
 
 
-    <div id="8be1c16f-c2db-4505-a4a9-37339012482a" style="width:576px;height:384px;"></div>
+    <div id="339a1eea-5384-4bdc-a623-cc07dcab8a0b" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('8be1c16f-c2db-4505-a4a9-37339012482a');
+    
+        var PLOT = document.getElementById('339a1eea-5384-4bdc-a623-cc07dcab8a0b');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -1286,27 +1351,27 @@ plan2 &#40;generic function with 1 method&#41;
         },
         "yaxis": "y",
         "x": [
-            -5.0,
-            -4.9023418098021185,
-            -3.9993508283162718,
-            -3.456690886943761,
-            -2.997878812842343,
-            -2.499480299669486,
-            -2.0400009546537183,
-            -1.5473905359351015,
-            -0.9766530566146772,
-            -0.46944893888978556,
-            -0.024676634597799892,
-            0.46024456655319457,
-            0.9480477875281209,
-            1.4873766262440427,
-            2.0005344074484346,
-            2.5340994351135055,
-            2.983247536668451,
-            3.531606459863641,
-            4.047080021287085,
-            4.872908640160599,
-            5.0
+            9.7,
+            9.803517681609753,
+            10.760688121984751,
+            11.335907659839613,
+            11.822248458387117,
+            12.350550882350344,
+            12.83759898806706,
+            13.359766031908793,
+            13.964747759988441,
+            14.502384124776828,
+            14.973842767326332,
+            15.487859240546385,
+            16.004930654779805,
+            16.576619223818685,
+            17.12056647189534,
+            17.686145401220315,
+            18.16224238886856,
+            18.74350284745546,
+            19.28990482256431,
+            20.165283158570237,
+            20.3
         ],
         "showlegend": true,
         "mode": "lines",
@@ -1321,27 +1386,27 @@ plan2 &#40;generic function with 1 method&#41;
             "width": 1
         },
         "y": [
-            20.0,
-            20.195316380395763,
-            22.001298343367456,
-            23.086618226112478,
-            24.004242374315314,
-            25.00103940066103,
-            25.919998090692562,
-            26.9052189281298,
-            28.046693886770647,
-            29.06110212222043,
-            29.9506467308044,
-            30.92048913310639,
-            31.896095575056243,
-            32.974753252488085,
-            34.00106881489687,
-            35.06819887022701,
-            35.9664950733369,
-            37.063212919727285,
-            38.094160042574174,
-            39.7458172803212,
-            40.0
+            49.4,
+            49.60703536321951,
+            51.5213762439695,
+            52.671815319679226,
+            53.64449691677423,
+            54.70110176470069,
+            55.675197976134115,
+            56.71953206381758,
+            57.92949551997688,
+            59.004768249553656,
+            59.94768553465266,
+            60.97571848109277,
+            62.00986130955961,
+            63.15323844763737,
+            64.24113294379069,
+            65.37229080244063,
+            66.32448477773713,
+            67.48700569491092,
+            68.57980964512862,
+            70.33056631714047,
+            70.6
         ],
         "type": "scatter"
     }
@@ -1352,30 +1417,46 @@ plan2 &#40;generic function with 1 method&#41;
         "showticklabels": true,
         "gridwidth": 0.5,
         "tickvals": [
-            -5.0,
-            0.0,
-            5.0,
             10.0,
-            15.0,
+            12.0,
+            14.0,
+            16.0,
+            18.0,
             20.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
-            -5.75,
-            20.75
+            9.382,
+            20.618000000000002
         ],
         "domain": [
             0.03769928064547487,
             0.9931649168853894
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "10",
+            "12",
+            "14",
+            "16",
+            "18",
+            "20"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -1383,23 +1464,7 @@ plan2 &#40;generic function with 1 method&#41;
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "−5",
-            "0",
-            "5",
-            "10",
-            "15",
-            "20"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y"
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -1415,29 +1480,44 @@ plan2 &#40;generic function with 1 method&#41;
         "showticklabels": true,
         "gridwidth": 0.5,
         "tickvals": [
-            20.0,
-            30.0,
-            40.0,
             50.0,
-            60.0
+            55.0,
+            60.0,
+            65.0,
+            70.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
-            18.7133,
-            64.1767
+            48.763999999999996,
+            71.23599999999999
         ],
         "domain": [
             0.0391878098571012,
             0.989747375328084
         ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "50",
+            "55",
+            "60",
+            "65",
+            "70"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
         "tickmode": "array",
         "linecolor": "rgba(0, 0, 0, 1.000)",
         "showgrid": true,
         "title": "",
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
         "gridcolor": "rgba(0, 0, 0, 0.100)",
         "titlefont": {
             "color": "rgba(0, 0, 0, 1.000)",
@@ -1445,42 +1525,37 @@ plan2 &#40;generic function with 1 method&#41;
             "size": 15
         },
         "tickcolor": "rgb(0, 0, 0)",
-        "ticktext": [
-            "20",
-            "30",
-            "40",
-            "50",
-            "60"
-        ],
-        "zeroline": false,
-        "type": "-",
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x"
+        "type": "-"
     },
     "legend": {
         "yanchor": "auto",
         "xanchor": "auto",
         "bordercolor": "rgba(0, 0, 0, 1.000)",
         "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
         "font": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "borderwidth": 1,
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
         "traceorder": "normal",
         "x": 1.0
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -1551,9 +1626,10 @@ y &#40;generic function with 1 method&#41;
 
 
 
-    <div id="01120bf0-65c4-4ccb-9978-246dec3d0e1e" style="width:576px;height:384px;"></div>
+    <div id="9803bb6c-75b7-4ead-b222-0465b515473a" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('01120bf0-65c4-4ccb-9978-246dec3d0e1e');
+    
+        var PLOT = document.getElementById('9803bb6c-75b7-4ead-b222-0465b515473a');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -1635,8 +1711,6 @@ y &#40;generic function with 1 method&#41;
             400.0,
             500.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -15.0,
             515.0
@@ -1645,20 +1719,9 @@ y &#40;generic function with 1 method&#41;
             0.05313137941090697,
             0.9931649168853892
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "0",
             "100",
@@ -1668,14 +1731,27 @@ y &#40;generic function with 1 method&#41;
             "500"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y"
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -1696,8 +1772,6 @@ y &#40;generic function with 1 method&#41;
             200.0,
             300.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -9.0,
             309.0
@@ -1706,20 +1780,9 @@ y &#40;generic function with 1 method&#41;
             0.0391878098571012,
             0.989747375328084
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "0",
             "100",
@@ -1727,34 +1790,57 @@ y &#40;generic function with 1 method&#41;
             "300"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x"
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "legend": {
         "yanchor": "auto",
         "xanchor": "auto",
         "bordercolor": "rgba(0, 0, 0, 1.000)",
         "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
         "font": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "borderwidth": 1,
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
         "traceorder": "normal",
         "x": 1.0
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -1762,15 +1848,15 @@ y &#40;generic function with 1 method&#41;
 
 
 <pre class='hljl'>
-<span class='hljl-nd'>@vars</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'>
+<span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'>
 </span><span class='hljl-nf'>roots</span><span class='hljl-p'>(</span><span class='hljl-nf'>j</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>))</span>
 </pre>
 
 
 <pre class="output">
-Dict&#123;Any,Any&#125; with 2 entries:
-  0                &#61;&gt; 1
+Dict&#123;Any, Any&#125; with 2 entries:
   1250.00000000000 &#61;&gt; 1
+  0                &#61;&gt; 1
 </pre>
 
 
@@ -1783,9 +1869,10 @@ Dict&#123;Any,Any&#125; with 2 entries:
 
 
 
-    <div id="8feab5b3-a5bc-4406-b066-8fe80ab27779" style="width:576px;height:384px;"></div>
+    <div id="92e72345-4cc7-47a0-ad5c-4971a52c0278" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('8feab5b3-a5bc-4406-b066-8fe80ab27779');
+    
+        var PLOT = document.getElementById('92e72345-4cc7-47a0-ad5c-4971a52c0278');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -1908,8 +1995,6 @@ Dict&#123;Any,Any&#125; with 2 entries:
             1000.0,
             1200.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -37.5,
             1287.5
@@ -1918,20 +2003,9 @@ Dict&#123;Any,Any&#125; with 2 entries:
             0.05313137941090697,
             0.9931649168853892
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "0",
             "200",
@@ -1942,14 +2016,27 @@ Dict&#123;Any,Any&#125; with 2 entries:
             "1200"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y"
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -1970,8 +2057,6 @@ Dict&#123;Any,Any&#125; with 2 entries:
             200.0,
             300.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -9.374771648889578,
             321.8671599452008
@@ -1980,20 +2065,9 @@ Dict&#123;Any,Any&#125; with 2 entries:
             0.0391878098571012,
             0.989747375328084
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "0",
             "100",
@@ -2001,34 +2075,57 @@ Dict&#123;Any,Any&#125; with 2 entries:
             "300"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x"
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "legend": {
         "yanchor": "auto",
         "xanchor": "auto",
         "bordercolor": "rgba(0, 0, 0, 1.000)",
         "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
         "font": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "borderwidth": 1,
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
         "traceorder": "normal",
         "x": 1.0
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -2041,9 +2138,10 @@ Dict&#123;Any,Any&#125; with 2 entries:
 
 
 
-    <div id="742953e5-d53d-4c28-a2ca-b0cef464390c" style="width:576px;height:384px;"></div>
+    <div id="4bce9fbf-5941-4854-9df8-daa01abe982e" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('742953e5-d53d-4c28-a2ca-b0cef464390c');
+    
+        var PLOT = document.getElementById('4bce9fbf-5941-4854-9df8-daa01abe982e');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -2162,8 +2260,6 @@ Dict&#123;Any,Any&#125; with 2 entries:
             1000.0,
             1200.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -37.5,
             1287.5
@@ -2172,20 +2268,9 @@ Dict&#123;Any,Any&#125; with 2 entries:
             0.03769928064547487,
             0.9931649168853894
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "0",
             "200",
@@ -2196,14 +2281,27 @@ Dict&#123;Any,Any&#125; with 2 entries:
             "1200"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y"
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -2225,8 +2323,6 @@ Dict&#123;Any,Any&#125; with 2 entries:
             60.0,
             80.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -14.675821856662044,
             90.29692538362505
@@ -2235,20 +2331,9 @@ Dict&#123;Any,Any&#125; with 2 entries:
             0.0391878098571012,
             0.989747375328084
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "0",
             "20",
@@ -2257,34 +2342,57 @@ Dict&#123;Any,Any&#125; with 2 entries:
             "80"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x"
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "legend": {
         "yanchor": "auto",
         "xanchor": "auto",
         "bordercolor": "rgba(0, 0, 0, 1.000)",
         "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
         "font": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "borderwidth": 1,
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
         "traceorder": "normal",
         "x": 1.0
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -2312,9 +2420,10 @@ Dict&#123;Any,Any&#125; with 2 entries:
 
 
 
-    <div id="560b47c2-10bd-4e67-a0c0-4b67853c83ac" style="width:576px;height:384px;"></div>
+    <div id="67302bea-b29c-4cbd-ac3b-c8a684102f4e" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('560b47c2-10bd-4e67-a0c0-4b67853c83ac');
+    
+        var PLOT = document.getElementById('67302bea-b29c-4cbd-ac3b-c8a684102f4e');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -2448,8 +2557,6 @@ Dict&#123;Any,Any&#125; with 2 entries:
             100.0,
             125.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -4.212640687119285,
             144.6339969244288
@@ -2458,20 +2565,9 @@ Dict&#123;Any,Any&#125; with 2 entries:
             0.03769928064547487,
             0.9931649168853894
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "0",
             "25",
@@ -2481,14 +2577,27 @@ Dict&#123;Any,Any&#125; with 2 entries:
             "125"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y"
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -2510,8 +2619,6 @@ Dict&#123;Any,Any&#125; with 2 entries:
             60.0,
             80.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -2.6199713058491017,
             89.95234816748584
@@ -2520,20 +2627,9 @@ Dict&#123;Any,Any&#125; with 2 entries:
             0.0391878098571012,
             0.989747375328084
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "0",
             "20",
@@ -2542,34 +2638,57 @@ Dict&#123;Any,Any&#125; with 2 entries:
             "80"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x"
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "legend": {
         "yanchor": "auto",
         "xanchor": "auto",
         "bordercolor": "rgba(0, 0, 0, 1.000)",
         "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
         "font": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "borderwidth": 1,
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
         "traceorder": "normal",
         "x": 1.0
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -2597,9 +2716,10 @@ Dict&#123;Any,Any&#125; with 2 entries:
 
 
 
-    <div id="9b86934e-37b4-4e40-955a-6fce9a5243e7" style="width:576px;height:384px;"></div>
+    <div id="1dc90540-7a6b-4cc9-8605-e0360c0cf5c3" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('9b86934e-37b4-4e40-955a-6fce9a5243e7');
+    
+        var PLOT = document.getElementById('1dc90540-7a6b-4cc9-8605-e0360c0cf5c3');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -2840,8 +2960,6 @@ Dict&#123;Any,Any&#125; with 2 entries:
             1000.0,
             1200.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -37.5,
             1287.5
@@ -2850,20 +2968,9 @@ Dict&#123;Any,Any&#125; with 2 entries:
             0.05313137941090697,
             0.9931649168853892
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "0",
             "200",
@@ -2874,14 +2981,27 @@ Dict&#123;Any,Any&#125; with 2 entries:
             "1200"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y"
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -2902,8 +3022,6 @@ Dict&#123;Any,Any&#125; with 2 entries:
             200.0,
             300.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -9.374771648889753,
             321.8671599452008
@@ -2912,20 +3030,9 @@ Dict&#123;Any,Any&#125; with 2 entries:
             0.0391878098571012,
             0.989747375328084
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "0",
             "100",
@@ -2933,34 +3040,57 @@ Dict&#123;Any,Any&#125; with 2 entries:
             "300"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x"
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "legend": {
         "yanchor": "auto",
         "xanchor": "auto",
         "bordercolor": "rgba(0, 0, 0, 1.000)",
         "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
         "font": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "borderwidth": 1,
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
         "traceorder": "normal",
         "x": 1.0
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -3007,7 +3137,7 @@ Dict&#123;Any,Any&#125; with 2 entries:
 
 
 <pre class="output">
-10-element Array&#123;Float64,1&#125;:
+10-element Vector&#123;Float64&#125;:
  0.05
  0.15
  0.25
@@ -3031,7 +3161,7 @@ Dict&#123;Any,Any&#125; with 2 entries:
 
 
 <pre class="output">
-1-element Array&#123;Float64,1&#125;:
+1-element Vector&#123;Float64&#125;:
  -0.6518234538234416
 </pre>
 
@@ -3049,7 +3179,7 @@ Dict&#123;Any,Any&#125; with 2 entries:
 
 
 <pre class="output">
-2-element Array&#123;Float64,1&#125;:
+2-element Vector&#123;Float64&#125;:
   1.2958555090953687
  12.713206788867632
 </pre>
@@ -3064,13 +3194,65 @@ Dict&#123;Any,Any&#125; with 2 entries:
 
 
 <pre class="output">
-2-element Array&#123;Float64,1&#125;:
+2-element Vector&#123;Float64&#125;:
  0.0
  0.0
 </pre>
 
 
 <p>&#40;For a continuous function this should be the case that the values returned by <code>find_zeros</code> are approximate zeros. Bear in mind that if <span class="math">$f$</span> is not continous the algorithm might find jumping points that are not zeros and may not even be in the domain of the function.&#41;</p>
+<h3>An alternate interface to <code>find_zero</code></h3>
+<p>The <code>find_zero</code> function in the <code>Roots</code> package is an interface to one of several methods. For now we focus on the <em>bracketing</em> methods, later we will see others. Bracketing methods, among others,  include <code>Roots.Bisection&#40;&#41;</code>, the basic bisection method though with a different sense of &quot;middle&quot; than <span class="math">$(a+b)/2$</span> and used by default above; <code>Roots.A42&#40;&#41;</code>, which will typically converge much faster than simple bisection; <code>Roots.Brent&#40;&#41;</code> for the classic method of Brent, and <code>FalsePosition&#40;&#41;</code> for a family of <em>regula falsi</em> methods. These can all be used by specifying the method in a call to <code>find_zero</code>.</p>
+<p>Alternatively, <code>Roots</code> implements the <code>CommonSolve</code> interface popularized by its use in the <code>DifferentialEquations.jl</code> ecosystem, a wildly successful area for <code>Julia</code>. The basic setup is two steps: setup a &quot;problem,&quot; solve the problem.</p>
+<p>To set up a problem, we call <code>ZeroProblem</code> with the function and an initial interval, as in:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>5</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-t'>
+</span><span class='hljl-n'>prob</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>ZeroProblem</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-ni'>2</span><span class='hljl-p'>))</span>
+</pre>
+
+
+<pre class="output">
+ZeroProblem&#123;typeof&#40;Main.##WeaveSandBox#6452.f&#41;, Tuple&#123;Int64, Int64&#125;&#125;&#40;Main.#
+#WeaveSandBox#6452.f, &#40;1, 2&#41;&#41;
+</pre>
+
+
+<p>Then we can &quot;solve&quot; this problem with <code>solve</code>. For example:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>solve</span><span class='hljl-p'>(</span><span class='hljl-n'>prob</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>Roots</span><span class='hljl-oB'>.</span><span class='hljl-nf'>Bisection</span><span class='hljl-p'>()),</span><span class='hljl-t'> </span><span class='hljl-nf'>solve</span><span class='hljl-p'>(</span><span class='hljl-n'>prob</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>Roots</span><span class='hljl-oB'>.</span><span class='hljl-nf'>Brent</span><span class='hljl-p'>()),</span><span class='hljl-t'> </span><span class='hljl-nf'>solve</span><span class='hljl-p'>(</span><span class='hljl-n'>prob</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>Roots</span><span class='hljl-oB'>.</span><span class='hljl-nf'>A42</span><span class='hljl-p'>())</span>
+</pre>
+
+
+<pre class="output">
+&#40;1.1673039782614187, 1.1673039782614187, 1.1673039782614187&#41;
+</pre>
+
+
+<p>Though the answers are identical, the methods employed were not.</p>
+<p>Behind the scenes, <code>solve</code> <em>initializes</em> a iterator and then iterates it to completion. This can be accessed through the <code>init</code> method. For example, we can see the steps along the way  of the <code>FalsePosition</code> method for this problem:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>o</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>init</span><span class='hljl-p'>(</span><span class='hljl-n'>prob</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>FalsePosition</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-n'>i</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-n'>o</span><span class='hljl-t'>
+  </span><span class='hljl-nd'>@show</span><span class='hljl-t'> </span><span class='hljl-n'>i</span><span class='hljl-t'>
+</span><span class='hljl-k'>end</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: MethodError: no method matching init&#40;::ZeroProblem&#123;typeof&#40;Main.##WeaveSandBox#6452.f&#41;, Tuple&#123;Int64, Int64&#125;&#125;, ::Type&#123;FalsePosition&#125;&#41;
+Closest candidates are:
+  init&#40;::ZeroProblem&#41; at /Users/verzani/julia/Roots/src/find_zero.jl:1046
+  init&#40;::ZeroProblem, &#33;Matched::Union&#123;Nothing, Roots.AbstractUnivariateZeroMethod&#125;; p, verbose, kwargs...&#41; at /Users/verzani/julia/Roots/src/find_zero.jl:1046
+</pre>
+
+
+<p>The command <code>find_zero&#40;f, &#40;1,2&#41;, FalsePosition&#40;&#41;, verbose&#61;true&#41;</code> would give more detail on the algorithm in a standard format, but this method may be of interest, as it allows the combination of different models.</p>
 <h3>Using IntervalRootFinding</h3>
 <p>The <code>IntervalRootFinding</code> package provides a more <em>rigorous</em> alternative to <code>find_zeros</code>. This packages leverages the interval arithmetic features of <code>IntervalArithmetic</code>. That package finds rigorous bounds on the range of <span class="math">$f$</span> over an interval <span class="math">$[a,b]$</span>. With this, a basic algorithm for root finding might follow this:</p>
 <p>check if <span class="math">$f([a,b])$</span> contains <span class="math">$0$</span>:</p>
@@ -3092,12 +3274,12 @@ Dict&#123;Any,Any&#125; with 2 entries:
 
 
 <pre class="output">
-4-element Array&#123;IntervalRootFinding.Root&#123;IntervalArithmetic.Interval&#123;Float6
-4&#125;&#125;,1&#125;:
+4-element Vector&#123;IntervalRootFinding.Root&#123;IntervalArithmetic.Interval&#123;Float
+64&#125;&#125;&#125;:
  Root&#40;&#91;3.14959, 3.1496&#93;, :unique&#41;
  Root&#40;&#91;-4.42654, -4.42653&#93;, :unique&#41;
- Root&#40;&#91;-1.08205, -1.08204&#93;, :unique&#41;
  Root&#40;&#91;-3.10682, -3.10681&#93;, :unique&#41;
+ Root&#40;&#91;-1.08205, -1.08204&#93;, :unique&#41;
 </pre>
 
 
@@ -3111,7 +3293,7 @@ Dict&#123;Any,Any&#125; with 2 entries:
 
 
 <pre class="output">
-4-element Array&#123;Float64,1&#125;:
+4-element Vector&#123;Float64&#125;:
  -4.426534982071949
  -3.1068165552293254
  -1.0820421327607177
@@ -3142,8 +3324,8 @@ g &#40;generic function with 1 method&#41;
 
 
 <pre class="output">
-1-element Array&#123;IntervalRootFinding.Root&#123;IntervalArithmetic.Interval&#123;Float6
-4&#125;&#125;,1&#125;:
+1-element Vector&#123;IntervalRootFinding.Root&#123;IntervalArithmetic.Interval&#123;Float
+64&#125;&#125;&#125;:
  Root&#40;&#91;1.36363, 1.36364&#93;, :unknown&#41;
 </pre>
 
@@ -3185,9 +3367,10 @@ g &#40;generic function with 1 method&#41;
 
 
 
-    <div id="ff08713a-2910-441f-9d6c-cae7fc4a3333" style="width:576px;height:384px;"></div>
+    <div id="78c2af9a-1cbe-48df-b643-e112b837e730" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('ff08713a-2910-441f-9d6c-cae7fc4a3333');
+    
+        var PLOT = document.getElementById('78c2af9a-1cbe-48df-b643-e112b837e730');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -3262,7 +3445,7 @@ g &#40;generic function with 1 method&#41;
             0.2086491869181512,
             0.23773253031169186,
             0.26299576665846186,
-            0.2847705702049478,
+            0.28477057020494784,
             0.3033637175711387,
             0.3131260739774988,
             0.3218999711415205,
@@ -3272,15 +3455,15 @@ g &#40;generic function with 1 method&#41;
             0.3566954825486776,
             0.36184697675694155,
             0.3653160530645795,
-            0.3672742561527359,
+            0.36727425615273585,
             0.3678792344114775,
             0.3652071710626137,
             0.3581123767424729,
             0.34858253277720025,
             0.33690383096366916,
-            0.3071799333235914,
-            0.26909076954726624,
-            0.23513883972057573,
+            0.30717993332359145,
+            0.2690907695472662,
+            0.23513883972057575,
             0.206734793763108,
             0.17803486400475735,
             0.1519645496171225,
@@ -3309,8 +3492,6 @@ g &#40;generic function with 1 method&#41;
             4.0,
             5.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -0.15,
             5.15
@@ -3319,20 +3500,9 @@ g &#40;generic function with 1 method&#41;
             0.05313137941090697,
             0.9931649168853892
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "0",
             "1",
@@ -3342,14 +3512,27 @@ g &#40;generic function with 1 method&#41;
             "5"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y"
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -3370,8 +3553,6 @@ g &#40;generic function with 1 method&#41;
             0.2,
             0.30000000000000004
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -0.011036377032344325,
             0.37891561144382185
@@ -3380,20 +3561,9 @@ g &#40;generic function with 1 method&#41;
             0.0391878098571012,
             0.989747375328084
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "0.0",
             "0.1",
@@ -3401,34 +3571,57 @@ g &#40;generic function with 1 method&#41;
             "0.3"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x"
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "legend": {
         "yanchor": "auto",
         "xanchor": "auto",
         "bordercolor": "rgba(0, 0, 0, 1.000)",
         "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
         "font": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "borderwidth": 1,
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
         "traceorder": "normal",
         "x": 1.0
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -3445,9 +3638,10 @@ g &#40;generic function with 1 method&#41;
 
 
 
-    <div id="16e24beb-ccff-4f14-a3fd-39e2571f077a" style="width:576px;height:384px;"></div>
+    <div id="52c45835-15b4-4843-bea7-6ded27a77673" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('16e24beb-ccff-4f14-a3fd-39e2571f077a');
+    
+        var PLOT = document.getElementById('52c45835-15b4-4843-bea7-6ded27a77673');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -3572,8 +3766,6 @@ g &#40;generic function with 1 method&#41;
             1.0,
             2.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -2.12,
             2.12
@@ -3582,20 +3774,9 @@ g &#40;generic function with 1 method&#41;
             0.05313137941090697,
             0.9931649168853892
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "−2",
             "−1",
@@ -3604,14 +3785,27 @@ g &#40;generic function with 1 method&#41;
             "2"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y"
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -3632,8 +3826,6 @@ g &#40;generic function with 1 method&#41;
             1.0,
             1.5
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -0.02992374688055243,
             1.6345075995074834
@@ -3642,20 +3834,9 @@ g &#40;generic function with 1 method&#41;
             0.0391878098571012,
             0.989747375328084
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "0.0",
             "0.5",
@@ -3663,34 +3844,57 @@ g &#40;generic function with 1 method&#41;
             "1.5"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x"
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "legend": {
         "yanchor": "auto",
         "xanchor": "auto",
         "bordercolor": "rgba(0, 0, 0, 1.000)",
         "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
         "font": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "borderwidth": 1,
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
         "traceorder": "normal",
         "x": 1.0
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
@@ -3702,28 +3906,28 @@ g &#40;generic function with 1 method&#41;
 <p>There is negative zero in the interval <span class="math">$[-10, 0]$</span> for the function <span class="math">$f(x) = e^x - x^4$</span>. Find its value numerically:</p>
 
 
-<form name='WeaveQuestion' data-id='2qnI00St' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='sbLih09D' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="2qnI00St" type="number" class="form-control">
+<input id="sbLih09D" type="number" class="form-control">
 
 </div>
 
-<div id='2qnI00St_message'></div>
+<div id='sbLih09D_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#2qnI00St').on('change', function() {
+$('#sbLih09D').on('change', function() {
   correct = Math.abs(this.value - -0.8155534188089606) <= 0.001;
 
   if(correct) {
-     $('#2qnI00St_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#sbLih09D_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#2qnI00St_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#sbLih09D_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -3733,28 +3937,28 @@ $('#2qnI00St').on('change', function() {
 <p>There is  zero in the interval <span class="math">$[0, 5]$</span> for the function <span class="math">$f(x) = e^x - x^4$</span>. Find its value numerically:</p>
 
 
-<form name='WeaveQuestion' data-id='9ZoPwj27' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='DO1NfXTT' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="9ZoPwj27" type="number" class="form-control">
+<input id="DO1NfXTT" type="number" class="form-control">
 
 </div>
 
-<div id='9ZoPwj27_message'></div>
+<div id='DO1NfXTT_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#9ZoPwj27').on('change', function() {
+$('#DO1NfXTT').on('change', function() {
   correct = Math.abs(this.value - 1.4296118247255556) <= 0.001;
 
   if(correct) {
-     $('#9ZoPwj27_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#DO1NfXTT_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#9ZoPwj27_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#DO1NfXTT_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -3764,28 +3968,28 @@ $('#9ZoPwj27').on('change', function() {
 <p>Let <span class="math">$f(x) = x^2 - 10 \cdot x \cdot \log(x)$</span>. This function has two zeros on the positive <span class="math">$x$</span> axis. You are asked to find the largest &#40;graph and bracket...&#41;.</p>
 
 
-<form name='WeaveQuestion' data-id='nDUg2cSK' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='WPzoq8Eo' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="nDUg2cSK" type="number" class="form-control">
+<input id="WPzoq8Eo" type="number" class="form-control">
 
 </div>
 
-<div id='nDUg2cSK_message'></div>
+<div id='WPzoq8Eo_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#nDUg2cSK').on('change', function() {
+$('#WPzoq8Eo').on('change', function() {
   correct = Math.abs(this.value - 35.77152063957298) <= 0.001;
 
   if(correct) {
-     $('#nDUg2cSK_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#WPzoq8Eo_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#nDUg2cSK_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#WPzoq8Eo_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -3801,9 +4005,10 @@ $('#nDUg2cSK').on('change', function() {
 
 
 
-    <div id="4a060424-cbcc-41df-bfb1-5f77e165d60a" style="width:576px;height:384px;"></div>
+    <div id="73bae3bd-750d-433b-b746-4426ab7584e3" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('4a060424-cbcc-41df-bfb1-5f77e165d60a');
+    
+        var PLOT = document.getElementById('73bae3bd-750d-433b-b746-4426ab7584e3');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -4140,8 +4345,6 @@ $('#nDUg2cSK').on('change', function() {
             5.0,
             10.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -10.6,
             10.6
@@ -4150,20 +4353,9 @@ $('#nDUg2cSK').on('change', function() {
             0.06856347817633907,
             0.9931649168853893
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "−10",
             "−5",
@@ -4172,14 +4364,27 @@ $('#nDUg2cSK').on('change', function() {
             "10"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y"
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -4201,8 +4406,6 @@ $('#nDUg2cSK').on('change', function() {
             0.2,
             0.4
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -0.44699751861835185,
             0.5636504626161618
@@ -4211,20 +4414,9 @@ $('#nDUg2cSK').on('change', function() {
             0.0391878098571012,
             0.989747375328084
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "−0.4",
             "−0.2",
@@ -4233,62 +4425,85 @@ $('#nDUg2cSK').on('change', function() {
             "0.4"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x"
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "legend": {
         "yanchor": "auto",
         "xanchor": "auto",
         "bordercolor": "rgba(0, 0, 0, 1.000)",
         "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
         "font": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "borderwidth": 1,
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
         "traceorder": "normal",
         "x": 1.0
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
 <p>The second largest root is:</p>
 
 
-<form name='WeaveQuestion' data-id='TFLbPAHo' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='R26JWPzW' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="TFLbPAHo" type="number" class="form-control">
+<input id="R26JWPzW" type="number" class="form-control">
 
 </div>
 
-<div id='TFLbPAHo_message'></div>
+<div id='R26JWPzW_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#TFLbPAHo').on('change', function() {
+$('#R26JWPzW').on('change', function() {
   correct = Math.abs(this.value - -4.087949444130973) <= 1.0e-8;
 
   if(correct) {
-     $('#TFLbPAHo_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#R26JWPzW_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#TFLbPAHo_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#R26JWPzW_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -4299,28 +4514,28 @@ $('#TFLbPAHo').on('change', function() {
 <p>Certainly <span class="math">$x^3$</span> equals <span class="math">$3^x$</span> at <span class="math">$x=3$</span>. Find the largest value for which <span class="math">$x^3 = 3x$</span>.</p>
 
 
-<form name='WeaveQuestion' data-id='bI4lBQX6' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='qrhZ4GVh' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="bI4lBQX6" type="number" class="form-control">
+<input id="qrhZ4GVh" type="number" class="form-control">
 
 </div>
 
-<div id='bI4lBQX6_message'></div>
+<div id='qrhZ4GVh_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#bI4lBQX6').on('change', function() {
+$('#qrhZ4GVh').on('change', function() {
   correct = Math.abs(this.value - 3.0000000000000013) <= 0.001;
 
   if(correct) {
-     $('#bI4lBQX6_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#qrhZ4GVh_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#bI4lBQX6_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#qrhZ4GVh_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -4329,38 +4544,38 @@ $('#bI4lBQX6').on('change', function() {
 <p>Compare <span class="math">$x^2$</span> and <span class="math">$2^x$</span>. They meet at <span class="math">$2$</span>, where do the meet again?</p>
 
 
-<form name="WeaveQuestion" data-id="wp4urhjj" data-controltype="radio">
+<form name="WeaveQuestion" data-id="aeq5ebrc" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_wp4urhjj" value="1"><div class="markdown"><p>Before and after 2</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_aeq5ebrc" id="radio_aeq5ebrc_1" value="1">
+  <label class="form-check-label" for="radio_aeq5ebrc_1">
+    Only before 2
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_wp4urhjj" value="2"><div class="markdown"><p>Only after 2</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_aeq5ebrc" id="radio_aeq5ebrc_2" value="2">
+  <label class="form-check-label" for="radio_aeq5ebrc_2">
+    Before and after 2
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_wp4urhjj" value="3"><div class="markdown"><p>Only before 2</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_aeq5ebrc" id="radio_aeq5ebrc_3" value="3">
+  <label class="form-check-label" for="radio_aeq5ebrc_3">
+    Only after 2
+  </label>
 </div>
-    </label>
-    </div>
 
-<div id="wp4urhjj_message"></div>
+<div id="aeq5ebrc_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_wp4urhjj']").on("change", function() {
-  correct = this.value == 1;
+$("input:radio[name='radio_aeq5ebrc']").on("change", function() {
+  correct = this.value == 2;
 
   if(correct) {
-     $("#wp4urhjj_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#aeq5ebrc_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#wp4urhjj_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#aeq5ebrc_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -4370,44 +4585,48 @@ $("input:radio[name='radio_wp4urhjj']").on("change", function() {
 <p>Just by graphing, find a number in <span class="math">$b$</span> with <span class="math">$2 < b < 3$</span> where for values less than <span class="math">$b$</span> there is a zero beyond <span class="math">$b$</span> of <span class="math">$b^x - x^b$</span> and for values more than <span class="math">$b$</span> there isn&#39;t.</p>
 
 
-<form name="WeaveQuestion" data-id="MgSjRv5B" data-controltype="radio">
+<form name="WeaveQuestion" data-id="ns3l4y4P" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_MgSjRv5B" value="1"><div class="markdown">&#36;b \approx 2.7&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_MgSjRv5B" value="2"><div class="markdown">&#36;b \approx 2.9&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_MgSjRv5B" value="3"><div class="markdown">&#36;b \approx 2.2&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_MgSjRv5B" value="4"><div class="markdown">&#36;b \approx 2.5&#36;
-</div>
-    </label>
-    </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_ns3l4y4P" id="radio_ns3l4y4P_1" value="1">
+  <label class="form-check-label" for="radio_ns3l4y4P_1">
+    &#36;b \approx 2.7&#36;
 
-<div id="MgSjRv5B_message"></div>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_ns3l4y4P" id="radio_ns3l4y4P_2" value="2">
+  <label class="form-check-label" for="radio_ns3l4y4P_2">
+    &#36;b \approx 2.9&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_ns3l4y4P" id="radio_ns3l4y4P_3" value="3">
+  <label class="form-check-label" for="radio_ns3l4y4P_3">
+    &#36;b \approx 2.2&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_ns3l4y4P" id="radio_ns3l4y4P_4" value="4">
+  <label class="form-check-label" for="radio_ns3l4y4P_4">
+    &#36;b \approx 2.5&#36;
+
+  </label>
+</div>
+
+<div id="ns3l4y4P_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_MgSjRv5B']").on("change", function() {
+$("input:radio[name='radio_ns3l4y4P']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#MgSjRv5B_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#ns3l4y4P_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#MgSjRv5B_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#ns3l4y4P_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -4447,38 +4666,41 @@ f(t) = -(1/2)\cdot 32 t^2 + v_0t.
 <p>Let <span class="math">$v_0= 390$</span>. The three times in question can be found from the zeros of <code>f</code> and <code>D&#40;f&#41;</code>. What are they?</p>
 
 
-<form name="WeaveQuestion" data-id="w5ewOhXA" data-controltype="radio">
+<form name="WeaveQuestion" data-id="M1kA7xdn" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_w5ewOhXA" value="1"><div class="markdown">&#36;&#40;0.0, 625.0, 1250.0&#41;&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_w5ewOhXA" value="2"><div class="markdown">&#36;&#40;-4.9731, 0.0, 4.9731&#41;&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_w5ewOhXA" value="3"><div class="markdown">&#36;&#40;0.0, 12.1875, 24.375&#41;&#36;
-</div>
-    </label>
-    </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_M1kA7xdn" id="radio_M1kA7xdn_1" value="1">
+  <label class="form-check-label" for="radio_M1kA7xdn_1">
+    &#36;&#40;-4.9731, 0.0, 4.9731&#41;&#36;
 
-<div id="w5ewOhXA_message"></div>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_M1kA7xdn" id="radio_M1kA7xdn_2" value="2">
+  <label class="form-check-label" for="radio_M1kA7xdn_2">
+    &#36;&#40;0.0, 625.0, 1250.0&#41;&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_M1kA7xdn" id="radio_M1kA7xdn_3" value="3">
+  <label class="form-check-label" for="radio_M1kA7xdn_3">
+    &#36;&#40;0.0, 12.1875, 24.375&#41;&#36;
+
+  </label>
+</div>
+
+<div id="M1kA7xdn_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_w5ewOhXA']").on("change", function() {
+$("input:radio[name='radio_M1kA7xdn']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#w5ewOhXA_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#M1kA7xdn_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#w5ewOhXA_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#M1kA7xdn_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -4509,38 +4731,41 @@ h &#40;generic function with 1 method&#41;
 <p>Now find the three times: <span class="math">$t_0$</span>, the starting time; <span class="math">$t_a$</span>, the time at the apex of the flight; and <span class="math">$t_f$</span>, the time the object returns to the ground.</p>
 
 
-<form name="WeaveQuestion" data-id="uljhefAt" data-controltype="radio">
+<form name="WeaveQuestion" data-id="AEG9LiBE" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_uljhefAt" value="1"><div class="markdown">&#36;&#40;0, 2.579, 13.187&#41;&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_uljhefAt" value="2"><div class="markdown">&#36;&#40;0, 32.0, 390.0&#41;&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_uljhefAt" value="3"><div class="markdown">&#36;&#40;0, 13.187, 30.0&#41;&#36;
-</div>
-    </label>
-    </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_AEG9LiBE" id="radio_AEG9LiBE_1" value="1">
+  <label class="form-check-label" for="radio_AEG9LiBE_1">
+    &#36;&#40;0, 32.0, 390.0&#41;&#36;
 
-<div id="uljhefAt_message"></div>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_AEG9LiBE" id="radio_AEG9LiBE_2" value="2">
+  <label class="form-check-label" for="radio_AEG9LiBE_2">
+    &#36;&#40;0, 2.579, 13.187&#41;&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_AEG9LiBE" id="radio_AEG9LiBE_3" value="3">
+  <label class="form-check-label" for="radio_AEG9LiBE_3">
+    &#36;&#40;0, 13.187, 30.0&#41;&#36;
+
+  </label>
+</div>
+
+<div id="AEG9LiBE_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_uljhefAt']").on("change", function() {
-  correct = this.value == 1;
+$("input:radio[name='radio_AEG9LiBE']").on("change", function() {
+  correct = this.value == 2;
 
   if(correct) {
-     $("#uljhefAt_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#AEG9LiBE_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#uljhefAt_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#AEG9LiBE_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -4551,38 +4776,38 @@ $("input:radio[name='radio_uljhefAt']").on("change", function() {
 <p>Part of the proof of the intermediate value theorem rests on knowing what the limit is of <span class="math">$f(x)$</span> when <span class="math">$f(x) > y$</span> for all <span class="math">$x$</span>. What can we say about <span class="math">$L$</span> supposing <span class="math">$L = \lim_{x \rightarrow c+}f(x)$</span> under  this assumption on <span class="math">$f$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="Wbi4F8aS" data-controltype="radio">
+<form name="WeaveQuestion" data-id="L5WL0OBU" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_Wbi4F8aS" value="1"><div class="markdown"><p>It must be that &#36;L &gt; y&#36; as each &#36;f&#40;x&#41;&#36; is.</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_L5WL0OBU" id="radio_L5WL0OBU_1" value="1">
+  <label class="form-check-label" for="radio_L5WL0OBU_1">
+    It must be that &#36;L &gt; y&#36; as each &#36;f&#40;x&#41;&#36; is.
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_Wbi4F8aS" value="2"><div class="markdown"><p>It must be that &#36;L \geq y&#36;</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_L5WL0OBU" id="radio_L5WL0OBU_2" value="2">
+  <label class="form-check-label" for="radio_L5WL0OBU_2">
+    It must be that &#36;L \geq y&#36;
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_Wbi4F8aS" value="3"><div class="markdown"><p>It can happen that &#36;L &lt; y&#36;, &#36;L&#61;y&#36;, or &#36;L&gt;y&#36;</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_L5WL0OBU" id="radio_L5WL0OBU_3" value="3">
+  <label class="form-check-label" for="radio_L5WL0OBU_3">
+    It can happen that &#36;L &lt; y&#36;, &#36;L&#61;y&#36;, or &#36;L&gt;y&#36;
+  </label>
 </div>
-    </label>
-    </div>
 
-<div id="Wbi4F8aS_message"></div>
+<div id="L5WL0OBU_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Wbi4F8aS']").on("change", function() {
+$("input:radio[name='radio_L5WL0OBU']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#Wbi4F8aS_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#L5WL0OBU_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Wbi4F8aS_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#L5WL0OBU_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -4593,44 +4818,47 @@ $("input:radio[name='radio_Wbi4F8aS']").on("change", function() {
 <p>The extreme value theorem has two assumptions: a continuous function and a <em>closed</em> interval. Which of the following examples fails to satisfy the consequence of the  extreme value theorem because the interval is not closed? &#40;The consequence - the existence of an absolute maximum and minimum - can happen even if the theorem does not apply.&#41;</p>
 
 
-<form name="WeaveQuestion" data-id="UovgdfuI" data-controltype="radio">
+<form name="WeaveQuestion" data-id="iPiVKcL3" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_UovgdfuI" value="1"><div class="markdown">&#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,~ I&#61;&#40;-2\pi, 2\pi&#41;&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_UovgdfuI" value="2"><div class="markdown">&#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,~ I&#61;&#40;-\pi, \pi&#41;&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_UovgdfuI" value="3"><div class="markdown">&#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,~ I&#61;&#40;-\pi/2, \pi/2&#41;&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_UovgdfuI" value="4"><div class="markdown"><p>None of the above</p>
-</div>
-    </label>
-    </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_iPiVKcL3" id="radio_iPiVKcL3_1" value="1">
+  <label class="form-check-label" for="radio_iPiVKcL3_1">
+    &#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,~ I&#61;&#40;-2\pi, 2\pi&#41;&#36;
 
-<div id="UovgdfuI_message"></div>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_iPiVKcL3" id="radio_iPiVKcL3_2" value="2">
+  <label class="form-check-label" for="radio_iPiVKcL3_2">
+    &#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,~ I&#61;&#40;-\pi, \pi&#41;&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_iPiVKcL3" id="radio_iPiVKcL3_3" value="3">
+  <label class="form-check-label" for="radio_iPiVKcL3_3">
+    &#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,~ I&#61;&#40;-\pi/2, \pi/2&#41;&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_iPiVKcL3" id="radio_iPiVKcL3_4" value="4">
+  <label class="form-check-label" for="radio_iPiVKcL3_4">
+    None of the above
+  </label>
+</div>
+
+<div id="iPiVKcL3_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_UovgdfuI']").on("change", function() {
+$("input:radio[name='radio_iPiVKcL3']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#UovgdfuI_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#iPiVKcL3_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#UovgdfuI_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#iPiVKcL3_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -4641,44 +4869,47 @@ $("input:radio[name='radio_UovgdfuI']").on("change", function() {
 <p>The extreme value theorem has two assumptions: a continuous function and a <em>closed</em> interval. Which of the following examples fails to satisfy the consequence of the  extreme value theorem because the function is not continuous?</p>
 
 
-<form name="WeaveQuestion" data-id="FyjKZ6a1" data-controltype="radio">
+<form name="WeaveQuestion" data-id="V4R4aBEk" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_FyjKZ6a1" value="1"><div class="markdown">&#36;f&#40;x&#41; &#61; 1/x,~ I&#61;&#91;1,2&#93;&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_FyjKZ6a1" value="2"><div class="markdown">&#36;f&#40;x&#41; &#61; 1/x,~ I&#61;&#91;-2, -1&#93;&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_FyjKZ6a1" value="3"><div class="markdown">&#36;f&#40;x&#41; &#61; 1/x,~ I&#61;&#91;-1, 1&#93;&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_FyjKZ6a1" value="4"><div class="markdown"><p>none of the above</p>
-</div>
-    </label>
-    </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_V4R4aBEk" id="radio_V4R4aBEk_1" value="1">
+  <label class="form-check-label" for="radio_V4R4aBEk_1">
+    &#36;f&#40;x&#41; &#61; 1/x,~ I&#61;&#91;1,2&#93;&#36;
 
-<div id="FyjKZ6a1_message"></div>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_V4R4aBEk" id="radio_V4R4aBEk_2" value="2">
+  <label class="form-check-label" for="radio_V4R4aBEk_2">
+    &#36;f&#40;x&#41; &#61; 1/x,~ I&#61;&#91;-2, -1&#93;&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_V4R4aBEk" id="radio_V4R4aBEk_3" value="3">
+  <label class="form-check-label" for="radio_V4R4aBEk_3">
+    &#36;f&#40;x&#41; &#61; 1/x,~ I&#61;&#91;-1, 1&#93;&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_V4R4aBEk" id="radio_V4R4aBEk_4" value="4">
+  <label class="form-check-label" for="radio_V4R4aBEk_4">
+    none of the above
+  </label>
+</div>
+
+<div id="V4R4aBEk_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_FyjKZ6a1']").on("change", function() {
+$("input:radio[name='radio_V4R4aBEk']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#FyjKZ6a1_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#V4R4aBEk_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#FyjKZ6a1_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#V4R4aBEk_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -4689,44 +4920,47 @@ $("input:radio[name='radio_FyjKZ6a1']").on("change", function() {
 <p>The extreme value theorem has two assumptions: a continuous function and a <em>closed</em> interval. Which of the following examples fails to satisfy the consequence of the  extreme value theorem because the function is not continuous?</p>
 
 
-<form name="WeaveQuestion" data-id="ZcDylFyo" data-controltype="radio">
+<form name="WeaveQuestion" data-id="C9o2SndW" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_ZcDylFyo" value="1"><div class="markdown">&#36;f&#40;x&#41; &#61; \text&#123;sign&#125;&#40;x&#41;,~  I&#61;&#91;-1, 1&#93;&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_ZcDylFyo" value="2"><div class="markdown">&#36;f&#40;x&#41; &#61; 1/x,~      I&#61;&#91;-4, -1&#93;&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_ZcDylFyo" value="3"><div class="markdown">&#36;f&#40;x&#41; &#61; \text&#123;floor&#125;&#40;x&#41;,~ I&#61;&#91;-1/2, 1/2&#93;&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_ZcDylFyo" value="4"><div class="markdown"><p>none of the above</p>
-</div>
-    </label>
-    </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_C9o2SndW" id="radio_C9o2SndW_1" value="1">
+  <label class="form-check-label" for="radio_C9o2SndW_1">
+    &#36;f&#40;x&#41; &#61; \text&#123;sign&#125;&#40;x&#41;,~  I&#61;&#91;-1, 1&#93;&#36;
 
-<div id="ZcDylFyo_message"></div>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_C9o2SndW" id="radio_C9o2SndW_2" value="2">
+  <label class="form-check-label" for="radio_C9o2SndW_2">
+    &#36;f&#40;x&#41; &#61; 1/x,~      I&#61;&#91;-4, -1&#93;&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_C9o2SndW" id="radio_C9o2SndW_3" value="3">
+  <label class="form-check-label" for="radio_C9o2SndW_3">
+    &#36;f&#40;x&#41; &#61; \text&#123;floor&#125;&#40;x&#41;,~ I&#61;&#91;-1/2, 1/2&#93;&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_C9o2SndW" id="radio_C9o2SndW_4" value="4">
+  <label class="form-check-label" for="radio_C9o2SndW_4">
+    none of the above
+  </label>
+</div>
+
+<div id="C9o2SndW_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_ZcDylFyo']").on("change", function() {
+$("input:radio[name='radio_C9o2SndW']").on("change", function() {
   correct = this.value == 4;
 
   if(correct) {
-     $("#ZcDylFyo_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#C9o2SndW_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#ZcDylFyo_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#C9o2SndW_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -4737,28 +4971,28 @@ $("input:radio[name='radio_ZcDylFyo']").on("change", function() {
 <p>The function <span class="math">$f(x) = x^3 - x$</span> is continuous over the interval <span class="math">$I=[-2,2]$</span>. Find a value <span class="math">$c$</span> for which <span class="math">$M=f(c)$</span> is an absolute maximum over <span class="math">$I$</span>.</p>
 
 
-<form name='WeaveQuestion' data-id='vPZ6VG5s' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='Y3PkVSGr' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="vPZ6VG5s" type="number" class="form-control">
+<input id="Y3PkVSGr" type="number" class="form-control">
 
 </div>
 
-<div id='vPZ6VG5s_message'></div>
+<div id='Y3PkVSGr_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#vPZ6VG5s').on('change', function() {
+$('#Y3PkVSGr').on('change', function() {
   correct = Math.abs(this.value - 2) <= 0;
 
   if(correct) {
-     $('#vPZ6VG5s_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#Y3PkVSGr_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#vPZ6VG5s_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#Y3PkVSGr_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -4768,28 +5002,28 @@ $('#vPZ6VG5s').on('change', function() {
 <p>The function <span class="math">$f(x) = x^3 - x$</span> is continuous over the interval <span class="math">$I=[-1,1]$</span>. Find a value <span class="math">$c$</span> for which <span class="math">$M=f(c)$</span> is an absolute maximum over <span class="math">$I$</span>.</p>
 
 
-<form name='WeaveQuestion' data-id='hkzLYjLz' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='6NpUN12r' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="hkzLYjLz" type="number" class="form-control">
+<input id="6NpUN12r" type="number" class="form-control">
 
 </div>
 
-<div id='hkzLYjLz_message'></div>
+<div id='6NpUN12r_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#hkzLYjLz').on('change', function() {
+$('#6NpUN12r').on('change', function() {
   correct = Math.abs(this.value - -0.5773502691896257) <= 0.001;
 
   if(correct) {
-     $('#hkzLYjLz_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#6NpUN12r_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#hkzLYjLz_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#6NpUN12r_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -4799,38 +5033,38 @@ $('#hkzLYjLz').on('change', function() {
 <p>Consider the continuous function <span class="math">$f(x) = \sin(x)$</span> over the closed interval <span class="math">$I=[0, 10\pi]$</span>. Which of these is true?</p>
 
 
-<form name="WeaveQuestion" data-id="5eWaaDlt" data-controltype="radio">
+<form name="WeaveQuestion" data-id="qoGe5GUh" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_5eWaaDlt" value="1"><div class="markdown"><p>There is no value &#36;c&#36; for which &#36;f&#40;c&#41;&#36; is an absolute maximum over &#36;I&#36;.</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_qoGe5GUh" id="radio_qoGe5GUh_1" value="1">
+  <label class="form-check-label" for="radio_qoGe5GUh_1">
+    There is no value &#36;c&#36; for which &#36;f&#40;c&#41;&#36; is an absolute maximum over &#36;I&#36;.
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_5eWaaDlt" value="2"><div class="markdown"><p>There is just one value of &#36;c&#36; for which &#36;f&#40;c&#41;&#36; is an absolute maximum over &#36;I&#36;.</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_qoGe5GUh" id="radio_qoGe5GUh_2" value="2">
+  <label class="form-check-label" for="radio_qoGe5GUh_2">
+    There is just one value of &#36;c&#36; for which &#36;f&#40;c&#41;&#36; is an absolute maximum over &#36;I&#36;.
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_5eWaaDlt" value="3"><div class="markdown"><p>There are many values of &#36;c&#36; for which &#36;f&#40;c&#41;&#36; is an absolute maximum over &#36;I&#36;.</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_qoGe5GUh" id="radio_qoGe5GUh_3" value="3">
+  <label class="form-check-label" for="radio_qoGe5GUh_3">
+    There are many values of &#36;c&#36; for which &#36;f&#40;c&#41;&#36; is an absolute maximum over &#36;I&#36;.
+  </label>
 </div>
-    </label>
-    </div>
 
-<div id="5eWaaDlt_message"></div>
+<div id="qoGe5GUh_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_5eWaaDlt']").on("change", function() {
+$("input:radio[name='radio_qoGe5GUh']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#5eWaaDlt_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#qoGe5GUh_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#5eWaaDlt_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#qoGe5GUh_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -4841,38 +5075,38 @@ $("input:radio[name='radio_5eWaaDlt']").on("change", function() {
 <p>Consider the continuous function <span class="math">$f(x) = \sin(x)$</span> over the closed interval <span class="math">$I=[0, 10\pi]$</span>. Which of these is true?</p>
 
 
-<form name="WeaveQuestion" data-id="B8P8Pdlx" data-controltype="radio">
+<form name="WeaveQuestion" data-id="WlghYQHL" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_B8P8Pdlx" value="1"><div class="markdown"><p>There is no value &#36;M&#36; for which &#36;M&#61;f&#40;c&#41;&#36;, &#36;c&#36; in &#36;I&#36; for which &#36;M&#36; is an absolute maximum over &#36;I&#36;.</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_WlghYQHL" id="radio_WlghYQHL_1" value="1">
+  <label class="form-check-label" for="radio_WlghYQHL_1">
+    There is no value &#36;M&#36; for which &#36;M&#61;f&#40;c&#41;&#36;, &#36;c&#36; in &#36;I&#36; for which &#36;M&#36; is an absolute maximum over &#36;I&#36;.
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_B8P8Pdlx" value="2"><div class="markdown"><p>There is just one value &#36;M&#36; for which &#36;M&#61;f&#40;c&#41;&#36;, &#36;c&#36; in &#36;I&#36; for which &#36;M&#36; is an absolute maximum over &#36;I&#36;.</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_WlghYQHL" id="radio_WlghYQHL_2" value="2">
+  <label class="form-check-label" for="radio_WlghYQHL_2">
+    There is just one value &#36;M&#36; for which &#36;M&#61;f&#40;c&#41;&#36;, &#36;c&#36; in &#36;I&#36; for which &#36;M&#36; is an absolute maximum over &#36;I&#36;.
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_B8P8Pdlx" value="3"><div class="markdown"><p>There are many values &#36;M&#36; for which &#36;M&#61;f&#40;c&#41;&#36;, &#36;c&#36; in &#36;I&#36; for which &#36;M&#36; is an absolute maximum over &#36;I&#36;.</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_WlghYQHL" id="radio_WlghYQHL_3" value="3">
+  <label class="form-check-label" for="radio_WlghYQHL_3">
+    There are many values &#36;M&#36; for which &#36;M&#61;f&#40;c&#41;&#36;, &#36;c&#36; in &#36;I&#36; for which &#36;M&#36; is an absolute maximum over &#36;I&#36;.
+  </label>
 </div>
-    </label>
-    </div>
 
-<div id="B8P8Pdlx_message"></div>
+<div id="WlghYQHL_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_B8P8Pdlx']").on("change", function() {
+$("input:radio[name='radio_WlghYQHL']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#B8P8Pdlx_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#WlghYQHL_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#B8P8Pdlx_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#WlghYQHL_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -4883,38 +5117,41 @@ $("input:radio[name='radio_B8P8Pdlx']").on("change", function() {
 <p>The extreme value theorem says that on a closed interval a continuous function has an extreme value <span class="math">$M=f(c)$</span> for some <span class="math">$c$</span>. Does it also say that <span class="math">$c$</span> is unique? Which of these examples might help you answer this?</p>
 
 
-<form name="WeaveQuestion" data-id="YodgqpPu" data-controltype="radio">
+<form name="WeaveQuestion" data-id="yXtneaxQ" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_YodgqpPu" value="1"><div class="markdown">&#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,\quad I&#61;&#91;0, 2\pi&#93;&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_YodgqpPu" value="2"><div class="markdown">&#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,\quad I&#61;&#91;-2\pi, 2\pi&#93;&#36;
-</div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_YodgqpPu" value="3"><div class="markdown">&#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,\quad I&#61;&#91;-\pi/2, \pi/2&#93;&#36;
-</div>
-    </label>
-    </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_yXtneaxQ" id="radio_yXtneaxQ_1" value="1">
+  <label class="form-check-label" for="radio_yXtneaxQ_1">
+    &#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,\quad I&#61;&#91;-2\pi, 2\pi&#93;&#36;
 
-<div id="YodgqpPu_message"></div>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_yXtneaxQ" id="radio_yXtneaxQ_2" value="2">
+  <label class="form-check-label" for="radio_yXtneaxQ_2">
+    &#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,\quad I&#61;&#91;0, 2\pi&#93;&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_yXtneaxQ" id="radio_yXtneaxQ_3" value="3">
+  <label class="form-check-label" for="radio_yXtneaxQ_3">
+    &#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,\quad I&#61;&#91;-\pi/2, \pi/2&#93;&#36;
+
+  </label>
+</div>
+
+<div id="yXtneaxQ_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_YodgqpPu']").on("change", function() {
-  correct = this.value == 2;
+$("input:radio[name='radio_yXtneaxQ']").on("change", function() {
+  correct = this.value == 1;
 
   if(correct) {
-     $("#YodgqpPu_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#yXtneaxQ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#YodgqpPu_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#yXtneaxQ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -4925,28 +5162,28 @@ $("input:radio[name='radio_YodgqpPu']").on("change", function() {
 <p>The zeros of the equation <span class="math">$\cos(x) \cdot \cosh(x) = 1$</span> are related to vibrations of rods. Using <code>find_zeros</code>, what is the largest zero in the interval <span class="math">$[0, 6\pi]$</span>?</p>
 
 
-<form name='WeaveQuestion' data-id='S3oQbMhy' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='1cwL9Uho' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="S3oQbMhy" type="number" class="form-control">
+<input id="1cwL9Uho" type="number" class="form-control">
 
 </div>
 
-<div id='S3oQbMhy_message'></div>
+<div id='1cwL9Uho_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#S3oQbMhy').on('change', function() {
+$('#1cwL9Uho').on('change', function() {
   correct = Math.abs(this.value - 17.27875965739948) <= 0.001;
 
   if(correct) {
-     $('#S3oQbMhy_message').html('<div class="alert alert-success"><span class="glyphicon glyphicon-thumbs-up">&nbsp;Correct</span></div>');
+     $('#1cwL9Uho_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#S3oQbMhy_message').html('<div class="alert alert-danger"><span class="glyphicon glyphicon-thumbs-down">&nbsp;Incorrect</span></div>');
+     $('#1cwL9Uho_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -4957,32 +5194,32 @@ $('#S3oQbMhy').on('change', function() {
 <p>Suppose <span class="math">$k_x$</span> and <span class="math">$k_y$</span> are positive integers and <span class="math">$a, b$</span> are positive numbers, will the <a href="https://en.wikipedia.org/wiki/Parametric_equation#Lissajous_Curve">Lissajous</a> curve given by <span class="math">$(a\cos(k_x t), b\sin(k_y t))$</span> be continuous?</p>
 
 
-<form name="WeaveQuestion" data-id="8vHshpBC" data-controltype="radio">
+<form name="WeaveQuestion" data-id="nAs5WNts" data-controltype="radio">
 <div class="form-group ">
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_8vHshpBC" value="1"><div class="markdown"><p>Yes</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_nAs5WNts" id="radio_nAs5WNts_1" value="1">
+  <label class="form-check-label" for="radio_nAs5WNts_1">
+    Yes
+  </label>
 </div>
-    </label>
-    </div>
-    <div  class="radio">
-    <label>
-      <input type="radio" name="radio_8vHshpBC" value="2"><div class="markdown"><p>No</p>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_nAs5WNts" id="radio_nAs5WNts_2" value="2">
+  <label class="form-check-label" for="radio_nAs5WNts_2">
+    No
+  </label>
 </div>
-    </label>
-    </div>
 
-<div id="8vHshpBC_message"></div>
+<div id="nAs5WNts_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_8vHshpBC']").on("change", function() {
+$("input:radio[name='radio_nAs5WNts']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#8vHshpBC_message").html("<div class='alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>&nbsp;Correct</span></div>");
+     $("#nAs5WNts_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#8vHshpBC_message").html("<div class='alert alert-warning'><span class='glyphicon glyphicon-thumbs-down'>&nbsp;Incorrect</span></div>");
+     $("#nAs5WNts_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -5000,9 +5237,10 @@ $("input:radio[name='radio_8vHshpBC']").on("change", function() {
 
 
 
-    <div id="596df9ff-0345-40f6-abf3-eeffd6793065" style="width:576px;height:384px;"></div>
+    <div id="415d7102-e4d6-4597-88a1-908b070379d0" style="width:576px;height:384px;"></div>
     <script>
-    PLOT = document.getElementById('596df9ff-0345-40f6-abf3-eeffd6793065');
+    
+        var PLOT = document.getElementById('415d7102-e4d6-4597-88a1-908b070379d0');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -5441,8 +5679,6 @@ $("input:radio[name='radio_8vHshpBC']").on("change", function() {
             0.5,
             1.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -1.059871651203187,
             1.0599962616855296
@@ -5451,20 +5687,9 @@ $("input:radio[name='radio_8vHshpBC']").on("change", function() {
             0.03769928064547487,
             0.9931649168853894
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "−1.0",
             "−0.5",
@@ -5473,14 +5698,27 @@ $("input:radio[name='radio_8vHshpBC']").on("change", function() {
             "1.0"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y"
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
     "annotations": [],
@@ -5502,8 +5740,6 @@ $("input:radio[name='radio_8vHshpBC']").on("change", function() {
             1.0,
             2.0
         ],
-        "visible": true,
-        "ticks": "inside",
         "range": [
             -2.1199339554156116,
             2.1199339554156116
@@ -5512,20 +5748,9 @@ $("input:radio[name='radio_8vHshpBC']").on("change", function() {
             0.0391878098571012,
             0.989747375328084
         ],
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
         "mirror": false,
         "tickangle": 0,
         "showline": true,
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
         "ticktext": [
             "−2",
             "−1",
@@ -5534,39 +5759,74 @@ $("input:radio[name='radio_8vHshpBC']").on("change", function() {
             "2"
         ],
         "zeroline": false,
-        "type": "-",
         "tickfont": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
         "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x"
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
     },
     "legend": {
         "yanchor": "auto",
         "xanchor": "auto",
         "bordercolor": "rgba(0, 0, 0, 1.000)",
         "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
         "font": {
             "color": "rgba(0, 0, 0, 1.000)",
             "family": "sans-serif",
             "size": 11
         },
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "borderwidth": 1,
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
         "traceorder": "normal",
         "x": 1.0
     },
     "width": 576
 }
 );
+
+    
     </script>
 
 
   </div>
 </div>
+
+<script>
+  document.querySelectorAll('pre.hljl').forEach(el => {   // first, find all the div.code blocks
+  hljs.highlightElement(el);                              // then highlight each
+  });
+
+  var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+  var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
+  });
+</script>
+
 
 </body>
 </html>

@@ -180,7 +180,7 @@ How can this relationship be summarized? Well, let's go back to what we know, th
 
 ```julia;
 using SymPy
-@vars t
+@syms t
 diff(A(t), t)
 ```
 
@@ -316,8 +316,7 @@ have fairly explicit function for $x$ and $y$, we will use `SymPy` to
 do this.
 
 ```julia;
-@vars t
-theta = SymFunction("theta")
+@syms t theta()
 
 v0 = 5
 x(t) = 50t

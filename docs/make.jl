@@ -1,5 +1,6 @@
 using CalculusWithJulia
 
+# hacky build script
 CalculusWithJulia.WeaveSupport.weave_all(force=false, build_list=(:html,))
 builddir = joinpath(@__DIR__, "build")
 htmldir = joinpath(@__DIR__, "..", "html")

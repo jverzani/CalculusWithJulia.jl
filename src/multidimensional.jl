@@ -22,7 +22,7 @@ values, y values, and optionally z values.
 
 If the argument is specified as a comma separated collection of vectors, then these are combined and passed along.
 
-If the argument is a function and two end point, then the function is
+If the argument is a function and two end points, then the function is
 evaluated at 100 points between `a` and `b`.
 
 This is useful for plotting when the data is more conveniently
@@ -56,7 +56,19 @@ function unzip(ws::Array; recursive=false)
 end
 #unzip(vs) = (A=hcat(vs...); Tuple([A[i,:] for i in eachindex(vs[1])]))
 unzip(v,vs...) = unzip([v, vs...])
-unzip(r::Function, a, b, n=100) = unzip(r.(range(a, stop=b, length=n)))
+unzip(r::Function, a, b, n) = unzip(r.(range(a, stop=b, length=n)))
+# return (xs, f.(xs)) or (f₁(xs), f₂(xs), ...)
+function unzip(f::Function, a, b)
+    n = length(f(a))
+    if n == 1
+        return Plots.PlotUtils.adapted_grid(f, (a,b))
+    else
+        xsys = [Plots.PlotUtils.adapted_grid(x->f(x)[i], (a,b)) for i ∈ 1:n]
+        xs = sort(vcat([xsys[i][1] for i ∈ 1:3]...))
+        return unzip(f.(xs))
+    end
+end
+
 
 """
     parametric_grid(us, vs, r)

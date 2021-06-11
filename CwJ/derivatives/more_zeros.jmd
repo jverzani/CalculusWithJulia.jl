@@ -1,0 +1,407 @@
+# Derivative free alternatives to Newton's method
+
+```julia; echo=false; results="hidden"
+import CalculusWithJulia
+using CalculusWithJulia.WeaveSupport
+using Plots
+nothing
+```
+
+
+One way to view Newton's method is through the inverse of ``f``. If ``f`` has a simple zero at ``\alpha`` and is locally invertible (that is some ``f^{-1}`` exists) then the update step for Newton's method can be identified with: fitting a polynomial to the local inverse function of ``f`` going through through the point ``(f(x_0),x_0)``,  and matching the slope of `f` at the same point.
+
+That is, we can write ``g(y) = h_0 + h1 (y-f(x_0))``. Then ``g(f(x0)) = x0 = h_0``, so ``h_0 = x_0``, and from ``g'(f(x_0)) = 1/f'(x_0)``, we get ``h_1 = 1/f'(x_0)``, so ``g(y) = x_0 + (y-f(x_0))/f'(x_0)``. At ``y=0``, we get the update step ``x_1 = g(0) = x_0 - f(x_0)/f'(x_0)``.
+
+
+The same viewpoint can be used  to create derivative-free methods.
+
+## The secant method
+
+
+For example, the  [secant method](https://en.wikipedia.org/wiki/Secant_method) can be seen as the result of fitting a polynomial approximation for  ``f^{-1}`` through two points ``(f(x_0),x_0)`` and ``(f(x_1), x_1)``. 
+
+
+Again, expressing this as ``g(y) = h_0 + h_1(y-f(x_1))`` leads to ``g(f(x_1)) = x_1 = h_0``.
+Substituting ``f(x_0)`` gives ``g(f(x_0)) = x_0 = x_1 + h_1(f(x_0)-f(x_1))``.  Solving for ``h_1`` leads to ``h_1=(x_1-x_0)/(f(x_1)-f(x_0))``. Then ``x_2 = g(0) = x_1 + (x_1-x_0)/(f(x_1)-f(x_0)) \cdot f(x_1)``.
+
+We code the update step as `λ2`:
+
+```julia;
+λ2(f0,f1,x0,x1) = x1 - (x1-x0)/(f1-f0) * f1
+```
+
+Then we can run a few steps to identify the zero of sine starting at ``3`` and ``4``
+
+```julia;
+x0,x1 = 4,3
+f0,f1 = sin.((x0,x1))
+@show x1,f1
+
+x0,x1 = x1, λ2(f0,f1,x0,x1)
+f0,f1 = f1, sin(x1)
+@show x1,f1
+
+x0,x1 = x1, λ2(f0,f1,x0,x1)
+f0,f1 = f1, sin(x1)
+@show x1,f1
+
+x0,x1 = x1, λ2(f0,f1,x0,x1)
+f0,f1 = f1, sin(x1)
+@show x1,f1
+
+x0,x1 = x1, λ2(f0,f1,x0,x1)
+f0,f1 = f1, sin(x1)
+x1,f1
+```
+
+
+Like Newton's method, the secant method coverges quickly for this problem (though its rate is less than the quadratic rate of Newton's method.)
+
+
+This method is included in `Roots` as `Order1()`:
+
+```julia;
+using Roots
+find_zero(sin, (4,3), Order1(), verbose=true)
+```
+
+
+
+Though the derivative is related to the slope of the secant line, that is in the limit. The convergence of the secant method is not as fast as Newton's method, though at each step of the secant method, only 1 new function evaluation is needed, so it can be more efficient for functions that are expensive to compute or differentiate.
+
+
+Let ``\epsilon_{n+1} = x_{n+1}-\alpha``, where ``\alpha`` is assumed to be a *simple* zero of ``f(x)`` that the secant method converges to. A [calculation](https://math.okstate.edu/people/binegar/4513-F98/4513-l08.pdf) shows that  
+
+```math
+\begin{align*}
+\epsilon_{n+1} &\approx \frac{x_n-x_{n-1}}{f(x_n)-f(x_{n-1})} \frac{(1/2)f''(\alpha)(e_n-e_{n-1})}{x_n-x_{n-1}} \epsilon_n \epsilon_{n-1}\\
+& \approx \frac{f''(\alpha)}{2f'(\alpha)} \epsilon_n \epsilon_{n-1}\\
+&= C  \epsilon_n \epsilon_{n-1}.
+\end{align*}
+```
+
+The constant `C` is similar to that for Newton's method, and reveals potential troubles for the secant method similar to those of Newton's method: a poor initial guess (the initial error is too big), the second derivative is too large, the first derivative too flat near the answer.
+
+Assuming the error term has the form ``\epsilon_{n+1} = A|\epsilon_n|^\phi`` and substituting into the above leads to the equation
+
+```math
+\frac{A^{1-1/\phi}}{C} = |\epsilon_n|^{1 - \phi +1/\phi}.
+```
+
+The left side being a constant suggests ``\phi`` solves: ``1 - \phi + 1/\phi = 0`` or ``\phi^2 -\phi - 1 = 0``. The solution is the golden ratio, ``(1 + \sqrt{5})/2 \approx 1.618\dots``. 
+
+
+### Steffensen's method
+
+Steffensen's method is a secant-like method that converges with ``|\epsilon_{n+1}| \approx C |\epsilon_n|^2``. The secant is taken between the points ``(x_n,f(x_n))`` and  ``(x_n + f(x_n), f(x_n + f(x_n))``. Like Newton's method this requires 2 function evaluations per step. Steffensen's is implemented through `Roots.Steffensen()`.
+
+
+
+## Inverse quadratic interpolation
+
+Inverse quadratic interpolation fits a quadratic polynomial through three points, not just two like the Secant method. The third being ``(f(x_2), x_2)``. 
+
+
+For example, here is the inverse quadratic function, ``g(y)``, going three points marked with red dots. The blue dot is found from ``(g(0), 0)``.
+
+```julia; echo=false
+using Plots
+
+a,b,c = 1,2,3
+fa,fb,fc = -1,1/4,1
+g(y) = (y-fb)*(y-fa)/(fc-fb)/(fc-fa)*c + (y-fc)*(y-fa)/(fb-fc)/(fb-fa)*b + (y-fc)*(y-fb)/(fa-fc)/(fa-fb)*a
+ys = range(-2,2, length=100)
+xs = g.(ys)
+plot(xs, ys, legend=false)
+scatter!([a,b,c],[fa,fb,fc], color=:red, markersize=5)
+scatter!([g(0)],[0], color=:blue, markersize=10)	
+```
+
+
+Here we use `SymPy` to identify the polynomial as a function of ``y``, then evaluate it at ``y=0`` to find the next step:
+
+```julia;
+using SymPy
+
+@syms y h[0:2] x[0:2] f[0:2]
+H(y) = sum(hᵢ*(y-f[end])^i for (hᵢ,i) ∈ zip(h, 0:2))
+
+eqs = [Eq(H(fᵢ), xᵢ) for (xᵢ, fᵢ) ∈ zip(x,f)]
+ϕ = solve(eqs, h)
+hy = subs(H(y), ϕ)
+```
+
+The value of `hy` at ``y=0`` yields the next guess based on the past three, and is given by:
+
+```julia;
+q⁻¹ = hy(y=>0)
+```
+
+
+Though the above can be simplified quite a bit when computed by hand, here we simply make this a function with `lambdify` which we will use below.
+
+```julia;
+λ3 = lambdify(q⁻¹) # fs, then xs
+```
+
+(The `\lambdify` function, by default, picks the order of its argument lexicographically, in this case they will be the `f` values then the `x` values.)
+
+An inverse quadratic step is utilized by Brent's method, as possible, to yield a rapidly convergent bracketing algorithm implemented as a default zero finder in many software languages.  `Julia`'s `Roots` package implements the method in `Roots.Brent()`. An inverse cubic interpolation is utilized by [Alefeld, Potra, and Shi](https://dl.acm.org/doi/10.1145/210089.210111) which gives an asymptotically even more rapidly convergent algorithm then Brent's (implemented in `Roots.AlefeldPotraShi()` and also `Roots.A42()`). This used as a finishing step in many cases by the default hybrid `Order0()` method of `find_zero`.
+
+In a bracketing algorithm, the next step should reduce the size of the bracket, so the next iterate should be inside the current bracket. However, quadratic convergence does not guarantee this to happen. As such, sometimes a subsitute method must be chosen.
+
+[Chandrapatlu's](https://www.google.com/books/edition/Computational_Physics/cC-8BAAAQBAJ?hl=en&gbpv=1&pg=PA95&printsec=frontcover) method, is a bracketing method utilizing an inverse quadratic step as the centerpiece. The key insight is the test to choose between this inverse quadratic step and a bisection step. This is done in the following based on values of ``\xi`` and ``\Phi`` defined within:
+
+```julia;
+function chandrapatlu(f, u, v, λ, verbose=false)
+    a,b = promote(float(u), float(v))
+    fa,fb = f(a),f(b)
+    @assert fa * fb < 0
+
+    if abs(fa) < abs(fb)
+        a,b,fa,fb = b,a,fb,fa
+    end
+    
+    c, fc = a, fa
+
+    maxsteps = 100
+    for ns in 1:maxsteps
+
+        Δ = abs(b-a)
+        ϵ = max(eps(a),eps(b))
+        if Δ < 2ϵ
+          return abs(fa) < abs(fb) ? a : b
+        end
+        abs(fa) < ϵ && return a
+        
+        ξ = (a-b)/(c-b)
+        Φ = (fa-fb)/(fc-fb)
+
+        if Φ^2 < ξ < 1 - (1-Φ)^2
+            xt = λ(fa,fc,fb, a,c,b) # inverse quadratic
+        else
+            xt = a + (b-a)/2
+        end
+
+        ft = f(xt)
+        
+        isnan(ft) && break
+
+        if sign(fa) == sign(ft)
+            c,fc = a,fa
+            a,fa = xt,ft
+        else
+            c,b,a = b,a,xt
+            fc,fb,fa = fb,fa,ft
+        end
+       
+    	verbose && @show ns, a, fa
+        
+    end
+    error("no convergence: [a,b] = $(sort([a,b]))")
+end
+```
+
+Like bisection, this method ensures that ``a`` and ``b`` is a bracket, but it moves ``a`` to the newest estimate, so does not maintain that ``a < b`` throughout. 
+
+We can see it in action on the sine function.   Here we pass in ``\lambda``, but in a real implementation we would have programmed the algorithm to compute the inverse quadratic value.
+
+```julia;
+chandrapatlu(sin, 3, 4,  λ3, true)
+```
+
+
+
+The condition `Φ^2 < ξ < 1 - (1-Φ)^2` can be visualized. Assume `a,b=0,1`, `fa,fb=-1/2,1`, Then `c < a < b`, and `fc` has the same sign as `fa`, but what values of `fc` will satisfy the inequality?
+
+```julia; 
+using ImplicitEquations
+using Plots
+ξ(c,fc) = (a-b)/(c-b)
+Φ(c,fc) = (fa-fb)/(fc-fb)
+Φl(c,fc) = Φ(c,fc)^2
+Φr(c,fc) = 1 - (1-Φ(c,fc))^2
+a,b = 0,1
+fa,fb = -1/2, 1
+r = ImplicitEquations.Lt(Φl, ξ) & ImplicitEquations.Lt(ξ,Φr)
+plot(r, xlims=(-2,a), ylims=(-3,0))
+```
+
+When `(c,fc)` is in the shaded area, the inverse quadratic step is chosen. We can see that `fc < fa` is needed.
+
+For these values, this area is within the area where a implicit quadratic step will result in a value between `a` and `b`:
+
+```julia; 
+l(c,fc) = λ3(fa,fb,fc,a,b,c)
+r = ImplicitEquations.Lt(l,b) & ImplicitEquations.Gt(l,a)
+plot(r, xlims=(-2,0), ylims=(-3,0))
+```
+
+There are values in the parameter space where this does not occur.
+
+## Tolerances
+
+The `chandrapatlu` alorithm typically waits until `abs(b-a) <= 2max(eps(a),eps(b))` is satisfied. Informally this means the algorithm stops when the two bracketing values are no more than a small amount apart. What is a "small amount?"
+
+To understand, we start with the fact that floating point numbers are an approximation to real numbers. 
+
+Floating point numbers effectively represent a number in scientific
+notation in terms of 
+
+* a sign (plus or minus) ,
+* a *mantissa* (a number in ``[1,2)``, in binary ), and 
+* an exponent (to represent a power of ``2``).
+
+The mantissa is of the form `1.xxxxx...xxx` where there are ``m``
+different `x`s each possibly a `0` or `1`. The `i`th `x` indicates if the term `1/2^i` should be
+included in the value.  The mantissa is the sum of `1` plus the
+indicated values of `1/2^i` for `i` in `1` to `m`. So the last `x` represents if `1/2^m` should be
+included in the sum. As such, the
+mantissa represents a discrete set of values, separated by `1/2^m`, as
+that is the smallest difference possible.
+
+For example if `m=2` then the possible value for the mantissa are `11 => 1 + 1/2 + 1/4 = 7/4`, 
+`10 => 1 + 1/2 = 6/4`, `01 => 1 + 1/4 = 5/4`. and `00 => 1 = 4/4`, values separated by `1/4 = 1/2^m`.
+
+For 64-bit floating point numbers `m=52`, so the values in the mantissa differ by `1/2^52 = 2.220446049250313e-16`. This is the value of `eps()`. 
+
+However, this "gap" between numbers is for values when the exponent is `0`. That is the numbers in `[1,2)`. For values in `[2,4)` the gap is twice, between `[1/2,1)` the gap is half. That is the gap depends on the size of the number. The gap between `x` and its next largest floating point number  is given by `eps(x)` and that always satisfies `eps(x) <= eps() * abs(x)`. 
+
+One way to think about this is the difference between `x` and the next largest floating point values is *basically* `x*(1+eps()) - x` or `x*eps()`.
+
+For the specific example, `abs(b-a) <= 2eps(max(abs(a),abs(b)))` which in turn is bounded by `2max(abs(b),abs(a)) * eps()` means that the gap between `a` and `b` is essentially 2 floating point values.
+
+
+For bisection methods that is about as good as you can get. However, once floating values are understood, the best you can get for a bracketing interval would be
+* one of the endpoints `f(c)` is *exactly* `0.0`
+* the enpoints of the bracketing interval are *adjacent* floating point values, meaning the interval can not be bisected and `f` changes sign between the two values.
+
+(This is the stopping criteria for `Roots.BisectionExact()` when `find_zero` from `Roots` is used.)
+
+There can be problems when the stopping criteria is `abs(b-a) <= 2eps(max(a,b))` and the answer is `0.0`. For example, the algorithm above for the function `f(x) =  -40*x*exp(-x)` does not converge when started with `[-9,1]`, even though `0.0` is an obvious zero.
+
+
+
+```julia;
+fu(x) = -40*x*exp(-x)
+chandrapatlu(fu, -9, 1, λ3)
+```
+
+Here the issue is `abs(b-a)` is tiny (of the order `1e-119`) but `max(eps(a), eps(b))` is even smaller, as the values are close to `0.0`.
+
+
+
+
+
+For non-bracketing methods, like Newton's method or the secant method, different criteria are useful. 
+There may not be a bracketing interval for `f` (for example `f(x) = (x-1)^2`) so the second criteria above might need to be restated in terms of the last two iterates, ``x_n`` and ``x_{n-1}``. Calling this difference ``\Delta = |x_n - x_{n-1}|``, we might stop if ``\Delta`` is small enough. As there are scenarios where this can happen, but the function is not at a zero, a check on the size of `f` is needed.
+
+However, there may be no floating point value where `f` is exactly `0.0` so checking the size of `f(x_n)` requires some agreement.
+
+First if `f(x_n)` is `0.0` then it makes sense to call `x_n` an *exact zero* of `f`, even though this may hold even if `x_n`, a floating point value, is not mathematically an *exact* zero of `f`. (Consider `f(x) = x^2 - 2x + 1`. Mathematically, this is identical to `g(x) = (x-1)^2`, but `f(1 + eps())` is zero, while `g(1+eps())` is `4.930380657631324e-32`. 
+
+However, there may never be a value with `f(x_n)` exactly `0.0`. (The value of `sin(pi)` is not zero, for example, as `pi` is an approximation to ``\pi``, as well the `sin` of values adjacent to `float(pi)` do not produce `0.0` exactly.)
+
+
+Suppose `x_n` is the closest floating number to ``\alpha``, the zero. Then the relative rounding error,``(\text{\texttt{x\_n}} - \alpha)/\alpha``, will be a value ``(1 + \delta)`` with ``\delta`` less than `eps()`.
+
+How far then can `f(x_n)` be from ``0 = f(\alpha)``?
+
+```math
+f(x_n) = f(x_n - \alpha + \alpha) =  f(\alpha + \alpha \cdot \delta) = f(\alpha \cdot (1 + \delta)),
+```
+
+Assuming ``f`` has a derivative, the linear approximation gives:
+
+```math
+\text{\texttt{f(x\_n)}} \approx f(\alpha) + f'(\alpha) \cdot (\alpha\delta) = f'(\alpha) \cdot \alpha \delta
+```
+
+So we should consider `f(x_n)` an *approximate zero* when it is on the scale of
+``f'(\alpha) \cdot \alpha \delta``.
+
+That `x_n` means we consider a *relative* tolerance for `f`. 
+Also important -- when `x_n` is close to  `0`, 
+is the need for an *absolute* tolerance, one not dependent on the size of `x`. 
+So a good condition to check if `f(x_n)` is small is 
+
+`abs(f(x_n)) <= abs(x_n) * rtol + atol`,
+
+where the relative tolerance, `rtol`, would absorb an estimate for ``f'(\alpha)``.
+
+
+One thing to keep in mind is that the right hand side, as a function of `x_n`, as `x_n` goes to `Inf` will be a line with positive slope, so if `f` has `0` as an asymptote (like `e^(-x)`) it will eventually duck under this line, and if `x_n` is past this crossing point, then `x_n` will be counted as an approximate zero.
+
+So a modified criteria for convergence might look like:
+
+* stop if ``\Delta`` is small and `f` is an approximate zero with some tolerances
+* stop if `f` is an approximate zero with some tolerances, but be mindful that this rule can identify mathematically erroneous answers.
+
+It is not uncommon to assign `rtol` to have a value like `sqrt(eps())` to account for accumulated floating point errors and the factor of ``f'(\alpha)``, though in the `Roots` package it is set smaller by default.
+
+
+## Questions
+
+###### Question
+
+Let `f(x) = tanh(x)` (the hyperbolic tangent) and `fp(x) = sech(x)^2`, its derivative.
+
+Does *Newton's* method (using `Roots.Newton()`) converge starting at `1.0`?
+
+```julia; math
+yesnoq("yes")
+```
+
+Does *Newton's* method (using `Roots.Newton()`) converge starting at `1.3`?
+
+```julia; math
+yesnoq("no")
+```
+
+Does the secant method (using `Roots.Secant()`) converge starting at `1.3`? (a second starting value will automatically be chosen, if not directly passed in.)
+
+```julia; math
+yesnoq("yes")
+```
+
+###### Question
+
+For the function `f(x) = x^5 - x - 1` both Newton's method and the secant method will converge to the one root when started from `1.0`. Using `verbose=true` as an argument to `find_zero`, (e.g., `find_zero(f, x0, Roots.Secant(), verbose=true)`) how many *more* steps does the secant method need to converge?
+
+```
+numericqq(2)
+```
+
+Do the two methods converge to the exact same value?
+
+```
+yesnoq("yes")
+```
+
+###### Question
+
+Let `f(x) = exp(x) - x^4` and `x0=8.0`. How many steps (iterations) does it take for the secant method to converge using the default tolerances?
+
+```
+numericq(10, 1)
+```
+
+###### Question
+
+Let `f(x) = exp(x) - x^4` and a starting bracket be `x0 = [8.9]`. Then calling `find_zero(f,x0, verbose=true)` will show that 49 steps are needed for exact bisection to converge. What about with the `Roots.Brent()` algorithm, which uses inverse quadratic steps when it can?
+
+It takes how many steps?
+
+```
+numericq(36, 1)
+```
+
+The `Roots.A42()` method uses inverse cubic interpolation, as possible, how many steps does this method take to converge?
+
+```
+numericq(3, 1)
+```
+
+The large difference is due to how the tolerances are set within `Roots`. The `Brent method gets pretty close in a few steps, but takes a much longer time to get close enough for the default tolerances
+
+

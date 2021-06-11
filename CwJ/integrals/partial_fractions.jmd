@@ -80,7 +80,7 @@ $q_i$
 
 ```julia;
 using CalculusWithJulia  # loads `SymPy`
-@vars a b c A B x real=true
+@syms a::real b::real c::real A::real B::real x::real
 ```
 
 ```julia;
@@ -165,7 +165,7 @@ integrate(p, x)
 For $j > 1$, we have powers.
 
 ```julia;
-@vars j positive=true
+@syms j::positive
 integrate(a/(x-c)^j, x)
 ```
 

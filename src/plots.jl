@@ -12,22 +12,18 @@ export newton_vis
 
 Plot f over [a,b] but break graph if it exceeds c in absolute value.
 """
-function trimplot(f, a, b, c=20; kwargs...)
-    xs = range(a, stop=b, length=251)
-    ys = f.(xs)
-    
-    us, vs = Real[NaN], Real[NaN]
-    p = Plots.plot(us, vs, xlim=(a, b), legend=false, kwargs...)
-    for (x,y) in zip(xs, ys)
-        if abs(y) <= c
-            push!(us, x); push!(vs, y)
-        else
-            length(us) > 0 && Plots.plot!(p, us, vs, color=1)
-            empty!(us); empty!(vs)
-        end
+function trimplot(f, a, b, c=20; color=:black, legend=false, kwargs...)
+    F = (a,b) -> begin
+        fa, fb = f(a), f(b)
+        M = max(fa, fb)
+        m = min(fa, fb)
+        m < -c && return false
+        M > c && return false
+        true
     end
-    length(us) > 0 && Plots.plot!(p, us, vs, color=1)
-    p
+    xs = range(a, b, length=251)
+    cols = find_colors(F, xs, (color, :transparent, :red))
+    Plots.plot(xs, f.(xs), colors=cols, legend=legend, kwargs...)
 end
 
 
@@ -36,33 +32,10 @@ end
 
 Plot f colored depending on g >= 0 or not.
 """
-function plotif(f, g, a, b, args...; colors=(1,2), linewidth=5, legend=false,  kwargs... )
-
-
-    xs = a:(b-a)/251:b
-    zs = f.(xs)
-    p = Plots.plot(xs, f.(xs), args...; color=colors[1], linewidth=linewidth, legend=legend, kwargs...)
-
-    ys = g.(xs)
-    ys[ys .< 0] .= NaN
-
-    us,vs = Float64[], Float64[]
-    for (i,y) in enumerate(ys)
-        if isnan(y)
-            if length(vs) > 1
-                Plots.plot!(p, us, vs, color=colors[2], linewidth=5)
-            end
-            empty!(us)
-            empty!(vs)
-        else
-            push!(us, xs[i])
-            push!(vs, zs[i])
-        end
-    end
-    if length(vs) > 1
-        Plots.plot!(p, us, vs, color=colors[2], linewidth=5)
-    end
-    p
+function plotif(f, g, a, b)
+    xs = range(a, b, length=251)
+    cols = identify_colors(g, xs)
+    Plots.plot(xs, f, color=cols, legend=false)
 end
 
 """

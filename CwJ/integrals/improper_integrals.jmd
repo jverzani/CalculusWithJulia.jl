@@ -158,7 +158,7 @@ As $M$ goes to $\infty$, this will converge to $1$.
 ```julia;
 using CalculusWithJulia    # loads `SymPy`, `QuadGK`
 using Plots
-@vars M
+@syms M
 limit(sympy.Si(M), M => oo)
 ```
 
@@ -212,7 +212,7 @@ As the limit does not exist, the function is not integrable around $0$.
 * `SymPy` may give answers which do not coincide with our definitions, as it uses complex numbers as a default assumption. In this case it returns `NaN` for an integral with no answer:
 
 ```julia;
-@vars x
+@syms x
 integrate(1/x, (x, -1, 1))
 ```
 

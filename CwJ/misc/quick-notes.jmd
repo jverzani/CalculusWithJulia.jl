@@ -181,18 +181,18 @@ The main (but not sole) use of keyword arguments will be with plotting, where va
 
 ## Symbolic objects
 
-The add-on `SymPy` package allows for symbolic expressions to be used. Symbolic values are defined with `@vars`, as below.
+The add-on `SymPy` package allows for symbolic expressions to be used. Symbolic values are defined with `@syms`, as below.
 
 ```julia;
 using SymPy
-@vars x y z  # no comma as done here, though @vars(x,y,z) is also available
+@syms x y z  
 x^2 + y^3 + z
 ```
 
 Assumptions on the variables can be useful, particularly with simplification, as in
 
 ```julia;
-@vars x y z real=true
+@syms x::real y::integer z::positive
 ```
 
 Symbolic expressions flow through `Julia` functions symbolically
@@ -467,7 +467,7 @@ plot(xs, ys, color=:red)
 A symbolic expression of single variable can be plotted as a function is:
 
 ```julia;
-@vars x
+@syms x
 plot(exp(-x/2pi)*sin(x), 0, 2pi)
 ```
 
@@ -649,14 +649,14 @@ f(x) = sin(x)/x
 Symbolically, `SymPy` provides a `limit` function:
 
 ```julia;
-@vars x
+@syms x
 limit(sin(x)/x, x => 0)
 ```
 
 Or
 
 ```julia;
-@vars h x
+@syms h x
 limit((sin(x+h) - sin(x))/h, h => 0)
 ```
 
@@ -694,7 +694,7 @@ f''''(pi/3) - f(pi/3)
 Symbolically, the `diff` function of `SymPy` finds derivatives.
 
 ```julia;
-@vars x
+@syms x
 f(x) = exp(-x)*sin(x)
 ex = f(x)  # symbolic expression
 diff(ex, x)   # or just diff(f(x), x)
@@ -715,7 +715,7 @@ diff(ex, x, 5)
 The variable is important, as this allows parameters to be symbolic
 
 ```julia;
-@vars mu sigma x
+@syms mu sigma x
 diff(exp(-((x-mu)/sigma)^2/2), x)
 ```
 
@@ -736,7 +736,7 @@ We can see directly that $\partial{f}/\partial{x} = \langle y + z\rangle$. At th
 Symbolically, `diff` is used for partial derivatives:
 
 ```julia;
-@vars x y z
+@syms x y z
 ex = x*y + y*z + z*x
 diff(ex, x)    # ∂f/∂x
 ```
@@ -762,7 +762,7 @@ The `∇` symbol, formed by entering `\nabla[tab]`, is mathematical syntax for t
 In `SymPy`, there is no gradient function, though finding the gradient is easy through broadcasting:
 
 ```julia;
-@vars x y z
+@syms x y z
 ex = x*y + y*z + z*x
 diff.(ex, [x,y,z])  # [diff(ex, x), diff(ex, y), diff(ex, z)]
 ```
@@ -796,7 +796,7 @@ ForwardDiff.jacobian(F , pt)
 Symbolically, the `jacobian` function is a method of a *matrix*, so the calling pattern is different. (Of the form `object.method(arguments...)`.)
 
 ```julia;
-@vars u v
+@syms u v
 ex = F(u,v)
 ex.jacobian([u,v])
 ```
@@ -804,7 +804,7 @@ ex.jacobian([u,v])
 As the Jacobian can be identified as the matrix with rows given by the transpose of the gradient of the component, it can be computed directly, but it is more difficult:
 
 ```julia;
-@vars u v real=true
+@syms u::real v::real
 vcat([diff.(ex, [u,v])' for ex in F(u,v)]...)
 ```
 
@@ -832,7 +832,7 @@ divergence(F, [1,2,3])
 Symbolically, the divergence can be found directly:
 
 ```julia;
-@vars x y z
+@syms x y z
 ex = F(x,y,z)
 sum(diff.(ex, [x,y,z]))    # sum of [diff(ex[1], x), diff(ex[2],y), diff(ex[3], z)]
 ```
@@ -901,7 +901,7 @@ SymPy provides the `integrate` function to compute both definite and indefinite 
 
 
 ```julia;
-@vars a x real=true
+@syms a::real x::real
 integrate(exp(a*x)*sin(x), x)
 ```
 
@@ -965,7 +965,7 @@ This function is for convenience, but is not performant.
 Symbolically, the `integrate` function allows additional terms to be specified. For example, the above could be done through:
 
 ```julia;
-@vars x y real=true
+@syms x::real y::real
 integrate(x * y^2, (y, -sqrt(1-x^2), sqrt(1-x^2)), (x, 0, 1))
 ```
 
@@ -1003,7 +1003,7 @@ quadgk(integrand, 1, 2)
 Symbolically, there is no real difference from a 1-dimensional integral. Let $\phi = 1/\|r\|$ and integrate the gradient field over one turn of the helix $\vec{r}(t) = \langle \cos(t), \sin(t), t\rangle$.
 
 ```julia;
-@vars x y z t real=true
+@syms x::real y::real z::real t::real
 phi(x,y,z) = 1/sqrt(x^2 + y^2 + z^2)
 r(t) = [cos(t), sin(t), t]
 ∇phi = diff.(phi(x,y,z), [x,y,z])
@@ -1044,7 +1044,7 @@ hcubature(pt -> norm(SE(Phi, pt)), (0.0,0.0), (1.0, 2pi))
 Symbolically, the approach is similar:
 
 ```julia;
-@vars u v real=true
+@syms u::real v::real
 ex = Phi(u,v)
 J = ex.jacobian([u,v])
 SurfEl = norm(J[:,1] × J[:,2]) |> simplify

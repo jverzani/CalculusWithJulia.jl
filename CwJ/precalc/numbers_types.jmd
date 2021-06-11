@@ -54,7 +54,9 @@ types through an easy to understand syntax:
 
 ```julia; echo=false;
 alert("""
-Heads up, the difference between `1` and `1.0` is subtle (and even more so, as `1.` will parse as `1.0`).
+Heads up, the difference between `1` and `1.0` is subtle.
+Even more so, as `1.` will parse as `1.0`.
+This means some expressions, such as `2.*3`, are ambigous, as the `.` might be part of the `2` (as in `2. * 3`) or the operation `*` (as in `2 .* 3`).
 """)
 ```
 
@@ -82,7 +84,7 @@ This is  because behind the scenes, `Julia` will often "promote" a type to match
 As floating point numbers are approximations, some values are not quite what they would be mathematically:
 
 ```julia;
-sqrt(2) * sqrt(2) - 2, sin(pi)
+sqrt(2) * sqrt(2) - 2, sin(pi), 1/10 + 1/5 - 3/10
 ```
 
 These values are *very* small numbers, but not exactly $0$, as they are mathematically.
@@ -106,7 +108,7 @@ This could be worked around, but it isn't, as it
 would slow down this basic computation. So, it is up to the user to be
 aware of cases where their integer values can grow to big. Again, use
 floating point numbers in this domain, as they have more room, at
-the cost of often being approximate values.
+the cost of sometimes being approximate values.
 
 
 * the `sqrt` function will give a domain error for negative values:
@@ -234,6 +236,19 @@ Floating point values in scientific notation will always be normalized. This is 
 ```
 
 The power in the first is 71, not 70 = 30+40, as the product of 3 and 4 as 12 or `1.2e^1`. (We also see the artifact of `1.2` not being exactly representable in floating point.)
+
+##### Example: 32-bit floating point
+
+In some uses, such as using a GPU, 32-bit floating point (single precision) is also
+common. These values may be specified with an `f` in place of the `e`
+in scientific notation:
+
+```julia
+a = 1.23f0
+```
+
+As with the use of `e`, some exponent is needed after the `f`, even if it is `0`.
+
 
 #### Special values: Inf, -Inf, NaN
 
@@ -388,6 +403,9 @@ discr = b^2 - 4a*c
 ```
 
 When learning calculus, the only common usage of complex numbers arises when solving polynomial equations for roots, or zeros, though they are very important for subsequent work using the concepts of calculus.
+
+!!! Note: 
+    Though complex numbers are stored as pairs of numbers, the imaginary unit, `im`, is of type `Complex{Bool}`, a type that can be promoted to more specific types when `im` is used with different number types.
 
 
 ## Type stability

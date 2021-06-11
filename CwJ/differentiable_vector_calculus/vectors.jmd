@@ -514,7 +514,7 @@ In `Julia`, entries in a matrix (or a vector) are stored in a container with a t
 
 ```julia;
 using SymPy
-@vars x1 x2 x3
+@syms x1 x2 x3
 x = [x1, x2, x3]
 ```
 
@@ -740,7 +740,7 @@ Let's see that the matrix definition will be identical (after identifications) t
 
 ```julia;
 using SymPy, LinearAlgebra  # already loaded with the CalculusWithJulia package
-@vars i j k
+@syms i j k
 M = [i j k; 3 4 5; 3 6 7]
 det(M) |> simplify
 ```
@@ -855,10 +855,7 @@ The following shows the algebraic properties stated above hold for
 symbolic vectors. First the linearity of the dot product:
 
 ```julia;
-@vars s t u1 u2 u3 v1 v2 v3 w1 w2 w3 real=true
-u = [u1, u2, u3]
-v = [v1, v2, v3]
-w = [w1, w2, w3]
+@syms s u[1:3]::real v[1:3]::real w[1:3]::real
 
 u ⋅ (s*v + t*w) - (s*(u⋅v) + t*(u⋅w)) |> simplify
 ```
@@ -923,7 +920,7 @@ This table shows common usages of the symbols for various multiplication types: 
 A line in two dimensions satisfies the equation $ax + by = c$. Suppose $a$ and $b$ are non-zero. This can be represented in vector form, as the collection of all points associated to the vectors: $p + t \vec{v}$ where $p$ is a point on the line, say $(0,c/b)$, and v is the vector $\langle b, -a \rangle$. We can verify, this for values of `t` as follows:
 
 ```julia;
-@vars a b c x y t
+@syms a b c x y t
 
 eq = c - (a*x + b*y)
 
@@ -942,7 +939,7 @@ In three dimensions, the equation of a plane is $ax + by + cz = d$. Suppose, $a$
 First, let $p = (0, 0, d/c)$ be a point on the plane. We find two vectors $u = \langle -b, a, 0 \rangle$ and $v = \langle 0, c, -b \rangle$. Then any point on the plane may be identified with the vector $p + s\vec{u} + t\vec{v}$. We can verify this algebraically through:
 
 ```julia;
-@vars d z s
+@syms d z s
 
 eq = d - (a*x + b*y + c * z)
 
