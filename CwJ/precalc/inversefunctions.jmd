@@ -176,7 +176,7 @@ The [inverse function theorem](https://en.wikipedia.org/wiki/Inverse_function_th
 
 ##### Example
 
-Consider the function $f(x) = (1+x^2)^{-1}$. This bell-shaped function is even (symmetric about $0$), so can not possibly be one-to-one. However, if the domain is restricted to $[0,\infty)$ it is. The restricted function is strictly decreasing and its inverse is found as follows:
+Consider the function $f(x) = (1+x^2)^{-1}$. This bell-shaped function is even (symmetric about $0$), so can not possibly be one-to-one. However, if the domain is restricted to $[0,\infty)$ it is. The restricted function is strictly decreasing and its inverse is found, as follows:
 
 
 $$~
@@ -544,7 +544,7 @@ radioq(choices, ans)
 
 ###### Question
 
-From plot, are blue and red inverse functions?
+From the plot, are blue and red inverse functions?
 
 ```julia; echo=false
 f(x) = x^3
@@ -560,7 +560,7 @@ yesnoq(true)
 ```
 
 
-From plot, are blue and red inverse functions?
+From the plot, are blue and red inverse functions?
 
 ```julia; echo=false
 f(x) = x^3 - x - 1

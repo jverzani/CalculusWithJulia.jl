@@ -399,7 +399,7 @@ That is, the variable to integrate and the endpoints are passed as tuples. (Unli
 For example, the last integral to compute the volume of a square pyramid, could be computed through
 
 ```julia;
-@vars x y a height
+@syms x y a height
 8 * integrate(height * (1 - 2x/a), (y, 0, x), (x, 0, a/2))
 ```
 
@@ -411,7 +411,7 @@ Find the integral $\int_0^1\int_{y^2}^1 y \sin(x^2) dx dy$.
 Without concerning ourselves with what or why, we just translate:
 
 ```julia;
-@vars x y
+@syms x y
 integrate( y * sin(x^2), (x, y^2, 1), (y, 0, 1))
 ```
 
@@ -498,7 +498,7 @@ Over this wedge the height is given by the cylinder along the $y$ axis, $x^2 + z
 
 
 ```julia;
-@vars x y real=true
+@syms x::real y::real
 r = 1 # if using r as a symbolic variable specify `positive=true`
 f(x,y) = sqrt(r^2 - x^2)
 16 * integrate(f(x,y), (x, y, sqrt(r^2-y^2)), (y, 0, r*cos(PI/4)))
@@ -677,7 +677,7 @@ Triple integrals are identical in theory to double integrals, though the computa
 * Box. Consider the box-like, or "rectangular," region $[0,a]\times [0,b] \times [0,c]$. This has volume $abc$ which we see here using Fubini's theorem:
 
 ```julia;
-@vars x y z a b c
+@syms x y z a b c
 f(x,y,z) = Sym(1)   # need to integrate a symbolic object in integrand or call `sympy.integrate`
 integrate(f(x,y,z), (x, 0, a), (y, 0, b), (z, 0, c))
 ```
@@ -697,7 +697,7 @@ Which, as expected, is half the volume of the box $[0,c] \times [0, 1/a] \times 
 (The third easy-to-find point is $(0, 0, 1/c)$). The line connecting the points in the $x$-$y$ plane is $ax + by = 1$. With this, the integral to compute the volume is
 
 ```julia;
-@vars x y z a b c
+@syms x y z a b c
 f(x,y,z) = Sym(1)
 integrate(f(x,y,z), (z, 0, (1 - a*x - b*y)/c), (y, 0, (1 - a*x)/b), (x, 0, 1/a))
 ```
@@ -1019,7 +1019,7 @@ As an example, consider the transformation of reflecting through the line $x = 1
 ```julia;
 T(u, v, a, b) = [u+a, v+b]
 G(u, v) = [-u, v]
-@vars u v
+@syms u v
 a,b = 1//2, 0
 x1, y1 = T(u,v, -a, -b)
 x2, y2 = G(x1, y1)
@@ -1055,16 +1055,16 @@ v & u
 So,  $\iint_R f(x,y) dA = \int_0^1\int_0^1 f(u, uv) u du dv$. Here we illustrate with a generic monomial:
 
 ```julia;
-@vars n m positive=true
+@syms n::positive m::positive
 f(x,y) = x^n*y^m
-@vars x y
+@syms x y
 integrate(f(x,y), (y, 0, x), (x, 0, 1))
 ```
 
 And compare with:
 
 ```julia;
-@vars u v
+@syms u v
 integrate(f(u, u*v)*u, (u,0,1), (v,0,1))
 ```
 
@@ -1106,7 +1106,7 @@ Consider the region, $R$, bounded by $y=0$, $x=e^{-n}$, $x=e^n$, and $y=1/x$. An
 With this, we compute $\iint_R x^2 y^3 dA$ using `SymPy` to compute the Jacobian:
 
 ```julia;
-@vars u v n
+@syms u v n
 G(u,v) = v * [exp(u), exp(-u)]
 Jac = G(u,v).jacobian([u,v])
 f(x,y) = x^2 * y^3
@@ -1166,7 +1166,7 @@ $$~
 That requires integrating $\sin^2(\theta)\cos^3(\theta)$, a doable task, but best left to SymPy:
 
 ```julia;
-@vars r theta
+@syms r theta
 x = r*cos(theta)
 y = r*sin(theta)
 rho(x,y) = x*y^2
@@ -1186,7 +1186,7 @@ $$~
 which is computed with:
 
 ```julia;
-@vars x y u v alpha
+@syms x y u v alpha
 f(x,y) = x^2
 G(u,v) = [cos(alpha)*u - sin(alpha)*v, sin(alpha)*u + cos(alpha)*v]
 Jac = det(G(u,v).jacobian([u,v])) |> simplify
@@ -1206,7 +1206,7 @@ $$~
 with domain that is easy to describe in polar coordinates:
 
 ```julia;
-@vars r theta
+@syms r theta
 x = r*cos(theta)
 integrate(x^2 * r, (r, 4, 5), (theta, 0, 2PI))
 ```
@@ -1254,7 +1254,7 @@ This is in agreement with $\pi r^2 h/3$.
 Find the centroid for the cone. First in the $x$ direction, $\iint_R x dV$ is found by:
 
 ```julia;
-@vars r theta z a b
+@syms r theta z a b
 f(x,y,z) = x
 x = r*cos(theta)
 y = r*sin(theta)
@@ -1265,7 +1265,7 @@ integrate(f(x,y,z) * Jac, (z, 0, a - b*r), (r, 0, a/b), (theta, 0, 2PI))
 That this is $0$ is no surprise. The same will be true for the $y$ direction, as the figure is symmetric about the plane $y=0$ and $x=0$. However, the $z$ direction is different:
 
 ```julia;
-@vars r theta z
+@syms r theta z
 f(x,y,z) = z
 x = r*cos(theta)
 y = r*sin(theta)
@@ -1284,14 +1284,14 @@ A sphere of radius $2$ is intersected by a cylinder of radius $1$ along the $z$ 
 We have $x^2 + y^2 + z^2 = 4$ or $z^2 = 4 - r^2$ in cylindrical coordinates. The integral then is:
 
 ```julia;
-@vars r theta z real=true
+@syms r::real theta::real z::real
 integrate(1 * r, (z, -sqrt(4-r^2), sqrt(4-r^2)), (r, 0, 1), (theta, 0, 2PI))
 ```
 
 If instead of a fixed radius of $1$ we use $0 \leq a \leq 2$ we have:
 
 ```julia;
-@vars a
+@syms a
 integrate(1 * r, (z, -sqrt(4-r^2), sqrt(4-r^2)), (r, 0, a), (theta,0, 2PI))
 ```
 
@@ -1321,7 +1321,7 @@ ImageFile(imgfile, caption)
 The Jacobian can be computed to be $\rho^2\sin(\phi)$.
 
 ```julia;
-@vars ρ theta phi
+@syms ρ theta phi
 G(ρ, theta, phi) = ρ * [sin(phi)*cos(theta), sin(phi)*sin(theta), cos(phi)]
 det(G(ρ, theta, phi).jacobian([ρ, theta, phi])) |> simplify |> abs
 ```
@@ -1350,7 +1350,7 @@ $$~
 But the Jacobian is a constant:
 
 ```julia;
-@vars u v w a b c
+@syms u v w a b c
 G(u,v,w) = [u*a, v*b, w*c]
 det(G(u,v,w).jacobian([u,v,w]))
 ```
@@ -1529,7 +1529,7 @@ radioq(choices, ans)
 A wedge, $R$, is specified by $0 \leq r \leq a$, $0 \leq \theta \leq b$.
 
 ```julia; echo=false
-@vars r theta a b
+@syms r theta a b
 x = r*cos(theta)
 y = r*sin(theta)
 A = integrate(r, (r, 0, a), (theta, 0, b))

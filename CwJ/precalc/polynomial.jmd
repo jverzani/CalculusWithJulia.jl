@@ -19,7 +19,8 @@ exploits this to great advantage.
 
 Here we discuss some vocabulary and basic facts related to polynomials
 and show how the add-on `SymPy` package can be used to model
-polynomial expressions within `SymPy`.
+polynomial expressions within `SymPy`. Later we will discuss the `Polynomials` package
+for polynomials.
 
 For our purposes, a *monomial* is simply a non-negative integer power
 of $x$ (or some other indeterminate symbol) possibly multiplied by a
@@ -57,7 +58,7 @@ ImageFile(imgfile, caption)
 
 
 The numbers $a_0, a_1, \dots, a_n$ are the **coefficients** of the
-polynomial. With the convention that $x=x^1$ and $1 = x^0$, the
+polynomial in the standard basis. With the identifications that $x=x^1$ and $1 = x^0$, the
 monomials above have their power match their coefficient's index,
 e.g., $a_ix^i$.  Outside of the coefficient $a_n$, the other
 coefficients may be negative, positive, *or* $0$. Except for the zero
@@ -142,7 +143,7 @@ seen that `Julia` makes it very easy to work with mathematical
 functions, it is not the case that base `Julia` makes working with
 expressions of algebraic symbols easy.  This makes sense, `Julia` is
 primarily designed for technical computing, where numeric approaches
-rule the day. However, symbolic math can be used from within `Julia` with an add-on package.
+rule the day. However, symbolic math can be used from within `Julia` through add-on packages.
 
 Symbolic math programs include well-known ones like the commercial programs
 Mathematica and Maple. Mathematica powers the popular
@@ -172,35 +173,32 @@ note("""
 ```
 
 
-To use `SymPy`, we create symbolic objects to be our indeterminate
-symbols. The `symbols` function does this and is used like:
+The [`Symbolics`](../alternatives/symbolics) package is a rapidly
+developing `Julia`-only packge that provides symbolic math options.
 
+----
+
+To use `SymPy`, we create symbolic objects to be our indeterminate
+symbols. The `symbols` function does this. However, we will use the more convenient `@syms` macro front end for `symbols`.
 
 
 ```julia;
 using CalculusWithJulia   # loads the `SymPy` package
 using Plots
-a,b,c = symbols("a,b,c")
-x = symbols("x", real=true)
+@syms a, b, c, x::real, zs[1:10]
 ```
 
-The first use, shows that multiple symbols can be defined at once. The
-second shows the extra keyword argument `real=true`, which instructs
-`SymPy` to assume the `x` is real, as otherwise it assumes it is
-possibly complex. There are many other
+The above shows that multiple symbols can be defined at once. The
+annotation `x::real` instructs `SymPy` to assume the `x` is real, as
+otherwise it assumes it is possibly complex. There are many other
 [assumptions](http://docs.sympy.org/dev/modules/core.html#module-sympy.core.assumptions)
-that can be made.
-
-The *macro* `@vars` is like the second usage, only it does not need
-assignment, as the variable are created behind the scenes. This may
-be the easiest way to create symbolic values:
-
-```julia;
-@vars h t
-```
+that can be made. The `zs[1:10]` tensor notation creates a container
+with 10 different symbols. The `@syms` macro documentation lists them.
+The *macro* `@syms` is does not need assignment, as the variable are
+created behind the scenes. T
 
 ```julia;echo=false
-note("""Macros in `Julia` are just transformations of the syntax into other synax. The `@` indicates they behave differently than regular function calls. For the `@vars` macro, the arguments are **not** separated by commas, as a normal function cal would be.
+note("""Macros in `Julia` are just transformations of the syntax into other synax. The `@` indicates they behave differently than regular function calls.
 """)
 ```
 
@@ -254,6 +252,13 @@ Another example, might be the following combination:
 quad + quad^2 - quad^3
 ```
 
+One way to create symbolic expressions is simply to call a `Julia` function with symbolic arguments. The first line in the next example defines a function, the second evaluates it at the symbols `x`, `a`, and `b` resulting in a symbolic expression `ex`:
+
+```julia
+f(x, m, b) = m*x + b
+ex = f(x, a, b)
+```
+
 
 ## Substitution: subs, replace
 
@@ -303,7 +308,7 @@ Suppose we have the polynomial $p = ax^2 + bx +c$. What would it look
 like if we shifted right by $E$ units and up by $F$ units?
 
 ```julia;
-@vars a b c E F
+@syms a b c E F
 p = a*x^2 + b*x + c
 p(x => x-E) + F
 ```
@@ -351,6 +356,39 @@ N(PI, 60)
 
 Conversion will fail if the value to be converted contains free
 symbols, as would be expected.
+
+### Converting symbolic expressions into Julia functions
+
+Evaluating a symbolic expression and returning a numeric value can be done by composing the two just discussed concepts. For example:
+
+```julia;
+p = 200 - 16x^2
+N(p(2))
+```
+
+This approach is direct, but can be slow *if* many such evaluations were needed (such as with a plot). An alternative is to turn the symbolic expression into a `Julia` function and then evaluate that as usual.
+
+The `lambdify` function turns a symbolic expression into a `Julia` function
+
+```julia;
+pp = lambdify(p)
+pp(2)
+```
+
+The `lambdify` function uses the name of the similar `SymPy` function which is named after Pythons convention of calling anoynmous function "lambdas." The use above is straightforward. Only slightly more complicated is the use when there are multiple symbolic values. For example:
+
+```julia
+p = a*x^2 + b
+pp = lambdify(p)
+pp(1,2,3)
+```
+
+This evaluation matches `a` with `1`, `b` with`2`, and `x` with `3` as that is the order returend by the function call `free_symbols(p)`. To adjust that, a second `vars` argument can be given:
+
+```
+pp = lambdify(p, (x,a,b))
+pp(1,2,3) # computes 2*1^2 + 3
+```
 
 ## Graphical properties of polynomials
 
@@ -446,8 +484,8 @@ ImageFile(imgfile, caption)
 ```
 
 
-The leading term in the animation is $x^4$, so the graphic is
-U-shaped, were it an odd power, then the left and right sides would
+The leading term in the animation is $x^4$, of even degree, so the graphic is
+U-shaped, were the leading term of odd degree  the left and right sides would
 each head off to different signs of infinity.
 
 
@@ -498,7 +536,8 @@ graph of the polynomial $p$.
 
 ## Factoring polynomials
 
-Among others, there are two common ways of representing a non-zero polynomial: either in an
+Among numerous others, there are two common ways of representing a
+non-zero polynomial: either in an
 
 * expanded form, as in $a_n x^n + a_{n-1}x^{n-1} + \cdots a_1 x + a_0, a_n \neq 0$; or
 
@@ -574,7 +613,7 @@ can then be used to produce the factored form.)
 
 Our definition of a polynomial is in terms of algebraic expressions
 which are easily represented by `SymPy` objects, but not objects from
-base `Julia`. (Though there are the `Polynomials` package and the `AbstractAlbegra` package for representing polynomials.)
+base `Julia`. (Later we discuss the `Polynomials` package for representing polynomials. There is also the `AbstractAlbegra` package for a more algebraic treatment of polynomials.)
 
 However, *polynomial functions* are easily represented by `Julia`, for
 example,
@@ -706,7 +745,7 @@ radioq(choices, ans)
 The polynomial `p` is defined in `Julia` as follows:
 
 ```julia; echo=false
-@vars x
+@syms x
 p = -16x^2 + 64
 ```
 
@@ -766,7 +805,10 @@ radioq(choices, ans, keep_order=true)
 Use `SymPy` to factor the polynomial $x^{11} - x$. How many factors are found?
 
 ```julia; echo=false
-numericq(4)
+@syms x
+ex = x^11 - x
+nf = length(factor(ex).args)
+numericq(nf)
 ```
 
 ###### Question
@@ -774,7 +816,10 @@ numericq(4)
 Use `SymPy` to factor the polynomial $x^{12} - 1$. How many factors are found?
 
 ```julia; echo=false
-numericq(6)
+@syms x
+ex = x^12 - 1
+nf = length(factor(ex).args)
+numericq(nf)
 ```
 
 

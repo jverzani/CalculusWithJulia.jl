@@ -298,7 +298,7 @@ rectangles? See [Isoperimetric inequality](https://en.wikipedia.org/wiki/Isoperi
 We could also do the above problem symbolically with the aid of `SymPy`. Here are the steps:
 
 ```julia;
-@vars width height real=true
+@syms width::real height::real
 
 Area  = width * height + pi * (width/2)^2 / 2
 Perim = 2*height + width + pi * width/2
@@ -520,7 +520,7 @@ both positive. What value $x$ in $[0,L]$ will minimize the total travel time?
 We approach this symbolically with `SymPy`:
 
 ```julia;
-@vars a b L x r0 r1 positive=true
+@syms a::positive b::positive L::positive x::positive r0::positive r1::positive
 
 d0 = sqrt(x^2 + a^2)
 d1 = sqrt((L-x)^2 + b^2)
@@ -940,10 +940,8 @@ We approach this using `SymPy` and $n=10$
 
 ```julia; eval=false
 using SymPy
-n = 10
-@vars s
-xs = [symbols("x\$i") for i in 1:n]
-s(x) = sum((x-xs[i])^2 for i in 1:n)
+@syms s xs[1:10]
+s(x) = sum((x-xi)^2 for xi in xs)
 cps = solve(diff(s(x), x), x)
 ```
 

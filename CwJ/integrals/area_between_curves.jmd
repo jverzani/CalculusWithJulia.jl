@@ -105,7 +105,7 @@ Find the area between $x^n$ and $x^{n+1}$ over $[0,1]$ for $n=1,2,\dots$.
 We have on this interval $x^n \geq x^{n+1}$, so the integral can be found symbolically through:
 
 ```julia;
-@vars x n real=true positive=true
+@syms x::positive n::positive
 ex = integrate(x^n - x^(n+1), (x, 0, 1))
 together(ex)
 ```

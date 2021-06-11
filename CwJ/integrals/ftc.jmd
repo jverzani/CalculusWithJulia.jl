@@ -275,7 +275,7 @@ integrate(sin, 0, pi)
 In the last two example, function objects were integrated. We can also integrate expressions, though in this usage we must specify the variable:
 
 ```julia;
-@vars x n real=true
+@syms x::real n::real
 integrate(x^n, x)          # indefinite integral
 ```
 
@@ -787,7 +787,7 @@ Using `SymPy`, integrate the function $\int_0^{2\pi} e^x \cdot \sin(x) dx$.
 
 ```julia; echo=false
 using SymPy
-@vars x
+@syms x
 val = N(integrate(exp(x) * sin(x), (x, 0, 2pi)))
 numericq(val)
 ```

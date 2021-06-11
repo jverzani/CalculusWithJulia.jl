@@ -12,7 +12,7 @@ end
 
 # F(a,b) returns true, false, or nothing
 function find_colors(F, xs, colors=(:red, :blue, :black))
-    n = length(xs) 
+    n = length(xs)
     cols = repeat([colors[1]], n-1)
     for i in 1:n-1
         a,b = xs[i], xs[i+1]
@@ -57,6 +57,19 @@ export Neq
 
 
 # some plotting utilities
+"""
+    rangeclamp(f, hi=20, lo=-hi; replacement=NaN)
+
+Modify `f` so that values of `f(x)` outside of `[lo,hi]` are replaced by `replacement`.
+
+Examples
+```
+f(x) = 1/x
+plot(rangeclamp(f), -1, 1)
+plot(rangeclamp(f, 10), -1, 1) # no `abs(y)` values exceeding 10
+```
+"""
+rangeclamp(f, hi=20, lo=-hi; replacement=NaN) = x -> lo < f(x) < hi ? f(x) : replacement
 
 """
    trimplot(f, a, b, c=20; kwargs...)
@@ -393,7 +406,7 @@ end
 
 
 
-import Contour 
+import Contour
 
 """
     Visualize `F(x,y,z) = c` by plotting assorted contour lines

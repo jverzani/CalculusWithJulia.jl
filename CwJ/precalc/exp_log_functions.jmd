@@ -24,7 +24,7 @@ straightforward, as it means multiplying $n$ copies of $a$. From this,
 the key properties of exponents: $a^x \cdot a^y = a^{x+y}$, and
 $(a^x)^y = a^{x \cdot y}$ are immediate consequences. For $a \neq 0$,
 $a^0$ is defined to be $1$. For positive, integer values of $n$, we
-have $a^{-n} = 1/a^n$. For $n$ a positive integer, we can
+have by definition that $a^{-n} = 1/a^n$. For $n$ a positive integer, we can
 define $a^{1/n}$ to be the unique positive solution to $x^n=a$. And
 using the key properties of exponents extend this to a definition of
 $a^x$ for any rational $x$.
@@ -108,13 +108,13 @@ than the initial amount.
 
 ##### Example
 
-[Bacterial growth](https://en.wikipedia.org/wiki/Bacterial_growth) (to
-Wikipedia) is the asexual reproduction, or cell division, of a
-bacterium into two daughter cells, in a process called binary
-fission. During the log phase "the number of new bacteria appearing per
-unit time is proportional to the present population." The article
-states that "Under controlled conditions, *cyanobacteria* can double
-their population four times a day..."
+[Bacterial growth](https://en.wikipedia.org/wiki/Bacterial_growth)
+(according to Wikipedia) is the asexual reproduction, or cell
+division, of a bacterium into two daughter cells, in a process called
+binary fission. During the log phase "the number of new bacteria
+appearing per unit time is proportional to the present population."
+The article states that "Under controlled conditions, *cyanobacteria*
+can double their population four times a day..."
 
 Suppose an initial population of $P_0$ bacteria, a formula for the
 number after $n$ *hours* is $P(n) = P_0 2^{n/6}$ where $6 = 24/4$.
@@ -138,7 +138,7 @@ numbers are $1,1,2,3,5,8,13,\dots$, where $F_{n+1}=F_n+F_{n-1}$. These numbers i
 the growth is evenually exponential and assume $F_n \approx c \cdot a^n$, then
 our equation is approximately $a^{n+1} = a^n + a^{n-1}$ which has solutions $a$
 satisfying $a^2 - a -1 = 0$. The positve solution is
-$(1 + \sqrt{5})/2\approx 1.618$
+$(1 + \sqrt{5})/2 \approx 1.618$
 
 That is evidence that the $F_n \approx 1.618^n$. (See
 [Relation to golden ratio](https://en.wikipedia.org/wiki/Fibonacci_number#Relation_to_the_golden_ratio)
@@ -157,6 +157,46 @@ $a>1$ and positive integer $n$ it is true that $a^x \gg x^n$.
 
 Later we will see an easy way to certify this statement.
 
+##### The mathematical constant ``e``
+
+
+Euler's number, ``e``, may be defined several ways. One way is as the
+limit of ``(1+1/n)^n``. The value is an irrational number. This number
+turns up to be the natural base to use for many problems arising in
+Calculus.  In `Julia` there are a few mathematical constants that get
+special treatment, so that when needed, extra precision is
+available. The value `e` is not immediately assigned to this value,
+rather `ℯ` is. This is typed `\euler[tab]`. The constant `e` is though
+too important to other to assign to a single number. However, users
+can issue the command `using Base.MathConstants` and `e` will be
+available to represent this number. In `CalculusWithJulia`, the value
+`e` is defined to be the floating point number returned by
+`exp(1)`. This loses the feature of arbitrary precision, but has other
+advantages.
+
+
+A [cute](https://www.mathsisfun.com/numbers/e-eulers-number.html) appearance of ``e`` is in this problem: Let ``a>0``. Cut ``a`` into ``n`` equal pieces and then multiply them. What ``n`` will produce the largest value? Note that the formula is ``(a/n)^n`` for a given ``a`` and ``nn`.
+
+Suppose ``a=5`` then for ``n=1,2,3`` we get:
+
+```julia
+a = 5
+(a/1)^1, (a/2)^2, (a/3)^3
+```
+
+We'd need to compare more, but at this point ``n=2`` is the winner when ``a=5``.
+
+With calculus, we will be able to see that the function ``f(x) = (a/x)^x`` will be maximized at ``a/e``, but for now we approach this in an exploratory manner. Suppose ``a=5``, then we have:
+
+
+```julia;
+a = 5
+n = 1:10
+f(n) = (a/n)^n
+@. [n f(n) (a/n - e)]  # @. just allows broadcasting
+```
+
+We can see more clearly that ``n=2`` is the largest value for ``f`` and ``a/2`` is the closest value to ``e``. This would be the case for any ``a>0``, pick ``n`` so that ``a/n`` is closest to ``e``.
 
 
 ## Logarithmic functions: the inverse of exponential functions
@@ -166,7 +206,7 @@ As the exponential functions are strictly *decreasing* when $0 < a <
 function will exist. (When $a=1$ the function is a constant and is not
 one-to-one.) The domain of an exponential function is all real $x$ and
 the range is all *positive* $x$, so these are switched around for the
-inverse function.
+inverse function. Explicitly: the inverse function to ``f(x)=a^x``  will have domain ``(0,\infty)`` and range ``(-\infty, \infty)`` when ``a > 0, a \neq 1``.
 
 The inverse function will solve for $x$ in the equation $a^x = y$. The
 answer, formally, is the logarithm base $a$, written $\log_a(x)$.
@@ -208,12 +248,12 @@ many problems involving doubling.
 
 ##### Example
 
-An [old](https://en.wikipedia.org/wiki/Wheat_and_chessboard_problem) story about doubling is couched in terms of doubling grains of wheat. To simplify the story, suppose each day an amount of grain is doubled. How many days of doubling will it take 1 grain to become 1 million grains?
+An [old](https://en.wikipedia.org/wiki/Wheat_and_chessboard_problem) story about doubling is couched in terms of doubling grains of wheat. To simplify the story, suppose each day an amount of grain is doubled. How many days of doubling will it take ``1`` grain to become ``1`` million grains?
 
 The number of grains after one day is $2$, two days is $4$, three days
 is $8$ and so after $n$ days the number of grains is $2^n$. To answer
 the question, we need to solve $2^x = 1,000,000$. The logarithm
-function yields 20 days (after rounding up):
+function yields ``20`` days (after rounding up):
 
 ```julia;
 log2(1_000_000)
@@ -230,7 +270,7 @@ case with a half life of 5730 years (plus or minus 40 years). In a
 Libby, measuring the amount of Carbon 14 present in an organic item
 can indicate the time since death. The amount of Carbon 14 at death is
 essentially that of the atmosphere, and this amount decays over
-time. If roughly half the carbon 14 remains, then the death occurred
+time. So, for example, if roughly half the carbon 14 remains, then the death occurred
 about 5730 years ago.
 
 
@@ -305,13 +345,16 @@ a^{(\log_b(x)/\log_b(b))} = (b^{\log_b(a)})^{(\log_b(x)/\log_b(a))} =
 b^{\log_b(a) \cdot \log_b(x)/\log_b(a) } = b^{\log_b(x)} = x.
 ~$$
 
-In short we have these three properties of logarithmic functions:
+In short, we have these three properties of logarithmic functions:
 
-> if $a,b$ are positive bases; $u,v$ are positive numbers; and $x$ is any real number then: 1) $\log_a(uv) = \log_a(u) + \log_a(v)$, 2) $\log_a(u^x) = x \log_a(u)$, and  3) $\log_a(u) = \log_b(u)/\log_b(a)$.
+> if $a, b$ are positive bases; $u,v$ are positive numbers; and $x$ is any real number then:
+> * $\log_a(uv) = \log_a(u) + \log_a(v)$,
+> * $\log_a(u^x) = x \log_a(u)$, and
+> * $\log_a(u) = \log_b(u)/\log_b(a)$.
 
 ##### Example
 
-Before the ubiquity of electonic calculating devices, the need to
+Before the ubiquity of electronic calculating devices, the need to
 compute was still present. Ancient civilizations had abacuses to make
 addition easier. For multiplication and powers a [slide
 rule](https://en.wikipedia.org/wiki/Slide_rule) rule could be used.
@@ -339,7 +382,7 @@ $t=\log_2(2)/r$. As $\log_2(2)$ is
 log(2, 2)
 ```
 
-We get the actual rule should be the "Rule of $69.314...$".
+We get the actual rule should be the "Rule of $69.314...$."
 
 ## Questions
 

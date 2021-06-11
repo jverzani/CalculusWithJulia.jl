@@ -332,11 +332,11 @@ In `Julia` the equals sign is **only** for *assignment*. The *left-hand* side of
 
 ## Symbolic math
 
-Symbolic math is available through an add-on package `SymPy`. As with `Plots`, this package is also loaded with `CalculusWithJulia`. Once loaded, symbolic variables are created with `@vars`:
+Symbolic math is available through an add-on package `SymPy`. As with `Plots`, this package is also loaded with `CalculusWithJulia`. Once loaded, symbolic variables are created with `@syms`:
 
 ```julia;
 using SymPy   # load package, not needed here as it was done already with CalculusWithJulia
-@vars x a b c # no commas here, though `@vars(x,a,b,c)` can be used
+@syms x a b c 
 ```
 
 

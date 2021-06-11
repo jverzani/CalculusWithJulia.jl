@@ -201,7 +201,7 @@ Using `SymPy`, we can compute through:
 
 ```julia; eval=false
 using SymPy
-@vars theta phi
+@syms theta phi
 out = [diff.(Phi(theta, phi), theta) diff.(Phi(theta, phi), phi)]
 ```
 
@@ -386,7 +386,7 @@ the latter assuming the point is in quadrant I or IV (though `atan(y,x)` will pr
 
 ```julia;
 using SymPy, LinearAlgebra   # done by CalculusWithJulia
-@vars a b real=true
+@syms a::real b::real
 
 r = sqrt(a^2 + b^2)
 theta = atan(b/a)
@@ -469,7 +469,7 @@ end
 The Jacobian of a transformation can be found from these conversions. For example, the conversion from spherical to cartesian would have Jacobian computed by:
 
 ```julia;
-@vars r theta phi real=true
+@syms r::real theta::real phi::real
 
 ex1 = cartesian_from_spherical(r, theta, phi)
 J1 = ex1.jacobian([r, theta, phi])
@@ -500,7 +500,7 @@ J2 = ex2.jacobian([r, theta, phi])
 Now to see that this last expression could have been found by the *chain rule*. To do this we need to find the Jacobian of each function; evaluate them at the proper places; and, finally, multiply the matrices. The `J1` object, found above, does one Jacobian. We now need to find that of `cylindrical_from_cartesian`:
 
 ```julia;
-@vars x y z real=true
+@syms x::real y::real z::real
 ex3 = cylindrical_from_cartesian(x, y, z)
 J3 = ex3.jacobian([x,y,z])
 ```
@@ -880,7 +880,7 @@ F(\lambda, \phi) = \langle \cos(\phi)\sin(\lambda - \lambda_0),
 What does the following `SymPy` code compute?
 
 ```julia;
-@vars lambda lambda_0 phi phi_0
+@syms lambda lambda_0 phi phi_0
 F(lambda,phi) = [cos(phi)*sin(lambda-lambda_0), cos(phi_0)*sin(phi) - sin(phi_0)*cos(phi)*cos(lambda-lambda_0)]
 
 out = [diff.(F(lambda, phi), lambda) diff.(F(lambda, phi), phi)]

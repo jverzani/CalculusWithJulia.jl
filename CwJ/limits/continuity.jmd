@@ -190,7 +190,7 @@ To be continuous we not that for $x < 0$ and for $x > 0$ the function is a simpl
 ```julia;
 using CalculusWithJulia   # load `SymPy`
 using Plots
-@vars x c
+@syms x c
 ex1 = 3x^2 + c
 ex2 = 2x-3
 del = limit(ex1, x=>0, dir="+") - limit(ex2, x=>0, dir="-")

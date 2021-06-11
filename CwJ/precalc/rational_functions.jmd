@@ -32,7 +32,7 @@ facts:
 * There are possible wiggles up and down, the exact behavior depends
   on intermediate terms, but there can be no more than $n-1$ wiggles.
 
-* The number of zeros is no more than $n$, the degree of the polynomial.
+* The number of real zeros is no more than $n$, the degree of the polynomial.
 
 Rational functions are not quite so nice:
 
@@ -62,9 +62,9 @@ a useful graph.
 For example, consider this graph generated from a simple rational
 function:
 
-$$~
+```math
 f(x) = \frac{(x-1)^2 \cdot (x-2)}{(x+3) \cdot (x-3)}.
-~$$
+```
 
 
 ```julia;
@@ -94,7 +94,7 @@ The spikes haven't vanished completely. It is just that with only a
 few hundred points to make the graph, there aren't any values near
 enough to the problem to make a large spike. The spikes happen because
 the function has a *vertical asymptote* at these values. Though not
-quite right, it is reasonable to think of the graph graph being made
+quite right, it is reasonable to think of the graph being made
 by selecting a few hundred points in the specified domain, computing
 the corresponding $y$ values, plotting the pairs, and finally connecting the points with
 straight line segments.  Near a vertical asymptote the function values
@@ -131,9 +131,9 @@ symbolic math.
 In particular, let's rewrite the expression in terms of its numerator and denominator:
 
 ```julia;
-@vars x real=true
-a =  (x-1)^2 * (x-2)
-b = (x+3)*(x-3)
+@syms x::real
+a = (x-1)^2 * (x-2)
+b = (x+3) * (x-3)
 ```
 
 Euclid's
@@ -157,7 +157,7 @@ The division algorithm is implemented in `Julia` generically through the `divrem
 q, r = divrem(a, b)
 ```
 
-This yield the decomposition of `a/b`:
+This yields the decomposition of `a/b`:
 
 ```julia;
 q + r/b
@@ -205,7 +205,7 @@ function
 cancel(p)
 ```
 
-We can see that numerator is of degree 3 and the denominator of degree $2$.
+We can see that the numerator is of degree 3 and the denominator of degree $2$.
 The leading terms are $x^3$ and $x^2$ respectively. If we were to
 pull those out we would get:
 
@@ -216,10 +216,9 @@ $$~
 The terms $(1 - 4/x + 5/x^2 - 2/x^3)$ and $(1 - 9/x^2)$ go towards $1$
 as $x \rightarrow \pm \infty$, as each term with $x$ goes towards
 $0$. So the dominant terms comes from the ratio of the leading terms,
-$x^3$ and $x^2$. This ratio is $x$, so their will be an asymptote of a
+$x^3$ and $x^2$. This ratio is $x$, so their will be an asymptote around a
 line with slope $1$. (The fact that the asymptote is $y=x-4$ takes a
 bit more work, as a division step is needed.)
-
 
 Just by looking at the ratio of the two leading terms, the behaviour
 as $x \rightarrow \pm \infty$ can be discerned. If this ratio is of:
@@ -304,9 +303,9 @@ plot!(q, 5, 10)
 
 Finally, consider this rational expression in factored form:
 
-$$~
+```math
 \frac{(x-2)^3\cdot(x-4)\cdot(x-3)}{(x-5)^4 \cdot (x-6)^2}.
-~$$
+```
 
 By looking at the powers we can see that the leading term of the
 numerator will the $x^5$ and the leading term of the denominator
@@ -351,9 +350,19 @@ plot(1/x, -1, 1)
 Again, this spike is an artifact of the plotting algorithm. The
 $y$ values for $x$-values just smaller than $0$ are large negative
 values and the $x$ values just larger than $0$ produce large, positive
-$y$ values. The two points with $x$ components closest to $0$ are
-connected with a line, though that is misleading.
+$y$ values.
 
+The two points with $x$ components closest to $0$ are connected with a
+line, though that is misleading.  Here we deliberately use far fewer
+points to plot ``1/x`` to show how this happens:
+
+```
+f(x) = 1/x
+xs = range(-1, 1, length=12)
+ys = f.(xs)
+plot(xs, ys)
+scatter!(xs, ys)
+```
 The line $x = 0$ is a *vertical asymptote* for the graph of $1/x$. As
 $x$ values get close to $0$ from the right, the $y$ values go towards
 $\infty$ and as the $x$ values get close to $0$ on the left, the $y$
@@ -362,7 +371,7 @@ values go towards $-\infty$.
 This has everything to do with the fact that $0$ is a root of the denominator.
 
 For a rational function $p(x)/q(x)$, the roots of $q(x)$ may or may
-not be asymptotes. For a root $c$ if $p(c)$ is not zero then the line
+not lead to vertical asymptotes. For a root $c$ if $p(c)$ is not zero then the line
 $x=c$ will be a vertical asymptote. If $c$ is a root of both $p(x)$
 and $q(x)$, then we can rewrite the expression as:
 
@@ -386,8 +395,8 @@ that has `f(c)` evaluate to `Inf` or `-Inf` then there will be a
 vertical asymptote. If the expression evaluates to `NaN`, more
 analysis is needed. (The value of `0/0` is `NaN`, where as `1/0` is `Inf`.)
 
-For example, the function $f(x) = ((x-1)^2 \cdot (x-2)) / ((x+3) \cdot
-(x-3))$ has vertical asymptotes at $-3$ and $3$, as its graph
+For example, the function
+``f(x) = ((x-1)^2 \cdot (x-2)) / ((x+3) \cdot(x-3))`` has vertical asymptotes at ``-3`` and ``3``, as its graph
 illustrated. Without the graph we could see this as well:
 
 ```julia;
@@ -416,7 +425,7 @@ f(x) = (x-1)^2 * (x-2) / ((x+3)*(x-3) )
 plot(f, -2.9, 2.9)
 ```
 
-This backs off by $\delta = 0.1$. As we have that $2.9 - 3$ is
+This backs off by $\delta = 0.1$. As we have that $3 - 2.9$ is
 $\delta$ and $1/\delta$ is 10, the $y$ axis won't get too large, and
 indeed it doesn't.
 
@@ -515,8 +524,6 @@ signchart(f, -3/2, 3/2)
 ```
 
 
-
-
 ## Pade approximate
 
 One area where rational functions are employed is in approximating
@@ -551,6 +558,249 @@ plot!(sin_p, -pi, pi)
 plot(tan, -pi/2 + 0.2, pi/2 - 0.2)
 plot!(tan_p, -pi/2 + 0.2, pi/2 - 0.2)
 ```
+
+## The `Polynomials` package for rational functions
+
+The `Polynomials` package has support for rational functions. The `//` operator can be used to create rational expressions:
+
+```julia;
+using Polynomials
+x = variable()
+p = (x-1)*(x-2)^2
+q = (x-2)*(x-3)
+pq = p // q
+```
+
+A rational expression is a formal object; a rational function the viewpoint that this object will be evaluated by substituting  values for the indeterminate. Rational expressions made within `Polynomials` are evaluated just like functions:
+
+```julia;
+pq(4)  # p(4)/q(4)
+```
+
+The rational expressions are not in lowest terms unless requested through the `lowest_terms` method:
+
+```julia;
+lowest_terms(pq)
+```
+
+For polynomials as simple as these, this computation is not a problem,
+but there is the very real possibility that the lowest term
+computation may be incorrect. Unlike `SymPy` which factors
+symbolically, `lowest_terms` uses a numeric algorithm and does not, as
+would be done by hand or with `SymPy`, factor the polynomial and then cancel common
+factors.
+
+The distinction between the two expressions is sometimes made; the
+initial expression is not defined at ``x=2``; the reduced one is, so
+the two are not identical when viewed as functions of the variable
+``x``.
+
+
+Rational expressions include polynomial expressions, just as the
+rational numbers include the integers. The identification there is to
+divide by ``1``, thinking of ``3`` as ``3/1``. In `Julia`, we would
+just use
+
+```julia;
+3//1
+```
+
+The integer can be recovered from the rational number using `numerator`:
+
+```julia;
+numerator(3//1)
+```
+
+Similarly, we can divide a polynomial by the polynomial ``1``, which in `Julia` is returned by `one(p)`, to produce a rational expression:
+
+```julia;
+pp = p // one(p)
+```
+
+And as with rational numbers, `p` is recovered by `numerator`:
+
+```julia;
+numerator(pp)
+```
+
+One difference is the rational number `3//1` also represents other
+expressions, say `6/2` or `12/4`, as `Julia`'s rational numbers are
+presented in lowest terms, unlike the rational expressions in
+`Polynomials`.
+
+Rational functions also have a plot recipe defined for them that
+attempts to ensure the basic features are identifiable. As previously
+discussed, a plot of a rational function can require some effort to
+avoid the values associated to vertical asymptotes taking up too many
+of the available vertical pixels in a graph.
+
+For the polynomial `pq` above, we have from observation that ``1`` and
+``2`` will be zeros and ``x=3`` a vertical asymptote. We also can
+identify a slant asymptote with slope ``1``. These are hinted at in this graph:
+
+```julia;
+plot(pq)
+```
+
+To better see the zeros, a plot over a narrower interval, say ``[0,2.5]``,
+would be encouraged; to better see the slant asymptote, a plot over
+a wider interval, say ``[-10,10]``, would be encouraged.
+
+
+##### Example: transformations of polynomials; real roots
+
+We have seen some basic transformations of functions such as shifts and scales. For a polynomial expression we can implement these as follows, taking advantage of polynomial evaluation:
+
+```julia;
+x = variable()
+p = 3 + 4x + 5x^2
+a = 2
+p(a*x), p(x+a) # scale, shift
+```
+
+A different polynomial transformation is inversion, or the mapping ``x^d \cdot p(1/x)`` where ``d`` is the degree of ``p``. This will yield a polynomial, as perhaps this example will convince you:
+
+
+```julia;
+p = Polynomial([1, 2, 3, 4, 5])
+d = degree(p)
+pp = p // one(x)
+x = variable(pp)
+q = x^d * pp(1/x)
+lowest_terms(q)
+```
+
+We had to use a rational expression so that division by the variable was possible.
+The above indicates that the new polynomial, ``q``, is constructed from ``p`` by **reversing** the coefficients.
+
+Inversion is like a funhouse mirror, flipping around parts of the polynomial. For example, the interval
+``[1/4,1/2]`` is related to the interval ``[2,4]``. Of interest here, is that if ``p(x)`` had a root, ``r``, in ``[1/4,1/2]`` then ``q(x) = x^d \cdot p(1/x)`` would have a root in ``[2,4]`` at ``1/r``.
+
+So these three transformations -- scale, shift, and inversion -- can be defined for polynomials.
+
+Combined, the three can be used to create a [Mobius transformation](https://en.wikipedia.org/wiki/M%C3%B6bius_transformation). For two values ``a`` and ``b``, consider the polynomial derived from ``p`` (again `d=degree(p)`) by:
+
+```math
+q = (x+1)^d \cdot p(\frac{ax + b}{x + 1}).
+```
+
+Here is a non-performant implementation as a `Julia` function:
+
+```julia;
+function mobius_transformation(p, a, b)
+  x = variable(p)
+  p = p(x + a)   # shift
+  p = p((b-a)*x) # scale
+  p = Polynomial(reverse(coeffs(p))) # invert
+  p = p(x + 1)   # shift
+  p
+end
+```
+
+We can verify this does what we want through example with the previously defined `p`:
+
+```julia;
+a, b = 4, 6
+q = mobius_transformation(p, 4, 6)
+```
+
+As contrasted with
+
+```julia;
+pq = p // one(p)
+x = variable(pq)
+d = degree(p)
+numerator(lowest_terms( (x + 1)^2 * pq((a*x + b)/(x + 1))))
+```
+
+----
+
+Now, why is this of any interest?
+
+Mobius transforms are used to map regions into other regions. In this special case, the transform ``\phi(x) = (ax + b)/(x + 1)`` takes the interval ``[0,\infty]`` and sends it to ``[a,b]`` under this (``0`` goes to ``(a\cdot 0 + b)/(0+1) = b``, whereas ``\infty`` goes to ``ax/x \rightarrow a``). Using this, if ``p(u) = 0``, with ``q(x) = (x=1)^d p(\phi(x))``,  then setting ``u = \phi(x)`` we have ``q(x) = (\phi^{-1}(u)+1)^d p(\phi(\phi^{-1}(u))) =  (\phi^{-1}(u)+1)^d \cdot  p(u) =  (\phi^{-1}(u)+1)^d \cdot 0 = 0``. That is, a zero of ``p`` in ``[a,b]`` will appear as a zero of ``q`` in ``[0,\infty)``.
+
+
+
+The Descartes rule of signs applied to ``q`` then will give a bound on the number of possible roots of ``p`` in the interval ``[a,b]``. In the example we did, the Mobius transform for ``a=4, b=6`` is ``15 - x - 11x^2 - 3x^3`` with ``1`` sign change, so there must be exactly ``1`` real root of ``p=(x-1)(x-3)(x-5)`` in the interval ``[4,6]``, as we can observe from the factored form of ``p``.
+
+Similarly, we can see there are ``2`` or ``0`` roots for ``p`` in the interval ``[2,6]`` by counting the two sign changes here:
+
+```julia;
+mobius_transformation(p, 2,6)
+```
+
+This observation, along with a detailed analysis provided by [Kobel, Rouillier, and Sagraloff](https://dl.acm.org/doi/10.1145/2930889.2930937) provides a means to find intervals that enclose the real roots of a polynomial.
+
+The basic algorithm, as presented next, is fairly simple to understand, and hints at the bisection algorithm to come. It is due to Akritas and Collins. Suppose you know the only possible positive real roots are between ``0`` and ``M`` *and* no roots are repeated. Find the transformed polynomial over ``[0,M]``:
+
+* If there are no sign changes, then there are no roots of ``p`` in ``[0,M]``.
+* If there is one sign change, then there is a single root of ``p`` in ``[0,M]``. The interval ``[0,M]`` is said to isolate the root (and the actual root can then be found by other means)
+* If there is more than one sign change, divide the interval in two (``[0,M/2]`` and ``[M/2,M]``, say) and apply the same consideration to each.
+
+Eventually, **mathematically** this will find isolating intervals for each positive real root. (The negative ones can be similarly isolated.)
+
+Applying these steps to ``p`` with an initial interval, say ``[0,9]``, we would have:
+
+```julia;
+p = fromroots([1,3,5])               #  (x-1)⋅(x-3)⋅(x-5) = -15 + 23*x - 9*x^2 + x^3
+mobius_transformation(p, 0, 9) # 3
+mobius_transformation(p, 0, 9//2)    # 2
+mobius_transformation(p, 9//2, 9)    # 1 (and done)
+mobius_transformation(p, 0, 9//4)    # 1 (and done)
+mobius_transformation(p, 9//4, 9//2) # 1 (and done)
+```
+
+So the three roots (``1``, ``3``, ``5``) are isolated by ``[0, 9/4]``, ``[9/4, 9/2]``, and ``[9/2, 9]``.
+
+### The `RealPolynomialRoots` package.
+
+For square-free polynomials, the `RealPolynomialRoots` package implements a basic version of the  paper of [Kobel, Rouillier, and Sagraloff](https://dl.acm.org/doi/10.1145/2930889.2930937) to identify the real roots of a polynomial using the Descartes rule of signs and the Möbius transformations just described.
+
+The `ANewDsc` function takes a collection of coefficients representing a polynomial and returns isolating intervals for each real root. For example:
+
+```julia
+using RealPolynomialRoots, Polynomials
+p = fromroots([1,3,5])
+st = ANewDsc(coeffs(p))
+```
+
+These intervals can be refined to give accurate approximations to the roots:
+
+```julia
+refine_roots(st)
+```
+
+
+More challenging problems can be readily handled by this package. The following polynomial
+
+
+```julia
+x = Polynomial([0,1]) # also just variable(Polynomial{Int})
+p = -1 + 254*x - 16129*x^2 + x^15
+```
+
+has three real roots, two of which are clustered very close to each other:
+
+```julia
+st = ANewDsc(coeffs(p))
+```
+
+and
+
+```julia
+refine_roots(st)
+```
+
+The SymPy package (`sympy.real_roots`) can accurately identify the
+three roots but it can take a **very** long time. The
+`Polynomials.roots` function from the `Polynomials` package identifies
+the cluster as complex valued. Though the implementation in
+`RealPolynomialRoots` doesn't handle such large polynomials, the
+authors of the algorithm have implementations that can quickly solve
+polynomials with degrees as high as 10,000.
+
+
+
 
 ## Questions
 
@@ -600,9 +850,9 @@ radioq(choices, ans)
 
 The rational expression
 
-$$~
+```math
 \frac{(x-1)\cdot(x-2)\cdot(x-3)}{(x-4)\cdot(x-5)\cdot(x-6)}
-~$$
+```
 
 would have
 
@@ -621,9 +871,9 @@ radioq(choices, ans)
 
 The rational expression
 
-$$~
+```math
 \frac{(x-1)\cdot(x-2)\cdot(x-3)}{(x-4)\cdot(x-5)\cdot(x-6)}
-~$$
+```
 
 would have
 
@@ -661,7 +911,7 @@ radioq(choices, ans)
 
 ###### Question
 
-Look at the graph of the function $f(x) = ((x-1)\cdot(x-2)) / ((x-3)\cdot(x-4))$
+Look at the graph of the function ``f(x) = ((x-1)\cdot(x-2)) / ((x-3)\cdot(x-4))``
 
 ```julia; echo=false
 f(x) = ((x-1) * (x-2)) / ((x-3) *(x-4))

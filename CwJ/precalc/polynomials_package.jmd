@@ -1,0 +1,284 @@
+# The Polynomials package
+
+```julia; echo=false; results="hidden"
+import CalculusWithJulia
+import CalculusWithJulia.WeaveSupport
+import CalculusWithJulia.WeaveSupport: note, radioq, yesnoq, numericq
+using Plots
+
+nothing
+```
+
+While `SymPy` can be used to represent polynomials, there are also native
+`Julia` packages available for this and related tasks. These packages include
+`Polynomials` and `AbstractAlgebra`, among many others. (A search on
+[juliahub.com](juliahub.com) found over 50 packages matching
+"polynomial".) We will look at the `Polynomials` package in the
+following, as it is straightforward to use and provides the features we
+are looking at for univariate polynomials.
+
+
+
+We load the package as others:
+
+```julia;
+using Polynomials
+using Plots
+```
+
+## Construction
+
+The polynomial expression ``p = a_0 + a_1\cdot x + a_2\cdot x^2 +
+\cdots + a_n\cdot x^n`` can be viewed mathematically as a vector of
+numbers with respect to some "basis", which for standard polynomials,
+as above, is just the set of monomials, ``1, x, x^2, \dots,
+x^n``. With this viewpoint, the polynomial ``p`` can be identified
+with the vector `[a0, a1, a2, ..., an]`. The `Polynomials` package
+provides a wrapper for such an identification through the `Polynomial`
+constructor.
+
+To illustrate, the polynomial ``p = 3 + 4x + 5x^2`` is constructed with
+
+```julia;
+p = Polynomial([3,4,5])
+```
+
+where the vector `[3,4,5]` represents the coefficients. The polynomial ``q = 3 + 5x^2 + 7x^4`` has some coefficients that are ``0``, these too must be indicated on construction, so we would have:
+
+```julia;
+q = Polynomial([3,0,5,0,7])
+```
+
+The `coeffs` function undoes `Polynomial`, returning the coefficients from a `Polynomial` object.
+
+```julia;
+coeffs(q)
+```
+
+Once defined, the usual arithmetic operations for polynomials follow:
+
+```julia;
+p + q
+```
+
+```julia;
+p*q + p^2
+```
+
+A polynomial has several familiar methods, such as `degree`:
+
+```julia;
+degree(p), degree(q)
+```
+
+The zero polynomial has degree `-1`, by convention.
+
+Polynomials may be evaluated using function notation, that is:
+
+```julia;
+p(1)
+```
+
+This blurs the distinction between a polynomial expression -- a formal object consisting of an indeterminate, coefficients, and the operations of addition, subtraction, multiplication, and non-negative integer powers -- and a polynomial function.
+
+
+The polynomial variable, in this case `1x`, can be returned by `variable`:
+
+```julia;
+x = variable(p)
+```
+
+This variable is a `Polynomial` object, so can be manipulated as a polynomial; we can then construct polynomials through expressions like:
+
+```julia;
+r = (x-2)^3 * (x-1) * (x+1)
+```
+
+The product is expanded for storage by `Polynomials`, which may not be desirable for some uses.
+A new variable can produced by calling `variable()`; so we could have constructed `p` by:
+
+```julia;
+x = variable()
+p = 3 + 4x + 5x^2
+```
+
+
+A polynomial in factored form, as `r` above is, can be constructed from its roots. Above, `r` has roots ``2`` (twice), ``1``, and ``-1``. Passing these as a vector to `fromroots` re-produces `r`:
+
+```julia;
+fromroots([2,2,1,-1])
+```
+
+The `fromroots` function is basically the [factor thereom](https://en.wikipedia.org/wiki/Factor_theorem) which links the factored form of the polynomial with the roots of the polynomial: ``(x-k)`` is a factor of ``p`` if and only if ``k`` is a root of ``p``. By combining a factor of the type ``(x-k)`` for each specified root, the polynomial can be constructed by multiplying its factors. For example, using `prod` and a generarator, we would have:
+
+```julia;
+x = variable()
+prod(x - k for k in [2,2,1,-1])
+```
+
+The `Polynomials` package has different ways to represent polynomials, and a factored form can also be used. For example, the `fromroots` function constructs polynomials from the specified roots and `FactoredPolynomial` leaves these in a factored form:
+
+```julia
+fromroots(FactoredPolynomial, [2, 2, 1, -1])
+```
+
+This form is helpful for some operations, for example polynomial multiplication and positive integer exponentiation, but not others such as addition of polynomials, where such polynomials must first be converted to the standard basis to add and are then converted back into a factored form.
+
+----
+
+The indeterminate, or polynomial symbol is a related, but different
+concept to `variable`. Polynomials are stored as a collection of
+coefficients, an implicit basis, *and* a symbol, in the above this symbol is
+`:x`. A polynomial's symbol is checked to ensure that polynomials with different
+symbols are not algebraically combined, except for the special case of constant
+polynomials. The symbol is specified through a second argument on
+construction:
+
+```julia;
+s = Polynomial([1,2,3], "t")
+```
+
+As `r` uses "`x`", and `s` a "`t`" the two can not be added, say:
+
+```julia;
+r + s
+```
+
+
+## Graphs
+
+Polynomial objects have a plot recipe defined -- plotting from the `Plots` package should be as easy as calling `plot`:
+
+```julia;
+plot(r, legend=false)  # suppress the legend
+```
+
+The choice of domain is heuristically identified; it and can be manually adjusted, as with:
+
+```julia;
+plot(r, 1.5, 2.5, legend=false)
+```
+
+## Roots
+
+The default `plot` recipe checks to ensure the real roots of the polynomial are included in the domain of the plot. To do this, it must identify the roots. This is done *numerically* by the `roots` function, as in this example:
+
+```julia;
+x = variable()
+p = x^5 - x - 1
+roots(p)
+```
+
+A consequence of the fundamental theorem of algebra and the factor
+theorem is that any fifth degree polynomial with integer coefficients
+has ``5`` roots, where possibly some are complex. For real coefficients,
+these complex values must come in conjugate pairs, which can be
+observed from the output. The lone real root is approximately
+`1.1673039782614187`. This value being a numeric approximation to the
+irrational root.
+
+
+```julia;echo=false
+note("""
+`SymPy` also has a `roots` function. If both `Polynomials` and `SymPy` are used together, calling `roots` must be qualified, as with `Polynomials.roots(...)`. Similarly, `degree` is provided in both, so it too must be qualified.
+""")
+```
+
+
+The `roots` function numerically identifies roots. As such, it is susceptible to floating point issues. For example, the following polynomial has one root with multiplicity ``5``, but ``5`` distinct roots are numerically identified:
+
+```julia;
+x = variable()
+p = (x-1)^5
+roots(p)
+```
+
+The `Polynomials` package has the `multroot` function to identify roots of polynomials when there are multiplicities expected. This function is not exported, so is called through:
+
+```julia
+x = variable()
+p = (x-1)^5
+Polynomials.Multroot.multroot(p)
+```
+
+
+Floating point error can also prevent the finding of real roots. For example, this polynomial has 3 real roots, but `roots` finds but 1, as the two nearby ones are identified as complex:
+
+```julia
+x = variable()
+p = -1 + 254x - 16129x^2 + x^9
+roots(p)
+```
+
+The `RealPolynomialRoots` package can assist in the case of identifying real roots of square-free polynomials (no multiple roots). For example:
+
+```julia
+using RealPolynomialRoots
+ps = coeffs(-1 + 254x - 16129x^2 + x^9)
+st = ANewDsc(ps)
+refine_roots(st)
+```
+
+
+
+## Questions
+
+###### Question
+
+Do the polynomials ``p = x^4`` and ``q = x^2 - 2`` intersect?
+
+```julia; echo=false;
+using RealPolynomialRoots
+x = variable()
+p,q = x^4, x^2 - 2
+st = ANewDsc(coeffs(p-q))
+yesnoq(length(st) > 0)
+```
+
+###### Question
+
+
+Do the polynomials ``p = x^4-4`` and ``q = x^2 - 2`` intersect?
+
+```julia; echo=false;
+using RealPolynomialRoots
+x = variable()
+p,q = x^4-4, x^2 - 2
+st = ANewDsc(coeffs(p-q))
+yesnoq(length(st) > 0)
+```
+
+###### Question
+
+How many real roots does ``p = 1 + x + x^2 + x^3 + x^4 + x^5`` have?
+
+```julia; echo=false;
+x = variable()
+p = 1 + x + x^2 + x^3 + x^4 + x^5
+st = (ANewDsc∘coeffs)(p)
+numericq(length(st))
+```
+
+###### Question
+
+Mathematically we say the ``0`` polynomial has ano degree. What convention does `Polynomials` use? (Look at `degree(zero(Polynomial))`.)
+
+```julia; echo=false;
+choices = ["`nothing`", "-1", "0", "Inf", "-Inf"]
+ans = 2
+radioq(choices, ans, keep_order=true)
+```
+
+###### Question
+
+The polynomial
+
+```julia
+p = fromroots([1,2,3,3,5])
+```
+
+has ``5`` sign changes and ``5`` real roots. For `x = variable()` use `div(p, x-3)` to find the result of dividing ``p`` by ``x-3``. How many sign changes are there in the new polynomial?
+
+```julia; echo=false;
+numericq(4)
+```

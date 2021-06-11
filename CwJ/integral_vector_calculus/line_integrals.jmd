@@ -86,7 +86,7 @@ Suppose $\rho(x,y,z) = 5 - z$ gives the density of an arc where the arc is param
 rho(x,y,z) = 5 - z
 rho(v) = rho(v...)
 r(t) = [cos(t), 0, sin(t)]
-@vars t
+@syms t
 rp = diff.(r(t),t)  # r'
 area = integrate((rho ∘ r)(t) * norm(rp), (t, 0, PI))
 ```
@@ -177,7 +177,7 @@ F(x,y,z) = [x-y, x^2 - y^2, x^2 - z^2]
 F(v) = F(v...)
 r(t) = [t, t^2, t^3]
 
-@vars t real=true
+@syms t::real
 integrate((F ∘ r)(t) ⋅ diff.(r(t), t), (t, 0, 1))
 ```
 
@@ -277,7 +277,7 @@ This is similar to gravitational force and is a *conservative force*. We saw tha
 Take as a closed loop the unit circle, parameterized by arc-length by $\vec{r}(t) = \langle \cos(t), \sin(t)\rangle$. The unit tangent will be $\hat{T} = \vec{r}'(t) = \langle -\sin(t), \cos(t) \rangle$. The work to move a particle of charge $q_0$ about a partical of charge $q$ at the origin around the unit circle would be computed through:
 
 ```julia;
-@vars k q q0 t
+@syms k q q0 t
 F(r) = k*q*q0 * r / norm(r)^3
 r(t) = [cos(t), sin(t)]
 T(r) = [-r[2], r[1]]
@@ -470,7 +470,7 @@ quadgk(G, a, b)[1]
 Example, let $F(x,y) = \langle -y, x\rangle$ be a vector field. (It represents an rotational flow.) What is the flow across the unit circle?
 
 ```julia;
-@vars t real=true
+@syms t::real
 F(x,y) = [-y,x]
 F(v) = F(v...)
 r(t) = [cos(t),sin(t)]
@@ -486,7 +486,7 @@ integrate((F ∘ r)(t) ⋅ normal(T(t)...) , (t, 0, 2PI))
 Let $F(x,y) = \langle x,y\rangle$ be a vector field. (It represents a *source*.) What is the flow across the unit circle?
 
 ```julia;
-@vars t real=true
+@syms t::real
 F(x,y) = [x, y]
 F(v) = F(v...)
 r(t) = [cos(t),sin(t)]
@@ -508,7 +508,7 @@ F(v) = F(v...)
 Consider $C$ to be the square with vertices at $(-1,-1)$, $(1,-1)$, $(1,1)$, and $(-1, 1)$. What is the flow across $C$ for this vector field? The region has simple outward pointing *unit* normals, these being $\pm\hat{i}$ and $\pm\hat{j}$, the unit vectors in the $x$ and $y$ direction. The integral can be computed in 4 parts. The first (along the bottom):
 
 ```julia;
-@vars s real=true
+@syms s::real
 
 r(s) = [-1 + s, -1]
 n = [0,-1]
@@ -538,7 +538,7 @@ A1 +  A2 +  A3 + A4
 As could have been anticipated by symmetry, the answer is simply `4A1` or $2\pi$. What likely is not anticipated, is that this integral will be the same as that found by integrating over the unit circle (an easier integral):
 
 ```julia;
-@vars t real=true
+@syms t::real
 r(t) = [cos(t), sin(t)]
 N(t) = r(t)
 integrate(F(r(t)) ⋅ N(t), (t, 0, 2PI))
@@ -661,7 +661,7 @@ The surface area of cone is a known quantity. In cylindrical coordinates, the co
 The surface element is the cross product $\langle \cos(\theta), \sin(\theta), -b\rangle$ and $\langle -r\sin(\theta), r\cos(\theta), 0\rangle$, which is:
 
 ```julia;
-@vars R theta a b positive=true
+@syms R::postive theta::positive a::positive b::positive
 n = [cos(theta), sin(theta), -b] × [-R*sin(theta), R*cos(theta), 0]
 se = simplify(norm(n))
 ```
@@ -720,8 +720,8 @@ $$~
 Consider the transformation $(x, \theta) \rightarrow \langle x, f(x)\cos(\theta), f(x)\sin(\theta)$. This maps the region $[a,b] \times [0, 2\pi]$ *onto* the surface of revolution. As such, the surface element would be:
 
 ```julia;
-H = SymFunction("H")
-@vars x theta real=true
+@sym H() x::real theta::real
+
 Phi(x, theta) = [x, H(x)*cos(theta), H(x)*sin(theta)]
 Jac = Phi(x, theta).jacobian([x, theta])
 v1, v2 = Jac[:,1], Jac[:,2]
@@ -749,7 +749,7 @@ $$~
 The Jacobian, and surface element can be computed:
 
 ```julia;
-@vars theta phi real=true
+@syms theta::real phi::real
 Phi(theta, phi) = [cos(phi)*cos(theta), cos(phi)*sin(theta), sin(phi)]
 Jac = Phi(theta,phi).jacobian([theta, phi])
 v1, v2 = Jac[:,1], Jac[:,2]
@@ -799,7 +799,7 @@ This is a surface of revolution about the $y$ axis, so a parameterization is
 $\Phi(y,\theta) = \langle \sqrt{y} \cos(\theta), y, \sqrt{y}\sin(\theta) \rangle$. The surface normal is given by:
 
 ```julia;
-@vars y theta positive=true
+@syms y::positive theta::positive
 Phi(y,theta) = [sqrt(y)*cos(theta), y, sqrt(y)*sin(theta)]
 Jac = Phi(y, theta).jacobian([y, theta])
 v1, v2 = Jac[:,1], Jac[:,2]
@@ -830,7 +830,7 @@ The surface has three faces, with different outward pointing normals for each. L
 Integrating over $S_1$, we have the parameterization $\Phi(r,\theta) = \langle r\cos(\theta), r\sin(\theta), 0\rangle$:
 
 ```julia;
-@vars R theta positive=true
+@syms R::positive theta::positive
 Phi(r,theta) = [r*cos(theta), r*sin(theta), 0]
 Jac = Phi(R, theta).jacobian([R, theta])
 v1, v2 = Jac[:,1], Jac[:,2]
@@ -862,7 +862,7 @@ Finally for $S_3$, the parameterization used is $\Phi(z, \theta) = \langle \cos(
 This parameterization gives a normal computed through:
 
 ```julia;
-@vars z positive=true
+@syms z::positive
 Phi(z, theta) = [cos(theta), sin(theta), z]
 Jac = Phi(z, theta).jacobian([z, theta])
 v1, v2 = Jac[:,1], Jac[:,2]
@@ -1087,7 +1087,7 @@ numericq(0)
 Let $f(x,y) = \tan^{-1}(y/x)$. We will integrate $\nabla{f}$ over the unit circle. The integrand wil be:
 
 ```julia;
-@vars t real=true
+@syms t::real
 f(x,y) =  atan(y/x)
 r(t) = [cos(t), sin(t)]
 ∇f = subs.(∇(f(x,y)), x .=> r(t)[1], y .=> r(t)[2]) .|> simplify
@@ -1130,7 +1130,7 @@ $$~
 Is this $0$?
 
 ```julia; echo=false
-@vars x y
+@syms x y
 F(x,y) = [2x^3*y^2, x*y^4 + 1]
 val = iszero(diff(F(x,y)[2],x) - diff(F(x,y)[1],y))
 yesnoq(val)
@@ -1148,7 +1148,7 @@ $$~
 Is this $0$?
 
 ```julia; echo=false
-@vars x y
+@syms x y
 F(x,y) = [2x^3, y^4 + 1]
 val = iszero(diff(F(x,y)[2],x) - diff(F(x,y)[1],y))
 yesnoq(val)
@@ -1280,7 +1280,7 @@ $$~
 Compute this.
 
 ```julia; echo=false
-#@vars x y real=true
+#@syms x y real=true
 #phi = 1 - (x+y)
 #SE = sqrt(1 + diff(phi,x)^2, diff(phi,y)^2)
 #integrate(x*y*S_, (y, 0, 1-x), (x,0,1)) # \sqrt{2}/24
@@ -1302,7 +1302,7 @@ Let $\Phi(u,v) = \langle u^2, uv, v^2\rangle$, $(u,v)$ in $[0,1]\times[0,1]$ and
 #Phi(u,v) = [u^2, u*v, v^2]
 #F(x,y,z) = [x,y^2,z^3]
 #Phi(v) = Phi(v...); F(v) = F(v...)
-#@vars u v real=true
+#@syms u::real v::real
 #function SurfaceElement(u,v)
 #  pt = [u,v]
 #  Jac = Phi(u,v).jacobian([u,v])

@@ -342,12 +342,14 @@ multiple of `7`:
 sum(k for k in 1:100 if rem(k,7) == 0)  ## add multiples of 7
 ```
 
-#### Example
+#### Example: Making change
 
 This example of Stefan Karpinski comes from a
 [blog](http://julialang.org/blog/2016/10/julia-0.5-highlights) post
 highlighting changes to the `Julia` language with version
-`v"0.5.0"`, which added features to comprehensions that made this example possible. It involves making change. First, a simple question: using
+`v"0.5.0"`, which added features to comprehensions that made this example possible.
+
+First, a simple question: using
 pennies, nickels, dimes, and quarters how many different ways can we
 generate one dollar? Clearly $100$ pennies, or $20$ nickels, or $10$ dimes,
 or $4$ quarters will do this, so the answer is at least four, but how
@@ -387,12 +389,11 @@ ways[1:3]
 
 The generating expression reads naturally. It introduces the use of
 multiple `for` statements, each subsequent one depending on the value
-of the previous (working left to right). Now suppose, like a shop
-keeper, we want to ensure that the amount of pennies is less than the
-amount from nickels, etc. We could use `filter` somehow to do this for
-our last answer, but using `if` allows for filtering while the events
-are generating. Here our condition is simply expressed: `q > d > n >
-p`:
+of the previous (working left to right). Now suppose, we want to
+ensure that the amount in pennies is less than the amount in nickels,
+etc. We could use `filter` somehow to do this for our last answer, but
+using `if` allows for filtering while the events are generating. Here
+our condition is simply expressed: `q > d > n > p`:
 
 
 ```julia;
@@ -428,7 +429,7 @@ This call will return a vector of 10 such random numbers:
 rand(10)
 ```
 
-Easy to use. The only common source of confusion is the subtle distinction between `rand()` and `rand(1)`, as the latter is a vector of 1 random number and the former just 1 random number.
+The `rand` function is easy to use. The only common source of confusion is the subtle distinction between `rand()` and `rand(1)`, as the latter is a vector of 1 random number and the former just 1 random number.
 
 ```julia;echo=false;
 alert(L"""

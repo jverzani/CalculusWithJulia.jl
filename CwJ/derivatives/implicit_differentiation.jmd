@@ -393,19 +393,17 @@ xy = cx^3 + dx^2 + ex + h.
 To approach this task in `SymPy`, we begin by defining our symbolic expression. For now, we keep the parameters as symbolic values:
 
 ```julia;
-@vars a b c d x y
+@syms a b c d x y
 ex = x*y - (a*c^3 + b*x^2 + c*x + d)
 ```
 
 To express that `y` is a locally a function of `x`, we use a "symbolic function" object:
 
 ```julia;
-u = SymFunction("u")
+@syms u()
 ```
 
-Defining a symbolic function is done with the command `SymFunction`. (This
-command's name is slightly modified from that when using SymPy under `Python`.) The object
-`u` is the symbolic function, and `u(x)` a symbolic expression
+The object `u` is the symbolic function, and `u(x)` a symbolic expression
 involving a symbolic function.  This is what we will use to refer to `y`.
 
 
@@ -438,7 +436,7 @@ If `x` and `y` are the variable names, this function will combine the steps abov
 
 ```julia;
 function dy_dx(eqn)
-  u = SymFunction("u")
+  @syms u()
   eqn1 = eqn(y => u(x))
   eqn2 = solve(diff(eqn1, x), diff(u(x), x))[1]
   eqn2(u(x) => y)
@@ -531,8 +529,7 @@ plot(Eq(F, 3),  xlims=(-3, 3), ylims=(-3, 3))
 The same problem can be done symbolically. The steps are similar, though the last step (replacing $x^3 - y^3$ with $3$) isn't done without explicitly asking.
 
 ```julia;
-@vars x y
-u = SymFunction("u")
+@syms x y u()
 
 eqn    = F(x,y) - 3
 eqn1   = eqn(y => u(x))
@@ -654,8 +651,7 @@ Okay, now to find the lowest point. This will be when the derivative
 is $0$. We solve by assuming $y$ is a function of $x$ called `u`:
 
 ```julia;
-@vars a b L x y
-u = SymFunction("u")
+@syms a b L x y u()
 ```
 
 ```julia;
@@ -759,7 +755,7 @@ if $x=4$, what is a value for $y$ such that $(x,y)$ is a point on the graph of t
 
 ```julia; echo=false
 using SymPy
-@vars x y
+@syms x y
 eqn = x^2*y + 2y - 4x
 val = float(N(solve(subs(eqn, (x,4)), y)[1]))
 numericq(val)
@@ -786,8 +782,7 @@ yesnoq(false)
 Let $(x/3)^2 + (y/2)^2 = 1$. Find the slope of the tangent line at the point $(3/\sqrt{2}, 2/\sqrt{2})$.
 
 ```julia; echo=false
-SymPy.@vars x y
-u = SymFunction("u")
+@syms x y u()
 eqn = (x/3)^2 + (y/2)^2 - 1
 dydx = SymPy.solve(SymPy.diff(SymPy.subs(eqn, y, u(x)), x), SymPy.diff(u(x), x))[1]
 val = float(SymPy.N(SymPy.subs(dydx, (u(x), y), (x, 3/sqrt(2)), (y, 2/sqrt(2)))))

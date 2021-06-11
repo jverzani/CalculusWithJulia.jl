@@ -430,7 +430,7 @@ We will work symbolically for this example.
 
 ```julia;
 f(x) = sin(x) - x
-@vars x
+@syms x
 fp = diff(f(x), x)
 cps = solve(fp)
 ```

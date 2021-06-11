@@ -410,7 +410,7 @@ Well, we haven't even seen the peak yet. Better to do a little spade
 work first. This is a quadratic function, so we can use `roots` from `SymPy` to find the roots:
 
 ```julia;
-@vars x
+@syms x
 roots(j(x))
 ```
 
@@ -556,6 +556,40 @@ f.(zs)
 returned by `find_zeros` are approximate zeros. Bear in mind that if $f$ is not
 continous the algorithm might find jumping points that are not zeros and may not even be in the domain of the function.)
 
+### An alternate interface to `find_zero`
+
+The `find_zero` function in the `Roots` package is an interface to one of several methods. For now we focus on the *bracketing* methods, later we will see others. Bracketing methods, among others,  include `Roots.Bisection()`, the basic bisection method though with a different sense of "middle" than ``(a+b)/2`` and used by default above; `Roots.A42()`, which will typically converge much faster than simple bisection; `Roots.Brent()` for the classic method of Brent, and `FalsePosition()` for a family of *regula falsi* methods. These can all be used by specifying the method in a call to `find_zero`.
+
+Alternatively, `Roots` implements the `CommonSolve` interface popularized by its use in the `DifferentialEquations.jl` ecosystem, a wildly successful area for `Julia`. The basic setup is two steps: setup a "problem," solve the problem.
+
+To set up a problem, we call `ZeroProblem` with the function and an initial interval, as in:
+
+```julia
+f(x) = x^5 - x - 1
+prob = ZeroProblem(f, (1,2))
+```
+
+Then we can "solve" this problem with `solve`. For example:
+
+```julia
+solve(prob, Roots.Bisection()), solve(prob, Roots.Brent()), solve(prob, Roots.A42())
+```
+
+Though the answers are identical, the methods employed were not.
+
+Behind the scenes, `solve` *initializes* a iterator and then iterates it to completion. This can be accessed through the `init` method. For example, we can see the steps along the way  of the `FalsePosition` method for this problem:
+
+```julia
+o = init(prob, FalsePosition)
+for i in o
+  @show i
+end
+```
+
+The command `find_zero(f, (1,2), FalsePosition(), verbose=true)` would
+give more detail on the algorithm in a standard format, but this
+method may be of interest, as it allows the combination of different
+models.
 
 ### Using IntervalRootFinding
 

@@ -7,6 +7,14 @@ using Plots
 nothing
 ```
 
+
+The following section takes up the task of numerically approximating solutions to differential equations. `Julia` has a huge set of state-of-the-art tools for this task starting with the [DifferentialEquations](https://github.com/SciML/DifferentialEquations.jl) package. We don't use that package here, focusing on  simpler methods and implementations for pedagogical purposes, but any further exploration should utilize the tools provided therein.
+
+
+----
+
+
+
 Consider the differential equation:
 
 $$~
@@ -18,8 +26,7 @@ which can be solved with `SymPy`:
 ```julia;
 using CalculusWithJulia   # loads `SymPy`, `Roots`
 using Plots
-@vars x y
-u = SymFunction("u")
+@syms x, y, u()
 x0, y0 = 1, 1
 F(y,x) = y*x
 
@@ -327,8 +334,7 @@ that one returned by `SymPy`.
 First, the `SymPy` solution:
 
 ```julia;
-@vars x
-u = SymFunction("u")
+@syms x, u()
 F(y,x) = sin(x*y)
 eqn = u'(x) - F(u(x), x)
 out = dsolve(eqn)
