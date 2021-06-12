@@ -271,6 +271,35 @@ radioq(choices, ans, keep_order=true)
 
 ###### Question
 
+Consider the polynomial ``p(x) = a_1 x - a_3 x^3 + a_5 x^5`` where
+
+```math
+\begin{align*}
+a_1 &= 4(\frac{3}{\pi} - \frac{9}{16}) \\
+a_3 &= 2a_1 -\frac{5}{2}\\
+a_5 &= a_1 - \frac{3}{2}.
+\end{align*}
+```
+
+
+* Form the polynomial `p` by first computing the ``a``s and forming `p=Polynomial([0,a1,0,-a3,0,a5])`
+* Form the polynomial `q` by these commands `x=variable(); q=p(2x/pi)`
+
+The polynomial `q`, a ``5``th-degree polynomial, is a good approximation of for the [sine](http://www.coranac.com/2009/07/sines/) function.
+
+Make graphs of both `q` and `sin`. Over which interval is the approximation (visually) a good one?
+
+```julia; echo=false
+choices = ["``[0,1]``",
+"``[0,\\pi]``",
+"``[0,2\\pi]``"]
+radioq(choices, 1, keep_order=true)
+```
+
+(This [blog post](https://www.nullhardware.com/blog/fixed-point-sine-and-cosine-for-embedded-systems/) shows how this approximation is valuable under some specific circumstances.)
+
+###### Question
+
 The polynomial
 
 ```julia
@@ -281,4 +310,124 @@ has ``5`` sign changes and ``5`` real roots. For `x = variable()` use `div(p, x-
 
 ```julia; echo=false;
 numericq(4)
+```
+
+
+###### Question
+
+The identification of a collection of coefficients with a polynomial depends on an understood **basis**. A basis for the polynomials of degree ``n`` or less, consists of a minimal collection of polynomials for which all the polynomials of degree ``n`` or less can be expressed through a combination of sums of terms, each of which is just a coefficient times a basis member. The typical basis is the ``n+`` polynomials `1`, `x`, `x^2, \dots, x^n`. However, though every basis must have ``n+1`` members, they need not be these.
+
+A basis used by [Lagrange](https://en.wikipedia.org/wiki/Lagrange_polynomial) is the following. Let there be ``n+1`` points distinct points ``x_0, x_1, \dots, x_n``. Let `l(x) = (x-x_0)\cdot(x-x_1)\cdot \cdots \cdot(x-x_n)`` and for each ``i`` in ``0`` to ``n`` define
+
+```math
+l_i(x) = \prod_{0 \leq j \leq n; j \ne i} \frac{x-x_j}{x_i - x_j} =
+\frac{(x-x_1)\cdot(x-x_2)\cdot \cdots \cdot (x-x_{j-1}) \cdot (x-x_{j+1}) \cdot \cdots \cdot (x-x_n)}{(x_i-x_1)\cdot(x_i-x_2)\cdot \cdots \cdot (x_i-x_{j-1}) \cdot (x_i-x_{j+1}) \cdot \cdots \cdot (x_i-x_n)}.
+```
+
+That is `l_i(x)` is a product of terms like ``(x-x_j)/(x_i-x_j)`` *except* when `j=i`.
+
+
+What is is the value of ``l_0(x_0)``?
+
+```julia; echo=false
+numericq(1)
+```
+
+
+Why?
+
+```julia; echo=false
+choices = ["""
+All terms like ``(x-x_j)/(x_0 - x_j)`` will be ``1`` when ``x=x_0`` and these are all the terms in the product defining ``l_0``.
+""",
+	"The term ``(x_0-x_0)`` will be ``0``, so the product will be zero"
+	]
+radioq(choices, 1)
+```
+
+
+What is the value of ``l_i(x_i)``?
+
+```julia; echo=false
+numericq(1)
+```
+
+
+What is the value of ``l_0(x_1)``?
+
+```julia; echo=false
+numericq(0)
+```
+
+
+Why?
+
+```julia; echo=false
+choices = ["""
+The term like ``(x-x_1)/(x_0 - x_1)`` will be ``0`` when ``x=x_1`` and so the product will be ``0``.
+""",
+	"The term ``(x-x_1)/(x_0-x_1)`` is omitted from the product, so the answer is non-zero."
+	]
+radioq(choices, 1)
+```
+
+
+What is the value of ``l_i(x_j)`` *if* ``i \ne j``?
+
+```julia; echo=false
+numericq(0)
+```
+
+
+Suppose the ``x_0, x_1, \dots, x_n`` are the ``x`` coordinates of ``n`` distinct points ``(x_0,y_0)``, ``(x_1, y_1), \dots, (x_n,y_n)``. Form the polynomial with the above basis and coefficients being the ``y`` values. That is consider:
+
+```math
+p(x) = \sum_{i=0}^n y_i l_i(x) = y_0l_0(x) + y_1l_1(x) + \dots + y_nl_n(x)
+```
+
+What is the value of ``p(x_j)``?
+
+```julia; echo=false
+choices = ["``0``", "``1``", "``y_j``"]
+radioq(choices, 3)
+```
+
+This last answer is why ``p`` is called an *interpolating* polynomial.
+
+
+###### Question
+
+The Chebyshev (``T``) polynomials are polynomials which use a different basis from the standard basis. Denote the basis elements ``T_0``, ``T_1``, ... where we have ``T_0(x) = 1``, ``T_1(x) = x``, and for bigger indices ``T_{i+1}(x) = 2xT_i(x) - T_{i-1}(x)``. The first others are then:
+
+```math
+\begin{align*}
+T_2(x) &= 2xT_1(x) - T_0(x) = 2x^2 - 1\\
+T_3(x) &= 2xT_2(x) - T_1(x) = 2x(2x^2-1) - x = 4x^3 - 3x\\
+T_4(x) &= 2xT_3(x) - T_2(x) = 2x(4x^3-3x) - (2x^2-1) = 8x^4 - 8x^2 + 1
+\end{align*}
+```
+
+With these definitions what is the polynomial associated to the coefficients ``[0,1,2,3]`` with this basis?
+
+
+```julia; echo=false
+choices = [
+		raw"""
+		It is ``0\cdot 1 + 1 \cdot x + 2 \cdots x^2 + 3\cdot x^3 = x + 2x^2 + 3x^3``
+		""",
+	    raw"""
+It is ``0\cdot T_1(x) +	1\cdot T_1(x) + 2\cdot T_2(x) + 3\cdot T_3(x) = 0``
+""",
+	    raw"""
+It is ``0\cdot T_1(x) +	1\cdot T_1(x) + 2\cdot T_2(x) + 3\cdot T_3(x) = -2 - 8\cdot x + 4\cdot x^2 + 12\cdot x^3```
+"""]
+radioq(choices, 3)
+```
+
+```julia; echo=false
+note("""
+The `Polynomials` package has an implementation, so you can check your answer through `convert(Polynomial, ChebyshevT([0,1,2,3]))`. Similarly, the `SpecialPolynomials` package has these and many other polynomial bases represented.
+
+The `ApproxFun` package is built on top of polynomials expressed in this basis, as the Chebyshev polynomials have special properties which make them very suitable when approximating functions with polynomials. The `ApproxFun` package uses  easier-to-manipulate polynomials to approximate functions very accurately, thereby being useful for investigating properties of non-linear functions leveraging properties for polynomials.
+""")
 ```

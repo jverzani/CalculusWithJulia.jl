@@ -217,29 +217,23 @@ an **or** and be "x minus 5 less than minus 7 **or** x minus 5
 greater than 7". Expressing this requires some new notation.
 
 
-The *boolean operators* `&` and `|` implement "and" and "or." Thus we
-could write $-7 < x-5 < 7$ as
+The *boolean shortcut operators* `&&` and `||` implement "and" and "or." (There are also *bitwise* boolean operators `&` and `|`, but we only describe the former.)
+
+
+Thus we could write $-7 < x-5 < 7$ as
 
 ```julia;
-(-7 < x - 5) & (x - 5 < 7)
+(-7 < x - 5) && (x - 5 < 7)
 ```
 
 and could write $\lvert x-5\rvert > 7$ as
 
 ```julia;
-(x - 5 < -7) | (x - 5 > 7)
+(x - 5 < -7) || (x - 5 > 7)
 ```
 
 (The first expression is false for $x=18$ and the second expression true, so the "or"ed result is `true` and the "and" result if `false`.)
 
-```julia; echo=false;
-alert("""
-The
-[short circuit operators](http://julia.readthedocs.org/en/latest/manual/control-flow/#man-short-circuit-evaluation)
-are `&&` and `||`. For simple Boolean values, they perform a related
-task, though have a more general usage.
-""")
-```
 
 ##### Example
 
@@ -252,7 +246,7 @@ following shows it true for 1 of the 4 possible cases for the pair
 
 ```julia;
 A,B = true, false  ## also true, true; false, true; and false, false
-!(A & B) == !A | !B
+!(A && B) == !A || !B
 ```
 
 ## Precedence
@@ -262,24 +256,27 @@ The question of when parentheses are needed and when they are not is answered by
 implemented. Earlier, we wrote
 
 ```julia;
-(x - 5 < -7) | (x - 5 > 7)
+(x - 5 < -7) || (x - 5 > 7)
 ```
 
 To represent $\lvert x-5\rvert > 7$. Were the parentheses necessary? Let's just check.
 
 ```julia;
-x - 5 < -7 | x - 5 > 7
+x - 5 < -7 || x - 5 > 7
 ```
 
-So yes, they were. The precedence rules perform `|` before `<` or `>`, so without the extra pair of parentheses, we would have
+So no, they were not.
 
-```julia;
-(x - 5 < ( (-7 | x) - 5)) > 7
+An operator (such as `<`, `>`, `||` above) has an associated associativity and precedence. The associativity is whether an expression like `a - b - c` is `(a-b) - c` or `a - (b-c)`. The former being left associative, the latter right. Of issue here is *precedence*, as in which operation of the 3 happens first.
+
+The table in the manual on [operator precedence and associativity](https://docs.julialang.org/en/v1/manual/mathematical-operations/#Operator-Precedence-and-Associativity) shows that for these operations "control flow" (the `&&` above) is lower than "comparisons" (the `<`, `>`), which are lower than "Addition" (the `-` above). So the expression without parentheses would be equivalent to:
+
+```julia
+((x-5) < -7) && ((x-5) > 7)
 ```
 
-which is not what is desired at all. (The value of `-7 | x` is `-5` -
-as `|` does something completely different when the two arguments are
-not boolean.)
+(This is different than the precedence of the bitwise boolean operators, which have `&` with "Multiplication" and `|` with "Addition", so `x-5 < 7 | x - 5 > 7` would need parentheses.)
+
 
 A thorough understanding of the precedence rules can help eliminate
 unnecessary parentheses, but in most cases it is easier just to put
@@ -420,7 +417,7 @@ radioq(choices, ans)
 
 According to Wikipedia, one of the following inequalities is always
 true for $a, b > 0$ (as proved by I. Ilani in
-JSTOR,AMM,Vol.97,No.1,1990). Which one?
+JSTOR, AMM, Vol.97, No.1, 1990). Which one?
 
 
 ```julia; echo=false;
@@ -459,7 +456,7 @@ If $\lvert x - \pi\rvert < 1/10$ is $\lvert \sin(x) - \sin(\pi)\rvert < 1/10$?
 Guess an answer based on a few runs of
 
 ```julia; eval=false;
-x = pi + 0.2 * rand()
+x = pi + 1/10 * (2rand()-1)
 abs(x - pi) < 1/10, abs(sin(x) - sin(pi)) < 1/10
 ```
 
@@ -482,9 +479,9 @@ yesnoq(val)
 Which of these will show DeMorgan's law holds when both values are `false`:
 
 ```julia; echo=false;
-choices = ["`!(false & false) == !false & !false`",
-           "`!(false & false) == false !& false`",
-	   "`!(false & false) == !false | !false`"]
+choices = ["`!(false && false) == (!false && !false)`",
+           "`!(false && false) == (false || false)`",
+	   "`!(false && false) == (!false || !false)`"]
 ans = 3
 radioq(choices, ans)
 ```
@@ -522,23 +519,27 @@ yesnoq(true)
 
 The `NaN` value is meant to signal an error in computation. `Julia` has value to indicate some data is missing or unavailable. This is `missing`. For `missing` values we have these computations:
 
-```julia; echo=false;
-true & missing, true | missing
+```julia;
+true && missing, true || missing
 ```
 
-We see the value of `true | missing` is `true`. Why?
+We see the value of `true || missing` is `true`. Why?
 
 ```julia; echo=false;
-choices = ["If `missing` were `true` or `false`, the answer would always be `true`",
-"Since the second value is \"`missing`\", only the first is used. So `false | missing` would also be `false`"]
+choices = ["""
+In the manual we can read that "In the expression `a || b`, the subexpression `b` is only evaluated if `a` evaluates to false." In this case `a` is `true` and so `a` is returned.
+""",
+"Since the second value is \"`missing`\", only the first is used. So `false || missing` would also be `false`"]
 ans = 1
 radioq(choices, ans)
 ```
 
-The value for `true & missing` is `missing` showing that there are possibly three values for `&` to return. Why would it make sense for this to be "`missing`"?
+The value for `true && missing` is `missing`, not a boolean value. What happens?
 
 ```julia; echo=false;
-choices = ["If `missing` were `true` the answer would be `true` and if it were `false` the answer would be `false`, so the answer is not known, hence also \"`missing`\"",
+choices = ["""
+In the manual we can read that "In the expression `a && b`, the subexpression `b` is only evaluated if `a` evaluates to true." In this case, `a` is `false` so `b` is evaluated and returned. As `b` is just `missing` that is the return value.
+""",
 "Since the second value is \"`missing`\" all such answers would be missing."]
 ans = 1
 radioq(choices, ans)
