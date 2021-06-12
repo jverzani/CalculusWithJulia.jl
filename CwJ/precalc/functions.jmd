@@ -96,71 +96,6 @@ The `DomainError` is one of many different error types `Julia` has, in this case
 
 
 
-### Using `IntervalArithmetics` to help identify the range
-
-Identifying the range of a function can be a difficult task. We see that in some cases, a package can be of assistance.
-
-A mathematical interval is a set of values of the form
-
-* an open interval: ``a < x < b``, or ``(a,b)``;
-* a closed interval: ``a \leq x \leq b``, or ``[a,b]``;
-* or a half-open interval: ``a < x \leq b`` or ``a \leq x < b``, repectively ``(a,b]`` or ``[a,b)``.
-
-They all contain all real numbers between the endpoints, the distinction is whether the endpoints are included or not.
-
-A domain is some set, but typically that set is an interval such as *all real numbers* (``(-\infty,\infty)``), *all non-negative numbers* (``[0,\infty)``), or, say, *all positive numbers* (``(0,\infty)``).
-
-The `IntervalArithmetic` package provides an easy  means to define closed intervals using the symbol `..`:
-
-```julia
-using IntervalArithmetic
-I1 = -Inf..Inf
-```
-
-```julia
-I2 = 0..Inf
-```
-
-The main feature of the package is not to construct intervals, but rather to *rigorously* bound with an interval the output of the image of a closed interval under a function. That is, for a function ``f`` and *closed* interval ``[a,b]``, a bound for the set ``\{f(x) \text{ for } x \text{ in } [a,b]\}``. When `[a,b]` is the domain of ``f``, then this is a bound for the range of ``f``.
-
-
-For example the function ``f(x) = x^2 + 2`` had a domain of all real ``x``, the range can be found with:
-
-```julia
-ab = -Inf..Inf
-f(x) = x^2 + 2
-f(ab)
-```
-
-For such an elementary function, this range could also be observed from inspection, but for more complicated problems, this can be very useful.
-
-The above example correctly identifies the range (under the assumption ``\infty`` is treated like a floating point value), but in general it is only a **bound** on the range. We will see later that the function ``f(x)=x^x`` has a minimum value at ``1/e`` and is defined to be ``1`` at ``x=0``, so the range should be ``[1/e,\infty)`` over the domain ``[0,\infty)``, but instead we find:
-
-```julia
-f(x) = x^x
-f(0..Inf)
-```
-
-That is a larger interval than necessary is found. The `IntervalArithmetic` manual says
-
-> The reason for this overestimation is known as dependence problem. If in a function `f` the same variable appears multiple times, then the interval evaluation of the function may lead to overestimation.
-
-These identified bounds are  *rigorous* bounds at the *floating point* level. This can cause some surprises at times, as here:
-
-```julia
-sin(0..pi)
-```
-
-The reason for the tiny negative value is not the mathematically
-accurate ``0`` comes from rigorously bounding the errors in the
-evalution of ``\sin(\pi)``.
-
-With thees caveats in mind, interval arithmetic can be a powerful tool for analysis.
-
-
-
-
-
 
 
 ### Equations, functions, calling a function
@@ -1142,4 +1077,85 @@ choices = ["Just use `f = h - g`",
 ]
 ans = 1
 radioq(choices, ans)
+```
+
+###### Question
+
+Identifying the range of a function can be a difficult task. We see in this question that in some cases, a package can be of assistance.
+
+A mathematical interval is a set of values of the form
+
+* an open interval: ``a < x < b``, or ``(a,b)``;
+* a closed interval: ``a \leq x \leq b``, or ``[a,b]``;
+* or a half-open interval: ``a < x \leq b`` or ``a \leq x < b``, repectively ``(a,b]`` or ``[a,b)``.
+
+They all contain all real numbers between the endpoints, the distinction is whether the endpoints are included or not.
+
+A domain is some set, but typically that set is an interval such as *all real numbers* (``(-\infty,\infty)``), *all non-negative numbers* (``[0,\infty)``), or, say, *all positive numbers* (``(0,\infty)``).
+
+The `IntervalArithmetic` package provides an easy  means to define closed intervals using the symbol `..`:
+
+```julia
+using IntervalArithmetic
+I1 = -Inf..Inf
+```
+
+```julia
+I2 = 0..Inf
+```
+
+The main feature of the package is not to construct intervals, but rather to *rigorously* bound with an interval the output of the image of a closed interval under a function. That is, for a function ``f`` and *closed* interval ``[a,b]``, a bound for the set ``\{f(x) \text{ for } x \text{ in } [a,b]\}``. When `[a,b]` is the domain of ``f``, then this is a bound for the range of ``f``.
+
+
+For example the function ``f(x) = x^2 + 2`` had a domain of all real ``x``, the range can be found with:
+
+```julia
+ab = -Inf..Inf
+f(x) = x^2 + 2
+f(ab)
+```
+
+For this problem, the actual range can easily be identified. Does the bound computed match exactly?
+
+```julia; echo=false
+yesnoq("yes")
+```
+
+Does `sin(0..pi)` **exactly** match the interval of ``[-1,1]``?
+
+```julia; echo=false
+yesnoq("no")
+```
+
+Guess why or why not?
+
+```julia; echo=false
+choices = ["Well it does, because ``[-1,1]`` is the range",
+           """It does not. The bound found is a provably known bound. The small deviation is due to the possible errors in evalution of the `sin` function near the floating point approximation of `pi`,
+"""]
+radioq(choices, 2)
+```
+
+Now consider the evaluation
+
+```julia;
+f(x) = x^x
+f(0..Inf)
+```
+
+Make a graph of `f`. Does the interval found above provide a nearly exact estimate of the true range (as the previous two questions have)?
+
+```julia; echo=false
+yesnoq("no")
+```
+
+Any thoughts on why?
+
+```julia;echo=false
+choices = ["""
+The guarantee of `IntervalArithmetic` is a *bound* on the interval, not the *exact* interval. In the case where the variable `x` appears more than once, it is treated formulaically as an *independent* quantity (meaning it has it full set of values considered in each instance) which is not the actual case mathemitcally. This is the "dependence problem" in interval arithmetic.""",
+           """
+The interval is a nearly exact estimate, as guaranteed by `IntervalArithmetic`.
+"""]
+radioq(choices, 1)
 ```
