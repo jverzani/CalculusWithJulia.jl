@@ -104,7 +104,7 @@ $( document ).ready(function() {
 });
 </script>
 
-
+<link rel="shortcut icon" href="https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/favicon.ico" type="image/x-icon" />
 
 </head>
 
@@ -247,7 +247,7 @@ false
 
 
 <pre class="output">
-&#40;true, true&#41;
+&#40;false, false&#41;
 </pre>
 
 
@@ -389,11 +389,12 @@ false
 
 <p>Read aloud this would be &quot;minus 7 is less than x minus 5 <strong>and</strong> x minus 5 is less than 7&quot;.</p>
 <p>The &quot;and&quot; equations can be combined as above with a natural notation. However, an equation like <span class="math">$\lvert x - 5\rvert > 7$</span> would emphasize an <strong>or</strong> and be &quot;x minus 5 less than minus 7 <strong>or</strong> x minus 5 greater than 7&quot;. Expressing this requires some new notation.</p>
-<p>The <em>boolean operators</em> <code>&amp;</code> and <code>|</code> implement &quot;and&quot; and &quot;or.&quot; Thus we could write <span class="math">$-7 < x-5 < 7$</span> as</p>
+<p>The <em>boolean shortcut operators</em> <code>&amp;&amp;</code> and <code>||</code> implement &quot;and&quot; and &quot;or.&quot; &#40;There are also <em>bitwise</em> boolean operators <code>&amp;</code> and <code>|</code>, but we only describe the former.&#41;</p>
+<p>Thus we could write <span class="math">$-7 < x-5 < 7$</span> as</p>
 
 
 <pre class='hljl'>
-<span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-ni'>7</span><span class='hljl-t'> </span><span class='hljl-oB'>&lt;</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>&amp;</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-t'> </span><span class='hljl-oB'>&lt;</span><span class='hljl-t'> </span><span class='hljl-ni'>7</span><span class='hljl-p'>)</span>
+<span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-ni'>7</span><span class='hljl-t'> </span><span class='hljl-oB'>&lt;</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>&amp;&amp;</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-t'> </span><span class='hljl-oB'>&lt;</span><span class='hljl-t'> </span><span class='hljl-ni'>7</span><span class='hljl-p'>)</span>
 </pre>
 
 
@@ -406,7 +407,7 @@ false
 
 
 <pre class='hljl'>
-<span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-t'> </span><span class='hljl-oB'>&lt;</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>7</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-t'> </span><span class='hljl-oB'>&gt;</span><span class='hljl-t'> </span><span class='hljl-ni'>7</span><span class='hljl-p'>)</span>
+<span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-t'> </span><span class='hljl-oB'>&lt;</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>7</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>||</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-t'> </span><span class='hljl-oB'>&gt;</span><span class='hljl-t'> </span><span class='hljl-ni'>7</span><span class='hljl-p'>)</span>
 </pre>
 
 
@@ -416,23 +417,13 @@ true
 
 
 <p>&#40;The first expression is false for <span class="math">$x=18$</span> and the second expression true, so the &quot;or&quot;ed result is <code>true</code> and the &quot;and&quot; result if <code>false</code>.&#41;</p>
-
-
-<div class="alert alert-success" role="alert">
-
-<div class="markdown"><p>The <a href="http://julia.readthedocs.org/en/latest/manual/control-flow/#man-short-circuit-evaluation">short circuit operators</a> are <code>&amp;&amp;</code> and <code>||</code>. For simple Boolean values, they perform a related task, though have a more general usage.</p>
-</div>
-
-</div>
-
-
 <h5>Example</h5>
 <p>One of <a href="http://en.wikipedia.org/wiki/De_Morgan&#37;27s_laws">DeMorgan&#39;s Laws</a> states that &quot;not &#40;A and B&#41;&quot; is the same as &quot;&#40;not A&#41; or &#40;not B&#41;&quot;. This is a kind of distributive law for &quot;not&quot;, but note how the &quot;and&quot; changes to &quot;or&quot;. We can verify this law systematically. For example, the following shows it true for 1 of the 4 possible cases for the pair <code>A</code>, <code>B</code> to take:</p>
 
 
 <pre class='hljl'>
 <span class='hljl-n'>A</span><span class='hljl-p'>,</span><span class='hljl-n'>B</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-kc'>true</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-kc'>false</span><span class='hljl-t'>  </span><span class='hljl-cs'>## also true, true; false, true; and false, false</span><span class='hljl-t'>
-</span><span class='hljl-oB'>!</span><span class='hljl-p'>(</span><span class='hljl-n'>A</span><span class='hljl-t'> </span><span class='hljl-oB'>&amp;</span><span class='hljl-t'> </span><span class='hljl-n'>B</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>==</span><span class='hljl-t'> </span><span class='hljl-oB'>!</span><span class='hljl-n'>A</span><span class='hljl-t'> </span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-oB'>!</span><span class='hljl-n'>B</span>
+</span><span class='hljl-oB'>!</span><span class='hljl-p'>(</span><span class='hljl-n'>A</span><span class='hljl-t'> </span><span class='hljl-oB'>&amp;&amp;</span><span class='hljl-t'> </span><span class='hljl-n'>B</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>==</span><span class='hljl-t'> </span><span class='hljl-oB'>!</span><span class='hljl-n'>A</span><span class='hljl-t'> </span><span class='hljl-oB'>||</span><span class='hljl-t'> </span><span class='hljl-oB'>!</span><span class='hljl-n'>B</span>
 </pre>
 
 
@@ -446,7 +437,7 @@ true
 
 
 <pre class='hljl'>
-<span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-t'> </span><span class='hljl-oB'>&lt;</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>7</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-t'> </span><span class='hljl-oB'>&gt;</span><span class='hljl-t'> </span><span class='hljl-ni'>7</span><span class='hljl-p'>)</span>
+<span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-t'> </span><span class='hljl-oB'>&lt;</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>7</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>||</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-t'> </span><span class='hljl-oB'>&gt;</span><span class='hljl-t'> </span><span class='hljl-ni'>7</span><span class='hljl-p'>)</span>
 </pre>
 
 
@@ -459,20 +450,22 @@ true
 
 
 <pre class='hljl'>
-<span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-t'> </span><span class='hljl-oB'>&lt;</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>7</span><span class='hljl-t'> </span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-t'> </span><span class='hljl-oB'>&gt;</span><span class='hljl-t'> </span><span class='hljl-ni'>7</span>
+<span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-t'> </span><span class='hljl-oB'>&lt;</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>7</span><span class='hljl-t'> </span><span class='hljl-oB'>||</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-t'> </span><span class='hljl-oB'>&gt;</span><span class='hljl-t'> </span><span class='hljl-ni'>7</span>
 </pre>
 
 
 <pre class="output">
-false
+true
 </pre>
 
 
-<p>So yes, they were. The precedence rules perform <code>|</code> before <code>&lt;</code> or <code>&gt;</code>, so without the extra pair of parentheses, we would have</p>
+<p>So no, they were not.</p>
+<p>An operator &#40;such as <code>&lt;</code>, <code>&gt;</code>, <code>||</code> above&#41; has an associated associativity and precedence. The associativity is whether an expression like <code>a - b - c</code> is <code>&#40;a-b&#41; - c</code> or <code>a - &#40;b-c&#41;</code>. The former being left associative, the latter right. Of issue here is <em>precedence</em>, as in which operation of the 3 happens first.</p>
+<p>The table in the manual on <a href="https://docs.julialang.org/en/v1/manual/mathematical-operations/#Operator-Precedence-and-Associativity">operator precedence and associativity</a> shows that for these operations &quot;control flow&quot; &#40;the <code>&amp;&amp;</code> above&#41; is lower than &quot;comparisons&quot; &#40;the <code>&lt;</code>, <code>&gt;</code>&#41;, which are lower than &quot;Addition&quot; &#40;the <code>-</code> above&#41;. So the expression without parentheses would be equivalent to:</p>
 
 
 <pre class='hljl'>
-<span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-t'> </span><span class='hljl-oB'>&lt;</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-ni'>7</span><span class='hljl-t'> </span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-p'>))</span><span class='hljl-t'> </span><span class='hljl-oB'>&gt;</span><span class='hljl-t'> </span><span class='hljl-ni'>7</span>
+<span class='hljl-p'>((</span><span class='hljl-n'>x</span><span class='hljl-oB'>-</span><span class='hljl-ni'>5</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>&lt;</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>7</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>&amp;&amp;</span><span class='hljl-t'> </span><span class='hljl-p'>((</span><span class='hljl-n'>x</span><span class='hljl-oB'>-</span><span class='hljl-ni'>5</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>&gt;</span><span class='hljl-t'> </span><span class='hljl-ni'>7</span><span class='hljl-p'>)</span>
 </pre>
 
 
@@ -481,7 +474,7 @@ false
 </pre>
 
 
-<p>which is not what is desired at all. &#40;The value of <code>-7 | x</code> is <code>-5</code> - as <code>|</code> does something completely different when the two arguments are not boolean.&#41;</p>
+<p>&#40;This is different than the precedence of the bitwise boolean operators, which have <code>&amp;</code> with &quot;Multiplication&quot; and <code>|</code> with &quot;Addition&quot;, so <code>x-5 &lt; 7 | x - 5 &gt; 7</code> would need parentheses.&#41;</p>
 <p>A thorough understanding of the precedence rules can help eliminate unnecessary parentheses, but in most cases it is easier just to put them in.</p>
 <h2>Arithmetic with</h2>
 <p>For convenience, basic arithmetic can be performed with Boolean values, <code>false</code> becomes <span class="math">$0$</span> and true <span class="math">$1$</span>. For example, both these expressions make sense:</p>
@@ -531,38 +524,38 @@ false
 <p>Is <code>e^pi</code> or <code>pi^e</code> greater?</p>
 
 
-<form name="WeaveQuestion" data-id="fDy5uJPH" data-controltype="radio">
+<form name="WeaveQuestion" data-id="kFxLWo1t" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_fDy5uJPH" id="radio_fDy5uJPH_1" value="1">
-  <label class="form-check-label" for="radio_fDy5uJPH_1">
+  <input class="form-check-input" type="radio" name="radio_kFxLWo1t" id="radio_kFxLWo1t_1" value="1">
+  <label class="form-check-label" for="radio_kFxLWo1t_1">
     <code>e^pi</code> is greater than <code>pi^e</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_fDy5uJPH" id="radio_fDy5uJPH_2" value="2">
-  <label class="form-check-label" for="radio_fDy5uJPH_2">
+  <input class="form-check-input" type="radio" name="radio_kFxLWo1t" id="radio_kFxLWo1t_2" value="2">
+  <label class="form-check-label" for="radio_kFxLWo1t_2">
     <code>e^pi</code> is less than <code>pi^e</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_fDy5uJPH" id="radio_fDy5uJPH_3" value="3">
-  <label class="form-check-label" for="radio_fDy5uJPH_3">
+  <input class="form-check-input" type="radio" name="radio_kFxLWo1t" id="radio_kFxLWo1t_3" value="3">
+  <label class="form-check-label" for="radio_kFxLWo1t_3">
     <code>e^pi</code> is equal to <code>pi^e</code>
   </label>
 </div>
 
-<div id="fDy5uJPH_message"></div>
+<div id="kFxLWo1t_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_fDy5uJPH']").on("change", function() {
+$("input:radio[name='radio_kFxLWo1t']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#fDy5uJPH_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#kFxLWo1t_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#fDy5uJPH_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#kFxLWo1t_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -573,32 +566,32 @@ $("input:radio[name='radio_fDy5uJPH']").on("change", function() {
 <p>Is <span class="math">$\sin(1000)$</span> positive?</p>
 
 
-<form name="WeaveQuestion" data-id="gl9ZbeaO" data-controltype="radio">
+<form name="WeaveQuestion" data-id="WR9n797j" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_gl9ZbeaO" id="radio_gl9ZbeaO_1" value="1">
-  <label class="form-check-label" for="radio_gl9ZbeaO_1">
+  <input class="form-check-input" type="radio" name="radio_WR9n797j" id="radio_WR9n797j_1" value="1">
+  <label class="form-check-label" for="radio_WR9n797j_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_gl9ZbeaO" id="radio_gl9ZbeaO_2" value="2">
-  <label class="form-check-label" for="radio_gl9ZbeaO_2">
+  <input class="form-check-input" type="radio" name="radio_WR9n797j" id="radio_WR9n797j_2" value="2">
+  <label class="form-check-label" for="radio_WR9n797j_2">
     No
   </label>
 </div>
 
-<div id="gl9ZbeaO_message"></div>
+<div id="WR9n797j_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_gl9ZbeaO']").on("change", function() {
+$("input:radio[name='radio_WR9n797j']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#gl9ZbeaO_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#WR9n797j_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#gl9ZbeaO_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#WR9n797j_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -609,41 +602,41 @@ $("input:radio[name='radio_gl9ZbeaO']").on("change", function() {
 <p>Suppose you know <span class="math">$0 < a < b$</span>. What can you say about the relationship between <span class="math">$-1/a$</span> and <span class="math">$-1/b$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="MDOUfEYi" data-controltype="radio">
+<form name="WeaveQuestion" data-id="WliLdxwc" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_MDOUfEYi" id="radio_MDOUfEYi_1" value="1">
-  <label class="form-check-label" for="radio_MDOUfEYi_1">
+  <input class="form-check-input" type="radio" name="radio_WliLdxwc" id="radio_WliLdxwc_1" value="1">
+  <label class="form-check-label" for="radio_WliLdxwc_1">
     &#36;-1/a &gt; -1/b&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_MDOUfEYi" id="radio_MDOUfEYi_2" value="2">
-  <label class="form-check-label" for="radio_MDOUfEYi_2">
+  <input class="form-check-input" type="radio" name="radio_WliLdxwc" id="radio_WliLdxwc_2" value="2">
+  <label class="form-check-label" for="radio_WliLdxwc_2">
     &#36;-1/a \geq -1/b&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_MDOUfEYi" id="radio_MDOUfEYi_3" value="3">
-  <label class="form-check-label" for="radio_MDOUfEYi_3">
+  <input class="form-check-input" type="radio" name="radio_WliLdxwc" id="radio_WliLdxwc_3" value="3">
+  <label class="form-check-label" for="radio_WliLdxwc_3">
     &#36;-1/a &lt; -1/b&#36;
 
   </label>
 </div>
 
-<div id="MDOUfEYi_message"></div>
+<div id="WliLdxwc_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_MDOUfEYi']").on("change", function() {
+$("input:radio[name='radio_WliLdxwc']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#MDOUfEYi_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#WliLdxwc_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#MDOUfEYi_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#WliLdxwc_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -653,38 +646,38 @@ $("input:radio[name='radio_MDOUfEYi']").on("change", function() {
 <h6>Suppose you know <span class="math">$a < 0 < b$</span>, is it true that <span class="math">$1/a > 1/b$</span>?</h6>
 
 
-<form name="WeaveQuestion" data-id="Ap0bloXO" data-controltype="radio">
+<form name="WeaveQuestion" data-id="tsVC8skV" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Ap0bloXO" id="radio_Ap0bloXO_1" value="1">
-  <label class="form-check-label" for="radio_Ap0bloXO_1">
+  <input class="form-check-input" type="radio" name="radio_tsVC8skV" id="radio_tsVC8skV_1" value="1">
+  <label class="form-check-label" for="radio_tsVC8skV_1">
     It can sometimes be true, though not always.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Ap0bloXO" id="radio_Ap0bloXO_2" value="2">
-  <label class="form-check-label" for="radio_Ap0bloXO_2">
-    Yes, it is always true.
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Ap0bloXO" id="radio_Ap0bloXO_3" value="3">
-  <label class="form-check-label" for="radio_Ap0bloXO_3">
+  <input class="form-check-input" type="radio" name="radio_tsVC8skV" id="radio_tsVC8skV_2" value="2">
+  <label class="form-check-label" for="radio_tsVC8skV_2">
     It is never true, as &#36;1/a&#36; is negative and &#36;1/b&#36; is positive
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_tsVC8skV" id="radio_tsVC8skV_3" value="3">
+  <label class="form-check-label" for="radio_tsVC8skV_3">
+    Yes, it is always true.
+  </label>
+</div>
 
-<div id="Ap0bloXO_message"></div>
+<div id="tsVC8skV_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Ap0bloXO']").on("change", function() {
-  correct = this.value == 3;
+$("input:radio[name='radio_tsVC8skV']").on("change", function() {
+  correct = this.value == 2;
 
   if(correct) {
-     $("#Ap0bloXO_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#tsVC8skV_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Ap0bloXO_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#tsVC8skV_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -709,50 +702,50 @@ $("input:radio[name='radio_Ap0bloXO']").on("change", function() {
 <p>It is known that this function is always positive for <span class="math">$x > 0$</span>, though not so for negative values of <span class="math">$x$</span>. Which of these indicates the first negative value : <code>airyai&#40;-1&#41; &lt;0</code>, <code>airyai&#40;-2&#41; &lt; 0</code>, ..., or <code>airyai&#40;-5&#41; &lt; 0</code>?</p>
 
 
-<form name="WeaveQuestion" data-id="4sgtWqyn" data-controltype="radio">
+<form name="WeaveQuestion" data-id="usTjxBvb" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_4sgtWqyn" id="radio_4sgtWqyn_1" value="1">
-  <label class="form-check-label" for="radio_4sgtWqyn_1">
+  <input class="form-check-input" type="radio" name="radio_usTjxBvb" id="radio_usTjxBvb_1" value="1">
+  <label class="form-check-label" for="radio_usTjxBvb_1">
     <code>airyai&#40;-1&#41; &lt; 0</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_4sgtWqyn" id="radio_4sgtWqyn_2" value="2">
-  <label class="form-check-label" for="radio_4sgtWqyn_2">
+  <input class="form-check-input" type="radio" name="radio_usTjxBvb" id="radio_usTjxBvb_2" value="2">
+  <label class="form-check-label" for="radio_usTjxBvb_2">
     <code>airyai&#40;-2&#41; &lt; 0</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_4sgtWqyn" id="radio_4sgtWqyn_3" value="3">
-  <label class="form-check-label" for="radio_4sgtWqyn_3">
+  <input class="form-check-input" type="radio" name="radio_usTjxBvb" id="radio_usTjxBvb_3" value="3">
+  <label class="form-check-label" for="radio_usTjxBvb_3">
     <code>airyai&#40;-3&#41; &lt; 0</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_4sgtWqyn" id="radio_4sgtWqyn_4" value="4">
-  <label class="form-check-label" for="radio_4sgtWqyn_4">
+  <input class="form-check-input" type="radio" name="radio_usTjxBvb" id="radio_usTjxBvb_4" value="4">
+  <label class="form-check-label" for="radio_usTjxBvb_4">
     <code>airyai&#40;-4&#41; &lt; 0</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_4sgtWqyn" id="radio_4sgtWqyn_5" value="5">
-  <label class="form-check-label" for="radio_4sgtWqyn_5">
+  <input class="form-check-input" type="radio" name="radio_usTjxBvb" id="radio_usTjxBvb_5" value="5">
+  <label class="form-check-label" for="radio_usTjxBvb_5">
     <code>airyai&#40;-5&#41; &lt; 0</code>
   </label>
 </div>
 
-<div id="4sgtWqyn_message"></div>
+<div id="usTjxBvb_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_4sgtWqyn']").on("change", function() {
+$("input:radio[name='radio_usTjxBvb']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#4sgtWqyn_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#usTjxBvb_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#4sgtWqyn_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#usTjxBvb_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -763,38 +756,38 @@ $("input:radio[name='radio_4sgtWqyn']").on("change", function() {
 <p>By trying three different values of <span class="math">$x > 0$</span> which of these could possibly be always true:</p>
 
 
-<form name="WeaveQuestion" data-id="lruL2DVN" data-controltype="radio">
+<form name="WeaveQuestion" data-id="HKvEEWP6" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_lruL2DVN" id="radio_lruL2DVN_1" value="1">
-  <label class="form-check-label" for="radio_lruL2DVN_1">
+  <input class="form-check-input" type="radio" name="radio_HKvEEWP6" id="radio_HKvEEWP6_1" value="1">
+  <label class="form-check-label" for="radio_HKvEEWP6_1">
     <code>x^x &lt;&#61; &#40;1/e&#41;^&#40;1/e&#41;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_lruL2DVN" id="radio_lruL2DVN_2" value="2">
-  <label class="form-check-label" for="radio_lruL2DVN_2">
+  <input class="form-check-input" type="radio" name="radio_HKvEEWP6" id="radio_HKvEEWP6_2" value="2">
+  <label class="form-check-label" for="radio_HKvEEWP6_2">
     <code>x^x &gt;&#61; &#40;1/e&#41;^&#40;1/e&#41;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_lruL2DVN" id="radio_lruL2DVN_3" value="3">
-  <label class="form-check-label" for="radio_lruL2DVN_3">
+  <input class="form-check-input" type="radio" name="radio_HKvEEWP6" id="radio_HKvEEWP6_3" value="3">
+  <label class="form-check-label" for="radio_HKvEEWP6_3">
     <code>x^x &#61;&#61; &#40;1/e&#41;^&#40;1/e&#41;</code>
   </label>
 </div>
 
-<div id="lruL2DVN_message"></div>
+<div id="HKvEEWP6_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_lruL2DVN']").on("change", function() {
+$("input:radio[name='radio_HKvEEWP6']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#lruL2DVN_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#HKvEEWP6_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#lruL2DVN_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#HKvEEWP6_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -805,38 +798,38 @@ $("input:radio[name='radio_lruL2DVN']").on("change", function() {
 <p>Student logic says <span class="math">$(x+y)^p = x^p + y^p$</span>. Of course, this isn&#39;t correct for all <span class="math">$p$</span> and <span class="math">$x$</span>. By trying a few points, which is true when <span class="math">$x,y > 0$</span> and <span class="math">$0 < p < 1$</span>:</p>
 
 
-<form name="WeaveQuestion" data-id="Az13l3Sk" data-controltype="radio">
+<form name="WeaveQuestion" data-id="uiZLuIKx" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Az13l3Sk" id="radio_Az13l3Sk_1" value="1">
-  <label class="form-check-label" for="radio_Az13l3Sk_1">
-    <code>&#40;x&#43;y&#41;^p &gt; x^p &#43; y^p</code>
+  <input class="form-check-input" type="radio" name="radio_uiZLuIKx" id="radio_uiZLuIKx_1" value="1">
+  <label class="form-check-label" for="radio_uiZLuIKx_1">
+    <code>&#40;x&#43;y&#41;^p &#61;&#61; x^p &#43; y^p</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Az13l3Sk" id="radio_Az13l3Sk_2" value="2">
-  <label class="form-check-label" for="radio_Az13l3Sk_2">
+  <input class="form-check-input" type="radio" name="radio_uiZLuIKx" id="radio_uiZLuIKx_2" value="2">
+  <label class="form-check-label" for="radio_uiZLuIKx_2">
     <code>&#40;x&#43;y&#41;^p &lt; x^p &#43; y^p</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Az13l3Sk" id="radio_Az13l3Sk_3" value="3">
-  <label class="form-check-label" for="radio_Az13l3Sk_3">
-    <code>&#40;x&#43;y&#41;^p &#61;&#61; x^p &#43; y^p</code>
+  <input class="form-check-input" type="radio" name="radio_uiZLuIKx" id="radio_uiZLuIKx_3" value="3">
+  <label class="form-check-label" for="radio_uiZLuIKx_3">
+    <code>&#40;x&#43;y&#41;^p &gt; x^p &#43; y^p</code>
   </label>
 </div>
 
-<div id="Az13l3Sk_message"></div>
+<div id="uiZLuIKx_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Az13l3Sk']").on("change", function() {
+$("input:radio[name='radio_uiZLuIKx']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#Az13l3Sk_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#uiZLuIKx_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Az13l3Sk_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#uiZLuIKx_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -844,41 +837,41 @@ $("input:radio[name='radio_Az13l3Sk']").on("change", function() {
 
 
 <h6>Question</h6>
-<p>According to Wikipedia, one of the following inequalities is always true for <span class="math">$a, b > 0$</span> &#40;as proved by I. Ilani in JSTOR,AMM,Vol.97,No.1,1990&#41;. Which one?</p>
+<p>According to Wikipedia, one of the following inequalities is always true for <span class="math">$a, b > 0$</span> &#40;as proved by I. Ilani in JSTOR, AMM, Vol.97, No.1, 1990&#41;. Which one?</p>
 
 
-<form name="WeaveQuestion" data-id="SlYPimVf" data-controltype="radio">
+<form name="WeaveQuestion" data-id="qxJ3in0f" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_SlYPimVf" id="radio_SlYPimVf_1" value="1">
-  <label class="form-check-label" for="radio_SlYPimVf_1">
-    <code>a^a &#43; b^b &gt;&#61; a^b &#43; b^a</code>
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_SlYPimVf" id="radio_SlYPimVf_2" value="2">
-  <label class="form-check-label" for="radio_SlYPimVf_2">
+  <input class="form-check-input" type="radio" name="radio_qxJ3in0f" id="radio_qxJ3in0f_1" value="1">
+  <label class="form-check-label" for="radio_qxJ3in0f_1">
     <code>a^b &#43; b^a &lt;&#61; 1</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_SlYPimVf" id="radio_SlYPimVf_3" value="3">
-  <label class="form-check-label" for="radio_SlYPimVf_3">
+  <input class="form-check-input" type="radio" name="radio_qxJ3in0f" id="radio_qxJ3in0f_2" value="2">
+  <label class="form-check-label" for="radio_qxJ3in0f_2">
+    <code>a^a &#43; b^b &gt;&#61; a^b &#43; b^a</code>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_qxJ3in0f" id="radio_qxJ3in0f_3" value="3">
+  <label class="form-check-label" for="radio_qxJ3in0f_3">
     <code>a^a &#43; b^b &lt;&#61; a^b &#43; b^a</code>
   </label>
 </div>
 
-<div id="SlYPimVf_message"></div>
+<div id="qxJ3in0f_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_SlYPimVf']").on("change", function() {
-  correct = this.value == 1;
+$("input:radio[name='radio_qxJ3in0f']").on("change", function() {
+  correct = this.value == 2;
 
   if(correct) {
-     $("#SlYPimVf_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#qxJ3in0f_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#SlYPimVf_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#qxJ3in0f_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -889,32 +882,32 @@ $("input:radio[name='radio_SlYPimVf']").on("change", function() {
 <p>Is <span class="math">$3$</span> in the set <span class="math">$\lvert x - 2\rvert < 1/2$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="T8fXzlnW" data-controltype="radio">
+<form name="WeaveQuestion" data-id="J54FHCQd" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_T8fXzlnW" id="radio_T8fXzlnW_1" value="1">
-  <label class="form-check-label" for="radio_T8fXzlnW_1">
+  <input class="form-check-input" type="radio" name="radio_J54FHCQd" id="radio_J54FHCQd_1" value="1">
+  <label class="form-check-label" for="radio_J54FHCQd_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_T8fXzlnW" id="radio_T8fXzlnW_2" value="2">
-  <label class="form-check-label" for="radio_T8fXzlnW_2">
+  <input class="form-check-input" type="radio" name="radio_J54FHCQd" id="radio_J54FHCQd_2" value="2">
+  <label class="form-check-label" for="radio_J54FHCQd_2">
     No
   </label>
 </div>
 
-<div id="T8fXzlnW_message"></div>
+<div id="J54FHCQd_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_T8fXzlnW']").on("change", function() {
+$("input:radio[name='radio_J54FHCQd']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#T8fXzlnW_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#J54FHCQd_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#T8fXzlnW_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#J54FHCQd_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -925,39 +918,39 @@ $("input:radio[name='radio_T8fXzlnW']").on("change", function() {
 <p>Which of the following is equivalent to <span class="math">$\lvert x - a\rvert > b$</span>:</p>
 
 
-<form name="WeaveQuestion" data-id="iQsg9H02" data-controltype="radio">
+<form name="WeaveQuestion" data-id="7g7lnJAl" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_iQsg9H02" id="radio_iQsg9H02_1" value="1">
-  <label class="form-check-label" for="radio_iQsg9H02_1">
-    &#36;-b &lt; x - a &lt; b&#36;
-
+  <input class="form-check-input" type="radio" name="radio_7g7lnJAl" id="radio_7g7lnJAl_1" value="1">
+  <label class="form-check-label" for="radio_7g7lnJAl_1">
+    &#36; -b &lt; x-a \text&#123; and &#125; x - a &lt; b&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_iQsg9H02" id="radio_iQsg9H02_2" value="2">
-  <label class="form-check-label" for="radio_iQsg9H02_2">
+  <input class="form-check-input" type="radio" name="radio_7g7lnJAl" id="radio_7g7lnJAl_2" value="2">
+  <label class="form-check-label" for="radio_7g7lnJAl_2">
     &#36; x - a &lt; -b \text&#123; or &#125; x - a &gt; b&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_iQsg9H02" id="radio_iQsg9H02_3" value="3">
-  <label class="form-check-label" for="radio_iQsg9H02_3">
-    &#36; -b &lt; x-a \text&#123; and &#125; x - a &lt; b&#36;
+  <input class="form-check-input" type="radio" name="radio_7g7lnJAl" id="radio_7g7lnJAl_3" value="3">
+  <label class="form-check-label" for="radio_7g7lnJAl_3">
+    &#36;-b &lt; x - a &lt; b&#36;
+
   </label>
 </div>
 
-<div id="iQsg9H02_message"></div>
+<div id="7g7lnJAl_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_iQsg9H02']").on("change", function() {
+$("input:radio[name='radio_7g7lnJAl']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#iQsg9H02_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#7g7lnJAl_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#iQsg9H02_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#7g7lnJAl_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -970,38 +963,38 @@ $("input:radio[name='radio_iQsg9H02']").on("change", function() {
 
 
 <pre class='hljl'>
-<span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>pi</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-nfB'>0.2</span><span class='hljl-t'> </span><span class='hljl-oB'>*</span><span class='hljl-t'> </span><span class='hljl-nf'>rand</span><span class='hljl-p'>()</span><span class='hljl-t'>
+<span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>pi</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-ni'>10</span><span class='hljl-t'> </span><span class='hljl-oB'>*</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-ni'>2</span><span class='hljl-nf'>rand</span><span class='hljl-p'>()</span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-p'>)</span><span class='hljl-t'>
 </span><span class='hljl-nf'>abs</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-n'>pi</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>&lt;</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-ni'>10</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>abs</span><span class='hljl-p'>(</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>pi</span><span class='hljl-p'>))</span><span class='hljl-t'> </span><span class='hljl-oB'>&lt;</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-ni'>10</span>
 </pre>
 
 
 
-<form name="WeaveQuestion" data-id="SSveJetO" data-controltype="radio">
+<form name="WeaveQuestion" data-id="CTjM6ne3" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_SSveJetO" id="radio_SSveJetO_1" value="1">
-  <label class="form-check-label" for="radio_SSveJetO_1">
+  <input class="form-check-input" type="radio" name="radio_CTjM6ne3" id="radio_CTjM6ne3_1" value="1">
+  <label class="form-check-label" for="radio_CTjM6ne3_1">
     true
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_SSveJetO" id="radio_SSveJetO_2" value="2">
-  <label class="form-check-label" for="radio_SSveJetO_2">
+  <input class="form-check-input" type="radio" name="radio_CTjM6ne3" id="radio_CTjM6ne3_2" value="2">
+  <label class="form-check-label" for="radio_CTjM6ne3_2">
     false
   </label>
 </div>
 
-<div id="SSveJetO_message"></div>
+<div id="CTjM6ne3_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_SSveJetO']").on("change", function() {
+$("input:radio[name='radio_CTjM6ne3']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#SSveJetO_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#CTjM6ne3_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#SSveJetO_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#CTjM6ne3_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1012,32 +1005,32 @@ $("input:radio[name='radio_SSveJetO']").on("change", function() {
 <p>Does <code>12</code> satisfy <span class="math">$\lvert x - 3\rvert + \lvert x-9\rvert > 12$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="F8uuvTYz" data-controltype="radio">
+<form name="WeaveQuestion" data-id="jP9aQvJV" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_F8uuvTYz" id="radio_F8uuvTYz_1" value="1">
-  <label class="form-check-label" for="radio_F8uuvTYz_1">
+  <input class="form-check-input" type="radio" name="radio_jP9aQvJV" id="radio_jP9aQvJV_1" value="1">
+  <label class="form-check-label" for="radio_jP9aQvJV_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_F8uuvTYz" id="radio_F8uuvTYz_2" value="2">
-  <label class="form-check-label" for="radio_F8uuvTYz_2">
+  <input class="form-check-input" type="radio" name="radio_jP9aQvJV" id="radio_jP9aQvJV_2" value="2">
+  <label class="form-check-label" for="radio_jP9aQvJV_2">
     No
   </label>
 </div>
 
-<div id="F8uuvTYz_message"></div>
+<div id="jP9aQvJV_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_F8uuvTYz']").on("change", function() {
+$("input:radio[name='radio_jP9aQvJV']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#F8uuvTYz_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#jP9aQvJV_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#F8uuvTYz_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#jP9aQvJV_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1048,38 +1041,38 @@ $("input:radio[name='radio_F8uuvTYz']").on("change", function() {
 <p>Which of these will show DeMorgan&#39;s law holds when both values are <code>false</code>:</p>
 
 
-<form name="WeaveQuestion" data-id="jBvbs28d" data-controltype="radio">
+<form name="WeaveQuestion" data-id="5Id3GY8U" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_jBvbs28d" id="radio_jBvbs28d_1" value="1">
-  <label class="form-check-label" for="radio_jBvbs28d_1">
-    <code>&#33;&#40;false &amp; false&#41; &#61;&#61; &#33;false &amp; &#33;false</code>
+  <input class="form-check-input" type="radio" name="radio_5Id3GY8U" id="radio_5Id3GY8U_1" value="1">
+  <label class="form-check-label" for="radio_5Id3GY8U_1">
+    <code>&#33;&#40;false &amp;&amp; false&#41; &#61;&#61; &#40;&#33;false || &#33;false&#41;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_jBvbs28d" id="radio_jBvbs28d_2" value="2">
-  <label class="form-check-label" for="radio_jBvbs28d_2">
-    <code>&#33;&#40;false &amp; false&#41; &#61;&#61; false &#33;&amp; false</code>
+  <input class="form-check-input" type="radio" name="radio_5Id3GY8U" id="radio_5Id3GY8U_2" value="2">
+  <label class="form-check-label" for="radio_5Id3GY8U_2">
+    <code>&#33;&#40;false &amp;&amp; false&#41; &#61;&#61; &#40;false || false&#41;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_jBvbs28d" id="radio_jBvbs28d_3" value="3">
-  <label class="form-check-label" for="radio_jBvbs28d_3">
-    <code>&#33;&#40;false &amp; false&#41; &#61;&#61; &#33;false | &#33;false</code>
+  <input class="form-check-input" type="radio" name="radio_5Id3GY8U" id="radio_5Id3GY8U_3" value="3">
+  <label class="form-check-label" for="radio_5Id3GY8U_3">
+    <code>&#33;&#40;false &amp;&amp; false&#41; &#61;&#61; &#40;&#33;false &amp;&amp; &#33;false&#41;</code>
   </label>
 </div>
 
-<div id="jBvbs28d_message"></div>
+<div id="5Id3GY8U_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_jBvbs28d']").on("change", function() {
-  correct = this.value == 3;
+$("input:radio[name='radio_5Id3GY8U']").on("change", function() {
+  correct = this.value == 1;
 
   if(correct) {
-     $("#jBvbs28d_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#5Id3GY8U_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#jBvbs28d_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#5Id3GY8U_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1090,32 +1083,32 @@ $("input:radio[name='radio_jBvbs28d']").on("change", function() {
 <p>For floating point numbers there are two special values <code>Inf</code> and <code>NaN</code>. For which of these is the answer always <code>false</code>:</p>
 
 
-<form name="WeaveQuestion" data-id="gJFLEXYR" data-controltype="radio">
+<form name="WeaveQuestion" data-id="kjB9nQxC" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_gJFLEXYR" id="radio_gJFLEXYR_1" value="1">
-  <label class="form-check-label" for="radio_gJFLEXYR_1">
+  <input class="form-check-input" type="radio" name="radio_kjB9nQxC" id="radio_kjB9nQxC_1" value="1">
+  <label class="form-check-label" for="radio_kjB9nQxC_1">
     <code>Inf &lt; 3.0</code> and <code>3.0 &lt;&#61; Inf</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_gJFLEXYR" id="radio_gJFLEXYR_2" value="2">
-  <label class="form-check-label" for="radio_gJFLEXYR_2">
+  <input class="form-check-input" type="radio" name="radio_kjB9nQxC" id="radio_kjB9nQxC_2" value="2">
+  <label class="form-check-label" for="radio_kjB9nQxC_2">
     <code>NaN &lt; 3.0</code> and <code>3.0 &lt;&#61; NaN</code>
   </label>
 </div>
 
-<div id="gJFLEXYR_message"></div>
+<div id="kjB9nQxC_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_gJFLEXYR']").on("change", function() {
+$("input:radio[name='radio_kjB9nQxC']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#gJFLEXYR_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#kjB9nQxC_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#gJFLEXYR_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#kjB9nQxC_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1137,32 +1130,32 @@ $("input:radio[name='radio_gJFLEXYR']").on("change", function() {
 <p>Do all four seem to be the case within <code>Julia</code>? Find your answer by trial and error.</p>
 
 
-<form name="WeaveQuestion" data-id="gcwICvnF" data-controltype="radio">
+<form name="WeaveQuestion" data-id="cqK1EdsL" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_gcwICvnF" id="radio_gcwICvnF_1" value="1">
-  <label class="form-check-label" for="radio_gcwICvnF_1">
+  <input class="form-check-input" type="radio" name="radio_cqK1EdsL" id="radio_cqK1EdsL_1" value="1">
+  <label class="form-check-label" for="radio_cqK1EdsL_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_gcwICvnF" id="radio_gcwICvnF_2" value="2">
-  <label class="form-check-label" for="radio_gcwICvnF_2">
+  <input class="form-check-input" type="radio" name="radio_cqK1EdsL" id="radio_cqK1EdsL_2" value="2">
+  <label class="form-check-label" for="radio_cqK1EdsL_2">
     No
   </label>
 </div>
 
-<div id="gcwICvnF_message"></div>
+<div id="cqK1EdsL_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_gcwICvnF']").on("change", function() {
+$("input:radio[name='radio_cqK1EdsL']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#gcwICvnF_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#cqK1EdsL_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#gcwICvnF_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#cqK1EdsL_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1172,75 +1165,81 @@ $("input:radio[name='radio_gcwICvnF']").on("change", function() {
 <h6>Question</h6>
 <p>The <code>NaN</code> value is meant to signal an error in computation. <code>Julia</code> has value to indicate some data is missing or unavailable. This is <code>missing</code>. For <code>missing</code> values we have these computations:</p>
 
+
+<pre class='hljl'>
+<span class='hljl-kc'>true</span><span class='hljl-t'> </span><span class='hljl-oB'>&amp;&amp;</span><span class='hljl-t'> </span><span class='hljl-n'>missing</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-kc'>true</span><span class='hljl-t'> </span><span class='hljl-oB'>||</span><span class='hljl-t'> </span><span class='hljl-n'>missing</span>
+</pre>
+
+
 <pre class="output">
 &#40;missing, true&#41;
 </pre>
 
 
-<p>We see the value of <code>true | missing</code> is <code>true</code>. Why?</p>
+<p>We see the value of <code>true || missing</code> is <code>true</code>. Why?</p>
 
 
-<form name="WeaveQuestion" data-id="ytxmfnDC" data-controltype="radio">
+<form name="WeaveQuestion" data-id="ZgpR2Un3" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ytxmfnDC" id="radio_ytxmfnDC_1" value="1">
-  <label class="form-check-label" for="radio_ytxmfnDC_1">
-    If <code>missing</code> were <code>true</code> or <code>false</code>, the answer would always be <code>true</code>
+  <input class="form-check-input" type="radio" name="radio_ZgpR2Un3" id="radio_ZgpR2Un3_1" value="1">
+  <label class="form-check-label" for="radio_ZgpR2Un3_1">
+    In the manual we can read that &quot;In the expression <code>a || b</code>, the subexpression <code>b</code> is only evaluated if <code>a</code> evaluates to false.&quot; In this case <code>a</code> is <code>true</code> and so <code>a</code> is returned.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ytxmfnDC" id="radio_ytxmfnDC_2" value="2">
-  <label class="form-check-label" for="radio_ytxmfnDC_2">
-    Since the second value is &quot;<code>missing</code>&quot;, only the first is used. So <code>false | missing</code> would also be <code>false</code>
+  <input class="form-check-input" type="radio" name="radio_ZgpR2Un3" id="radio_ZgpR2Un3_2" value="2">
+  <label class="form-check-label" for="radio_ZgpR2Un3_2">
+    Since the second value is &quot;<code>missing</code>&quot;, only the first is used. So <code>false || missing</code> would also be <code>false</code>
   </label>
 </div>
 
-<div id="ytxmfnDC_message"></div>
+<div id="ZgpR2Un3_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_ytxmfnDC']").on("change", function() {
+$("input:radio[name='radio_ZgpR2Un3']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#ytxmfnDC_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#ZgpR2Un3_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#ytxmfnDC_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#ZgpR2Un3_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
 </script>
 
 
-<p>The value for <code>true &amp; missing</code> is <code>missing</code> showing that there are possibly three values for <code>&amp;</code> to return. Why would it make sense for this to be &quot;<code>missing</code>&quot;?</p>
+<p>The value for <code>true &amp;&amp; missing</code> is <code>missing</code>, not a boolean value. What happens?</p>
 
 
-<form name="WeaveQuestion" data-id="VhqVcZ1D" data-controltype="radio">
+<form name="WeaveQuestion" data-id="L1JI2DAL" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_VhqVcZ1D" id="radio_VhqVcZ1D_1" value="1">
-  <label class="form-check-label" for="radio_VhqVcZ1D_1">
+  <input class="form-check-input" type="radio" name="radio_L1JI2DAL" id="radio_L1JI2DAL_1" value="1">
+  <label class="form-check-label" for="radio_L1JI2DAL_1">
+    In the manual we can read that &quot;In the expression <code>a &amp;&amp; b</code>, the subexpression <code>b</code> is only evaluated if <code>a</code> evaluates to true.&quot; In this case, <code>a</code> is <code>false</code> so <code>b</code> is evaluated and returned. As <code>b</code> is just <code>missing</code> that is the return value.
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_L1JI2DAL" id="radio_L1JI2DAL_2" value="2">
+  <label class="form-check-label" for="radio_L1JI2DAL_2">
     Since the second value is &quot;<code>missing</code>&quot; all such answers would be missing.
   </label>
 </div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_VhqVcZ1D" id="radio_VhqVcZ1D_2" value="2">
-  <label class="form-check-label" for="radio_VhqVcZ1D_2">
-    If <code>missing</code> were <code>true</code> the answer would be <code>true</code> and if it were <code>false</code> the answer would be <code>false</code>, so the answer is not known, hence also &quot;<code>missing</code>&quot;
-  </label>
-</div>
 
-<div id="VhqVcZ1D_message"></div>
+<div id="L1JI2DAL_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_VhqVcZ1D']").on("change", function() {
-  correct = this.value == 2;
+$("input:radio[name='radio_L1JI2DAL']").on("change", function() {
+  correct = this.value == 1;
 
   if(correct) {
-     $("#VhqVcZ1D_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#L1JI2DAL_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#VhqVcZ1D_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#L1JI2DAL_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 

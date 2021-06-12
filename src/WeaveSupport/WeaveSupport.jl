@@ -1,5 +1,5 @@
 module WeaveSupport
-## Modified from 
+## Modified from
 ## https://github.com/SciML/SciMLTutorials.jl/blob/master/src/SciMLTutorials.jl
 
 import Base64: base64encode
@@ -13,7 +13,7 @@ using JSON
 using Reexport
 @reexport using LaTeXStrings
 using SymPy
-function Base.show(io::IO, ::MIME"text/latex", x::SymPy.SymbolicObject) 
+function Base.show(io::IO, ::MIME"text/latex", x::SymPy.SymbolicObject)
     print(io, SymPy.as_markdown(sympy.latex(x)))
 end
 
@@ -42,11 +42,13 @@ const htmlfile = joinpath(@__DIR__,"..", "..", "templates", "bootstrap.tpl")
 const latexfile = joinpath(@__DIR__, "..", "..", "templates", "julia_tex.tpl")
 
 function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebook), force=false, kwargs...)
+
+
     jmddir = joinpath(repo_directory,"CwJ",folder)
     tmp = joinpath(jmddir, file)
     bnm = replace(basename(tmp), r".jmd$" => "")
 
-    
+
     if !force
         testfile = joinpath(repo_directory, "html", folder, bnm*".html")
         if isfile(testfile) && (mtime(testfile) >= mtime(tmp))
@@ -79,7 +81,7 @@ function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebo
             cp(figdir, htmlfigdir)
         end
 
-        
+
         args[:doctype] = "html"
         #weave(tmp,doctype = "md2html",out_path=dir,args=args; fig_ext=".svg", css=cssfile, kwargs...)
         weave(tmp,doctype = "md2html", out_path=dir,args=args; fig_ext=".svg",
@@ -89,13 +91,13 @@ function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebo
 
         # clean up
         isdir(htmlfigdir) && rm(htmlfigdir, recursive=true)
-        
+
     end
-    
+
     if :pdf ∈ build_list
 
         eval(quote using Tectonic end) # load Tectonic; wierd testing error
-        
+
         println("Building PDF")
         dir = joinpath(repo_directory,"pdf",folder)
         isdir(dir) || mkpath(dir)
@@ -119,13 +121,13 @@ function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebo
             texfile = joinpath(dir, bnm * ".tex")
             Base.invokelatest(Tectonic.tectonic, bin -> run(`$bin $texfile`))
 
-            
+
             # clean up
             for ext in (".tex",)
                 f = joinpath(dir, bnm * ext)
                 isfile(f) && rm(f)
             end
-            
+
         catch ex
             @warn "PDF generation failed" exception=(ex, catch_backtrace())
 
@@ -139,7 +141,7 @@ function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebo
         end
 
     end
-    
+
     if :github ∈ build_list
         println("Building Github Markdown")
         dir = joinpath(repo_directory,"markdown",folder)
@@ -162,12 +164,12 @@ end
 """
     weave_all(; force=false, build_list=(:script,:html,:pdf,:github,:notebook))
 
-Run `weave` on all source files. 
+Run `weave` on all source files.
 
 * `force`: by default, only run `weave` on files with `html` file older than the source file in `CwJ`
 * `build_list`: list of output types to be built. The default is all types
 
-The files will be built as subdirectories in the package directory. This is returned by `pathof(CalculusWithJulia)`. 
+The files will be built as subdirectories in the package directory. This is returned by `pathof(CalculusWithJulia)`.
 
 """
 function weave_all(;force=false, build_list=(:script,:html,:pdf,:github,:notebook))
@@ -178,6 +180,7 @@ function weave_all(;force=false, build_list=(:script,:html,:pdf,:github,:noteboo
 end
 
 function weave_folder(folder; force=false, build_list=(:script,:html,:pdf,:github,:notebook))
+    !isnothing(match(r"\.ico$", folder)) && return nothing
     for file in readdir(joinpath(repo_directory,"CwJ",folder))
         !occursin(r".jmd$", basename(file)) && continue
         println("Building $(joinpath(folder,file))")
