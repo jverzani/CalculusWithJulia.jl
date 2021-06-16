@@ -8,7 +8,7 @@ nothing
 ```
 
 
-A univariate function, such as $f(x) = 1 - x^2/2$, can be thought of in many different ways. For example:
+A scalar, univariate function, such as $f(x) = 1 - x^2/2$, can be thought of in many different ways. For example:
 
 * It can be represented through a rule of what it does to $x$, as above. This is useful for computing numeric values.
 
@@ -42,14 +42,14 @@ For example, a typical approach to plot $f(x) = 1 - x^2/2$ would be to choose so
 
 These pairs would be plotted in a Cartesian plane and then connected with curved lines. A good sketch is aided by knowing ahead of time that this function describes a parabola which is curving downwards.
 
-It is important to note that this sketch would not include *all* the pairs $(x,f(x))$, as their extent is infinite.
+We note that this sketch would not include *all* the pairs $(x,f(x))$, as their extent is infinite, rather a well chosen collection of points over some finite domain.
 
 ## Graphing a function with Julia
 
 `Julia` has several different options for rendering graphs, all in
 external packages. We will focus in these notes on the `Plots`
 package, which provides a common interface to several different
-plotting backends. (Click through for instructions for plotting with the [Makie](../alternatives/makie-plotting.html) package.)
+plotting backends. (Click through for instructions for plotting with the [Makie](../alternatives/makie_plotting.html) package.)
 
 We begin by loading the accompanying `CalculusWithJulia` package and  the `Plots` package.
 
@@ -171,17 +171,21 @@ to curve the lines connecting points based on an analysis of the
 function. As `Julia` doesn't consider this, the points are connected
 with straight lines like a dot-to-dot puzzle.
 
-The plotting directive `plot(f, xmin, xmax)` calls an adaptive algorithm to use more points where needed, as judged by  by `PlotUtils.adapted_grid(f, (xmin, xmas))`. The is wrapped up into the `unzip(f, xmin, xmax)` function from `CalculusWithJulia`. A
-solution might be to just use more than 10 points. The
-algorithm  adds more points when the function is more
-"curvy" and uses fewer points when it is "straighter." Here we see the linear function is identified as needing far fewer points than the oscillating function when plotted over the same range:
+The plotting directive `plot(f, xmin, xmax)` calls an adaptive
+algorithm to use more points where needed, as judged by
+`PlotUtils.adapted_grid(f, (xmin, xmas))`. The is wrapped up into the
+`unzip(f, xmin, xmax)` function from `CalculusWithJulia`.  The
+algorithm adds more points when the function is more "curvy" and uses
+fewer points when it is "straighter." Here we see the linear function
+is identified as needing far fewer points than the oscillating
+function when plotted over the same range:
 
 ```julia
 pts_needed(f, xmin, xmax) = length(unzip(f, xmin, xmax)[1])
 pts_needed(x -> 10x, 0, 10), pts_needed(x -> sin(10x), 0, 1)
 ```
 
-For instances where a specific set of ``x`` values is desired to be
+For instances where a *specific* set of ``x`` values is desired to be
 used, the `range` function or colon operator can be used to create the
 $x$ values and broadcasting used to create the $y$ values. For
 example, if we were to plot $f(x) = \sin(x)$ over $[0,2\pi]$ using
@@ -273,7 +277,7 @@ plot(ys, xs)
 
 The graph is that of the "inverse function" for $\sin(x), x \text{ in } [-\pi/2, \pi/2]$.
 
-### The `plot(f, xs)` syntax
+#### The `plot(f, xs)` syntax
 
 When plotting a univariate function there are three basic patterns that can be employed. We have examples above of:
 
@@ -462,7 +466,7 @@ $(f(x), g(x))$. We illustrate with some examples below:
 
 ##### Example
 
-The most "famous" parametric graph is one that is likely already familiar, as it follows the parametrization of points on the unit circle by the angle made between the ``x`` axis and the ray from the origin through the point.
+The most "famous" parametric graph is one that is likely already familiar, as it follows the parametrization of points on the unit circle by the angle made between the ``x`` axis and the ray from the origin through the point. (If not familiar, this will soon be discussed in these notes.)
 
 ```julia;
 f(x) = cos(x); g(x) = sin(x)
@@ -560,7 +564,7 @@ Playing with the toy makes a few things become clear:
   moving both knobs at the same time. A 45$^\circ$ line with slope $m=1$
   can be made by twisting both at the same rate, say through $f(t) =
   ct$, $g(t)=ct$. It doesn't matter how big $c$ is, just that it is
-  the same for both $g$ and $g$. Creating a different slope is done by
+  the same for both $f$ and $g$. Creating a different slope is done by
   twisting at different rates, say $f(t)=ct$ and $g(t)=dt$. The slope
   of the resulting line will be $d/c$.
 
@@ -656,7 +660,8 @@ Graphing both `f` and the line ``y=0``  helps focus on the *zeros* of `f`. When
 `f(x)=log(x)-2`, plot `f` and the line ``y=0``.  Identify the lone zero.
 
 ```julia;echo=false
-val = fzero(x -> log(x) - 2, 8)
+using Roots
+val = find_zero(x -> log(x) - 2, 8)
 numericq(val, .5)
 ```
 
@@ -713,7 +718,7 @@ Plot the functions $f(x) = \cos(x)$ and $g(x) = x$. Estimate the $x$ value of wh
 
 ```julia;echo=false
 using Roots
-val = fzero(x -> cos(x) -x, .7)
+val = find_zero(x -> cos(x) -x, .7)
 numericq(val, .25)
 ```
 
@@ -870,9 +875,16 @@ ans = 5
 radioq(choices, ans, keep_order=true)
 ```
 
+----
 
-## Technical note
+### Technical note
 
 The slow "time to first plot" in `Julia` is a well-known hiccup that is related to how `Julia` can be so fast. Loading Plots and the making the first plot are both somewhat time consuming, though the second and subsequent plots are speedy. Why?
 
 `Julia` is an interactive language that attains its speed by compiling functions on the fly using the [llvm](llvm.org) compiler. When `Julia` encounters a new combination of a function method and argument types it will compile and cache a function for subsequent speedy execution. The first plot is slow, as there are many internal functions that get compiled. This has sped up of late, as excessive recompilations have been trimmed down, but still has a way to go. This is different from "precompilation" which also helps trim down time for initial executions. There are also some more technically challenging means to create `Julia` images for faster start up that can be pursued if needed.
+
+
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

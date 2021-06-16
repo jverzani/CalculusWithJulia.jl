@@ -12,10 +12,10 @@ import Markdown
 using JSON
 using Reexport
 @reexport using LaTeXStrings
-using SymPy
-function Base.show(io::IO, ::MIME"text/latex", x::SymPy.SymbolicObject)
-    print(io, SymPy.as_markdown(sympy.latex(x)))
-end
+#using SymPy
+#function Base.show(io::IO, ::MIME"text/latex", x::SymPy.SymbolicObject)
+#    print(io, SymPy.as_markdown(sympy.latex(x)))
+#end
 
 
 using Pkg
@@ -24,13 +24,13 @@ include("formatting.jl")
 include("bootstrap.jl")
 include("questions.jl")
 include("show-methods.jl")
+include("toc.jl")
 
-
-import Plots
+#import Plots
 # just show body, not standalone
-function Plots._show(io::IO, ::MIME"text/html", plt::Plots.Plot{Plots.PlotlyBackend})
-    write(io, Plots.html_body(plt))
-end
+#function Plots._show(io::IO, ::MIME"text/html", plt::Plots.Plot{Plots.PlotlyBackend})
+#    write(io, Plots.html_body(plt))
+#end
 
 
 ## we have jmd files that convert to html files
@@ -81,7 +81,7 @@ function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebo
             cp(figdir, htmlfigdir)
         end
 
-
+        Weave.set_chunk_defaults!(:wrap=>false)
         args[:doctype] = "html"
         #weave(tmp,doctype = "md2html",out_path=dir,args=args; fig_ext=".svg", css=cssfile, kwargs...)
         weave(tmp,doctype = "md2html", out_path=dir,args=args; fig_ext=".svg",
@@ -191,18 +191,8 @@ function weave_folder(folder; force=false, build_list=(:script,:html,:pdf,:githu
     end
 end
 
-function _footer(folder=nothing, file=nothing; remove_homedir=true)
-    display("text/markdown", """
-    ## Appendix
-     This file is part of the CalculusWithJulia.jl repository, found at: <https://github.com/CalculusWithJulia/CalculusWithJulia.jl>.
-    """)
-    if folder !== nothing && file !== nothing
-        display("text/markdown", """
 
-        """)
-    end
 
-end
 
 
 macro q_str(x)

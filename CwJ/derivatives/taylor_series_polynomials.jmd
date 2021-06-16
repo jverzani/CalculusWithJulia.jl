@@ -791,14 +791,14 @@ x_0 + \Delta_x &= g(f(x_0 + \Delta_x)) \\
 That is:
 
 ```math
-b_n (\sum_{j=1}^n a_j (\Delta_x)^j)^n = 
+b_n (\sum_{j=1}^n a_j (\Delta_x)^j)^n =
 (x_0 + \Delta_x) - ( x_0 + \sum_{i=1}^{n-1} b_i (\sum_{j=1}^n a_j (\Delta_x)^j)^i)
 ```
 
 Solving for ``b_n = g^{(n)}(y_0) / n!`` gives the formal expression:
 
 ```math
-g^{(n)}(y_0) = n! \cdot \lim_{\Delta_x \rightarrow 0} 
+g^{(n)}(y_0) = n! \cdot \lim_{\Delta_x \rightarrow 0}
 \frac{\Delta_x -  \sum_{i=1}^{n-1} b_i (\sum_{j=1}^n a_j (\Delta_x)^j)^i}{
 \sum_{j=1}^n a_j (\Delta_x^j)^i}
 ```
@@ -828,10 +828,10 @@ for n ∈ 1:4
     for j ∈ 1:n-1
         ϕ = subs(ϕ, g′[j] => gᵏs[j])
     end
-    
+
     L = limit(ϕ, Δₓ => 0)
     push!(gᵏs, L)
-	
+
 end
 gᵏs
 ```
@@ -1106,3 +1106,11 @@ $n+1-4$ zeros of $h^{4}(x)$, $\dots$,
 $n+1-(n-1)$ zeros of $h^{n-1}(x)$, and finally
 $n+1-n$ ($1$) zero of $h^{(n)}(x)$. Call this last zero $\xi$. It satisfies $x_0 \leq \xi \leq x_n$. Further,
 $0 = h^{(n)}(\xi) = f^{(n)}(\xi)  - g^{(n)}(\xi)$. But $g$ is a degree $n$ polynomial, so the $n$th derivative is the coefficient of $x^n$ times $n!$. In this case we have $0 = f^{(n)}(\xi) - f[x_0, \dots, x_n] n!$. Rearranging yields the result.
+
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

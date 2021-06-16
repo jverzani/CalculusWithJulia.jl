@@ -437,7 +437,7 @@ expect radians. For angles in degrees, the convenience functions
 functions like $\sin^{-1}(x)$ are done by combining $Inv$ with
 $\sin$. With `Julia`, the function name is `asin`, an abbreviation for
 "arcsine." (Which is a good thing, as the notation using a power of
-$-1$ is often a source of confusion and is not supported by `Julia`.) Similarly, there
+$-1$ is often a source of confusion and is not supported by `Julia` without work.) Similarly, there
 are `asind`, `acos`, `acosd`, `atan`, and `atand` functions available
 to the `Julia` user.
 
@@ -541,7 +541,7 @@ sqrt(11^2 + 12^2)
 ##### Example
 
 A formula from statistics to compute the variance of binomial random variable for parameters $p$ and $n$
-is $\sqrt{p (1-p)/10}$. Compute this value for $p=1/4$ and $n=10$.
+is $\sqrt{p (1-p)/n}$. Compute this value for $p=1/4$ and $n=10$.
 
 ```julia;
 sqrt((1/4 * (1 - 1/4)) / 10)
@@ -1031,4 +1031,9 @@ choices = [
 ]
 ans=1
 radioq(choices, ans)
+```
+
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

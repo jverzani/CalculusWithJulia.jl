@@ -541,3 +541,10 @@ a, b = 0, 100
 val, _ = quadgk(x -> mr(x) - mc(x), 0, 100)
 numericq(val)
 ```
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

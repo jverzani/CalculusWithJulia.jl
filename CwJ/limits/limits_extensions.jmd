@@ -630,3 +630,10 @@ L" $f(x)$ does not have a limit as $x \rightarrow 0$"
 ans = 3
 radioq(choices, ans)
 ```
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

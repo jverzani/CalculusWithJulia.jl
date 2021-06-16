@@ -204,7 +204,7 @@ plot!([2,2,0], [0,f(2),f(2)])
 
 The graph is shown over the interval $(0,4)$, but the *domain* of $f(x)$ is all $x \geq 0$. The *range* of $f(x)$ is clearly $2 \leq x \leq \infty$.
 
-The lines layered on the plot show how to associate an $x$ value to a $y$ value or vice versa (as $f(x)$ is one-to-one). The domain then of the inverse function is all the $y$ values for which an corresponding $x$ value exists: this is clearly all values bigger or equal to $2$. The *range* of the inverse function can be seen to be all the images for the values of $y$, which would be all $x \geq 0$. This gives the relationship:
+The lines layered on the plot show how to associate an $x$ value to a $y$ value or vice versa (as $f(x)$ is one-to-one). The domain then of the inverse function is all the $y$ values for which a corresponding $x$ value exists: this is clearly all values bigger or equal to $2$. The *range* of the inverse function can be seen to be all the images for the values of $y$, which would be all $x \geq 0$. This gives the relationship:
 
 > the *range* of $f(x)$ is the *domain* of $f^{-1}(x)$ and furthermore the *domain* of $f(x)$ is the *range* for $f^{-1}(x)$;
 
@@ -639,4 +639,9 @@ What about the value of $g1(g2(g3(g4(f4(f3(f2(f1(10))))))))$?
 ```julia; echo=false
 val = g1(g2(g3(g4(f4(f3(f2(f1(10))))))))
 numericq(val)
+```
+
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

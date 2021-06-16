@@ -1054,3 +1054,11 @@ a,b = 1, 2
 k_x, k_y = 3, 4
 plot(t -> a * cos(k_x *t), t-> b * sin(k_y * t), 0, 4pi)
 ```
+
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

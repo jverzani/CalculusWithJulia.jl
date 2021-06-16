@@ -19,7 +19,9 @@ exploits this to great advantage.
 
 Here we discuss some vocabulary and basic facts related to polynomials
 and show how the add-on `SymPy` package can be used to model
-polynomial expressions within `SymPy`. Later we will discuss the `Polynomials` package
+polynomial expressions within `SymPy`.
+`SymPy` provides a Computer Algebra System (CAS) for `Julia`. In this case, by leveraging a mature `Python` package [SymPy](https://www.sympy.org/).
+Later we will discuss the `Polynomials` package
 for polynomials.
 
 For our purposes, a *monomial* is simply a non-negative integer power
@@ -163,11 +165,8 @@ within `Julia`.
 ```julia; echo=false
 note("""
 
-`SymPy` is installed when the accompanying `CalculusWithJulia` package
- is installed. It could also be installed directly. The package relies
- on both Python being installed and SymPy being added to the installed
- Python. This is done automatically on installation, if needed, when
- the `PyCall` package is installed.
+ When `SymPy` is installed through the package manger, the underlying `Python`
+ libraries will also be installed.
 
 """)
 ```
@@ -183,7 +182,8 @@ symbols. The `symbols` function does this. However, we will use the more conveni
 
 
 ```julia;
-using CalculusWithJulia   # loads the `SymPy` package
+using CalculusWithJulia
+using SymPy
 using Plots
 @syms a, b, c, x::real, zs[1:10]
 ```
@@ -192,10 +192,10 @@ The above shows that multiple symbols can be defined at once. The
 annotation `x::real` instructs `SymPy` to assume the `x` is real, as
 otherwise it assumes it is possibly complex. There are many other
 [assumptions](http://docs.sympy.org/dev/modules/core.html#module-sympy.core.assumptions)
-that can be made. The `zs[1:10]` tensor notation creates a container
-with 10 different symbols. The `@syms` macro documentation lists them.
-The *macro* `@syms` is does not need assignment, as the variable are
-created behind the scenes. T
+that can be made. The `@syms` macro documentation lists them. The
+`zs[1:10]` tensor notation creates a container with 10 different
+symbols.  The *macro* `@syms` is does not need assignment, as the
+variable(s) are created behind the scenes by the macro.
 
 ```julia;echo=false
 note("""Macros in `Julia` are just transformations of the syntax into other synax. The `@` indicates they behave differently than regular function calls.
@@ -203,11 +203,13 @@ note("""Macros in `Julia` are just transformations of the syntax into other syna
 ```
 
 
-The `SymPy` package does two basic things:
+The `SymPy` package does three basic things:
 
 - It imports some of the functionality provided by `SymPy`, including the ability to create symbolic variables.
 
 - It overloads many `Julia` functions to work seamlessly with symbolic expressions. This makes working with polynomials quite natural.
+
+- It gives access to a wide range of SymPy's functionality through the `sympy` object.
 
 To illustrate, using the just defined `x`, here is how we can create the polynomial $-16x^2 + 100$:
 
@@ -848,4 +850,9 @@ q"x^3 - x^3/h",
 q"0"]
 ans = 1
 radioq(choices, ans)
+```
+
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

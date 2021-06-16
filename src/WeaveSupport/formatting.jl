@@ -146,13 +146,7 @@ note(txt; kwargs...) = alert(txt; class="info", kwargs...)
 function Base.show(io::IO, ::MIME"text/html", x::Alert)
     cls = haskey(x.d,:class) ? x.d[:class] : "success"
     txt = sprint(io -> show(io, "text/html", Markdown.parse(x.x)))
-    tpl = """
-<div class="alert alert-$cls" role="alert">
-
-$txt
-
-</div>
-"""
+    tpl = """<div class="alert alert-$cls" role="alert">$txt</div>"""
 
     print(io, tpl)
 end
@@ -362,3 +356,86 @@ function Base.show(io::IO, ::MIME"text/latex", x::NamedTable)
     d = markdown_to_latex.(x.x)
     println(io, df_to_table(d))
 end
+
+
+# show footer via
+#=
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.footer(@__FILE__, @__DIR__)
+```
+=#
+struct Footer
+    f
+    d
+end
+
+# compute from URL
+function previous_current_next(foot::Footer)
+    f₀ = Symbol(last(split(foot.f, "/"))[1:end-4])
+    d₀ = Symbol(split(foot.d, "/")[end])
+
+    toc_url = "../misc/toc.html"
+    suggest_url = "https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/$(d₀)/$(f₀).jmd"
+
+    prev_url = "https://calculuswithjulia.github.io"
+    next_url = "https://calculuswithjulia.github.io"
+
+    prev,nxt = prev_next(d₀, f₀)
+
+    if prev != nothing
+        d,f = prev
+        prev_url = "../$(d)/$(f).html"
+    end
+
+    if nxt != nothing
+        d,f = nxt
+        next_url = "../$(d)/$(f).html"
+    end
+
+    (base_url="https://calculuswithjulia.github.io",
+     toc_url=toc_url,
+     prev_url=prev_url,
+     next_url = next_url,
+     suggest_edit_url = suggest_url
+     )
+end
+
+function Base.show(io::IO, ::MIME"text/html", x::Footer)
+    Mustache.render(io, footer_html_tpl, previous_current_next(x))
+end
+
+# add suggest edit
+# <div class="container d-flex justify-content-end">
+#==
+==#
+footer_html_tpl = """
+<div class="card" style="">
+  <div class="card-header float-end text-muted">
+    <span class="text-muted  float-end align-middle">
+
+<a href="{{{:prev_url}}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Previous section" aria-label="Previous section">
+<i class="bi bi-arrow-left-circle-fill"></i>
+</a>
+
+&nbsp;
+
+<a href="{{{:next_url}}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Next section" aria-label="Next section">
+<i class="bi bi-arrow-right-circle-fill"></i>
+</a>
+
+&nbsp;
+
+<a href="{{{:suggest_edit_url}}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Suggest an edit" aria-label="Suggest an edit">
+<i class="bi bi-pencil-square"></i>
+</a>
+
+&nbsp;
+
+<a href="{{{:toc_url}}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Table of contents" aria-label="Table of contents">
+<i class="bi bi-card-list"></i>
+</a>
+
+    </span>
+  </div>
+</div>
+"""

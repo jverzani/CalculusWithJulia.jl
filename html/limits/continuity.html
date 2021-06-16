@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
 
 <style>
@@ -104,7 +104,7 @@ $( document ).ready(function() {
 });
 </script>
 
-
+<link rel="shortcut icon" href="https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/misc/logo.png" type="image/x-icon" />
 
 </head>
 
@@ -155,10 +155,10 @@ $( document ).ready(function() {
 <p>The concept in calculus, as transferred to functions, is similar. Roughly speaking, a continuous function is one whose graph could be drawn without having to lift &#40;or interrupt&#41; the pencil drawing it. nte&#40; Consider these two graphs:</p>
 
 
-    <div id="e1024e3b-7b79-4d5f-aa54-d98c1638d73d" style="width:576px;height:384px;"></div>
+    <div id="4d752e7f-bc0a-4c19-ac04-ba6bfa6fe80f" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('e1024e3b-7b79-4d5f-aa54-d98c1638d73d');
+        var PLOT = document.getElementById('4d752e7f-bc0a-4c19-ac04-ba6bfa6fe80f');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -342,10 +342,10 @@ $( document ).ready(function() {
 <p>and</p>
 
 
-    <div id="c11caa4e-44d4-45f5-b18f-1321074b90a2" style="width:576px;height:384px;"></div>
+    <div id="e71412bd-c309-40b1-9006-032cfd869d69" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('c11caa4e-44d4-45f5-b18f-1321074b90a2');
+        var PLOT = document.getElementById('e71412bd-c309-40b1-9006-032cfd869d69');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -525,13 +525,8 @@ $( document ).ready(function() {
 <p>Finally, as with limits, it can be convenient to speak of <em>right</em> continuity and <em>left</em> continuity at a point, where the limit in the defintion is replaced by a right or left limit, as appropriate.</p>
 
 
-<div class="alert alert-success" role="alert">
-
-<div class="markdown"><p>The limit in the definition of continuity is the basic limit and not an extended sense where infinities are accounted for. As with limits, such extensions are qualified in the language, as in &quot;<em>right</em> continous.&quot;</p>
-</div>
-
-</div>
-
+<div class="alert alert-success" role="alert"><div class="markdown"><p>The limit in the definition of continuity is the basic limit and not an extended sense where infinities are accounted for. As with limits, such extensions are qualified in the language, as in &quot;<em>right</em> continous.&quot;</p>
+</div></div>
 
 <h5>Examples of continuity</h5>
 <p>Most familiar functions are continuous everywhere.</p>
@@ -588,10 +583,10 @@ f(x) = \begin{cases}
 </ul>
 
 
-    <div id="22cd3c7c-88c8-4b8a-8397-1d4bd8207592" style="width:576px;height:384px;"></div>
+    <div id="6015b5bc-4c4a-4eb5-a8ad-d23258570fcf" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('22cd3c7c-88c8-4b8a-8397-1d4bd8207592');
+        var PLOT = document.getElementById('6015b5bc-4c4a-4eb5-a8ad-d23258570fcf');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -808,10 +803,10 @@ f(x) = \begin{cases}
 </ul>
 
 
-    <div id="a613147c-7947-485f-87a7-9528cee9607c" style="width:576px;height:384px;"></div>
+    <div id="6cf29b94-d890-487b-9be7-ae46c555a0c5" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('a613147c-7947-485f-87a7-9528cee9607c');
+        var PLOT = document.getElementById('6cf29b94-d890-487b-9be7-ae46c555a0c5');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -1155,9 +1150,11 @@ f(x) = \begin{cases}
 </pre>
 
 
+<pre class="julia-error">
+ERROR: LoadError: UndefVarError: @syms not defined
+in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/limits/continuity.jmd:4
+</pre>
 
-<div class="well well-sm">$c + 3$
-</div>
 
 <p>We need to solve for <span class="math">$c$</span> to make <code>del</code> zero:</p>
 
@@ -1167,9 +1164,10 @@ f(x) = \begin{cases}
 </pre>
 
 
+<pre class="julia-error">
+ERROR: UndefVarError: solve not defined
+</pre>
 
-<div class="well well-sm">$\left[ \begin{array}{r}-3\end{array} \right]$
-</div>
 
 <p>This gives the value of <span class="math">$c$</span>.</p>
 <h2>Rules for continuity</h2>
@@ -1209,55 +1207,55 @@ f+g,~ f-g,~ f\cdot g,~ f\circ g,~ f/g
 \]</p>
 
 
-<form name="WeaveQuestion" data-id="R2TUWS5a" data-controltype="radio">
+<form name="WeaveQuestion" data-id="LvyL9C7r" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_R2TUWS5a" id="radio_R2TUWS5a_1" value="1">
-  <label class="form-check-label" for="radio_R2TUWS5a_1">
+  <input class="form-check-input" type="radio" name="radio_LvyL9C7r" id="radio_LvyL9C7r_1" value="1">
+  <label class="form-check-label" for="radio_LvyL9C7r_1">
     &#36;f/g&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_R2TUWS5a" id="radio_R2TUWS5a_2" value="2">
-  <label class="form-check-label" for="radio_R2TUWS5a_2">
-    &#36;f\circ g&#36;
-
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_R2TUWS5a" id="radio_R2TUWS5a_3" value="3">
-  <label class="form-check-label" for="radio_R2TUWS5a_3">
-    &#36;f\cdot g&#36;
-
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_R2TUWS5a" id="radio_R2TUWS5a_4" value="4">
-  <label class="form-check-label" for="radio_R2TUWS5a_4">
+  <input class="form-check-input" type="radio" name="radio_LvyL9C7r" id="radio_LvyL9C7r_2" value="2">
+  <label class="form-check-label" for="radio_LvyL9C7r_2">
     &#36;f&#43;g&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_R2TUWS5a" id="radio_R2TUWS5a_5" value="5">
-  <label class="form-check-label" for="radio_R2TUWS5a_5">
+  <input class="form-check-input" type="radio" name="radio_LvyL9C7r" id="radio_LvyL9C7r_3" value="3">
+  <label class="form-check-label" for="radio_LvyL9C7r_3">
     &#36;f-g&#36;
 
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_LvyL9C7r" id="radio_LvyL9C7r_4" value="4">
+  <label class="form-check-label" for="radio_LvyL9C7r_4">
+    &#36;f\cdot g&#36;
 
-<div id="R2TUWS5a_message"></div>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_LvyL9C7r" id="radio_LvyL9C7r_5" value="5">
+  <label class="form-check-label" for="radio_LvyL9C7r_5">
+    &#36;f\circ g&#36;
+
+  </label>
+</div>
+
+<div id="LvyL9C7r_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_R2TUWS5a']").on("change", function() {
+$("input:radio[name='radio_LvyL9C7r']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#R2TUWS5a_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#LvyL9C7r_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#R2TUWS5a_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#LvyL9C7r_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1269,38 +1267,38 @@ $("input:radio[name='radio_R2TUWS5a']").on("change", function() {
 <p>When will <span class="math">$f\circ g$</span> be continuous?</p>
 
 
-<form name="WeaveQuestion" data-id="8k0p1m2c" data-controltype="radio">
+<form name="WeaveQuestion" data-id="DrtUX17u" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_8k0p1m2c" id="radio_8k0p1m2c_1" value="1">
-  <label class="form-check-label" for="radio_8k0p1m2c_1">
+  <input class="form-check-input" type="radio" name="radio_DrtUX17u" id="radio_DrtUX17u_1" value="1">
+  <label class="form-check-label" for="radio_DrtUX17u_1">
     For all &#36;x&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_8k0p1m2c" id="radio_8k0p1m2c_2" value="2">
-  <label class="form-check-label" for="radio_8k0p1m2c_2">
+  <input class="form-check-input" type="radio" name="radio_DrtUX17u" id="radio_DrtUX17u_2" value="2">
+  <label class="form-check-label" for="radio_DrtUX17u_2">
     For all &#36;x &gt; 0&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_8k0p1m2c" id="radio_8k0p1m2c_3" value="3">
-  <label class="form-check-label" for="radio_8k0p1m2c_3">
+  <input class="form-check-input" type="radio" name="radio_DrtUX17u" id="radio_DrtUX17u_3" value="3">
+  <label class="form-check-label" for="radio_DrtUX17u_3">
     For all &#36;x&#36; where &#36;\sin&#40;x&#41; &gt; 0&#36;
   </label>
 </div>
 
-<div id="8k0p1m2c_message"></div>
+<div id="DrtUX17u_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_8k0p1m2c']").on("change", function() {
+$("input:radio[name='radio_DrtUX17u']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#8k0p1m2c_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#DrtUX17u_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#8k0p1m2c_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#DrtUX17u_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1310,38 +1308,38 @@ $("input:radio[name='radio_8k0p1m2c']").on("change", function() {
 <p>When will <span class="math">$g \circ f$</span> be continuous?</p>
 
 
-<form name="WeaveQuestion" data-id="4gQgkJOu" data-controltype="radio">
+<form name="WeaveQuestion" data-id="ymT10KrF" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_4gQgkJOu" id="radio_4gQgkJOu_1" value="1">
-  <label class="form-check-label" for="radio_4gQgkJOu_1">
+  <input class="form-check-input" type="radio" name="radio_ymT10KrF" id="radio_ymT10KrF_1" value="1">
+  <label class="form-check-label" for="radio_ymT10KrF_1">
     For all &#36;x&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_4gQgkJOu" id="radio_4gQgkJOu_2" value="2">
-  <label class="form-check-label" for="radio_4gQgkJOu_2">
+  <input class="form-check-input" type="radio" name="radio_ymT10KrF" id="radio_ymT10KrF_2" value="2">
+  <label class="form-check-label" for="radio_ymT10KrF_2">
     For all &#36;x &gt; 0&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_4gQgkJOu" id="radio_4gQgkJOu_3" value="3">
-  <label class="form-check-label" for="radio_4gQgkJOu_3">
+  <input class="form-check-input" type="radio" name="radio_ymT10KrF" id="radio_ymT10KrF_3" value="3">
+  <label class="form-check-label" for="radio_ymT10KrF_3">
     For all &#36;x&#36; where &#36;\sin&#40;x&#41; &gt; 0&#36;
   </label>
 </div>
 
-<div id="4gQgkJOu_message"></div>
+<div id="ymT10KrF_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_4gQgkJOu']").on("change", function() {
+$("input:radio[name='radio_ymT10KrF']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#4gQgkJOu_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#ymT10KrF_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#4gQgkJOu_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#ymT10KrF_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1352,44 +1350,44 @@ $("input:radio[name='radio_4gQgkJOu']").on("change", function() {
 <p>The composition <span class="math">$f\circ g$</span> will be continuous everywhere provided:</p>
 
 
-<form name="WeaveQuestion" data-id="SrCy0ymE" data-controltype="radio">
+<form name="WeaveQuestion" data-id="3vDLCYYs" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_SrCy0ymE" id="radio_SrCy0ymE_1" value="1">
-  <label class="form-check-label" for="radio_SrCy0ymE_1">
+  <input class="form-check-input" type="radio" name="radio_3vDLCYYs" id="radio_3vDLCYYs_1" value="1">
+  <label class="form-check-label" for="radio_3vDLCYYs_1">
     The function &#36;g&#36; is continuous everywhere
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_SrCy0ymE" id="radio_SrCy0ymE_2" value="2">
-  <label class="form-check-label" for="radio_SrCy0ymE_2">
+  <input class="form-check-input" type="radio" name="radio_3vDLCYYs" id="radio_3vDLCYYs_2" value="2">
+  <label class="form-check-label" for="radio_3vDLCYYs_2">
     The function &#36;f&#36; is continuous everywhere
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_SrCy0ymE" id="radio_SrCy0ymE_3" value="3">
-  <label class="form-check-label" for="radio_SrCy0ymE_3">
+  <input class="form-check-input" type="radio" name="radio_3vDLCYYs" id="radio_3vDLCYYs_3" value="3">
+  <label class="form-check-label" for="radio_3vDLCYYs_3">
     The function &#36;g&#36; is continuous everywhere and &#36;f&#36; is continuous on the range of &#36;g&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_SrCy0ymE" id="radio_SrCy0ymE_4" value="4">
-  <label class="form-check-label" for="radio_SrCy0ymE_4">
+  <input class="form-check-input" type="radio" name="radio_3vDLCYYs" id="radio_3vDLCYYs_4" value="4">
+  <label class="form-check-label" for="radio_3vDLCYYs_4">
     The function &#36;f&#36; is continuous everywhere and &#36;g&#36; is continuous on the range of &#36;f&#36;
   </label>
 </div>
 
-<div id="SrCy0ymE_message"></div>
+<div id="3vDLCYYs_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_SrCy0ymE']").on("change", function() {
+$("input:radio[name='radio_3vDLCYYs']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#SrCy0ymE_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#3vDLCYYs_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#SrCy0ymE_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#3vDLCYYs_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1400,44 +1398,44 @@ $("input:radio[name='radio_SrCy0ymE']").on("change", function() {
 <p>At which values is <span class="math">$f(x) = 1/\sqrt{x-2}$</span> not continuous?</p>
 
 
-<form name="WeaveQuestion" data-id="gM8p3nuy" data-controltype="radio">
+<form name="WeaveQuestion" data-id="FanuzmLJ" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_gM8p3nuy" id="radio_gM8p3nuy_1" value="1">
-  <label class="form-check-label" for="radio_gM8p3nuy_1">
+  <input class="form-check-input" type="radio" name="radio_FanuzmLJ" id="radio_FanuzmLJ_1" value="1">
+  <label class="form-check-label" for="radio_FanuzmLJ_1">
+    When &#36;x \leq 2&#36;
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_FanuzmLJ" id="radio_FanuzmLJ_2" value="2">
+  <label class="form-check-label" for="radio_FanuzmLJ_2">
     When &#36;x &gt; 2&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_gM8p3nuy" id="radio_gM8p3nuy_2" value="2">
-  <label class="form-check-label" for="radio_gM8p3nuy_2">
-    For &#36;x \geq 0&#36;
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_gM8p3nuy" id="radio_gM8p3nuy_3" value="3">
-  <label class="form-check-label" for="radio_gM8p3nuy_3">
+  <input class="form-check-input" type="radio" name="radio_FanuzmLJ" id="radio_FanuzmLJ_3" value="3">
+  <label class="form-check-label" for="radio_FanuzmLJ_3">
     When &#36;x \geq 2&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_gM8p3nuy" id="radio_gM8p3nuy_4" value="4">
-  <label class="form-check-label" for="radio_gM8p3nuy_4">
-    When &#36;x \leq 2&#36;
+  <input class="form-check-input" type="radio" name="radio_FanuzmLJ" id="radio_FanuzmLJ_4" value="4">
+  <label class="form-check-label" for="radio_FanuzmLJ_4">
+    For &#36;x \geq 0&#36;
   </label>
 </div>
 
-<div id="gM8p3nuy_message"></div>
+<div id="FanuzmLJ_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_gM8p3nuy']").on("change", function() {
-  correct = this.value == 4;
+$("input:radio[name='radio_FanuzmLJ']").on("change", function() {
+  correct = this.value == 1;
 
   if(correct) {
-     $("#gM8p3nuy_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#FanuzmLJ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#gM8p3nuy_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#FanuzmLJ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1449,28 +1447,28 @@ $("input:radio[name='radio_gM8p3nuy']").on("change", function() {
 <p>The function <span class="math">$f(x) = (x^2 - 4)/(x-2)$</span> has a removable singularity at <span class="math">$x=2$</span>. What value would we redefine <span class="math">$f(2)$</span> to be, to make <span class="math">$f$</span> a continuous function?</p>
 
 
-<form name='WeaveQuestion' data-id='y94MkMiB' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='9O2A7GsM' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="y94MkMiB" type="number" class="form-control">
+<input id="9O2A7GsM" type="number" class="form-control">
 
 </div>
 
-<div id='y94MkMiB_message'></div>
+<div id='9O2A7GsM_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#y94MkMiB').on('change', function() {
+$('#9O2A7GsM').on('change', function() {
   correct = Math.abs(this.value - 4.000010000000827) <= 0.001;
 
   if(correct) {
-     $('#y94MkMiB_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#9O2A7GsM_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#y94MkMiB_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#9O2A7GsM_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1486,28 +1484,28 @@ f(x) = x^2 (\cos(1/x) - 1)
 <p>has a removable singularity at <span class="math">$x=0$</span>. What value would we redefine <span class="math">$f(0)$</span> to be, to make <span class="math">$f$</span> a continuous function?</p>
 
 
-<form name='WeaveQuestion' data-id='JxJci89D' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='R1o7jprK' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="JxJci89D" type="number" class="form-control">
+<input id="R1o7jprK" type="number" class="form-control">
 
 </div>
 
-<div id='JxJci89D_message'></div>
+<div id='R1o7jprK_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#JxJci89D').on('change', function() {
+$('#R1o7jprK').on('change', function() {
   correct = Math.abs(this.value - 0) <= 0.001;
 
   if(correct) {
-     $('#JxJci89D_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#R1o7jprK_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#JxJci89D_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#R1o7jprK_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1526,28 +1524,28 @@ c + \sin(2x - \pi/2) & x > 0\\
 <p>What value of <span class="math">$c$</span> will make <span class="math">$f(x)$</span> continuous?</p>
 
 
-<form name='WeaveQuestion' data-id='muIhXocd' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='66450w8L' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="muIhXocd" type="number" class="form-control">
+<input id="66450w8L" type="number" class="form-control">
 
 </div>
 
-<div id='muIhXocd_message'></div>
+<div id='66450w8L_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#muIhXocd').on('change', function() {
+$('#66450w8L').on('change', function() {
   correct = Math.abs(this.value - -3.0) <= 0.001;
 
   if(correct) {
-     $('#muIhXocd_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#66450w8L_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#muIhXocd_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#66450w8L_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1557,32 +1555,32 @@ $('#muIhXocd').on('change', function() {
 <p>Suppose <span class="math">$f(x)$</span>, <span class="math">$g(x)$</span>, and <span class="math">$h(x)$</span> are continuous functions on <span class="math">$(a,b)$</span>. If <span class="math">$a < c < b$</span>, are you sure that <span class="math">$lim_{x \rightarrow c} f(g(x))$</span> is <span class="math">$f(g(c))$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="91OdwPPu" data-controltype="radio">
+<form name="WeaveQuestion" data-id="yB6dnlIa" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_91OdwPPu" id="radio_91OdwPPu_1" value="1">
-  <label class="form-check-label" for="radio_91OdwPPu_1">
+  <input class="form-check-input" type="radio" name="radio_yB6dnlIa" id="radio_yB6dnlIa_1" value="1">
+  <label class="form-check-label" for="radio_yB6dnlIa_1">
     Yes, composition of continuous functions results in a continous function, so the limit is just the function value.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_91OdwPPu" id="radio_91OdwPPu_2" value="2">
-  <label class="form-check-label" for="radio_91OdwPPu_2">
+  <input class="form-check-input" type="radio" name="radio_yB6dnlIa" id="radio_yB6dnlIa_2" value="2">
+  <label class="form-check-label" for="radio_yB6dnlIa_2">
     No, as &#36;g&#40;c&#41;&#36; may not be in the interval &#36;&#40;a,b&#41;&#36;
   </label>
 </div>
 
-<div id="91OdwPPu_message"></div>
+<div id="yB6dnlIa_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_91OdwPPu']").on("change", function() {
+$("input:radio[name='radio_yB6dnlIa']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#91OdwPPu_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#yB6dnlIa_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#91OdwPPu_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#yB6dnlIa_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1593,10 +1591,10 @@ $("input:radio[name='radio_91OdwPPu']").on("change", function() {
 <p>Consider the function <span class="math">$f(x)$</span> given by the following graph</p>
 
 
-    <div id="eb86abe7-2b96-4f23-a8a2-3079880bb871" style="width:576px;height:384px;"></div>
+    <div id="cad40919-32df-4dbb-987f-7473dc114514" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('eb86abe7-2b96-4f23-a8a2-3079880bb871');
+        var PLOT = document.getElementById('cad40919-32df-4dbb-987f-7473dc114514');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -1962,32 +1960,32 @@ $("input:radio[name='radio_91OdwPPu']").on("change", function() {
 <p>The function <span class="math">$f(x)$</span> is continous at <span class="math">$x=1$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="TQbAEDd2" data-controltype="radio">
+<form name="WeaveQuestion" data-id="NgJo0zeC" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TQbAEDd2" id="radio_TQbAEDd2_1" value="1">
-  <label class="form-check-label" for="radio_TQbAEDd2_1">
+  <input class="form-check-input" type="radio" name="radio_NgJo0zeC" id="radio_NgJo0zeC_1" value="1">
+  <label class="form-check-label" for="radio_NgJo0zeC_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TQbAEDd2" id="radio_TQbAEDd2_2" value="2">
-  <label class="form-check-label" for="radio_TQbAEDd2_2">
+  <input class="form-check-input" type="radio" name="radio_NgJo0zeC" id="radio_NgJo0zeC_2" value="2">
+  <label class="form-check-label" for="radio_NgJo0zeC_2">
     No
   </label>
 </div>
 
-<div id="TQbAEDd2_message"></div>
+<div id="NgJo0zeC_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_TQbAEDd2']").on("change", function() {
+$("input:radio[name='radio_NgJo0zeC']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#TQbAEDd2_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#NgJo0zeC_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#TQbAEDd2_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#NgJo0zeC_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1997,32 +1995,32 @@ $("input:radio[name='radio_TQbAEDd2']").on("change", function() {
 <p>The function <span class="math">$f(x)$</span> is continous at <span class="math">$x=2$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="accB0e1q" data-controltype="radio">
+<form name="WeaveQuestion" data-id="DXd4Zks8" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_accB0e1q" id="radio_accB0e1q_1" value="1">
-  <label class="form-check-label" for="radio_accB0e1q_1">
+  <input class="form-check-input" type="radio" name="radio_DXd4Zks8" id="radio_DXd4Zks8_1" value="1">
+  <label class="form-check-label" for="radio_DXd4Zks8_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_accB0e1q" id="radio_accB0e1q_2" value="2">
-  <label class="form-check-label" for="radio_accB0e1q_2">
+  <input class="form-check-input" type="radio" name="radio_DXd4Zks8" id="radio_DXd4Zks8_2" value="2">
+  <label class="form-check-label" for="radio_DXd4Zks8_2">
     No
   </label>
 </div>
 
-<div id="accB0e1q_message"></div>
+<div id="DXd4Zks8_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_accB0e1q']").on("change", function() {
+$("input:radio[name='radio_DXd4Zks8']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#accB0e1q_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#DXd4Zks8_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#accB0e1q_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#DXd4Zks8_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -2032,32 +2030,32 @@ $("input:radio[name='radio_accB0e1q']").on("change", function() {
 <p>The function <span class="math">$f(x)$</span> is right continous at <span class="math">$x=3$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="955UqTf1" data-controltype="radio">
+<form name="WeaveQuestion" data-id="nzOjsrTB" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_955UqTf1" id="radio_955UqTf1_1" value="1">
-  <label class="form-check-label" for="radio_955UqTf1_1">
+  <input class="form-check-input" type="radio" name="radio_nzOjsrTB" id="radio_nzOjsrTB_1" value="1">
+  <label class="form-check-label" for="radio_nzOjsrTB_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_955UqTf1" id="radio_955UqTf1_2" value="2">
-  <label class="form-check-label" for="radio_955UqTf1_2">
+  <input class="form-check-input" type="radio" name="radio_nzOjsrTB" id="radio_nzOjsrTB_2" value="2">
+  <label class="form-check-label" for="radio_nzOjsrTB_2">
     No
   </label>
 </div>
 
-<div id="955UqTf1_message"></div>
+<div id="nzOjsrTB_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_955UqTf1']").on("change", function() {
+$("input:radio[name='radio_nzOjsrTB']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#955UqTf1_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#nzOjsrTB_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#955UqTf1_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#nzOjsrTB_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -2067,32 +2065,32 @@ $("input:radio[name='radio_955UqTf1']").on("change", function() {
 <p>The function <span class="math">$f(x)$</span> is left continous at <span class="math">$x=4$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="H5zLdyg9" data-controltype="radio">
+<form name="WeaveQuestion" data-id="KAcWl6SB" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_H5zLdyg9" id="radio_H5zLdyg9_1" value="1">
-  <label class="form-check-label" for="radio_H5zLdyg9_1">
+  <input class="form-check-input" type="radio" name="radio_KAcWl6SB" id="radio_KAcWl6SB_1" value="1">
+  <label class="form-check-label" for="radio_KAcWl6SB_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_H5zLdyg9" id="radio_H5zLdyg9_2" value="2">
-  <label class="form-check-label" for="radio_H5zLdyg9_2">
+  <input class="form-check-input" type="radio" name="radio_KAcWl6SB" id="radio_KAcWl6SB_2" value="2">
+  <label class="form-check-label" for="radio_KAcWl6SB_2">
     No
   </label>
 </div>
 
-<div id="H5zLdyg9_message"></div>
+<div id="KAcWl6SB_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_H5zLdyg9']").on("change", function() {
+$("input:radio[name='radio_KAcWl6SB']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#H5zLdyg9_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#KAcWl6SB_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#H5zLdyg9_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#KAcWl6SB_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -2103,10 +2101,10 @@ $("input:radio[name='radio_H5zLdyg9']").on("change", function() {
 <p>Let <span class="math">$f(x)$</span> and <span class="math">$g(x)$</span> be continuous functions whose graph of <span class="math">$[0,1]$</span> is given by:</p>
 
 
-    <div id="d363a36a-6024-4d9f-b20b-763185c217e9" style="width:576px;height:384px;"></div>
+    <div id="26e34688-cd6e-4a8d-b730-53bbfed4da3f" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('d363a36a-6024-4d9f-b20b-763185c217e9');
+        var PLOT = document.getElementById('26e34688-cd6e-4a8d-b730-53bbfed4da3f');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x1",
@@ -2617,28 +2615,28 @@ $("input:radio[name='radio_H5zLdyg9']").on("change", function() {
 <p>What is <span class="math">$\lim_{x \rightarrow 0.25} f(g(x))$</span>?</p>
 
 
-<form name='WeaveQuestion' data-id='6pC6IGTY' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='d3EjQlyX' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="6pC6IGTY" type="number" class="form-control">
+<input id="d3EjQlyX" type="number" class="form-control">
 
 </div>
 
-<div id='6pC6IGTY_message'></div>
+<div id='d3EjQlyX_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#6pC6IGTY').on('change', function() {
+$('#d3EjQlyX').on('change', function() {
   correct = Math.abs(this.value - 3.8473413874435795e-16) <= 0.001;
 
   if(correct) {
-     $('#6pC6IGTY_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#d3EjQlyX_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#6pC6IGTY_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#d3EjQlyX_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -2647,28 +2645,28 @@ $('#6pC6IGTY').on('change', function() {
 <p>What is <span class="math">$\lim{x \rightarrow 0.25} g(f(x))$</span>?</p>
 
 
-<form name='WeaveQuestion' data-id='fxJPe1TO' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='uHyHNHyx' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="fxJPe1TO" type="number" class="form-control">
+<input id="uHyHNHyx" type="number" class="form-control">
 
 </div>
 
-<div id='fxJPe1TO_message'></div>
+<div id='uHyHNHyx_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#fxJPe1TO').on('change', function() {
+$('#uHyHNHyx').on('change', function() {
   correct = Math.abs(this.value - 1.0) <= 0.001;
 
   if(correct) {
-     $('#fxJPe1TO_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#uHyHNHyx_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#fxJPe1TO_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#uHyHNHyx_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -2677,44 +2675,74 @@ $('#fxJPe1TO').on('change', function() {
 <p>What is <span class="math">$\lim_{x \rightarrow 0.5} f(g(x))$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="D9OXUfLO" data-controltype="radio">
+<form name="WeaveQuestion" data-id="RhDpGyl2" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_D9OXUfLO" id="radio_D9OXUfLO_1" value="1">
-  <label class="form-check-label" for="radio_D9OXUfLO_1">
+  <input class="form-check-input" type="radio" name="radio_RhDpGyl2" id="radio_RhDpGyl2_1" value="1">
+  <label class="form-check-label" for="radio_RhDpGyl2_1">
+    Can&#39;t tell
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_RhDpGyl2" id="radio_RhDpGyl2_2" value="2">
+  <label class="form-check-label" for="radio_RhDpGyl2_2">
     &#36;-1.0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_D9OXUfLO" id="radio_D9OXUfLO_2" value="2">
-  <label class="form-check-label" for="radio_D9OXUfLO_2">
+  <input class="form-check-input" type="radio" name="radio_RhDpGyl2" id="radio_RhDpGyl2_3" value="3">
+  <label class="form-check-label" for="radio_RhDpGyl2_3">
     &#36;0.0&#36;
 
   </label>
 </div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_D9OXUfLO" id="radio_D9OXUfLO_3" value="3">
-  <label class="form-check-label" for="radio_D9OXUfLO_3">
-    Can&#39;t tell
-  </label>
-</div>
 
-<div id="D9OXUfLO_message"></div>
+<div id="RhDpGyl2_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_D9OXUfLO']").on("change", function() {
-  correct = this.value == 3;
+$("input:radio[name='radio_RhDpGyl2']").on("change", function() {
+  correct = this.value == 1;
 
   if(correct) {
-     $("#D9OXUfLO_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#RhDpGyl2_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#D9OXUfLO_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#RhDpGyl2_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
 </script>
+
+
+<hr />
+
+
+<footer class="footer">
+<div class="span10 offset1 d-flex justify-content-end">
+
+<a href="../limits/limits_extensions.html" aria-label="Previous section">
+  <i class="bi bi-arrow-left-circle-fill"></i>
+</a>
+
+&nbsp;
+
+<a href="../limits/intermediate_value_theorem.html" aria-label="Next section">
+  <i class="bi bi-arrow-right-circle-fill"></i>
+</a>
+
+&nbsp;
+
+<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/limits/continuity.jmd" aria-label="Suggest edt">
+  <i class="bi bi-pencil-square"></i>
+</a>
+
+&nbsp;
+
+<a href="../misc/toc.html">Calculus with Julia</a>
+
+</div>
+</footer>
 
 
   </div>

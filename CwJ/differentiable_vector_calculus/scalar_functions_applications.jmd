@@ -2087,3 +2087,9 @@ Using these points, what is the largest value on the boundary?
 val = maximum((f∘r).(ts))
 numericq(val)
 ```
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

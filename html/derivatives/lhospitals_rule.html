@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
 
 <style>
@@ -104,7 +104,7 @@ $( document ).ready(function() {
 });
 </script>
 
-
+<link rel="shortcut icon" href="https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/misc/logo.png" type="image/x-icon" />
 
 </head>
 
@@ -114,8 +114,9 @@ $( document ).ready(function() {
   <header class="navbar navbar-expand-md navbar-dark bd-navbar">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top navbar-nav">
     <div class="container-fluid">
-
-      <a class="navbar-brand" href="https://juliahub.com/docs/CalculusWithJulia/">Calculus with Julia</a>
+      <a class="navbar-brand" href="https://juliahub.com/docs/CalculusWithJulia/">
+      <img src="data:image/gif;base64,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"/>
+      Calculus with Julia</a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -275,9 +276,7 @@ f''(c) = \lim_{h \rightarrow 0} \frac{f(c + h) - 2f(c) + f(c-h)}{h^2}.
 <h3>L&#39;Hospital&#39;s picture</h3>
 
 <pre class="julia-error">
-ERROR: ArgumentError: Package PyPlot not found in current path:
-- Run &#96;import Pkg; Pkg.add&#40;&quot;PyPlot&quot;&#41;&#96; to install the PyPlot package.
-
+ERROR: UndefVarError: fzero not defined
 </pre>
 
 
@@ -351,8 +350,9 @@ x^x = \exp(\log(x^x)) = \exp(x \log(x)) = \exp(\log(x)/(1/x)).
 </pre>
 
 
-<pre class="output">
-g &#40;generic function with 1 method&#41;
+<pre class="julia-error">
+ERROR: LoadError: UndefVarError: @syms not defined
+in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/derivatives/lhospitals_rule.jmd:4
 </pre>
 
 
@@ -364,8 +364,8 @@ g &#40;generic function with 1 method&#41;
 </pre>
 
 
-<pre class="output">
-&#40;0, 0&#41;
+<pre class="julia-error">
+ERROR: UndefVarError: f not defined
 </pre>
 
 
@@ -377,8 +377,8 @@ g &#40;generic function with 1 method&#41;
 </pre>
 
 
-<pre class="output">
-&#40;-4*a/3, -3/4&#41;
+<pre class="julia-error">
+ERROR: UndefVarError: f not defined
 </pre>
 
 
@@ -390,9 +390,10 @@ g &#40;generic function with 1 method&#41;
 </pre>
 
 
+<pre class="julia-error">
+ERROR: UndefVarError: fp not defined
+</pre>
 
-<div class="well well-sm">$\frac{16 a}{9}$
-</div>
 
 <p>Of course, we could have just relied on <code>limit</code>, which knows about L&#39;Hospital&#39;s rule:</p>
 
@@ -402,64 +403,65 @@ g &#40;generic function with 1 method&#41;
 </pre>
 
 
+<pre class="julia-error">
+ERROR: UndefVarError: f not defined
+</pre>
 
-<div class="well well-sm">$\frac{16 a}{9}$
-</div>
 
 <h2>Questions</h2>
 <h6>Question</h6>
 <p>This function <span class="math">$f(x) = \sin(5x)/x$</span> is <em>indeterminate</em> at <span class="math">$x=0$</span>. What type?</p>
 
 
-<form name="WeaveQuestion" data-id="nsoFc6ik" data-controltype="radio">
+<form name="WeaveQuestion" data-id="eQ1x27nP" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_nsoFc6ik" id="radio_nsoFc6ik_1" value="1">
-  <label class="form-check-label" for="radio_nsoFc6ik_1">
+  <input class="form-check-input" type="radio" name="radio_eQ1x27nP" id="radio_eQ1x27nP_1" value="1">
+  <label class="form-check-label" for="radio_eQ1x27nP_1">
     &#36;0/0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_nsoFc6ik" id="radio_nsoFc6ik_2" value="2">
-  <label class="form-check-label" for="radio_nsoFc6ik_2">
+  <input class="form-check-input" type="radio" name="radio_eQ1x27nP" id="radio_eQ1x27nP_2" value="2">
+  <label class="form-check-label" for="radio_eQ1x27nP_2">
     &#36;\infty/\infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_nsoFc6ik" id="radio_nsoFc6ik_3" value="3">
-  <label class="form-check-label" for="radio_nsoFc6ik_3">
+  <input class="form-check-input" type="radio" name="radio_eQ1x27nP" id="radio_eQ1x27nP_3" value="3">
+  <label class="form-check-label" for="radio_eQ1x27nP_3">
     &#36;0^0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_nsoFc6ik" id="radio_nsoFc6ik_4" value="4">
-  <label class="form-check-label" for="radio_nsoFc6ik_4">
+  <input class="form-check-input" type="radio" name="radio_eQ1x27nP" id="radio_eQ1x27nP_4" value="4">
+  <label class="form-check-label" for="radio_eQ1x27nP_4">
     &#36;\infty - \infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_nsoFc6ik" id="radio_nsoFc6ik_5" value="5">
-  <label class="form-check-label" for="radio_nsoFc6ik_5">
+  <input class="form-check-input" type="radio" name="radio_eQ1x27nP" id="radio_eQ1x27nP_5" value="5">
+  <label class="form-check-label" for="radio_eQ1x27nP_5">
     &#36;0 \cdot \infty&#36;
 
   </label>
 </div>
 
-<div id="nsoFc6ik_message"></div>
+<div id="eQ1x27nP_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_nsoFc6ik']").on("change", function() {
+$("input:radio[name='radio_eQ1x27nP']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#nsoFc6ik_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#eQ1x27nP_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#nsoFc6ik_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#eQ1x27nP_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -470,55 +472,55 @@ $("input:radio[name='radio_nsoFc6ik']").on("change", function() {
 <p>This function <span class="math">$f(x) = \sin(x)^{\sin(x)}$</span> is <em>indeterminate</em> at <span class="math">$x=0$</span>. What type?</p>
 
 
-<form name="WeaveQuestion" data-id="5Jv7qSIJ" data-controltype="radio">
+<form name="WeaveQuestion" data-id="oYypHfq1" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_5Jv7qSIJ" id="radio_5Jv7qSIJ_1" value="1">
-  <label class="form-check-label" for="radio_5Jv7qSIJ_1">
+  <input class="form-check-input" type="radio" name="radio_oYypHfq1" id="radio_oYypHfq1_1" value="1">
+  <label class="form-check-label" for="radio_oYypHfq1_1">
     &#36;0/0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_5Jv7qSIJ" id="radio_5Jv7qSIJ_2" value="2">
-  <label class="form-check-label" for="radio_5Jv7qSIJ_2">
+  <input class="form-check-input" type="radio" name="radio_oYypHfq1" id="radio_oYypHfq1_2" value="2">
+  <label class="form-check-label" for="radio_oYypHfq1_2">
     &#36;\infty/\infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_5Jv7qSIJ" id="radio_5Jv7qSIJ_3" value="3">
-  <label class="form-check-label" for="radio_5Jv7qSIJ_3">
+  <input class="form-check-input" type="radio" name="radio_oYypHfq1" id="radio_oYypHfq1_3" value="3">
+  <label class="form-check-label" for="radio_oYypHfq1_3">
     &#36;0^0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_5Jv7qSIJ" id="radio_5Jv7qSIJ_4" value="4">
-  <label class="form-check-label" for="radio_5Jv7qSIJ_4">
+  <input class="form-check-input" type="radio" name="radio_oYypHfq1" id="radio_oYypHfq1_4" value="4">
+  <label class="form-check-label" for="radio_oYypHfq1_4">
     &#36;\infty - \infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_5Jv7qSIJ" id="radio_5Jv7qSIJ_5" value="5">
-  <label class="form-check-label" for="radio_5Jv7qSIJ_5">
+  <input class="form-check-input" type="radio" name="radio_oYypHfq1" id="radio_oYypHfq1_5" value="5">
+  <label class="form-check-label" for="radio_oYypHfq1_5">
     &#36;0 \cdot \infty&#36;
 
   </label>
 </div>
 
-<div id="5Jv7qSIJ_message"></div>
+<div id="oYypHfq1_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_5Jv7qSIJ']").on("change", function() {
+$("input:radio[name='radio_oYypHfq1']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#5Jv7qSIJ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#oYypHfq1_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#5Jv7qSIJ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#oYypHfq1_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -529,55 +531,55 @@ $("input:radio[name='radio_5Jv7qSIJ']").on("change", function() {
 <p>This function <span class="math">$f(x) = (x-2)/(x^2 - 4)$</span> is <em>indeterminate</em> at <span class="math">$x=2$</span>. What type?</p>
 
 
-<form name="WeaveQuestion" data-id="OGgtebyi" data-controltype="radio">
+<form name="WeaveQuestion" data-id="g6LaS4DA" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_OGgtebyi" id="radio_OGgtebyi_1" value="1">
-  <label class="form-check-label" for="radio_OGgtebyi_1">
+  <input class="form-check-input" type="radio" name="radio_g6LaS4DA" id="radio_g6LaS4DA_1" value="1">
+  <label class="form-check-label" for="radio_g6LaS4DA_1">
     &#36;0/0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_OGgtebyi" id="radio_OGgtebyi_2" value="2">
-  <label class="form-check-label" for="radio_OGgtebyi_2">
+  <input class="form-check-input" type="radio" name="radio_g6LaS4DA" id="radio_g6LaS4DA_2" value="2">
+  <label class="form-check-label" for="radio_g6LaS4DA_2">
     &#36;\infty/\infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_OGgtebyi" id="radio_OGgtebyi_3" value="3">
-  <label class="form-check-label" for="radio_OGgtebyi_3">
+  <input class="form-check-input" type="radio" name="radio_g6LaS4DA" id="radio_g6LaS4DA_3" value="3">
+  <label class="form-check-label" for="radio_g6LaS4DA_3">
     &#36;0^0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_OGgtebyi" id="radio_OGgtebyi_4" value="4">
-  <label class="form-check-label" for="radio_OGgtebyi_4">
+  <input class="form-check-input" type="radio" name="radio_g6LaS4DA" id="radio_g6LaS4DA_4" value="4">
+  <label class="form-check-label" for="radio_g6LaS4DA_4">
     &#36;\infty - \infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_OGgtebyi" id="radio_OGgtebyi_5" value="5">
-  <label class="form-check-label" for="radio_OGgtebyi_5">
+  <input class="form-check-input" type="radio" name="radio_g6LaS4DA" id="radio_g6LaS4DA_5" value="5">
+  <label class="form-check-label" for="radio_g6LaS4DA_5">
     &#36;0 \cdot \infty&#36;
 
   </label>
 </div>
 
-<div id="OGgtebyi_message"></div>
+<div id="g6LaS4DA_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_OGgtebyi']").on("change", function() {
+$("input:radio[name='radio_g6LaS4DA']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#OGgtebyi_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#g6LaS4DA_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#OGgtebyi_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#g6LaS4DA_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -588,55 +590,55 @@ $("input:radio[name='radio_OGgtebyi']").on("change", function() {
 <p>This function <span class="math">$f(x) = (g(x+h) - g(x-h)) / (2h)$</span> &#40;<span class="math">$g$</span> is continuous&#41; is <em>indeterminate</em> at <span class="math">$h=0$</span>. What type?</p>
 
 
-<form name="WeaveQuestion" data-id="xJfs6wTU" data-controltype="radio">
+<form name="WeaveQuestion" data-id="HVX1MbAV" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_xJfs6wTU" id="radio_xJfs6wTU_1" value="1">
-  <label class="form-check-label" for="radio_xJfs6wTU_1">
+  <input class="form-check-input" type="radio" name="radio_HVX1MbAV" id="radio_HVX1MbAV_1" value="1">
+  <label class="form-check-label" for="radio_HVX1MbAV_1">
     &#36;0/0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_xJfs6wTU" id="radio_xJfs6wTU_2" value="2">
-  <label class="form-check-label" for="radio_xJfs6wTU_2">
+  <input class="form-check-input" type="radio" name="radio_HVX1MbAV" id="radio_HVX1MbAV_2" value="2">
+  <label class="form-check-label" for="radio_HVX1MbAV_2">
     &#36;\infty/\infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_xJfs6wTU" id="radio_xJfs6wTU_3" value="3">
-  <label class="form-check-label" for="radio_xJfs6wTU_3">
+  <input class="form-check-input" type="radio" name="radio_HVX1MbAV" id="radio_HVX1MbAV_3" value="3">
+  <label class="form-check-label" for="radio_HVX1MbAV_3">
     &#36;0^0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_xJfs6wTU" id="radio_xJfs6wTU_4" value="4">
-  <label class="form-check-label" for="radio_xJfs6wTU_4">
+  <input class="form-check-input" type="radio" name="radio_HVX1MbAV" id="radio_HVX1MbAV_4" value="4">
+  <label class="form-check-label" for="radio_HVX1MbAV_4">
     &#36;\infty - \infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_xJfs6wTU" id="radio_xJfs6wTU_5" value="5">
-  <label class="form-check-label" for="radio_xJfs6wTU_5">
+  <input class="form-check-input" type="radio" name="radio_HVX1MbAV" id="radio_HVX1MbAV_5" value="5">
+  <label class="form-check-label" for="radio_HVX1MbAV_5">
     &#36;0 \cdot \infty&#36;
 
   </label>
 </div>
 
-<div id="xJfs6wTU_message"></div>
+<div id="HVX1MbAV_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_xJfs6wTU']").on("change", function() {
+$("input:radio[name='radio_HVX1MbAV']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#xJfs6wTU_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#HVX1MbAV_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#xJfs6wTU_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#HVX1MbAV_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -647,55 +649,55 @@ $("input:radio[name='radio_xJfs6wTU']").on("change", function() {
 <p>This function <span class="math">$f(x) = x \log(x)$</span> is <em>indeterminate</em> at <span class="math">$x=0$</span>. What type?</p>
 
 
-<form name="WeaveQuestion" data-id="5Akh79gt" data-controltype="radio">
+<form name="WeaveQuestion" data-id="Ixh4kfO5" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_5Akh79gt" id="radio_5Akh79gt_1" value="1">
-  <label class="form-check-label" for="radio_5Akh79gt_1">
+  <input class="form-check-input" type="radio" name="radio_Ixh4kfO5" id="radio_Ixh4kfO5_1" value="1">
+  <label class="form-check-label" for="radio_Ixh4kfO5_1">
     &#36;0/0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_5Akh79gt" id="radio_5Akh79gt_2" value="2">
-  <label class="form-check-label" for="radio_5Akh79gt_2">
+  <input class="form-check-input" type="radio" name="radio_Ixh4kfO5" id="radio_Ixh4kfO5_2" value="2">
+  <label class="form-check-label" for="radio_Ixh4kfO5_2">
     &#36;\infty/\infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_5Akh79gt" id="radio_5Akh79gt_3" value="3">
-  <label class="form-check-label" for="radio_5Akh79gt_3">
+  <input class="form-check-input" type="radio" name="radio_Ixh4kfO5" id="radio_Ixh4kfO5_3" value="3">
+  <label class="form-check-label" for="radio_Ixh4kfO5_3">
     &#36;0^0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_5Akh79gt" id="radio_5Akh79gt_4" value="4">
-  <label class="form-check-label" for="radio_5Akh79gt_4">
+  <input class="form-check-input" type="radio" name="radio_Ixh4kfO5" id="radio_Ixh4kfO5_4" value="4">
+  <label class="form-check-label" for="radio_Ixh4kfO5_4">
     &#36;\infty - \infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_5Akh79gt" id="radio_5Akh79gt_5" value="5">
-  <label class="form-check-label" for="radio_5Akh79gt_5">
+  <input class="form-check-input" type="radio" name="radio_Ixh4kfO5" id="radio_Ixh4kfO5_5" value="5">
+  <label class="form-check-label" for="radio_Ixh4kfO5_5">
     &#36;0 \cdot \infty&#36;
 
   </label>
 </div>
 
-<div id="5Akh79gt_message"></div>
+<div id="Ixh4kfO5_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_5Akh79gt']").on("change", function() {
+$("input:radio[name='radio_Ixh4kfO5']").on("change", function() {
   correct = this.value == 5;
 
   if(correct) {
-     $("#5Akh79gt_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#Ixh4kfO5_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#5Akh79gt_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#Ixh4kfO5_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -711,32 +713,32 @@ $("input:radio[name='radio_5Akh79gt']").on("change", function() {
 \]</p>
 
 
-<form name="WeaveQuestion" data-id="a8YlXgvr" data-controltype="radio">
+<form name="WeaveQuestion" data-id="5Yh33x9a" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_a8YlXgvr" id="radio_a8YlXgvr_1" value="1">
-  <label class="form-check-label" for="radio_a8YlXgvr_1">
+  <input class="form-check-input" type="radio" name="radio_5Yh33x9a" id="radio_5Yh33x9a_1" value="1">
+  <label class="form-check-label" for="radio_5Yh33x9a_1">
     Yes. It is of the form &#36;0/0&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_a8YlXgvr" id="radio_a8YlXgvr_2" value="2">
-  <label class="form-check-label" for="radio_a8YlXgvr_2">
+  <input class="form-check-input" type="radio" name="radio_5Yh33x9a" id="radio_5Yh33x9a_2" value="2">
+  <label class="form-check-label" for="radio_5Yh33x9a_2">
     No. It is not indeterminate
   </label>
 </div>
 
-<div id="a8YlXgvr_message"></div>
+<div id="5Yh33x9a_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_a8YlXgvr']").on("change", function() {
+$("input:radio[name='radio_5Yh33x9a']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#a8YlXgvr_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#5Yh33x9a_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#a8YlXgvr_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#5Yh33x9a_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -753,28 +755,28 @@ L = \lim_{x \rightarrow 0} \frac{4x - \sin(x)}{x}.
 <p>What is <span class="math">$L$</span>?</p>
 
 
-<form name='WeaveQuestion' data-id='4kdqmJZm' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='adsbgQPF' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="4kdqmJZm" type="number" class="form-control">
+<input id="adsbgQPF" type="number" class="form-control">
 
 </div>
 
-<div id='4kdqmJZm_message'></div>
+<div id='adsbgQPF_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#4kdqmJZm').on('change', function() {
+$('#adsbgQPF').on('change', function() {
   correct = Math.abs(this.value - 3.0) <= 0.001;
 
   if(correct) {
-     $('#4kdqmJZm_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#adsbgQPF_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#4kdqmJZm_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#adsbgQPF_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -790,28 +792,28 @@ L = \lim_{x \rightarrow 0} \frac{\sqrt{1+x} - 1}{x}.
 <p>What is <span class="math">$L$</span>?</p>
 
 
-<form name='WeaveQuestion' data-id='wMRzoRtX' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='GXwnQ1LJ' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="wMRzoRtX" type="number" class="form-control">
+<input id="GXwnQ1LJ" type="number" class="form-control">
 
 </div>
 
-<div id='wMRzoRtX_message'></div>
+<div id='GXwnQ1LJ_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#wMRzoRtX').on('change', function() {
+$('#GXwnQ1LJ').on('change', function() {
   correct = Math.abs(this.value - 0.5) <= 0.001;
 
   if(correct) {
-     $('#wMRzoRtX_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#GXwnQ1LJ_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#wMRzoRtX_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#GXwnQ1LJ_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -827,28 +829,28 @@ L = \lim_{x \rightarrow 0} \frac{x - \sin(x)}{x^3}.
 <p>What is <span class="math">$L$</span>?</p>
 
 
-<form name='WeaveQuestion' data-id='Ec0v2b6f' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='n29PrK44' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="Ec0v2b6f" type="number" class="form-control">
+<input id="n29PrK44" type="number" class="form-control">
 
 </div>
 
-<div id='Ec0v2b6f_message'></div>
+<div id='n29PrK44_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#Ec0v2b6f').on('change', function() {
+$('#n29PrK44').on('change', function() {
   correct = Math.abs(this.value - 0.16666666666666666) <= 0.001;
 
   if(correct) {
-     $('#Ec0v2b6f_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#n29PrK44_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#Ec0v2b6f_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#n29PrK44_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -864,28 +866,28 @@ L = \lim_{x \rightarrow 0} \frac{1 - x^2/2 - \cos(x)}{x^3}.
 <p>What is <span class="math">$L$</span>?</p>
 
 
-<form name='WeaveQuestion' data-id='YwIRnAmT' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='ujeZo3jw' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="YwIRnAmT" type="number" class="form-control">
+<input id="ujeZo3jw" type="number" class="form-control">
 
 </div>
 
-<div id='YwIRnAmT_message'></div>
+<div id='ujeZo3jw_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#YwIRnAmT').on('change', function() {
+$('#ujeZo3jw').on('change', function() {
   correct = Math.abs(this.value - 0.0) <= 0.001;
 
   if(correct) {
-     $('#YwIRnAmT_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#ujeZo3jw_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#YwIRnAmT_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#ujeZo3jw_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -901,28 +903,28 @@ L = \lim_{x \rightarrow 0} \frac{1}{x} - \frac{1}{\sin(x)}.
 <p>What is <span class="math">$L$</span>?</p>
 
 
-<form name='WeaveQuestion' data-id='SiT6odRu' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='5LTS5aPy' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="SiT6odRu" type="number" class="form-control">
+<input id="5LTS5aPy" type="number" class="form-control">
 
 </div>
 
-<div id='SiT6odRu_message'></div>
+<div id='5LTS5aPy_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#SiT6odRu').on('change', function() {
+$('#5LTS5aPy').on('change', function() {
   correct = Math.abs(this.value - 0.0) <= 0.001;
 
   if(correct) {
-     $('#SiT6odRu_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#5LTS5aPy_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#SiT6odRu_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#5LTS5aPy_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -938,28 +940,28 @@ L = \lim_{x \rightarrow \infty} \log(x)/x
 <p>What is <span class="math">$L$</span>?</p>
 
 
-<form name='WeaveQuestion' data-id='Q8nIEyhE' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='dtJm003X' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="Q8nIEyhE" type="number" class="form-control">
+<input id="dtJm003X" type="number" class="form-control">
 
 </div>
 
-<div id='Q8nIEyhE_message'></div>
+<div id='dtJm003X_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#Q8nIEyhE').on('change', function() {
+$('#dtJm003X').on('change', function() {
   correct = Math.abs(this.value - 0.0) <= 0.001;
 
   if(correct) {
-     $('#Q8nIEyhE_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#dtJm003X_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#Q8nIEyhE_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#dtJm003X_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -976,32 +978,32 @@ $('#Q8nIEyhE').on('change', function() {
 <p>Consider <span class="math">$x^{\log(x)} = e^{\log(x)\log(x)}$</span>.</p>
 
 
-<form name="WeaveQuestion" data-id="CniG4RLM" data-controltype="radio">
+<form name="WeaveQuestion" data-id="5qCrs43h" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_CniG4RLM" id="radio_CniG4RLM_1" value="1">
-  <label class="form-check-label" for="radio_CniG4RLM_1">
+  <input class="form-check-input" type="radio" name="radio_5qCrs43h" id="radio_5qCrs43h_1" value="1">
+  <label class="form-check-label" for="radio_5qCrs43h_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_CniG4RLM" id="radio_CniG4RLM_2" value="2">
-  <label class="form-check-label" for="radio_CniG4RLM_2">
+  <input class="form-check-input" type="radio" name="radio_5qCrs43h" id="radio_5qCrs43h_2" value="2">
+  <label class="form-check-label" for="radio_5qCrs43h_2">
     No
   </label>
 </div>
 
-<div id="CniG4RLM_message"></div>
+<div id="5qCrs43h_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_CniG4RLM']").on("change", function() {
+$("input:radio[name='radio_5qCrs43h']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#CniG4RLM_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#5qCrs43h_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#CniG4RLM_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#5qCrs43h_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1018,58 +1020,88 @@ $("input:radio[name='radio_CniG4RLM']").on("change", function() {
 <p>&#40;Hint, express as <span class="math">$\exp^{\tan(\pi/2 \cdot x) \cdot \log(2-x)}$</span> and take the limit of the resulting exponent.&#41;</p>
 
 
-<form name="WeaveQuestion" data-id="CzSoF6RS" data-controltype="radio">
+<form name="WeaveQuestion" data-id="DmnRXQDE" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_CzSoF6RS" id="radio_CzSoF6RS_1" value="1">
-  <label class="form-check-label" for="radio_CzSoF6RS_1">
+  <input class="form-check-input" type="radio" name="radio_DmnRXQDE" id="radio_DmnRXQDE_1" value="1">
+  <label class="form-check-label" for="radio_DmnRXQDE_1">
     &#36;1&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_CzSoF6RS" id="radio_CzSoF6RS_2" value="2">
-  <label class="form-check-label" for="radio_CzSoF6RS_2">
+  <input class="form-check-input" type="radio" name="radio_DmnRXQDE" id="radio_DmnRXQDE_2" value="2">
+  <label class="form-check-label" for="radio_DmnRXQDE_2">
+    It does not exist
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_DmnRXQDE" id="radio_DmnRXQDE_3" value="3">
+  <label class="form-check-label" for="radio_DmnRXQDE_3">
     &#36;0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_CzSoF6RS" id="radio_CzSoF6RS_3" value="3">
-  <label class="form-check-label" for="radio_CzSoF6RS_3">
-    &#36;e^&#123;2/\pi&#125;&#36;
-
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_CzSoF6RS" id="radio_CzSoF6RS_4" value="4">
-  <label class="form-check-label" for="radio_CzSoF6RS_4">
-    It does not exist
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_CzSoF6RS" id="radio_CzSoF6RS_5" value="5">
-  <label class="form-check-label" for="radio_CzSoF6RS_5">
+  <input class="form-check-input" type="radio" name="radio_DmnRXQDE" id="radio_DmnRXQDE_4" value="4">
+  <label class="form-check-label" for="radio_DmnRXQDE_4">
     &#36;&#123;2\pi&#125;&#36;
 
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_DmnRXQDE" id="radio_DmnRXQDE_5" value="5">
+  <label class="form-check-label" for="radio_DmnRXQDE_5">
+    &#36;e^&#123;2/\pi&#125;&#36;
 
-<div id="CzSoF6RS_message"></div>
+  </label>
+</div>
+
+<div id="DmnRXQDE_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_CzSoF6RS']").on("change", function() {
-  correct = this.value == 3;
+$("input:radio[name='radio_DmnRXQDE']").on("change", function() {
+  correct = this.value == 5;
 
   if(correct) {
-     $("#CzSoF6RS_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#DmnRXQDE_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#CzSoF6RS_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#DmnRXQDE_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
 </script>
+
+
+<hr />
+
+
+<footer class="footer">
+<div class="span10 offset1 d-flex justify-content-end">
+
+<a href="../derivatives/more_zeros.html" aria-label="Previous section">
+  <i class="bi bi-arrow-left-circle-fill"></i>
+</a>
+
+&nbsp;
+
+<a href="../derivatives/implicit_differentiation.html" aria-label="Next section">
+  <i class="bi bi-arrow-right-circle-fill"></i>
+</a>
+
+&nbsp;
+
+<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/derivatives/lhospitals_rule.jmd" aria-label="Suggest edt">
+  <i class="bi bi-pencil-square"></i>
+</a>
+
+&nbsp;
+
+<a href="../misc/toc.html">Calculus with Julia</a>
+
+</div>
+</footer>
 
 
   </div>

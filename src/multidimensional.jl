@@ -86,7 +86,7 @@ end
 
 ## The gradient in SymPy.
 import ForwardDiff: gradient
-gradient(ex::SymPy.Sym, vars::AbstractArray=free_symbols(ex)) = diff.(ex, [vars...])
+
 gradient(f::Function) = (x, xs...) -> ForwardDiff.gradient(f, vcat(x, xs...))
 
 
@@ -106,20 +106,20 @@ function curl(J::Matrix)
         throw(ArgumentError("Wrong size jacobian matrix for a curl"))
     end
 end
-curl(F::Vector{Sym}, vars=free_symbols(F)) = curl(F.jacobian(vars))
 curl(F::Tuple) = curl(F[1], F[2])
 curl(F::Function, pt) = curl(ForwardDiff.jacobian(F, float.(pt)))
 curl(F::Function) = (pt, pts...) -> curl(F, vcat(pt, pts...))
+
 
 """
     divergence(F)
 
 Find divergence of a 3-D vector vield.
 """
-divergence(F::Vector{Sym}, vars=free_symbols(F)) = sum(diff.(F, vars))
 divergence(F::Tuple) = divergence(F[1], F[2])
 divergence(F::Function, pt) = sum(diag(ForwardDiff.jacobian(F, float.(pt))))
 divergence(F::Function) = (pt, pts...) -> divergence(F, vcat(pt, pts...))
+
 
 ## Is this a bad idea?
 ## syntax is a bit heavy with parentheses

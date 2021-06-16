@@ -555,7 +555,7 @@ Similarly, if a function has a decreasing derivative on $I$ then it
 will be concave down on $I$.
 
 
-The relationship between increasing functions and their derivatives - if $f'(x) > 0 $ on $I$ it is increasing on $I$ - 
+The relationship between increasing functions and their derivatives - if $f'(x) > 0 $ on $I$ it is increasing on $I$ -
 gives this second characterization of concavity when the second
 derivative exists:
 
@@ -1189,4 +1189,11 @@ choices = [
 ]
 ans = 1
 radioq(choices, ans)
+```
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

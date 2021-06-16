@@ -4,6 +4,7 @@
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
 using Plots
+plotly()
 nothing
 ```
 
@@ -166,8 +167,8 @@ turns up to be the natural base to use for many problems arising in
 Calculus.  In `Julia` there are a few mathematical constants that get
 special treatment, so that when needed, extra precision is
 available. The value `e` is not immediately assigned to this value,
-rather `ℯ` is. This is typed `\euler[tab]`. The constant `e` is though
-too important to other to assign to a single number. However, users
+rather `ℯ` is. This is typed `\euler[tab]`. The constant `e` is thought
+too important for other uses to reserve the name for  a single number. However, users
 can issue the command `using Base.MathConstants` and `e` will be
 available to represent this number. In `CalculusWithJulia`, the value
 `e` is defined to be the floating point number returned by
@@ -175,7 +176,7 @@ available to represent this number. In `CalculusWithJulia`, the value
 advantages.
 
 
-A [cute](https://www.mathsisfun.com/numbers/e-eulers-number.html) appearance of ``e`` is in this problem: Let ``a>0``. Cut ``a`` into ``n`` equal pieces and then multiply them. What ``n`` will produce the largest value? Note that the formula is ``(a/n)^n`` for a given ``a`` and ``nn`.
+A [cute](https://www.mathsisfun.com/numbers/e-eulers-number.html) appearance of ``e`` is in this problem: Let ``a>0``. Cut ``a`` into ``n`` equal pieces and then multiply them. What ``n`` will produce the largest value? Note that the formula is ``(a/n)^n`` for a given ``a`` and ``nn``.
 
 Suppose ``a=5`` then for ``n=1,2,3`` we get:
 
@@ -314,7 +315,7 @@ a^{\log_a(u) + \log_a(v)} = a^{\log_a(u)} \cdot a^{\log_a(v)} = u \cdot v.
 
 Taking $\log_a$ of *both* sides yields $\log_a(u) + \log_a(v)=\log_a(u\cdot v)$. That is logarithms turn products into sums (of logs).
 
-Similarly, the relation $(a^{x})^y =a^{x \cdot y}, a > 0$s can be used to see that
+Similarly, the relation $(a^{x})^y =a^{x \cdot y}, a > 0$ can be used to see that
 $\log_a(b^x) = x \cdot\log_a(b)$. This follows, as applying $a^x$ to each side yields the
 same answer.
 
@@ -347,10 +348,15 @@ b^{\log_b(a) \cdot \log_b(x)/\log_b(a) } = b^{\log_b(x)} = x.
 
 In short, we have these three properties of logarithmic functions:
 
-> if $a, b$ are positive bases; $u,v$ are positive numbers; and $x$ is any real number then:
-> * $\log_a(uv) = \log_a(u) + \log_a(v)$,
-> * $\log_a(u^x) = x \log_a(u)$, and
-> * $\log_a(u) = \log_b(u)/\log_b(a)$.
+If $a, b$ are positive bases; $u,v$ are positive numbers; and $x$ is any real number then:
+
+```math
+\begin{align*}
+\log_a(uv) &= \log_a(u) + \log_a(v),
+\log_a(u^x) &= x \log_a(u), \text{ and}
+\log_a(u) &= \log_b(u)/\log_b(a).
+\end{align*}
+```
 
 ##### Example
 
@@ -388,7 +394,7 @@ We get the actual rule should be the "Rule of $69.314...$."
 
 ###### Question
 
-Suppose ever $4$ days, a population doubles. If the population starts
+Suppose every $4$ days, a population doubles. If the population starts
 with $2$ individuals, what is its size after $4$ weeks?
 
 ```julia; echo=false
@@ -483,7 +489,7 @@ radioq(choices, ans, keep_order=true)
 The [Loudest band](https://en.wikipedia.org/wiki/Loudest_band) can
 possibly be measured in [decibels](https://en.wikipedia.org/wiki/Decibel). In 1976 the Who recorded $126$
 db and in 1986 Motorhead recorded $130$ db. Suppose both measurements
-record power through the formula $db = 10 \log_10(P)$. What is the
+record power through the formula $db = 10 \log_{10}(P)$. What is the
 ratio of the Motorhead $P$ to the $P$ for the Who?
 
 ```julia; echo=false
@@ -594,4 +600,8 @@ L"a^{y-x} < 0"
 ]
 ans = 1
 radioq(choices, ans)
+```
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

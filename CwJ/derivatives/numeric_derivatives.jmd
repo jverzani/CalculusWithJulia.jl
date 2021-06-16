@@ -318,3 +318,10 @@ fp_(h) = 3*32h^2 - 62
 c = 2
 numericq(fp_(2))
 ```
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

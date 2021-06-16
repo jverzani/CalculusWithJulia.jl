@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+
+<style>
+.julia {display: block; font-family: "Source Code Pro";
+        color:#0033CC;
+        }
+.hljl {font-family: "Source Code Pro";
+        color:#0033CC;
+      }
+.output, .julia-error {
+    border-left: thick solid #ff0000;
+    padding: 5px;
+    background-color: #f5f5f5;
+}
+body { padding-top: 60px; }
+.output {color:#0033CC;}
+h5:before {content:"\2746\ ";}
+h6:before {content:"\2742\ ";}
+pre {display: block;}
+th, td {
+  padding: 5px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+tr:hover {background-color: #f5f5f5;}
+
+.admonition-title:before {content:"\2746\ ";}
+.admonition-title { color:#0033CC}
+
+
+</style>
+
+<!-- .julia:before {content: "julia> "} -->
+
+<style></style>
+
+<script src="https://code.jquery.com/jquery.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/katex.min.css" integrity="sha384-ThssJ7YtjywV52Gj4JE/1SQEDoMEckXyhkFVwaf4nDSm5OBlXeedVYjuuUd0Yua+" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/katex.min.js" integrity="sha384-Bi8OWqMXO1ta+a4EPkZv7bYGIes7C3krGSZoTGNTAnAn5eYQc7IIXrJ/7ck1drAi" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+	onload="renderMathInElement(document.body);"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          // customised options
+          // • auto-render specific keys, e.g.:
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true},
+	      {left: "\\begin{equation}", right: "\\end{equation}", display: true},
+              {left: "\\begin{align}", right: "\\end{align}", display: true},
+	      {left: "\\begin{alignat}", right: "\\end{alignat}", display: true},
+	      {left: "\\begin{gather}", right: "\\end{gather}", display: true}
+          ],
+          // • rendering keys, e.g.:
+          throwOnError : false
+        });
+    });
+</script>
+<script>
+window.PlotlyConfig = {MathJaxConfig: 'local'}
+</script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<!-- highlight Julia Code -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/julia.min.js"></script>
+
+<script type="text/javascript">
+$( document ).ready(function() {
+  $("h1").each(function(index) {
+       var title = $( this ).text()
+       $("#page_title").html("<strong>" + title + "</strong>");
+       document.title = title
+  });
+  $( "h2" ).each(function( index ) {
+    var nm =  $( this ).text();
+    var id = $.trim(nm).replace(/ /g,'');
+    this.id = id
+    $("#page_dropdown").append("<li><a class='dropdown-item' href='#" + id + "'>" + nm + "</a></li>");
+  });
+    $('[data-toggle="popover"]').popover();
+});
+</script>
+
+<link rel="shortcut icon" href="https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/misc/logo.png" type="image/x-icon" />
+
+</head>
+
+
+<body data-spy="scroll" >
+
+  <header class="navbar navbar-expand-md navbar-dark bd-navbar">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top navbar-nav">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="https://juliahub.com/docs/CalculusWithJulia/">
+      <img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAADsAAAAwCAYAAACv4gJwAAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TtVIqDu0g4pChOlkQleKoVShChVArtOpgcukXNGlIUlwcBdeCgx+LVQcXZ10dXAVB8APEzc1J0UVK/F9aaBHjwXE/3t173L0DhEaFaVbPBKDptplOJsRsblUMvKIPQYQRhyAzy5iTpBQ8x9c9fHy9i/Es73N/jgE1bzHAJxLPMsO0iTeI45u2wXmfOMJKskp8Tjxu0gWJH7mutPiNc9FlgWdGzEx6njhCLBa7WOliVjI14mniqKrplC9kW6xy3uKsVWqsfU/+wlBeX1nmOs0RJLGIJUgQoaCGMiqwEaNVJ8VCmvYTHv5h1y+RSyFXGYwcC6hCg+z6wf/gd7dWYWqylRRKAL0vjvMxCgR2gWbdcb6PHad5AvifgSu94682gJlP0usdLXoEDG4DF9cdTdkDLneAoSdDNmVX8tMUCgXg/Yy+KQeEb4HgWqu39j5OH4AMdZW6AQ4OgbEiZa97vLu/u7d/z7T7+wFQOXKZ0cNEOAAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAAuIwAALiMBeKU/dgAAAAd0SU1FB+UGChM4DoTnuYAAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAKU0lEQVRo3u2ZeXRU1R3Hf/e+dbY3k8lMlklC9mASImspIaxFEESpS23V4lbKUU4LaJVWj1utWtBqtXrqUsCVntODtFUULSjIIpsBWUP2bZJMMskkM5NZ3pu33f7RVgso2Z7H2Hr/vvf9fp+Ze+/v9/1egG/H/+ZAX3WAklwMy36WatIBKFYrwp7IYrtJ9Th0pKgh7lSg27JVIihGGCDSHXd3qd9Y2J9fZwU8MTe/DU1dxYNQipBGElgMxZEUowBTFt0s0DpniyM9ZtY7txcyB17+9S864t842OVzFkLh7OLpNSa49whTPT6q1+kXSiMHz1ImxB3binT54dsf+mPwq8iJ+io+uvuOI2AtwN8/IPiu38OcnKDqLQPGCREvVWumzWNk19g7ypdXb963NTzqYZ+8+UaIu6NX7HBULzxI1c2mNB8/6MVaj/2YmeLSdJKzouKqk3/d+0F01MLedo0FrGPLyz+x9tx0kKqZSWmd/JAT0gJJx8zI5NKYossW8vt2fdgijzrYB1faQS5JKfBTxWv3McfLhgP6n4G1gMPHW5MdibyMxYvbD+3eEVGMyBEbBesYY0LdMP3mo0ztBDwC0H8NAiH1qKuKTyyp1yxTjMrRMFgCCBy6uzBCWg2rlTIKM6nSnMxRB2tSLwKMdGLkHeDDoV6rLiSPOtiC0BqKBk0xElYHovOAyKiDZdVkHhBoRpcylpiYUQerYlFGgLDRsCqS1VEH22z/g6ISxBjMikQw7mQYBtvPHQKdYEOblFTdJogoER11sAAA/Tjmo1GSYd/kicD7+IOtow7WqgCxkoObJ2lTvAQ79JF+j6GLomNlx75U3H1q1LWL7+6Mwqr5dDsjFcdELskRQP3piEjDkpAqkxe8VCw+ngZt96+753DnqBQCb30YgRXzs6oyY4Vur5nIYYhnDxVYZfKCl0tF+yfH3c/f9dALdUbmN+Rt/LerJ0P9dbOSm2+Z+4U374/u2wLjxHkv/rjv4uO5qPhjHSfpgwfND14uFR2siJT8ee/7vuNfq55tWXYJEsJkktglzZOjasGdU3K7dY7EKrv6z5r36oFXyOrypZ+YtbiVoj05nVTQCeTCboudKlPmiWOPlYrmJ598afOxnQ3bvj5bpv762RapR5onB9V0IEAAADCHCJfMVgrp/InM9bvOa+vWP+aBKpg6p4H1rKQIFMSpWJ+PCgWiSJExQSiZmMzpapJHAYq4NHTAg46se+JXlf4vy2FJWhk8cGMJiIS2IEpUPKFsOf+lp42DPb3qMqiOjS8LyqZbdZWYEqzGW1F3eT9t6+ZjliqEEGI5VFOAvRtmbdxwXk3c+JgHzrB4jEIE3i3NdCYrqS6e2EwEND2C+yLdXLM/wh6OW0DvWbemPXTu+n33TQd7aEaqCGmXBmh7uSLbx4uKLZ3Gmsoy/Y08E/o0RQrvIXz93iC/X5y3rnp4sAue+lSY5j18a0GXd0xRy/6GkEf2sJK+xO5X7RqDoCeLrbL3qf+I40K+PrPYcyrjove3ZM3/IHC7w5Dm/cyKe2wn2XHrcDT1CiJbiDnGkXNlgUYRiFtFirCRqNXS8sQ4sebVvBefJYOGHVd0EXznurXjJvV4b5p69M1mhEXiz2Irkv1KBRfVz7rUQmlMSGHR226v3NHtmeDcVzxX7bDbnnvt/isTw5aLYIJTyx8oOs3lric9+TmMTA3qx4sLccolnHlrrOj/ZcaGB8UBYTtWLEBvk+/NM/eHF5TVbG8Ip9F2mcVLXO1yFvqSezVhxVpvGvNxaqt8UKGd9P7SS7OnJaoeX7zptUBEG1p/QSGAyhW/LW1CY99g/NlOShtaqRbNMrE5qw9naVW3lj7/lPilsI1LZ/PeeM7iOj73kim1W4915nLFtrC6yNqrDWizEAwQyGRbuYT+Dh1xJ07lTS+ZE3zvWSGNrc5c/9Hgm5M7144JS2XvCv50YbhKVuZUnEhp2pPBb7pl1hPbtLPqbOXScqi5ekZG1Bu/9rSpcFFJ544znbncZe4O+arBgAIAIB3A7ZWzsQrL+tN6c1JC/p5qavINwVZxQePS2dygzujylSASz92CP80+EsnOJmgdhTPnInHO3LOaip3XfxfMQZgs+qTFbZaLsziqGycs2s3pTYkJdGLoEa29qsnlU67h2cpxbYIrUw7IOdE28draH8wc0F6xElcGEl2LEBm5O2GJmNUwSr2t95anP9u9eFtdB+gySdJlHbwe68SStkOzk3yKaySBaIlAelNiUqpWPTfgLrJrcc0CaGCt28Y7rtSjybQhDQQBECX3pH4mkvcZ7O+PtgNtoZsBAcSQDWhZM6xfdsR8Hd6kojGUmYrzTtp/obm7HymDLkhdZI4zhr0/oYiTqrU4F5x1Znkn4yU2AexR1BVx0gGjgmm0fFpDmMIcbilc/9EFtyYVmi5IUnKpke0hL9EQ0NLKN6/J+xx2S2u3IttcnRwBVWFQrRGBJAETc1yrQ0AQKzBN8gAuq6BQOo9Uo20dYEGlfvi7ps9h1+ysAs1mbyIACAHUqPzId1JMoDrsXWqEsJTIO9kBNak7nqJQWI4aDcvjePg8iRdKtjaoLAJ3m9wdcdJ9Iw2iMLgGAEHAIjRn/2nngJ0Fm3DKGCf6jARVKR3xWPSdB/vTE72JoCO1B2lAZHZkW1myYcIl9Nqo4DE3unMHJcBX7NlIVFppNBI2YVKRRZbrz4P1790ELUJ6o8wKNCCoUbnhb+W4nepM6lTCDXnTMuqcxfsHs+ZN7wmIc9JRjdKN87IZCStU6MgXOhUxE729uqCiwN2mdEWcdGi4QWQG1+iIQe1moevQy3cN+hwWJFpeT7g7DTm3Kq2Dydq2nRb2Nn0h7MrGZ4JhkyMQ5zN4hUPD8n8SFkxYRa89nT+/JF8J7NBOvDPotTdseLwvm2p4PGaPjdidVF2+WJnU+psZj35e8s6CnfzKLpjVu2fr8expE1SKqdWGUd9jDsovauMZigZphrr/zFDWNoky5IqJNxy2+n0Kqw37HMUcETwGNzx6sK619YKGm8MWbZjoP3KigV+YFXabYkMN5BcKg5229PSJ3R/uWPb+4SE/dKVsvFfPVBtWx10dbRpFhgwsmmSKsjdtSobWv9y0e8PZbey5k/sQSA6to3FKS0I7PnZqVorFR+xSS++AEg8w8tnHFyDCNk2pefckk21q3umLDOufKX1hbWj36oevDnnCj8TimfNNQQfGOhpA1mmgO/wiY2p/Nok5sCH/mTfIoJyKM1dUlIodYgVBCGpy5uWHOVtSSizgz/ZVdlCapP/38qg1w9SQPj5PollTkb+6ztlX009ZKM1WZHstf+OuEb3AdfzkMYgw1MwGLn1VLJZZbg7atXMVkcJoWE3qUZxc25Y8sfu514/vb3+ocvvgPaiGG+eYRL84Ff6NRRCG2pSZ7npbeppOMwjRJpoQnYASUy2qqkz2H2lOijV/ZsNgHvdVvHfoVMigh3jv7atRC5NWWsemLBI0SOaIbiKA9BhGUQ1r3nFS69+PVtUFlu9+E74d/4/jnwl6l8LhlFUrAAAAAElFTkSuQmCC"/>
+      Calculus with Julia</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <ul class="nav navbar-nav navbar-right">
+      <li class="nav-item dropdown">
+	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+	   role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Jump to...
+          </a>
+
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" role="menu" id="page_dropdown"></ul>
+      </li>
+    </ul>
+
+    </div>
+  </div>
+</nav>
+
+</header>
+          <div class="title">
+            
+            
+            
+          </div>
+
+
+
+<div class="container-fluid">
+  <div class="span10 offset1">
+    <h1>Calculus plots with Makie</h1>
+<h2>XXX This needs a total rewrite for the new Makie</h2>
+
+
+<p>The <a href="https://github.com/JuliaPlots/Makie.jl">Makie.jl webpage</a> says</p>
+<blockquote>
+<p>From the Jpanese word Maki-e, which is a technique to sprinkle lacquer with gold and silver powder. Data is basically the gold and silver of our age, so let&#39;s spread it out beautifully on the screen&#33;</p>
+</blockquote>
+<p><code>Makie</code> itself is a metapackage for a rich ecosystem. We show how to use the interface provided by <code>AbstractPlotting</code> and the <code>GLMakie</code> backend to produce the familiar graphics of calculus.  We do not discuss the <code>MakieLayout</code> package which provides a means to layout multiple graphics and add widgets, such as sliders and buttons, to a layout. We do not discuss <code>MakieRecipes</code>. For <code>Plots</code>, there are &quot;recipes&quot; that make some of the plots more straightforward.  We do not discuss the <a href="https://github.com/JuliaPlots/AlgebraOfGraphics.jl"><code>AlgebraOfGraphics</code></a> which presents an interface for the familiar graphics of statistics.</p>
+<h2>Scenes</h2>
+<p>Makie draws graphics onto a canvas termed a &quot;scene&quot; in the Makie documentation. There are <code>GLMakie</code>, <code>WGLMakie</code>, and <code>CairoMakie</code> backends for different types of canvases. In the following, we have used <code>GLMakie</code>. <code>WGLMakie</code> is useful for incorporating <code>Makie</code> plots into web-based technologies.</p>
+<p>We begin by loading our two packages:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>AbstractPlotting</span><span class='hljl-t'>
+</span><span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>GLMakie</span><span class='hljl-t'>
+</span><span class='hljl-cs'>#using WGLMakie; WGLMakie.activate!()</span><span class='hljl-t'>
+</span><span class='hljl-cs'>#AbstractPlotting.set_theme!(scale_figure=false, resolution = (480, 400))</span>
+</pre>
+
+
+
+<p>The <code>Makie</code> developers have workarounds for the delayed time to first plot, but without utilizing these the time to load the package is lengthy.</p>
+<p>A scene is produced with <code>Scene&#40;&#41;</code> or through a plotting primitive:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>scene</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>Scene</span><span class='hljl-p'>()</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: Scene not defined
+</pre>
+
+
+<p>We see next how to move beyond the blank canvas.</p>
+<h2>Points &#40;<code>scatter</code>&#41;</h2>
+<p>The task of plotting the points, say <span class="math">$(1,2)$</span>, <span class="math">$(2,3)$</span>, <span class="math">$(3,2)$</span> can be done different ways. Most plotting packages, and <code>Makie</code> is no exception, allow the following: form vectors of the <span class="math">$x$</span> and <span class="math">$y$</span> values then plot those with <code>scatter</code>:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-ni'>3</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-n'>ys</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-ni'>2</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-nf'>scatter</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: scatter not defined
+</pre>
+
+
+<p>The <code>scatter</code> function creates and returns a <code>Scene</code> object, which when displayed shows the plot.</p>
+<p>The more generic <code>plot</code> function can also be used for this task.</p>
+<h3><code>Point2</code>, <code>Point3</code></h3>
+<p>When learning about points on the Cartesian plane, a &quot;<code>t</code>&quot;-chart is often produced:</p>
+<pre><code>x | y
+-----
+1 | 2
+2 | 3
+3 | 2</code></pre>
+<p>The <code>scatter</code> usage above used the columns. The rows are associated with the points, and these too can be used to produce the same graphic. Rather than make vectors of <span class="math">$x$</span> and <span class="math">$y$</span> &#40;and optionally <span class="math">$z$</span>&#41; coordinates, it is more idiomatic to create a vector of &quot;points.&quot; <code>Makie</code> utilizes a <code>Point</code> type to store a 2 or 3 dimensional point. The <code>Point2</code> and <code>Point3</code> constructors will be utilized.</p>
+<p><code>Makie</code> uses a GPU, when present, to accelerate the graphic rendering. GPUs employ 32-bit numbers. Julia uses an <code>f0</code> to indicate 32-bit floating points. Hence the alternate types <code>Point2f0</code> to store 2D points as 32-bit numbers and <code>Points3f0</code> to store 3D points as 32-bit numbers are seen in the documentation for Makie.</p>
+<p>We can plot vector of points in as direct manner as vectors of their coordinates:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>pts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-nf'>Point2</span><span class='hljl-p'>(</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-ni'>2</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>Point2</span><span class='hljl-p'>(</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-ni'>3</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>Point2</span><span class='hljl-p'>(</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-ni'>2</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+</span><span class='hljl-nf'>scatter</span><span class='hljl-p'>(</span><span class='hljl-n'>pts</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: scatter not defined
+</pre>
+
+
+<p>A typical usage is to generate points from some vector-valued function. Say we have a parameterized function <code>r</code> taking <span class="math">$R$</span> into <span class="math">$R^2$</span> defined by:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>r</span><span class='hljl-p'>(</span><span class='hljl-n'>t</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>t</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>cos</span><span class='hljl-p'>(</span><span class='hljl-n'>t</span><span class='hljl-p'>)]</span>
+</pre>
+
+
+<pre class="output">
+r &#40;generic function with 1 method&#41;
+</pre>
+
+
+<p>Then broadcasting values gives a vector of vectors, each identified with a point:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>ts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-ni'>3</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-n'>r</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>ts</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="output">
+3-element Vector&#123;Vector&#123;Float64&#125;&#125;:
+ &#91;0.8414709848078965, 0.5403023058681398&#93;
+ &#91;0.9092974268256817, -0.4161468365471424&#93;
+ &#91;0.1411200080598672, -0.9899924966004454&#93;
+</pre>
+
+
+<p>We can broadcast <code>Point2</code> over this to create a vector of <code>Point</code> objects:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>pts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>Point2</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>r</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>ts</span><span class='hljl-p'>))</span>
+</pre>
+
+
+<pre class="output">
+3-element Vector&#123;GeometryBasics.Point2&#123;Float64&#125;&#125;:
+ &#91;0.8414709848078965, 0.5403023058681398&#93;
+ &#91;0.9092974268256817, -0.4161468365471424&#93;
+ &#91;0.1411200080598672, -0.9899924966004454&#93;
+</pre>
+
+
+<p>These then can be plotted directly:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>scatter</span><span class='hljl-p'>(</span><span class='hljl-n'>pts</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: scatter not defined
+</pre>
+
+
+<p>The ploting of points in three dimesions is essentially the same, save the use of <code>Point3</code> instead of <code>Point2</code>.</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>r</span><span class='hljl-p'>(</span><span class='hljl-n'>t</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>t</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>cos</span><span class='hljl-p'>(</span><span class='hljl-n'>t</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>t</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-n'>ts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>4</span><span class='hljl-n'>pi</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>100</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>pts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>Point3</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>r</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>ts</span><span class='hljl-p'>))</span><span class='hljl-t'>
+</span><span class='hljl-nf'>scatter</span><span class='hljl-p'>(</span><span class='hljl-n'>pts</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: scatter not defined
+</pre>
+
+
+<hr />
+<p>To plot points generated in terms of vectors of coordinates, the component vectors must be created.  The &quot;<code>t</code>&quot;-table shows how, simply loop over each column and add the corresponding <span class="math">$x$</span> or <span class="math">$y$</span> &#40;or <span class="math">$z$</span>&#41; value.  This utility function does exactly that, returning the vectors in a tuple.</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>unzip</span><span class='hljl-p'>(</span><span class='hljl-n'>vs</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>Tuple</span><span class='hljl-p'>([</span><span class='hljl-n'>vs</span><span class='hljl-p'>[</span><span class='hljl-n'>j</span><span class='hljl-p'>][</span><span class='hljl-n'>i</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-n'>j</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-nf'>eachindex</span><span class='hljl-p'>(</span><span class='hljl-n'>vs</span><span class='hljl-p'>)]</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-n'>i</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-nf'>eachindex</span><span class='hljl-p'>(</span><span class='hljl-n'>vs</span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>]))</span>
+</pre>
+
+
+<pre class="output">
+unzip &#40;generic function with 1 method&#41;
+</pre>
+
+
+<p>&#40;The functionality is essentially a reverse of the <code>zip</code> function, hence the name.&#41;</p>
+<p>We might have then:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>scatter</span><span class='hljl-p'>(</span><span class='hljl-nf'>unzip</span><span class='hljl-p'>(</span><span class='hljl-n'>r</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>ts</span><span class='hljl-p'>))</span><span class='hljl-oB'>...</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: scatter not defined
+</pre>
+
+
+<p>where splatting is used to specify the <code>xs</code>, <code>ys</code>, and <code>zs</code> to <code>scatter</code>.</p>
+<p>&#40;Compare to <code>scatter&#40;Point3.&#40;r.&#40;ts&#41;&#41;&#41;</code> or <code>scatter&#40;Point3∘r&#41;.&#40;ts&#41;&#41;</code>.&#41;</p>
+<h3>Attributes</h3>
+<p>A point is drawn with a &quot;marker&quot; with a certain size and color. These attributes can be adjusted, as in the following:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>scatter</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>marker</span><span class='hljl-oB'>=</span><span class='hljl-p'>[</span><span class='hljl-sc'>:x</span><span class='hljl-p'>,</span><span class='hljl-oB'>:</span><span class='hljl-n'>cross</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-sc'>:circle</span><span class='hljl-p'>],</span><span class='hljl-t'> </span><span class='hljl-n'>markersize</span><span class='hljl-oB'>=</span><span class='hljl-ni'>25</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>color</span><span class='hljl-oB'>=:</span><span class='hljl-n'>blue</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: scatter not defined
+</pre>
+
+
+<p>Marker attributes include</p>
+<ul>
+<li><p><code>marker</code> a symbol, shape. A single value will be repeated. A vector of values of a matching size will specify a marker for each point.</p>
+</li>
+<li><p><code>marker_offset</code> offset coordinates</p>
+</li>
+<li><p><code>markersize</code> size &#40;radius pixels&#41; of marker</p>
+</li>
+</ul>
+<h3>Text &#40;<code>text</code>&#41;</h3>
+<p>Text can be placed at a point, as a marker is. To place text the desired text and a position need to be specified.</p>
+<p>For example:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>pts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>Point2</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-ni'>1</span><span class='hljl-oB'>:</span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>:</span><span class='hljl-ni'>5</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>scene</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>scatter</span><span class='hljl-p'>(</span><span class='hljl-n'>pts</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-p'>[</span><span class='hljl-nf'>text!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;text&quot;</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>position</span><span class='hljl-oB'>=</span><span class='hljl-n'>pt</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>textsize</span><span class='hljl-oB'>=</span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-n'>i</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>rotation</span><span class='hljl-oB'>=</span><span class='hljl-ni'>2</span><span class='hljl-n'>pi</span><span class='hljl-oB'>/</span><span class='hljl-n'>i</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>i</span><span class='hljl-p'>,</span><span class='hljl-n'>pt</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-nf'>enumerate</span><span class='hljl-p'>(</span><span class='hljl-n'>pts</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+</span><span class='hljl-n'>scene</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: scatter not defined
+</pre>
+
+
+<p>The graphic shows that <code>position</code> positions the text, <code>textsize</code> adjusts the displayed size, and <code>rotation</code> adjusts the orientation.</p>
+<p>Attributes for <code>text</code> include:</p>
+<ul>
+<li><p><code>position</code> to indicate the position. Either a <code>Point</code> object, as above, or a tuple</p>
+</li>
+<li><p><code>align</code> Specify the text alignment through <code>&#40;:pos, :pos&#41;</code>, where <code>:pos</code> can be <code>:left</code>, <code>:center</code>, or <code>:right</code>.</p>
+</li>
+<li><p><code>rotation</code> to indicate how the text is to be rotated</p>
+</li>
+<li><p><code>textsize</code> the font point size for the text</p>
+</li>
+<li><p><code>font</code> to indicate the desired font</p>
+</li>
+</ul>
+<h2>Curves</h2>
+<h3>Plots of univariate functions</h3>
+<p>The basic plot of univariate calculus is the graph of a function <span class="math">$f$</span> over an interval <span class="math">$[a,b]$</span>. This is implemented using a familiar strategy: produce a series of representative values between <span class="math">$a$</span> and <span class="math">$b$</span>; produce the corresponding <span class="math">$f(x)$</span> values; plot these as points and connect the points with straight lines. The <code>lines</code> function of <code>AbstractPlotting</code> will do the last step.</p>
+<p>By taking a sufficient number of points within <span class="math">$[a,b]$</span> the connect-the-dot figure will appear curved, when the function is.</p>
+<p>To create regular values between <code>a</code> and <code>b</code> either the <code>range</code> function, the related <code>LinRange</code> function, or the range operator &#40;<code>a:h:b</code>&#41; are employed.</p>
+<p>For example:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>a</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-n'>pi</span><span class='hljl-t'>
+</span><span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-n'>a</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>250</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>lines</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>f</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>))</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: lines not defined
+</pre>
+
+
+<p>Or</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>cos</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>a</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-n'>pi</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>pi</span><span class='hljl-t'>
+</span><span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>a</span><span class='hljl-oB'>:</span><span class='hljl-n'>pi</span><span class='hljl-oB'>/</span><span class='hljl-ni'>100</span><span class='hljl-oB'>:</span><span class='hljl-n'>b</span><span class='hljl-t'>
+</span><span class='hljl-nf'>lines</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>f</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>))</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: lines not defined
+</pre>
+
+
+<p>As with <code>scatter</code>, <code>lines</code> returns a <code>Scene</code> object that produces a graphic when displayed.</p>
+<p>As with <code>scatter</code>, <code>lines</code> can can also be drawn using a vector of points:</p>
+<pre><code class="language-juila">lines&#40;&#91;Point2&#40;x, fx&#41; for &#40;x,fx&#41; in zip&#40;xs, f.&#40;xs&#41;&#41;&#93;&#41;</code></pre>
+<p>&#40;Though the advantage isn&#39;t clear here, this will be useful when the points are more naturally generated.&#41;</p>
+<p>When a <code>y</code> value is <code>NaN</code> or infinite, the connecting lines are not drawn:</p>
+<pre><code>xs &#61; 1:5
+ys &#61; &#91;1,2,NaN, 4, 5&#93;
+lines&#40;xs, ys&#41;</code></pre>
+<p>As with other plotting packages, this is useful to represent discontinuous functions, such as what occurs at a vertical asymptote.</p>
+<h4>Adding to a scene &#40;<code>lines&#33;</code>, <code>scatter&#33;</code>, ...&#41;</h4>
+<p>To <em>add</em> or <em>modify</em> a scene can be done using a mutating version of a plotting primitive, such as <code>lines&#33;</code> or <code>scatter&#33;</code>. The names follow <code>Julia</code>&#39;s convention of using an <code>&#33;</code> to indicate that a function modifies an argument, in this case the scene.</p>
+<p>Here is one way to show two plots at once:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-n'>pi</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>100</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>scene</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>lines</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>sin</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>))</span><span class='hljl-t'>
+</span><span class='hljl-nf'>lines!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>cos</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>))</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: lines not defined
+</pre>
+
+
+<p>We will see soon how to modify the line attributes so that the curves can be distinguished.</p>
+<p>The following shows the construction details in the graphic, and that  the initial scene argument is implicitly assumed:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-n'>pi</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>10</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>lines</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>sin</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>))</span><span class='hljl-t'>
+</span><span class='hljl-nf'>scatter!</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>sin</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>markersize</span><span class='hljl-oB'>=</span><span class='hljl-ni'>10</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: lines not defined
+</pre>
+
+
+<hr />
+<p>The current scene will have data limits that can be of interest. The following indicates how they can be manipulated to get the limits of the displayed <code>x</code> values.</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-n'>pi</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>200</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>scene</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>plot</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>sin</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>))</span><span class='hljl-t'>
+</span><span class='hljl-n'>rect</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>scene</span><span class='hljl-oB'>.</span><span class='hljl-n'>data_limits</span><span class='hljl-p'>[]</span><span class='hljl-t'> </span><span class='hljl-cs'># get limits for g from f</span><span class='hljl-t'>
+</span><span class='hljl-n'>a</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>rect</span><span class='hljl-oB'>.</span><span class='hljl-n'>origin</span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>],</span><span class='hljl-t'>  </span><span class='hljl-n'>rect</span><span class='hljl-oB'>.</span><span class='hljl-n'>origin</span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>rect</span><span class='hljl-oB'>.</span><span class='hljl-n'>widths</span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>]</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: plot not defined
+</pre>
+
+
+<p>In the output it can be discerned that the values are 32-bit floating point numbers <em>and</em> yield a  slightly larger interval than specified in <code>xs</code>.</p>
+<p>As an example, this shows how to add the tangent line to a graph. The slope of the tangent line being computed by <code>ForwardDiff.derivative</code>.</p>
+
+
+<pre class='hljl'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>ForwardDiff</span><span class='hljl-t'>
+</span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-n'>x</span><span class='hljl-t'>
+</span><span class='hljl-n'>a</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-t'>
+</span><span class='hljl-n'>c</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nfB'>0.5</span><span class='hljl-t'>
+</span><span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-n'>a</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>200</span><span class='hljl-p'>)</span><span class='hljl-t'>
+
+</span><span class='hljl-nf'>tl</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>c</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>ForwardDiff</span><span class='hljl-oB'>.</span><span class='hljl-nf'>derivative</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>c</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>*</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>-</span><span class='hljl-n'>c</span><span class='hljl-p'>)</span><span class='hljl-t'>
+
+</span><span class='hljl-n'>scene</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>lines</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>f</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>))</span><span class='hljl-t'>
+</span><span class='hljl-nf'>lines!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>tl</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>color</span><span class='hljl-oB'>=:</span><span class='hljl-n'>blue</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: lines not defined
+</pre>
+
+
+<h4>Attributes</h4>
+<p>In the last example, we added the argument <code>color&#61;:blue</code> to the <code>lines&#33;</code> call. This set an attribute for the line being drawn. Lines have other attributes that allow different ones to be distinguished, as above where colors indicate the different graphs.</p>
+<p>Other attributes can be seen from the help page for <code>lines</code>, and include:</p>
+<ul>
+<li><p><code>color</code> set with a symbol, as above, or a string</p>
+</li>
+<li><p><code>linestyle</code> available styles are set by a symbol, one of <code>:dash</code>, <code>:dot</code>, <code>:dashdot</code>, or <code>:dashdotdot</code>.</p>
+</li>
+<li><p><code>linewidth</code> width of line</p>
+</li>
+<li><p><code>transparency</code> the <code>alpha</code> value, a number between <span class="math">$0$</span> and <span class="math">$1$</span>, smaller numbers for more transparent.</p>
+</li>
+</ul>
+<p>A legend can also be used to help identify different curves on the same graphic, though this is not illustrated. There are examples in the Makie gallery.</p>
+<h4>Scene attributes</h4>
+<p>Attributes of the scene include any titles and labels, the limits that define the coordinates being displayed, the presentation of tick marks, etc.</p>
+<p>The <code>title</code> function can be used to add a title to a scene. The calling syntax is <code>title&#40;scene, text&#41;</code>.</p>
+<p>To set the labels of the graph, there are &quot;shorthand&quot; functions <code>xlabel&#33;</code>, <code>ylabel&#33;</code>, and <code>zlabel&#33;</code>. The calling pattern would follow <code>xlabel&#33;&#40;scene, &quot;x-axis&quot;&#41;</code>.</p>
+<p>The plotting ticks and their labels are returned by the unexported functions <code>tickranges</code> and <code>ticklabels</code>. The unexported <code>xtickrange</code>, <code>ytickrange</code>, and <code>ztickrange</code>; and <code>xticklabels</code>, <code>yticklabels</code>, and <code>zticklabels</code> return these for the indicated axes.</p>
+<p>These can be dynamically adjusted using <code>xticks&#33;</code>, <code>yticks&#33;</code>, or <code>zticks&#33;</code>.</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>pts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-nf'>Point2</span><span class='hljl-p'>(</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-ni'>2</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>Point2</span><span class='hljl-p'>(</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-ni'>3</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>Point2</span><span class='hljl-p'>(</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-ni'>2</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+</span><span class='hljl-n'>scene</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>scatter</span><span class='hljl-p'>(</span><span class='hljl-n'>pts</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>title</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;3 points&quot;</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>ylabel!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;y values&quot;</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>xticks!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>xtickrange</span><span class='hljl-oB'>=</span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-ni'>3</span><span class='hljl-p'>],</span><span class='hljl-t'> </span><span class='hljl-n'>xticklabels</span><span class='hljl-oB'>=</span><span class='hljl-p'>[</span><span class='hljl-s'>&quot;a&quot;</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;b&quot;</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;c&quot;</span><span class='hljl-p'>])</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: scatter not defined
+</pre>
+
+
+<p>To set the limits of the graph there are shorthand functions <code>xlims&#33;</code>, <code>ylims&#33;</code>, and <code>zlims&#33;</code>. This might prove useful if vertical asymptotes are encountered, as in this example:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-n'>x</span><span class='hljl-t'>
+</span><span class='hljl-n'>a</span><span class='hljl-p'>,</span><span class='hljl-n'>b</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-t'>
+</span><span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>200</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>scene</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>lines</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>f</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>))</span><span class='hljl-t'>
+</span><span class='hljl-nf'>ylims!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-ni'>10</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>10</span><span class='hljl-p'>))</span><span class='hljl-t'>
+</span><span class='hljl-nf'>center!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: lines not defined
+</pre>
+
+
+<h3>Plots of parametric functions</h3>
+<p>A space curve is a plot of a function <span class="math">$f:R^2 \rightarrow R$</span> or <span class="math">$f:R^3 \rightarrow R$</span>.</p>
+<p>To construct a curve from a set of points, we have a similar pattern in both <span class="math">$2$</span> and <span class="math">$3$</span> dimensions:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>r</span><span class='hljl-p'>(</span><span class='hljl-n'>t</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-ni'>2</span><span class='hljl-n'>t</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>cos</span><span class='hljl-p'>(</span><span class='hljl-ni'>3</span><span class='hljl-n'>t</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+</span><span class='hljl-n'>ts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-n'>pi</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>200</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>pts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>Point2</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>r</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>ts</span><span class='hljl-p'>))</span><span class='hljl-t'>  </span><span class='hljl-cs'># or (Point2∘r).(ts)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>lines</span><span class='hljl-p'>(</span><span class='hljl-n'>pts</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: lines not defined
+</pre>
+
+
+<p>Or</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>r</span><span class='hljl-p'>(</span><span class='hljl-n'>t</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-ni'>2</span><span class='hljl-n'>t</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>cos</span><span class='hljl-p'>(</span><span class='hljl-ni'>3</span><span class='hljl-n'>t</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>t</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-n'>ts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-n'>pi</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>200</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>pts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>Point3</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>r</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>ts</span><span class='hljl-p'>))</span><span class='hljl-t'>
+</span><span class='hljl-nf'>lines</span><span class='hljl-p'>(</span><span class='hljl-n'>pts</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: lines not defined
+</pre>
+
+
+<p>Alternatively, vectors of the <span class="math">$x$</span>, <span class="math">$y$</span>, and <span class="math">$z$</span> components can be produced and then plotted using the pattern <code>lines&#40;xs, ys&#41;</code> or <code>lines&#40;xs, ys, zs&#41;</code>. For example, using <code>unzip</code>, as above, we might have done the prior example with:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>unzip</span><span class='hljl-p'>(</span><span class='hljl-n'>r</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>ts</span><span class='hljl-p'>))</span><span class='hljl-t'>
+</span><span class='hljl-nf'>lines</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: lines not defined
+</pre>
+
+
+<h4>Tangent vectors &#40;<code>arrows</code>&#41;</h4>
+<p>A tangent vector along a curve can be drawn quite easily using the <code>arrows</code> function. There are different interfaces for <code>arrows</code>, but we show the one which uses a vector of positions and a vector of &quot;vectors&quot;. For the latter, we utilize the <code>derivative</code> function from <code>ForwardDiff</code>:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>ForwardDiff</span><span class='hljl-t'>
+</span><span class='hljl-nf'>r</span><span class='hljl-p'>(</span><span class='hljl-n'>t</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>t</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>cos</span><span class='hljl-p'>(</span><span class='hljl-n'>t</span><span class='hljl-p'>)]</span><span class='hljl-t'> </span><span class='hljl-cs'># vector, not tuple</span><span class='hljl-t'>
+</span><span class='hljl-n'>ts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>4</span><span class='hljl-n'>pi</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>200</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>scene</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>Scene</span><span class='hljl-p'>()</span><span class='hljl-t'>
+</span><span class='hljl-nf'>lines!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>Point2</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>r</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>ts</span><span class='hljl-p'>)))</span><span class='hljl-t'>
+
+</span><span class='hljl-n'>nts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-oB'>:</span><span class='hljl-n'>pi</span><span class='hljl-oB'>/</span><span class='hljl-ni'>4</span><span class='hljl-oB'>:</span><span class='hljl-ni'>2</span><span class='hljl-n'>pi</span><span class='hljl-t'>
+</span><span class='hljl-n'>us</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>r</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>nts</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>dus</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>ForwardDiff</span><span class='hljl-oB'>.</span><span class='hljl-n'>derivative</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>r</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>nts</span><span class='hljl-p'>)</span><span class='hljl-t'>
+
+</span><span class='hljl-nf'>arrows!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>Point2</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>us</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>Point2</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>dus</span><span class='hljl-p'>))</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: Scene not defined
+</pre>
+
+
+<p>In 3 dimensions the differences are minor:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>r</span><span class='hljl-p'>(</span><span class='hljl-n'>t</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>t</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>cos</span><span class='hljl-p'>(</span><span class='hljl-n'>t</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>t</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-cs'># vector, not tuple</span><span class='hljl-t'>
+</span><span class='hljl-n'>ts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>4</span><span class='hljl-n'>pi</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>200</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>scene</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>Scene</span><span class='hljl-p'>()</span><span class='hljl-t'>
+</span><span class='hljl-nf'>lines!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>Point3</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>r</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>ts</span><span class='hljl-p'>)))</span><span class='hljl-t'>
+
+</span><span class='hljl-n'>nts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>pi</span><span class='hljl-oB'>:</span><span class='hljl-n'>pi</span><span class='hljl-oB'>/</span><span class='hljl-ni'>4</span><span class='hljl-oB'>:</span><span class='hljl-ni'>3</span><span class='hljl-n'>pi</span><span class='hljl-t'>
+</span><span class='hljl-n'>us</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>r</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>nts</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>dus</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>ForwardDiff</span><span class='hljl-oB'>.</span><span class='hljl-n'>derivative</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>r</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>nts</span><span class='hljl-p'>)</span><span class='hljl-t'>
+
+</span><span class='hljl-nf'>arrows!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>Point3</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>us</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>Point3</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>dus</span><span class='hljl-p'>))</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: Scene not defined
+</pre>
+
+
+<h5>Attributes</h5>
+<p>Attributes for <code>arrows</code> include</p>
+<ul>
+<li><p><code>arrowsize</code> to adjust the size</p>
+</li>
+<li><p><code>lengthscale</code> to scale the size</p>
+</li>
+<li><p><code>arrowcolor</code> to set the color</p>
+</li>
+<li><p><code>arrowhead</code> to adjust the head</p>
+</li>
+<li><p><code>arrowtail</code> to adjust the tail</p>
+</li>
+</ul>
+<h3>Implicit equations &#40;2D&#41;</h3>
+<p>The graph of an equation is the collection of all <span class="math">$(x,y)$</span> values satisfying the equation. This is more general than the graph of a function, which can be viewed as the graph of the equation <span class="math">$y=f(x)$</span>. An equation in <span class="math">$x$</span>-<span class="math">$y$</span> can be graphed if the set of solutions to a related equation <span class="math">$f(x,y)=0$</span> can be identified, as one can move all terms to one side of an equation and define <span class="math">$f$</span> as the rule of the side with the terms.</p>
+<p>The <a href="https://github.com/bachrathyd/MDBM.jl">MDBM</a> &#40;Multi-Dimensional Bisection Method&#41; package can be used for the task of characterizing when <span class="math">$f(x,y)=0$</span>. &#40;Also <code>IntervalConstraintProgramming</code> can be used.&#41; We first wrap its interface and then define a &quot;<code>plot</code>&quot; recipe &#40;through method overloading, not through <code>MakieRecipes</code>&#41;.</p>
+
+
+<pre class='hljl'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>MDBM</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: ArgumentError: Package MDBM not found in current path:
+- Run &#96;import Pkg; Pkg.add&#40;&quot;MDBM&quot;&#41;&#96; to install the MDBM package.
+
+</pre>
+
+
+
+<pre class='hljl'>
+<span class='hljl-k'>function</span><span class='hljl-t'> </span><span class='hljl-nf'>implicit_equation</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>axes</span><span class='hljl-oB'>...</span><span class='hljl-p'>;</span><span class='hljl-t'> </span><span class='hljl-n'>iteration</span><span class='hljl-oB'>::</span><span class='hljl-n'>Int</span><span class='hljl-oB'>=</span><span class='hljl-ni'>4</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>constraint</span><span class='hljl-oB'>=</span><span class='hljl-n'>nothing</span><span class='hljl-p'>)</span><span class='hljl-t'>
+
+    </span><span class='hljl-n'>axes</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-n'>axes</span><span class='hljl-oB'>...</span><span class='hljl-p'>]</span><span class='hljl-t'>
+
+    </span><span class='hljl-k'>if</span><span class='hljl-t'> </span><span class='hljl-n'>constraint</span><span class='hljl-t'> </span><span class='hljl-oB'>==</span><span class='hljl-t'> </span><span class='hljl-n'>nothing</span><span class='hljl-t'>
+        </span><span class='hljl-n'>prob</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>MDBM_Problem</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>axes</span><span class='hljl-p'>)</span><span class='hljl-t'>
+    </span><span class='hljl-k'>else</span><span class='hljl-t'>
+        </span><span class='hljl-n'>prob</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>MDBM_Problem</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>axes</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>constraint</span><span class='hljl-oB'>=</span><span class='hljl-n'>constraint</span><span class='hljl-p'>)</span><span class='hljl-t'>
+    </span><span class='hljl-k'>end</span><span class='hljl-t'>
+
+    </span><span class='hljl-nf'>solve!</span><span class='hljl-p'>(</span><span class='hljl-n'>prob</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>iteration</span><span class='hljl-p'>)</span><span class='hljl-t'>
+
+    </span><span class='hljl-n'>prob</span><span class='hljl-t'>
+</span><span class='hljl-k'>end</span>
+</pre>
+
+
+<pre class="output">
+implicit_equation &#40;generic function with 1 method&#41;
+</pre>
+
+
+<p>The <code>implicit_equation</code> function is just a simplified wrapper for the <code>MDBM_Problem</code> interface. It creates an object to be plotted in a manner akin to:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-n'>y</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>3</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>*</span><span class='hljl-n'>y</span><span class='hljl-t'>        </span><span class='hljl-cs'># solve x^3 + x^2 + x + 1 = x*y</span><span class='hljl-t'>
+</span><span class='hljl-n'>ie</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>implicit_equation</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>5</span><span class='hljl-oB'>:</span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>10</span><span class='hljl-oB'>:</span><span class='hljl-ni'>10</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: MDBM_Problem not defined
+</pre>
+
+
+<p>The function definition is straightforward. The limits for <code>x</code> and <code>y</code> are specified in the above using ranges. This specifies the initial grid of points for the apdaptive algorithm used by <code>MDBM</code> to identify solutions.</p>
+<p>To visualize the output, we make a new method for <code>plot</code> and <code>plot&#33;</code>. There is a distinction between 2 and 3 dimensions. Below in two dimensions curve&#40;s&#41; are drawn. In three dimensions, scaled cubes are used to indicate the surface.</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>AbstractPlotting</span><span class='hljl-oB'>.</span><span class='hljl-nf'>plot</span><span class='hljl-p'>(</span><span class='hljl-n'>m</span><span class='hljl-oB'>::</span><span class='hljl-n'>MDBM_Problem</span><span class='hljl-p'>;</span><span class='hljl-t'> </span><span class='hljl-n'>kwargs</span><span class='hljl-oB'>...</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>plot!</span><span class='hljl-p'>(</span><span class='hljl-nf'>Scene</span><span class='hljl-p'>(),</span><span class='hljl-t'> </span><span class='hljl-n'>m</span><span class='hljl-p'>;</span><span class='hljl-t'> </span><span class='hljl-n'>kwargs</span><span class='hljl-oB'>...</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>AbstractPlotting</span><span class='hljl-oB'>.</span><span class='hljl-nf'>plot!</span><span class='hljl-p'>(</span><span class='hljl-n'>m</span><span class='hljl-oB'>::</span><span class='hljl-n'>MDBM_Problem</span><span class='hljl-p'>;</span><span class='hljl-t'> </span><span class='hljl-n'>kwargs</span><span class='hljl-oB'>...</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>plot!</span><span class='hljl-p'>(</span><span class='hljl-n'>AbstractPlotting</span><span class='hljl-oB'>.</span><span class='hljl-nf'>current_scene</span><span class='hljl-p'>(),</span><span class='hljl-t'> </span><span class='hljl-n'>m</span><span class='hljl-p'>;</span><span class='hljl-t'> </span><span class='hljl-n'>kwargs</span><span class='hljl-oB'>...</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>AbstractPlotting</span><span class='hljl-oB'>.</span><span class='hljl-nf'>plot!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-oB'>::</span><span class='hljl-n'>AbstractPlotting</span><span class='hljl-oB'>.</span><span class='hljl-n'>Scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>m</span><span class='hljl-oB'>::</span><span class='hljl-n'>MDBM_Problem</span><span class='hljl-p'>;</span><span class='hljl-t'> </span><span class='hljl-n'>kwargs</span><span class='hljl-oB'>...</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'>
+    </span><span class='hljl-nf'>plot!</span><span class='hljl-p'>(</span><span class='hljl-nf'>Val</span><span class='hljl-p'>(</span><span class='hljl-nf'>_dim</span><span class='hljl-p'>(</span><span class='hljl-n'>m</span><span class='hljl-p'>)),</span><span class='hljl-t'> </span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>m</span><span class='hljl-p'>;</span><span class='hljl-t'> </span><span class='hljl-n'>kwargs</span><span class='hljl-oB'>...</span><span class='hljl-p'>)</span><span class='hljl-t'>
+
+</span><span class='hljl-nf'>_dim</span><span class='hljl-p'>(</span><span class='hljl-n'>m</span><span class='hljl-oB'>::</span><span class='hljl-n'>MDBM</span><span class='hljl-oB'>.</span><span class='hljl-nf'>MDBM_Problem</span><span class='hljl-p'>{</span><span class='hljl-n'>a</span><span class='hljl-p'>,</span><span class='hljl-n'>N</span><span class='hljl-p'>,</span><span class='hljl-n'>b</span><span class='hljl-p'>,</span><span class='hljl-n'>c</span><span class='hljl-p'>,</span><span class='hljl-n'>d</span><span class='hljl-p'>,</span><span class='hljl-n'>e</span><span class='hljl-p'>,</span><span class='hljl-n'>f</span><span class='hljl-p'>,</span><span class='hljl-n'>g</span><span class='hljl-p'>,</span><span class='hljl-n'>h</span><span class='hljl-p'>})</span><span class='hljl-t'> </span><span class='hljl-n'>where</span><span class='hljl-t'> </span><span class='hljl-p'>{</span><span class='hljl-n'>a</span><span class='hljl-p'>,</span><span class='hljl-n'>N</span><span class='hljl-p'>,</span><span class='hljl-n'>b</span><span class='hljl-p'>,</span><span class='hljl-n'>c</span><span class='hljl-p'>,</span><span class='hljl-n'>d</span><span class='hljl-p'>,</span><span class='hljl-n'>e</span><span class='hljl-p'>,</span><span class='hljl-n'>f</span><span class='hljl-p'>,</span><span class='hljl-n'>g</span><span class='hljl-p'>,</span><span class='hljl-n'>h</span><span class='hljl-p'>}</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>N</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: MDBM_Problem not defined
+</pre>
+
+
+<p>Dispatch is used for the two different dimesions, identified through <code>_dim</code>, defined above.</p>
+
+
+<pre class='hljl'>
+<span class='hljl-cs'># 2D plot</span><span class='hljl-t'>
+</span><span class='hljl-k'>function</span><span class='hljl-t'> </span><span class='hljl-n'>AbstractPlotting</span><span class='hljl-oB'>.</span><span class='hljl-nf'>plot!</span><span class='hljl-p'>(</span><span class='hljl-oB'>::</span><span class='hljl-nf'>Val</span><span class='hljl-p'>{</span><span class='hljl-ni'>2</span><span class='hljl-p'>},</span><span class='hljl-t'> </span><span class='hljl-n'>scene</span><span class='hljl-oB'>::</span><span class='hljl-n'>AbstractPlotting</span><span class='hljl-oB'>.</span><span class='hljl-n'>Scene</span><span class='hljl-p'>,</span><span class='hljl-t'>
+    </span><span class='hljl-n'>m</span><span class='hljl-oB'>::</span><span class='hljl-n'>MDBM_Problem</span><span class='hljl-p'>;</span><span class='hljl-t'> </span><span class='hljl-n'>color</span><span class='hljl-oB'>=:</span><span class='hljl-n'>black</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>kwargs</span><span class='hljl-oB'>...</span><span class='hljl-p'>)</span><span class='hljl-t'>
+
+    </span><span class='hljl-n'>mdt</span><span class='hljl-oB'>=</span><span class='hljl-n'>MDBM</span><span class='hljl-oB'>.</span><span class='hljl-nf'>connect</span><span class='hljl-p'>(</span><span class='hljl-n'>m</span><span class='hljl-p'>)</span><span class='hljl-t'>
+    </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-n'>i</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>:</span><span class='hljl-nf'>length</span><span class='hljl-p'>(</span><span class='hljl-n'>mdt</span><span class='hljl-p'>)</span><span class='hljl-t'>
+        </span><span class='hljl-n'>dt</span><span class='hljl-oB'>=</span><span class='hljl-n'>mdt</span><span class='hljl-p'>[</span><span class='hljl-n'>i</span><span class='hljl-p'>]</span><span class='hljl-t'>
+        </span><span class='hljl-n'>P1</span><span class='hljl-oB'>=</span><span class='hljl-nf'>getinterpolatedsolution</span><span class='hljl-p'>(</span><span class='hljl-n'>m</span><span class='hljl-oB'>.</span><span class='hljl-n'>ncubes</span><span class='hljl-p'>[</span><span class='hljl-n'>dt</span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>]],</span><span class='hljl-t'> </span><span class='hljl-n'>m</span><span class='hljl-p'>)</span><span class='hljl-t'>
+        </span><span class='hljl-n'>P2</span><span class='hljl-oB'>=</span><span class='hljl-nf'>getinterpolatedsolution</span><span class='hljl-p'>(</span><span class='hljl-n'>m</span><span class='hljl-oB'>.</span><span class='hljl-n'>ncubes</span><span class='hljl-p'>[</span><span class='hljl-n'>dt</span><span class='hljl-p'>[</span><span class='hljl-ni'>2</span><span class='hljl-p'>]],</span><span class='hljl-t'> </span><span class='hljl-n'>m</span><span class='hljl-p'>)</span><span class='hljl-t'>
+        </span><span class='hljl-nf'>lines!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-n'>P1</span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>],</span><span class='hljl-n'>P2</span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>]],[</span><span class='hljl-n'>P1</span><span class='hljl-p'>[</span><span class='hljl-ni'>2</span><span class='hljl-p'>],</span><span class='hljl-n'>P2</span><span class='hljl-p'>[</span><span class='hljl-ni'>2</span><span class='hljl-p'>]],</span><span class='hljl-t'> </span><span class='hljl-n'>color</span><span class='hljl-oB'>=</span><span class='hljl-n'>color</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>kwargs</span><span class='hljl-oB'>...</span><span class='hljl-p'>)</span><span class='hljl-t'>
+    </span><span class='hljl-k'>end</span><span class='hljl-t'>
+
+    </span><span class='hljl-n'>scene</span><span class='hljl-t'>
+</span><span class='hljl-k'>end</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: MDBM_Problem not defined
+</pre>
+
+
+
+<pre class='hljl'>
+<span class='hljl-cs'># 3D plot</span><span class='hljl-t'>
+</span><span class='hljl-k'>function</span><span class='hljl-t'> </span><span class='hljl-n'>AbstractPlotting</span><span class='hljl-oB'>.</span><span class='hljl-nf'>plot!</span><span class='hljl-p'>(</span><span class='hljl-oB'>::</span><span class='hljl-nf'>Val</span><span class='hljl-p'>{</span><span class='hljl-ni'>3</span><span class='hljl-p'>},</span><span class='hljl-t'> </span><span class='hljl-n'>scene</span><span class='hljl-oB'>::</span><span class='hljl-n'>AbstractPlotting</span><span class='hljl-oB'>.</span><span class='hljl-n'>Scene</span><span class='hljl-p'>,</span><span class='hljl-t'>
+    </span><span class='hljl-n'>m</span><span class='hljl-oB'>::</span><span class='hljl-n'>MDBM_Problem</span><span class='hljl-p'>;</span><span class='hljl-t'> </span><span class='hljl-n'>color</span><span class='hljl-oB'>=:</span><span class='hljl-n'>black</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>kwargs</span><span class='hljl-oB'>...</span><span class='hljl-p'>)</span><span class='hljl-t'>
+
+    </span><span class='hljl-n'>positions</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>Point</span><span class='hljl-p'>{</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>Float32</span><span class='hljl-p'>}[]</span><span class='hljl-t'>
+    </span><span class='hljl-n'>scales</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>Vec3</span><span class='hljl-p'>[]</span><span class='hljl-t'>
+
+    </span><span class='hljl-n'>mdt</span><span class='hljl-oB'>=</span><span class='hljl-n'>MDBM</span><span class='hljl-oB'>.</span><span class='hljl-nf'>connect</span><span class='hljl-p'>(</span><span class='hljl-n'>m</span><span class='hljl-p'>)</span><span class='hljl-t'>
+    </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-n'>i</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>:</span><span class='hljl-nf'>length</span><span class='hljl-p'>(</span><span class='hljl-n'>mdt</span><span class='hljl-p'>)</span><span class='hljl-t'>
+        </span><span class='hljl-n'>dt</span><span class='hljl-oB'>=</span><span class='hljl-n'>mdt</span><span class='hljl-p'>[</span><span class='hljl-n'>i</span><span class='hljl-p'>]</span><span class='hljl-t'>
+        </span><span class='hljl-n'>P1</span><span class='hljl-oB'>=</span><span class='hljl-nf'>getinterpolatedsolution</span><span class='hljl-p'>(</span><span class='hljl-n'>m</span><span class='hljl-oB'>.</span><span class='hljl-n'>ncubes</span><span class='hljl-p'>[</span><span class='hljl-n'>dt</span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>]],</span><span class='hljl-t'> </span><span class='hljl-n'>m</span><span class='hljl-p'>)</span><span class='hljl-t'>
+        </span><span class='hljl-n'>P2</span><span class='hljl-oB'>=</span><span class='hljl-nf'>getinterpolatedsolution</span><span class='hljl-p'>(</span><span class='hljl-n'>m</span><span class='hljl-oB'>.</span><span class='hljl-n'>ncubes</span><span class='hljl-p'>[</span><span class='hljl-n'>dt</span><span class='hljl-p'>[</span><span class='hljl-ni'>2</span><span class='hljl-p'>]],</span><span class='hljl-t'> </span><span class='hljl-n'>m</span><span class='hljl-p'>)</span><span class='hljl-t'>
+
+        </span><span class='hljl-n'>a</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>Vec3</span><span class='hljl-p'>(</span><span class='hljl-n'>P1</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>Vec3</span><span class='hljl-p'>(</span><span class='hljl-n'>P2</span><span class='hljl-p'>)</span><span class='hljl-t'>
+        </span><span class='hljl-nf'>push!</span><span class='hljl-p'>(</span><span class='hljl-n'>positions</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>Point3</span><span class='hljl-p'>(</span><span class='hljl-n'>P1</span><span class='hljl-p'>))</span><span class='hljl-t'>
+        </span><span class='hljl-nf'>push!</span><span class='hljl-p'>(</span><span class='hljl-n'>scales</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-oB'>-</span><span class='hljl-n'>a</span><span class='hljl-p'>)</span><span class='hljl-t'>
+    </span><span class='hljl-k'>end</span><span class='hljl-t'>
+
+    </span><span class='hljl-n'>cube</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>Rect</span><span class='hljl-p'>{</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>Float32</span><span class='hljl-p'>}(</span><span class='hljl-nf'>Vec3</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-nfB'>0.5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-nfB'>0.5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-nfB'>0.5</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>Vec3</span><span class='hljl-p'>(</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>))</span><span class='hljl-t'>
+    </span><span class='hljl-nf'>meshscatter!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>positions</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>marker</span><span class='hljl-oB'>=</span><span class='hljl-n'>cube</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>scale</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>scales</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>color</span><span class='hljl-oB'>=</span><span class='hljl-n'>color</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>transparency</span><span class='hljl-oB'>=</span><span class='hljl-kc'>true</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>kwargs</span><span class='hljl-oB'>...</span><span class='hljl-p'>)</span><span class='hljl-t'>
+
+    </span><span class='hljl-n'>scene</span><span class='hljl-t'>
+</span><span class='hljl-k'>end</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: MDBM_Problem not defined
+</pre>
+
+
+<p>We see that the equation <code>ie</code> has two pieces. &#40;This is known as Newton&#39;s trident, as Newton was interested in this form of equation.&#41;</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>plot</span><span class='hljl-p'>(</span><span class='hljl-n'>ie</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: plot not defined
+</pre>
+
+
+<h2>Surfaces</h2>
+<p>Plots of surfaces in 3 dimensions are useful to help understand the behavior of multivariate functions.</p>
+<h4>Surfaces defined through <span class="math">$z=f(x,y)$</span></h4>
+<p>The &quot;peaks&quot; function generates the logo for MATLAB. Here we see how it can be plotted over the region <span class="math">$[-5,5]\times[-5,5]$</span>.</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>peaks</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-n'>y</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>3</span><span class='hljl-oB'>*</span><span class='hljl-p'>(</span><span class='hljl-ni'>1</span><span class='hljl-oB'>-</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-oB'>*</span><span class='hljl-nf'>exp</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>y</span><span class='hljl-oB'>+</span><span class='hljl-ni'>1</span><span class='hljl-p'>)</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>10</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>/</span><span class='hljl-ni'>5</span><span class='hljl-oB'>-</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>3</span><span class='hljl-oB'>-</span><span class='hljl-n'>y</span><span class='hljl-oB'>^</span><span class='hljl-ni'>5</span><span class='hljl-p'>)</span><span class='hljl-oB'>*</span><span class='hljl-nf'>exp</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-oB'>-</span><span class='hljl-n'>y</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-p'>)</span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-ni'>3</span><span class='hljl-oB'>*</span><span class='hljl-nf'>exp</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>+</span><span class='hljl-ni'>1</span><span class='hljl-p'>)</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-oB'>-</span><span class='hljl-n'>y</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>25</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>surface</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>peaks</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: surface not defined
+</pre>
+
+
+<p>The calling pattern <code>surface&#40;xs, ys, f&#41;</code> implies a rectangular grid over the <span class="math">$x$</span>-<span class="math">$y$</span> plane defined by <code>xs</code> and <code>ys</code> with <span class="math">$z$</span> values given by <span class="math">$f(x,y)$</span>.</p>
+<p>Alternatively a &quot;matrix&quot; of <span class="math">$z$</span> values can be specified. For a function <code>f</code>, this is conveniently generated by the pattern <code>f.&#40;xs, ys&#39;&#41;</code>, the <code>&#39;</code> being important to get a matrix of all <span class="math">$x$</span>-<span class="math">$y$</span> pairs through <code>Julia</code>&#39;s broadcasting syntax.</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>zs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>peaks</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-oB'>&#39;</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>surface</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: surface not defined
+</pre>
+
+
+<p>To see how this graph is constructed, the points <span class="math">$(x,y,f(x,y))$</span> are plotted over the grid and displayed.</p>
+<p>Here we downsample to illutrate</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>5</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>pts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-nf'>Point3</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>peaks</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-n'>y</span><span class='hljl-p'>))</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-nf'>scatter</span><span class='hljl-p'>(</span><span class='hljl-n'>pts</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>markersize</span><span class='hljl-oB'>=</span><span class='hljl-ni'>25</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: scatter not defined
+</pre>
+
+
+<p>These points are connected. The <code>wireframe</code> function illustrates just the frame</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>wireframe</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>peaks</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-oB'>&#39;</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>linewidth</span><span class='hljl-oB'>=</span><span class='hljl-ni'>5</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: wireframe not defined
+</pre>
+
+
+<p>The <code>surface</code> call triangulates the frame and fills in the shading:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>surface!</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>peaks</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-oB'>&#39;</span><span class='hljl-p'>))</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: surface&#33; not defined
+</pre>
+
+
+<h4>Implicitly defined surfaces, <span class="math">$F(x,y,z)=0$</span></h4>
+<p>The set of points <span class="math">$(x,y,z)$</span> satisfying <span class="math">$F(x,y,z) = 0$</span> will form a surface that can be visualized using the <code>MDBM</code> package. We illustrate showing two nested surfaces.</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>r₂</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-n'>y</span><span class='hljl-p'>,</span><span class='hljl-n'>z</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>z</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-oB'>/</span><span class='hljl-ni'>4</span><span class='hljl-t'> </span><span class='hljl-cs'># a sphere</span><span class='hljl-t'>
+</span><span class='hljl-nf'>r₄</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-n'>y</span><span class='hljl-p'>,</span><span class='hljl-n'>z</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>4</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-oB'>^</span><span class='hljl-ni'>4</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>z</span><span class='hljl-oB'>^</span><span class='hljl-ni'>4</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-t'>
+</span><span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>2</span><span class='hljl-oB'>:</span><span class='hljl-ni'>2</span><span class='hljl-t'>
+</span><span class='hljl-n'>m2</span><span class='hljl-p'>,</span><span class='hljl-n'>m4</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>implicit_equation</span><span class='hljl-p'>(</span><span class='hljl-n'>r₂</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>implicit_equation</span><span class='hljl-p'>(</span><span class='hljl-n'>r₄</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-p'>)</span><span class='hljl-t'>
+
+</span><span class='hljl-nf'>plot</span><span class='hljl-p'>(</span><span class='hljl-n'>m4</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>color</span><span class='hljl-oB'>=:</span><span class='hljl-n'>yellow</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>plot!</span><span class='hljl-p'>(</span><span class='hljl-n'>m2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>color</span><span class='hljl-oB'>=:</span><span class='hljl-n'>red</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: MDBM_Problem not defined
+</pre>
+
+
+<h4>Parametrically defined surfaces</h4>
+<p>A surface may be parametrically defined through a function <span class="math">$r(u,v) = (x(u,v), y(u,v), z(u,v))$</span>. For example, the surface generated by <span class="math">$z=f(x,y)$</span> is of the form with <span class="math">$r(u,v) = (u,v,f(u,v))$</span>.</p>
+<p>The <code>surface</code> function and the <code>wireframe</code> function can be used to display such surfaces. In previous usages, the <code>x</code> and <code>y</code> values were vectors from which a 2-dimensional grid is formed. For parametric surfaces, a grid for the <code>x</code> and <code>y</code> values must be generated. This function will do so:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-k'>function</span><span class='hljl-t'> </span><span class='hljl-nf'>parametric_grid</span><span class='hljl-p'>(</span><span class='hljl-n'>us</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>vs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>r</span><span class='hljl-p'>)</span><span class='hljl-t'>
+    </span><span class='hljl-n'>n</span><span class='hljl-p'>,</span><span class='hljl-n'>m</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>length</span><span class='hljl-p'>(</span><span class='hljl-n'>us</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>length</span><span class='hljl-p'>(</span><span class='hljl-n'>vs</span><span class='hljl-p'>)</span><span class='hljl-t'>
+    </span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>zeros</span><span class='hljl-p'>(</span><span class='hljl-n'>n</span><span class='hljl-p'>,</span><span class='hljl-n'>m</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>zeros</span><span class='hljl-p'>(</span><span class='hljl-n'>n</span><span class='hljl-p'>,</span><span class='hljl-n'>m</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>zeros</span><span class='hljl-p'>(</span><span class='hljl-n'>n</span><span class='hljl-p'>,</span><span class='hljl-n'>m</span><span class='hljl-p'>)</span><span class='hljl-t'>
+    </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>i</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>uᵢ</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-nf'>enumerate</span><span class='hljl-p'>(</span><span class='hljl-n'>us</span><span class='hljl-p'>)</span><span class='hljl-t'>
+        </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>j</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>vⱼ</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-nf'>enumerate</span><span class='hljl-p'>(</span><span class='hljl-n'>vs</span><span class='hljl-p'>)</span><span class='hljl-t'>
+            </span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-n'>y</span><span class='hljl-p'>,</span><span class='hljl-n'>z</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>r</span><span class='hljl-p'>(</span><span class='hljl-n'>uᵢ</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>vⱼ</span><span class='hljl-p'>)</span><span class='hljl-t'>
+            </span><span class='hljl-n'>xs</span><span class='hljl-p'>[</span><span class='hljl-n'>i</span><span class='hljl-p'>,</span><span class='hljl-n'>j</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'>
+            </span><span class='hljl-n'>ys</span><span class='hljl-p'>[</span><span class='hljl-n'>i</span><span class='hljl-p'>,</span><span class='hljl-n'>j</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-t'>
+            </span><span class='hljl-n'>zs</span><span class='hljl-p'>[</span><span class='hljl-n'>i</span><span class='hljl-p'>,</span><span class='hljl-n'>j</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>z</span><span class='hljl-t'>
+        </span><span class='hljl-k'>end</span><span class='hljl-t'>
+    </span><span class='hljl-k'>end</span><span class='hljl-t'>
+    </span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-k'>end</span>
+</pre>
+
+
+<pre class="output">
+parametric_grid &#40;generic function with 1 method&#41;
+</pre>
+
+
+<p>With the data suitably massaged, we can directly plot either a <code>surface</code> or <code>wireframe</code> plot.</p>
+<hr />
+<p>As an aside, The above can be done more campactly with nested list comprehensions:</p>
+<pre><code>xs, ys, zs &#61; &#91;&#91;pt&#91;i&#93; for pt in r.&#40;us, vs&#39;&#41;&#93; for i in 1:3&#93;</code></pre>
+<p>Or using the <code>unzip</code> function directly after broadcasting:</p>
+<pre><code>xs, ys, zs &#61; unzip&#40;r.&#40;us, vs&#39;&#41;&#41;</code></pre>
+<hr />
+<p>For example, a sphere can be parameterized by <span class="math">$r(u,v) = (\sin(u)\cos(v), \sin(u)\sin(v), \cos(u))$</span> and visualized through:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>r</span><span class='hljl-p'>(</span><span class='hljl-n'>u</span><span class='hljl-p'>,</span><span class='hljl-n'>v</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>u</span><span class='hljl-p'>)</span><span class='hljl-oB'>*</span><span class='hljl-nf'>cos</span><span class='hljl-p'>(</span><span class='hljl-n'>v</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>u</span><span class='hljl-p'>)</span><span class='hljl-oB'>*</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>v</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>cos</span><span class='hljl-p'>(</span><span class='hljl-n'>u</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+</span><span class='hljl-n'>us</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>pi</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>25</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>vs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>pi</span><span class='hljl-oB'>/</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>25</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>parametric_grid</span><span class='hljl-p'>(</span><span class='hljl-n'>us</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>vs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>r</span><span class='hljl-p'>)</span><span class='hljl-t'>
+
+</span><span class='hljl-n'>scene</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>Scene</span><span class='hljl-p'>()</span><span class='hljl-t'>
+</span><span class='hljl-nf'>surface!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>wireframe!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: Scene not defined
+</pre>
+
+
+<p>A surface of revolution for <span class="math">$g(u)$</span> revolved about the <span class="math">$z$</span> axis can be visualized through:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>g</span><span class='hljl-p'>(</span><span class='hljl-n'>u</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>u</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>*</span><span class='hljl-t'> </span><span class='hljl-nf'>exp</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-n'>u</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>r</span><span class='hljl-p'>(</span><span class='hljl-n'>u</span><span class='hljl-p'>,</span><span class='hljl-n'>v</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-nf'>g</span><span class='hljl-p'>(</span><span class='hljl-n'>u</span><span class='hljl-p'>)</span><span class='hljl-oB'>*</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>v</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>g</span><span class='hljl-p'>(</span><span class='hljl-n'>u</span><span class='hljl-p'>)</span><span class='hljl-oB'>*</span><span class='hljl-nf'>cos</span><span class='hljl-p'>(</span><span class='hljl-n'>v</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>u</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>us</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>10</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>vs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-n'>pi</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>10</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>parametric_grid</span><span class='hljl-p'>(</span><span class='hljl-n'>us</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>vs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>r</span><span class='hljl-p'>)</span><span class='hljl-t'>
+
+</span><span class='hljl-n'>scene</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>Scene</span><span class='hljl-p'>()</span><span class='hljl-t'>
+</span><span class='hljl-nf'>surface!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>wireframe!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: Scene not defined
+</pre>
+
+
+<p>A torus with big radius <span class="math">$2$</span> and inner radius <span class="math">$1/2$</span> can be visualized as follows</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>r1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>r2</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-ni'>2</span><span class='hljl-t'>
+</span><span class='hljl-nf'>r</span><span class='hljl-p'>(</span><span class='hljl-n'>u</span><span class='hljl-p'>,</span><span class='hljl-n'>v</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>((</span><span class='hljl-n'>r1</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>r2</span><span class='hljl-oB'>*</span><span class='hljl-nf'>cos</span><span class='hljl-p'>(</span><span class='hljl-n'>v</span><span class='hljl-p'>))</span><span class='hljl-oB'>*</span><span class='hljl-nf'>cos</span><span class='hljl-p'>(</span><span class='hljl-n'>u</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>r1</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>r2</span><span class='hljl-oB'>*</span><span class='hljl-nf'>cos</span><span class='hljl-p'>(</span><span class='hljl-n'>v</span><span class='hljl-p'>))</span><span class='hljl-oB'>*</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>u</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>r2</span><span class='hljl-oB'>*</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>v</span><span class='hljl-p'>))</span><span class='hljl-t'>
+</span><span class='hljl-n'>us</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>vs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-n'>pi</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>25</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>parametric_grid</span><span class='hljl-p'>(</span><span class='hljl-n'>us</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>vs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>r</span><span class='hljl-p'>)</span><span class='hljl-t'>
+
+</span><span class='hljl-n'>scene</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>Scene</span><span class='hljl-p'>()</span><span class='hljl-t'>
+</span><span class='hljl-nf'>surface!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>wireframe!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: Scene not defined
+</pre>
+
+
+<p>A Möbius strip can be produced with:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>ws</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-ni'>4</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-ni'>4</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>8</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>thetas</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-n'>pi</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>30</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>r</span><span class='hljl-p'>(</span><span class='hljl-n'>w</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>θ</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>((</span><span class='hljl-ni'>1</span><span class='hljl-oB'>+</span><span class='hljl-n'>w</span><span class='hljl-oB'>*</span><span class='hljl-nf'>cos</span><span class='hljl-p'>(</span><span class='hljl-n'>θ</span><span class='hljl-oB'>/</span><span class='hljl-ni'>2</span><span class='hljl-p'>))</span><span class='hljl-oB'>*</span><span class='hljl-nf'>cos</span><span class='hljl-p'>(</span><span class='hljl-n'>θ</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-ni'>1</span><span class='hljl-oB'>+</span><span class='hljl-n'>w</span><span class='hljl-oB'>*</span><span class='hljl-nf'>cos</span><span class='hljl-p'>(</span><span class='hljl-n'>θ</span><span class='hljl-oB'>/</span><span class='hljl-ni'>2</span><span class='hljl-p'>))</span><span class='hljl-oB'>*</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>θ</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>w</span><span class='hljl-oB'>*</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>θ</span><span class='hljl-oB'>/</span><span class='hljl-ni'>2</span><span class='hljl-p'>))</span><span class='hljl-t'>
+</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>parametric_grid</span><span class='hljl-p'>(</span><span class='hljl-n'>ws</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>thetas</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>r</span><span class='hljl-p'>)</span><span class='hljl-t'>
+
+</span><span class='hljl-n'>scene</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>Scene</span><span class='hljl-p'>()</span><span class='hljl-t'>
+</span><span class='hljl-nf'>surface!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>wireframe!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: Scene not defined
+</pre>
+
+
+<h2>Contour plots &#40;<code>contour</code>, <code>heatmap</code>&#41;</h2>
+<p>For a function <span class="math">$z = f(x,y)$</span> an alternative to a surface plot, is a contour plot. That is, for different values of <span class="math">$c$</span> the level curves <span class="math">$f(x,y)=c$</span> are drawn.</p>
+<p>For a function <span class="math">$f(x,y)$</span>, the syntax for generating a contour plot follows that for <code>surface</code>.</p>
+<p>For example, using the <code>peaks</code> function, previously defined, we have a contour plot over the region <span class="math">$[-5,5]\times[-5,5]$</span> is generated through:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>100</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>contour</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>peaks</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: contour not defined
+</pre>
+
+
+<p>The default of <span class="math">$5$</span> levels can be adjusted using the <code>levels</code> keyword:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>contour</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>peaks</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-oB'>&#39;</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>levels</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>20</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: contour not defined
+</pre>
+
+
+<p>&#40;As a reminder, the above also shows how to generate values &quot;<code>zs</code>&quot; to pass to <code>contour</code> instead of a function.&#41;</p>
+<p>The contour graph makes identification of peaks and valleys easy as the limits of patterns of nested contour lines.</p>
+<p>An alternative visualzation using color to replace contour lines is a heatmap. The <code>heatmap</code> function produces these. The calling syntax is similar to <code>contour</code> and <code>surface</code>:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>heatmap</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>peaks</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: heatmap not defined
+</pre>
+
+
+<p>This graph shows peaks and valleys through &quot;hotspots&quot; on the graph.</p>
+<p>The <code>MakieGallery</code> package includes an example of a surface plot with both a wireframe and 2D contour graph added. It is replicated here using the <code>peaks</code> function scaled by <span class="math">$5$</span>.</p>
+<p>The function and domain to plot are described by:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>51</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>zs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>peaks</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-oB'>&#39;</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>/</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-p'>;</span>
+</pre>
+
+
+
+<p>The <code>zs</code> were generated, as <code>wireframe</code> does not provide the interface for passing a function.</p>
+<p>The <code>surface</code> and <code>wireframe</code> are produced as follows:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>scene</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>surface</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>wireframe!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>overdraw</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-kc'>true</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>transparency</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-kc'>true</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>color</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-sc'>:black</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nfB'>0.1</span><span class='hljl-p'>))</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: surface not defined
+</pre>
+
+
+<p>To add the contour, a simple call via <code>contour&#33;&#40;scene, xs, ys, zs&#41;</code> will place the contour at the <span class="math">$z=0$</span> level which will make it hard to read. Rather, placing at the &quot;bottom&quot; of the scene is desirable. To identify that the &quot;scene limits&quot; are queried and the argument <code>transformation &#61; &#40;:xy, zmin&#41;</code> is passed to <code>contour&#33;</code>:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>xmin</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ymin</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zmin</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>minimum</span><span class='hljl-p'>(</span><span class='hljl-nf'>scene_limits</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>))</span><span class='hljl-t'>
+</span><span class='hljl-nf'>contour!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>levels</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>15</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>linewidth</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>transformation</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-sc'>:xy</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zmin</span><span class='hljl-p'>))</span><span class='hljl-t'>
+</span><span class='hljl-nf'>center!</span><span class='hljl-p'>(</span><span class='hljl-n'>scene</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: scene_limits not defined
+</pre>
+
+
+<p>The <code>transformation</code> plot attribute sets the &quot;plane&quot; &#40;one of <code>:xy</code>, <code>:yz</code>, or <code>:xz</code>&#41; at a location, in this example <code>zmin</code>.</p>
+<h3>Three dimensional contour plots</h3>
+<p>The <code>contour</code> function can also plot <span class="math">$3$</span>-dimensional contour plots. Concentric spheres, contours of <span class="math">$x^2 + y^2 + z^2 = c$</span> for <span class="math">$c > 0$</span> are presented by the following:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-n'>y</span><span class='hljl-p'>,</span><span class='hljl-n'>z</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>z</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-t'>
+</span><span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>100</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>contour</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>zs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>f</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: contour not defined
+</pre>
+
+
+<h2>Vector fields. Visualizations of <span class="math">$f:R^2 \rightarrow R^2$</span></h2>
+<p>The vector field <span class="math">$f(x,y) = (y, -x)$</span> can be visualized as a set of vectors, <span class="math">$f(x,y)$</span>, positioned at a grid. These can be produced with the <code>arrows</code> function. Below we pass a vector of points for the anchors and a vector of points representing the vectors.</p>
+<p>We can generate these on a regular grid through:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-n'>y</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-n'>x</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-n'>xs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>5</span><span class='hljl-oB'>:</span><span class='hljl-ni'>5</span><span class='hljl-t'>
+</span><span class='hljl-n'>pts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>vec</span><span class='hljl-p'>(</span><span class='hljl-n'>Point2</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-oB'>&#39;</span><span class='hljl-p'>))</span><span class='hljl-t'>
+</span><span class='hljl-n'>dus</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>vec</span><span class='hljl-p'>(</span><span class='hljl-n'>Point2</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-oB'>&#39;</span><span class='hljl-p'>)))</span>
+</pre>
+
+
+<pre class="output">
+121-element Vector&#123;GeometryBasics.Point2&#123;Int64&#125;&#125;:
+ &#91;-5, 5&#93;
+ &#91;-5, 4&#93;
+ &#91;-5, 3&#93;
+ &#91;-5, 2&#93;
+ &#91;-5, 1&#93;
+ &#91;-5, 0&#93;
+ &#91;-5, -1&#93;
+ &#91;-5, -2&#93;
+ &#91;-5, -3&#93;
+ &#91;-5, -4&#93;
+ ⋮
+ &#91;5, 3&#93;
+ &#91;5, 2&#93;
+ &#91;5, 1&#93;
+ &#91;5, 0&#93;
+ &#91;5, -1&#93;
+ &#91;5, -2&#93;
+ &#91;5, -3&#93;
+ &#91;5, -4&#93;
+ &#91;5, -5&#93;
+</pre>
+
+
+<p>Broadcasting over <code>&#40;xs, ys&#39;&#41;</code> ensures each pair of possible values is encountered. The <code>vec</code> call reshapes an array into a  vector.</p>
+<p>Calling <code>arrows</code> on the prepared data produces the graphic:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>arrows</span><span class='hljl-p'>(</span><span class='hljl-n'>pts</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>dus</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: arrows not defined
+</pre>
+
+
+<p>The grid seems rotated at first glance. This is due to the length of the vectors as the <span class="math">$(x,y)$</span> values get farther from the origin. Plotting the <em>normalized</em> values &#40;each will have length <span class="math">$1$</span>&#41; can be done easily using <code>norm</code> &#40;which requires <code>LinearAlgebra</code> to be loaded&#41;:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>LinearAlgebra</span><span class='hljl-t'>
+</span><span class='hljl-n'>dvs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>dus</span><span class='hljl-t'> </span><span class='hljl-oB'>./</span><span class='hljl-t'> </span><span class='hljl-n'>norm</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>dus</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>arrows</span><span class='hljl-p'>(</span><span class='hljl-n'>pts</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>dvs</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: arrows not defined
+</pre>
+
+
+<p>The rotational pattern becomes quite clear now.</p>
+<p>The <code>streamplot</code> function also illustrates this phenomenon. This implements an &quot;algorithm &#91;that&#93; puts an arrow somewhere and extends the streamline in both directions from there. Then, it chooses a new position &#40;from the remaining ones&#41;, repeating the the exercise until the streamline  gets blocked, from which on a new starting point, the process repeats.&quot;</p>
+<p>The <code>streamplot</code> function expects a <code>point</code> not a pair of values, so we adjust <code>f</code> slightly and call the function using the pattern <code>streamplot&#40;f, xs, ys&#41;</code>:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>g</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-n'>y</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>Point2</span><span class='hljl-p'>(</span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-n'>y</span><span class='hljl-p'>))</span><span class='hljl-t'>
+</span><span class='hljl-nf'>streamplot</span><span class='hljl-p'>(</span><span class='hljl-n'>g</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="julia-error">
+ERROR: UndefVarError: streamplot not defined
+</pre>
+
+
+<p>&#40;The viewing range could also be adjusted with the <code>-5..5</code> notation from the <code>IntervalSets</code> package which is brought in when <code>AbstractPlotting</code> is loaded.&#41;</p>
+<h2>Interacting with a scene</h2>
+<p><a href="http://makie.juliaplots.org/stable/interaction.html">Interaction</a> with a scene is very much integrated into <code>Makie</code>, as the design has a &quot;sophisticated referencing system&quot; which allows sharing of attributes. Adjusting one attribute, can then propogate to others.</p>
+<p>In Makie, a <code>Node</code> is a structure that allows its value to be updated, similar to an array. Nodes are <code>Observables</code>, which when changed can trigger an event. Nodes can rely on other nodes, so events can be cascaded.</p>
+<p>A simple example is a means to dynamically adjust a label for a scene.</p>
+<pre><code>xs, &#61; 1:5, rand&#40;5&#41;
+scene &#61; scatter&#40;xs, ys&#41;</code></pre>
+<p>We can create a &quot;Node&quot; through:</p>
+<pre><code>x &#61; Node&#40;&quot;x values&quot;&#41;</code></pre>
+<p>The value of the node is retrieved by <code>x&#91;&#93;</code>, though the function call <code>to_value&#40;x&#41;</code> is recommened, as it will be defined even when <code>x</code> is not a node. This stored value could be used to set the <span class="math">$x$</span>-label in our scene:</p>
+<pre><code>xlabel&#33;&#40;scene, x&#91;&#93;&#41;</code></pre>
+<p>We now set up an observer to update the label whenever the value of <code>x</code> is updated:</p>
+<pre><code>on&#40;x&#41; do val
+   xlabel&#33;&#40;scen, val&#41;
+end</code></pre>
+<p>Now setting the value of <code>x</code> will also update the label:</p>
+<pre><code>x&#91;&#93; &#61; &quot;The x axis&quot;</code></pre>
+<p>A node can be more complicated. This shows how a node of <span class="math">$x$</span> value can be used to define dependent <span class="math">$y$</span> values. A scatter plot will update when the <span class="math">$x$</span> values are updated:</p>
+<pre><code>xs &#61; Node&#40;1:10&#41;
+ys &#61; lift&#40;a -&gt; f.&#40;a&#41;, xs&#41;</code></pre>
+<p>The <code>lift</code> function lifts the values of <code>xs</code> to the values of <code>ys</code>.</p>
+<p>These can be plotted directly:</p>
+<pre><code>scene &#61;  lines&#40;xs, ys&#41;</code></pre>
+<p>Changes to the <code>xs</code> values will be reflected in the <code>scene</code>.</p>
+<pre><code>xs&#91;&#93; &#61; 2:9</code></pre>
+<p>We can incoporporate the two:</p>
+<pre><code>lab &#61; lift&#40;val -&gt; &quot;Showing from &#36;&#40;val.start&#41; to &#36;&#40;val.stop&#41;&quot;, xs&#41;
+on&#40;lab&#41; do val
+  xlabel&#33;&#40;scene, val&#41;
+  udpate&#33;&#40;scene&#41;
+end</code></pre>
+<p>The <code>update&#33;</code> call redraws the scene to adjust to increased or decreased range of <span class="math">$x$</span> values.</p>
+<p>The mouse position can be recorded. An example in the gallery of examples shows how.</p>
+<p>Here is a hint:</p>
+<pre><code>scene &#61; lines&#40;1:5, rand&#40;5&#41;&#41;
+pos &#61; lift&#40;scene.events.mouseposition&#41; do mpos
+    @show AbstractPlotting.to_world&#40;scene, Point2f0&#40;mpos&#41;&#41;
+end</code></pre>
+<p>This will display the coordinates of the mouse in the terminal, as the mouse is moved around.</p>
+
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('pre.hljl').forEach(el => {   // first, find all the div.code blocks
+  hljs.highlightElement(el);                              // then highlight each
+  });
+
+  var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+  var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
+  });
+</script>
+
+
+</body>
+</html>

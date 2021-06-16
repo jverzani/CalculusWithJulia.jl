@@ -511,3 +511,10 @@ xs = rs[4] .- rs
 val = sum(ms .* xs) / sum(ms)
 numericq(val)
 ```
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

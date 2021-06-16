@@ -110,7 +110,7 @@ the distance formula $\sqrt{(x_1 - x_0)^2 + (y_1 - y_0)^2}$.  A line
 segment can be given a direction by assigning an initial point and a
 terminal point. A directed line segment has both a direction and a
 magnitude. A vector is an abstraction where just these two properties
-- a direction and a magnitude - are intrinsic. While a directed line
+``-`` a **direction** and a **magnitude** ``-`` are intrinsic. While a directed line
 segment can be represented by a vector, a single vector describes all
 such line segments found by translation. That is, how the the vector
 is located when visualized is for convenience, it is not a characteristic of
@@ -156,9 +156,11 @@ Two operations on vectors are fundamental.
 * Vectors can be multiplied by a scalar (a real number): $c\vec{v} =
   \langle cx,~ cy \rangle$. Geometrically this scales the vector by a
   factor of $\lvert c \rvert$ and switches the direction of the vector
-  by 180 degree when $c < 0$. A *unit vector* is one with magnitude 1,
-  and, except for the $\vec{0}$ vector, can be formed from $\vec{v}$ by dividing
-  $\vec{v}$ by its magnitude. A vector's two parts are summarized by its direction given by a unit vector gives and its norm given by the magnitude.
+  by 180 degrees (in the ``2``-dimensional case) when $c < 0$. A *unit
+  vector* is one with magnitude 1, and, except for the $\vec{0}$
+  vector, can be formed from $\vec{v}$ by dividing $\vec{v}$ by its
+  magnitude. A vector's two parts are summarized by its direction
+  given by a unit vector gives and its norm given by the magnitude.
 
 
 
@@ -213,7 +215,7 @@ annotate!(plt, [(-1, .5, L"a"), (2.45, .5, L"b"), (1, 1.75, L"a-b")])
 imgfile = tempname() * ".png"
 png(plt, imgfile)
 
-caption = "The sum of two vectors can be visualized by placing the tail of one at the tip of the other"
+caption = "The difference of two vectors can be visualized by placing the tail of one at the tip of the other"
 
 ImageFile(imgfile, caption)
 ```
@@ -442,7 +444,7 @@ The last value of a vector is usually denoted by $v_n$. In `Julia`,
 the `length` function will return $n$, the number of items in the
 container. So `v[length(v)]` will refer to the last
 component. However, the special keyword `end` will do so as well, when
-put into the context of indexing. So `v[end]` is more idiomatic.
+put into the context of indexing. So `v[end]` is more idiomatic. (Similarly, there is a `begin` keyword that is useful when the vector is not ``1``-based, as is typical but not mandatory.)
 
 
 ```julia; echo=false;
@@ -615,7 +617,12 @@ Broadcasting with multiple arguments allows for mixing of vectors and scalar val
 As a final example, the task from statistics of centering and then
 squaring can be done with broadcasting. We go a bit further, showing how to compute
 the (unbiased) [sample variance](http://tinyurl.com/p6wa4r8) of a data set. This has the formula
-$(1/(n-1))\cdot ((x_1-\bar{x})^2 + \cdots + (x_n + \bar{x})^2)$. It can be computed, with broadcasting, through:
+
+```math
+\frac{1}{n-1}\cdot ((x_1-\bar{x})^2 + \cdots + (x_n + \bar{x})^2).
+```
+
+This can be computed, with broadcasting, through:
 
 ```julia;
 import Statistics: mean
@@ -631,7 +638,7 @@ for various number types. The `.-` uses broadcasting to subtract a scalar (`mean
 
 
 ```julia; echo=false;
-note("""The `map` function is very much related to broadcasting and similarly named functions are found in many different programming languages. (The "dot" broadcast is mostly limited to `Julia` and based on a similar usage of a dot in `MATLAB`.) For those familiar with other programming languages, using `map` may seem more natural. Its syntax is `map(f, xs)`.
+note("""The `map` function is very much related to broadcasting and similarly named functions are found in many different programming languages. (The "dot" broadcast is mostly limited to `Julia` and mirrors on a similar usage of a dot in `MATLAB`.) For those familiar with other programming languages, using `map` may seem more natural. Its syntax is `map(f, xs)`.
 """)
 ```
 
@@ -639,7 +646,7 @@ note("""The `map` function is very much related to broadcasting and similarly na
 
 In mathematics, set notation is often used to describe elements in a set.
 
-For example, the first 5 cubed numbers can be described by:
+For example, the first ``5`` cubed numbers can be described by:
 
 $$~
 \{x^3: x \text{ in } 1, 2,\dots, 5\}
@@ -649,7 +656,7 @@ Comprehension notation is similar. The above could be created in `Julia` with:
 
 ```julia;
 xs = [1,2,3,4,5]
-[x^3 for x in xs ]
+[x^3 for x in xs]
 ```
 
 
@@ -666,15 +673,15 @@ Another typical example of set notation might include a condition,
 such as, the numbers divisible by $7$ between $1$ and $100$. Set
 notation might be:
 
-$$~
-\{x: rem(x, 7) = 0 \text{ for } x \text{ in } 1, 2, \dots, 100\}.
-~$$
+```math
+\{x: \rem(x, 7) = 0 \text{ for } x \text{ in } 1, 2, \dots, 100\}.
+```
 
 This would be read: "the set of $x$ such that the remainder on division by $7$ is $0$ for all x in $1, 2, \dots, 100$."
 
 In `Julia`, a comprehension can include an `if` clause to mirror,
 somewhat, the math notation. For example, the above would become
-(using `1:100` as a means to create the numbers $1,2,\dots, 100$, as will be described in a later section):
+(using `1:100` as a means to create the numbers ``1,2,\dots, 100``, as will be described in an upcoming section):
 
 ```julia;
 [x for x in 1:100 if rem(x,7) == 0]
@@ -698,7 +705,7 @@ each $x$.
 
 To be concrete, let's generate $7$ points to plot $f(x) = x^2$ over $[-1,1]$.
 
-The first task is to create the `xs`. We will see later, more convenient ways to generate patterned data, but for now, we do this by hand:
+The first task is to create the `xs`. We will soon see more convenient ways to generate patterned data, but for now, we do this by hand:
 
 ```julia;
 a,b, n = -1, 1, 7
@@ -737,16 +744,19 @@ single value is being referred to, leading to expressions like "`x in xs`".
 
 ## Other container types
 
-Vectors in `Julia` are a container, one of many different types. Another useful type for programming purposes are *tuples*. If a vector if formed by placing comma-separated values within a `[]` pair (e.g., `[1,2,3]`), a tuple is formed by placing comma-separated values withing a `()` pair. I tuple of length $1$ uses a convention of a trailing comma to distinguish it from a parethesized expression (e.g. `(1,)` is a tuple, `(1)` is just the value `1`).
+Vectors in `Julia` are a container, one of many different types. Another useful type for programming purposes are *tuples*. If a vector is formed by placing comma-separated values within a `[]` pair (e.g., `[1,2,3]`), a tuple is formed by placing comma-separated values withing a `()` pair. A tuple of length $1$ uses a convention of a trailing comma to distinguish it from a parethesized expression (e.g. `(1,)` is a tuple, `(1)` is just the value `1`).
 
-Tuples are used in programming, as they don't typically require memory to be used so they can be faster. Internal usages are for function arguments and function return types. Unlike vectors, tuples can be heterogeneous collections. (When commas are used to combine more than one output into a cell, a tuple is being used.)
+Tuples are used in programming, as they don't typically require allocated memory to be used so they can be faster. Internal usages are for function arguments and function return types. Unlike vectors, tuples can be heterogeneous collections. (When commas are used to combine more than one output into a cell, a tuple is being used.) (Also, a big technical distinction is that tuples are also different from vectors and other containers in that tuple types are *covariant* in their parameters, not *invariant*.)
 
-Also unlike vectors, tuples can have names which can be used for referening a value, similar to indexing but possibly more convenient.
-Named tuples as similar to *dictionaries* which are used to associate a key (like a name) with a value.
+Unlike vectors, tuples can have names which can be used for
+referencing a value, similar to indexing but possibly more convenient.
+Named tuples as similar to *dictionaries* which are used to associate
+a key (like a name) with a value.
 
 ## Questions
 
 ###### Question
+
 
 Which command will create the vector $\vec{v} = \langle 4,~ 3 \rangle$?
 
@@ -954,4 +964,10 @@ q"zs^(1./2)"
 ]
 ans = 2
 radioq(choices, ans, keep_order=true)
+```
+
+
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

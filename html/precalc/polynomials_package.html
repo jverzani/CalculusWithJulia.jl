@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
 
 <style>
@@ -22,7 +22,8 @@
     padding: 5px;
     background-color: #f5f5f5;
 }
-body { padding-top: 60px; }
+body { padding-top: 60px;
+}
 .output {color:#0033CC;}
 h5:before {content:"\2746\ ";}
 h6:before {content:"\2742\ ";}
@@ -36,6 +37,10 @@ tr:hover {background-color: #f5f5f5;}
 
 .admonition-title:before {content:"\2746\ ";}
 .admonition-title { color:#0033CC}
+
+main > .container {
+  padding: 60px 15px 0;
+}
 
 
 </style>
@@ -104,7 +109,7 @@ $( document ).ready(function() {
 });
 </script>
 
-<link rel="shortcut icon" href="https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/misc/logo.png" type="image/x-icon" />
 
 </head>
 
@@ -173,7 +178,7 @@ $( document ).ready(function() {
 
 
 
-3 &#43; 4&#8729;x &#43; 5&#8729;x<sup>2</sup>
+<div class="output">$3 + 4\cdot x + 5\cdot x^{2}$</div>
 
 <p>where the vector <code>&#91;3,4,5&#93;</code> represents the coefficients. The polynomial <span class="math">$q = 3 + 5x^2 + 7x^4$</span> has some coefficients that are <span class="math">$0$</span>, these too must be indicated on construction, so we would have:</p>
 
@@ -184,7 +189,7 @@ $( document ).ready(function() {
 
 
 
-3 &#43; 5&#8729;x<sup>2</sup> &#43; 7&#8729;x<sup>4</sup>
+<div class="output">$3 + 5\cdot x^{2} + 7\cdot x^{4}$</div>
 
 <p>The <code>coeffs</code> function undoes <code>Polynomial</code>, returning the coefficients from a <code>Polynomial</code> object.</p>
 
@@ -213,7 +218,7 @@ $( document ).ready(function() {
 
 
 
-6 &#43; 4&#8729;x &#43; 10&#8729;x<sup>2</sup> &#43; 7&#8729;x<sup>4</sup>
+<div class="output">$6 + 4\cdot x + 10\cdot x^{2} + 7\cdot x^{4}$</div>
 
 
 <pre class='hljl'>
@@ -222,7 +227,7 @@ $( document ).ready(function() {
 
 
 
-18 &#43; 36&#8729;x &#43; 76&#8729;x<sup>2</sup> &#43; 60&#8729;x<sup>3</sup> &#43; 71&#8729;x<sup>4</sup> &#43; 28&#8729;x<sup>5</sup> &#43; 35&#8729;x<sup>6</sup>
+<div class="output">$18 + 36\cdot x + 76\cdot x^{2} + 60\cdot x^{3} + 71\cdot x^{4} + 28\cdot x^{5} + 35\cdot x^{6}$</div>
 
 <p>A polynomial has several familiar methods, such as <code>degree</code>:</p>
 
@@ -261,7 +266,7 @@ $( document ).ready(function() {
 
 
 
-x
+<div class="output">$x$</div>
 
 <p>This variable is a <code>Polynomial</code> object, so can be manipulated as a polynomial; we can then construct polynomials through expressions like:</p>
 
@@ -272,7 +277,7 @@ x
 
 
 
-8 &#45; 12&#8729;x &#45; 2&#8729;x<sup>2</sup> &#43; 11&#8729;x<sup>3</sup> &#45; 6&#8729;x<sup>4</sup> &#43; x<sup>5</sup>
+<div class="output">$8 - 12\cdot x - 2\cdot x^{2} + 11\cdot x^{3} - 6\cdot x^{4} + x^{5}$</div>
 
 <p>The product is expanded for storage by <code>Polynomials</code>, which may not be desirable for some uses. A new variable can produced by calling <code>variable&#40;&#41;</code>; so we could have constructed <code>p</code> by:</p>
 
@@ -284,7 +289,7 @@ x
 
 
 
-3 &#43; 4&#8729;x &#43; 5&#8729;x<sup>2</sup>
+<div class="output">$3 + 4\cdot x + 5\cdot x^{2}$</div>
 
 <p>A polynomial in factored form, as <code>r</code> above is, can be constructed from its roots. Above, <code>r</code> has roots <span class="math">$2$</span> &#40;twice&#41;, <span class="math">$1$</span>, and <span class="math">$-1$</span>. Passing these as a vector to <code>fromroots</code> re-produces <code>r</code>:</p>
 
@@ -295,7 +300,7 @@ x
 
 
 
-&#45;4 &#43; 4&#8729;x &#43; 3&#8729;x<sup>2</sup> &#45; 4&#8729;x<sup>3</sup> &#43; x<sup>4</sup>
+<div class="output">$-4 + 4\cdot x + 3\cdot x^{2} - 4\cdot x^{3} + x^{4}$</div>
 
 <p>The <code>fromroots</code> function is basically the <a href="https://en.wikipedia.org/wiki/Factor_theorem">factor thereom</a> which links the factored form of the polynomial with the roots of the polynomial: <span class="math">$(x-k)$</span> is a factor of <span class="math">$p$</span> if and only if <span class="math">$k$</span> is a root of <span class="math">$p$</span>. By combining a factor of the type <span class="math">$(x-k)$</span> for each specified root, the polynomial can be constructed by multiplying its factors. For example, using <code>prod</code> and a generarator, we would have:</p>
 
@@ -307,7 +312,7 @@ x
 
 
 
-&#45;4 &#43; 4&#8729;x &#43; 3&#8729;x<sup>2</sup> &#45; 4&#8729;x<sup>3</sup> &#43; x<sup>4</sup>
+<div class="output">$-4 + 4\cdot x + 3\cdot x^{2} - 4\cdot x^{3} + x^{4}$</div>
 
 <p>The <code>Polynomials</code> package has different ways to represent polynomials, and a factored form can also be used. For example, the <code>fromroots</code> function constructs polynomials from the specified roots and <code>FactoredPolynomial</code> leaves these in a factored form:</p>
 
@@ -318,7 +323,7 @@ x
 
 
 
-(x - 2)² * (x + 1) * (x - 1)
+<div class="output">$(x - 2)² * (x + 1) * (x - 1)$</div>
 
 <p>This form is helpful for some operations, for example polynomial multiplication and positive integer exponentiation, but not others such as addition of polynomials, where such polynomials must first be converted to the standard basis to add and are then converted back into a factored form.</p>
 <hr />
@@ -331,7 +336,7 @@ x
 
 
 
-1 &#43; 2&#8729;t &#43; 3&#8729;t<sup>2</sup>
+<div class="output">$1 + 2\cdot t + 3\cdot t^{2}$</div>
 
 <p>As <code>r</code> uses &quot;<code>x</code>&quot;, and <code>s</code> a &quot;<code>t</code>&quot; the two can not be added, say:</p>
 
@@ -355,7 +360,256 @@ ERROR: ArgumentError: Polynomials have different indeterminates
 </pre>
 
 
-<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTc2IiBoZWlnaHQ9IjM4NCIgdmlld0JveD0iMCAwIDIzMDQgMTUzNiI+CjxkZWZzPgogIDxjbGlwUGF0aCBpZD0iY2xpcDAwMCI+CiAgICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjMwNCIgaGVpZ2h0PSIxNTM2Ii8+CiAgPC9jbGlwUGF0aD4KPC9kZWZzPgo8cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDAwMCkiIGQ9IgpNMCAxNTM2IEwyMzA0IDE1MzYgTDIzMDQgMCBMMCAwICBaCiAgIiBmaWxsPSIjZmZmZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIvPgo8ZGVmcz4KICA8Y2xpcFBhdGggaWQ9ImNsaXAwMDEiPgogICAgPHJlY3QgeD0iNDYwIiB5PSIwIiB3aWR0aD0iMTYxNCIgaGVpZ2h0PSIxNTM2Ii8+CiAgPC9jbGlwUGF0aD4KPC9kZWZzPgo8cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDAwMCkiIGQ9IgpNMTc3LjkwNyAxNDIzLjA5IEwyMjU2Ljc2IDE0MjMuMDkgTDIyNTYuNzYgNDcuMjQ0MSBMMTc3LjkwNyA0Ny4yNDQxICBaCiAgIiBmaWxsPSIjZmZmZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIvPgo8ZGVmcz4KICA8Y2xpcFBhdGggaWQ9ImNsaXAwMDIiPgogICAgPHJlY3QgeD0iMTc3IiB5PSI0NyIgd2lkdGg9IjIwODAiIGhlaWdodD0iMTM3NyIvPgogIDwvY2xpcFBhdGg+CjwvZGVmcz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDAyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDoyOyBzdHJva2Utb3BhY2l0eTowLjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICA1MTYuOTEsMTQyMy4wOSA1MTYuOTEsNDcuMjQ0MSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDAyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDoyOyBzdHJva2Utb3BhY2l0eTowLjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICA5ODMuODU1LDE0MjMuMDkgOTgzLjg1NSw0Ny4yNDQxIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMDIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjI7IHN0cm9rZS1vcGFjaXR5OjAuMTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE0NTAuOCwxNDIzLjA5IDE0NTAuOCw0Ny4yNDQxIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMDIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjI7IHN0cm9rZS1vcGFjaXR5OjAuMTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE5MTcuNzQsMTQyMy4wOSAxOTE3Ljc0LDQ3LjI0NDEgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDAwMCkiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE3Ny45MDcsMTQyMy4wOSAyMjU2Ljc2LDE0MjMuMDkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDAwMCkiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDUxNi45MSwxNDIzLjA5IDUxNi45MSwxNDA2LjU4IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMDApIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICA5ODMuODU1LDE0MjMuMDkgOTgzLjg1NSwxNDA2LjU4IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMDApIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxNDUwLjgsMTQyMy4wOSAxNDUwLjgsMTQwNi41OCAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDAwKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTkxNy43NCwxNDIzLjA5IDE5MTcuNzQsMTQwNi41OCAKICAiLz4KPHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMDApIiBkPSJNNDg2LjY2NyAxNDY2LjE2IEw1MTYuMzQzIDE0NjYuMTYgTDUxNi4zNDMgMTQ3MC4xIEw0ODYuNjY3IDE0NzAuMSBMNDg2LjY2NyAxNDY2LjE2IFoiIGZpbGw9IiMwMDAwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbC1vcGFjaXR5PSIxIiAvPjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwMDAwKSIgZD0iTTUyNy4yNDYgMTQ3OS4wNiBMNTM0Ljg4NSAxNDc5LjA2IEw1MzQuODg1IDE0NTIuNjkgTDUyNi41NzUgMTQ1NC4zNiBMNTI2LjU3NSAxNDUwLjEgTDUzNC44MzkgMTQ0OC40MyBMNTM5LjUxNCAxNDQ4LjQzIEw1MzkuNTE0IDE0NzkuMDYgTDU0Ny4xNTMgMTQ3OS4wNiBMNTQ3LjE1MyAxNDgyLjk5IEw1MjcuMjQ2IDE0ODIuOTkgTDUyNy4yNDYgMTQ3OS4wNiBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDAwMCkiIGQ9Ik05ODMuODU1IDE0NTEuNTEgUTk4MC4yNDQgMTQ1MS41MSA5NzguNDE1IDE0NTUuMDggUTk3Ni42MDkgMTQ1OC42MiA5NzYuNjA5IDE0NjUuNzUgUTk3Ni42MDkgMTQ3Mi44NSA5NzguNDE1IDE0NzYuNDIgUTk4MC4yNDQgMTQ3OS45NiA5ODMuODU1IDE0NzkuOTYgUTk4Ny40ODkgMTQ3OS45NiA5ODkuMjk1IDE0NzYuNDIgUTk5MS4xMjMgMTQ3Mi44NSA5OTEuMTIzIDE0NjUuNzUgUTk5MS4xMjMgMTQ1OC42MiA5ODkuMjk1IDE0NTUuMDggUTk4Ny40ODkgMTQ1MS41MSA5ODMuODU1IDE0NTEuNTEgTTk4My44NTUgMTQ0Ny44MSBROTg5LjY2NSAxNDQ3LjgxIDk5Mi43MiAxNDUyLjQxIFE5OTUuNzk5IDE0NTcgOTk1Ljc5OSAxNDY1Ljc1IFE5OTUuNzk5IDE0NzQuNDcgOTkyLjcyIDE0NzkuMDggUTk4OS42NjUgMTQ4My42NiA5ODMuODU1IDE0ODMuNjYgUTk3OC4wNDUgMTQ4My42NiA5NzQuOTY2IDE0NzkuMDggUTk3MS45MSAxNDc0LjQ3IDk3MS45MSAxNDY1Ljc1IFE5NzEuOTEgMTQ1NyA5NzQuOTY2IDE0NTIuNDEgUTk3OC4wNDUgMTQ0Ny44MSA5ODMuODU1IDE0NDcuODEgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMDApIiBkPSJNMTQ0MS4xOCAxNDc5LjA2IEwxNDQ4LjgyIDE0NzkuMDYgTDE0NDguODIgMTQ1Mi42OSBMMTQ0MC41MSAxNDU0LjM2IEwxNDQwLjUxIDE0NTAuMSBMMTQ0OC43NyAxNDQ4LjQzIEwxNDUzLjQ1IDE0NDguNDMgTDE0NTMuNDUgMTQ3OS4wNiBMMTQ2MS4wOSAxNDc5LjA2IEwxNDYxLjA5IDE0ODIuOTkgTDE0NDEuMTggMTQ4Mi45OSBMMTQ0MS4xOCAxNDc5LjA2IFoiIGZpbGw9IiMwMDAwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbC1vcGFjaXR5PSIxIiAvPjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwMDAwKSIgZD0iTTE5MTIuNCAxNDc5LjA2IEwxOTI4LjcyIDE0NzkuMDYgTDE5MjguNzIgMTQ4Mi45OSBMMTkwNi43NyAxNDgyLjk5IEwxOTA2Ljc3IDE0NzkuMDYgUTE5MDkuNDMgMTQ3Ni4zIDE5MTQuMDIgMTQ3MS42NyBRMTkxOC42MiAxNDY3LjAyIDE5MTkuOCAxNDY1LjY4IFExOTIyLjA1IDE0NjMuMTUgMTkyMi45MyAxNDYxLjQyIFExOTIzLjgzIDE0NTkuNjYgMTkyMy44MyAxNDU3Ljk3IFExOTIzLjgzIDE0NTUuMjEgMTkyMS44OSAxNDUzLjQ4IFExOTE5Ljk3IDE0NTEuNzQgMTkxNi44NiAxNDUxLjc0IFExOTE0LjY2IDE0NTEuNzQgMTkxMi4yMSAxNDUyLjUxIFExOTA5Ljc4IDE0NTMuMjcgMTkwNyAxNDU0LjgyIEwxOTA3IDE0NTAuMSBRMTkwOS44MyAxNDQ4Ljk2IDE5MTIuMjggMTQ0OC4zOSBRMTkxNC43MyAxNDQ3LjgxIDE5MTYuNzcgMTQ0Ny44MSBRMTkyMi4xNCAxNDQ3LjgxIDE5MjUuMzQgMTQ1MC40OSBRMTkyOC41MyAxNDUzLjE4IDE5MjguNTMgMTQ1Ny42NyBRMTkyOC41MyAxNDU5LjggMTkyNy43MiAxNDYxLjcyIFExOTI2LjkzIDE0NjMuNjIgMTkyNC44MyAxNDY2LjIxIFExOTI0LjI1IDE0NjYuODggMTkyMS4xNSAxNDcwLjEgUTE5MTguMDQgMTQ3My4yOSAxOTEyLjQgMTQ3OS4wNiBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMDIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjI7IHN0cm9rZS1vcGFjaXR5OjAuMTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE3Ny45MDcsMTE4Ny43NSAyMjU2Ljc2LDExODcuNzUgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDAwMikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6Mjsgc3Ryb2tlLW9wYWNpdHk6MC4xOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTc3LjkwNyw4ODAuNDk5IDIyNTYuNzYsODgwLjQ5OSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDAyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDoyOyBzdHJva2Utb3BhY2l0eTowLjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxNzcuOTA3LDU3My4yNDYgMjI1Ni43Niw1NzMuMjQ2IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMDIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjI7IHN0cm9rZS1vcGFjaXR5OjAuMTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE3Ny45MDcsMjY1Ljk5MyAyMjU2Ljc2LDI2NS45OTMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDAwMCkiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE3Ny45MDcsMTQyMy4wOSAxNzcuOTA3LDQ3LjI0NDEgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDAwMCkiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE3Ny45MDcsMTE4Ny43NSAyMDIuODUzLDExODcuNzUgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDAwMCkiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE3Ny45MDcsODgwLjQ5OSAyMDIuODUzLDg4MC40OTkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDAwMCkiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE3Ny45MDcsNTczLjI0NiAyMDIuODUzLDU3My4yNDYgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDAwMCkiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE3Ny45MDcsMjY1Ljk5MyAyMDIuODUzLDI2NS45OTMgCiAgIi8+CjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwMDAwKSIgZD0iTTUxLjQ3MjEgMTE4OC4yIEw4MS4xNDc5IDExODguMiBMODEuMTQ3OSAxMTkyLjE0IEw1MS40NzIxIDExOTIuMTQgTDUxLjQ3MjEgMTE4OC4yIFoiIGZpbGw9IiMwMDAwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbC1vcGFjaXR5PSIxIiAvPjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwMDAwKSIgZD0iTTEwMS44MTkgMTE4NS44OSBROTguNjcwOSAxMTg1Ljg5IDk2LjgxOTEgMTE4OC4wNCBROTQuOTkwNCAxMTkwLjE5IDk0Ljk5MDQgMTE5My45NCBROTQuOTkwNCAxMTk3LjY3IDk2LjgxOTEgMTE5OS44NSBROTguNjcwOSAxMjAyIDEwMS44MTkgMTIwMiBRMTA0Ljk2NyAxMjAyIDEwNi43OTYgMTE5OS44NSBRMTA4LjY0OCAxMTk3LjY3IDEwOC42NDggMTE5My45NCBRMTA4LjY0OCAxMTkwLjE5IDEwNi43OTYgMTE4OC4wNCBRMTA0Ljk2NyAxMTg1Ljg5IDEwMS44MTkgMTE4NS44OSBNMTExLjEwMSAxMTcxLjIzIEwxMTEuMTAxIDExNzUuNDkgUTEwOS4zNDIgMTE3NC42NiAxMDcuNTM3IDExNzQuMjIgUTEwNS43NTQgMTE3My43OCAxMDMuOTk1IDExNzMuNzggUTk5LjM2NTQgMTE3My43OCA5Ni45MTE3IDExNzYuOTEgUTk0LjQ4MTIgMTE4MC4wMyA5NC4xMzM5IDExODYuMzUgUTk1LjQ5OTcgMTE4NC4zNCA5Ny41NTk4IDExODMuMjcgUTk5LjYyIDExODIuMTggMTAyLjA5NyAxMTgyLjE4IFExMDcuMzA1IDExODIuMTggMTEwLjMxNCAxMTg1LjM2IFExMTMuMzQ3IDExODguNSAxMTMuMzQ3IDExOTMuOTQgUTExMy4zNDcgMTE5OS4yNyAxMTAuMTk5IDEyMDIuNDggUTEwNy4wNTEgMTIwNS43IDEwMS44MTkgMTIwNS43IFE5NS44MjM3IDEyMDUuNyA5Mi42NTI1IDEyMDEuMTIgUTg5LjQ4MTIgMTE5Ni41MSA4OS40ODEyIDExODcuNzkgUTg5LjQ4MTIgMTE3OS41OSA5My4zNyAxMTc0LjczIFE5Ny4yNTg5IDExNjkuODUgMTAzLjgxIDExNjkuODUgUTEwNS41NjkgMTE2OS44NSAxMDcuMzUxIDExNzAuMTkgUTEwOS4xNTcgMTE3MC41NCAxMTEuMTAxIDExNzEuMjMgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMDApIiBkPSJNMTMxLjQwMiAxMTczLjU1IFExMjcuNzkxIDExNzMuNTUgMTI1Ljk2MiAxMTc3LjExIFExMjQuMTU3IDExODAuNjYgMTI0LjE1NyAxMTg3Ljc5IFExMjQuMTU3IDExOTQuODkgMTI1Ljk2MiAxMTk4LjQ2IFExMjcuNzkxIDEyMDIgMTMxLjQwMiAxMjAyIFExMzUuMDM2IDEyMDIgMTM2Ljg0MiAxMTk4LjQ2IFExMzguNjcxIDExOTQuODkgMTM4LjY3MSAxMTg3Ljc5IFExMzguNjcxIDExODAuNjYgMTM2Ljg0MiAxMTc3LjExIFExMzUuMDM2IDExNzMuNTUgMTMxLjQwMiAxMTczLjU1IE0xMzEuNDAyIDExNjkuODUgUTEzNy4yMTIgMTE2OS44NSAxNDAuMjY4IDExNzQuNDUgUTE0My4zNDcgMTE3OS4wNCAxNDMuMzQ3IDExODcuNzkgUTE0My4zNDcgMTE5Ni41MSAxNDAuMjY4IDEyMDEuMTIgUTEzNy4yMTIgMTIwNS43IDEzMS40MDIgMTIwNS43IFExMjUuNTkyIDEyMDUuNyAxMjIuNTEzIDEyMDEuMTIgUTExOS40NTggMTE5Ni41MSAxMTkuNDU4IDExODcuNzkgUTExOS40NTggMTE3OS4wNCAxMjIuNTEzIDExNzQuNDUgUTEyNS41OTIgMTE2OS44NSAxMzEuNDAyIDExNjkuODUgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMDApIiBkPSJNNTEuNDcyMSA4ODAuOTUgTDgxLjE0NzkgODgwLjk1IEw4MS4xNDc5IDg4NC44ODUgTDUxLjQ3MjEgODg0Ljg4NSBMNTEuNDcyMSA4ODAuOTUgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMDApIiBkPSJNMTA0LjA4OCA4NjcuMjkzIEw5Mi4yODIxIDg4NS43NDIgTDEwNC4wODggODg1Ljc0MiBMMTA0LjA4OCA4NjcuMjkzIE0xMDIuODYxIDg2My4yMTkgTDEwOC43NCA4NjMuMjE5IEwxMDguNzQgODg1Ljc0MiBMMTEzLjY3MSA4ODUuNzQyIEwxMTMuNjcxIDg4OS42MyBMMTA4Ljc0IDg4OS42MyBMMTA4Ljc0IDg5Ny43NzkgTDEwNC4wODggODk3Ljc3OSBMMTA0LjA4OCA4ODkuNjMgTDg4LjQ4NTggODg5LjYzIEw4OC40ODU4IDg4NS4xMTcgTDEwMi44NjEgODYzLjIxOSBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDAwMCkiIGQ9Ik0xMzEuNDAyIDg2Ni4yOTcgUTEyNy43OTEgODY2LjI5NyAxMjUuOTYyIDg2OS44NjIgUTEyNC4xNTcgODczLjQwNCAxMjQuMTU3IDg4MC41MzMgUTEyNC4xNTcgODg3LjY0IDEyNS45NjIgODkxLjIwNCBRMTI3Ljc5MSA4OTQuNzQ2IDEzMS40MDIgODk0Ljc0NiBRMTM1LjAzNiA4OTQuNzQ2IDEzNi44NDIgODkxLjIwNCBRMTM4LjY3MSA4ODcuNjQgMTM4LjY3MSA4ODAuNTMzIFExMzguNjcxIDg3My40MDQgMTM2Ljg0MiA4NjkuODYyIFExMzUuMDM2IDg2Ni4yOTcgMTMxLjQwMiA4NjYuMjk3IE0xMzEuNDAyIDg2Mi41OTQgUTEzNy4yMTIgODYyLjU5NCAxNDAuMjY4IDg2Ny4yIFExNDMuMzQ3IDg3MS43ODMgMTQzLjM0NyA4ODAuNTMzIFExNDMuMzQ3IDg4OS4yNiAxNDAuMjY4IDg5My44NjYgUTEzNy4yMTIgODk4LjQ1IDEzMS40MDIgODk4LjQ1IFExMjUuNTkyIDg5OC40NSAxMjIuNTEzIDg5My44NjYgUTExOS40NTggODg5LjI2IDExOS40NTggODgwLjUzMyBRMTE5LjQ1OCA4NzEuNzgzIDEyMi41MTMgODY3LjIgUTEyNS41OTIgODYyLjU5NCAxMzEuNDAyIDg2Mi41OTQgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMDApIiBkPSJNNTEuNDcyMSA1NzMuNjk3IEw4MS4xNDc5IDU3My42OTcgTDgxLjE0NzkgNTc3LjYzMyBMNTEuNDcyMSA1NzcuNjMzIEw1MS40NzIxIDU3My42OTcgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMDApIiBkPSJNOTUuMjY4MiA1ODYuNTkxIEwxMTEuNTg4IDU4Ni41OTEgTDExMS41ODggNTkwLjUyNiBMODkuNjQzMiA1OTAuNTI2IEw4OS42NDMyIDU4Ni41OTEgUTkyLjMwNTIgNTgzLjgzNiA5Ni44ODg1IDU3OS4yMDcgUTEwMS40OTUgNTc0LjU1NCAxMDIuNjc2IDU3My4yMTEgUTEwNC45MjEgNTcwLjY4OCAxMDUuODAxIDU2OC45NTIgUTEwNi43MDMgNTY3LjE5MyAxMDYuNzAzIDU2NS41MDMgUTEwNi43MDMgNTYyLjc0OCAxMDQuNzU5IDU2MS4wMTIgUTEwMi44MzggNTU5LjI3NiA5OS43MzU4IDU1OS4yNzYgUTk3LjUzNjcgNTU5LjI3NiA5NS4wODMgNTYwLjA0IFE5Mi42NTI1IDU2MC44MDQgODkuODc0NyA1NjIuMzU1IEw4OS44NzQ3IDU1Ny42MzMgUTkyLjY5ODggNTU2LjQ5OCA5NS4xNTI0IDU1NS45MiBROTcuNjA2MSA1NTUuMzQxIDk5LjY0MzIgNTU1LjM0MSBRMTA1LjAxNCA1NTUuMzQxIDEwOC4yMDggNTU4LjAyNiBRMTExLjQwMiA1NjAuNzExIDExMS40MDIgNTY1LjIwMiBRMTExLjQwMiA1NjcuMzMyIDExMC41OTIgNTY5LjI1MyBRMTA5LjgwNSA1NzEuMTUxIDEwNy42OTkgNTczLjc0NCBRMTA3LjEyIDU3NC40MTUgMTA0LjAxOCA1NzcuNjMzIFExMDAuOTE2IDU4MC44MjcgOTUuMjY4MiA1ODYuNTkxIFoiIGZpbGw9IiMwMDAwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbC1vcGFjaXR5PSIxIiAvPjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwMDAwKSIgZD0iTTEzMS40MDIgNTU5LjA0NSBRMTI3Ljc5MSA1NTkuMDQ1IDEyNS45NjIgNTYyLjYwOSBRMTI0LjE1NyA1NjYuMTUxIDEyNC4xNTcgNTczLjI4MSBRMTI0LjE1NyA1ODAuMzg3IDEyNS45NjIgNTgzLjk1MiBRMTI3Ljc5MSA1ODcuNDk0IDEzMS40MDIgNTg3LjQ5NCBRMTM1LjAzNiA1ODcuNDk0IDEzNi44NDIgNTgzLjk1MiBRMTM4LjY3MSA1ODAuMzg3IDEzOC42NzEgNTczLjI4MSBRMTM4LjY3MSA1NjYuMTUxIDEzNi44NDIgNTYyLjYwOSBRMTM1LjAzNiA1NTkuMDQ1IDEzMS40MDIgNTU5LjA0NSBNMTMxLjQwMiA1NTUuMzQxIFExMzcuMjEyIDU1NS4zNDEgMTQwLjI2OCA1NTkuOTQ3IFExNDMuMzQ3IDU2NC41MzEgMTQzLjM0NyA1NzMuMjgxIFExNDMuMzQ3IDU4Mi4wMDcgMTQwLjI2OCA1ODYuNjE0IFExMzcuMjEyIDU5MS4xOTcgMTMxLjQwMiA1OTEuMTk3IFExMjUuNTkyIDU5MS4xOTcgMTIyLjUxMyA1ODYuNjE0IFExMTkuNDU4IDU4Mi4wMDcgMTE5LjQ1OCA1NzMuMjgxIFExMTkuNDU4IDU2NC41MzEgMTIyLjUxMyA1NTkuOTQ3IFExMjUuNTkyIDU1NS4zNDEgMTMxLjQwMiA1NTUuMzQxIFoiIGZpbGw9IiMwMDAwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbC1vcGFjaXR5PSIxIiAvPjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwMDAwKSIgZD0iTTEzMS40MDIgMjUxLjc5MiBRMTI3Ljc5MSAyNTEuNzkyIDEyNS45NjIgMjU1LjM1NyBRMTI0LjE1NyAyNTguODk5IDEyNC4xNTcgMjY2LjAyOCBRMTI0LjE1NyAyNzMuMTM1IDEyNS45NjIgMjc2LjY5OSBRMTI3Ljc5MSAyODAuMjQxIDEzMS40MDIgMjgwLjI0MSBRMTM1LjAzNiAyODAuMjQxIDEzNi44NDIgMjc2LjY5OSBRMTM4LjY3MSAyNzMuMTM1IDEzOC42NzEgMjY2LjAyOCBRMTM4LjY3MSAyNTguODk5IDEzNi44NDIgMjU1LjM1NyBRMTM1LjAzNiAyNTEuNzkyIDEzMS40MDIgMjUxLjc5MiBNMTMxLjQwMiAyNDguMDg4IFExMzcuMjEyIDI0OC4wODggMTQwLjI2OCAyNTIuNjk1IFExNDMuMzQ3IDI1Ny4yNzggMTQzLjM0NyAyNjYuMDI4IFExNDMuMzQ3IDI3NC43NTUgMTQwLjI2OCAyNzkuMzYxIFExMzcuMjEyIDI4My45NDUgMTMxLjQwMiAyODMuOTQ1IFExMjUuNTkyIDI4My45NDUgMTIyLjUxMyAyNzkuMzYxIFExMTkuNDU4IDI3NC43NTUgMTE5LjQ1OCAyNjYuMDI4IFExMTkuNDU4IDI1Ny4yNzggMTIyLjUxMyAyNTIuNjk1IFExMjUuNTkyIDI0OC4wODggMTMxLjQwMiAyNDguMDg4IFoiIGZpbGw9IiMwMDAwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbC1vcGFjaXR5PSIxIiAvPjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDAwMikiIHN0eWxlPSJzdHJva2U6IzAwOWFmOTsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDIzNi43NDIsMTM4NC4xNSAyNzUuOTY2LDExMzIuOTEgMzE1LjE4OSw5MTguNDYxIDM1NC40MTMsNzM3LjA4MyAzOTMuNjM2LDU4NS4yOTQgNDMyLjg2LDQ1OS44NDkgNDcyLjA4MywzNTcuNzI4IDUxMS4zMDcsMjc2LjEyOSA1NTAuNTMxLDIxMi40NjEgNTg5Ljc1NCwxNjQuMzM1IAogIDYyOC45NzgsMTI5LjU2MSA2NjguMjAxLDEwNi4xMzIgNzA3LjQyNSw5Mi4yMjM2IDc0Ni42NDgsODYuMTgzMSA3ODUuODcyLDg2LjUyMTkgODI1LjA5Niw5MS45MDg2IDg2NC4zMTksMTAxLjE2MSA5MDMuNTQzLDExMy4yMzcgOTQyLjc2NiwxMjcuMjI5IDk4MS45OSwxNDIuMzU3IAogIDEwMjEuMjEsMTU3Ljk1NiAxMDYwLjQ0LDE3My40NzMgMTA5OS42NiwxODguNDU5IDExMzguODgsMjAyLjU1OSAxMTc4LjExLDIxNS41MDUgMTIxNy4zMywyMjcuMTA4IDEyNTYuNTUsMjM3LjI1MyAxMjk1Ljc4LDI0NS44ODkgMTMzNSwyNTMuMDIgMTM3NC4yMywyNTguNjk5IAogIDE0MTMuNDUsMjYzLjAyMSAxNDUyLjY3LDI2Ni4xMTUgMTQ5MS45LDI2OC4xMzUgMTUzMS4xMiwyNjkuMjUyIDE1NzAuMzQsMjY5LjY0NyAxNjA5LjU3LDI2OS41MDcgMTY0OC43OSwyNjkuMDExIDE2ODguMDEsMjY4LjMyNCAxNzI3LjI0LDI2Ny41OTQgMTc2Ni40NiwyNjYuOTM5IAogIDE4MDUuNjgsMjY2LjQzOSAxODQ0LjkxLDI2Ni4xMzMgMTg4NC4xMywyNjYuMDA5IDE5MjMuMzYsMjY1Ljk5MyAxOTYyLjU4LDI2NS45NDcgMjAwMS44LDI2NS42NTcgMjA0MS4wMywyNjQuODI3IDIwODAuMjUsMjYzLjA3MSAyMTE5LjQ3LDI1OS45MDUgMjE1OC43LDI1NC43NDIgCiAgMjE5Ny45MiwyNDYuODc3IAogICIvPgo8L3N2Zz4K"  />
+
+    <div id="ac0b61c0-2756-4a36-a304-758fcea45ca6" style="width:576px;height:384px;"></div>
+    <script>
+    
+        var PLOT = document.getElementById('ac0b61c0-2756-4a36-a304-758fcea45ca6');
+    Plotly.plot(PLOT, [
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            -1.600003683475422,
+            -1.5160031677888628,
+            -1.4320026521023037,
+            -1.3480021364157444,
+            -1.2640016207291853,
+            -1.180001105042626,
+            -1.0960005893560667,
+            -1.0120000736695074,
+            -0.9279995579829483,
+            -0.8439990422963891,
+            -0.7599985266098299,
+            -0.6759980109232706,
+            -0.5919974952367113,
+            -0.5079969795501522,
+            -0.4239964638635929,
+            -0.3399959481770338,
+            -0.2559954324904745,
+            -0.1719949168039152,
+            -0.08799440111735612,
+            -0.0039938854307968175,
+            0.08000663025576227,
+            0.16400714594232157,
+            0.24800766162888088,
+            0.33200817731543997,
+            0.4160086930019995,
+            0.5000092086885584,
+            0.5840097243751177,
+            0.668010240061677,
+            0.7520107557482363,
+            0.8360112714347956,
+            0.9200117871213545,
+            1.0040123028079138,
+            1.088012818494473,
+            1.1720133341810324,
+            1.2560138498675917,
+            1.3400143655541505,
+            1.4240148812407099,
+            1.5080153969272692,
+            1.5920159126138285,
+            1.6760164283003878,
+            1.7600169439869466,
+            1.844017459673506,
+            1.9280179753600653,
+            2.0120184910466246,
+            2.096019006733184,
+            2.180019522419743,
+            2.264020038106302,
+            2.3480205537928613,
+            2.432021069479421,
+            2.51602158516598,
+            2.600022100852539
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "8 - 12*x - 2*x^2 + 11*x^3 - 6*x^4 + x^5",
+        "zmin": null,
+        "legendgroup": "8 - 12*x - 2*x^2 + 11*x^3 - 6*x^4 + x^5",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            -72.78413335558152,
+            -56.43016555905227,
+            -42.471079677445026,
+            -30.66461929351313,
+            -20.784253161038475,
+            -12.618673335095416,
+            -5.971293302315184,
+            -0.659746111149948,
+            3.484617497862938,
+            6.617230961836767,
+            8.880813765271242,
+            10.405873309788298,
+            11.311206783867917,
+            11.704403032583912,
+            11.682344427339745,
+            11.331708735604323,
+            10.729470990647801,
+            9.943405361277387,
+            9.032587021573148,
+            8.047894020623808,
+            7.032509152262553,
+            6.0224218248028345,
+            5.0469299307741755,
+            4.1291417166579745,
+            3.2864776526232924,
+            2.5311723022626897,
+            1.870776192327988,
+            1.308657682466107,
+            0.8445048349548525,
+            0.4748272844387227,
+            0.19345810766470803,
+            -0.007944306781900017,
+            -0.13939438874170665,
+            -0.21207751674541572,
+            -0.23784814827802317,
+            -0.22872795004300858,
+            -0.19640392822654087,
+            -0.15172655876167573,
+            -0.10420791759253116,
+            -0.06151981093851268,
+            -0.028991905558504026,
+            -0.009109859015045988,
+            -0.0010134499385435359,
+            5.291708522232157e-6,
+            0.0030039543674192848,
+            0.021891614618961143,
+            0.07593070691930895,
+            0.19023889333577332,
+            0.39629093328261883,
+            0.732420553256855,
+            1.244322316574076
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": false,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            -1.0,
+            0.0,
+            1.0,
+            2.0
+        ],
+        "range": [
+            -1.7260044570052608,
+            2.7260228743823776
+        ],
+        "domain": [
+            0.05313137941090697,
+            0.9931649168853892
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−1",
+            "0",
+            "1",
+            "2"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [],
+    "height": 384,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            -60.0,
+            -40.0,
+            -20.0,
+            0.0
+        ],
+        "range": [
+            -75.31878944722648,
+            14.239059124228874
+        ],
+        "domain": [
+            0.0391878098571012,
+            0.989747375328084
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−60",
+            "−40",
+            "−20",
+            "0"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "width": 576
+}
+);
+
+    
+    </script>
+
 
 <p>The choice of domain is heuristically identified; it and can be manually adjusted, as with:</p>
 
@@ -365,7 +619,358 @@ ERROR: ArgumentError: Polynomials have different indeterminates
 </pre>
 
 
-<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTc2IiBoZWlnaHQ9IjM4NCIgdmlld0JveD0iMCAwIDIzMDQgMTUzNiI+CjxkZWZzPgogIDxjbGlwUGF0aCBpZD0iY2xpcDAzMCI+CiAgICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjMwNCIgaGVpZ2h0PSIxNTM2Ii8+CiAgPC9jbGlwUGF0aD4KPC9kZWZzPgo8cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDAzMCkiIGQ9IgpNMCAxNTM2IEwyMzA0IDE1MzYgTDIzMDQgMCBMMCAwICBaCiAgIiBmaWxsPSIjZmZmZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIvPgo8ZGVmcz4KICA8Y2xpcFBhdGggaWQ9ImNsaXAwMzEiPgogICAgPHJlY3QgeD0iNDYwIiB5PSIwIiB3aWR0aD0iMTYxNCIgaGVpZ2h0PSIxNTM2Ii8+CiAgPC9jbGlwUGF0aD4KPC9kZWZzPgo8cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDAzMCkiIGQ9IgpNMTU1LjYzOCAxNDIzLjA5IEwyMjU2Ljc2IDE0MjMuMDkgTDIyNTYuNzYgNDcuMjQ0MSBMMTU1LjYzOCA0Ny4yNDQxICBaCiAgIiBmaWxsPSIjZmZmZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIvPgo8ZGVmcz4KICA8Y2xpcFBhdGggaWQ9ImNsaXAwMzIiPgogICAgPHJlY3QgeD0iMTU1IiB5PSI0NyIgd2lkdGg9IjIxMDIiIGhlaWdodD0iMTM3NyIvPgogIDwvY2xpcFBhdGg+CjwvZGVmcz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDMyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDoyOyBzdHJva2Utb3BhY2l0eTowLjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICA0MTMuMzIyLDE0MjMuMDkgNDEzLjMyMiw0Ny4yNDQxIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjI7IHN0cm9rZS1vcGFjaXR5OjAuMTsgZmlsbDpub25lIiBwb2ludHM9IgogIDgwOS43NiwxNDIzLjA5IDgwOS43Niw0Ny4yNDQxIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjI7IHN0cm9rZS1vcGFjaXR5OjAuMTsgZmlsbDpub25lIiBwb2ludHM9IgogIDEyMDYuMiwxNDIzLjA5IDEyMDYuMiw0Ny4yNDQxIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjI7IHN0cm9rZS1vcGFjaXR5OjAuMTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE2MDIuNjMsMTQyMy4wOSAxNjAyLjYzLDQ3LjI0NDEgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDAzMikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6Mjsgc3Ryb2tlLW9wYWNpdHk6MC4xOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTk5OS4wNywxNDIzLjA5IDE5OTkuMDcsNDcuMjQ0MSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDMwKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTU1LjYzOCwxNDIzLjA5IDIyNTYuNzYsMTQyMy4wOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDMwKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgNDEzLjMyMiwxNDIzLjA5IDQxMy4zMjIsMTQwNi41OCAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDMwKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgODA5Ljc2LDE0MjMuMDkgODA5Ljc2LDE0MDYuNTggCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDAzMCkiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDEyMDYuMiwxNDIzLjA5IDEyMDYuMiwxNDA2LjU4IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzApIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxNjAyLjYzLDE0MjMuMDkgMTYwMi42MywxNDA2LjU4IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzApIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxOTk5LjA3LDE0MjMuMDkgMTk5OS4wNywxNDA2LjU4IAogICIvPgo8cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDAzMCkiIGQ9Ik0zODAuMzk0IDE0NzkuMDYgTDM4OC4wMzMgMTQ3OS4wNiBMMzg4LjAzMyAxNDUyLjY5IEwzNzkuNzIzIDE0NTQuMzYgTDM3OS43MjMgMTQ1MC4xIEwzODcuOTg3IDE0NDguNDMgTDM5Mi42NjMgMTQ0OC40MyBMMzkyLjY2MyAxNDc5LjA2IEw0MDAuMzAyIDE0NzkuMDYgTDQwMC4zMDIgMTQ4Mi45OSBMMzgwLjM5NCAxNDgyLjk5IEwzODAuMzk0IDE0NzkuMDYgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzApIiBkPSJNNDA5Ljc0NiAxNDc3LjExIEw0MTQuNjMgMTQ3Ny4xMSBMNDE0LjYzIDE0ODIuOTkgTDQwOS43NDYgMTQ4Mi45OSBMNDA5Ljc0NiAxNDc3LjExIFoiIGZpbGw9IiMwMDAwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbC1vcGFjaXR5PSIxIiAvPjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwMDMwKSIgZD0iTTQzNS4zOTQgMTQ2My44NSBRNDMyLjI0NiAxNDYzLjg1IDQzMC4zOTQgMTQ2NiBRNDI4LjU2NSAxNDY4LjE1IDQyOC41NjUgMTQ3MS45IFE0MjguNTY1IDE0NzUuNjMgNDMwLjM5NCAxNDc3LjgxIFE0MzIuMjQ2IDE0NzkuOTYgNDM1LjM5NCAxNDc5Ljk2IFE0MzguNTQyIDE0NzkuOTYgNDQwLjM3MSAxNDc3LjgxIFE0NDIuMjIzIDE0NzUuNjMgNDQyLjIyMyAxNDcxLjkgUTQ0Mi4yMjMgMTQ2OC4xNSA0NDAuMzcxIDE0NjYgUTQzOC41NDIgMTQ2My44NSA0MzUuMzk0IDE0NjMuODUgTTQ0NC42NzYgMTQ0OS4yIEw0NDQuNjc2IDE0NTMuNDUgUTQ0Mi45MTcgMTQ1Mi42MiA0NDEuMTEyIDE0NTIuMTggUTQzOS4zMjkgMTQ1MS43NCA0MzcuNTcgMTQ1MS43NCBRNDMyLjk0IDE0NTEuNzQgNDMwLjQ4NyAxNDU0Ljg3IFE0MjguMDU2IDE0NTcuOTkgNDI3LjcwOSAxNDY0LjMxIFE0MjkuMDc1IDE0NjIuMyA0MzEuMTM1IDE0NjEuMjMgUTQzMy4xOTUgMTQ2MC4xNCA0MzUuNjcyIDE0NjAuMTQgUTQ0MC44OCAxNDYwLjE0IDQ0My44ODkgMTQ2My4zMiBRNDQ2LjkyMiAxNDY2LjQ2IDQ0Ni45MjIgMTQ3MS45IFE0NDYuOTIyIDE0NzcuMjMgNDQzLjc3NCAxNDgwLjQ1IFE0NDAuNjI2IDE0ODMuNjYgNDM1LjM5NCAxNDgzLjY2IFE0MjkuMzk5IDE0ODMuNjYgNDI2LjIyOCAxNDc5LjA4IFE0MjMuMDU2IDE0NzQuNDcgNDIzLjA1NiAxNDY1Ljc1IFE0MjMuMDU2IDE0NTcuNTUgNDI2Ljk0NSAxNDUyLjY5IFE0MzAuODM0IDE0NDcuODEgNDM3LjM4NSAxNDQ3LjgxIFE0MzkuMTQ0IDE0NDcuODEgNDQwLjkyNiAxNDQ4LjE1IFE0NDIuNzMyIDE0NDguNSA0NDQuNjc2IDE0NDkuMiBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDAzMCkiIGQ9Ik03NzYuOTU5IDE0NzkuMDYgTDc4NC41OTggMTQ3OS4wNiBMNzg0LjU5OCAxNDUyLjY5IEw3NzYuMjg4IDE0NTQuMzYgTDc3Ni4yODggMTQ1MC4xIEw3ODQuNTUyIDE0NDguNDMgTDc4OS4yMjcgMTQ0OC40MyBMNzg5LjIyNyAxNDc5LjA2IEw3OTYuODY2IDE0NzkuMDYgTDc5Ni44NjYgMTQ4Mi45OSBMNzc2Ljk1OSAxNDgyLjk5IEw3NzYuOTU5IDE0NzkuMDYgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzApIiBkPSJNODA2LjMxMSAxNDc3LjExIEw4MTEuMTk1IDE0NzcuMTEgTDgxMS4xOTUgMTQ4Mi45OSBMODA2LjMxMSAxNDgyLjk5IEw4MDYuMzExIDE0NzcuMTEgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzApIiBkPSJNODMxLjM4IDE0NjYuNTggUTgyOC4wNDcgMTQ2Ni41OCA4MjYuMTI1IDE0NjguMzYgUTgyNC4yMjcgMTQ3MC4xNCA4MjQuMjI3IDE0NzMuMjcgUTgyNC4yMjcgMTQ3Ni4zOSA4MjYuMTI1IDE0NzguMTggUTgyOC4wNDcgMTQ3OS45NiA4MzEuMzggMTQ3OS45NiBRODM0LjcxMyAxNDc5Ljk2IDgzNi42MzUgMTQ3OC4xOCBRODM4LjU1NiAxNDc2LjM3IDgzOC41NTYgMTQ3My4yNyBRODM4LjU1NiAxNDcwLjE0IDgzNi42MzUgMTQ2OC4zNiBRODM0LjczNiAxNDY2LjU4IDgzMS4zOCAxNDY2LjU4IE04MjYuNzA0IDE0NjQuNTkgUTgyMy42OTUgMTQ2My44NSA4MjIuMDA1IDE0NjEuNzkgUTgyMC4zMzggMTQ1OS43MyA4MjAuMzM4IDE0NTYuNzcgUTgyMC4zMzggMTQ1Mi42MiA4MjMuMjc4IDE0NTAuMjEgUTgyNi4yNDEgMTQ0Ny44MSA4MzEuMzggMTQ0Ny44MSBRODM2LjU0MiAxNDQ3LjgxIDgzOS40ODIgMTQ1MC4yMSBRODQyLjQyMiAxNDUyLjYyIDg0Mi40MjIgMTQ1Ni43NyBRODQyLjQyMiAxNDU5LjczIDg0MC43MzIgMTQ2MS43OSBRODM5LjA2NSAxNDYzLjg1IDgzNi4wNzkgMTQ2NC41OSBRODM5LjQ1OSAxNDY1LjM4IDg0MS4zMzQgMTQ2Ny42NyBRODQzLjIzMiAxNDY5Ljk2IDg0My4yMzIgMTQ3My4yNyBRODQzLjIzMiAxNDc4LjI5IDg0MC4xNTMgMTQ4MC45OCBRODM3LjA5OCAxNDgzLjY2IDgzMS4zOCAxNDgzLjY2IFE4MjUuNjYyIDE0ODMuNjYgODIyLjU4NCAxNDgwLjk4IFE4MTkuNTI4IDE0NzguMjkgODE5LjUyOCAxNDczLjI3IFE4MTkuNTI4IDE0NjkuOTYgODIxLjQyNiAxNDY3LjY3IFE4MjMuMzI1IDE0NjUuMzggODI2LjcwNCAxNDY0LjU5IE04MjQuOTkxIDE0NTcuMiBRODI0Ljk5MSAxNDU5Ljg5IDgyNi42NTggMTQ2MS4zOSBRODI4LjM0OCAxNDYyLjkgODMxLjM4IDE0NjIuOSBRODM0LjM4OSAxNDYyLjkgODM2LjA3OSAxNDYxLjM5IFE4MzcuNzkyIDE0NTkuODkgODM3Ljc5MiAxNDU3LjIgUTgzNy43OTIgMTQ1NC41MiA4MzYuMDc5IDE0NTMuMDIgUTgzNC4zODkgMTQ1MS41MSA4MzEuMzggMTQ1MS41MSBRODI4LjM0OCAxNDUxLjUxIDgyNi42NTggMTQ1My4wMiBRODI0Ljk5MSAxNDU0LjUyIDgyNC45OTEgMTQ1Ny4yIFoiIGZpbGw9IiMwMDAwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbC1vcGFjaXR5PSIxIiAvPjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwMDMwKSIgZD0iTTExNzcuNDQgMTQ3OS4wNiBMMTE5My43NiAxNDc5LjA2IEwxMTkzLjc2IDE0ODIuOTkgTDExNzEuODEgMTQ4Mi45OSBMMTE3MS44MSAxNDc5LjA2IFExMTc0LjQ3IDE0NzYuMyAxMTc5LjA2IDE0NzEuNjcgUTExODMuNjYgMTQ2Ny4wMiAxMTg0Ljg0IDE0NjUuNjggUTExODcuMDkgMTQ2My4xNSAxMTg3Ljk3IDE0NjEuNDIgUTExODguODcgMTQ1OS42NiAxMTg4Ljg3IDE0NTcuOTcgUTExODguODcgMTQ1NS4yMSAxMTg2LjkzIDE0NTMuNDggUTExODUuMDEgMTQ1MS43NCAxMTgxLjkgMTQ1MS43NCBRMTE3OS43IDE0NTEuNzQgMTE3Ny4yNSAxNDUyLjUxIFExMTc0LjgyIDE0NTMuMjcgMTE3Mi4wNCAxNDU0LjgyIEwxMTcyLjA0IDE0NTAuMSBRMTE3NC44NyAxNDQ4Ljk2IDExNzcuMzIgMTQ0OC4zOSBRMTE3OS43NyAxNDQ3LjgxIDExODEuODEgMTQ0Ny44MSBRMTE4Ny4xOCAxNDQ3LjgxIDExOTAuMzggMTQ1MC40OSBRMTE5My41NyAxNDUzLjE4IDExOTMuNTcgMTQ1Ny42NyBRMTE5My41NyAxNDU5LjggMTE5Mi43NiAxNDYxLjcyIFExMTkxLjk3IDE0NjMuNjIgMTE4OS44NyAxNDY2LjIxIFExMTg5LjI5IDE0NjYuODggMTE4Ni4xOSAxNDcwLjEgUTExODMuMDggMTQ3My4yOSAxMTc3LjQ0IDE0NzkuMDYgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzApIiBkPSJNMTIwMy41NyAxNDc3LjExIEwxMjA4LjQ1IDE0NzcuMTEgTDEyMDguNDUgMTQ4Mi45OSBMMTIwMy41NyAxNDgyLjk5IEwxMjAzLjU3IDE0NzcuMTEgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzApIiBkPSJNMTIyOC42NCAxNDUxLjUxIFExMjI1LjAzIDE0NTEuNTEgMTIyMy4yIDE0NTUuMDggUTEyMjEuMzkgMTQ1OC42MiAxMjIxLjM5IDE0NjUuNzUgUTEyMjEuMzkgMTQ3Mi44NSAxMjIzLjIgMTQ3Ni40MiBRMTIyNS4wMyAxNDc5Ljk2IDEyMjguNjQgMTQ3OS45NiBRMTIzMi4yNyAxNDc5Ljk2IDEyMzQuMDggMTQ3Ni40MiBRMTIzNS45MSAxNDcyLjg1IDEyMzUuOTEgMTQ2NS43NSBRMTIzNS45MSAxNDU4LjYyIDEyMzQuMDggMTQ1NS4wOCBRMTIzMi4yNyAxNDUxLjUxIDEyMjguNjQgMTQ1MS41MSBNMTIyOC42NCAxNDQ3LjgxIFExMjM0LjQ1IDE0NDcuODEgMTIzNy41IDE0NTIuNDEgUTEyNDAuNTggMTQ1NyAxMjQwLjU4IDE0NjUuNzUgUTEyNDAuNTggMTQ3NC40NyAxMjM3LjUgMTQ3OS4wOCBRMTIzNC40NSAxNDgzLjY2IDEyMjguNjQgMTQ4My42NiBRMTIyMi44MyAxNDgzLjY2IDEyMTkuNzUgMTQ3OS4wOCBRMTIxNi42OSAxNDc0LjQ3IDEyMTYuNjkgMTQ2NS43NSBRMTIxNi42OSAxNDU3IDEyMTkuNzUgMTQ1Mi40MSBRMTIyMi44MyAxNDQ3LjgxIDEyMjguNjQgMTQ0Ny44MSBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDAzMCkiIGQ9Ik0xNTc0LjY3IDE0NzkuMDYgTDE1OTAuOTkgMTQ3OS4wNiBMMTU5MC45OSAxNDgyLjk5IEwxNTY5LjA1IDE0ODIuOTkgTDE1NjkuMDUgMTQ3OS4wNiBRMTU3MS43MSAxNDc2LjMgMTU3Ni4yOSAxNDcxLjY3IFExNTgwLjkgMTQ2Ny4wMiAxNTgyLjA4IDE0NjUuNjggUTE1ODQuMzIgMTQ2My4xNSAxNTg1LjIgMTQ2MS40MiBRMTU4Ni4xMSAxNDU5LjY2IDE1ODYuMTEgMTQ1Ny45NyBRMTU4Ni4xMSAxNDU1LjIxIDE1ODQuMTYgMTQ1My40OCBRMTU4Mi4yNCAxNDUxLjc0IDE1NzkuMTQgMTQ1MS43NCBRMTU3Ni45NCAxNDUxLjc0IDE1NzQuNDkgMTQ1Mi41MSBRMTU3Mi4wNiAxNDUzLjI3IDE1NjkuMjggMTQ1NC44MiBMMTU2OS4yOCAxNDUwLjEgUTE1NzIuMSAxNDQ4Ljk2IDE1NzQuNTYgMTQ0OC4zOSBRMTU3Ny4wMSAxNDQ3LjgxIDE1NzkuMDUgMTQ0Ny44MSBRMTU4NC40MiAxNDQ3LjgxIDE1ODcuNjEgMTQ1MC40OSBRMTU5MC44MSAxNDUzLjE4IDE1OTAuODEgMTQ1Ny42NyBRMTU5MC44MSAxNDU5LjggMTU5MCAxNDYxLjcyIFExNTg5LjIxIDE0NjMuNjIgMTU4Ny4xIDE0NjYuMjEgUTE1ODYuNTIgMTQ2Ni44OCAxNTgzLjQyIDE0NzAuMSBRMTU4MC4zMiAxNDczLjI5IDE1NzQuNjcgMTQ3OS4wNiBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDAzMCkiIGQ9Ik0xNjAwLjgxIDE0NzcuMTEgTDE2MDUuNjkgMTQ3Ny4xMSBMMTYwNS42OSAxNDgyLjk5IEwxNjAwLjgxIDE0ODIuOTkgTDE2MDAuODEgMTQ3Ny4xMSBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDAzMCkiIGQ9Ik0xNjE5LjkgMTQ3OS4wNiBMMTYzNi4yMiAxNDc5LjA2IEwxNjM2LjIyIDE0ODIuOTkgTDE2MTQuMjggMTQ4Mi45OSBMMTYxNC4yOCAxNDc5LjA2IFExNjE2Ljk0IDE0NzYuMyAxNjIxLjUyIDE0NzEuNjcgUTE2MjYuMTMgMTQ2Ny4wMiAxNjI3LjMxIDE0NjUuNjggUTE2MjkuNTYgMTQ2My4xNSAxNjMwLjQ0IDE0NjEuNDIgUTE2MzEuMzQgMTQ1OS42NiAxNjMxLjM0IDE0NTcuOTcgUTE2MzEuMzQgMTQ1NS4yMSAxNjI5LjM5IDE0NTMuNDggUTE2MjcuNDcgMTQ1MS43NCAxNjI0LjM3IDE0NTEuNzQgUTE2MjIuMTcgMTQ1MS43NCAxNjE5LjcyIDE0NTIuNTEgUTE2MTcuMjkgMTQ1My4yNyAxNjE0LjUxIDE0NTQuODIgTDE2MTQuNTEgMTQ1MC4xIFExNjE3LjMzIDE0NDguOTYgMTYxOS43OSAxNDQ4LjM5IFExNjIyLjI0IDE0NDcuODEgMTYyNC4yOCAxNDQ3LjgxIFExNjI5LjY1IDE0NDcuODEgMTYzMi44NCAxNDUwLjQ5IFExNjM2LjA0IDE0NTMuMTggMTYzNi4wNCAxNDU3LjY3IFExNjM2LjA0IDE0NTkuOCAxNjM1LjIzIDE0NjEuNzIgUTE2MzQuNDQgMTQ2My42MiAxNjMyLjMzIDE0NjYuMjEgUTE2MzEuNzUgMTQ2Ni44OCAxNjI4LjY1IDE0NzAuMSBRMTYyNS41NSAxNDczLjI5IDE2MTkuOSAxNDc5LjA2IFoiIGZpbGw9IiMwMDAwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbC1vcGFjaXR5PSIxIiAvPjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwMDMwKSIgZD0iTTE5NzAuMDcgMTQ3OS4wNiBMMTk4Ni4zOSAxNDc5LjA2IEwxOTg2LjM5IDE0ODIuOTkgTDE5NjQuNDQgMTQ4Mi45OSBMMTk2NC40NCAxNDc5LjA2IFExOTY3LjEgMTQ3Ni4zIDE5NzEuNjkgMTQ3MS42NyBRMTk3Ni4yOSAxNDY3LjAyIDE5NzcuNDcgMTQ2NS42OCBRMTk3OS43MiAxNDYzLjE1IDE5ODAuNiAxNDYxLjQyIFExOTgxLjUgMTQ1OS42NiAxOTgxLjUgMTQ1Ny45NyBRMTk4MS41IDE0NTUuMjEgMTk3OS41NiAxNDUzLjQ4IFExOTc3LjY0IDE0NTEuNzQgMTk3NC41MyAxNDUxLjc0IFExOTcyLjM0IDE0NTEuNzQgMTk2OS44OCAxNDUyLjUxIFExOTY3LjQ1IDE0NTMuMjcgMTk2NC42NyAxNDU0LjgyIEwxOTY0LjY3IDE0NTAuMSBRMTk2Ny41IDE0NDguOTYgMTk2OS45NSAxNDQ4LjM5IFExOTcyLjQxIDE0NDcuODEgMTk3NC40NCAxNDQ3LjgxIFExOTc5LjgxIDE0NDcuODEgMTk4My4wMSAxNDUwLjQ5IFExOTg2LjIgMTQ1My4xOCAxOTg2LjIgMTQ1Ny42NyBRMTk4Ni4yIDE0NTkuOCAxOTg1LjM5IDE0NjEuNzIgUTE5ODQuNiAxNDYzLjYyIDE5ODIuNSAxNDY2LjIxIFExOTgxLjkyIDE0NjYuODggMTk3OC44MiAxNDcwLjEgUTE5NzUuNzIgMTQ3My4yOSAxOTcwLjA3IDE0NzkuMDYgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzApIiBkPSJNMTk5Ni4yIDE0NzcuMTEgTDIwMDEuMDkgMTQ3Ny4xMSBMMjAwMS4wOSAxNDgyLjk5IEwxOTk2LjIgMTQ4Mi45OSBMMTk5Ni4yIDE0NzcuMTEgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzApIiBkPSJNMjAyNC4xMiAxNDUyLjUxIEwyMDEyLjMxIDE0NzAuOTUgTDIwMjQuMTIgMTQ3MC45NSBMMjAyNC4xMiAxNDUyLjUxIE0yMDIyLjg5IDE0NDguNDMgTDIwMjguNzcgMTQ0OC40MyBMMjAyOC43NyAxNDcwLjk1IEwyMDMzLjcgMTQ3MC45NSBMMjAzMy43IDE0NzQuODQgTDIwMjguNzcgMTQ3NC44NCBMMjAyOC43NyAxNDgyLjk5IEwyMDI0LjEyIDE0ODIuOTkgTDIwMjQuMTIgMTQ3NC44NCBMMjAwOC41MiAxNDc0Ljg0IEwyMDA4LjUyIDE0NzAuMzMgTDIwMjIuODkgMTQ0OC40MyBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjI7IHN0cm9rZS1vcGFjaXR5OjAuMTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE1NS42MzgsMTEzNC41NCAyMjU2Ljc2LDExMzQuNTQgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDAzMikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6Mjsgc3Ryb2tlLW9wYWNpdHk6MC4xOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTU1LjYzOCw4MTUuMDQxIDIyNTYuNzYsODE1LjA0MSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDMyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDoyOyBzdHJva2Utb3BhY2l0eTowLjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxNTUuNjM4LDQ5NS41NDIgMjI1Ni43Niw0OTUuNTQyIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjI7IHN0cm9rZS1vcGFjaXR5OjAuMTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE1NS42MzgsMTc2LjA0MiAyMjU2Ljc2LDE3Ni4wNDIgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDAzMCkiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE1NS42MzgsMTQyMy4wOSAxNTUuNjM4LDQ3LjI0NDEgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDAzMCkiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE1NS42MzgsMTEzNC41NCAxODAuODUyLDExMzQuNTQgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDAzMCkiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE1NS42MzgsODE1LjA0MSAxODAuODUyLDgxNS4wNDEgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDAzMCkiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE1NS42MzgsNDk1LjU0MiAxODAuODUyLDQ5NS41NDIgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDAzMCkiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE1NS42MzgsMTc2LjA0MiAxODAuODUyLDE3Ni4wNDIgCiAgIi8+CjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwMDMwKSIgZD0iTTYzLjkwMjYgMTEyMC4zNCBRNjAuMjkxNSAxMTIwLjM0IDU4LjQ2MjggMTEyMy45IFE1Ni42NTczIDExMjcuNDUgNTYuNjU3MyAxMTM0LjU3IFE1Ni42NTczIDExNDEuNjggNTguNDYyOCAxMTQ1LjI1IFE2MC4yOTE1IDExNDguNzkgNjMuOTAyNiAxMTQ4Ljc5IFE2Ny41MzY5IDExNDguNzkgNjkuMzQyNCAxMTQ1LjI1IFE3MS4xNzExIDExNDEuNjggNzEuMTcxMSAxMTM0LjU3IFE3MS4xNzExIDExMjcuNDUgNjkuMzQyNCAxMTIzLjkgUTY3LjUzNjkgMTEyMC4zNCA2My45MDI2IDExMjAuMzQgTTYzLjkwMjYgMTExNi42NCBRNjkuNzEyOCAxMTE2LjY0IDcyLjc2ODMgMTEyMS4yNCBRNzUuODQ3IDExMjUuODIgNzUuODQ3IDExMzQuNTcgUTc1Ljg0NyAxMTQzLjMgNzIuNzY4MyAxMTQ3LjkxIFE2OS43MTI4IDExNTIuNDkgNjMuOTAyNiAxMTUyLjQ5IFE1OC4wOTI1IDExNTIuNDkgNTUuMDEzOCAxMTQ3LjkxIFE1MS45NTgyIDExNDMuMyA1MS45NTgyIDExMzQuNTcgUTUxLjk1ODIgMTEyNS44MiA1NS4wMTM4IDExMjEuMjQgUTU4LjA5MjUgMTExNi42NCA2My45MDI2IDExMTYuNjQgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzApIiBkPSJNODQuMDY0NSAxMTQ1Ljk0IEw4OC45NDg4IDExNDUuOTQgTDg4Ljk0ODggMTE1MS44MiBMODQuMDY0NSAxMTUxLjgyIEw4NC4wNjQ1IDExNDUuOTQgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzApIiBkPSJNMTA5LjEzNCAxMTIwLjM0IFExMDUuNTIzIDExMjAuMzQgMTAzLjY5NCAxMTIzLjkgUTEwMS44ODkgMTEyNy40NSAxMDEuODg5IDExMzQuNTcgUTEwMS44ODkgMTE0MS42OCAxMDMuNjk0IDExNDUuMjUgUTEwNS41MjMgMTE0OC43OSAxMDkuMTM0IDExNDguNzkgUTExMi43NjggMTE0OC43OSAxMTQuNTc0IDExNDUuMjUgUTExNi40MDIgMTE0MS42OCAxMTYuNDAyIDExMzQuNTcgUTExNi40MDIgMTEyNy40NSAxMTQuNTc0IDExMjMuOSBRMTEyLjc2OCAxMTIwLjM0IDEwOS4xMzQgMTEyMC4zNCBNMTA5LjEzNCAxMTE2LjY0IFExMTQuOTQ0IDExMTYuNjQgMTE4IDExMjEuMjQgUTEyMS4wNzggMTEyNS44MiAxMjEuMDc4IDExMzQuNTcgUTEyMS4wNzggMTE0My4zIDExOCAxMTQ3LjkxIFExMTQuOTQ0IDExNTIuNDkgMTA5LjEzNCAxMTUyLjQ5IFExMDMuMzI0IDExNTIuNDkgMTAwLjI0NSAxMTQ3LjkxIFE5Ny4xODk1IDExNDMuMyA5Ny4xODk1IDExMzQuNTcgUTk3LjE4OTUgMTEyNS44MiAxMDAuMjQ1IDExMjEuMjQgUTEwMy4zMjQgMTExNi42NCAxMDkuMTM0IDExMTYuNjQgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzApIiBkPSJNNjUuNDk5OCA4MDAuODM5IFE2MS44ODg3IDgwMC44MzkgNjAuMDYgODA0LjQwNCBRNTguMjU0NSA4MDcuOTQ2IDU4LjI1NDUgODE1LjA3NiBRNTguMjU0NSA4MjIuMTgyIDYwLjA2IDgyNS43NDcgUTYxLjg4ODcgODI5LjI4OCA2NS40OTk4IDgyOS4yODggUTY5LjEzNDEgODI5LjI4OCA3MC45Mzk2IDgyNS43NDcgUTcyLjc2ODMgODIyLjE4MiA3Mi43NjgzIDgxNS4wNzYgUTcyLjc2ODMgODA3Ljk0NiA3MC45Mzk2IDgwNC40MDQgUTY5LjEzNDEgODAwLjgzOSA2NS40OTk4IDgwMC44MzkgTTY1LjQ5OTggNzk3LjEzNiBRNzEuMzEgNzk3LjEzNiA3NC4zNjU1IDgwMS43NDIgUTc3LjQ0NDIgODA2LjMyNiA3Ny40NDQyIDgxNS4wNzYgUTc3LjQ0NDIgODIzLjgwMiA3NC4zNjU1IDgyOC40MDkgUTcxLjMxIDgzMi45OTIgNjUuNDk5OCA4MzIuOTkyIFE1OS42ODk3IDgzMi45OTIgNTYuNjExIDgyOC40MDkgUTUzLjU1NTQgODIzLjgwMiA1My41NTU0IDgxNS4wNzYgUTUzLjU1NTQgODA2LjMyNiA1Ni42MTEgODAxLjc0MiBRNTkuNjg5NyA3OTcuMTM2IDY1LjQ5OTggNzk3LjEzNiBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDAzMCkiIGQ9Ik04NS42NjE4IDgyNi40NDEgTDkwLjU0NiA4MjYuNDQxIEw5MC41NDYgODMyLjMyMSBMODUuNjYxOCA4MzIuMzIxIEw4NS42NjE4IDgyNi40NDEgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzApIiBkPSJNMTA0Ljc1OSA4MjguMzg2IEwxMjEuMDc4IDgyOC4zODYgTDEyMS4wNzggODMyLjMyMSBMOTkuMTMzOSA4MzIuMzIxIEw5OS4xMzM5IDgyOC4zODYgUTEwMS43OTYgODI1LjYzMSAxMDYuMzc5IDgyMS4wMDEgUTExMC45ODYgODE2LjM0OSAxMTIuMTY2IDgxNS4wMDYgUTExNC40MTIgODEyLjQ4MyAxMTUuMjkxIDgxMC43NDcgUTExNi4xOTQgODA4Ljk4OCAxMTYuMTk0IDgwNy4yOTggUTExNi4xOTQgODA0LjU0MyAxMTQuMjUgODAyLjgwNyBRMTEyLjMyOCA4MDEuMDcxIDEwOS4yMjYgODAxLjA3MSBRMTA3LjAyNyA4MDEuMDcxIDEwNC41NzQgODAxLjgzNSBRMTAyLjE0MyA4MDIuNTk5IDk5LjM2NTQgODA0LjE1IEw5OS4zNjU0IDc5OS40MjcgUTEwMi4xODkgNzk4LjI5MyAxMDQuNjQzIDc5Ny43MTUgUTEwNy4wOTcgNzk3LjEzNiAxMDkuMTM0IDc5Ny4xMzYgUTExNC41MDQgNzk3LjEzNiAxMTcuNjk5IDc5OS44MjEgUTEyMC44OTMgODAyLjUwNiAxMjAuODkzIDgwNi45OTcgUTEyMC44OTMgODA5LjEyNiAxMjAuMDgzIDgxMS4wNDggUTExOS4yOTYgODEyLjk0NiAxMTcuMTg5IDgxNS41MzggUTExNi42MTEgODE2LjIxIDExMy41MDkgODE5LjQyNyBRMTEwLjQwNyA4MjIuNjIyIDEwNC43NTkgODI4LjM4NiBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDAzMCkiIGQ9Ik02My40MTY1IDQ4MS4zNCBRNTkuODA1NCA0ODEuMzQgNTcuOTc2NyA0ODQuOTA1IFE1Ni4xNzEyIDQ4OC40NDcgNTYuMTcxMiA0OTUuNTc2IFE1Ni4xNzEyIDUwMi42ODMgNTcuOTc2NyA1MDYuMjQ3IFE1OS44MDU0IDUwOS43ODkgNjMuNDE2NSA1MDkuNzg5IFE2Ny4wNTA3IDUwOS43ODkgNjguODU2MyA1MDYuMjQ3IFE3MC42ODUgNTAyLjY4MyA3MC42ODUgNDk1LjU3NiBRNzAuNjg1IDQ4OC40NDcgNjguODU2MyA0ODQuOTA1IFE2Ny4wNTA3IDQ4MS4zNCA2My40MTY1IDQ4MS4zNCBNNjMuNDE2NSA0NzcuNjM3IFE2OS4yMjY3IDQ3Ny42MzcgNzIuMjgyMiA0ODIuMjQzIFE3NS4zNjA5IDQ4Ni44MjYgNzUuMzYwOSA0OTUuNTc2IFE3NS4zNjA5IDUwNC4zMDMgNzIuMjgyMiA1MDguOTEgUTY5LjIyNjcgNTEzLjQ5MyA2My40MTY1IDUxMy40OTMgUTU3LjYwNjQgNTEzLjQ5MyA1NC41Mjc3IDUwOC45MSBRNTEuNDcyMSA1MDQuMzAzIDUxLjQ3MjEgNDk1LjU3NiBRNTEuNDcyMSA0ODYuODI2IDU0LjUyNzcgNDgyLjI0MyBRNTcuNjA2NCA0NzcuNjM3IDYzLjQxNjUgNDc3LjYzNyBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDAzMCkiIGQ9Ik04My41Nzg0IDUwNi45NDIgTDg4LjQ2MjcgNTA2Ljk0MiBMODguNDYyNyA1MTIuODIyIEw4My41Nzg0IDUxMi44MjIgTDgzLjU3ODQgNTA2Ljk0MiBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDAzMCkiIGQ9Ik0xMTEuNDk1IDQ4Mi4zMzYgTDk5LjY4OTUgNTAwLjc4NSBMMTExLjQ5NSA1MDAuNzg1IEwxMTEuNDk1IDQ4Mi4zMzYgTTExMC4yNjggNDc4LjI2MiBMMTE2LjE0OCA0NzguMjYyIEwxMTYuMTQ4IDUwMC43ODUgTDEyMS4wNzggNTAwLjc4NSBMMTIxLjA3OCA1MDQuNjczIEwxMTYuMTQ4IDUwNC42NzMgTDExNi4xNDggNTEyLjgyMiBMMTExLjQ5NSA1MTIuODIyIEwxMTEuNDk1IDUwNC42NzMgTDk1Ljg5MzIgNTA0LjY3MyBMOTUuODkzMiA1MDAuMTYgTDExMC4yNjggNDc4LjI2MiBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDAzMCkiIGQ9Ik02My43NDA2IDE2MS44NDEgUTYwLjEyOTUgMTYxLjg0MSA1OC4zMDA4IDE2NS40MDYgUTU2LjQ5NTIgMTY4Ljk0NyA1Ni40OTUyIDE3Ni4wNzcgUTU2LjQ5NTIgMTgzLjE4MyA1OC4zMDA4IDE4Ni43NDggUTYwLjEyOTUgMTkwLjI5IDYzLjc0MDYgMTkwLjI5IFE2Ny4zNzQ4IDE5MC4yOSA2OS4xODA0IDE4Ni43NDggUTcxLjAwOTEgMTgzLjE4MyA3MS4wMDkxIDE3Ni4wNzcgUTcxLjAwOTEgMTY4Ljk0NyA2OS4xODA0IDE2NS40MDYgUTY3LjM3NDggMTYxLjg0MSA2My43NDA2IDE2MS44NDEgTTYzLjc0MDYgMTU4LjEzNyBRNjkuNTUwNyAxNTguMTM3IDcyLjYwNjMgMTYyLjc0NCBRNzUuNjg1IDE2Ny4zMjcgNzUuNjg1IDE3Ni4wNzcgUTc1LjY4NSAxODQuODA0IDcyLjYwNjMgMTg5LjQxIFE2OS41NTA3IDE5My45OTQgNjMuNzQwNiAxOTMuOTk0IFE1Ny45MzA0IDE5My45OTQgNTQuODUxNyAxODkuNDEgUTUxLjc5NjIgMTg0LjgwNCA1MS43OTYyIDE3Ni4wNzcgUTUxLjc5NjIgMTY3LjMyNyA1NC44NTE3IDE2Mi43NDQgUTU3LjkzMDQgMTU4LjEzNyA2My43NDA2IDE1OC4xMzcgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzApIiBkPSJNODMuOTAyNSAxODcuNDQzIEw4OC43ODY3IDE4Ny40NDMgTDg4Ljc4NjcgMTkzLjMyMiBMODMuOTAyNSAxOTMuMzIyIEw4My45MDI1IDE4Ny40NDMgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAwMzApIiBkPSJNMTA5LjU1MSAxNzQuMTc5IFExMDYuNDAyIDE3NC4xNzkgMTA0LjU1MSAxNzYuMzMyIFExMDIuNzIyIDE3OC40ODQgMTAyLjcyMiAxODIuMjM0IFExMDIuNzIyIDE4NS45NjEgMTA0LjU1MSAxODguMTM3IFExMDYuNDAyIDE5MC4yOSAxMDkuNTUxIDE5MC4yOSBRMTEyLjY5OSAxOTAuMjkgMTE0LjUyNyAxODguMTM3IFExMTYuMzc5IDE4NS45NjEgMTE2LjM3OSAxODIuMjM0IFExMTYuMzc5IDE3OC40ODQgMTE0LjUyNyAxNzYuMzMyIFExMTIuNjk5IDE3NC4xNzkgMTA5LjU1MSAxNzQuMTc5IE0xMTguODMzIDE1OS41MjYgTDExOC44MzMgMTYzLjc4NSBRMTE3LjA3NCAxNjIuOTUyIDExNS4yNjggMTYyLjUxMiBRMTEzLjQ4NiAxNjIuMDcyIDExMS43MjYgMTYyLjA3MiBRMTA3LjA5NyAxNjIuMDcyIDEwNC42NDMgMTY1LjE5NyBRMTAyLjIxMyAxNjguMzIyIDEwMS44NjUgMTc0LjY0MiBRMTAzLjIzMSAxNzIuNjI4IDEwNS4yOTEgMTcxLjU2MyBRMTA3LjM1MSAxNzAuNDc1IDEwOS44MjggMTcwLjQ3NSBRMTE1LjAzNyAxNzAuNDc1IDExOC4wNDYgMTczLjY0NiBRMTIxLjA3OCAxNzYuNzk1IDEyMS4wNzggMTgyLjIzNCBRMTIxLjA3OCAxODcuNTU4IDExNy45MyAxOTAuNzc2IFExMTQuNzgyIDE5My45OTQgMTA5LjU1MSAxOTMuOTk0IFExMDMuNTU1IDE5My45OTQgMTAwLjM4NCAxODkuNDEgUTk3LjIxMjYgMTg0LjgwNCA5Ny4yMTI2IDE3Ni4wNzcgUTk3LjIxMjYgMTY3Ljg4MyAxMDEuMTAxIDE2My4wMjEgUTEwNC45OSAxNTguMTM3IDExMS41NDEgMTU4LjEzNyBRMTEzLjMgMTU4LjEzNyAxMTUuMDgzIDE1OC40ODQgUTExNi44ODggMTU4LjgzMiAxMTguODMzIDE1OS41MjYgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMDMyKSIgc3R5bGU9InN0cm9rZTojMDA5YWY5OyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMjE1LjEwNCwxMzg0LjE1IDIzNC45MjYsMTM3NS4xMyAyNTQuNzQ4LDEzNjYuMDUgMjc0LjU2OSwxMzU2Ljk0IDI5NC4zOTEsMTM0Ny44MiAzMTQuMjEzLDEzMzguNyAzMzQuMDM1LDEzMjkuNjMgMzUzLjg1NywxMzIwLjYgMzczLjY3OSwxMzExLjY1IDM5My41MDEsMTMwMi43OSAKICA0MTMuMzIyLDEyOTQuMDMgNDMzLjE0NCwxMjg1LjQxIDQ1Mi45NjYsMTI3Ni45MyA0NzIuNzg4LDEyNjguNjEgNDkyLjYxLDEyNjAuNDcgNTEyLjQzMiwxMjUyLjUyIDUzMi4yNTQsMTI0NC43NyA1NTIuMDc2LDEyMzcuMjQgNTcxLjg5NywxMjI5Ljk0IDU5MS43MTksMTIyMi44NyAKICA2MTEuNTQxLDEyMTYuMDYgNjMxLjM2MywxMjA5LjUxIDY1MS4xODUsMTIwMy4yMiA2NzEuMDA3LDExOTcuMiA2OTAuODI5LDExOTEuNDcgNzEwLjY1LDExODYuMDIgNzMwLjQ3MiwxMTgwLjg2IDc1MC4yOTQsMTE3NiA3NzAuMTE2LDExNzEuNDIgNzg5LjkzOCwxMTY3LjE1IAogIDgwOS43NiwxMTYzLjE3IDgyOS41ODIsMTE1OS40OCA4NDkuNDA0LDExNTYuMDggODY5LjIyNSwxMTUyLjk4IDg4OS4wNDcsMTE1MC4xNSA5MDguODY5LDExNDcuNiA5MjguNjkxLDExNDUuMzIgOTQ4LjUxMywxMTQzLjMgOTY4LjMzNSwxMTQxLjU0IDk4OC4xNTcsMTE0MC4wMSAKICAxMDA3Ljk4LDExMzguNzEgMTAyNy44LDExMzcuNjIgMTA0Ny42MiwxMTM2Ljc0IDEwNjcuNDQsMTEzNi4wMyAxMDg3LjI3LDExMzUuNDkgMTEwNy4wOSwxMTM1LjEgMTEyNi45MSwxMTM0LjgzIDExNDYuNzMsMTEzNC42NiAxMTY2LjU1LDExMzQuNTggMTE4Ni4zOCwxMTM0LjU0IAogIDEyMDYuMiwxMTM0LjU0IDEyMjYuMDIsMTEzNC41NCAxMjQ1Ljg0LDExMzQuNSAxMjY1LjY2LDExMzQuNDEgMTI4NS40OCwxMTM0LjIyIDEzMDUuMzEsMTEzMy45IDEzMjUuMTMsMTEzMy40MiAxMzQ0Ljk1LDExMzIuNzQgMTM2NC43NywxMTMxLjgyIDEzODQuNTksMTEzMC42MiAKICAxNDA0LjQyLDExMjkuMDkgMTQyNC4yNCwxMTI3LjIgMTQ0NC4wNiwxMTI0Ljg5IDE0NjMuODgsMTEyMi4xMyAxNDgzLjcsMTExOC44NSAxNTAzLjUzLDExMTUuMDEgMTUyMy4zNSwxMTEwLjU1IDE1NDMuMTcsMTEwNS40MyAxNTYyLjk5LDEwOTkuNTggMTU4Mi44MSwxMDkyLjk1IAogIDE2MDIuNjMsMTA4NS40NiAxNjIyLjQ2LDEwNzcuMDggMTY0Mi4yOCwxMDY3LjcyIDE2NjIuMSwxMDU3LjMyIDE2ODEuOTIsMTA0NS44MiAxNzAxLjc0LDEwMzMuMTQgMTcyMS41NywxMDE5LjIxIDE3NDEuMzksMTAwMy45NiAxNzYxLjIxLDk4Ny4zMSAxNzgxLjAzLDk2OS4xODQgCiAgMTgwMC44NSw5NDkuNTAyIDE4MjAuNjcsOTI4LjE4MSAxODQwLjUsOTA1LjEzNiAxODYwLjMyLDg4MC4yOCAxODgwLjE0LDg1My41MjYgMTg5OS45Niw4MjQuNzgyIDE5MTkuNzgsNzkzLjk1NSAxOTM5LjYxLDc2MC45NSAxOTU5LjQzLDcyNS42NjkgMTk3OS4yNSw2ODguMDEzIAogIDE5OTkuMDcsNjQ3Ljg3OSAyMDE4Ljg5LDYwNS4xNjMgMjAzOC43Miw1NTkuNzU5IDIwNTguNTQsNTExLjU1OCAyMDc4LjM2LDQ2MC40NDkgMjA5OC4xOCw0MDYuMzE3IDIxMTgsMzQ5LjA0NyAyMTM3LjgyLDI4OC41MjEgMjE1Ny42NSwyMjQuNjE3IDIxNzcuNDcsMTU3LjIxMyAKICAyMTk3LjI5LDg2LjE4MzEgCiAgIi8+Cjwvc3ZnPgo="  />
+
+    <div id="97eca23d-4827-468b-84d1-e5fd76ad1961" style="width:576px;height:384px;"></div>
+    <script>
+    
+        var PLOT = document.getElementById('97eca23d-4827-468b-84d1-e5fd76ad1961');
+    Plotly.plot(PLOT, [
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            1.5,
+            1.51,
+            1.52,
+            1.53,
+            1.54,
+            1.55,
+            1.56,
+            1.57,
+            1.58,
+            1.59,
+            1.6,
+            1.61,
+            1.62,
+            1.63,
+            1.64,
+            1.65,
+            1.66,
+            1.67,
+            1.68,
+            1.69,
+            1.7,
+            1.71,
+            1.72,
+            1.73,
+            1.74,
+            1.75,
+            1.76,
+            1.77,
+            1.78,
+            1.79,
+            1.8,
+            1.81,
+            1.82,
+            1.83,
+            1.84,
+            1.85,
+            1.86,
+            1.87,
+            1.88,
+            1.89,
+            1.9,
+            1.91,
+            1.92,
+            1.93,
+            1.94,
+            1.95,
+            1.96,
+            1.97,
+            1.98,
+            1.99,
+            2.0,
+            2.01,
+            2.02,
+            2.03,
+            2.04,
+            2.05,
+            2.06,
+            2.07,
+            2.08,
+            2.09,
+            2.1,
+            2.11,
+            2.12,
+            2.13,
+            2.14,
+            2.15,
+            2.16,
+            2.17,
+            2.18,
+            2.19,
+            2.2,
+            2.21,
+            2.22,
+            2.23,
+            2.24,
+            2.25,
+            2.26,
+            2.27,
+            2.28,
+            2.29,
+            2.3,
+            2.31,
+            2.32,
+            2.33,
+            2.34,
+            2.35,
+            2.36,
+            2.37,
+            2.38,
+            2.39,
+            2.4,
+            2.41,
+            2.42,
+            2.43,
+            2.44,
+            2.45,
+            2.46,
+            2.47,
+            2.48,
+            2.49,
+            2.5
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "8 - 12*x - 2*x^2 + 11*x^3 - 6*x^4 + x^5",
+        "zmin": null,
+        "legendgroup": "8 - 12*x - 2*x^2 + 11*x^3 - 6*x^4 + x^5",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            -0.15625,
+            -0.1506024849000019,
+            -0.14491975680000196,
+            -0.13921626070000084,
+            -0.13350605760000137,
+            -0.12780281250000322,
+            -0.12211978239999727,
+            -0.11646980430000013,
+            -0.11086528319999892,
+            -0.10531818010000245,
+            -0.09984000000000366,
+            -0.09444177989999908,
+            -0.089134076799999,
+            -0.08392695569999938,
+            -0.0788299776000032,
+            -0.07385218749999499,
+            -0.06900210239999638,
+            -0.0642876992999993,
+            -0.05971640320000097,
+            -0.05529507510000245,
+            -0.05102999999999828,
+            -0.04692687490000054,
+            -0.04299079680000121,
+            -0.03922625069999765,
+            -0.03563709759999744,
+            -0.0322265625,
+            -0.02899722240000419,
+            -0.025950994300003548,
+            -0.023089123199997234,
+            -0.02041217010000131,
+            -0.017920000000002843,
+            -0.015611769899997685,
+            -0.013485916799997185,
+            -0.011540145699997728,
+            -0.009771417600004845,
+            -0.00817593750000552,
+            -0.006749142399997433,
+            -0.0054856892999992045,
+            -0.004379443199999934,
+            -0.0034234651000008168,
+            -0.002609999999996208,
+            -0.0019304648999993671,
+            -0.0013754367999993513,
+            -0.0009346407000032285,
+            -0.000596937600005536,
+            -0.0003503124999966144,
+            -0.00018186240000079998,
+            -7.77843000038098e-5,
+            -2.336319999219611e-5,
+            -2.9600999940269535e-6,
+            0.0,
+            3.04010000268493e-6,
+            2.4643199999055546e-5,
+            8.426430000054896e-5,
+            0.00020234239999878336,
+            0.00040031249999839463,
+            0.0007006175999995596,
+            0.0011267207000018424,
+            0.0017031168000021888,
+            0.002455344899998584,
+            0.003410000000001396,
+            0.004594745099997804,
+            0.006038323200001539,
+            0.007770569300000956,
+            0.009822422399999017,
+            0.012225937500000424,
+            0.015014297599998202,
+            0.01822182570000127,
+            0.02188399679999922,
+            0.026037449899997497,
+            0.030719999999999702,
+            0.03597065009999807,
+            0.041829603199998636,
+            0.04833827430000084,
+            0.05553930240000237,
+            0.0634765625,
+            0.07219517760000242,
+            0.08174153070000313,
+            0.09216327679999889,
+            0.1035093548999992,
+            0.11582999999999817,
+            0.12917675509999674,
+            0.14360248319999955,
+            0.15916137930000296,
+            0.17590898239999753,
+            0.1939021874999997,
+            0.21319925760000052,
+            0.2338598357000024,
+            0.25594495680000295,
+            0.2795170598999966,
+            0.30464000000000263,
+            0.3313790600999979,
+            0.35980096320000327,
+            0.38997388430000235,
+            0.4219674623999993,
+            0.45585281249999987,
+            0.49170253759999655,
+            0.5295907407000034,
+            0.5695930368000004,
+            0.6117865649000029,
+            0.65625
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": false,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            1.6,
+            1.8,
+            2.0,
+            2.2,
+            2.4000000000000004
+        ],
+        "range": [
+            1.47,
+            2.53
+        ],
+        "domain": [
+            0.05313137941090697,
+            0.9931649168853892
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "1.6",
+            "1.8",
+            "2.0",
+            "2.2",
+            "2.4"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [],
+    "height": 384,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            0.0,
+            0.2,
+            0.4,
+            0.6000000000000001
+        ],
+        "range": [
+            -0.180625,
+            0.680625
+        ],
+        "domain": [
+            0.0391878098571012,
+            0.989747375328084
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "0.0",
+            "0.2",
+            "0.4",
+            "0.6"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "width": 576
+}
+);
+
+    
+    </script>
+
 
 <h2>Roots</h2>
 <p>The default <code>plot</code> recipe checks to ensure the real roots of the polynomial are included in the domain of the plot. To do this, it must identify the roots. This is done <em>numerically</em> by the <code>roots</code> function, as in this example:</p>
@@ -391,13 +996,8 @@ ERROR: ArgumentError: Polynomials have different indeterminates
 <p>A consequence of the fundamental theorem of algebra and the factor theorem is that any fifth degree polynomial with integer coefficients has <span class="math">$5$</span> roots, where possibly some are complex. For real coefficients, these complex values must come in conjugate pairs, which can be observed from the output. The lone real root is approximately <code>1.1673039782614187</code>. This value being a numeric approximation to the irrational root.</p>
 
 
-<div class="alert alert-info" role="alert">
-
-<div class="markdown"><p><code>SymPy</code> also has a <code>roots</code> function. If both <code>Polynomials</code> and <code>SymPy</code> are used together, calling <code>roots</code> must be qualified, as with <code>Polynomials.roots&#40;...&#41;</code>. Similarly, <code>degree</code> is provided in both, so it too must be qualified.</p>
-</div>
-
-</div>
-
+<div class="alert alert-info" role="alert"><div class="markdown"><p><code>SymPy</code> also has a <code>roots</code> function. If both <code>Polynomials</code> and <code>SymPy</code> are used together, calling <code>roots</code> must be qualified, as with <code>Polynomials.roots&#40;...&#41;</code>. Similarly, <code>degree</code> is provided in both, so it too must be qualified.</p>
+</div></div>
 
 <p>The <code>roots</code> function numerically identifies roots. As such, it is susceptible to floating point issues. For example, the following polynomial has one root with multiplicity <span class="math">$5$</span>, but <span class="math">$5$</span> distinct roots are numerically identified:</p>
 
@@ -471,13 +1071,581 @@ ERROR: ArgumentError: Polynomials have different indeterminates
 
 <pre class="output">
 3-element Vector&#123;BigFloat&#125;:
- 3.988793826425306473648095731420245951248812549100695593956361394984623621
-62237
- 0.007874015750717327761888044994640324317437644763755398518128240973250722
-655087708
- 0.007874015745345640732471937155453684302598892670671766904450593065067926
-461080351
+ 3.988793826425306473643875560929317665379156190252215138025357332729470272170147
+ 0.007874015750717328401106983873669632654401652035080718271925018891368422962498625
+ 0.007874015745345654712263876402223840995480839564507482552960537026071484343484943
 </pre>
+
+
+<h2>Fitting a polynomial to data</h2>
+<p>The fact that two distinct points determine a line is well known. Deriving the line is easy. Say we have two points <span class="math">$(x_0, y_0)$</span> and <span class="math">$(x_1, y_1)$</span>. The <em>slope</em> is then</p>
+<p class="math">\[
+m = \frac{y_1 - y_0}{x_1 - x_0}, \quad x_1 \neq x_0
+\]</p>
+<p>The line is then given from the <em>point-slope</em> form by, say, <span class="math">$y= y_0 + m\cdot (x-x_0)$</span>. This all assumes, <span class="math">$x_1 \neq x_0$</span>, as were that the case the slope would be infinite &#40;though the vertical line <code>x&#61;x_0</code> would still be determined&#41;.</p>
+<p>A line, <code>y&#61;mx&#43;b</code> can be a linear polynomial or a constant depending on <span class="math">$m$</span>, so we could say <span class="math">$2$</span> points determine a polynomial of degree <span class="math">$1$</span> or less. Similarly, <span class="math">$3$</span> distinct points determine a degree <span class="math">$2$</span> polynomial or less, <span class="math">$\dots$</span>, <span class="math">$n+1$</span> distinct points determine a degree <span class="math">$n$</span> or less polynomial. Finding a polynomial, <span class="math">$p$</span>  that goes through <span class="math">$n+1$</span> points &#40;i.e., <span class="math">$p(x_i)=y_i$</span> for each <span class="math">$i$</span>&#41; is called  <a href="https://en.wikipedia.org/wiki/Polynomial_interpolation">polynomial interpolation</a>. The main theorem says if the <span class="math">$x_i$</span> are distinct, there is a unique polynomial of degree <span class="math">$n$</span> <em>or</em> less that will interpolate each of the points.</p>
+<p>Knowing we can succeed, we approach the problem of <span class="math">$3$</span> points, say <span class="math">$(x_0, y_0)$</span>, <span class="math">$(x_1,y_1)$</span>, and <span class="math">$(x_2, y_2)$</span>. There is a polynomial <span class="math">$p = a\cdot x^2 + b\cdot x + c$</span> with <span class="math">$p(x_i) = y_i$</span>. This gives 3 equations for the 3 unknown values <span class="math">$a$</span>, <span class="math">$b$</span>, and <span class="math">$c$</span>:</p>
+<p class="math">\[
+\begin{align*}
+a\cdot x_0^2 + b\cdot x_0 + c &= y_0\\
+a\cdot x_1^2 + b\cdot x_1 + c &= y_1\\
+a\cdot x_2^2 + b\cdot x_2 + c &= y_2\\
+\end{align*}
+\]</p>
+<p>Solving this with <code>SymPy</code> is tractable. A comprehension is used below to create the <span class="math">$3$</span> equations; the <code>zip</code> function is a simple means to iterate over 2 or more iterables simultaneously:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>SymPy</span><span class='hljl-t'> </span><span class='hljl-cs'># mindful now that some functions, e.g. degree, need qualification</span><span class='hljl-t'>
+</span><span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>a</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-t'> </span><span class='hljl-n'>c</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-p'>[</span><span class='hljl-ni'>0</span><span class='hljl-oB'>:</span><span class='hljl-ni'>2</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-p'>[</span><span class='hljl-ni'>0</span><span class='hljl-oB'>:</span><span class='hljl-ni'>2</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-n'>eqs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-n'>a</span><span class='hljl-oB'>*</span><span class='hljl-n'>xi</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-oB'>*</span><span class='hljl-n'>xi</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>c</span><span class='hljl-t'> </span><span class='hljl-oB'>~</span><span class='hljl-t'> </span><span class='hljl-n'>yi</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>xi</span><span class='hljl-p'>,</span><span class='hljl-n'>yi</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-nf'>zip</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-n'>y</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+</span><span class='hljl-n'>abc</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>solve</span><span class='hljl-p'>(</span><span class='hljl-n'>eqs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-n'>a</span><span class='hljl-p'>,</span><span class='hljl-n'>b</span><span class='hljl-p'>,</span><span class='hljl-n'>c</span><span class='hljl-p'>])</span>
+</pre>
+
+
+<pre class="output">
+Dict&#123;Any, Any&#125; with 3 entries:
+  a &#61;&gt; &#40;-x₀*y₁ &#43; x₀*y₂ &#43; x₁*y₀ - x₁*y₂ - x₂*y₀ &#43; x₂*y₁&#41;/&#40;x₀^2*x₁ - x₀^2*x₂ - x₀…
+  c &#61;&gt; &#40;x₀^2*x₁*y₂ - x₀^2*x₂*y₁ - x₀*x₁^2*y₂ &#43; x₀*x₂^2*y₁ &#43; x₁^2*x₂*y₀ - x₁*x₂^…
+  b &#61;&gt; &#40;x₀^2*y₁ - x₀^2*y₂ - x₁^2*y₀ &#43; x₁^2*y₂ &#43; x₂^2*y₀ - x₂^2*y₁&#41;/&#40;x₀^2*x₁ - x…
+</pre>
+
+
+<p>As can be seen, the terms do get quite unwieldy when treated symbolically. Numerically, the <code>fit</code> function from the <code>Polynomials</code> package will return the interpolating polynomial. To compare,</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-ni'>3</span><span class='hljl-p'>],</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-ni'>2</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-n'>p</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>fit</span><span class='hljl-p'>(</span><span class='hljl-n'>Polynomial</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'>  </span><span class='hljl-n'>ys</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+<div class="output">$8.0 - 6.5\cdot x + 1.5\cdot x^{2}$</div>
+
+<p>and we can compare that the two give the same answer with, for example:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>abc</span><span class='hljl-p'>[</span><span class='hljl-n'>b</span><span class='hljl-p'>]((</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>.=&gt;</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>)</span><span class='hljl-oB'>...</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>y</span><span class='hljl-oB'>.=&gt;</span><span class='hljl-n'>ys</span><span class='hljl-p'>)</span><span class='hljl-oB'>...</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+<div class="output">$- \frac{13}{2}$
+</div>
+
+<p>&#40;Ignore the tricky way of substituting in each value of <code>xs</code> and <code>ys</code> for the symbolic values in <code>x</code> and <code>y</code>.&#41;</p>
+<h5>Example Inverse quadratic interpolation</h5>
+<p>A related problem, that will arise when finding iterative means to solve for zeros of functions, is <em>inverse</em> quadratic interpolation. That is finding <span class="math">$q$</span> that goes through the points <span class="math">$(x_0,y_0), (x_1, y_1), \dots, (x_n, y_n)$</span> satisfying <span class="math">$q(y_i) = x_i$</span>. &#40;That is <span class="math">$x$</span> and <span class="math">$y$</span> are reversed, as with inverse functions.&#41; For the envisioned task, where the inverse quadratic function  intersects the <span class="math">$x$</span> axis is of interest, which is at the constant term of the polynomial &#40;as it is like the <span class="math">$y$</span> intercept of  typical polynomial&#41;. Let&#39;s see what that is in general by replicating the above steps &#40;though now the assumption is the <span class="math">$y$</span> values are distinct&#41;:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>a</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-t'> </span><span class='hljl-n'>c</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-p'>[</span><span class='hljl-ni'>0</span><span class='hljl-oB'>:</span><span class='hljl-ni'>2</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-p'>[</span><span class='hljl-ni'>0</span><span class='hljl-oB'>:</span><span class='hljl-ni'>2</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-n'>eqs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-n'>a</span><span class='hljl-oB'>*</span><span class='hljl-n'>yi</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-oB'>*</span><span class='hljl-n'>yi</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>c</span><span class='hljl-t'> </span><span class='hljl-oB'>~</span><span class='hljl-t'> </span><span class='hljl-n'>xi</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>xi</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>yi</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-nf'>zip</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-n'>y</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+</span><span class='hljl-n'>abc</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>solve</span><span class='hljl-p'>(</span><span class='hljl-n'>eqs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-n'>a</span><span class='hljl-p'>,</span><span class='hljl-n'>b</span><span class='hljl-p'>,</span><span class='hljl-n'>c</span><span class='hljl-p'>])</span><span class='hljl-t'>
+</span><span class='hljl-n'>abc</span><span class='hljl-p'>[</span><span class='hljl-n'>c</span><span class='hljl-p'>]</span>
+</pre>
+
+
+
+<div class="output">$\frac{x₀ y₁^{2} y₂ - x₀ y₁ y₂^{2} - x₁ y₀^{2} y₂ + x₁ y₀ y₂^{2} + x₂ y₀^{2} y₁ - x₂ y₀ y₁^{2}}{y₀^{2} y₁ - y₀^{2} y₂ - y₀ y₁^{2} + y₀ y₂^{2} + y₁^{2} y₂ - y₁ y₂^{2}}$
+</div>
+
+<p>We can graphically see the result for the specific values of <code>xs</code> and <code>ys</code> as follows:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-ni'>3</span><span class='hljl-p'>],</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-ni'>2</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-n'>q</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>fit</span><span class='hljl-p'>(</span><span class='hljl-n'>Polynomial</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>,</span><span class='hljl-t'>  </span><span class='hljl-n'>xs</span><span class='hljl-p'>)</span><span class='hljl-t'>  </span><span class='hljl-cs'># reverse</span><span class='hljl-t'>
+</span><span class='hljl-cs'># plot</span><span class='hljl-t'>
+</span><span class='hljl-n'>us</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>range</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-ni'>4</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>4</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>length</span><span class='hljl-oB'>=</span><span class='hljl-ni'>100</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>vs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>q</span><span class='hljl-oB'>.</span><span class='hljl-p'>(</span><span class='hljl-n'>us</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>plot</span><span class='hljl-p'>(</span><span class='hljl-n'>vs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>us</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>legend</span><span class='hljl-oB'>=</span><span class='hljl-kc'>false</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>scatter!</span><span class='hljl-p'>(</span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>plot!</span><span class='hljl-p'>(</span><span class='hljl-n'>zero</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>x0</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>abc</span><span class='hljl-p'>[</span><span class='hljl-n'>c</span><span class='hljl-p'>]((</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>.=&gt;</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>)</span><span class='hljl-oB'>...</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>y</span><span class='hljl-t'> </span><span class='hljl-oB'>.=&gt;</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-p'>)</span><span class='hljl-oB'>...</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>scatter!</span><span class='hljl-p'>([</span><span class='hljl-nf'>N</span><span class='hljl-p'>(</span><span class='hljl-n'>x0</span><span class='hljl-p'>)],</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>0</span><span class='hljl-p'>],</span><span class='hljl-t'> </span><span class='hljl-n'>markershape</span><span class='hljl-oB'>=:</span><span class='hljl-n'>star</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+    <div id="a7a20c98-0237-4c39-a4f1-ce636ddb7785" style="width:576px;height:384px;"></div>
+    <script>
+    
+        var PLOT = document.getElementById('a7a20c98-0237-4c39-a4f1-ce636ddb7785');
+    Plotly.plot(PLOT, [
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            -3.46875,
+            -3.203206305479033,
+            -2.9431913835322927,
+            -2.6887052341597797,
+            -2.439747857361494,
+            -2.196319253137435,
+            -1.9584194214876034,
+            -1.7260483624119989,
+            -1.4992060759106214,
+            -1.2778925619834711,
+            -1.0621078206305479,
+            -0.8518518518518519,
+            -0.647124655647383,
+            -0.4479262320171411,
+            -0.25425658096112647,
+            -0.0661157024793389,
+            0.11649640342822154,
+            0.29357973676155485,
+            0.46513429752066104,
+            0.63116008570554,
+            0.791657101316192,
+            0.9466253443526168,
+            1.0960648148148144,
+            1.2399755127027852,
+            1.378357438016529,
+            1.5112105907560456,
+            1.6385349709213348,
+            1.7603305785123968,
+            1.8765974135292318,
+            1.9873354759718398,
+            2.0925447658402203,
+            2.1922252831343743,
+            2.2863770278543005,
+            2.3750000000000004,
+            2.4580941995714722,
+            2.5356596265687177,
+            2.607696280991735,
+            2.6742041628405264,
+            2.7351832721150906,
+            2.7906336088154267,
+            2.8405551729415364,
+            2.8849479644934193,
+            2.923811983471074,
+            2.9571472298745025,
+            2.984953703703704,
+            3.0072314049586777,
+            3.023980333639425,
+            3.035200489745945,
+            3.040891873278237,
+            3.0410544842363025,
+            3.0356883226201408,
+            3.024793388429752,
+            3.008369681665136,
+            2.9864172023262934,
+            2.958935950413223,
+            2.9259259259259256,
+            2.8873871288644017,
+            2.8433195592286507,
+            2.793723217018671,
+            2.738598102234466,
+            2.6779442148760335,
+            2.6117615549433735,
+            2.5400501224364858,
+            2.4628099173553717,
+            2.380040939700031,
+            2.2917431894704627,
+            2.1979166666666665,
+            2.098561371288644,
+            1.9936773033363944,
+            1.8832644628099178,
+            1.767322849709213,
+            1.6458524640342822,
+            1.5188533057851241,
+            1.3863253749617392,
+            1.2482686715641256,
+            1.1046831955922864,
+            0.9555689470462201,
+            0.8009259259259266,
+            0.6407541322314044,
+            0.4750535659626568,
+            0.30382422711968204,
+            0.1270661157024802,
+            -0.055220768288950665,
+            -0.24303642485460675,
+            -0.43638085399448995,
+            -0.6352540557086002,
+            -0.8396560299969397,
+            -1.0495867768595042,
+            -1.2650462962962958,
+            -1.4860345883073145,
+            -1.7125516528925626,
+            -1.9445974900520355,
+            -2.1821720997857357,
+            -2.425275482093663,
+            -2.6739076369758195,
+            -2.9280685644322006,
+            -3.187758264462809,
+            -3.4529767370676447,
+            -3.7237239822467103,
+            -4.0
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y1",
+        "zmin": null,
+        "legendgroup": "y1",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            -0.25,
+            -0.20707070707070707,
+            -0.16414141414141414,
+            -0.12121212121212122,
+            -0.07828282828282829,
+            -0.03535353535353535,
+            0.007575757575757576,
+            0.050505050505050504,
+            0.09343434343434344,
+            0.13636363636363635,
+            0.17929292929292928,
+            0.2222222222222222,
+            0.26515151515151514,
+            0.30808080808080807,
+            0.351010101010101,
+            0.3939393939393939,
+            0.43686868686868685,
+            0.4797979797979798,
+            0.5227272727272727,
+            0.5656565656565656,
+            0.6085858585858586,
+            0.6515151515151515,
+            0.6944444444444444,
+            0.7373737373737373,
+            0.7803030303030303,
+            0.8232323232323232,
+            0.8661616161616161,
+            0.9090909090909091,
+            0.952020202020202,
+            0.9949494949494949,
+            1.0378787878787878,
+            1.0808080808080809,
+            1.1237373737373737,
+            1.1666666666666667,
+            1.2095959595959596,
+            1.2525252525252526,
+            1.2954545454545454,
+            1.3383838383838385,
+            1.3813131313131313,
+            1.4242424242424243,
+            1.4671717171717171,
+            1.5101010101010102,
+            1.553030303030303,
+            1.595959595959596,
+            1.6388888888888888,
+            1.6818181818181819,
+            1.7247474747474747,
+            1.7676767676767677,
+            1.8106060606060606,
+            1.8535353535353536,
+            1.8964646464646464,
+            1.9393939393939394,
+            1.9823232323232323,
+            2.025252525252525,
+            2.0681818181818183,
+            2.111111111111111,
+            2.154040404040404,
+            2.196969696969697,
+            2.23989898989899,
+            2.282828282828283,
+            2.3257575757575757,
+            2.3686868686868685,
+            2.4116161616161618,
+            2.4545454545454546,
+            2.4974747474747474,
+            2.54040404040404,
+            2.5833333333333335,
+            2.6262626262626263,
+            2.669191919191919,
+            2.712121212121212,
+            2.755050505050505,
+            2.797979797979798,
+            2.840909090909091,
+            2.8838383838383836,
+            2.926767676767677,
+            2.9696969696969697,
+            3.0126262626262625,
+            3.0555555555555554,
+            3.0984848484848486,
+            3.1414141414141414,
+            3.1843434343434343,
+            3.227272727272727,
+            3.2702020202020203,
+            3.313131313131313,
+            3.356060606060606,
+            3.398989898989899,
+            3.441919191919192,
+            3.484848484848485,
+            3.5277777777777777,
+            3.5707070707070705,
+            3.6136363636363638,
+            3.6565656565656566,
+            3.6994949494949494,
+            3.742424242424242,
+            3.7853535353535355,
+            3.8282828282828283,
+            3.871212121212121,
+            3.914141414141414,
+            3.957070707070707,
+            4.0
+        ],
+        "type": "scatter"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            1.0,
+            2.0,
+            3.0
+        ],
+        "showlegend": true,
+        "mode": "markers",
+        "name": "y2",
+        "zmin": null,
+        "legendgroup": "y2",
+        "marker": {
+            "symbol": "circle",
+            "color": "rgba(227, 111, 71, 1.000)",
+            "line": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "width": 1
+            },
+            "size": 8
+        },
+        "zmax": null,
+        "y": [
+            3.0,
+            1.0,
+            2.0
+        ],
+        "type": "scatter"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            -4.211231634527089,
+            -4.138344270897479,
+            -3.464395348759397,
+            -3.059380138116067,
+            -2.7169449320680705,
+            -2.3449643169401506,
+            -2.002031092060604,
+            -1.634370431504379,
+            -1.2083995005667543,
+            -0.8298468068485779,
+            -0.4978902079230629,
+            -0.1359684085493237,
+            0.22810439143654054,
+            0.6306334276983225,
+            1.0136296487241356,
+            1.411856854375454,
+            1.7470793373566595,
+            2.156347993200914,
+            2.5410726009044886,
+            3.1574312567182723,
+            3.252286118763392
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y3",
+        "zmin": null,
+        "legendgroup": "y3",
+        "zmax": null,
+        "line": {
+            "color": "rgba(62, 164, 78, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "type": "scatter"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            -2.0
+        ],
+        "showlegend": true,
+        "mode": "markers",
+        "name": "y4",
+        "zmin": null,
+        "legendgroup": "y4",
+        "marker": {
+            "symbol": "star-triangle-up",
+            "color": "rgba(195, 113, 210, 1.000)",
+            "line": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "width": 1
+            },
+            "size": 8
+        },
+        "zmax": null,
+        "y": [
+            0.0
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": false,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            -4.0,
+            -2.0,
+            0.0,
+            2.0
+        ],
+        "range": [
+            -4.435137167125804,
+            3.476191651362106
+        ],
+        "domain": [
+            0.022267181880042772,
+            0.9931649168853892
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−4",
+            "−2",
+            "0",
+            "2"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [],
+    "height": 384,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            0.0,
+            1.0,
+            2.0,
+            3.0,
+            4.0
+        ],
+        "range": [
+            -0.3775,
+            4.1275
+        ],
+        "domain": [
+            0.0391878098571012,
+            0.989747375328084
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "width": 576
+}
+);
+
+    
+    </script>
 
 
 <h2>Questions</h2>
@@ -485,32 +1653,32 @@ ERROR: ArgumentError: Polynomials have different indeterminates
 <p>Do the polynomials <span class="math">$p = x^4$</span> and <span class="math">$q = x^2 - 2$</span> intersect?</p>
 
 
-<form name="WeaveQuestion" data-id="9JayuswB" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="kmDtdbhc" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_9JayuswB" id="radio_9JayuswB_1" value="1">
-  <label class="form-check-label" for="radio_9JayuswB_1">
+  <input class="form-check-input" type="radio" name="radio_kmDtdbhc" id="radio_kmDtdbhc_1" value="1">
+  <label class="form-check-label" for="radio_kmDtdbhc_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_9JayuswB" id="radio_9JayuswB_2" value="2">
-  <label class="form-check-label" for="radio_9JayuswB_2">
+  <input class="form-check-input" type="radio" name="radio_kmDtdbhc" id="radio_kmDtdbhc_2" value="2">
+  <label class="form-check-label" for="radio_kmDtdbhc_2">
     No
   </label>
 </div>
 
-<div id="9JayuswB_message"></div>
+<div id="kmDtdbhc_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_9JayuswB']").on("change", function() {
+$("input:radio[name='radio_kmDtdbhc']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#9JayuswB_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#kmDtdbhc_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#9JayuswB_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#kmDtdbhc_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -521,32 +1689,32 @@ $("input:radio[name='radio_9JayuswB']").on("change", function() {
 <p>Do the polynomials <span class="math">$p = x^4-4$</span> and <span class="math">$q = x^2 - 2$</span> intersect?</p>
 
 
-<form name="WeaveQuestion" data-id="Iur7qALT" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="rPqfYN1z" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Iur7qALT" id="radio_Iur7qALT_1" value="1">
-  <label class="form-check-label" for="radio_Iur7qALT_1">
+  <input class="form-check-input" type="radio" name="radio_rPqfYN1z" id="radio_rPqfYN1z_1" value="1">
+  <label class="form-check-label" for="radio_rPqfYN1z_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Iur7qALT" id="radio_Iur7qALT_2" value="2">
-  <label class="form-check-label" for="radio_Iur7qALT_2">
+  <input class="form-check-input" type="radio" name="radio_rPqfYN1z" id="radio_rPqfYN1z_2" value="2">
+  <label class="form-check-label" for="radio_rPqfYN1z_2">
     No
   </label>
 </div>
 
-<div id="Iur7qALT_message"></div>
+<div id="rPqfYN1z_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Iur7qALT']").on("change", function() {
+$("input:radio[name='radio_rPqfYN1z']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#Iur7qALT_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#rPqfYN1z_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Iur7qALT_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#rPqfYN1z_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -557,28 +1725,29 @@ $("input:radio[name='radio_Iur7qALT']").on("change", function() {
 <p>How many real roots does <span class="math">$p = 1 + x + x^2 + x^3 + x^4 + x^5$</span> have?</p>
 
 
-<form name='WeaveQuestion' data-id='ztO38hC3' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='DPFBWl4C' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
-<div class="input-group">
-<input id="ztO38hC3" type="number" class="form-control">
+<div class="form-floating input-group">
+<input id="DPFBWl4C" type="number" class="form-control" placeholder="Numeric answer">
+<label for="DPFBWl4C">Numeric answer</label>
 
 </div>
 
-<div id='ztO38hC3_message'></div>
+<div id='DPFBWl4C_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#ztO38hC3').on('change', function() {
+$('#DPFBWl4C').on('change', function() {
   correct = Math.abs(this.value - 1) <= 0;
 
   if(correct) {
-     $('#ztO38hC3_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#DPFBWl4C_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#ztO38hC3_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#DPFBWl4C_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -588,50 +1757,50 @@ $('#ztO38hC3').on('change', function() {
 <p>Mathematically we say the <span class="math">$0$</span> polynomial has ano degree. What convention does <code>Polynomials</code> use? &#40;Look at <code>degree&#40;zero&#40;Polynomial&#41;&#41;</code>.&#41;</p>
 
 
-<form name="WeaveQuestion" data-id="ymbEGOeS" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="ZNnSA65f" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ymbEGOeS" id="radio_ymbEGOeS_1" value="1">
-  <label class="form-check-label" for="radio_ymbEGOeS_1">
+  <input class="form-check-input" type="radio" name="radio_ZNnSA65f" id="radio_ZNnSA65f_1" value="1">
+  <label class="form-check-label" for="radio_ZNnSA65f_1">
     <code>nothing</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ymbEGOeS" id="radio_ymbEGOeS_2" value="2">
-  <label class="form-check-label" for="radio_ymbEGOeS_2">
+  <input class="form-check-input" type="radio" name="radio_ZNnSA65f" id="radio_ZNnSA65f_2" value="2">
+  <label class="form-check-label" for="radio_ZNnSA65f_2">
     -1
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ymbEGOeS" id="radio_ymbEGOeS_3" value="3">
-  <label class="form-check-label" for="radio_ymbEGOeS_3">
+  <input class="form-check-input" type="radio" name="radio_ZNnSA65f" id="radio_ZNnSA65f_3" value="3">
+  <label class="form-check-label" for="radio_ZNnSA65f_3">
     0
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ymbEGOeS" id="radio_ymbEGOeS_4" value="4">
-  <label class="form-check-label" for="radio_ymbEGOeS_4">
+  <input class="form-check-input" type="radio" name="radio_ZNnSA65f" id="radio_ZNnSA65f_4" value="4">
+  <label class="form-check-label" for="radio_ZNnSA65f_4">
     Inf
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ymbEGOeS" id="radio_ymbEGOeS_5" value="5">
-  <label class="form-check-label" for="radio_ymbEGOeS_5">
+  <input class="form-check-input" type="radio" name="radio_ZNnSA65f" id="radio_ZNnSA65f_5" value="5">
+  <label class="form-check-label" for="radio_ZNnSA65f_5">
     -Inf
   </label>
 </div>
 
-<div id="ymbEGOeS_message"></div>
+<div id="ZNnSA65f_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_ymbEGOeS']").on("change", function() {
+$("input:radio[name='radio_ZNnSA65f']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#ymbEGOeS_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#ZNnSA65f_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#ymbEGOeS_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#ZNnSA65f_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -653,42 +1822,42 @@ a_5 &= a_1 - \frac{3}{2}.
 <li><p>Form the polynomial <code>q</code> by these commands <code>x&#61;variable&#40;&#41;; q&#61;p&#40;2x/pi&#41;</code></p>
 </li>
 </ul>
-<p>The polynomial <code>q</code>, a <span class="math">$5$</span>th-degree polynomial, is a good approximation of for the<a href="http://www.coranac.com/2009/07/sines/">sine</a> function.</p>
-<p>Make a graph. Over which interval is the approximation visually a good one?</p>
+<p>The polynomial <code>q</code>, a <span class="math">$5$</span>th-degree polynomial, is a good approximation of for the <a href="http://www.coranac.com/2009/07/sines/">sine</a> function.</p>
+<p>Make graphs of both <code>q</code> and <code>sin</code>. Over which interval is the approximation &#40;visually&#41; a good one?</p>
 
 
-<form name="WeaveQuestion" data-id="Ze4BzYGr" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="aJ58vnLU" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Ze4BzYGr" id="radio_Ze4BzYGr_1" value="1">
-  <label class="form-check-label" for="radio_Ze4BzYGr_1">
+  <input class="form-check-input" type="radio" name="radio_aJ58vnLU" id="radio_aJ58vnLU_1" value="1">
+  <label class="form-check-label" for="radio_aJ58vnLU_1">
     &#36;&#91;0,1&#93;&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Ze4BzYGr" id="radio_Ze4BzYGr_2" value="2">
-  <label class="form-check-label" for="radio_Ze4BzYGr_2">
+  <input class="form-check-input" type="radio" name="radio_aJ58vnLU" id="radio_aJ58vnLU_2" value="2">
+  <label class="form-check-label" for="radio_aJ58vnLU_2">
     &#36;&#91;0,\pi&#93;&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Ze4BzYGr" id="radio_Ze4BzYGr_3" value="3">
-  <label class="form-check-label" for="radio_Ze4BzYGr_3">
+  <input class="form-check-input" type="radio" name="radio_aJ58vnLU" id="radio_aJ58vnLU_3" value="3">
+  <label class="form-check-label" for="radio_aJ58vnLU_3">
     &#36;&#91;0,2\pi&#93;&#36;
   </label>
 </div>
 
-<div id="Ze4BzYGr_message"></div>
+<div id="aJ58vnLU_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Ze4BzYGr']").on("change", function() {
+$("input:radio[name='radio_aJ58vnLU']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#Ze4BzYGr_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#aJ58vnLU_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Ze4BzYGr_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#aJ58vnLU_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -706,71 +1875,73 @@ $("input:radio[name='radio_Ze4BzYGr']").on("change", function() {
 
 
 
-&#45;90 &#43; 213&#8729;x &#45; 184&#8729;x<sup>2</sup> &#43; 74&#8729;x<sup>3</sup> &#45; 14&#8729;x<sup>4</sup> &#43; x<sup>5</sup>
+<div class="output">$-90 + 213\cdot x - 184\cdot x^{2} + 74\cdot x^{3} - 14\cdot x^{4} + x^{5}$</div>
 
 <p>has <span class="math">$5$</span> sign changes and <span class="math">$5$</span> real roots. For <code>x &#61; variable&#40;&#41;</code> use <code>div&#40;p, x-3&#41;</code> to find the result of dividing <span class="math">$p$</span> by <span class="math">$x-3$</span>. How many sign changes are there in the new polynomial?</p>
 
 
-<form name='WeaveQuestion' data-id='1hLUf8os' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='BO6rGywG' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
-<div class="input-group">
-<input id="1hLUf8os" type="number" class="form-control">
+<div class="form-floating input-group">
+<input id="BO6rGywG" type="number" class="form-control" placeholder="Numeric answer">
+<label for="BO6rGywG">Numeric answer</label>
 
 </div>
 
-<div id='1hLUf8os_message'></div>
+<div id='BO6rGywG_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#1hLUf8os').on('change', function() {
+$('#BO6rGywG').on('change', function() {
   correct = Math.abs(this.value - 4) <= 0;
 
   if(correct) {
-     $('#1hLUf8os_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#BO6rGywG_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#1hLUf8os_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#BO6rGywG_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
 
 
 <h6>Question</h6>
-<p>The identification of a collection of coefficients with a polynomial depends on an understood <strong>basis</strong>. A basis for the polynomials of degree <span class="math">$n$</span> or less, consists of a minimal collection of polynomials for which all the polynomials of degree <span class="math">$n$</span> or less can be expressed through a combination of sums of terms, each of which is just a coefficient times a basis member. The typical basis is the <span class="math">$n+$</span> polynomials <code>1</code>, <code>x</code>, <code>x^2, \dots, x^n</code>. However, though every basis must have <span class="math">$n+1$</span> members, they need not be these.</p>
-<p>A basis used by <a href="https://en.wikipedia.org/wiki/Lagrange_polynomial">Lagrange</a> is the following. Let there be <span class="math">$n+1$</span> points distinct points <span class="math">$x_0, x_1, \dots, x_n$</span>. Let <code>l&#40;x&#41; &#61; &#40;x-x_0&#41;\cdot&#40;x-x_1&#41;\cdot \cdots \cdot&#40;x-x_n&#41;</code><code>and for each</code><code>i</code><code>in</code><code>0</code><code>to</code><code>n</code>&#96; define</p>
+<p>The identification of a collection of coefficients with a polynomial depends on an understood <strong>basis</strong>. A basis for the polynomials of degree <span class="math">$n$</span> or less, consists of a minimal collection of polynomials for which all the polynomials of degree <span class="math">$n$</span> or less can be expressed through a combination of sums of terms, each of which is just a coefficient times a basis member. The typical basis is the <span class="math">$n+$</span> polynomials <span class="math">$1`, `x`, `x^2, \dots, x^n$</span>. However, though every basis must have <span class="math">$n+1$</span> members, they need not be these.</p>
+<p>A basis used by <a href="https://en.wikipedia.org/wiki/Lagrange_polynomial">Lagrange</a> is the following. Let there be <span class="math">$n+1$</span> points distinct points <span class="math">$x_0, x_1, \dots, x_n$</span>. For each <span class="math">$i$</span> in <span class="math">$0$</span> to <span class="math">$n$</span> define</p>
 <p class="math">\[
 l_i(x) = \prod_{0 \leq j \leq n; j \ne i} \frac{x-x_j}{x_i - x_j} =
 \frac{(x-x_1)\cdot(x-x_2)\cdot \cdots \cdot (x-x_{j-1}) \cdot (x-x_{j+1}) \cdot \cdots \cdot (x-x_n)}{(x_i-x_1)\cdot(x_i-x_2)\cdot \cdots \cdot (x_i-x_{j-1}) \cdot (x_i-x_{j+1}) \cdot \cdots \cdot (x_i-x_n)}.
 \]</p>
-<p>That is <code>l_i&#40;x&#41;</code> is a product of terms like <span class="math">$(x-x_j)/(x_i-x_j)$</span> <em>except</em> when <code>j&#61;i</code>.</p>
+<p>That is <span class="math">$l_i(x)$</span> is a product of terms like <span class="math">$(x-x_j)/(x_i-x_j)$</span> <em>except</em> when <span class="math">$j=i$</span>.</p>
 <p>What is is the value of <span class="math">$l_0(x_0)$</span>?</p>
 
 
-<form name='WeaveQuestion' data-id='n4n1ovhI' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='zOaJvfFv' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
-<div class="input-group">
-<input id="n4n1ovhI" type="number" class="form-control">
+<div class="form-floating input-group">
+<input id="zOaJvfFv" type="number" class="form-control" placeholder="Numeric answer">
+<label for="zOaJvfFv">Numeric answer</label>
 
 </div>
 
-<div id='n4n1ovhI_message'></div>
+<div id='zOaJvfFv_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#n4n1ovhI').on('change', function() {
+$('#zOaJvfFv').on('change', function() {
   correct = Math.abs(this.value - 1) <= 0;
 
   if(correct) {
-     $('#n4n1ovhI_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#zOaJvfFv_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#n4n1ovhI_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#zOaJvfFv_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -779,32 +1950,32 @@ $('#n4n1ovhI').on('change', function() {
 <p>Why?</p>
 
 
-<form name="WeaveQuestion" data-id="6Y6LqlHl" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="MEqKGvCO" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_6Y6LqlHl" id="radio_6Y6LqlHl_1" value="1">
-  <label class="form-check-label" for="radio_6Y6LqlHl_1">
+  <input class="form-check-input" type="radio" name="radio_MEqKGvCO" id="radio_MEqKGvCO_1" value="1">
+  <label class="form-check-label" for="radio_MEqKGvCO_1">
     The term &#36;&#40;x_0-x_0&#41;&#36; will be &#36;0&#36;, so the product will be zero
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_6Y6LqlHl" id="radio_6Y6LqlHl_2" value="2">
-  <label class="form-check-label" for="radio_6Y6LqlHl_2">
+  <input class="form-check-input" type="radio" name="radio_MEqKGvCO" id="radio_MEqKGvCO_2" value="2">
+  <label class="form-check-label" for="radio_MEqKGvCO_2">
     All terms like &#36;&#40;x-x_j&#41;/&#40;x_0 - x_j&#41;&#36; will be &#36;1&#36; when &#36;x&#61;x_0&#36; and these are all the terms in the product defining &#36;l_0&#36;.
   </label>
 </div>
 
-<div id="6Y6LqlHl_message"></div>
+<div id="MEqKGvCO_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_6Y6LqlHl']").on("change", function() {
+$("input:radio[name='radio_MEqKGvCO']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#6Y6LqlHl_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#MEqKGvCO_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#6Y6LqlHl_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#MEqKGvCO_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -814,28 +1985,29 @@ $("input:radio[name='radio_6Y6LqlHl']").on("change", function() {
 <p>What is the value of <span class="math">$l_i(x_i)$</span>?</p>
 
 
-<form name='WeaveQuestion' data-id='b4sYyQUP' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='JAsWKMPZ' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
-<div class="input-group">
-<input id="b4sYyQUP" type="number" class="form-control">
+<div class="form-floating input-group">
+<input id="JAsWKMPZ" type="number" class="form-control" placeholder="Numeric answer">
+<label for="JAsWKMPZ">Numeric answer</label>
 
 </div>
 
-<div id='b4sYyQUP_message'></div>
+<div id='JAsWKMPZ_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#b4sYyQUP').on('change', function() {
+$('#JAsWKMPZ').on('change', function() {
   correct = Math.abs(this.value - 1) <= 0;
 
   if(correct) {
-     $('#b4sYyQUP_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#JAsWKMPZ_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#b4sYyQUP_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#JAsWKMPZ_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -844,28 +2016,29 @@ $('#b4sYyQUP').on('change', function() {
 <p>What is the value of <span class="math">$l_0(x_1)$</span>?</p>
 
 
-<form name='WeaveQuestion' data-id='1VBfjceo' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='2EYs1j4N' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
-<div class="input-group">
-<input id="1VBfjceo" type="number" class="form-control">
+<div class="form-floating input-group">
+<input id="2EYs1j4N" type="number" class="form-control" placeholder="Numeric answer">
+<label for="2EYs1j4N">Numeric answer</label>
 
 </div>
 
-<div id='1VBfjceo_message'></div>
+<div id='2EYs1j4N_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#1VBfjceo').on('change', function() {
+$('#2EYs1j4N').on('change', function() {
   correct = Math.abs(this.value - 0) <= 0;
 
   if(correct) {
-     $('#1VBfjceo_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#2EYs1j4N_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#1VBfjceo_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#2EYs1j4N_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -874,32 +2047,32 @@ $('#1VBfjceo').on('change', function() {
 <p>Why?</p>
 
 
-<form name="WeaveQuestion" data-id="6u5Nmi4X" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="rV8Iso15" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_6u5Nmi4X" id="radio_6u5Nmi4X_1" value="1">
-  <label class="form-check-label" for="radio_6u5Nmi4X_1">
-    The term &#36;&#40;x-x_1&#41;/&#40;x_0-x_1&#41;&#36; is omitted from the product, so the answer is non-zero.
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_6u5Nmi4X" id="radio_6u5Nmi4X_2" value="2">
-  <label class="form-check-label" for="radio_6u5Nmi4X_2">
+  <input class="form-check-input" type="radio" name="radio_rV8Iso15" id="radio_rV8Iso15_1" value="1">
+  <label class="form-check-label" for="radio_rV8Iso15_1">
     The term like &#36;&#40;x-x_1&#41;/&#40;x_0 - x_1&#41;&#36; will be &#36;0&#36; when &#36;x&#61;x_1&#36; and so the product will be &#36;0&#36;.
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_rV8Iso15" id="radio_rV8Iso15_2" value="2">
+  <label class="form-check-label" for="radio_rV8Iso15_2">
+    The term &#36;&#40;x-x_1&#41;/&#40;x_0-x_1&#41;&#36; is omitted from the product, so the answer is non-zero.
+  </label>
+</div>
 
-<div id="6u5Nmi4X_message"></div>
+<div id="rV8Iso15_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_6u5Nmi4X']").on("change", function() {
-  correct = this.value == 2;
+$("input:radio[name='radio_rV8Iso15']").on("change", function() {
+  correct = this.value == 1;
 
   if(correct) {
-     $("#6u5Nmi4X_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#rV8Iso15_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#6u5Nmi4X_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#rV8Iso15_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -909,28 +2082,29 @@ $("input:radio[name='radio_6u5Nmi4X']").on("change", function() {
 <p>What is the value of <span class="math">$l_i(x_j)$</span> <em>if</em> <span class="math">$i \ne j$</span>?</p>
 
 
-<form name='WeaveQuestion' data-id='gME9Nq9A' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='kIWTfNiG' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
-<div class="input-group">
-<input id="gME9Nq9A" type="number" class="form-control">
+<div class="form-floating input-group">
+<input id="kIWTfNiG" type="number" class="form-control" placeholder="Numeric answer">
+<label for="kIWTfNiG">Numeric answer</label>
 
 </div>
 
-<div id='gME9Nq9A_message'></div>
+<div id='kIWTfNiG_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#gME9Nq9A').on('change', function() {
+$('#kIWTfNiG').on('change', function() {
   correct = Math.abs(this.value - 0) <= 0;
 
   if(correct) {
-     $('#gME9Nq9A_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#kIWTfNiG_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#gME9Nq9A_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#kIWTfNiG_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -943,45 +2117,45 @@ p(x) = \sum_{i=0}^n y_i l_i(x) = y_0l_0(x) + y_1l_1(x) + \dots + y_nl_n(x)
 <p>What is the value of <span class="math">$p(x_j)$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="CSuJ4CBx" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="NuT8YXuy" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_CSuJ4CBx" id="radio_CSuJ4CBx_1" value="1">
-  <label class="form-check-label" for="radio_CSuJ4CBx_1">
+  <input class="form-check-input" type="radio" name="radio_NuT8YXuy" id="radio_NuT8YXuy_1" value="1">
+  <label class="form-check-label" for="radio_NuT8YXuy_1">
     &#36;y_j&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_CSuJ4CBx" id="radio_CSuJ4CBx_2" value="2">
-  <label class="form-check-label" for="radio_CSuJ4CBx_2">
+  <input class="form-check-input" type="radio" name="radio_NuT8YXuy" id="radio_NuT8YXuy_2" value="2">
+  <label class="form-check-label" for="radio_NuT8YXuy_2">
     &#36;1&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_CSuJ4CBx" id="radio_CSuJ4CBx_3" value="3">
-  <label class="form-check-label" for="radio_CSuJ4CBx_3">
+  <input class="form-check-input" type="radio" name="radio_NuT8YXuy" id="radio_NuT8YXuy_3" value="3">
+  <label class="form-check-label" for="radio_NuT8YXuy_3">
     &#36;0&#36;
   </label>
 </div>
 
-<div id="CSuJ4CBx_message"></div>
+<div id="NuT8YXuy_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_CSuJ4CBx']").on("change", function() {
+$("input:radio[name='radio_NuT8YXuy']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#CSuJ4CBx_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#NuT8YXuy_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#CSuJ4CBx_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#NuT8YXuy_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
 </script>
 
 
-<p>This last answer is why <span class="math">$p$</span> is called an <em>interpolating</em> polynomial.</p>
+<p>This last answer is why <span class="math">$p$</span> is called an <em>interpolating</em> polynomial and this question shows an alternative way to identify interpolating polynomials from solving a system of linear equations.</p>
 <h6>Question</h6>
 <p>The Chebyshev &#40;<span class="math">$T$</span>&#41; polynomials are polynomials which use a different basis from the standard basis. Denote the basis elements <span class="math">$T_0$</span>, <span class="math">$T_1$</span>, ... where we have <span class="math">$T_0(x) = 1$</span>, <span class="math">$T_1(x) = x$</span>, and for bigger indices <span class="math">$T_{i+1}(x) = 2xT_i(x) - T_{i-1}(x)$</span>. The first others are then:</p>
 <p class="math">\[
@@ -994,38 +2168,38 @@ T_4(x) &= 2xT_3(x) - T_2(x) = 2x(4x^3-3x) - (2x^2-1) = 8x^4 - 8x^2 + 1
 <p>With these definitions what is the polynomial associated to the coefficients <span class="math">$[0,1,2,3]$</span> with this basis?</p>
 
 
-<form name="WeaveQuestion" data-id="TEHGhbtc" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Z4SC2RIJ" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TEHGhbtc" id="radio_TEHGhbtc_1" value="1">
-  <label class="form-check-label" for="radio_TEHGhbtc_1">
-    It is &#36;0\cdot T_1&#40;x&#41; &#43;	1\cdot T_1&#40;x&#41; &#43; 2\cdot T_2&#40;x&#41; &#43; 3\cdot T_3&#40;x&#41; &#61; -2 - 8\cdot x &#43; 4\cdot x^2 &#43; 12\cdot x^3&#36;&#96;
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TEHGhbtc" id="radio_TEHGhbtc_2" value="2">
-  <label class="form-check-label" for="radio_TEHGhbtc_2">
+  <input class="form-check-input" type="radio" name="radio_Z4SC2RIJ" id="radio_Z4SC2RIJ_1" value="1">
+  <label class="form-check-label" for="radio_Z4SC2RIJ_1">
     It is &#36;0\cdot T_1&#40;x&#41; &#43;	1\cdot T_1&#40;x&#41; &#43; 2\cdot T_2&#40;x&#41; &#43; 3\cdot T_3&#40;x&#41; &#61; 0&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TEHGhbtc" id="radio_TEHGhbtc_3" value="3">
-  <label class="form-check-label" for="radio_TEHGhbtc_3">
+  <input class="form-check-input" type="radio" name="radio_Z4SC2RIJ" id="radio_Z4SC2RIJ_2" value="2">
+  <label class="form-check-label" for="radio_Z4SC2RIJ_2">
+    It is &#36;0\cdot T_1&#40;x&#41; &#43;	1\cdot T_1&#40;x&#41; &#43; 2\cdot T_2&#40;x&#41; &#43; 3\cdot T_3&#40;x&#41; &#61; -2 - 8\cdot x &#43; 4\cdot x^2 &#43; 12\cdot x^3&#36;&#96;
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_Z4SC2RIJ" id="radio_Z4SC2RIJ_3" value="3">
+  <label class="form-check-label" for="radio_Z4SC2RIJ_3">
     It is &#36;0\cdot 1 &#43; 1 \cdot x &#43; 2 \cdots x^2 &#43; 3\cdot x^3 &#61; x &#43; 2x^2 &#43; 3x^3&#36;
   </label>
 </div>
 
-<div id="TEHGhbtc_message"></div>
+<div id="Z4SC2RIJ_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_TEHGhbtc']").on("change", function() {
-  correct = this.value == 1;
+$("input:radio[name='radio_Z4SC2RIJ']").on("change", function() {
+  correct = this.value == 2;
 
   if(correct) {
-     $("#TEHGhbtc_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#Z4SC2RIJ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#TEHGhbtc_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#Z4SC2RIJ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1033,12 +2207,39 @@ $("input:radio[name='radio_TEHGhbtc']").on("change", function() {
 
 
 
-<div class="alert alert-info" role="alert">
-
-<div class="markdown"><p>The <code>Polynomials</code> package has an implementation, so you can check your answer through <code>convert&#40;Polynomial, ChebyshevT&#40;&#91;0,1,2,3&#93;&#41;&#41;</code>. Similarly, the <code>SpecialPolynomials</code> package has these and many other polynomial bases represented.</p>
+<div class="alert alert-info" role="alert"><div class="markdown"><p>The <code>Polynomials</code> package has an implementation, so you can check your answer through <code>convert&#40;Polynomial, ChebyshevT&#40;&#91;0,1,2,3&#93;&#41;&#41;</code>. Similarly, the <code>SpecialPolynomials</code> package has these and many other polynomial bases represented.</p>
 <p>The <code>ApproxFun</code> package is built on top of polynomials expressed in this basis, as the Chebyshev polynomials have special properties which make them very suitable when approximating functions with polynomials. The <code>ApproxFun</code> package uses  easier-to-manipulate polynomials to approximate functions very accurately, thereby being useful for investigating properties of non-linear functions leveraging properties for polynomials.</p>
-</div>
+</div></div>
 
+
+<div class="card" style="">
+  <div class="card-header float-end text-muted">
+    <span class="text-muted  float-end align-middle">
+
+<a href="../precalc/polynomial_roots.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Previous section" aria-label="Previous section">
+<i class="bi bi-arrow-left-circle-fill"></i>
+</a>
+
+&nbsp;
+
+<a href="../precalc/rational_functions.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Next section" aria-label="Next section">
+<i class="bi bi-arrow-right-circle-fill"></i>
+</a>
+
+&nbsp;
+
+<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/precalc/polynomials_package.jmd" data-bs-toggle="tooltip" data-bs-placement="top" title="Suggest an edit" aria-label="Suggest an edit">
+<i class="bi bi-pencil-square"></i>
+</a>
+
+&nbsp;
+
+<a href="../misc/toc.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Table of contents" aria-label="Table of contents">
+<i class="bi bi-card-list"></i>
+</a>
+
+    </span>
+  </div>
 </div>
 
 
@@ -1050,6 +2251,10 @@ $("input:radio[name='radio_TEHGhbtc']").on("change", function() {
   hljs.highlightElement(el);                              // then highlight each
   });
 
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
   var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
   var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
     return new bootstrap.Popover(popoverTriggerEl)

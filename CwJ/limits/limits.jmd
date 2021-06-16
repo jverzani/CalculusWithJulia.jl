@@ -1047,3 +1047,10 @@ f(x) =  1/PI * cos(PI*x)/(1 - (2x)^2)
 val = N(limit(f, 1//2))
 numericq(val)
 ```
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

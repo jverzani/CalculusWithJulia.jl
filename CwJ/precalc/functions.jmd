@@ -15,7 +15,7 @@ That is, a function gives a correspondence between  values in its domain with  v
 
 This definition is abstract, as functions can be very general. With
 single-variable calculus, we generally specialize to real-valued
-functions of a single variable (*univariate functions*). These
+functions of a single variable (*scalar univariate functions*). These
 typically have the correspondence given by a rule, such as $f(x) =
 x^2$ or $f(x) = \sqrt{x}$. The function's domain may be implicit (as in all $x$
 for which the rule is defined) or may be explicitly given as part of the
@@ -310,7 +310,7 @@ $$~
 f(x) = m \cdot x + b, \quad g(x) = y_0 + m \cdot (x - x_0).
 ~$$
 
-Both functions use the variable $x$, but there is no confusion, as we learn that this is just a dummy variable to be substituted for and so could have any name. Both also share a variable $m$ for a slope. Where does that value come from? In practice, there is a context that gives an answer. Despite the same name, there is no expectation that the slope will be the same for each function if the context is different. So when parameters are involved, a function involves a rule and a context to give specific values to the parameters.
+Both functions use the variable $x$, but there is no confusion, as we learn that this is just a dummy variable to be substituted for and so could have any name. Both also share a variable $m$ for a slope. Where does that value come from? In practice, there is a context that gives an answer. Despite the same name, there is no expectation that the slope will be the same for each function if the context is different. So when parameters are involved, a function involves a rule and a context to give specific values to the parameters. Euler had said initially that functions a composed of "the variable quantity and numbers or constant quantities." The "term"variable, we still use, but instead of "constant quantities," we choose the name "parameters."
 
 
 
@@ -348,7 +348,7 @@ Before discussing this, let's just see in this case:
 f(0)
 ```
 
-So the `b` is found from the currently stored value. This fact can be exploited. we can write template-like functions, such as `f(x)=mx+b` and reuse them just by updating the parameters separately.
+So the `b` is found from the currently stored value. This fact can be exploited. we can write template-like functions, such as `f(x)=m*x+b` and reuse them just by updating the parameters separately.
 
 
 
@@ -444,7 +444,7 @@ Earlier we saw the `log` function can use a second argument to express
 the base. This function is basically defined by `log(b,x)=log(x)/log(b)`. The `log(x)` value is the natural log, and this definition
 just uses the change-of-base formula for logarithms.
 
-But not so fast, on the left side is a function with two arguments and on the right side the functions have one argument - yet they share the same name. How does `Julia` know which to use? `Julia` uses the number, order, and *type* of the arguments passed to a function to determine which function definition to use. This is technically known as [multiple dispatch](http://en.wikipedia.org/wiki/Multiple_dispatch) or **polymorphism**. As a feature of the language, it can be used to greatly simplify the number of functions the user must learn. The basic idea is that many functions are "generic" in that they will work for many different scenarios.
+But not so fast, on the left side is a function with two arguments and on the right side the functions have one argument - yet they share the same name. How does `Julia` know which to use? `Julia` uses the number, order, and *type* of the positional arguments passed to a function to determine which function definition to use. This is technically known as [multiple dispatch](http://en.wikipedia.org/wiki/Multiple_dispatch) or **polymorphism**. As a feature of the language, it can be used to greatly simplify the number of functions the user must learn. The basic idea is that many functions are "generic" in that they will work for many different scenarios.
 
 ```julia;echo=false;
 alert("""
@@ -496,8 +496,8 @@ Area(w) = Area(w, h(w))
 This might seem odd, just like with `log`, we now  have two *different* but related
 functions named `Area`. Julia will decide which to use based on the
 number of arguments when the function is called. This setup allows both to
-be used on the same line, as above. This usage style is not common with
-computer languages, but is a feature of `Julia` which is built around
+be used on the same line, as above. This usage style is not so common with
+many computer languages, but is a feature of `Julia` which is built around
 the concept of *generic* functions with multiple dispatch rules to
 decide which rule to call.
 
@@ -560,6 +560,12 @@ l = shift_right(f, c=3)
 ```
 
 Then `l` is a function that is derived from `f`.
+
+```julia;echo=false
+note("""
+The value of `c` used when `l` is called is the one passed to `shift_right`. Functions like `l` that are returned by other functions also are called *closures*, as the context they are evaluated within included the context of the function that constructs them.
+""")
+```
 
 Anonymous functions can be created with the `function` keyword, but we will use the "arrow" notation, `arg->body` to create them, The above, could have been defined as:
 
@@ -895,7 +901,7 @@ positional arguments. These are matched by how the function is
 called. For example,
 
 ```julia;
-A(w, h) = w*h
+A(w, h) = w * h
 ```
 
 when called as `A(10, 5)` will use 10 for `w` and `5` for `h`, as the
@@ -907,7 +913,7 @@ default values (then called
 arguments). For example,
 
 ```julia;
-B(w, h=5) = w*h
+B(w, h=5) = w * h
 ```
 
 Actually creates two functions: `B(w,h)` for when the call is, say, `B(10,5)` and `B(w)` when the call is `B(10)`.
@@ -1022,7 +1028,9 @@ fn(3)
 ```
 
 ```julia;echo=false;
-booleanq(fn(3))
+choices = ["`true`","`false`"]
+ans = 1
+radioq(choices, ans)
 ```
 
 ###### Question
@@ -1158,4 +1166,9 @@ The guarantee of `IntervalArithmetic` is a *bound* on the interval, not the *exa
 The interval is a nearly exact estimate, as guaranteed by `IntervalArithmetic`.
 """]
 radioq(choices, 1)
+```
+
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

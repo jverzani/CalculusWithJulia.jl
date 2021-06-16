@@ -29,32 +29,6 @@ function find_colors(F, xs, colors=(:red, :blue, :black))
 end
 
 
-# Load ImplicitEquations
-
-## meta these
-preds = [(:Lt, :≪, :<), # \ll
-         (:Le, :≦, :<=), # \leqq
-         (:Eq, :⩵, :(==)), # \Equal
-         (:Ge, :≧, :>=), # \gegg
-         (:Gt, :≫, :>) # \gg
-         ]
-
-import SymPy: Lt, Le, Eq, Ge, Gt, ≪, ≦, ⩵, ≧, ≫
-for (fn, uop, op) in preds
-    fnname =  string(fn)
-
-    @eval begin
-        ($fn)(f::Function, x::Real) = Pred(f, $op, x)
-        ($uop)(f::Function, x::Real) = ($fn)(f, x)
-        ($fn)(f::Function, g::Function) = $(fn)((x,y) -> f(x,y) - g(x,y), 0)
-        ($uop)(f::Function, g::Function) = ($fn)(f, g)
-    end
-    eval(Expr(:export, fn))
-    eval(Expr(:export, uop))
-end
-import ImplicitEquations: Neq
-export Neq
-
 
 # some plotting utilities
 """
@@ -248,7 +222,6 @@ We see that this function is a convenience for vector-valued descriptions of par
 end
 
 
-import SymPy: plot_parametric_surface
 
 """
     plot_parametric_surface(F, [xlim=(-5,5)], [ylim=(-5,5)], [nx=50], [ny=50])
