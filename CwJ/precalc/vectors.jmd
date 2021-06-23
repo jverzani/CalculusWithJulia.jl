@@ -753,6 +753,13 @@ referencing a value, similar to indexing but possibly more convenient.
 Named tuples as similar to *dictionaries* which are used to associate
 a key (like a name) with a value.
 
+For example, here a named tuple is constructed, and then its elements referenced:
+
+```julia
+nt = (one=1, two="two", three=:three)  # heterogeneous values (Int, String, Symbol)
+nt.one, nt[2], n[end]                  # named tuples have name or index access
+```
+
 ## Questions
 
 ###### Question

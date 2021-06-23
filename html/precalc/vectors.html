@@ -42,7 +42,13 @@ main > .container {
   padding: 60px 15px 0;
 }
 
-
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
 </style>
 
 <!-- .julia:before {content: "julia> "} -->
@@ -166,13 +172,7 @@ $( document ).ready(function() {
   <div class="card-footer text-muted">
     <span class="card-text">
       <small class="text-muted">
-      
-Position, velocity, and acceleration vectors (scaled) for projectile
-motion. Vectors are drawn with tail on the projectile. The position
-vector (black) points from the origin to the projectile, the velocity
-vector (red) is in the direction of the trajectory, and the
-acceleration vector (green) is a constant pointing downward.
-
+      Position, velocity, and acceleration vectors (scaled) for projectile motion. Vectors are drawn with tail on the projectile. The position vector (black) points from the origin to the projectile, the velocity vector (red) is in the direction of the trajectory, and the acceleration vector (green) is a constant pointing downward.
 
       </small>
     </span>
@@ -207,6 +207,7 @@ acceleration vector (green) is a constant pointing downward.
     <span class="card-text">
       <small class="text-muted">
       A vector and its unit vector. They share the same direction, but the unit vector has a standardized magnitude.
+
       </small>
     </span>
   </div>
@@ -234,6 +235,7 @@ acceleration vector (green) is a constant pointing downward.
     <span class="card-text">
       <small class="text-muted">
       The sum of two vectors can be visualized by placing the tail of one at the tip of the other
+
       </small>
     </span>
   </div>
@@ -250,6 +252,7 @@ acceleration vector (green) is a constant pointing downward.
     <span class="card-text">
       <small class="text-muted">
       The difference of two vectors can be visualized by placing the tail of one at the tip of the other
+
       </small>
     </span>
   </div>
@@ -267,10 +270,8 @@ acceleration vector (green) is a constant pointing downward.
   <div class="card-footer text-muted">
     <span class="card-text">
       <small class="text-muted">
-      The vector $\langle 4,3 \rangle$ is written as
-$2$/$3$ $\cdot\langle 1,2 \rangle$ $+$ $5$/$3$ $\cdot\langle 2,1 \rangle$. Any vector $\vec{c}$ can be
-written uniquely as $\alpha\cdot\vec{a} + \beta \cdot \vec{b}$ provided
-$\vec{a}$ and $\vec{b}$ are not parallel.
+      The vector $\langle 4,3 \rangle$ is written as $2$/$3$ $\cdot\langle 1,2 \rangle$ $+$ $5$/$3$ $\cdot\langle 2,1 \rangle$. Any vector $\vec{c}$ can be written uniquely as $\alpha\cdot\vec{a} + \beta \cdot \vec{b}$ provided $\vec{a}$ and $\vec{b}$ are not parallel.
+
       </small>
     </span>
   </div>
@@ -296,11 +297,8 @@ r = \sqrt{x^2 + y^2}, \quad \tan(\theta) = y/x.
   <div class="card-footer text-muted">
     <span class="card-text">
       <small class="text-muted">
-      
-A vector $\langle x, y \rangle$ can be written as $\langle r\cdot
-\cos(\theta), r\cdot\sin(\theta) \rangle$ for values $r$ and
-$\theta$. The value $r$ is a magnitude, the direction parameterized by
-$\theta$.
+      A vector $\langle x, y \rangle$ can be written as $\langle r\cdot \cos(\theta), r\cdot\sin(\theta) \rangle$ for values $r$ and $\theta$. The value $r$ is a magnitude, the direction parameterized by $\theta$.
+
       </small>
     </span>
   </div>
@@ -975,55 +973,69 @@ $\theta$.
 <p>Vectors in <code>Julia</code> are a container, one of many different types. Another useful type for programming purposes are <em>tuples</em>. If a vector is formed by placing comma-separated values within a <code>&#91;&#93;</code> pair &#40;e.g., <code>&#91;1,2,3&#93;</code>&#41;, a tuple is formed by placing comma-separated values withing a <code>&#40;&#41;</code> pair. A tuple of length <span class="math">$1$</span> uses a convention of a trailing comma to distinguish it from a parethesized expression &#40;e.g. <code>&#40;1,&#41;</code> is a tuple, <code>&#40;1&#41;</code> is just the value <code>1</code>&#41;.</p>
 <p>Tuples are used in programming, as they don&#39;t typically require allocated memory to be used so they can be faster. Internal usages are for function arguments and function return types. Unlike vectors, tuples can be heterogeneous collections. &#40;When commas are used to combine more than one output into a cell, a tuple is being used.&#41; &#40;Also, a big technical distinction is that tuples are also different from vectors and other containers in that tuple types are <em>covariant</em> in their parameters, not <em>invariant</em>.&#41;</p>
 <p>Unlike vectors, tuples can have names which can be used for referencing a value, similar to indexing but possibly more convenient. Named tuples as similar to <em>dictionaries</em> which are used to associate a key &#40;like a name&#41; with a value.</p>
+<p>For example, here a named tuple is constructed, and then its elements referenced:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>nt</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>one</span><span class='hljl-oB'>=</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>two</span><span class='hljl-oB'>=</span><span class='hljl-s'>&quot;two&quot;</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>three</span><span class='hljl-oB'>=:</span><span class='hljl-n'>three</span><span class='hljl-p'>)</span><span class='hljl-t'>  </span><span class='hljl-cs'># heterogeneous values (Int, String, Symbol)</span><span class='hljl-t'>
+</span><span class='hljl-n'>nt</span><span class='hljl-oB'>.</span><span class='hljl-n'>one</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>nt</span><span class='hljl-p'>[</span><span class='hljl-ni'>2</span><span class='hljl-p'>],</span><span class='hljl-t'> </span><span class='hljl-n'>n</span><span class='hljl-p'>[</span><span class='hljl-k'>end</span><span class='hljl-p'>]</span><span class='hljl-t'>                  </span><span class='hljl-cs'># named tuples have name or index access</span>
+</pre>
+
+
+<pre class="output">
+&#40;1, &quot;two&quot;, 7&#41;
+</pre>
+
+
 <h2>Questions</h2>
 <h6>Question</h6>
 <p>Which command will create the vector <span class="math">$\vec{v} = \langle 4,~ 3 \rangle$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="fjtMEjmC" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="FV6NHD2v" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_fjtMEjmC" id="radio_fjtMEjmC_1" value="1">
-  <label class="form-check-label" for="radio_fjtMEjmC_1">
-    <code>v &#61; &#39;4, 3&#39;</code>
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_fjtMEjmC" id="radio_fjtMEjmC_2" value="2">
-  <label class="form-check-label" for="radio_fjtMEjmC_2">
-    <code>v &#61; &#40;4,3&#41;</code>
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_fjtMEjmC" id="radio_fjtMEjmC_3" value="3">
-  <label class="form-check-label" for="radio_fjtMEjmC_3">
-    <code>v &#61; &lt;4,3&gt;</code>
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_fjtMEjmC" id="radio_fjtMEjmC_4" value="4">
-  <label class="form-check-label" for="radio_fjtMEjmC_4">
+  <input class="form-check-input" type="radio" name="radio_FV6NHD2v" id="radio_FV6NHD2v_1" value="1">
+  <label class="form-check-label" for="radio_FV6NHD2v_1">
     <code>v &#61; &#123;4, 3&#125;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_fjtMEjmC" id="radio_fjtMEjmC_5" value="5">
-  <label class="form-check-label" for="radio_fjtMEjmC_5">
+  <input class="form-check-input" type="radio" name="radio_FV6NHD2v" id="radio_FV6NHD2v_2" value="2">
+  <label class="form-check-label" for="radio_FV6NHD2v_2">
+    <code>v &#61; &#39;4, 3&#39;</code>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_FV6NHD2v" id="radio_FV6NHD2v_3" value="3">
+  <label class="form-check-label" for="radio_FV6NHD2v_3">
+    <code>v &#61; &lt;4,3&gt;</code>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_FV6NHD2v" id="radio_FV6NHD2v_4" value="4">
+  <label class="form-check-label" for="radio_FV6NHD2v_4">
     <code>v &#61; &#91;4,3&#93;</code>
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_FV6NHD2v" id="radio_FV6NHD2v_5" value="5">
+  <label class="form-check-label" for="radio_FV6NHD2v_5">
+    <code>v &#61; &#40;4,3&#41;</code>
+  </label>
+</div>
 
-<div id="fjtMEjmC_message"></div>
+<div id="FV6NHD2v_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_fjtMEjmC']").on("change", function() {
-  correct = this.value == 5;
+$("input:radio[name='radio_FV6NHD2v']").on("change", function() {
+  correct = this.value == 4;
 
   if(correct) {
-     $("#fjtMEjmC_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#FV6NHD2v_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#fjtMEjmC_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#FV6NHD2v_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1034,50 +1046,50 @@ $("input:radio[name='radio_fjtMEjmC']").on("change", function() {
 <p>Which command will create the vector with components &quot;4,3,2,1&quot;?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="cX7HmlQN" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="nD6v1gsl" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_cX7HmlQN" id="radio_cX7HmlQN_1" value="1">
-  <label class="form-check-label" for="radio_cX7HmlQN_1">
-    <code>v &#61; &#39;4, 3, 2, 1&#39;</code>
+  <input class="form-check-input" type="radio" name="radio_nD6v1gsl" id="radio_nD6v1gsl_1" value="1">
+  <label class="form-check-label" for="radio_nD6v1gsl_1">
+    <code>v &#61; &#91;4,3,2,1&#93;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_cX7HmlQN" id="radio_cX7HmlQN_2" value="2">
-  <label class="form-check-label" for="radio_cX7HmlQN_2">
-    <code>v &#61; &#40;4,3,2,1&#41;</code>
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_cX7HmlQN" id="radio_cX7HmlQN_3" value="3">
-  <label class="form-check-label" for="radio_cX7HmlQN_3">
+  <input class="form-check-input" type="radio" name="radio_nD6v1gsl" id="radio_nD6v1gsl_2" value="2">
+  <label class="form-check-label" for="radio_nD6v1gsl_2">
     <code>v &#61; &#123;4,3,2,1&#125;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_cX7HmlQN" id="radio_cX7HmlQN_4" value="4">
-  <label class="form-check-label" for="radio_cX7HmlQN_4">
-    <code>v &#61; &lt;4,3,2,1&gt;</code>
+  <input class="form-check-input" type="radio" name="radio_nD6v1gsl" id="radio_nD6v1gsl_3" value="3">
+  <label class="form-check-label" for="radio_nD6v1gsl_3">
+    <code>v &#61; &#40;4,3,2,1&#41;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_cX7HmlQN" id="radio_cX7HmlQN_5" value="5">
-  <label class="form-check-label" for="radio_cX7HmlQN_5">
-    <code>v &#61; &#91;4,3,2,1&#93;</code>
+  <input class="form-check-input" type="radio" name="radio_nD6v1gsl" id="radio_nD6v1gsl_4" value="4">
+  <label class="form-check-label" for="radio_nD6v1gsl_4">
+    <code>v &#61; &#39;4, 3, 2, 1&#39;</code>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_nD6v1gsl" id="radio_nD6v1gsl_5" value="5">
+  <label class="form-check-label" for="radio_nD6v1gsl_5">
+    <code>v &#61; &lt;4,3,2,1&gt;</code>
   </label>
 </div>
 
-<div id="cX7HmlQN_message"></div>
+<div id="nD6v1gsl_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_cX7HmlQN']").on("change", function() {
-  correct = this.value == 5;
+$("input:radio[name='radio_nD6v1gsl']").on("change", function() {
+  correct = this.value == 1;
 
   if(correct) {
-     $("#cX7HmlQN_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#nD6v1gsl_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#cX7HmlQN_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#nD6v1gsl_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1088,29 +1100,29 @@ $("input:radio[name='radio_cX7HmlQN']").on("change", function() {
 <p>What is the magnitude of the vector <span class="math">$\vec{v} = \langle 10,~ 15 \rangle$</span>?</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='0GU07PaG' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='B65ss0aA' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="0GU07PaG" type="number" class="form-control" placeholder="Numeric answer">
-<label for="0GU07PaG">Numeric answer</label>
+<input id="B65ss0aA" type="number" class="form-control" placeholder="Numeric answer">
+<label for="B65ss0aA">Numeric answer</label>
 
 </div>
 
-<div id='0GU07PaG_message'></div>
+<div id='B65ss0aA_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#0GU07PaG').on('change', function() {
+$('#B65ss0aA').on('change', function() {
   correct = Math.abs(this.value - 18.027756377319946) <= 0.001;
 
   if(correct) {
-     $('#0GU07PaG_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#B65ss0aA_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#0GU07PaG_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#B65ss0aA_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1120,44 +1132,44 @@ $('#0GU07PaG').on('change', function() {
 <p>Which of the following is the unit vector in the direction of <span class="math">$\vec{v} = \langle 3,~ 4 \rangle$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="1L5oiKyn" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="unfOiDVw" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_1L5oiKyn" id="radio_1L5oiKyn_1" value="1">
-  <label class="form-check-label" for="radio_1L5oiKyn_1">
-    <code>&#91;3, 4&#93;</code>
+  <input class="form-check-input" type="radio" name="radio_unfOiDVw" id="radio_unfOiDVw_1" value="1">
+  <label class="form-check-label" for="radio_unfOiDVw_1">
+    <code>&#91;1.0, 1.33333&#93;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_1L5oiKyn" id="radio_1L5oiKyn_2" value="2">
-  <label class="form-check-label" for="radio_1L5oiKyn_2">
+  <input class="form-check-input" type="radio" name="radio_unfOiDVw" id="radio_unfOiDVw_2" value="2">
+  <label class="form-check-label" for="radio_unfOiDVw_2">
     <code>&#91;0.6, 0.8&#93;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_1L5oiKyn" id="radio_1L5oiKyn_3" value="3">
-  <label class="form-check-label" for="radio_1L5oiKyn_3">
-    <code>&#91;1, 1&#93;</code>
+  <input class="form-check-input" type="radio" name="radio_unfOiDVw" id="radio_unfOiDVw_3" value="3">
+  <label class="form-check-label" for="radio_unfOiDVw_3">
+    <code>&#91;3, 4&#93;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_1L5oiKyn" id="radio_1L5oiKyn_4" value="4">
-  <label class="form-check-label" for="radio_1L5oiKyn_4">
-    <code>&#91;1.0, 1.33333&#93;</code>
+  <input class="form-check-input" type="radio" name="radio_unfOiDVw" id="radio_unfOiDVw_4" value="4">
+  <label class="form-check-label" for="radio_unfOiDVw_4">
+    <code>&#91;1, 1&#93;</code>
   </label>
 </div>
 
-<div id="1L5oiKyn_message"></div>
+<div id="unfOiDVw_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_1L5oiKyn']").on("change", function() {
+$("input:radio[name='radio_unfOiDVw']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#1L5oiKyn_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#unfOiDVw_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#1L5oiKyn_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#unfOiDVw_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1168,44 +1180,44 @@ $("input:radio[name='radio_1L5oiKyn']").on("change", function() {
 <p>What vector is in the same direction as <span class="math">$\vec{v} = \langle 3,~ 4 \rangle$</span> but is 10 times as long?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="KvnHpxJx" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="GcPywACY" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_KvnHpxJx" id="radio_KvnHpxJx_1" value="1">
-  <label class="form-check-label" for="radio_KvnHpxJx_1">
-    <code>&#91;3, 4&#93;</code>
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_KvnHpxJx" id="radio_KvnHpxJx_2" value="2">
-  <label class="form-check-label" for="radio_KvnHpxJx_2">
-    <code>&#91;10, 10&#93;</code>
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_KvnHpxJx" id="radio_KvnHpxJx_3" value="3">
-  <label class="form-check-label" for="radio_KvnHpxJx_3">
+  <input class="form-check-input" type="radio" name="radio_GcPywACY" id="radio_GcPywACY_1" value="1">
+  <label class="form-check-label" for="radio_GcPywACY_1">
     <code>&#91;30, 40&#93;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_KvnHpxJx" id="radio_KvnHpxJx_4" value="4">
-  <label class="form-check-label" for="radio_KvnHpxJx_4">
+  <input class="form-check-input" type="radio" name="radio_GcPywACY" id="radio_GcPywACY_2" value="2">
+  <label class="form-check-label" for="radio_GcPywACY_2">
     <code>&#91;9.48683, 12.6491 &#93;</code>
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_GcPywACY" id="radio_GcPywACY_3" value="3">
+  <label class="form-check-label" for="radio_GcPywACY_3">
+    <code>&#91;10, 10&#93;</code>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_GcPywACY" id="radio_GcPywACY_4" value="4">
+  <label class="form-check-label" for="radio_GcPywACY_4">
+    <code>&#91;3, 4&#93;</code>
+  </label>
+</div>
 
-<div id="KvnHpxJx_message"></div>
+<div id="GcPywACY_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_KvnHpxJx']").on("change", function() {
-  correct = this.value == 3;
+$("input:radio[name='radio_GcPywACY']").on("change", function() {
+  correct = this.value == 1;
 
   if(correct) {
-     $("#KvnHpxJx_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#GcPywACY_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#KvnHpxJx_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#GcPywACY_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1216,44 +1228,44 @@ $("input:radio[name='radio_KvnHpxJx']").on("change", function() {
 <p>If <span class="math">$\vec{v} = \langle 3,~ 4 \rangle$</span> and <span class="math">$\vec{w} = \langle 1,~ 2 \rangle$</span>  find <span class="math">$2\vec{v} + 5 \vec{w}$</span>.</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Vh7oXrYe" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="CsZsyWnz" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Vh7oXrYe" id="radio_Vh7oXrYe_1" value="1">
-  <label class="form-check-label" for="radio_Vh7oXrYe_1">
-    <code>&#91;5, 10&#93;</code>
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Vh7oXrYe" id="radio_Vh7oXrYe_2" value="2">
-  <label class="form-check-label" for="radio_Vh7oXrYe_2">
-    <code>&#91;11, 18&#93;</code>
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Vh7oXrYe" id="radio_Vh7oXrYe_3" value="3">
-  <label class="form-check-label" for="radio_Vh7oXrYe_3">
+  <input class="form-check-input" type="radio" name="radio_CsZsyWnz" id="radio_CsZsyWnz_1" value="1">
+  <label class="form-check-label" for="radio_CsZsyWnz_1">
     <code>&#91;4, 6&#93;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Vh7oXrYe" id="radio_Vh7oXrYe_4" value="4">
-  <label class="form-check-label" for="radio_Vh7oXrYe_4">
+  <input class="form-check-input" type="radio" name="radio_CsZsyWnz" id="radio_CsZsyWnz_2" value="2">
+  <label class="form-check-label" for="radio_CsZsyWnz_2">
+    <code>&#91;5, 10&#93;</code>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_CsZsyWnz" id="radio_CsZsyWnz_3" value="3">
+  <label class="form-check-label" for="radio_CsZsyWnz_3">
     <code>&#91;6, 8&#93;</code>
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_CsZsyWnz" id="radio_CsZsyWnz_4" value="4">
+  <label class="form-check-label" for="radio_CsZsyWnz_4">
+    <code>&#91;11, 18&#93;</code>
+  </label>
+</div>
 
-<div id="Vh7oXrYe_message"></div>
+<div id="CsZsyWnz_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Vh7oXrYe']").on("change", function() {
-  correct = this.value == 2;
+$("input:radio[name='radio_CsZsyWnz']").on("change", function() {
+  correct = this.value == 4;
 
   if(correct) {
-     $("#Vh7oXrYe_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#CsZsyWnz_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Vh7oXrYe_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#CsZsyWnz_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1272,29 +1284,29 @@ $("input:radio[name='radio_Vh7oXrYe']").on("change", function() {
 <p>What is the length of <code>v</code>?</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='6BJAG2PB' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='0NnA3Dvm' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="6BJAG2PB" type="number" class="form-control" placeholder="Numeric answer">
-<label for="6BJAG2PB">Numeric answer</label>
+<input id="0NnA3Dvm" type="number" class="form-control" placeholder="Numeric answer">
+<label for="0NnA3Dvm">Numeric answer</label>
 
 </div>
 
-<div id='6BJAG2PB_message'></div>
+<div id='0NnA3Dvm_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#6BJAG2PB').on('change', function() {
+$('#0NnA3Dvm').on('change', function() {
   correct = Math.abs(this.value - 8) <= 0;
 
   if(correct) {
-     $('#6BJAG2PB_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#0NnA3Dvm_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#6BJAG2PB_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#0NnA3Dvm_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1303,29 +1315,29 @@ $('#6BJAG2PB').on('change', function() {
 <p>What is the <code>sum</code> of <code>v</code>?</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='yz2nOSG1' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='IE4uy0Ga' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="yz2nOSG1" type="number" class="form-control" placeholder="Numeric answer">
-<label for="yz2nOSG1">Numeric answer</label>
+<input id="IE4uy0Ga" type="number" class="form-control" placeholder="Numeric answer">
+<label for="IE4uy0Ga">Numeric answer</label>
 
 </div>
 
-<div id='yz2nOSG1_message'></div>
+<div id='IE4uy0Ga_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#yz2nOSG1').on('change', function() {
+$('#IE4uy0Ga').on('change', function() {
   correct = Math.abs(this.value - 54) <= 0;
 
   if(correct) {
-     $('#yz2nOSG1_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#IE4uy0Ga_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#yz2nOSG1_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#IE4uy0Ga_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1334,29 +1346,29 @@ $('#yz2nOSG1').on('change', function() {
 <p>What is the <code>prod</code> of <code>v</code>?</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='SBKnjrPK' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='LxzbLFxK' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="SBKnjrPK" type="number" class="form-control" placeholder="Numeric answer">
-<label for="SBKnjrPK">Numeric answer</label>
+<input id="LxzbLFxK" type="number" class="form-control" placeholder="Numeric answer">
+<label for="LxzbLFxK">Numeric answer</label>
 
 </div>
 
-<div id='SBKnjrPK_message'></div>
+<div id='LxzbLFxK_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#SBKnjrPK').on('change', function() {
+$('#LxzbLFxK').on('change', function() {
   correct = Math.abs(this.value - 65520) <= 0;
 
   if(correct) {
-     $('#SBKnjrPK_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#LxzbLFxK_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#SBKnjrPK_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#LxzbLFxK_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1365,56 +1377,56 @@ $('#SBKnjrPK').on('change', function() {
 <h6>Question</h6>
 <p>From <a href="http://www.transum.org/Maths/Exam/Online_Exercise.asp?Topic&#61;Vectors">transum.org</a>.</p>
 
-<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTc2IiBoZWlnaHQ9IjM4NCIgdmlld0JveD0iMCAwIDIzMDQgMTUzNiI+CjxkZWZzPgogIDxjbGlwUGF0aCBpZD0iY2xpcDcyMCI+CiAgICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjMwNCIgaGVpZ2h0PSIxNTM2Ii8+CiAgPC9jbGlwUGF0aD4KPC9kZWZzPgo8cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDcyMCkiIGQ9IgpNMCAxNTM2IEwyMzA0IDE1MzYgTDIzMDQgMCBMMCAwICBaCiAgIiBmaWxsPSIjZmZmZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIvPgo8ZGVmcz4KICA8Y2xpcFBhdGggaWQ9ImNsaXA3MjEiPgogICAgPHJlY3QgeD0iNDYwIiB5PSIwIiB3aWR0aD0iMTYxNCIgaGVpZ2h0PSIxNTM2Ii8+CiAgPC9jbGlwUGF0aD4KPC9kZWZzPgo8cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDcyMCkiIGQ9IgpNMTExLjIxNyAxNDIzLjA5IEwyMjU2Ljc2IDE0MjMuMDkgTDIyNTYuNzYgNDcuMjQ0MSBMMTExLjIxNyA0Ny4yNDQxICBaCiAgIiBmaWxsPSIjZmZmZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIvPgo8ZGVmcz4KICA8Y2xpcFBhdGggaWQ9ImNsaXA3MjIiPgogICAgPHJlY3QgeD0iMTExIiB5PSI0NyIgd2lkdGg9IjIxNDciIGhlaWdodD0iMTM3NyIvPgogIDwvY2xpcFBhdGg+CjwvZGVmcz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNzIyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAtNTMyLjQ0NCwxNDIzLjA5IDU0MC4zMjUsLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgLTE2MDUuMjEsLTk1OS45NDMgLTUzMi40NDQsMTQyMy4wOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNzIyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAtMzE3Ljg5MSwxNDIzLjA5IDc1NC44NzksLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgLTEzOTAuNjYsLTk1OS45NDMgLTMxNy44OTEsMTQyMy4wOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNzIyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAtMTAzLjMzNywxNDIzLjA5IDk2OS40MzMsLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgLTExNzYuMTEsLTk1OS45NDMgLTEwMy4zMzcsMTQyMy4wOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNzIyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxMTEuMjE3LDE0MjMuMDkgMTE4My45OSwtOTU5Ljk0MyAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNzIyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAtOTYxLjU1MiwtOTU5Ljk0MyAxMTEuMjE3LDE0MjMuMDkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMzI1Ljc3MSwxNDIzLjA5IDEzOTguNTQsLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgLTc0Ni45OTgsLTk1OS45NDMgMzI1Ljc3MSwxNDIzLjA5IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA3MjIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwZmY7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIDU0MC4zMjUsMTQyMy4wOSAxNjEzLjA5LC05NTkuOTQzIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA3MjIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwZmY7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIC01MzIuNDQ0LC05NTkuOTQzIDU0MC4zMjUsMTQyMy4wOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNzIyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICA3NTQuODc5LDE0MjMuMDkgMTgyNy42NSwtOTU5Ljk0MyAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNzIyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAtMzE3Ljg5MSwtOTU5Ljk0MyA3NTQuODc5LDE0MjMuMDkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgOTY5LjQzMywxNDIzLjA5IDIwNDIuMiwtOTU5Ljk0MyAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNzIyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAtMTAzLjMzNywtOTU5Ljk0MyA5NjkuNDMzLDE0MjMuMDkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTE4My45OSwxNDIzLjA5IDIyNTYuNzYsLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTExLjIxNywtOTU5Ljk0MyAxMTgzLjk5LDE0MjMuMDkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTM5OC41NCwxNDIzLjA5IDI0NzEuMzEsLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMzI1Ljc3MSwtOTU5Ljk0MyAxMzk4LjU0LDE0MjMuMDkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTYxMy4wOSwxNDIzLjA5IDI2ODUuODYsLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgNTQwLjMyNSwtOTU5Ljk0MyAxNjEzLjA5LDE0MjMuMDkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTgyNy42NSwxNDIzLjA5IDI5MDAuNDIsLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgNzU0Ljg3OSwtOTU5Ljk0MyAxODI3LjY1LDE0MjMuMDkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMjA0Mi4yLDE0MjMuMDkgMzExNC45NywtOTU5Ljk0MyAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNzIyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICA5NjkuNDMzLC05NTkuOTQzIDIwNDIuMiwxNDIzLjA5IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA3MjIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwZmY7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIDIyNTYuNzYsMTQyMy4wOSAzMzI5LjUzLC05NTkuOTQzIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA3MjIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwZmY7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIDExODMuOTksLTk1OS45NDMgMjI1Ni43NiwxNDIzLjA5IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA3MjIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwZmY7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIDExMS4yMTcsMTE4NC43OCAyMjU2Ljc2LDExODQuNzggCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTExLjIxNyw5NDYuNDgyIDIyNTYuNzYsOTQ2LjQ4MiAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNzIyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxMTEuMjE3LDcwOC4xNzggMjI1Ni43Niw3MDguMTc4IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA3MjIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwZmY7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIDExMS4yMTcsNDY5Ljg3NSAyMjU2Ljc2LDQ2OS44NzUgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTExLjIxNywyMzEuNTcyIDIyNTYuNzYsMjMxLjU3MiAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNzIyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxMTEuMjE3LC02LjczMDkyIDIyNTYuNzYsLTYuNzMwOTIgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6MjA7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICA0MzMuMDQ4LDcwOC4xNzggNjQ3LjYwMiw3MDguMTc4IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA3MjIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjIwOyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgNjEzLjA0Miw2OTAuODk4IDY0Ny42MDIsNzA4LjE3OCA2MTMuMDQyLDcyNS40NTggCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6MjA7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICA2NDcuNjAyLDcwOC4xNzggNDMzLjA0OCw3MDguMTc4IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA3MjIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjIwOyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgNTQwLjMyNSw5NDYuNDgyIDY0Ny42MDIsMTE4NC43OCAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNzIyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDoyMDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDY0OS4xNzIsMTE0Ni4xOCA2NDcuNjAyLDExODQuNzggNjE3LjY1OCwxMTYwLjM2IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA3MjIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjIwOyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgNjQ3LjYwMiwxMTg0Ljc4IDU0MC4zMjUsOTQ2LjQ4MiAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNzIyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDoyMDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDEwNzYuNzEsNzA4LjE3OCAxNzIwLjM3LDcwOC4xNzggCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6MjA7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxNjg1LjgxLDY5MC44OTggMTcyMC4zNyw3MDguMTc4IDE2ODUuODEsNzI1LjQ1OCAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNzIyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDoyMDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE3MjAuMzcsNzA4LjE3OCAxMDc2LjcxLDcwOC4xNzggCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6MjA7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICA5NjkuNDMzLDk0Ni40ODIgMTI5MS4yNiwxMTg0Ljc4IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA3MjIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjIwOyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTI3My43NywxMTUwLjMzIDEyOTEuMjYsMTE4NC43OCAxMjUzLjIxLDExNzguMTEgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDcyMikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6MjA7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxMjkxLjI2LDExODQuNzggOTY5LjQzMyw5NDYuNDgyIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA3MjIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjIwOyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTUwNS44MiwxMTg0Ljc4IDE2MTMuMDksOTQ2LjQ4MiAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNzIyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDoyMDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE1ODMuMTUsOTcwLjkwMiAxNjEzLjA5LDk0Ni40ODIgMTYxNC42Niw5ODUuMDg5IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA3MjIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjIwOyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTYxMy4wOSw5NDYuNDgyIDE1MDUuODIsMTE4NC43OCAKICAiLz4KPHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXA3MjApIiBkPSJNNTU2Ljc4NSA3ODIuOTM4IFE1NTUuNjc4IDc4OC4yMjYgNTU0LjI0NCA3OTEuMjU5IFE1NTEuOTQ4IDc5NS44OTEgNTQ4LjA1NCA3OTUuODkxIFE1NDUuMTAzIDc5NS44OTEgNTQzLjAxMyA3OTQuMDg3IFE1NDAuOTIyIDc5Mi4yODQgNTQwLjQzIDc4OS41NzkgUTUzNS4wNjEgNzk1Ljg5MSA1MjkuNDg2IDc5NS44OTEgUTUyNC41NjcgNzk1Ljg5MSA1MjEuNDUyIDc5Mi4xNjEgUTUxOC4zMzcgNzg4LjM5IDUxOC4zMzcgNzgyLjQ0NiBRNTE4LjMzNyA3NzYuNDYyIDUyMS4yODggNzcwLjcyNCBRNTI0LjI4MSA3NjQuOTg1IDUyOC45OTQgNzYxLjQxOSBRNTMzLjcwOCA3NTcuODUzIDUzOC41NDUgNzU3Ljg1MyBRNTQzLjY2OCA3NTcuODUzIDU0Ni4yOTIgNzYzLjIyMiBRNTQ2LjQ5NyA3NjEuNzQ3IDU0Ny40MzkgNzYwLjY0IFE1NDguMzgyIDc1OS41MzMgNTQ5LjgxNyA3NTkuNTMzIFE1NTAuOTI0IDc1OS41MzMgNTUxLjU3OSA3NjAuMTQ4IFE1NTIuMjM1IDc2MC43MjIgNTUyLjIzNSA3NjEuNzg4IFE1NTIuMjM1IDc2Mi4zMjEgNTUxLjY2MSA3NjQuNjU3IEw1NDguNjI4IDc3Ni4zOCBMNTQ2Ljc4NCA3ODMuOTYzIFE1NDYuMDg3IDc4Ni43NSA1NDUuODgyIDc4Ny43NzUgUTU0NS43MTggNzg4LjggNTQ1LjcxOCA3OTAuMTUyIFE1NDUuNzE4IDc5NC4wMDUgNTQ4LjIxOCA3OTQuMDA1IFE1NDkuNDQ4IDc5NC4wMDUgNTUwLjQzMiA3OTMuMjI3IFE1NTEuNDE1IDc5Mi40NDggNTUyLjE5NCA3OTAuODA4IFE1NTIuOTczIDc4OS4xNjkgNTUzLjQ2NSA3ODcuNjUyIFE1NTMuOTU3IDc4Ni4wOTQgNTU0LjYxMyA3ODMuNjM1IFE1NTQuODE4IDc4Mi42NTEgNTU0Ljk4MSA3ODIuNDA1IFE1NTUuMTg2IDc4Mi4xMTkgNTU1Ljc2IDc4Mi4xMTkgUTU1Ni43ODUgNzgyLjExOSA1NTYuNzg1IDc4Mi45MzggTTU0NS4yNjcgNzY3LjA3NSBRNTQ1LjI2NyA3NjYuNzA3IDU0NC45OCA3NjUuNjgyIFE1NDQuNjkzIDc2NC42NTcgNTQ0LjAzNyA3NjMuMjIyIFE1NDMuMzgyIDc2MS43ODggNTQxLjk0NyA3NjAuNzYzIFE1NDAuNTUzIDc1OS42OTcgNTM4LjY2OCA3NTkuNjk3IFE1MzYuMTI2IDc1OS42OTcgNTMzLjQ2MiA3NjEuODcgUTUzMC44MzkgNzY0LjA0MiA1MjguOTEyIDc2Ny43MzEgUTUyNy40MzcgNzcwLjY4MyA1MjUuODM4IDc3Ni44NzIgUTUyNC4yODEgNzgzLjA2MSA1MjQuMjgxIDc4Ni4xMzUgUTUyNC4yODEgNzg4LjAyMSA1MjQuNjkgNzg5LjcwMiBRNTI1LjE0MSA3OTEuMzQxIDUyNi40MTIgNzkyLjY5NCBRNTI3LjY4MyA3OTQuMDA1IDUyOS42NSA3OTQuMDA1IFE1MzQuNDQ2IDc5NC4wMDUgNTM5LjE2IDc4OC4wNjIgUTU0MC4wNjEgNzg3LjAzNyA1NDAuMjY2IDc4Ni42MjcgUTU0MC41MTIgNzg2LjE3NiA1NDAuODQgNzg0Ljk0NyBMNTQ1LjAyMSA3NjguNTEgUTU0NS4yNjcgNzY3LjI4IDU0NS4yNjcgNzY3LjA3NSBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDcyMCkiIGQ9Ik02MDcuMDQ0IDk1MS4yOSBRNjA3LjA0NCA5NTcuMTkyIDYwNC4wNTEgOTYyLjk3MiBRNjAxLjEgOTY4LjcxIDU5Ni4zNDUgOTcyLjMxNyBRNTkxLjYzMiA5NzUuOTI0IDU4Ni43OTUgOTc1LjkyNCBRNTgyLjA4MSA5NzUuOTI0IDU3OS4wODkgOTcyLjMxNyBRNTc2LjEzOCA5NjguNjY5IDU3Ni4xMzggOTYyLjcyNiBRNTc2LjEzOCA5NjAuNjM1IDU3Ni4zODQgOTU5LjE2IFE1NzYuNjI5IDk1Ny42ODQgNTc3LjQ5IDk1NC4yNDEgTDU4NC4zNzYgOTI2Ljg2IFE1ODUuNTY1IDkyMS43MzcgNTg1LjU2NSA5MjEuNjk2IFE1ODUuNTY1IDkyMS4yMDQgNTg1LjM2IDkyMC45NTggUTU4NS4xOTYgOTIwLjY3MSA1ODQuMjEyIDkyMC40NjYgUTU4My4yMjkgOTIwLjI2MSA1ODEuMzQzIDkyMC4yNjEgUTU4MC41NjQgOTIwLjI2MSA1ODAuMTk2IDkyMC4yMiBRNTc5Ljg2OCA5MjAuMTc5IDU3OS41ODEgOTE5Ljk3NCBRNTc5LjMzNSA5MTkuNzI4IDU3OS4zMzUgOTE5LjIzNiBRNTc5LjMzNSA5MTguNTM5IDU3OS42MjIgOTE4LjE3IFE1NzkuOTUgOTE3Ljc2MSA1ODAuMTk2IDkxNy42NzkgUTU4MC40NDEgOTE3LjU5NyA1ODAuOTMzIDkxNy41NTYgUTU4MS42MyA5MTcuNTE1IDU4My45NjcgOTE3LjMxIFE1ODYuMzAzIDkxNy4wNjQgNTg4LjMxMSA5MTYuOSBRNTkwLjMyIDkxNi43MzYgNTkxLjE4MSA5MTYuNzM2IFE1OTEuNjczIDkxNi43MzYgNTkxLjkxOCA5MTYuOTgyIFE1OTIuMjA1IDkxNy4xODcgNTkyLjIwNSA5MTcuNDMzIEw1OTIuMjQ2IDkxNy42MzggTDU4Ni4wNTcgOTQyLjkyOCBRNTkwLjkzNSA5MzcuODg2IDU5NS44OTQgOTM3Ljg4NiBRNjAwLjg1NCA5MzcuODg2IDYwMy45MjggOTQxLjY5OCBRNjA3LjA0NCA5NDUuNTEgNjA3LjA0NCA5NTEuMjkgTTYwMC45NzcgOTQ3LjYwMSBRNjAwLjk3NyA5NDMuNzA3IDU5OS41MDEgOTQxLjczOSBRNTk4LjA2NyA5MzkuNzMxIDU5NS42ODkgOTM5LjczMSBRNTkzLjY4MSA5MzkuNzMxIDU5MS4wNTggOTQxLjI0NyBRNTg4LjQzNCA5NDIuNzY0IDU4NS42NDcgOTQ2LjQ1MyBRNTg1LjExNCA5NDcuMTUgNTg0LjkwOSA5NDcuNTYgUTU4NC43NDUgOTQ3Ljk3IDU4NC4zNzYgOTQ5LjM2MyBMNTgyLjUzMiA5NTcuMTEgUTU4MS4xNzkgOTYyLjM5OCA1ODEuMTc5IDk2NS41OTUgUTU4MS4xNzkgOTY5Ljk0IDU4Mi43NzggOTcxLjk4OSBRNTg0LjM3NiA5NzQuMDM5IDU4Ni43OTUgOTc0LjAzOSBRNTg5LjMzNiA5NzQuMDM5IDU5MiA5NzEuNzg0IFE1OTQuNjY1IDk2OS41MyA1OTYuNzE0IDk2NS40MzEgUTU5Ny45ODUgOTYyLjcyNiA1OTkuNDYgOTU2LjkwNSBRNjAwLjk3NyA5NTEuMDQ0IDYwMC45NzcgOTQ3LjYwMSBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDcyMCkiIGQ9Ik0xNDEyLjg5IDc4NS4yMzQgUTE0MTMuMjIgNzg1LjYwMyAxNDEzLjIyIDc4NS45NzIgUTE0MTMuMjIgNzg2LjM0IDE0MTIuNCA3ODcuNDA2IFExNDExLjYyIDc4OC40NzIgMTQwOS45NCA3ODkuOTA2IFExNDA4LjI2IDc5MS4zNDEgMTQwNi4wOSA3OTIuNjk0IFExNDAzLjkyIDc5NC4wNDYgMTQwMC43MiA3OTQuOTQ4IFExMzk3LjUyIDc5NS44OTEgMTM5NC4xNiA3OTUuODkxIFExMzg3Ljg5IDc5NS44OTEgMTM4NC4yIDc5MS43NTEgUTEzODAuNTUgNzg3LjYxMSAxMzgwLjU1IDc4MS42NjggUTEzODAuNTUgNzc1Ljg4OCAxMzgzLjc5IDc3MC4zNTUgUTEzODcuMDMgNzY0Ljc4IDEzOTIuMjggNzYxLjMzNyBRMTM5Ny41MiA3NTcuODUzIDE0MDMuMDYgNzU3Ljg1MyBRMTQwNy40NCA3NTcuODUzIDE0MTAuMTkgNzU5LjkwMiBRMTQxMi45MyA3NjEuOTUyIDE0MTIuOTMgNzY1LjA2NyBRMTQxMi45MyA3NjcuNDg1IDE0MTEuNTQgNzY4Ljk2MSBRMTQxMC4xNSA3NzAuNDM3IDE0MDguMjYgNzcwLjQzNyBRMTQwNi45NSA3NzAuNDM3IDE0MDYuMDUgNzY5LjY5OSBRMTQwNS4xNSA3NjguOTIgMTQwNS4xNSA3NjcuNDg1IFExNDA1LjE1IDc2NS42NDEgMTQwNi42NiA3NjQuMjA2IFExNDA3LjI0IDc2My42MzIgMTQwNy44OSA3NjMuMzg2IFExNDA4LjU5IDc2My4wOTkgMTQwOSA3NjMuMDk5IFExNDA5LjQxIDc2My4wNTkgMTQxMC4zNSA3NjMuMDU5IFExNDA5LjQ5IDc2MS40NiAxNDA3LjQ0IDc2MC41OTkgUTE0MDUuNDMgNzU5LjY5NyAxNDAzLjE0IDc1OS42OTcgUTEzOTkuNzQgNzU5LjY5NyAxMzk2LjUgNzYyLjA3NSBRMTM5My4yNiA3NjQuNDExIDEzOTEuMjkgNzY4LjEgUTEzODkuMzIgNzcxLjcwNyAxMzg4LjA1IDc3Ni44MzEgUTEzODYuNzggNzgxLjkxNCAxMzg2Ljc4IDc4NC44NjUgUTEzODYuNzggNzg4LjkyMyAxMzg4LjY3IDc5MS40NjQgUTEzOTAuNTUgNzk0LjAwNSAxMzk0LjMyIDc5NC4wMDUgUTEzOTUuMDYgNzk0LjAwNSAxMzk1Ljg0IDc5My45NjQgUTEzOTYuNjYgNzkzLjkyMyAxMzk4LjcxIDc5My40NzMgUTE0MDAuOCA3OTMuMDIyIDE0MDIuNjUgNzkyLjI0MyBRMTQwNC40OSA3OTEuNDY0IDE0MDYuODMgNzg5Ljc4NCBRMTQwOS4yIDc4OC4wNjIgMTQxMS4wOSA3ODUuNzI2IFExNDExLjc1IDc4NC44NjUgMTQxMi4yIDc4NC44NjUgUTE0MTIuNTYgNzg0Ljg2NSAxNDEyLjg5IDc4NS4yMzQgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXA3MjApIiBkPSJNMTE0OC43MSAxMTA1LjU4IEwxMTM2LjYyIDExNTQuMTEgUTExMzYuMTMgMTE1Ni4yOSAxMTM2LjEzIDExNTguMTMgUTExMzYuMTMgMTE2MS45OCAxMTM4LjYzIDExNjEuOTggUTExMzkuODYgMTE2MS45OCAxMTQwLjg0IDExNjEuMiBRMTE0MS44MiAxMTYwLjQzIDExNDIuNiAxMTU4Ljc5IFExMTQzLjM4IDExNTcuMTUgMTE0My44NyAxMTU1LjYzIFExMTQ0LjM3IDExNTQuMDcgMTE0NS4wMiAxMTUxLjYxIFExMTQ1LjIzIDExNTAuNjMgMTE0NS4zOSAxMTUwLjM4IFExMTQ1LjYgMTE1MC4xIDExNDYuMTcgMTE1MC4xIFExMTQ3LjE5IDExNTAuMSAxMTQ3LjE5IDExNTAuOTIgUTExNDYuMDkgMTE1Ni4yIDExNDQuNjUgMTE1OS4yNCBRMTE0Mi4zNiAxMTYzLjg3IDExMzguNDYgMTE2My44NyBRMTEzNS41MSAxMTYzLjg3IDExMzMuNDIgMTE2Mi4wNiBRMTEzMS4zMyAxMTYwLjI2IDExMzAuODQgMTE1Ny41NiBRMTEyNS40NyAxMTYzLjg3IDExMTkuOSAxMTYzLjg3IFExMTE0Ljk4IDExNjMuODcgMTExMS44NiAxMTYwLjE0IFExMTA4Ljc1IDExNTYuMzcgMTEwOC43NSAxMTUwLjQyIFExMTA4Ljc1IDExNDQuNDQgMTExMS43IDExMzguNyBRMTExNC42OSAxMTMyLjk2IDExMTkuNCAxMTI5LjQgUTExMjQuMTIgMTEyNS44MyAxMTI4Ljk1IDExMjUuODMgUTExMzQuMDggMTEyNS44MyAxMTM2LjcgMTEzMS4yIEwxMTQxLjc0IDExMTEuMjggTDExNDEuOTkgMTEwOS42NCBRMTE0MS45OSAxMTA5LjE1IDExNDEuNzggMTEwOC45IFExMTQxLjYyIDExMDguNjEgMTE0MC42NCAxMTA4LjQxIFExMTM5LjY5IDExMDguMiAxMTM3LjgxIDExMDguMiBRMTEzNy4wMyAxMTA4LjIgMTEzNi42NiAxMTA4LjE2IFExMTM2LjMzIDExMDguMTIgMTEzNi4wNCAxMTA3LjkyIFExMTM1Ljc2IDExMDcuNjcgMTEzNS43NiAxMTA3LjE4IFExMTM1Ljc2IDExMDUuNzUgMTEzNi45NSAxMTA1LjU4IFExMTQ0LjgyIDExMDQuNjggMTE0Ny42IDExMDQuNjggUTExNDguMSAxMTA0LjY4IDExNDguMzggMTEwNC45MyBRMTE0OC42NyAxMTA1LjEzIDExNDguNjcgMTEwNS4zOCBMMTE0OC43MSAxMTA1LjU4IE0xMTM1LjY4IDExMzUuMDUgUTExMzUuNjggMTEzNC42OCAxMTM1LjM5IDExMzMuNjYgUTExMzUuMSAxMTMyLjYzIDExMzQuNDUgMTEzMS4yIFExMTMzLjc5IDExMjkuNzcgMTEzMi4zNiAxMTI4Ljc0IFExMTMwLjk2IDExMjcuNjcgMTEyOS4wOCAxMTI3LjY3IFExMTI2LjU0IDExMjcuNjcgMTEyMy44NyAxMTI5Ljg1IFExMTIxLjI1IDExMzIuMDIgMTExOS4zMiAxMTM1LjcxIFExMTE3Ljg1IDExMzguNjYgMTExNi4yNSAxMTQ0Ljg1IFExMTE0LjY5IDExNTEuMDQgMTExNC42OSAxMTU0LjExIFExMTE0LjY5IDExNTYgMTExNS4xIDExNTcuNjggUTExMTUuNTUgMTE1OS4zMiAxMTE2LjgyIDExNjAuNjcgUTExMTguMDkgMTE2MS45OCAxMTIwLjA2IDExNjEuOTggUTExMjQuODUgMTE2MS45OCAxMTI5LjU3IDExNTYuMDQgUTExMzAuNDcgMTE1NS4wMSAxMTMwLjY4IDExNTQuNiBRMTEzMC45MiAxMTU0LjE1IDExMzEuMjUgMTE1Mi45MiBMMTEzNS40MyAxMTM2LjQ5IFExMTM1LjY4IDExMzUuMjYgMTEzNS42OCAxMTM1LjA1IFoiIGZpbGw9IiMwMDAwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbC1vcGFjaXR5PSIxIiAvPjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwNzIwKSIgZD0iTTE2MjUuNjYgMTE0Mi42OSBRMTYyNS45OCAxMTQzLjA2IDE2MjUuOTggMTE0My40MyBRMTYyNS45OCAxMTQzLjggMTYyNS4xNiAxMTQ0Ljg2IFExNjI0LjM5IDExNDUuOTMgMTYyMi43IDExNDcuMzYgUTE2MjEuMDIgMTE0OC44IDE2MTguODUgMTE1MC4xNSBRMTYxNi42OCAxMTUxLjUgMTYxMy40OCAxMTUyLjQgUTE2MTAuMjkgMTE1My4zNSAxNjA2LjkyIDExNTMuMzUgUTE2MDAuOSAxMTUzLjM1IDE1OTcuMjkgMTE0OS4wNCBRMTU5My43MyAxMTQ0Ljc0IDE1OTMuNzMgMTEzOC4xNCBRMTU5My43MyAxMTMzLjkyIDE1OTUuMTIgMTEzMC4xOSBRMTU5Ni41MSAxMTI2LjQyIDE1OTguNzcgMTEyMy43NSBRMTYwMS4wNiAxMTIxLjA5IDE2MDMuOTMgMTExOS4xNiBRMTYwNi44NCAxMTE3LjE5IDE2MDkuODggMTExNi4yNSBRMTYxMi45MSAxMTE1LjMxIDE2MTUuNzQgMTExNS4zMSBRMTYxOS44OCAxMTE1LjMxIDE2MjIuMyAxMTE3LjQgUTE2MjQuNzEgMTExOS40OSAxNjI0LjcxIDExMjIuNDQgUTE2MjQuNzEgMTEyMy4xNCAxNjI0LjUxIDExMjQgUTE2MjQuMzQgMTEyNC44NiAxNjIzLjc3IDExMjYuMjEgUTE2MjMuMjQgMTEyNy41NiAxNjIxLjg0IDExMjguOTIgUTE2MjAuNDUgMTEzMC4yMyAxNjE4LjQgMTEzMS4wOSBRMTYxMy44NSAxMTMzLjAxIDE2MDUuNTcgMTEzMy4wMSBMMTYwMS4xIDExMzMuMDEgUTE1OTkuNzkgMTEzOC4zIDE1OTkuNzkgMTE0MS43NSBRMTU5OS43OSAxMTQzLjEgMTYwMC4wNCAxMTQ0LjQ5IFExNjAwLjI4IDExNDUuODQgMTYwMC45NCAxMTQ3LjU3IFExNjAxLjY0IDExNDkuMjkgMTYwMy4xOSAxMTUwLjM5IFExNjA0Ljc5IDExNTEuNDYgMTYwNy4wOSAxMTUxLjQ2IFExNjA3LjgzIDExNTEuNDYgMTYwOC42IDExNTEuNDIgUTE2MDkuNDIgMTE1MS4zOCAxNjExLjQ3IDExNTAuOTMgUTE2MTMuNTYgMTE1MC40OCAxNjE1LjQxIDExNDkuNyBRMTYxNy4yNSAxMTQ4LjkyIDE2MTkuNTkgMTE0Ny4yNCBRMTYyMS45NyAxMTQ1LjUyIDE2MjMuODUgMTE0My4xOCBRMTYyNC41MSAxMTQyLjMyIDE2MjQuOTYgMTE0Mi4zMiBRMTYyNS4zMyAxMTQyLjMyIDE2MjUuNjYgMTE0Mi42OSBNMTYyMS45MyAxMTIyLjQ0IFExNjIxLjkzIDExMjAuMTkgMTYyMC4yNSAxMTE4LjY3IFExNjE4LjYxIDExMTcuMTUgMTYxNS43NCAxMTE3LjE1IFExNjE0LjgzIDExMTcuMTUgMTYxMy43MyAxMTE3LjM2IFExNjEyLjYyIDExMTcuNTYgMTYxMC43OCAxMTE4LjQyIFExNjA4Ljk3IDExMTkuMjggMTYwNy4zNyAxMTIwLjcyIFExNjA1Ljc4IDExMjIuMTEgMTYwNC4xOCAxMTI0Ljg2IFExNjAyLjU4IDExMjcuNTYgMTYwMS42NCAxMTMxLjE3IEwxNjA1LjA4IDExMzEuMTcgUTE2MDYuMjcgMTEzMS4xNyAxNjA3LjEzIDExMzEuMTcgUTE2MDcuOTkgMTEzMS4xMyAxNjA5Ljg4IDExMzAuOTcgUTE2MTEuOCAxMTMwLjggMTYxMy4yIDExMzAuNTEgUTE2MTQuNTkgMTEzMC4xOSAxNjE2LjM1IDExMjkuNTMgUTE2MTguMTEgMTEyOC44OCAxNjE5LjIyIDExMjguMDEgUTE2MjAuMzcgMTEyNy4xMSAxNjIxLjE1IDExMjUuNjggUTE2MjEuOTMgMTEyNC4yNCAxNjIxLjkzIDExMjIuNDQgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PC9zdmc+Cg=="  />
+<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTc2IiBoZWlnaHQ9IjM4NCIgdmlld0JveD0iMCAwIDIzMDQgMTUzNiI+CjxkZWZzPgogIDxjbGlwUGF0aCBpZD0iY2xpcDYzMCI+CiAgICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjMwNCIgaGVpZ2h0PSIxNTM2Ii8+CiAgPC9jbGlwUGF0aD4KPC9kZWZzPgo8cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDYzMCkiIGQ9IgpNMCAxNTM2IEwyMzA0IDE1MzYgTDIzMDQgMCBMMCAwICBaCiAgIiBmaWxsPSIjZmZmZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIvPgo8ZGVmcz4KICA8Y2xpcFBhdGggaWQ9ImNsaXA2MzEiPgogICAgPHJlY3QgeD0iNDYwIiB5PSIwIiB3aWR0aD0iMTYxNCIgaGVpZ2h0PSIxNTM2Ii8+CiAgPC9jbGlwUGF0aD4KPC9kZWZzPgo8cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDYzMCkiIGQ9IgpNMTExLjIxNyAxNDIzLjA5IEwyMjU2Ljc2IDE0MjMuMDkgTDIyNTYuNzYgNDcuMjQ0MSBMMTExLjIxNyA0Ny4yNDQxICBaCiAgIiBmaWxsPSIjZmZmZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIvPgo8ZGVmcz4KICA8Y2xpcFBhdGggaWQ9ImNsaXA2MzIiPgogICAgPHJlY3QgeD0iMTExIiB5PSI0NyIgd2lkdGg9IjIxNDciIGhlaWdodD0iMTM3NyIvPgogIDwvY2xpcFBhdGg+CjwvZGVmcz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNjMyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAtNTMyLjQ0NCwxNDIzLjA5IDU0MC4zMjUsLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgLTE2MDUuMjEsLTk1OS45NDMgLTUzMi40NDQsMTQyMy4wOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNjMyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAtMzE3Ljg5MSwxNDIzLjA5IDc1NC44NzksLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgLTEzOTAuNjYsLTk1OS45NDMgLTMxNy44OTEsMTQyMy4wOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNjMyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAtMTAzLjMzNywxNDIzLjA5IDk2OS40MzMsLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgLTExNzYuMTEsLTk1OS45NDMgLTEwMy4zMzcsMTQyMy4wOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNjMyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxMTEuMjE3LDE0MjMuMDkgMTE4My45OSwtOTU5Ljk0MyAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNjMyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAtOTYxLjU1MiwtOTU5Ljk0MyAxMTEuMjE3LDE0MjMuMDkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMzI1Ljc3MSwxNDIzLjA5IDEzOTguNTQsLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgLTc0Ni45OTgsLTk1OS45NDMgMzI1Ljc3MSwxNDIzLjA5IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA2MzIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwZmY7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIDU0MC4zMjUsMTQyMy4wOSAxNjEzLjA5LC05NTkuOTQzIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA2MzIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwZmY7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIC01MzIuNDQ0LC05NTkuOTQzIDU0MC4zMjUsMTQyMy4wOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNjMyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICA3NTQuODc5LDE0MjMuMDkgMTgyNy42NSwtOTU5Ljk0MyAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNjMyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAtMzE3Ljg5MSwtOTU5Ljk0MyA3NTQuODc5LDE0MjMuMDkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgOTY5LjQzMywxNDIzLjA5IDIwNDIuMiwtOTU5Ljk0MyAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNjMyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAtMTAzLjMzNywtOTU5Ljk0MyA5NjkuNDMzLDE0MjMuMDkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTE4My45OSwxNDIzLjA5IDIyNTYuNzYsLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTExLjIxNywtOTU5Ljk0MyAxMTgzLjk5LDE0MjMuMDkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTM5OC41NCwxNDIzLjA5IDI0NzEuMzEsLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMzI1Ljc3MSwtOTU5Ljk0MyAxMzk4LjU0LDE0MjMuMDkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTYxMy4wOSwxNDIzLjA5IDI2ODUuODYsLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgNTQwLjMyNSwtOTU5Ljk0MyAxNjEzLjA5LDE0MjMuMDkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTgyNy42NSwxNDIzLjA5IDI5MDAuNDIsLTk1OS45NDMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgNzU0Ljg3OSwtOTU5Ljk0MyAxODI3LjY1LDE0MjMuMDkgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMjA0Mi4yLDE0MjMuMDkgMzExNC45NywtOTU5Ljk0MyAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNjMyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICA5NjkuNDMzLC05NTkuOTQzIDIwNDIuMiwxNDIzLjA5IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA2MzIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwZmY7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIDIyNTYuNzYsMTQyMy4wOSAzMzI5LjUzLC05NTkuOTQzIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA2MzIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwZmY7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIDExODMuOTksLTk1OS45NDMgMjI1Ni43NiwxNDIzLjA5IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA2MzIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwZmY7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIDExMS4yMTcsMTE4NC43OCAyMjU2Ljc2LDExODQuNzggCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTExLjIxNyw5NDYuNDgyIDIyNTYuNzYsOTQ2LjQ4MiAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNjMyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxMTEuMjE3LDcwOC4xNzggMjI1Ni43Niw3MDguMTc4IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA2MzIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwZmY7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjAuNTsgZmlsbDpub25lIiBwb2ludHM9IgogIDExMS4yMTcsNDY5Ljg3NSAyMjU2Ljc2LDQ2OS44NzUgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDBmZjsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MC41OyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTExLjIxNywyMzEuNTcyIDIyNTYuNzYsMjMxLjU3MiAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNjMyKSIgc3R5bGU9InN0cm9rZTojMDAwMGZmOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eTowLjU7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxMTEuMjE3LC02LjczMDkyIDIyNTYuNzYsLTYuNzMwOTIgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6MjA7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICA0MzMuMDQ4LDcwOC4xNzggNjQ3LjYwMiw3MDguMTc4IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA2MzIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjIwOyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgNjEzLjA0Miw2OTAuODk4IDY0Ny42MDIsNzA4LjE3OCA2MTMuMDQyLDcyNS40NTggCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6MjA7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICA2NDcuNjAyLDcwOC4xNzggNDMzLjA0OCw3MDguMTc4IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA2MzIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjIwOyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgNTQwLjMyNSw5NDYuNDgyIDY0Ny42MDIsMTE4NC43OCAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNjMyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDoyMDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDY0OS4xNzIsMTE0Ni4xOCA2NDcuNjAyLDExODQuNzggNjE3LjY1OCwxMTYwLjM2IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA2MzIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjIwOyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgNjQ3LjYwMiwxMTg0Ljc4IDU0MC4zMjUsOTQ2LjQ4MiAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNjMyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDoyMDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDEwNzYuNzEsNzA4LjE3OCAxNzIwLjM3LDcwOC4xNzggCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6MjA7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxNjg1LjgxLDY5MC44OTggMTcyMC4zNyw3MDguMTc4IDE2ODUuODEsNzI1LjQ1OCAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNjMyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDoyMDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE3MjAuMzcsNzA4LjE3OCAxMDc2LjcxLDcwOC4xNzggCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6MjA7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICA5NjkuNDMzLDk0Ni40ODIgMTI5MS4yNiwxMTg0Ljc4IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA2MzIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjIwOyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTI3My43NywxMTUwLjMzIDEyOTEuMjYsMTE4NC43OCAxMjUzLjIxLDExNzguMTEgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDYzMikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6MjA7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxMjkxLjI2LDExODQuNzggOTY5LjQzMyw5NDYuNDgyIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA2MzIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjIwOyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTUwNS44MiwxMTg0Ljc4IDE2MTMuMDksOTQ2LjQ4MiAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwNjMyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDoyMDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE1ODMuMTUsOTcwLjkwMiAxNjEzLjA5LDk0Ni40ODIgMTYxNC42Niw5ODUuMDg5IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXA2MzIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjIwOyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTYxMy4wOSw5NDYuNDgyIDE1MDUuODIsMTE4NC43OCAKICAiLz4KPHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXA2MzApIiBkPSJNNTU2Ljc4NSA3ODIuOTM4IFE1NTUuNjc4IDc4OC4yMjYgNTU0LjI0NCA3OTEuMjU5IFE1NTEuOTQ4IDc5NS44OTEgNTQ4LjA1NCA3OTUuODkxIFE1NDUuMTAzIDc5NS44OTEgNTQzLjAxMyA3OTQuMDg3IFE1NDAuOTIyIDc5Mi4yODQgNTQwLjQzIDc4OS41NzkgUTUzNS4wNjEgNzk1Ljg5MSA1MjkuNDg2IDc5NS44OTEgUTUyNC41NjcgNzk1Ljg5MSA1MjEuNDUyIDc5Mi4xNjEgUTUxOC4zMzcgNzg4LjM5IDUxOC4zMzcgNzgyLjQ0NiBRNTE4LjMzNyA3NzYuNDYyIDUyMS4yODggNzcwLjcyNCBRNTI0LjI4MSA3NjQuOTg1IDUyOC45OTQgNzYxLjQxOSBRNTMzLjcwOCA3NTcuODUzIDUzOC41NDUgNzU3Ljg1MyBRNTQzLjY2OCA3NTcuODUzIDU0Ni4yOTIgNzYzLjIyMiBRNTQ2LjQ5NyA3NjEuNzQ3IDU0Ny40MzkgNzYwLjY0IFE1NDguMzgyIDc1OS41MzMgNTQ5LjgxNyA3NTkuNTMzIFE1NTAuOTI0IDc1OS41MzMgNTUxLjU3OSA3NjAuMTQ4IFE1NTIuMjM1IDc2MC43MjIgNTUyLjIzNSA3NjEuNzg4IFE1NTIuMjM1IDc2Mi4zMjEgNTUxLjY2MSA3NjQuNjU3IEw1NDguNjI4IDc3Ni4zOCBMNTQ2Ljc4NCA3ODMuOTYzIFE1NDYuMDg3IDc4Ni43NSA1NDUuODgyIDc4Ny43NzUgUTU0NS43MTggNzg4LjggNTQ1LjcxOCA3OTAuMTUyIFE1NDUuNzE4IDc5NC4wMDUgNTQ4LjIxOCA3OTQuMDA1IFE1NDkuNDQ4IDc5NC4wMDUgNTUwLjQzMiA3OTMuMjI3IFE1NTEuNDE1IDc5Mi40NDggNTUyLjE5NCA3OTAuODA4IFE1NTIuOTczIDc4OS4xNjkgNTUzLjQ2NSA3ODcuNjUyIFE1NTMuOTU3IDc4Ni4wOTQgNTU0LjYxMyA3ODMuNjM1IFE1NTQuODE4IDc4Mi42NTEgNTU0Ljk4MSA3ODIuNDA1IFE1NTUuMTg2IDc4Mi4xMTkgNTU1Ljc2IDc4Mi4xMTkgUTU1Ni43ODUgNzgyLjExOSA1NTYuNzg1IDc4Mi45MzggTTU0NS4yNjcgNzY3LjA3NSBRNTQ1LjI2NyA3NjYuNzA3IDU0NC45OCA3NjUuNjgyIFE1NDQuNjkzIDc2NC42NTcgNTQ0LjAzNyA3NjMuMjIyIFE1NDMuMzgyIDc2MS43ODggNTQxLjk0NyA3NjAuNzYzIFE1NDAuNTUzIDc1OS42OTcgNTM4LjY2OCA3NTkuNjk3IFE1MzYuMTI2IDc1OS42OTcgNTMzLjQ2MiA3NjEuODcgUTUzMC44MzkgNzY0LjA0MiA1MjguOTEyIDc2Ny43MzEgUTUyNy40MzcgNzcwLjY4MyA1MjUuODM4IDc3Ni44NzIgUTUyNC4yODEgNzgzLjA2MSA1MjQuMjgxIDc4Ni4xMzUgUTUyNC4yODEgNzg4LjAyMSA1MjQuNjkgNzg5LjcwMiBRNTI1LjE0MSA3OTEuMzQxIDUyNi40MTIgNzkyLjY5NCBRNTI3LjY4MyA3OTQuMDA1IDUyOS42NSA3OTQuMDA1IFE1MzQuNDQ2IDc5NC4wMDUgNTM5LjE2IDc4OC4wNjIgUTU0MC4wNjEgNzg3LjAzNyA1NDAuMjY2IDc4Ni42MjcgUTU0MC41MTIgNzg2LjE3NiA1NDAuODQgNzg0Ljk0NyBMNTQ1LjAyMSA3NjguNTEgUTU0NS4yNjcgNzY3LjI4IDU0NS4yNjcgNzY3LjA3NSBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDYzMCkiIGQ9Ik02MDcuMDQ0IDk1MS4yOSBRNjA3LjA0NCA5NTcuMTkyIDYwNC4wNTEgOTYyLjk3MiBRNjAxLjEgOTY4LjcxIDU5Ni4zNDUgOTcyLjMxNyBRNTkxLjYzMiA5NzUuOTI0IDU4Ni43OTUgOTc1LjkyNCBRNTgyLjA4MSA5NzUuOTI0IDU3OS4wODkgOTcyLjMxNyBRNTc2LjEzOCA5NjguNjY5IDU3Ni4xMzggOTYyLjcyNiBRNTc2LjEzOCA5NjAuNjM1IDU3Ni4zODQgOTU5LjE2IFE1NzYuNjI5IDk1Ny42ODQgNTc3LjQ5IDk1NC4yNDEgTDU4NC4zNzYgOTI2Ljg2IFE1ODUuNTY1IDkyMS43MzcgNTg1LjU2NSA5MjEuNjk2IFE1ODUuNTY1IDkyMS4yMDQgNTg1LjM2IDkyMC45NTggUTU4NS4xOTYgOTIwLjY3MSA1ODQuMjEyIDkyMC40NjYgUTU4My4yMjkgOTIwLjI2MSA1ODEuMzQzIDkyMC4yNjEgUTU4MC41NjQgOTIwLjI2MSA1ODAuMTk2IDkyMC4yMiBRNTc5Ljg2OCA5MjAuMTc5IDU3OS41ODEgOTE5Ljk3NCBRNTc5LjMzNSA5MTkuNzI4IDU3OS4zMzUgOTE5LjIzNiBRNTc5LjMzNSA5MTguNTM5IDU3OS42MjIgOTE4LjE3IFE1NzkuOTUgOTE3Ljc2MSA1ODAuMTk2IDkxNy42NzkgUTU4MC40NDEgOTE3LjU5NyA1ODAuOTMzIDkxNy41NTYgUTU4MS42MyA5MTcuNTE1IDU4My45NjcgOTE3LjMxIFE1ODYuMzAzIDkxNy4wNjQgNTg4LjMxMSA5MTYuOSBRNTkwLjMyIDkxNi43MzYgNTkxLjE4MSA5MTYuNzM2IFE1OTEuNjczIDkxNi43MzYgNTkxLjkxOCA5MTYuOTgyIFE1OTIuMjA1IDkxNy4xODcgNTkyLjIwNSA5MTcuNDMzIEw1OTIuMjQ2IDkxNy42MzggTDU4Ni4wNTcgOTQyLjkyOCBRNTkwLjkzNSA5MzcuODg2IDU5NS44OTQgOTM3Ljg4NiBRNjAwLjg1NCA5MzcuODg2IDYwMy45MjggOTQxLjY5OCBRNjA3LjA0NCA5NDUuNTEgNjA3LjA0NCA5NTEuMjkgTTYwMC45NzcgOTQ3LjYwMSBRNjAwLjk3NyA5NDMuNzA3IDU5OS41MDEgOTQxLjczOSBRNTk4LjA2NyA5MzkuNzMxIDU5NS42ODkgOTM5LjczMSBRNTkzLjY4MSA5MzkuNzMxIDU5MS4wNTggOTQxLjI0NyBRNTg4LjQzNCA5NDIuNzY0IDU4NS42NDcgOTQ2LjQ1MyBRNTg1LjExNCA5NDcuMTUgNTg0LjkwOSA5NDcuNTYgUTU4NC43NDUgOTQ3Ljk3IDU4NC4zNzYgOTQ5LjM2MyBMNTgyLjUzMiA5NTcuMTEgUTU4MS4xNzkgOTYyLjM5OCA1ODEuMTc5IDk2NS41OTUgUTU4MS4xNzkgOTY5Ljk0IDU4Mi43NzggOTcxLjk4OSBRNTg0LjM3NiA5NzQuMDM5IDU4Ni43OTUgOTc0LjAzOSBRNTg5LjMzNiA5NzQuMDM5IDU5MiA5NzEuNzg0IFE1OTQuNjY1IDk2OS41MyA1OTYuNzE0IDk2NS40MzEgUTU5Ny45ODUgOTYyLjcyNiA1OTkuNDYgOTU2LjkwNSBRNjAwLjk3NyA5NTEuMDQ0IDYwMC45NzcgOTQ3LjYwMSBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDYzMCkiIGQ9Ik0xNDEyLjg5IDc4NS4yMzQgUTE0MTMuMjIgNzg1LjYwMyAxNDEzLjIyIDc4NS45NzIgUTE0MTMuMjIgNzg2LjM0IDE0MTIuNCA3ODcuNDA2IFExNDExLjYyIDc4OC40NzIgMTQwOS45NCA3ODkuOTA2IFExNDA4LjI2IDc5MS4zNDEgMTQwNi4wOSA3OTIuNjk0IFExNDAzLjkyIDc5NC4wNDYgMTQwMC43MiA3OTQuOTQ4IFExMzk3LjUyIDc5NS44OTEgMTM5NC4xNiA3OTUuODkxIFExMzg3Ljg5IDc5NS44OTEgMTM4NC4yIDc5MS43NTEgUTEzODAuNTUgNzg3LjYxMSAxMzgwLjU1IDc4MS42NjggUTEzODAuNTUgNzc1Ljg4OCAxMzgzLjc5IDc3MC4zNTUgUTEzODcuMDMgNzY0Ljc4IDEzOTIuMjggNzYxLjMzNyBRMTM5Ny41MiA3NTcuODUzIDE0MDMuMDYgNzU3Ljg1MyBRMTQwNy40NCA3NTcuODUzIDE0MTAuMTkgNzU5LjkwMiBRMTQxMi45MyA3NjEuOTUyIDE0MTIuOTMgNzY1LjA2NyBRMTQxMi45MyA3NjcuNDg1IDE0MTEuNTQgNzY4Ljk2MSBRMTQxMC4xNSA3NzAuNDM3IDE0MDguMjYgNzcwLjQzNyBRMTQwNi45NSA3NzAuNDM3IDE0MDYuMDUgNzY5LjY5OSBRMTQwNS4xNSA3NjguOTIgMTQwNS4xNSA3NjcuNDg1IFExNDA1LjE1IDc2NS42NDEgMTQwNi42NiA3NjQuMjA2IFExNDA3LjI0IDc2My42MzIgMTQwNy44OSA3NjMuMzg2IFExNDA4LjU5IDc2My4wOTkgMTQwOSA3NjMuMDk5IFExNDA5LjQxIDc2My4wNTkgMTQxMC4zNSA3NjMuMDU5IFExNDA5LjQ5IDc2MS40NiAxNDA3LjQ0IDc2MC41OTkgUTE0MDUuNDMgNzU5LjY5NyAxNDAzLjE0IDc1OS42OTcgUTEzOTkuNzQgNzU5LjY5NyAxMzk2LjUgNzYyLjA3NSBRMTM5My4yNiA3NjQuNDExIDEzOTEuMjkgNzY4LjEgUTEzODkuMzIgNzcxLjcwNyAxMzg4LjA1IDc3Ni44MzEgUTEzODYuNzggNzgxLjkxNCAxMzg2Ljc4IDc4NC44NjUgUTEzODYuNzggNzg4LjkyMyAxMzg4LjY3IDc5MS40NjQgUTEzOTAuNTUgNzk0LjAwNSAxMzk0LjMyIDc5NC4wMDUgUTEzOTUuMDYgNzk0LjAwNSAxMzk1Ljg0IDc5My45NjQgUTEzOTYuNjYgNzkzLjkyMyAxMzk4LjcxIDc5My40NzMgUTE0MDAuOCA3OTMuMDIyIDE0MDIuNjUgNzkyLjI0MyBRMTQwNC40OSA3OTEuNDY0IDE0MDYuODMgNzg5Ljc4NCBRMTQwOS4yIDc4OC4wNjIgMTQxMS4wOSA3ODUuNzI2IFExNDExLjc1IDc4NC44NjUgMTQxMi4yIDc4NC44NjUgUTE0MTIuNTYgNzg0Ljg2NSAxNDEyLjg5IDc4NS4yMzQgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXA2MzApIiBkPSJNMTE0OC43MSAxMTA1LjU4IEwxMTM2LjYyIDExNTQuMTEgUTExMzYuMTMgMTE1Ni4yOSAxMTM2LjEzIDExNTguMTMgUTExMzYuMTMgMTE2MS45OCAxMTM4LjYzIDExNjEuOTggUTExMzkuODYgMTE2MS45OCAxMTQwLjg0IDExNjEuMiBRMTE0MS44MiAxMTYwLjQzIDExNDIuNiAxMTU4Ljc5IFExMTQzLjM4IDExNTcuMTUgMTE0My44NyAxMTU1LjYzIFExMTQ0LjM3IDExNTQuMDcgMTE0NS4wMiAxMTUxLjYxIFExMTQ1LjIzIDExNTAuNjMgMTE0NS4zOSAxMTUwLjM4IFExMTQ1LjYgMTE1MC4xIDExNDYuMTcgMTE1MC4xIFExMTQ3LjE5IDExNTAuMSAxMTQ3LjE5IDExNTAuOTIgUTExNDYuMDkgMTE1Ni4yIDExNDQuNjUgMTE1OS4yNCBRMTE0Mi4zNiAxMTYzLjg3IDExMzguNDYgMTE2My44NyBRMTEzNS41MSAxMTYzLjg3IDExMzMuNDIgMTE2Mi4wNiBRMTEzMS4zMyAxMTYwLjI2IDExMzAuODQgMTE1Ny41NiBRMTEyNS40NyAxMTYzLjg3IDExMTkuOSAxMTYzLjg3IFExMTE0Ljk4IDExNjMuODcgMTExMS44NiAxMTYwLjE0IFExMTA4Ljc1IDExNTYuMzcgMTEwOC43NSAxMTUwLjQyIFExMTA4Ljc1IDExNDQuNDQgMTExMS43IDExMzguNyBRMTExNC42OSAxMTMyLjk2IDExMTkuNCAxMTI5LjQgUTExMjQuMTIgMTEyNS44MyAxMTI4Ljk1IDExMjUuODMgUTExMzQuMDggMTEyNS44MyAxMTM2LjcgMTEzMS4yIEwxMTQxLjc0IDExMTEuMjggTDExNDEuOTkgMTEwOS42NCBRMTE0MS45OSAxMTA5LjE1IDExNDEuNzggMTEwOC45IFExMTQxLjYyIDExMDguNjEgMTE0MC42NCAxMTA4LjQxIFExMTM5LjY5IDExMDguMiAxMTM3LjgxIDExMDguMiBRMTEzNy4wMyAxMTA4LjIgMTEzNi42NiAxMTA4LjE2IFExMTM2LjMzIDExMDguMTIgMTEzNi4wNCAxMTA3LjkyIFExMTM1Ljc2IDExMDcuNjcgMTEzNS43NiAxMTA3LjE4IFExMTM1Ljc2IDExMDUuNzUgMTEzNi45NSAxMTA1LjU4IFExMTQ0LjgyIDExMDQuNjggMTE0Ny42IDExMDQuNjggUTExNDguMSAxMTA0LjY4IDExNDguMzggMTEwNC45MyBRMTE0OC42NyAxMTA1LjEzIDExNDguNjcgMTEwNS4zOCBMMTE0OC43MSAxMTA1LjU4IE0xMTM1LjY4IDExMzUuMDUgUTExMzUuNjggMTEzNC42OCAxMTM1LjM5IDExMzMuNjYgUTExMzUuMSAxMTMyLjYzIDExMzQuNDUgMTEzMS4yIFExMTMzLjc5IDExMjkuNzcgMTEzMi4zNiAxMTI4Ljc0IFExMTMwLjk2IDExMjcuNjcgMTEyOS4wOCAxMTI3LjY3IFExMTI2LjU0IDExMjcuNjcgMTEyMy44NyAxMTI5Ljg1IFExMTIxLjI1IDExMzIuMDIgMTExOS4zMiAxMTM1LjcxIFExMTE3Ljg1IDExMzguNjYgMTExNi4yNSAxMTQ0Ljg1IFExMTE0LjY5IDExNTEuMDQgMTExNC42OSAxMTU0LjExIFExMTE0LjY5IDExNTYgMTExNS4xIDExNTcuNjggUTExMTUuNTUgMTE1OS4zMiAxMTE2LjgyIDExNjAuNjcgUTExMTguMDkgMTE2MS45OCAxMTIwLjA2IDExNjEuOTggUTExMjQuODUgMTE2MS45OCAxMTI5LjU3IDExNTYuMDQgUTExMzAuNDcgMTE1NS4wMSAxMTMwLjY4IDExNTQuNiBRMTEzMC45MiAxMTU0LjE1IDExMzEuMjUgMTE1Mi45MiBMMTEzNS40MyAxMTM2LjQ5IFExMTM1LjY4IDExMzUuMjYgMTEzNS42OCAxMTM1LjA1IFoiIGZpbGw9IiMwMDAwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbC1vcGFjaXR5PSIxIiAvPjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwNjMwKSIgZD0iTTE2MjUuNjYgMTE0Mi42OSBRMTYyNS45OCAxMTQzLjA2IDE2MjUuOTggMTE0My40MyBRMTYyNS45OCAxMTQzLjggMTYyNS4xNiAxMTQ0Ljg2IFExNjI0LjM5IDExNDUuOTMgMTYyMi43IDExNDcuMzYgUTE2MjEuMDIgMTE0OC44IDE2MTguODUgMTE1MC4xNSBRMTYxNi42OCAxMTUxLjUgMTYxMy40OCAxMTUyLjQgUTE2MTAuMjkgMTE1My4zNSAxNjA2LjkyIDExNTMuMzUgUTE2MDAuOSAxMTUzLjM1IDE1OTcuMjkgMTE0OS4wNCBRMTU5My43MyAxMTQ0Ljc0IDE1OTMuNzMgMTEzOC4xNCBRMTU5My43MyAxMTMzLjkyIDE1OTUuMTIgMTEzMC4xOSBRMTU5Ni41MSAxMTI2LjQyIDE1OTguNzcgMTEyMy43NSBRMTYwMS4wNiAxMTIxLjA5IDE2MDMuOTMgMTExOS4xNiBRMTYwNi44NCAxMTE3LjE5IDE2MDkuODggMTExNi4yNSBRMTYxMi45MSAxMTE1LjMxIDE2MTUuNzQgMTExNS4zMSBRMTYxOS44OCAxMTE1LjMxIDE2MjIuMyAxMTE3LjQgUTE2MjQuNzEgMTExOS40OSAxNjI0LjcxIDExMjIuNDQgUTE2MjQuNzEgMTEyMy4xNCAxNjI0LjUxIDExMjQgUTE2MjQuMzQgMTEyNC44NiAxNjIzLjc3IDExMjYuMjEgUTE2MjMuMjQgMTEyNy41NiAxNjIxLjg0IDExMjguOTIgUTE2MjAuNDUgMTEzMC4yMyAxNjE4LjQgMTEzMS4wOSBRMTYxMy44NSAxMTMzLjAxIDE2MDUuNTcgMTEzMy4wMSBMMTYwMS4xIDExMzMuMDEgUTE1OTkuNzkgMTEzOC4zIDE1OTkuNzkgMTE0MS43NSBRMTU5OS43OSAxMTQzLjEgMTYwMC4wNCAxMTQ0LjQ5IFExNjAwLjI4IDExNDUuODQgMTYwMC45NCAxMTQ3LjU3IFExNjAxLjY0IDExNDkuMjkgMTYwMy4xOSAxMTUwLjM5IFExNjA0Ljc5IDExNTEuNDYgMTYwNy4wOSAxMTUxLjQ2IFExNjA3LjgzIDExNTEuNDYgMTYwOC42IDExNTEuNDIgUTE2MDkuNDIgMTE1MS4zOCAxNjExLjQ3IDExNTAuOTMgUTE2MTMuNTYgMTE1MC40OCAxNjE1LjQxIDExNDkuNyBRMTYxNy4yNSAxMTQ4LjkyIDE2MTkuNTkgMTE0Ny4yNCBRMTYyMS45NyAxMTQ1LjUyIDE2MjMuODUgMTE0My4xOCBRMTYyNC41MSAxMTQyLjMyIDE2MjQuOTYgMTE0Mi4zMiBRMTYyNS4zMyAxMTQyLjMyIDE2MjUuNjYgMTE0Mi42OSBNMTYyMS45MyAxMTIyLjQ0IFExNjIxLjkzIDExMjAuMTkgMTYyMC4yNSAxMTE4LjY3IFExNjE4LjYxIDExMTcuMTUgMTYxNS43NCAxMTE3LjE1IFExNjE0LjgzIDExMTcuMTUgMTYxMy43MyAxMTE3LjM2IFExNjEyLjYyIDExMTcuNTYgMTYxMC43OCAxMTE4LjQyIFExNjA4Ljk3IDExMTkuMjggMTYwNy4zNyAxMTIwLjcyIFExNjA1Ljc4IDExMjIuMTEgMTYwNC4xOCAxMTI0Ljg2IFExNjAyLjU4IDExMjcuNTYgMTYwMS42NCAxMTMxLjE3IEwxNjA1LjA4IDExMzEuMTcgUTE2MDYuMjcgMTEzMS4xNyAxNjA3LjEzIDExMzEuMTcgUTE2MDcuOTkgMTEzMS4xMyAxNjA5Ljg4IDExMzAuOTcgUTE2MTEuOCAxMTMwLjggMTYxMy4yIDExMzAuNTEgUTE2MTQuNTkgMTEzMC4xOSAxNjE2LjM1IDExMjkuNTMgUTE2MTguMTEgMTEyOC44OCAxNjE5LjIyIDExMjguMDEgUTE2MjAuMzcgMTEyNy4xMSAxNjIxLjE1IDExMjUuNjggUTE2MjEuOTMgMTEyNC4yNCAxNjIxLjkzIDExMjIuNDQgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PC9zdmc+Cg=="  />
 
 <p>The figure shows <span class="math">$5$</span> vectors.</p>
 <p>Express vector <strong>c</strong> in terms of <strong>a</strong> and <strong>b</strong>:</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="OXbJ6LIR" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="msq1uoEL" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_OXbJ6LIR" id="radio_OXbJ6LIR_1" value="1">
-  <label class="form-check-label" for="radio_OXbJ6LIR_1">
-    3b
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_OXbJ6LIR" id="radio_OXbJ6LIR_2" value="2">
-  <label class="form-check-label" for="radio_OXbJ6LIR_2">
-    a - b
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_OXbJ6LIR" id="radio_OXbJ6LIR_3" value="3">
-  <label class="form-check-label" for="radio_OXbJ6LIR_3">
-    3a
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_OXbJ6LIR" id="radio_OXbJ6LIR_4" value="4">
-  <label class="form-check-label" for="radio_OXbJ6LIR_4">
+  <input class="form-check-input" type="radio" name="radio_msq1uoEL" id="radio_msq1uoEL_1" value="1">
+  <label class="form-check-label" for="radio_msq1uoEL_1">
     a &#43; b
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_OXbJ6LIR" id="radio_OXbJ6LIR_5" value="5">
-  <label class="form-check-label" for="radio_OXbJ6LIR_5">
+  <input class="form-check-input" type="radio" name="radio_msq1uoEL" id="radio_msq1uoEL_2" value="2">
+  <label class="form-check-label" for="radio_msq1uoEL_2">
     b-a
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_msq1uoEL" id="radio_msq1uoEL_3" value="3">
+  <label class="form-check-label" for="radio_msq1uoEL_3">
+    a - b
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_msq1uoEL" id="radio_msq1uoEL_4" value="4">
+  <label class="form-check-label" for="radio_msq1uoEL_4">
+    3a
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_msq1uoEL" id="radio_msq1uoEL_5" value="5">
+  <label class="form-check-label" for="radio_msq1uoEL_5">
+    3b
+  </label>
+</div>
 
-<div id="OXbJ6LIR_message"></div>
+<div id="msq1uoEL_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_OXbJ6LIR']").on("change", function() {
-  correct = this.value == 3;
+$("input:radio[name='radio_msq1uoEL']").on("change", function() {
+  correct = this.value == 4;
 
   if(correct) {
-     $("#OXbJ6LIR_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#msq1uoEL_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#OXbJ6LIR_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#msq1uoEL_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1424,50 +1436,50 @@ $("input:radio[name='radio_OXbJ6LIR']").on("change", function() {
 <p>Express vector <strong>d</strong> in terms of <strong>a</strong> and <strong>b</strong>:</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="tdPZRr3r" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="hRjWVy0D" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_tdPZRr3r" id="radio_tdPZRr3r_1" value="1">
-  <label class="form-check-label" for="radio_tdPZRr3r_1">
-    b-a
+  <input class="form-check-input" type="radio" name="radio_hRjWVy0D" id="radio_hRjWVy0D_1" value="1">
+  <label class="form-check-label" for="radio_hRjWVy0D_1">
+    3a
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_tdPZRr3r" id="radio_tdPZRr3r_2" value="2">
-  <label class="form-check-label" for="radio_tdPZRr3r_2">
-    a - b
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_tdPZRr3r" id="radio_tdPZRr3r_3" value="3">
-  <label class="form-check-label" for="radio_tdPZRr3r_3">
-    3b
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_tdPZRr3r" id="radio_tdPZRr3r_4" value="4">
-  <label class="form-check-label" for="radio_tdPZRr3r_4">
+  <input class="form-check-input" type="radio" name="radio_hRjWVy0D" id="radio_hRjWVy0D_2" value="2">
+  <label class="form-check-label" for="radio_hRjWVy0D_2">
     a &#43; b
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_tdPZRr3r" id="radio_tdPZRr3r_5" value="5">
-  <label class="form-check-label" for="radio_tdPZRr3r_5">
-    3a
+  <input class="form-check-input" type="radio" name="radio_hRjWVy0D" id="radio_hRjWVy0D_3" value="3">
+  <label class="form-check-label" for="radio_hRjWVy0D_3">
+    b-a
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_hRjWVy0D" id="radio_hRjWVy0D_4" value="4">
+  <label class="form-check-label" for="radio_hRjWVy0D_4">
+    a - b
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_hRjWVy0D" id="radio_hRjWVy0D_5" value="5">
+  <label class="form-check-label" for="radio_hRjWVy0D_5">
+    3b
   </label>
 </div>
 
-<div id="tdPZRr3r_message"></div>
+<div id="hRjWVy0D_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_tdPZRr3r']").on("change", function() {
-  correct = this.value == 4;
+$("input:radio[name='radio_hRjWVy0D']").on("change", function() {
+  correct = this.value == 2;
 
   if(correct) {
-     $("#tdPZRr3r_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#hRjWVy0D_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#tdPZRr3r_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#hRjWVy0D_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1477,50 +1489,50 @@ $("input:radio[name='radio_tdPZRr3r']").on("change", function() {
 <p>Express vector <strong>e</strong> in terms of <strong>a</strong> and <strong>b</strong>:</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Aj4QrIqO" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="qKtzeK3Q" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Aj4QrIqO" id="radio_Aj4QrIqO_1" value="1">
-  <label class="form-check-label" for="radio_Aj4QrIqO_1">
-    b-a
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Aj4QrIqO" id="radio_Aj4QrIqO_2" value="2">
-  <label class="form-check-label" for="radio_Aj4QrIqO_2">
-    a &#43; b
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Aj4QrIqO" id="radio_Aj4QrIqO_3" value="3">
-  <label class="form-check-label" for="radio_Aj4QrIqO_3">
-    a - b
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Aj4QrIqO" id="radio_Aj4QrIqO_4" value="4">
-  <label class="form-check-label" for="radio_Aj4QrIqO_4">
+  <input class="form-check-input" type="radio" name="radio_qKtzeK3Q" id="radio_qKtzeK3Q_1" value="1">
+  <label class="form-check-label" for="radio_qKtzeK3Q_1">
     3a
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Aj4QrIqO" id="radio_Aj4QrIqO_5" value="5">
-  <label class="form-check-label" for="radio_Aj4QrIqO_5">
+  <input class="form-check-input" type="radio" name="radio_qKtzeK3Q" id="radio_qKtzeK3Q_2" value="2">
+  <label class="form-check-label" for="radio_qKtzeK3Q_2">
+    a - b
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_qKtzeK3Q" id="radio_qKtzeK3Q_3" value="3">
+  <label class="form-check-label" for="radio_qKtzeK3Q_3">
+    b-a
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_qKtzeK3Q" id="radio_qKtzeK3Q_4" value="4">
+  <label class="form-check-label" for="radio_qKtzeK3Q_4">
     3b
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_qKtzeK3Q" id="radio_qKtzeK3Q_5" value="5">
+  <label class="form-check-label" for="radio_qKtzeK3Q_5">
+    a &#43; b
+  </label>
+</div>
 
-<div id="Aj4QrIqO_message"></div>
+<div id="qKtzeK3Q_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Aj4QrIqO']").on("change", function() {
-  correct = this.value == 3;
+$("input:radio[name='radio_qKtzeK3Q']").on("change", function() {
+  correct = this.value == 2;
 
   if(correct) {
-     $("#Aj4QrIqO_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#qKtzeK3Q_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Aj4QrIqO_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#qKtzeK3Q_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1531,44 +1543,44 @@ $("input:radio[name='radio_Aj4QrIqO']").on("change", function() {
 <p>If <code>xs&#61;&#91;1, 2, 3, 4&#93;</code> and <code>f&#40;x&#41; &#61; x^2</code> which of these will not produce the vector <code>&#91;1, 4, 9, 16&#93;</code>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="gRMVvQHA" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="eh1wCyVE" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_gRMVvQHA" id="radio_gRMVvQHA_1" value="1">
-  <label class="form-check-label" for="radio_gRMVvQHA_1">
+  <input class="form-check-input" type="radio" name="radio_eh1wCyVE" id="radio_eh1wCyVE_1" value="1">
+  <label class="form-check-label" for="radio_eh1wCyVE_1">
     <code>f.&#40;xs&#41;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_gRMVvQHA" id="radio_gRMVvQHA_2" value="2">
-  <label class="form-check-label" for="radio_gRMVvQHA_2">
+  <input class="form-check-input" type="radio" name="radio_eh1wCyVE" id="radio_eh1wCyVE_2" value="2">
+  <label class="form-check-label" for="radio_eh1wCyVE_2">
     <code>map&#40;f, xs&#41;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_gRMVvQHA" id="radio_gRMVvQHA_3" value="3">
-  <label class="form-check-label" for="radio_gRMVvQHA_3">
+  <input class="form-check-input" type="radio" name="radio_eh1wCyVE" id="radio_eh1wCyVE_3" value="3">
+  <label class="form-check-label" for="radio_eh1wCyVE_3">
     <code>&#91;f&#40;x&#41; for x in xs&#93;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_gRMVvQHA" id="radio_gRMVvQHA_4" value="4">
-  <label class="form-check-label" for="radio_gRMVvQHA_4">
+  <input class="form-check-input" type="radio" name="radio_eh1wCyVE" id="radio_eh1wCyVE_4" value="4">
+  <label class="form-check-label" for="radio_eh1wCyVE_4">
     All three of them work
   </label>
 </div>
 
-<div id="gRMVvQHA_message"></div>
+<div id="eh1wCyVE_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_gRMVvQHA']").on("change", function() {
+$("input:radio[name='radio_eh1wCyVE']").on("change", function() {
   correct = this.value == 4;
 
   if(correct) {
-     $("#gRMVvQHA_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#eh1wCyVE_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#gRMVvQHA_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#eh1wCyVE_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1594,44 +1606,44 @@ $("input:radio[name='radio_gRMVvQHA']").on("change", function() {
 <p>What construct will give the function values of <span class="math">$f$</span> at the zeros of <span class="math">$g$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="8ngbkwRb" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="9Pu9ikbP" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_8ngbkwRb" id="radio_8ngbkwRb_1" value="1">
-  <label class="form-check-label" for="radio_8ngbkwRb_1">
+  <input class="form-check-input" type="radio" name="radio_9Pu9ikbP" id="radio_9Pu9ikbP_1" value="1">
+  <label class="form-check-label" for="radio_9Pu9ikbP_1">
     <code>sin&#40;zs&#41;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_8ngbkwRb" id="radio_8ngbkwRb_2" value="2">
-  <label class="form-check-label" for="radio_8ngbkwRb_2">
+  <input class="form-check-input" type="radio" name="radio_9Pu9ikbP" id="radio_9Pu9ikbP_2" value="2">
+  <label class="form-check-label" for="radio_9Pu9ikbP_2">
     <code>sin.&#40;zs&#41;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_8ngbkwRb" id="radio_8ngbkwRb_3" value="3">
-  <label class="form-check-label" for="radio_8ngbkwRb_3">
+  <input class="form-check-input" type="radio" name="radio_9Pu9ikbP" id="radio_9Pu9ikbP_3" value="3">
+  <label class="form-check-label" for="radio_9Pu9ikbP_3">
     <code>sin&#40;.zs&#41;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_8ngbkwRb" id="radio_8ngbkwRb_4" value="4">
-  <label class="form-check-label" for="radio_8ngbkwRb_4">
+  <input class="form-check-input" type="radio" name="radio_9Pu9ikbP" id="radio_9Pu9ikbP_4" value="4">
+  <label class="form-check-label" for="radio_9Pu9ikbP_4">
     <code>.sin&#40;zs&#41;</code>
   </label>
 </div>
 
-<div id="8ngbkwRb_message"></div>
+<div id="9Pu9ikbP_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_8ngbkwRb']").on("change", function() {
+$("input:radio[name='radio_9Pu9ikbP']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#8ngbkwRb_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#9Pu9ikbP_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#8ngbkwRb_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#9Pu9ikbP_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1642,44 +1654,44 @@ $("input:radio[name='radio_8ngbkwRb']").on("change", function() {
 <p>If <code>zs &#61; &#91;1,4,9,16&#93;</code> which of these commands will return <code>&#91;1.0, 2.0, 3.0, 4.0&#93;</code>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="z54jt4dg" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Hehp7NJD" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_z54jt4dg" id="radio_z54jt4dg_1" value="1">
-  <label class="form-check-label" for="radio_z54jt4dg_1">
+  <input class="form-check-input" type="radio" name="radio_Hehp7NJD" id="radio_Hehp7NJD_1" value="1">
+  <label class="form-check-label" for="radio_Hehp7NJD_1">
     <code>sqrt&#40;zs&#41;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_z54jt4dg" id="radio_z54jt4dg_2" value="2">
-  <label class="form-check-label" for="radio_z54jt4dg_2">
+  <input class="form-check-input" type="radio" name="radio_Hehp7NJD" id="radio_Hehp7NJD_2" value="2">
+  <label class="form-check-label" for="radio_Hehp7NJD_2">
     <code>sqrt.&#40;zs&#41;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_z54jt4dg" id="radio_z54jt4dg_3" value="3">
-  <label class="form-check-label" for="radio_z54jt4dg_3">
+  <input class="form-check-input" type="radio" name="radio_Hehp7NJD" id="radio_Hehp7NJD_3" value="3">
+  <label class="form-check-label" for="radio_Hehp7NJD_3">
     <code>zs^&#40;1/2&#41;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_z54jt4dg" id="radio_z54jt4dg_4" value="4">
-  <label class="form-check-label" for="radio_z54jt4dg_4">
+  <input class="form-check-input" type="radio" name="radio_Hehp7NJD" id="radio_Hehp7NJD_4" value="4">
+  <label class="form-check-label" for="radio_Hehp7NJD_4">
     <code>zs^&#40;1./2&#41;</code>
   </label>
 </div>
 
-<div id="z54jt4dg_message"></div>
+<div id="Hehp7NJD_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_z54jt4dg']").on("change", function() {
+$("input:radio[name='radio_Hehp7NJD']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#z54jt4dg_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#Hehp7NJD_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#z54jt4dg_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#Hehp7NJD_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 

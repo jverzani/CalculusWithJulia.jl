@@ -13,7 +13,7 @@ The definition Google finds for *continuous* is *forming an unbroken whole; with
 The concept in calculus, as transferred to functions, is
 similar. Roughly speaking, a continuous function is one whose graph
 could be drawn without having to lift (or interrupt) the pencil drawing it.
-nte(
+
 Consider these two graphs:
 
 ```julia; echo=false
@@ -35,7 +35,7 @@ break is needed to draw it - where as the second is continuous.
 
 
 
-A formal definition was a bit harder to come to. At
+A formal definition of continuity was a bit harder to come about. At
 [first](http://en.wikipedia.org/wiki/Intermediate_value_theorem) the
 concept that for any $y$ between any two values in the range for
 $f(x)$, the function should take the value $y$ was included. Clearly
@@ -111,7 +111,7 @@ There are various reasons why a function may not be continuous.
 
 * The function $f(x) = \sin(x)/x$ has a limit at $0$ but is not defined at $0$, so is not continuous at $0$. The function can be redefined to make it continuous.
 
-* The function $f(x) = 1/x$ is continuous everywhere *except* $x=0$.
+* The function $f(x) = 1/x$ is continuous everywhere *except* $x=0$ where *no* limit exists.
 
 * A rational function $f(x) = p(x)/q(x)$ will be continuous everywhere except where $q(x)=0$.
 
@@ -185,11 +185,12 @@ f(x) = \begin{cases}
 
 What value of $c$ will make $f(x)$ a continuous function?
 
-To be continuous we not that for $x < 0$ and for $x > 0$ the function is a simple polynomial, so is continous. At $x=0$ to be continuous we need a limit to exists and be equal to $f(0)$, which is $c$. A limit exists if the left and right limits are equal. This means we need to solve for $c$ to make the left and right limits equal.
+To be continuous we note that for $x < 0$ and for $x > 0$ the function is a simple polynomial, so is continous. At $x=0$ to be continuous we need a limit to exists and be equal to $f(0)$, which is $c$. A limit exists if the left and right limits are equal. This means we need to solve for $c$ to make the left and right limits equal.
 
 ```julia;
-using CalculusWithJulia   # load `SymPy`
+using CalculusWithJulia
 using Plots
+using SymPy
 @syms x c
 ex1 = 3x^2 + c
 ex2 = 2x-3
@@ -439,8 +440,6 @@ radioq(choices, ans)
 ```
 
 
-
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

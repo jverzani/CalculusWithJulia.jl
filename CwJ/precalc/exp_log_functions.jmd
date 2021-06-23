@@ -33,11 +33,13 @@ $a^x$ for any rational $x$.
 Defining $a^x$ for any real number requires some more sophisticated
 mathematics. One method is to use a
 [theorem](http://tinyurl.com/zk86c8r) that says a *bounded*
-monotonically increasing sequence will converge. Then for $a > 1$ we
-have if $q_n$ is a sequence of rational numbers increasing to $x$,
-then $a^{q_n}$ will be a bounded sequence of increasing numbers, so
-will converge to a number defined to be $a^x$. Something similar is
-possible for the $0 < a < 1$ case.
+monotonically increasing sequence will converge. (This uses the
+[Completeness
+Axiom](https://en.wikipedia.org/wiki/Completeness_of_the_real_numbers).)
+Then for $a > 1$ we have if $q_n$ is a sequence of rational numbers
+increasing to $x$, then $a^{q_n}$ will be a bounded sequence of
+increasing numbers, so will converge to a number defined to be
+$a^x$. Something similar is possible for the $0 < a < 1$ case.
 
 This definition can be done to ensure the rules of exponents hold for
 $a > 0$:

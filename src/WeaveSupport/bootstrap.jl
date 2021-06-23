@@ -21,7 +21,7 @@ centered_content_tpl = """
 
 Take an image file and encode it
 
-The \\ keeps linebreaks when run through Base.Markdown.parse
+Caption uses LaTeX markup, not markdown.
 
 """
 mutable struct ImageFile
@@ -42,6 +42,7 @@ end
 function ImageFile(f::AbstractString, caption, alt, width)
     data = base64encode(read(f, String))
     content = Mustache.render(gif_to_img_tpl, data=data, alt=alt)
+    caption = Markdown.parse(caption)
     ImageFile(f, caption, alt, width, content)
 end
 

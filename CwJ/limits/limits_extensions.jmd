@@ -34,7 +34,8 @@ question of whether a limit exists at $c=0$.
 A graph shows the issue:
 
 ```julia; echo=false
-using CalculusWithJulia   # to load `Plots` and `SymPy`
+using CalculusWithJulia
+using Plots
 f(x) = sin(1/x)
 plot(f, range(-1, stop=1, length=1000))
 ```
@@ -132,14 +133,18 @@ The `SymPy` function `limit` has a keyword argument `dir="+"` or
 
 
 ```julia;
+using SymPy
 @syms x
 f(x) = abs(x)/x
 limit(f(x), x=>0, dir="+"), limit(f(x), x=>0, dir="-")
 ```
 
+The default for `limit` is `dir="+"`, that is only a one-sided limit is computed.
+
+
 ```julia; echo=false
 alert("""
-However, `SymPy` will actually *not* get this correct as a limit, as one can verify through `limit(f(x), x=>0)`. This is because `SymPy` defaults to `dir="+"`. To be certain, you can check both to see they are equal.
+That means the mathematical limit need not exist when `SymPy`'s `limit` returns an answer, as `SymPy` is only carrying out a one sided limit. Checking that both `limit(ex, x=>c)` and `limit(ex, x=>c, dir="-")` are equal would be needed to confirm a limit exists mathematically.
 """)
 ```
 
@@ -170,7 +175,7 @@ by 1.
 
 Some functions only have one-sided limits as they are not defined in
 an interval around $c$. There are many examples, but we will take
-$f(x) = x^x$ at $x=0$. This function is not well defined for all $x <
+$f(x) = x^x$ and consider ``c=0``. This function is not well defined for all $x <
 0$, so it is typical to just take the domain to be $x > 0$. Still it
 has a right limit $\lim_{x \rightarrow 0+} x^x = 1$. `SymPy` can verify:
 
@@ -215,8 +220,8 @@ The loose definition of a horizontal asymptote is "a line such that
 the distance between the curve and the line approaches $0$ as they
 tend to infinity." This sounds like it should be defined by a
 limit. The issue is, that the limit would be at $\pm\infty$ and not
-some finite $c$. This means the idea of a neighborhood of $c$, $0 < |x-c| < \delta$, needs
-reworking.
+some finite $c$. This requires the idea of a neighborhood of $c$, $0 < |x-c| < \delta$ to be
+reworked.
 
 The basic idea for a limit at $+\infty$ is that for any $\epsilon$,
 there exists an $M$ such that when $x > M$ it must be that $|f(x) - L|
@@ -246,7 +251,6 @@ limit(sin(x), x=>oo)
 However, a damped oscillation, such as $f(x) = e^{-x} \sin(x)$ will have a limit:
 
 ```julia;
-@syms x::real
 limit(exp(-x)*sin(x), x=>oo)
 ```
 
@@ -268,7 +272,38 @@ f(x) = x / sqrt(x^2 + 4)
 limit(f(x), x=>oo), limit(f(x), x=>-oo)
 ```
 
-(A simpler example showing this behavior is just the function $|x|/x$ considered earlier.)
+(A simpler example showing this behavior is just the function $x/|x|$ considered earlier.)
+
+##### Example: Limits at infinity and right limits at ``0``
+
+Given a function ``f`` the question of whether this exists:
+
+```math
+\lim_{x \rightarrow \infty} f(x)
+```
+
+can be reduced to the question of whether this limit exists:
+
+```math
+\lim_{x \rightarrow 0+} f(1/x)
+```
+
+So whether ``\lim_{x \rightarrow 0+} \sin(1/x)`` exists is equivalent to whether  ``\lim_{x\rightarrow \infty} \sin(x)`` exists, which clearly does not due to the oscillatory nature of ``\sin(x)``.
+
+
+Similarly, one can make this reduction
+
+```math
+\lim_{x \rightarrow c+} f(x) =
+\lim_{x \rightarrow 0+} f(c + x) =
+\lim_{x \rightarrow \infty} f(c + \frac{1}{x}).
+```
+
+That is, right limits can be analyzed as limits at ``\infty`` or right limits at ``0``, should that prove more convenient.
+
+
+
+
 
 ## Limits of infinity
 
@@ -348,10 +383,11 @@ only on non-negative integer values of $n$. However, the same idea as
 a limit at infinity can be used to define a limit.
 
 > Let $a_0,a_1, a_2, \dots, a_n, \dots$ be a sequence of values indexed by $n$.
-> We have $\lim_{n \rightarrow \infty} a_n = L$ if for every $\epsilon > 0$ there is an $M>0$ where if $n > M$ then $|a_n - L| < \epsilon$.
+> We have $\lim_{n \rightarrow \infty} a_n = L$ if for every $\epsilon > 0$ there exists an $M>0$ where if $n > M$ then $|a_n - L| < \epsilon$.
 
+Common language is the sequence *converges* when the limit exists and other *diverges*.
 
-This is essentially the same as a limit *at* infinity for a function,
+The aboves essentially the same as a limit *at* infinity for a function,
 but in this case the function's domain is only the non-negative
 integers.
 
@@ -362,6 +398,16 @@ integers.
 s(n) = 1//2 * summation((1//4)^i, (i, 0, n))    # rationals make for an exact answer
 limit(s(n), n=>oo)
 ```
+
+### Some limit theorems for sequences
+
+The limit discussion first defined limits of scalar univariate functions at a point ``c`` and then added generalizations. The pedagogical approach can be reversed by starting the discussion with limits of sequences and then generalizing from there. This approach relies on a few theorems to be gathered along the way that are mentioned here for the curious reader:
+
+* Convergent sequences are bounded.
+* All *bounded* monotone sequences converge.
+* Every bounded sequence has a convergent subsequence. (Bolzano-Weirstrass)
+* The limit of ``f`` at ``c`` exists and equals ``L`` if and only if for *every* sequence ``x_n`` in the domain of ``f`` converging to ``c`` the sequence ``s_n = f(x_n)`` converges to ``L``.
+
 
 ## Summary
 
@@ -418,6 +464,108 @@ d = DataFrame(Type=limit_type, Notation=Notation, V=Vs, U=Us)
 table(d)
 ```
 
+[Ross](https://doi.org/10.1007/978-1-4614-6271-2) summarizes this by enumerating the 15 different *related* definitions for ``\lim_{x \rightarrow a} f(x) = L`` that arise from ``L`` being either finite, ``-\infty``, or ``+\infty`` and ``a`` being any of ``c``, ``c-``, ``c+``, ``-\infty``, or ``+\infty``.
+
+## Rates of growth
+
+Consider two functions ``f`` and ``g`` to be *comparable* if there are positive integers ``m`` and ``n`` with *both*
+
+```math
+\lim_{x \rightarrow \infty} \frac{f(x)^m}{g(x)} = \infty \quad\text{and }
+\lim_{x \rightarrow \infty} \frac{g(x)^n}{f(x)} = \infty.
+```
+
+The first says ``g`` is eventually bounded by a power of ``f``, the second that ``f`` is eventually bounded by a power of ``g``.
+
+Here we consider which families of functions are *comparable*.
+
+
+First consider ``f(x) = x^3`` and ``g(x) = x^4``. We can take ``m=2`` and ``n=1`` to verify ``f`` and ``g`` are comparable:
+
+```julia
+@syms x
+fx, gx = x^3, x^4
+limit(fx^2/gx, x=>oo), limit(gx^1 / fx, x=>oo)
+```
+
+Similarly for any pairs of powers, so we could conclude ``f(x) = x^n`` and ``g(x) =x^m`` are comparable.
+
+
+Now consider ``f(x) = x`` and ``g(x) = \log(x)``. These are not compatible as there will be no ``n`` large enough. We might say ``x`` dominates ``\log(x)``.
+
+```julia
+@syms n::(positive, integer)
+limit(log(x)^n / x, x => oo)
+```
+
+As ``x`` could be replaced by any monomial ``x^k``, we can say "powers" grow faster than "logarithms".
+
+
+Now consider ``f(x)=x`` and ``g(x) = e^x``. These are not compatible as there will be no ``m`` large enough:
+
+```julia
+@syms m::(positive, integer)
+limit(x^m / exp(x), x => oo)
+```
+
+That is ``e^x`` grows faster than any power of ``x``.
+
+
+Now, if ``a, b > 1`` then ``f(x) = a^x`` and ``g(x) = b^x`` will be comparable.
+Take ``m`` so that ``a^m > b`` and ``n`` so that ``b^n > x`` as then, say,
+
+```math
+\frac{(a^x)^m}{b^x} = \frac{a^{xm}}{b^x} = \frac{(a^m)^x}{b^x} = (\frac{a^m}{b})^x,
+```
+
+which will go to ``\infty`` as ``x \rightarrow \infty`` as ``a^m/b > 1``.
+
+
+Finally, consider ``f(x) = \exp(x^2)`` and ``g(x) = \exp(x)^2``. Are these comparable? No, as no ``n`` is large enough:
+
+```julia
+@syms x n::(positive, integer)
+fx, gx = exp(x^2), exp(x)^2
+limit(gx^n / fx, x => oo)
+```
+
+A negative test for compatability is the following: if
+
+```math
+\lim_{x \rightarrow \infty} \frac{\log(|f(x)|)}{\log(|g(x)|)} = 0,
+```
+
+Then ``f`` and ``g`` are not compatible (and ``g`` grows faster than ``f``. Applying this to the last two values of ``f`` and ``g``, we have
+
+```math
+\lim_{x \rightarrow \infty}\frac{\log(\exp(x)^2)}{\log(\exp(x^2))} =
+\lim_{x \rightarrow \infty}\frac{2\log(\exp(x))}{x^2} =
+\lim_{x \rightarrow \infty}\frac{2x}{x^2} = 0,
+```
+
+so ``f(x) = \exp(x^2)`` grows faster than ``g(x) = \exp(x)^2``.
+
+
+----
+
+Keeping in mind that logarithms grow slower than powers which grow slower than exponentials (``a > 1``) can help understand growth at ``\infty`` as a comparison of leading terms does for rational functions.
+
+
+We can immediately put this to use to compute ``\lim_{x\rightarrow 0+} x^x``. We first express this problem using ``x^x = (\exp(\ln(x)))^x = e^{x\ln(x)}``. Rewriting ``u(x) = \exp(\ln(u(x)))``, which only uses the basic inverse relation between the two functions, can often be a useful step.
+
+
+As ``f(x) = e^x`` is a suitably nice function (continuous) so that the limit of a composition can be computed through the limit of the inside function, ``x\ln(x)``, it is enough to see what ``\lim_{x\rightarrow 0+} x\ln(x)`` is. We *re-express* this as a limit at ``\infty``
+
+```math
+\lim_{x\rightarrow 0+} x\ln(x) = \lim_{x \rightarrow \infty} (1/x)\ln(1/x) =
+\lim_{x \rightarrow \infty} \frac{-\ln(x)}{x} = 0
+```
+
+The last equality follows, as the function ``x`` dominates the function ``\ln(x)``. So by the limit rule involving compositions we have: ``\lim_{x\rightarrow 0+} x^x = e^0 = 1``.
+
+----
+
+The above assumes `limit(ex, x=>oo)` actually produces the correct answer for ``\lim_{x\rightarrow \infty} f(x)``, which is *almost* always the case. The above could be independently verified once L'Hospital's [rule](../derivatives/lhospitals_rule.html) is established.
 
 
 ## Questions
@@ -503,7 +651,85 @@ ans = 4
 radioq(choices, ans)
 ```
 
-###### Question <small>No limit</small>
+###### Question
+
+Let ``f(x) = \exp(x + \exp(-x^2))`` and ``g(x) = \exp(-x^2)``. Compute:
+
+```math
+\lim_{x \rightarrow \infty} \frac{\ln(f(x))}{\ln(g(x))}.
+```
+
+```julia;echo=false
+@syms x
+ex = log(exp(x + exp(-x^2))) / log(exp(-x^2))
+val = N(limit(ex, x => oo))
+numericq(val)
+```
+
+###### Question
+
+Consider the following expression:
+
+```julia;
+@syms x
+ex = 1/(exp(-x + exp(-x))) - exp(x)
+```
+
+We want to find the limit, ``L``, as ``x \rightarrow \infty``, which we assume exists below.
+
+We first rewrite `ex` using `w` as `exp(-x)`:
+
+```julia
+@syms w
+ex1 = ex(exp(-x) => w)
+```
+
+As ``x \rightarrow \infty``, ``w \rightarrow 0+``, so the limit at ``0+`` of `ex1` is of interest.
+
+Use this fact, to find ``L``
+
+```julia
+limit(ex1 - (w/2 - 1), w=>0)
+```
+
+``L`` is:
+
+```julia; echo=false
+numericq(-1)
+```
+
+(This awkward approach is  generalizable: replacing the limit as ``w \rightarrow 0`` of an expression with the limit of a polynomial in `w` that is easy to identify.)
+
+
+
+
+###### Question
+
+As mentioned, for limits that depend on specific values of parameters `SymPy` may have issues.
+As an example, `SymPy` has an issue with this limit, whose answer  depends on the value of ``k``"
+
+```math
+\lim_{x \rightarrow 0+} \frac{\sin(\sin(x^2))}{x^k}.
+```
+
+
+
+Note, regardless of ``k`` you find:
+
+```julia
+@syms x::real k::integer
+limit(sin(sin(x^2))/x^k, x=>0)
+```
+
+For which value(s) of ``k`` in ``1,2,3`` is this actually the correct answer? (Do the above ``3`` times using a specific value of `k`, not a numeric one.
+
+```julia, echo=false
+choices = [L"1", L"2", L"3", L"1,2", L"1,3", L"2,3", L"1,2,3"]
+radioq(choices, 1, keep_order=true)
+```
+
+
+###### Question: No limit
 
 Some functions do not have a limit. Make a graph of $\sin(1/x)$ from $0.0001$ to $1$ and look at the output. Why does a limit not exist?
 
@@ -518,7 +744,7 @@ radioq(choices, ans)
 
 
 
-###### Question <small>$0^0$</small>
+###### Question ``0^0`` is not *always* ``1``
 
 Is the form $0^0$ really indeterminate? As mentioned `0^0` evaluates to `1`.
 
@@ -599,12 +825,12 @@ L"We can say $f(x) - (mx+b)$ has a horizontal asymptote $y=0$",
 L"We can say $f(x) - mx$ has a horizontal asymptote $y=b$",
 "Any of the above"]
 ans = 5
-radioq(choices, ans)
+radioq(choices, ans, keep_order=true)
 ```
 
 ###### Question
 
-Suppose a sequence of points $x_n$ converges to $a$ in the limiting sense. For a function $f(x)$, the sequence of points $f(x_n)$ may or may not converge.  One alternative definition of a [limit](https://en.wikipedia.org/wiki/Limit_of_a_function#In_terms_of_sequences) due to Heine is that $lim_{x \rightarrow a}f(x) = L$ if *and* only if **all** sequences $x_n \rightarrow a$ have $f(x_n) \rightarrow L$.
+Suppose a sequence of points $x_n$ converges to $a$ in the limiting sense. For a function $f(x)$, the sequence of points $f(x_n)$ may or may not converge.  One alternative definition of a [limit](https://en.wikipedia.org/wiki/Limit_of_a_function#In_terms_of_sequences) due to Heine is that $\lim_{x \rightarrow a}f(x) = L$ if *and* only if **all** sequences $x_n \rightarrow a$ have $f(x_n) \rightarrow L$.
 
 Consider the function $f(x) = \sin(1/x)$, $a=0$, and the two sequences implicitly defined by $1/x_n = \pi/2 + n \cdot (2\pi)$ and $y_n = 3\pi/2 + n \cdot(2\pi)$, $n = 0, 1, 2, \dots$.
 
@@ -614,7 +840,7 @@ What is $\lim_{x_n \rightarrow 0} f(x_n)$?
 numericq(1)
 ```
 
-What is $\lim_{x_n \rightarrow 0} f(y_n)$?
+What is $\lim_{y_n \rightarrow 0} f(y_n)$?
 
 ```julia; echo=false
 numericq(-1)
@@ -624,15 +850,13 @@ This shows that
 
 ```julia; echo=false
 choices = [L" $f(x)$ has a limit of $1$ as $x \rightarrow 0$",
-L" $f(x)$ has a limit of $-11$ as $x \rightarrow 0$",
+L" $f(x)$ has a limit of $-1$ as $x \rightarrow 0$",
 L" $f(x)$ does not have a limit as $x \rightarrow 0$"
 ]
 ans = 3
 radioq(choices, ans)
 ```
 
-
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

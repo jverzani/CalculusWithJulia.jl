@@ -201,7 +201,7 @@ end
 
 export mmd
 export @q_str
-export ImageFile, Verbatim, Invisible, Outputonly, HTMLonly
+export ImageFile, Verbatim, Invisible, Outputonly, HTMLonly, JSXGraph
 export alert, warning, note
 export example, popup, table
 export gif_to_data

@@ -2,7 +2,7 @@
 
 
 ## WeaveTpl
-function Base.show(io::IO, ::MIME"text/html", x::ImageFile)
+function Base.show(io::IO, m::MIME"text/html", x::ImageFile)
     Mustache.render(io, centered_content_tpl, x)
     #write(io, gif_to_data(x.f, x.caption))
 end

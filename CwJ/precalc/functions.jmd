@@ -418,6 +418,26 @@ end
 ```
 
 
+#### `f(x,p)` alternative
+
+An alternative to keyword arguments is to bundle the parameters into a container and pass them as a single argument to the function. This style is used in the `SciML` suite of packages.
+
+For example, here we use a *named tuple* to pass parameters to `f`:
+
+```julia;
+function f(x,p)
+    g,v0, theta, k = p.g, p.v0, p.theta, p.k # unpack parameters
+
+    a = v0 * cos(theta)
+    (g/(k*a) + tan(theta))* x + (g/k^2) * log(1 - k/a*x)
+end
+
+p = (g=9.8, v0=200, theta = 45*pi/180, k=1/2)
+f(2, p)
+```
+
+The style isn't so different from using keyword arguments, save the extra step of unpacking the parameters. The advantage is the function is always called in an identical manner regardless of the number of parameters (or variables).
+
 
 ## Multiple dispatch
 

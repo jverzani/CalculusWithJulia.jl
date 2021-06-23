@@ -1,5 +1,20 @@
 # L'Hospital's Rule
 
+<!-- XXX Gruntz p21 http://www.cybertester.com/data/gruntz.pdf -->
+<!-- julia> @syms x -->
+<!-- (x,) -->
+
+<!-- julia> ex = (1/2*sin(2x) + x) / (exp(sin(x))*(cos(x)*sin(x) + x)) -->
+<!--                     -sin(x) -->
+<!-- (x + 0.5⋅sin(2⋅x))⋅ℯ        -->
+<!-- ─────────────────────────── -->
+<!--      x + sin(x)⋅cos(x)      -->
+
+<!-- julia> limit(ex, x=> oo) -->
+<!-- ╱     -1       ╲ -->
+<!-- ╲1.0⋅ℯ  , 1.0⋅ℯ╱ -->
+
+
 
 ```julia; echo=false; results="hidden"
 using CalculusWithJulia
@@ -604,6 +619,33 @@ L"0",
 "It does not exist"
 ]
 ans =1
+radioq(choices, ans)
+```
+
+###### Question
+
+At [math overflow](http://mathoverflow.net/questions/51685/how-did-bernoulli-prove-lh%C3%B4pitals-rule) we learn that L'Hopital was motivated by the following limit:
+
+$$~
+\lim_{x \rightarrow a} \frac{(2a^3x-x^4)^{1/2} - a (a^2x)^{1/3}}{a - (ax^3)^{1/4}}
+~$$
+
+What did he find (with the help of a Bernoulli)?
+
+You need to inform `SymPy` that $a > 0$. The following is a good start:
+
+```
+@syms x, a::positive
+top = (2a^3*x-x^4)^(1//2) - a *(a^2*x)^(1//3) # rationals are converted exactly to SymPy
+bottom =  a - (a*x^3)^(1//4)
+ex = top/bottom
+```
+
+Now find the limit.
+
+```
+choices = [L"16a/9", L"0", L"9\sqrt{a}", "Does not exist"]
+ans = 1
 radioq(choices, ans)
 ```
 

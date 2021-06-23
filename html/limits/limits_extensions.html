@@ -20,9 +20,12 @@
 .output, .julia-error {
     border-left: thick solid #ff0000;
     padding: 5px;
+    padding-left: 10px;
+    margin-bottom: 15px;
     background-color: #f5f5f5;
 }
-body { padding-top: 60px; }
+body { padding-top: 60px;
+}
 .output {color:#0033CC;}
 h5:before {content:"\2746\ ";}
 h6:before {content:"\2742\ ";}
@@ -37,7 +40,17 @@ tr:hover {background-color: #f5f5f5;}
 .admonition-title:before {content:"\2746\ ";}
 .admonition-title { color:#0033CC}
 
+main > .container {
+  padding: 60px 15px 0;
+}
 
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
 </style>
 
 <!-- .julia:before {content: "julia> "} -->
@@ -123,7 +136,7 @@ $( document ).ready(function() {
     </button>
 
     <ul class="nav navbar-nav navbar-right">
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown dropstart">
 	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 	   role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Jump to...
@@ -171,10 +184,10 @@ f(x) = \sin(1/x)
 <p>A graph shows the issue:</p>
 
 
-    <div id="8dab14e2-6aac-400f-b359-b695802ae42e" style="width:576px;height:384px;"></div>
+    <div id="8553c981-9210-4748-b68f-ca313ea62aa9" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('8dab14e2-6aac-400f-b359-b695802ae42e');
+        var PLOT = document.getElementById('8553c981-9210-4748-b68f-ca313ea62aa9');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -2367,10 +2380,10 @@ f(x) = \sin(1/x)
 
 
 
-    <div id="96a9182f-953b-4edd-8239-2999e58388fa" style="width:576px;height:384px;"></div>
+    <div id="f3a0c84b-0ecb-483b-9688-2eea0ec7b3e0" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('96a9182f-953b-4edd-8239-2999e58388fa');
+        var PLOT = document.getElementById('f3a0c84b-0ecb-483b-9688-2eea0ec7b3e0');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -3230,10 +3243,10 @@ f(x) = \sin(1/x)
 
 
 
-    <div id="4892e7ef-ec4e-41ba-b39f-02e6cf3f6857" style="width:576px;height:384px;"></div>
+    <div id="62aacccb-79cd-4c37-bdec-9142bc512d80" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('4892e7ef-ec4e-41ba-b39f-02e6cf3f6857');
+        var PLOT = document.getElementById('62aacccb-79cd-4c37-bdec-9142bc512d80');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -3520,20 +3533,22 @@ f(x) = \sin(1/x)
 
 
 <pre class='hljl'>
-<span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>SymPy</span><span class='hljl-t'>
+</span><span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'>
 </span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>abs</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-oB'>/</span><span class='hljl-n'>x</span><span class='hljl-t'>
 </span><span class='hljl-nf'>limit</span><span class='hljl-p'>(</span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>=&gt;</span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>dir</span><span class='hljl-oB'>=</span><span class='hljl-s'>&quot;+&quot;</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>limit</span><span class='hljl-p'>(</span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>=&gt;</span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>dir</span><span class='hljl-oB'>=</span><span class='hljl-s'>&quot;-&quot;</span><span class='hljl-p'>)</span>
 </pre>
 
 
-<pre class="julia-error">
-ERROR: LoadError: UndefVarError: @syms not defined
-in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/limits/limits_extensions.jmd:2
+<pre class="output">
+&#40;1, -1&#41;
 </pre>
 
 
+<p>The default for <code>limit</code> is <code>dir&#61;&quot;&#43;&quot;</code>, that is only a one-sided limit is computed.</p>
 
-<div class="alert alert-success" role="alert"><div class="markdown"><p>However, <code>SymPy</code> will actually <em>not</em> get this correct as a limit, as one can verify through <code>limit&#40;f&#40;x&#41;, x&#61;&gt;0&#41;</code>. This is because <code>SymPy</code> defaults to <code>dir&#61;&quot;&#43;&quot;</code>. To be certain, you can check both to see they are equal.</p>
+
+<div class="alert alert-success" role="alert"><div class="markdown"><p>That means the mathematical limit need not exist when <code>SymPy</code>&#39;s <code>limit</code> returns an answer, as <code>SymPy</code> is only carrying out a one sided limit. Checking that both <code>limit&#40;ex, x&#61;&gt;c&#41;</code> and <code>limit&#40;ex, x&#61;&gt;c, dir&#61;&quot;-&quot;&#41;</code> are equal would be needed to confirm a limit exists mathematically.</p>
 </div></div>
 
 <p>The relation between the two concepts is that a function has a limit at <span class="math">$c$</span> if an only if the left and right limits exist and are equal. This function <span class="math">$f$</span> has both existing, but the two limits are not equal.</p>
@@ -3546,10 +3561,10 @@ in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/limits/limi
 
 
 
-    <div id="292c848d-eb77-4633-a093-7c340a5a2714" style="width:576px;height:384px;"></div>
+    <div id="189ba69a-db89-4cbc-a8a5-a18abdcad299" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('292c848d-eb77-4633-a093-7c340a5a2714');
+        var PLOT = document.getElementById('189ba69a-db89-4cbc-a8a5-a18abdcad299');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -4218,7 +4233,7 @@ in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/limits/limi
 
 <p>Again, the &#40;nearly&#41; vertical lines are an artifact of the graphing algorithm and not actual points that solve <span class="math">$y=f(x)$</span>. The floor function has limits except at the integers. There the left and right limits differ.</p>
 <p>Consider the limit at <span class="math">$c=0$</span>. If <span class="math">$0 < x < 1/2$</span>, say, then <span class="math">$f(x) = 0$</span> as we round down, so the right limit will be <span class="math">$0$</span>. However, if <span class="math">$-1/2 < x < 0$</span>, then the <span class="math">$f(x) = -1$</span>, again as we round down, so the left limit will be <span class="math">$-1$</span>. Again, with this example both the left and right limits exists, but at the integer values they are not equal, as they differ by 1.</p>
-<p>Some functions only have one-sided limits as they are not defined in an interval around <span class="math">$c$</span>. There are many examples, but we will take <span class="math">$f(x) = x^x$</span> at <span class="math">$x=0$</span>. This function is not well defined for all <span class="math">$x < 0$</span>, so it is typical to just take the domain to be <span class="math">$x > 0$</span>. Still it has a right limit <span class="math">$\lim_{x \rightarrow 0+} x^x = 1$</span>. <code>SymPy</code> can verify:</p>
+<p>Some functions only have one-sided limits as they are not defined in an interval around <span class="math">$c$</span>. There are many examples, but we will take <span class="math">$f(x) = x^x$</span> and consider <span class="math">$c=0$</span>. This function is not well defined for all <span class="math">$x < 0$</span>, so it is typical to just take the domain to be <span class="math">$x > 0$</span>. Still it has a right limit <span class="math">$\lim_{x \rightarrow 0+} x^x = 1$</span>. <code>SymPy</code> can verify:</p>
 
 
 <pre class='hljl'>
@@ -4227,11 +4242,9 @@ in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/limits/limi
 </pre>
 
 
-<pre class="julia-error">
-ERROR: LoadError: UndefVarError: @syms not defined
-in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/limits/limits_extensions.jmd:2
-</pre>
 
+<div class="output">$1$
+</div>
 
 <p>This agrees with the IEEE convention of assigning <code>0^0</code> to be <code>1</code>.</p>
 <p>However, not all such functions with indeterminate forms of <span class="math">$0^0$</span> will have a limit of <span class="math">$1$</span>.</p>
@@ -4239,10 +4252,10 @@ in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/limits/limi
 <p>Consider this funny graph:</p>
 
 
-    <div id="928544ba-4b90-4d1f-b0c1-d797121c6fd6" style="width:576px;height:384px;"></div>
+    <div id="9c8d60b6-c271-4f8c-b8ba-9cb249773987" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('928544ba-4b90-4d1f-b0c1-d797121c6fd6');
+        var PLOT = document.getElementById('9c8d60b6-c271-4f8c-b8ba-9cb249773987');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -4713,7 +4726,7 @@ in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/limits/limi
 </li>
 </ul>
 <h2>Limits at infinity</h2>
-<p>The loose definition of a horizontal asymptote is &quot;a line such that the distance between the curve and the line approaches <span class="math">$0$</span> as they tend to infinity.&quot; This sounds like it should be defined by a limit. The issue is, that the limit would be at <span class="math">$\pm\infty$</span> and not some finite <span class="math">$c$</span>. This means the idea of a neighborhood of <span class="math">$c$</span>, <span class="math">$0 < |x-c| < \delta$</span>, needs reworking.</p>
+<p>The loose definition of a horizontal asymptote is &quot;a line such that the distance between the curve and the line approaches <span class="math">$0$</span> as they tend to infinity.&quot; This sounds like it should be defined by a limit. The issue is, that the limit would be at <span class="math">$\pm\infty$</span> and not some finite <span class="math">$c$</span>. This requires the idea of a neighborhood of <span class="math">$c$</span>, <span class="math">$0 < |x-c| < \delta$</span> to be reworked.</p>
 <p>The basic idea for a limit at <span class="math">$+\infty$</span> is that for any <span class="math">$\epsilon$</span>, there exists an <span class="math">$M$</span> such that when <span class="math">$x > M$</span> it must be that <span class="math">$|f(x) - L| < \epsilon$</span>. For a horizontal asymptote, the line would be <span class="math">$y=L$</span>. Similarly a limit at <span class="math">$-\infty$</span> can be defined with <span class="math">$x < M$</span> being the condition.</p>
 <p>Let&#39;s consider some cases.</p>
 <p>The function <span class="math">$f(x) = \sin(x)$</span> will not have a limit at <span class="math">$+\infty$</span> for exactly the same reason that <span class="math">$f(x) = \sin(1/x)$</span> does not have a limit at <span class="math">$c=0$</span> - it just oscillates between <span class="math">$-1$</span> and <span class="math">$1$</span> so never eventually gets close to a single value.</p>
@@ -4725,10 +4738,9 @@ in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/limits/limi
 </pre>
 
 
-<pre class="julia-error">
-ERROR: UndefVarError: x not defined
-</pre>
 
+<div class="output">$\left\langle -1, 1\right\rangle$
+</div>
 
 <p>&#40;We used <code>SymPy</code>&#39;s <code>oo</code> for <span class="math">$\infty$</span> and not <code>Inf</code>.&#41;</p>
 <hr />
@@ -4736,16 +4748,13 @@ ERROR: UndefVarError: x not defined
 
 
 <pre class='hljl'>
-<span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>::</span><span class='hljl-n'>real</span><span class='hljl-t'>
-</span><span class='hljl-nf'>limit</span><span class='hljl-p'>(</span><span class='hljl-nf'>exp</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-oB'>*</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>=&gt;</span><span class='hljl-n'>oo</span><span class='hljl-p'>)</span>
+<span class='hljl-nf'>limit</span><span class='hljl-p'>(</span><span class='hljl-nf'>exp</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-oB'>*</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>=&gt;</span><span class='hljl-n'>oo</span><span class='hljl-p'>)</span>
 </pre>
 
 
-<pre class="julia-error">
-ERROR: LoadError: UndefVarError: @syms not defined
-in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/limits/limits_extensions.jmd:2
-</pre>
 
+<div class="output">$0$
+</div>
 
 <hr />
 <p>We have rational functions will have the expected limit. In this example <span class="math">$m = n$</span>, so we get a horizontal asymptote that is not <span class="math">$y=0$</span>:</p>
@@ -4756,10 +4765,9 @@ in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/limits/limi
 </pre>
 
 
-<pre class="julia-error">
-ERROR: UndefVarError: x not defined
-</pre>
 
+<div class="output">$\frac{1}{4}$
+</div>
 
 <hr />
 <p>Though rational functions can have only one &#40;at most&#41; horizontal asymptote, this isn&#39;t true for all functions. Consider the following <span class="math">$f(x) = x / \sqrt{x^2 + 4}$</span>. It has different limits:</p>
@@ -4771,22 +4779,39 @@ ERROR: UndefVarError: x not defined
 </pre>
 
 
-<pre class="julia-error">
-ERROR: UndefVarError: x not defined
+<pre class="output">
+&#40;1, -1&#41;
 </pre>
 
 
-<p>&#40;A simpler example showing this behavior is just the function <span class="math">$|x|/x$</span> considered earlier.&#41;</p>
+<p>&#40;A simpler example showing this behavior is just the function <span class="math">$x/|x|$</span> considered earlier.&#41;</p>
+<h5>Example: Limits at infinity and right limits at <span class="math">$0$</span></h5>
+<p>Given a function <span class="math">$f$</span> the question of whether this exists:</p>
+<p class="math">\[
+\lim_{x \rightarrow \infty} f(x)
+\]</p>
+<p>can be reduced to the question of whether this limit exists:</p>
+<p class="math">\[
+\lim_{x \rightarrow 0+} f(1/x)
+\]</p>
+<p>So whether <span class="math">$\lim_{x \rightarrow 0+} \sin(1/x)$</span> exists is equivalent to whether  <span class="math">$\lim_{x\rightarrow \infty} \sin(x)$</span> exists, which clearly does not due to the oscillatory nature of <span class="math">$\sin(x)$</span>.</p>
+<p>Similarly, one can make this reduction</p>
+<p class="math">\[
+\lim_{x \rightarrow c+} f(x) =
+\lim_{x \rightarrow 0+} f(c + x) =
+\lim_{x \rightarrow \infty} f(c + \frac{1}{x}).
+\]</p>
+<p>That is, right limits can be analyzed as limits at <span class="math">$\infty$</span> or right limits at <span class="math">$0$</span>, should that prove more convenient.</p>
 <h2>Limits of infinity</h2>
 <p>Vertical asymptotes are nicely defined with horizontal asymptotes by the graph getting close to some line. However, the formal definition of a limit won&#39;t be the same. For a vertical asymptote, the value of <span class="math">$f(x)$</span> heads towards positive or negative infinity, not some finite <span class="math">$L$</span>. As such, a neighborhood like <span class="math">$(L-\epsilon, L+\epsilon)$</span> will no longer make sense, rather we replace it with an expression like <span class="math">$(M, \infty)$</span> or <span class="math">$(-\infty, M)$</span>. As in: the limit of <span class="math">$f(x)$</span> as <span class="math">$x$</span> approaches <span class="math">$c$</span> is <em>infinity</em> if for every <span class="math">$M > 0$</span> there exists a <span class="math">$\delta>0$</span> such that if <span class="math">$0 < |x-c| < \delta$</span> then <span class="math">$f(x) > M$</span>. Approaching <span class="math">$-\infty$</span> would conclude with <span class="math">$f(x) < -M$</span> for all <span class="math">$M>0$</span>.</p>
 <h5>Examples</h5>
 <p>Consider the function <span class="math">$f(x) = 1/x^2$</span>. This will have a limit at every point except possibly <span class="math">$0$</span>, where division by <span class="math">$0$</span> is possible. In this case, there is a vertical asymptote. The limit at <span class="math">$0$</span> is <span class="math">$\infty$</span>, in the extended sense above. For <span class="math">$M>0$</span>, we can take any <span class="math">$0 < \delta < 1/\sqrt{M}$</span>. The following graph shows <span class="math">$M=25$</span> where the function values are outside of the box, as <span class="math">$f(x) > M$</span> for those <span class="math">$x$</span> values with <span class="math">$0 < |x-0| < 1/\sqrt{M}$</span>.</p>
 
 
-    <div id="05acd4c5-9649-4b05-a92f-19f777e6caa5" style="width:576px;height:384px;"></div>
+    <div id="62399498-626b-4764-895f-33b21263264b" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('05acd4c5-9649-4b05-a92f-19f777e6caa5');
+        var PLOT = document.getElementById('62399498-626b-4764-895f-33b21263264b');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -5187,10 +5212,10 @@ ERROR: UndefVarError: x not defined
 <p>The function <span class="math">$f(x)=1/x$</span> requires us to talk about left and right limits of infinity, with the natural generalization. We can see that the left limit at <span class="math">$0$</span> is <span class="math">$-\infty$</span> and the right limit <span class="math">$\infty$</span>:</p>
 
 
-    <div id="4538d171-a6c6-4e63-bf25-23f7372ffdc0" style="width:576px;height:384px;"></div>
+    <div id="c301b50c-5c00-46b8-b126-fc93f37a8be5" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('4538d171-a6c6-4e63-bf25-23f7372ffdc0');
+        var PLOT = document.getElementById('c301b50c-5c00-46b8-b126-fc93f37a8be5');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -5560,8 +5585,8 @@ ERROR: UndefVarError: x not defined
 </pre>
 
 
-<pre class="julia-error">
-ERROR: UndefVarError: x not defined
+<pre class="output">
+&#40;-oo, oo&#41;
 </pre>
 
 
@@ -5577,10 +5602,10 @@ ERROR: UndefVarError: x not defined
 
 
 
-    <div id="d2639b45-dde7-4782-a75a-df64dac8a7e4" style="width:576px;height:384px;"></div>
+    <div id="75132cac-7d89-4990-8fc5-9edc48624c47" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('d2639b45-dde7-4782-a75a-df64dac8a7e4');
+        var PLOT = document.getElementById('75132cac-7d89-4990-8fc5-9edc48624c47');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -5843,17 +5868,17 @@ ERROR: UndefVarError: x not defined
 </pre>
 
 
-<pre class="julia-error">
-ERROR: UndefVarError: x not defined
-</pre>
 
+<div class="output">$-\infty$
+</div>
 
 <h2>Limits of sequences</h2>
 <p>After all this, we still can&#39;t formalize the basic question asked in the introduction to limits: what is the area contained in a parabola. For that we developed a sequence of sums: <span class="math">$s_n = 1/2 \dot((1/4)^0 + (1/4)^1 + (1/4)^2 + \cdots + (1/4)^n)$</span>. This isn&#39;t a function of <span class="math">$x$</span>, but rather depends only on non-negative integer values of <span class="math">$n$</span>. However, the same idea as a limit at infinity can be used to define a limit.</p>
 <blockquote>
-<p>Let <span class="math">$a_0,a_1, a_2, \dots, a_n, \dots$</span> be a sequence of values indexed by <span class="math">$n$</span>. We have <span class="math">$\lim_{n \rightarrow \infty} a_n = L$</span> if for every <span class="math">$\epsilon > 0$</span> there is an <span class="math">$M>0$</span> where if <span class="math">$n > M$</span> then <span class="math">$|a_n - L| < \epsilon$</span>.</p>
+<p>Let <span class="math">$a_0,a_1, a_2, \dots, a_n, \dots$</span> be a sequence of values indexed by <span class="math">$n$</span>. We have <span class="math">$\lim_{n \rightarrow \infty} a_n = L$</span> if for every <span class="math">$\epsilon > 0$</span> there exists an <span class="math">$M>0$</span> where if <span class="math">$n > M$</span> then <span class="math">$|a_n - L| < \epsilon$</span>.</p>
 </blockquote>
-<p>This is essentially the same as a limit <em>at</em> infinity for a function, but in this case the function&#39;s domain is only the non-negative integers.</p>
+<p>Common language is the sequence <em>converges</em> when the limit exists and other <em>diverges</em>.</p>
+<p>The aboves essentially the same as a limit <em>at</em> infinity for a function, but in this case the function&#39;s domain is only the non-negative integers.</p>
 <p><code>SymPy</code> is happy to compute limits of sequences. Defining this one involving a sum is best done with the <code>summation</code> function:</p>
 
 
@@ -5864,54 +5889,203 @@ ERROR: UndefVarError: x not defined
 </pre>
 
 
-<pre class="julia-error">
-ERROR: LoadError: UndefVarError: @syms not defined
-in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/limits/limits_extensions.jmd:2
-</pre>
 
+<div class="output">$\frac{2}{3}$
+</div>
 
+<h3>Some limit theorems for sequences</h3>
+<p>The limit discussion first defined limits of scalar univariate functions at a point <span class="math">$c$</span> and then added generalizations. The pedagogical approach can be reversed by starting the discussion with limits of sequences and then generalizing from there. This approach relies on a few theorems to be gathered along the way that are mentioned here for the curious reader:</p>
+<ul>
+<li><p>Convergent sequences are bounded.</p>
+</li>
+<li><p>All <em>bounded</em> monotone sequences converge.</p>
+</li>
+<li><p>Every bounded sequence has a convergent subsequence. &#40;Bolzano-Weirstrass&#41;</p>
+</li>
+<li><p>The limit of <span class="math">$f$</span> at <span class="math">$c$</span> exists and equals <span class="math">$L$</span> if and only if for <em>every</em> sequence <span class="math">$x_n$</span> in the domain of <span class="math">$f$</span> converging to <span class="math">$c$</span> the sequence <span class="math">$s_n = f(x_n)$</span> converges to <span class="math">$L$</span>.</p>
+</li>
+</ul>
 <h2>Summary</h2>
 <p>The following table captures the various changes to the definition of the limit to accommodate some of the possible behaviors.</p>
 
-<pre class="julia-error">
-ERROR: ArgumentError: Package DataFrames not found in current path:
-- Run &#96;import Pkg; Pkg.add&#40;&quot;DataFrames&quot;&#41;&#96; to install the DataFrames package.
 
+
+<div class="table-responsive">
+<table class="table table-hover">
+<tr><th>Type</th><th>Notation</th><th>V</th><th>U</th></tr>
+
+<tr><td><div class="markdown"><p>limit</p>
+</div></td><td><div class="markdown">&#36;\lim_&#123;x\rightarrow c&#125;f&#40;x&#41; &#61; L&#36;
+</div></td><td><div class="markdown">&#36;&#40;L-\epsilon, L&#43;\epsilon&#41;&#36;
+</div></td><td><div class="markdown">&#36;&#40;c - \delta, c&#43;\delta&#41;&#36;
+</div></td></tr>
+<tr><td><div class="markdown"><p>right limit</p>
+</div></td><td><div class="markdown">&#36;\lim_&#123;x\rightarrow c&#43;&#125;f&#40;x&#41; &#61; L&#36;
+</div></td><td><div class="markdown">&#36;&#40;L-\epsilon, L&#43;\epsilon&#41;&#36;
+</div></td><td><div class="markdown">&#36;&#40;c, c&#43;\delta&#41;&#36;
+</div></td></tr>
+<tr><td><div class="markdown"><p>left limit</p>
+</div></td><td><div class="markdown">&#36;\lim_&#123;x\rightarrow c-&#125;f&#40;x&#41; &#61; L&#36;
+</div></td><td><div class="markdown">&#36;&#40;L-\epsilon, L&#43;\epsilon&#41;&#36;
+</div></td><td><div class="markdown">&#36;&#40;c - \delta, c&#41;&#36;
+</div></td></tr>
+<tr><td><div class="markdown"><p>limit at &#36;\infty&#36;</p>
+</div></td><td><div class="markdown">&#36;\lim_&#123;x\rightarrow \infty&#125;f&#40;x&#41; &#61; L&#36;
+</div></td><td><div class="markdown">&#36;&#40;L-\epsilon, L&#43;\epsilon&#41;&#36;
+</div></td><td><div class="markdown">&#36;&#40;M, \infty&#41;&#36;
+</div></td></tr>
+<tr><td><div class="markdown"><p>limit at &#36;-\infty&#36;</p>
+</div></td><td><div class="markdown">&#36;\lim_&#123;x\rightarrow -\infty&#125;f&#40;x&#41; &#61; L&#36;
+</div></td><td><div class="markdown">&#36;&#40;L-\epsilon, L&#43;\epsilon&#41;&#36;
+</div></td><td><div class="markdown">&#36;&#40;-\infty, M&#41;&#36;
+</div></td></tr>
+<tr><td><div class="markdown"><p>limit of &#36;\infty&#36;</p>
+</div></td><td><div class="markdown">&#36;\lim_&#123;x\rightarrow c&#125;f&#40;x&#41; &#61; \infty&#36;
+</div></td><td><div class="markdown">&#36;&#40;M, \infty&#41;&#36;
+</div></td><td><div class="markdown">&#36;&#40;c - \delta, c&#43;\delta&#41;&#36;
+</div></td></tr>
+<tr><td><div class="markdown"><p>limit of &#36;-\infty&#36;</p>
+</div></td><td><div class="markdown">&#36;\lim_&#123;x\rightarrow c&#125;f&#40;x&#41; &#61; -\infty&#36;
+</div></td><td><div class="markdown">&#36;&#40;-\infty, M&#41;&#36;
+</div></td><td><div class="markdown">&#36;&#40;c - \delta, c&#43;\delta&#41;&#36;
+</div></td></tr>
+<tr><td><div class="markdown"><p>limit of a sequence</p>
+</div></td><td><div class="markdown">&#36;\lim_&#123;n \rightarrow \infty&#125; a_n &#61; L&#36;
+</div></td><td><div class="markdown">&#36;&#40;L-\epsilon, L&#43;\epsilon&#41;&#36;
+</div></td><td><div class="markdown">&#36;&#40;M, \infty&#41;&#36;
+</div></td></tr>
+
+</table>
+</div>
+
+
+
+<p><a href="https://doi.org/10.1007/978-1-4614-6271-2">Ross</a> summarizes this by enumerating the 15 different <em>related</em> definitions for <span class="math">$\lim_{x \rightarrow a} f(x) = L$</span> that arise from <span class="math">$L$</span> being either finite, <span class="math">$-\infty$</span>, or <span class="math">$+\infty$</span> and <span class="math">$a$</span> being any of <span class="math">$c$</span>, <span class="math">$c-$</span>, <span class="math">$c+$</span>, <span class="math">$-\infty$</span>, or <span class="math">$+\infty$</span>.</p>
+<h2>Rates of growth</h2>
+<p>Consider two functions <span class="math">$f$</span> and <span class="math">$g$</span> to be <em>comparable</em> if there are positive integers <span class="math">$m$</span> and <span class="math">$n$</span> with <em>both</em></p>
+<p class="math">\[
+\lim_{x \rightarrow \infty} \frac{f(x)^m}{g(x)} = \infty \quad\text{and }
+\lim_{x \rightarrow \infty} \frac{g(x)^n}{f(x)} = \infty.
+\]</p>
+<p>The first says <span class="math">$g$</span> is eventually bounded by a power of <span class="math">$f$</span>, the second that <span class="math">$f$</span> is eventually bounded by a power of <span class="math">$g$</span>.</p>
+<p>Here we consider which families of functions are <em>comparable</em>.</p>
+<p>First consider <span class="math">$f(x) = x^3$</span> and <span class="math">$g(x) = x^4$</span>. We can take <span class="math">$m=2$</span> and <span class="math">$n=1$</span> to verify <span class="math">$f$</span> and <span class="math">$g$</span> are comparable:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'>
+</span><span class='hljl-n'>fx</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>gx</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>4</span><span class='hljl-t'>
+</span><span class='hljl-nf'>limit</span><span class='hljl-p'>(</span><span class='hljl-n'>fx</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-oB'>/</span><span class='hljl-n'>gx</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>=&gt;</span><span class='hljl-n'>oo</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>limit</span><span class='hljl-p'>(</span><span class='hljl-n'>gx</span><span class='hljl-oB'>^</span><span class='hljl-ni'>1</span><span class='hljl-t'> </span><span class='hljl-oB'>/</span><span class='hljl-t'> </span><span class='hljl-n'>fx</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>=&gt;</span><span class='hljl-n'>oo</span><span class='hljl-p'>)</span>
 </pre>
 
 
+<pre class="output">
+&#40;oo, oo&#41;
+</pre>
+
+
+<p>Similarly for any pairs of powers, so we could conclude <span class="math">$f(x) = x^n$</span> and <span class="math">$g(x) =x^m$</span> are comparable.</p>
+<p>Now consider <span class="math">$f(x) = x$</span> and <span class="math">$g(x) = \log(x)$</span>. These are not compatible as there will be no <span class="math">$n$</span> large enough. We might say <span class="math">$x$</span> dominates <span class="math">$\log(x)$</span>.</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>n</span><span class='hljl-oB'>::</span><span class='hljl-p'>(</span><span class='hljl-n'>positive</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>integer</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>limit</span><span class='hljl-p'>(</span><span class='hljl-nf'>log</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-oB'>^</span><span class='hljl-n'>n</span><span class='hljl-t'> </span><span class='hljl-oB'>/</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>=&gt;</span><span class='hljl-t'> </span><span class='hljl-n'>oo</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+<div class="output">$0$
+</div>
+
+<p>As <span class="math">$x$</span> could be replaced by any monomial <span class="math">$x^k$</span>, we can say &quot;powers&quot; grow faster than &quot;logarithms&quot;.</p>
+<p>Now consider <span class="math">$f(x)=x$</span> and <span class="math">$g(x) = e^x$</span>. These are not compatible as there will be no <span class="math">$m$</span> large enough:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>m</span><span class='hljl-oB'>::</span><span class='hljl-p'>(</span><span class='hljl-n'>positive</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>integer</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>limit</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-n'>m</span><span class='hljl-t'> </span><span class='hljl-oB'>/</span><span class='hljl-t'> </span><span class='hljl-nf'>exp</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>=&gt;</span><span class='hljl-t'> </span><span class='hljl-n'>oo</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+<div class="output">$0$
+</div>
+
+<p>That is <span class="math">$e^x$</span> grows faster than any power of <span class="math">$x$</span>.</p>
+<p>Now, if <span class="math">$a, b > 1$</span> then <span class="math">$f(x) = a^x$</span> and <span class="math">$g(x) = b^x$</span> will be comparable. Take <span class="math">$m$</span> so that <span class="math">$a^m > b$</span> and <span class="math">$n$</span> so that <span class="math">$b^n > x$</span> as then, say,</p>
+<p class="math">\[
+\frac{(a^x)^m}{b^x} = \frac{a^{xm}}{b^x} = \frac{(a^m)^x}{b^x} = (\frac{a^m}{b})^x,
+\]</p>
+<p>which will go to <span class="math">$\infty$</span> as <span class="math">$x \rightarrow \infty$</span> as <span class="math">$a^m/b > 1$</span>.</p>
+<p>Finally, consider <span class="math">$f(x) = \exp(x^2)$</span> and <span class="math">$g(x) = \exp(x)^2$</span>. Are these comparable? No, as no <span class="math">$n$</span> is large enough:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-n'>n</span><span class='hljl-oB'>::</span><span class='hljl-p'>(</span><span class='hljl-n'>positive</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>integer</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>fx</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>gx</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>exp</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>exp</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-t'>
+</span><span class='hljl-nf'>limit</span><span class='hljl-p'>(</span><span class='hljl-n'>gx</span><span class='hljl-oB'>^</span><span class='hljl-n'>n</span><span class='hljl-t'> </span><span class='hljl-oB'>/</span><span class='hljl-t'> </span><span class='hljl-n'>fx</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>=&gt;</span><span class='hljl-t'> </span><span class='hljl-n'>oo</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+<div class="output">$0$
+</div>
+
+<p>A negative test for compatability is the following: if</p>
+<p class="math">\[
+\lim_{x \rightarrow \infty} \frac{\log(|f(x)|)}{\log(|g(x)|)} = 0,
+\]</p>
+<p>Then <span class="math">$f$</span> and <span class="math">$g$</span> are not compatible &#40;and <span class="math">$g$</span> grows faster than <span class="math">$f$</span>. Applying this to the last two values of <span class="math">$f$</span> and <span class="math">$g$</span>, we have</p>
+<p class="math">\[
+\lim_{x \rightarrow \infty}\frac{\log(\exp(x)^2)}{\log(\exp(x^2))} =
+\lim_{x \rightarrow \infty}\frac{2\log(\exp(x))}{x^2} =
+\lim_{x \rightarrow \infty}\frac{2x}{x^2} = 0,
+\]</p>
+<p>so <span class="math">$f(x) = \exp(x^2)$</span> grows faster than <span class="math">$g(x) = \exp(x)^2$</span>.</p>
+<hr />
+<p>Keeping in mind that logarithms grow slower than powers which grow slower than exponentials &#40;<span class="math">$a > 1$</span>&#41; can help understand growth at <span class="math">$\infty$</span> as a comparison of leading terms does for rational functions.</p>
+<p>We can immediately put this to use to compute <span class="math">$\lim_{x\rightarrow 0+} x^x$</span>. We first express this problem using <span class="math">$x^x = (\exp(\ln(x)))^x = e^{x\ln(x)}$</span>. Rewriting <span class="math">$u(x) = \exp(\ln(u(x)))$</span>, which only uses the basic inverse relation between the two functions, can often be a useful step.</p>
+<p>As <span class="math">$f(x) = e^x$</span> is a suitably nice function &#40;continuous&#41; so that the limit of a composition can be computed through the limit of the inside function, <span class="math">$x\ln(x)$</span>, it is enough to see what <span class="math">$\lim_{x\rightarrow 0+} x\ln(x)$</span> is. We <em>re-express</em> this as a limit at <span class="math">$\infty$</span></p>
+<p class="math">\[
+\lim_{x\rightarrow 0+} x\ln(x) = \lim_{x \rightarrow \infty} (1/x)\ln(1/x) =
+\lim_{x \rightarrow \infty} \frac{-\ln(x)}{x} = 0
+\]</p>
+<p>The last equality follows, as the function <span class="math">$x$</span> dominates the function <span class="math">$\ln(x)$</span>. So by the limit rule involving compositions we have: <span class="math">$\lim_{x\rightarrow 0+} x^x = e^0 = 1$</span>.</p>
+<hr />
+<p>The above assumes <code>limit&#40;ex, x&#61;&gt;oo&#41;</code> actually produces the correct answer for <span class="math">$\lim_{x\rightarrow \infty} f(x)$</span>, which is <em>almost</em> always the case. The above could be independently verified once L&#39;Hospital&#39;s <a href="../derivatives/lhospitals_rule.html">rule</a> is established.</p>
 <h2>Questions</h2>
 <h6>Question</h6>
 <p>Consider the function <span class="math">$f(x) = \sqrt{x}$</span>.</p>
 <p>Does this function have a limit at every <span class="math">$c > 0$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="zxVTQz30" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="nFJWGGkc" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_zxVTQz30" id="radio_zxVTQz30_1" value="1">
-  <label class="form-check-label" for="radio_zxVTQz30_1">
+  <input class="form-check-input" type="radio" name="radio_nFJWGGkc" id="radio_nFJWGGkc_1" value="1">
+  <label class="form-check-label" for="radio_nFJWGGkc_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_zxVTQz30" id="radio_zxVTQz30_2" value="2">
-  <label class="form-check-label" for="radio_zxVTQz30_2">
+  <input class="form-check-input" type="radio" name="radio_nFJWGGkc" id="radio_nFJWGGkc_2" value="2">
+  <label class="form-check-label" for="radio_nFJWGGkc_2">
     No
   </label>
 </div>
 
-<div id="zxVTQz30_message"></div>
+<div id="nFJWGGkc_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_zxVTQz30']").on("change", function() {
+$("input:radio[name='radio_nFJWGGkc']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#zxVTQz30_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#nFJWGGkc_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#zxVTQz30_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#nFJWGGkc_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -5921,32 +6095,32 @@ $("input:radio[name='radio_zxVTQz30']").on("change", function() {
 <p>Does this function have a limit at <span class="math">$c=0$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="v6IVxB43" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="8JuTqx9z" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_v6IVxB43" id="radio_v6IVxB43_1" value="1">
-  <label class="form-check-label" for="radio_v6IVxB43_1">
+  <input class="form-check-input" type="radio" name="radio_8JuTqx9z" id="radio_8JuTqx9z_1" value="1">
+  <label class="form-check-label" for="radio_8JuTqx9z_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_v6IVxB43" id="radio_v6IVxB43_2" value="2">
-  <label class="form-check-label" for="radio_v6IVxB43_2">
+  <input class="form-check-input" type="radio" name="radio_8JuTqx9z" id="radio_8JuTqx9z_2" value="2">
+  <label class="form-check-label" for="radio_8JuTqx9z_2">
     No
   </label>
 </div>
 
-<div id="v6IVxB43_message"></div>
+<div id="8JuTqx9z_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_v6IVxB43']").on("change", function() {
+$("input:radio[name='radio_8JuTqx9z']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#v6IVxB43_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#8JuTqx9z_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#v6IVxB43_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#8JuTqx9z_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -5956,32 +6130,32 @@ $("input:radio[name='radio_v6IVxB43']").on("change", function() {
 <p>Does this function have a right limit at <span class="math">$c=0$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="V7HYkoQt" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="6ZrNRWSd" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_V7HYkoQt" id="radio_V7HYkoQt_1" value="1">
-  <label class="form-check-label" for="radio_V7HYkoQt_1">
+  <input class="form-check-input" type="radio" name="radio_6ZrNRWSd" id="radio_6ZrNRWSd_1" value="1">
+  <label class="form-check-label" for="radio_6ZrNRWSd_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_V7HYkoQt" id="radio_V7HYkoQt_2" value="2">
-  <label class="form-check-label" for="radio_V7HYkoQt_2">
+  <input class="form-check-input" type="radio" name="radio_6ZrNRWSd" id="radio_6ZrNRWSd_2" value="2">
+  <label class="form-check-label" for="radio_6ZrNRWSd_2">
     No
   </label>
 </div>
 
-<div id="V7HYkoQt_message"></div>
+<div id="6ZrNRWSd_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_V7HYkoQt']").on("change", function() {
+$("input:radio[name='radio_6ZrNRWSd']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#V7HYkoQt_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#6ZrNRWSd_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#V7HYkoQt_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#6ZrNRWSd_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -5991,32 +6165,32 @@ $("input:radio[name='radio_V7HYkoQt']").on("change", function() {
 <p>Does this function have a left limit at <span class="math">$c=0$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="8idQtzef" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="khhjjIFn" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_8idQtzef" id="radio_8idQtzef_1" value="1">
-  <label class="form-check-label" for="radio_8idQtzef_1">
+  <input class="form-check-input" type="radio" name="radio_khhjjIFn" id="radio_khhjjIFn_1" value="1">
+  <label class="form-check-label" for="radio_khhjjIFn_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_8idQtzef" id="radio_8idQtzef_2" value="2">
-  <label class="form-check-label" for="radio_8idQtzef_2">
+  <input class="form-check-input" type="radio" name="radio_khhjjIFn" id="radio_khhjjIFn_2" value="2">
+  <label class="form-check-label" for="radio_khhjjIFn_2">
     No
   </label>
 </div>
 
-<div id="8idQtzef_message"></div>
+<div id="khhjjIFn_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_8idQtzef']").on("change", function() {
+$("input:radio[name='radio_khhjjIFn']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#8idQtzef_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#khhjjIFn_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#8idQtzef_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#khhjjIFn_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -6027,28 +6201,29 @@ $("input:radio[name='radio_8idQtzef']").on("change", function() {
 <p>Find <span class="math">$\lim_{x \rightarrow \infty} \sin(x)/x$</span>.</p>
 
 
-<form name='WeaveQuestion' data-id='YUZh95nv' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='otDbk91l' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
-<div class="input-group">
-<input id="YUZh95nv" type="number" class="form-control">
+<div class="form-floating input-group">
+<input id="otDbk91l" type="number" class="form-control" placeholder="Numeric answer">
+<label for="otDbk91l">Numeric answer</label>
 
 </div>
 
-<div id='YUZh95nv_message'></div>
+<div id='otDbk91l_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#YUZh95nv').on('change', function() {
+$('#otDbk91l').on('change', function() {
   correct = Math.abs(this.value - 0) <= 0;
 
   if(correct) {
-     $('#YUZh95nv_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#otDbk91l_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#YUZh95nv_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#otDbk91l_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -6058,28 +6233,29 @@ $('#YUZh95nv').on('change', function() {
 <p>Find <span class="math">$\lim_{x \rightarrow \infty} (1-\cos(x))/x^2$</span>.</p>
 
 
-<form name='WeaveQuestion' data-id='1zw99Ncn' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='BwXco6ot' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
-<div class="input-group">
-<input id="1zw99Ncn" type="number" class="form-control">
+<div class="form-floating input-group">
+<input id="BwXco6ot" type="number" class="form-control" placeholder="Numeric answer">
+<label for="BwXco6ot">Numeric answer</label>
 
 </div>
 
-<div id='1zw99Ncn_message'></div>
+<div id='BwXco6ot_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#1zw99Ncn').on('change', function() {
+$('#BwXco6ot').on('change', function() {
   correct = Math.abs(this.value - 0) <= 0;
 
   if(correct) {
-     $('#1zw99Ncn_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#BwXco6ot_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#1zw99Ncn_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#BwXco6ot_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -6089,28 +6265,29 @@ $('#1zw99Ncn').on('change', function() {
 <p>Find <span class="math">$\lim_{x \rightarrow \infty} \log(x)/x$</span>.</p>
 
 
-<form name='WeaveQuestion' data-id='knD59VRo' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='0jRyc5DP' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
-<div class="input-group">
-<input id="knD59VRo" type="number" class="form-control">
+<div class="form-floating input-group">
+<input id="0jRyc5DP" type="number" class="form-control" placeholder="Numeric answer">
+<label for="0jRyc5DP">Numeric answer</label>
 
 </div>
 
-<div id='knD59VRo_message'></div>
+<div id='0jRyc5DP_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#knD59VRo').on('change', function() {
+$('#0jRyc5DP').on('change', function() {
   correct = Math.abs(this.value - 0) <= 0;
 
   if(correct) {
-     $('#knD59VRo_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#0jRyc5DP_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#knD59VRo_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#0jRyc5DP_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -6120,48 +6297,48 @@ $('#knD59VRo').on('change', function() {
 <p>Find <span class="math">$\lim_{x \rightarrow 2+} (x-3)/(x-2)$</span>.</p>
 
 
-<form name="WeaveQuestion" data-id="MsuMt6zP" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="jjlj4Ui1" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_MsuMt6zP" id="radio_MsuMt6zP_1" value="1">
-  <label class="form-check-label" for="radio_MsuMt6zP_1">
+  <input class="form-check-input" type="radio" name="radio_jjlj4Ui1" id="radio_jjlj4Ui1_1" value="1">
+  <label class="form-check-label" for="radio_jjlj4Ui1_1">
     &#36;L&#61;-\infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_MsuMt6zP" id="radio_MsuMt6zP_2" value="2">
-  <label class="form-check-label" for="radio_MsuMt6zP_2">
+  <input class="form-check-input" type="radio" name="radio_jjlj4Ui1" id="radio_jjlj4Ui1_2" value="2">
+  <label class="form-check-label" for="radio_jjlj4Ui1_2">
     &#36;L&#61;0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_MsuMt6zP" id="radio_MsuMt6zP_3" value="3">
-  <label class="form-check-label" for="radio_MsuMt6zP_3">
+  <input class="form-check-input" type="radio" name="radio_jjlj4Ui1" id="radio_jjlj4Ui1_3" value="3">
+  <label class="form-check-label" for="radio_jjlj4Ui1_3">
     &#36;L&#61;-1&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_MsuMt6zP" id="radio_MsuMt6zP_4" value="4">
-  <label class="form-check-label" for="radio_MsuMt6zP_4">
+  <input class="form-check-input" type="radio" name="radio_jjlj4Ui1" id="radio_jjlj4Ui1_4" value="4">
+  <label class="form-check-label" for="radio_jjlj4Ui1_4">
     &#36;L&#61;\infty&#36;
 
   </label>
 </div>
 
-<div id="MsuMt6zP_message"></div>
+<div id="jjlj4Ui1_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_MsuMt6zP']").on("change", function() {
+$("input:radio[name='radio_jjlj4Ui1']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#MsuMt6zP_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#jjlj4Ui1_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#MsuMt6zP_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#jjlj4Ui1_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -6171,103 +6348,301 @@ $("input:radio[name='radio_MsuMt6zP']").on("change", function() {
 <p>Find <span class="math">$\lim_{x \rightarrow -3-} (x-3)/(x+3)$</span>.</p>
 
 
-<form name="WeaveQuestion" data-id="oXsQowam" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="5jXRqmAO" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_oXsQowam" id="radio_oXsQowam_1" value="1">
-  <label class="form-check-label" for="radio_oXsQowam_1">
-    &#36;L&#61;-\infty&#36;
-
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_oXsQowam" id="radio_oXsQowam_2" value="2">
-  <label class="form-check-label" for="radio_oXsQowam_2">
-    &#36;L&#61;-1&#36;
-
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_oXsQowam" id="radio_oXsQowam_3" value="3">
-  <label class="form-check-label" for="radio_oXsQowam_3">
+  <input class="form-check-input" type="radio" name="radio_5jXRqmAO" id="radio_5jXRqmAO_1" value="1">
+  <label class="form-check-label" for="radio_5jXRqmAO_1">
     &#36;L&#61;0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_oXsQowam" id="radio_oXsQowam_4" value="4">
-  <label class="form-check-label" for="radio_oXsQowam_4">
+  <input class="form-check-input" type="radio" name="radio_5jXRqmAO" id="radio_5jXRqmAO_2" value="2">
+  <label class="form-check-label" for="radio_5jXRqmAO_2">
+    &#36;L&#61;-1&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_5jXRqmAO" id="radio_5jXRqmAO_3" value="3">
+  <label class="form-check-label" for="radio_5jXRqmAO_3">
     &#36;L&#61;\infty&#36;
 
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_5jXRqmAO" id="radio_5jXRqmAO_4" value="4">
+  <label class="form-check-label" for="radio_5jXRqmAO_4">
+    &#36;L&#61;-\infty&#36;
 
-<div id="oXsQowam_message"></div>
+  </label>
+</div>
+
+<div id="5jXRqmAO_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_oXsQowam']").on("change", function() {
-  correct = this.value == 4;
+$("input:radio[name='radio_5jXRqmAO']").on("change", function() {
+  correct = this.value == 3;
 
   if(correct) {
-     $("#oXsQowam_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#5jXRqmAO_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#oXsQowam_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#5jXRqmAO_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
 </script>
 
 
-<h6>Question &lt;small&gt;No limit&lt;/small&gt;</h6>
+<h6>Question</h6>
+<p>Let <span class="math">$f(x) = \exp(x + \exp(-x^2))$</span> and <span class="math">$g(x) = \exp(-x^2)$</span>. Compute:</p>
+<p class="math">\[
+\lim_{x \rightarrow \infty} \frac{\ln(f(x))}{\ln(g(x))}.
+\]</p>
+
+
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='d3L9fQUL' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="form-floating input-group">
+<input id="d3L9fQUL" type="number" class="form-control" placeholder="Numeric answer">
+<label for="d3L9fQUL">Numeric answer</label>
+
+</div>
+
+<div id='d3L9fQUL_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#d3L9fQUL').on('change', function() {
+  correct = Math.abs(this.value - 0) <= 0;
+
+  if(correct) {
+     $('#d3L9fQUL_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#d3L9fQUL_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
+
+
+<h6>Question</h6>
+<p>Consider the following expression:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'>
+</span><span class='hljl-n'>ex</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-p'>(</span><span class='hljl-nf'>exp</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-nf'>exp</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-n'>x</span><span class='hljl-p'>)))</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-nf'>exp</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+<div class="output">$- e^{x} + e^{x - e^{- x}}$
+</div>
+
+<p>We want to find the limit, <span class="math">$L$</span>, as <span class="math">$x \rightarrow \infty$</span>, which we assume exists below.</p>
+<p>We first rewrite <code>ex</code> using <code>w</code> as <code>exp&#40;-x&#41;</code>:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>w</span><span class='hljl-t'>
+</span><span class='hljl-n'>ex1</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>ex</span><span class='hljl-p'>(</span><span class='hljl-nf'>exp</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=&gt;</span><span class='hljl-t'> </span><span class='hljl-n'>w</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+<div class="output">$- \frac{1}{w} + \frac{e^{- w}}{w}$
+</div>
+
+<p>As <span class="math">$x \rightarrow \infty$</span>, <span class="math">$w \rightarrow 0+$</span>, so the limit at <span class="math">$0+$</span> of <code>ex1</code> is of interest.</p>
+<p>Use this fact, to find <span class="math">$L$</span></p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>limit</span><span class='hljl-p'>(</span><span class='hljl-n'>ex1</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>w</span><span class='hljl-oB'>/</span><span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>w</span><span class='hljl-oB'>=&gt;</span><span class='hljl-ni'>0</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+<div class="output">$0$
+</div>
+
+<p><span class="math">$L$</span> is:</p>
+
+
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='Rr8JKH8f' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="form-floating input-group">
+<input id="Rr8JKH8f" type="number" class="form-control" placeholder="Numeric answer">
+<label for="Rr8JKH8f">Numeric answer</label>
+
+</div>
+
+<div id='Rr8JKH8f_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#Rr8JKH8f').on('change', function() {
+  correct = Math.abs(this.value - -1) <= 0;
+
+  if(correct) {
+     $('#Rr8JKH8f_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#Rr8JKH8f_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
+
+
+<p>&#40;This awkward approach is  generalizable: replacing the limit as <span class="math">$w \rightarrow 0$</span> of an expression with the limit of a polynomial in <code>w</code> that is easy to identify.&#41;</p>
+<h6>Question</h6>
+<p>As mentioned, for limits that depend on specific values of parameters <code>SymPy</code> may have issues. As an example, <code>SymPy</code> has an issue with this limit, whose answer  depends on the value of <span class="math">$k$</span>&quot;</p>
+<p class="math">\[
+\lim_{x \rightarrow 0+} \frac{\sin(\sin(x^2))}{x^k}.
+\]</p>
+<p>Note, regardless of <span class="math">$k$</span> you find:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>::</span><span class='hljl-n'>real</span><span class='hljl-t'> </span><span class='hljl-n'>k</span><span class='hljl-oB'>::</span><span class='hljl-n'>integer</span><span class='hljl-t'>
+</span><span class='hljl-nf'>limit</span><span class='hljl-p'>(</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-p'>))</span><span class='hljl-oB'>/</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-n'>k</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>=&gt;</span><span class='hljl-ni'>0</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+<div class="output">$0$
+</div>
+
+<p>For which value&#40;s&#41; of <span class="math">$k$</span> in <span class="math">$1,2,3$</span> is this actually the correct answer? &#40;Do the above <span class="math">$3$</span> times using a specific value of <code>k</code>, not a numeric one.</p>
+
+
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="3IZfG5UO" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_3IZfG5UO" id="radio_3IZfG5UO_1" value="1">
+  <label class="form-check-label" for="radio_3IZfG5UO_1">
+    &#36;1&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_3IZfG5UO" id="radio_3IZfG5UO_2" value="2">
+  <label class="form-check-label" for="radio_3IZfG5UO_2">
+    &#36;2&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_3IZfG5UO" id="radio_3IZfG5UO_3" value="3">
+  <label class="form-check-label" for="radio_3IZfG5UO_3">
+    &#36;3&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_3IZfG5UO" id="radio_3IZfG5UO_4" value="4">
+  <label class="form-check-label" for="radio_3IZfG5UO_4">
+    &#36;1,2&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_3IZfG5UO" id="radio_3IZfG5UO_5" value="5">
+  <label class="form-check-label" for="radio_3IZfG5UO_5">
+    &#36;1,3&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_3IZfG5UO" id="radio_3IZfG5UO_6" value="6">
+  <label class="form-check-label" for="radio_3IZfG5UO_6">
+    &#36;2,3&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_3IZfG5UO" id="radio_3IZfG5UO_7" value="7">
+  <label class="form-check-label" for="radio_3IZfG5UO_7">
+    &#36;1,2,3&#36;
+
+  </label>
+</div>
+
+<div id="3IZfG5UO_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_3IZfG5UO']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#3IZfG5UO_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#3IZfG5UO_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
+
+<h6>Question: No limit</h6>
 <p>Some functions do not have a limit. Make a graph of <span class="math">$\sin(1/x)$</span> from <span class="math">$0.0001$</span> to <span class="math">$1$</span> and look at the output. Why does a limit not exist?</p>
 
 
-<form name="WeaveQuestion" data-id="EzJX27jU" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="iapnoGMX" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_EzJX27jU" id="radio_EzJX27jU_1" value="1">
-  <label class="form-check-label" for="radio_EzJX27jU_1">
-    Any function that oscillates does not have a limit.
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_EzJX27jU" id="radio_EzJX27jU_2" value="2">
-  <label class="form-check-label" for="radio_EzJX27jU_2">
-    The function oscillates too much and its y values do not get close to any one value
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_EzJX27jU" id="radio_EzJX27jU_3" value="3">
-  <label class="form-check-label" for="radio_EzJX27jU_3">
+  <input class="form-check-input" type="radio" name="radio_iapnoGMX" id="radio_iapnoGMX_1" value="1">
+  <label class="form-check-label" for="radio_iapnoGMX_1">
     Err, the limit does exists and is 1
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_EzJX27jU" id="radio_EzJX27jU_4" value="4">
-  <label class="form-check-label" for="radio_EzJX27jU_4">
+  <input class="form-check-input" type="radio" name="radio_iapnoGMX" id="radio_iapnoGMX_2" value="2">
+  <label class="form-check-label" for="radio_iapnoGMX_2">
     The limit does exist - it is any number from -1 to 1
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_iapnoGMX" id="radio_iapnoGMX_3" value="3">
+  <label class="form-check-label" for="radio_iapnoGMX_3">
+    Any function that oscillates does not have a limit.
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_iapnoGMX" id="radio_iapnoGMX_4" value="4">
+  <label class="form-check-label" for="radio_iapnoGMX_4">
+    The function oscillates too much and its y values do not get close to any one value
+  </label>
+</div>
 
-<div id="EzJX27jU_message"></div>
+<div id="iapnoGMX_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_EzJX27jU']").on("change", function() {
-  correct = this.value == 2;
+$("input:radio[name='radio_iapnoGMX']").on("change", function() {
+  correct = this.value == 4;
 
   if(correct) {
-     $("#EzJX27jU_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#iapnoGMX_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#EzJX27jU_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#iapnoGMX_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
 </script>
 
 
-<h6>Question &lt;small&gt;<span class="math">$0^0$</span>&lt;/small&gt;</h6>
+<h6>Question <span class="math">$0^0$</span> is not <em>always</em> <span class="math">$1$</span></h6>
 <p>Is the form <span class="math">$0^0$</span> really indeterminate? As mentioned <code>0^0</code> evaluates to <code>1</code>.</p>
 <p>Consider this limit:</p>
 <p class="math">\[
@@ -6278,47 +6653,47 @@ $("input:radio[name='radio_EzJX27jU']").on("change", function() {
 <p>Consider different values of <span class="math">$k$</span> to see if this limit depends on <span class="math">$k$</span> or not. What is <span class="math">$L$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="Q1ScWilr" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="MaHixKUJ" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Q1ScWilr" id="radio_Q1ScWilr_1" value="1">
-  <label class="form-check-label" for="radio_Q1ScWilr_1">
-    &#36;1&#36;
-
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Q1ScWilr" id="radio_Q1ScWilr_2" value="2">
-  <label class="form-check-label" for="radio_Q1ScWilr_2">
+  <input class="form-check-input" type="radio" name="radio_MaHixKUJ" id="radio_MaHixKUJ_1" value="1">
+  <label class="form-check-label" for="radio_MaHixKUJ_1">
     &#36;k&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Q1ScWilr" id="radio_Q1ScWilr_3" value="3">
-  <label class="form-check-label" for="radio_Q1ScWilr_3">
-    The limit does not exist
+  <input class="form-check-input" type="radio" name="radio_MaHixKUJ" id="radio_MaHixKUJ_2" value="2">
+  <label class="form-check-label" for="radio_MaHixKUJ_2">
+    &#36;1&#36;
+
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Q1ScWilr" id="radio_Q1ScWilr_4" value="4">
-  <label class="form-check-label" for="radio_Q1ScWilr_4">
+  <input class="form-check-input" type="radio" name="radio_MaHixKUJ" id="radio_MaHixKUJ_3" value="3">
+  <label class="form-check-label" for="radio_MaHixKUJ_3">
     &#36;\log&#40;k&#41;&#36;
 
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_MaHixKUJ" id="radio_MaHixKUJ_4" value="4">
+  <label class="form-check-label" for="radio_MaHixKUJ_4">
+    The limit does not exist
+  </label>
+</div>
 
-<div id="Q1ScWilr_message"></div>
+<div id="MaHixKUJ_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Q1ScWilr']").on("change", function() {
-  correct = this.value == 1;
+$("input:radio[name='radio_MaHixKUJ']").on("change", function() {
+  correct = this.value == 2;
 
   if(correct) {
-     $("#Q1ScWilr_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#MaHixKUJ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Q1ScWilr_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#MaHixKUJ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -6341,47 +6716,47 @@ f &#40;generic function with 1 method&#41;
 <p>Consider different values of <span class="math">$k$</span> to see if the limit depends on <span class="math">$k$</span> or not. What is <span class="math">$L$</span>?</p>
 
 
-<form name="WeaveQuestion" data-id="kYP48Q4r" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="ZeQlLWSY" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_kYP48Q4r" id="radio_kYP48Q4r_1" value="1">
-  <label class="form-check-label" for="radio_kYP48Q4r_1">
-    The limit does not exist
+  <input class="form-check-input" type="radio" name="radio_ZeQlLWSY" id="radio_ZeQlLWSY_1" value="1">
+  <label class="form-check-label" for="radio_ZeQlLWSY_1">
+    &#36;1&#36;
+
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_kYP48Q4r" id="radio_kYP48Q4r_2" value="2">
-  <label class="form-check-label" for="radio_kYP48Q4r_2">
+  <input class="form-check-input" type="radio" name="radio_ZeQlLWSY" id="radio_ZeQlLWSY_2" value="2">
+  <label class="form-check-label" for="radio_ZeQlLWSY_2">
     &#36;\log&#40;k&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_kYP48Q4r" id="radio_kYP48Q4r_3" value="3">
-  <label class="form-check-label" for="radio_kYP48Q4r_3">
+  <input class="form-check-input" type="radio" name="radio_ZeQlLWSY" id="radio_ZeQlLWSY_3" value="3">
+  <label class="form-check-label" for="radio_ZeQlLWSY_3">
     &#36;k&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_kYP48Q4r" id="radio_kYP48Q4r_4" value="4">
-  <label class="form-check-label" for="radio_kYP48Q4r_4">
-    &#36;1&#36;
-
+  <input class="form-check-input" type="radio" name="radio_ZeQlLWSY" id="radio_ZeQlLWSY_4" value="4">
+  <label class="form-check-label" for="radio_ZeQlLWSY_4">
+    The limit does not exist
   </label>
 </div>
 
-<div id="kYP48Q4r_message"></div>
+<div id="ZeQlLWSY_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_kYP48Q4r']").on("change", function() {
+$("input:radio[name='radio_ZeQlLWSY']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#kYP48Q4r_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#ZeQlLWSY_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#kYP48Q4r_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#ZeQlLWSY_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -6397,50 +6772,50 @@ x^4/x^3,\quad x^{100+1}/x^{100}, \quad x/\log(x), \quad 3^x / 2^x, \quad e^x/x^{
 \]</p>
 
 
-<form name="WeaveQuestion" data-id="iEBJfETM" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="YtjmJLCB" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_iEBJfETM" id="radio_iEBJfETM_1" value="1">
-  <label class="form-check-label" for="radio_iEBJfETM_1">
+  <input class="form-check-input" type="radio" name="radio_YtjmJLCB" id="radio_YtjmJLCB_1" value="1">
+  <label class="form-check-label" for="radio_YtjmJLCB_1">
     the first one
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_iEBJfETM" id="radio_iEBJfETM_2" value="2">
-  <label class="form-check-label" for="radio_iEBJfETM_2">
+  <input class="form-check-input" type="radio" name="radio_YtjmJLCB" id="radio_YtjmJLCB_2" value="2">
+  <label class="form-check-label" for="radio_YtjmJLCB_2">
     the first and second ones
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_iEBJfETM" id="radio_iEBJfETM_3" value="3">
-  <label class="form-check-label" for="radio_iEBJfETM_3">
+  <input class="form-check-input" type="radio" name="radio_YtjmJLCB" id="radio_YtjmJLCB_3" value="3">
+  <label class="form-check-label" for="radio_YtjmJLCB_3">
     the first, second and third ones
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_iEBJfETM" id="radio_iEBJfETM_4" value="4">
-  <label class="form-check-label" for="radio_iEBJfETM_4">
+  <input class="form-check-input" type="radio" name="radio_YtjmJLCB" id="radio_YtjmJLCB_4" value="4">
+  <label class="form-check-label" for="radio_YtjmJLCB_4">
     the first, second, third, and fourth ones
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_iEBJfETM" id="radio_iEBJfETM_5" value="5">
-  <label class="form-check-label" for="radio_iEBJfETM_5">
+  <input class="form-check-input" type="radio" name="radio_YtjmJLCB" id="radio_YtjmJLCB_5" value="5">
+  <label class="form-check-label" for="radio_YtjmJLCB_5">
     all of them
   </label>
 </div>
 
-<div id="iEBJfETM_message"></div>
+<div id="YtjmJLCB_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_iEBJfETM']").on("change", function() {
+$("input:radio[name='radio_YtjmJLCB']").on("change", function() {
   correct = this.value == 5;
 
   if(correct) {
-     $("#iEBJfETM_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#YtjmJLCB_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#iEBJfETM_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#YtjmJLCB_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -6451,50 +6826,50 @@ $("input:radio[name='radio_iEBJfETM']").on("change", function() {
 <p>A slant asymptote is a line <span class="math">$mx + b$</span> for which the graph of <span class="math">$f(x)$</span> gets close to as <span class="math">$x$</span> gets large. We can&#39;t express this directly as a limit, as &quot;<span class="math">$L$</span>&quot; is not a number. How might we?</p>
 
 
-<form name="WeaveQuestion" data-id="TVvqdoqF" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="brerHr0S" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TVvqdoqF" id="radio_TVvqdoqF_1" value="1">
-  <label class="form-check-label" for="radio_TVvqdoqF_1">
-    We can say &#36;f&#40;x&#41; - mx&#36; has a horizontal asymptote &#36;y&#61;b&#36;
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TVvqdoqF" id="radio_TVvqdoqF_2" value="2">
-  <label class="form-check-label" for="radio_TVvqdoqF_2">
-    Any of the above
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TVvqdoqF" id="radio_TVvqdoqF_3" value="3">
-  <label class="form-check-label" for="radio_TVvqdoqF_3">
+  <input class="form-check-input" type="radio" name="radio_brerHr0S" id="radio_brerHr0S_1" value="1">
+  <label class="form-check-label" for="radio_brerHr0S_1">
     We can talk about the limit at &#36;\infty&#36; of &#36;f&#40;x&#41; - &#40;mx &#43; b&#41;&#36; being &#36;0&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TVvqdoqF" id="radio_TVvqdoqF_4" value="4">
-  <label class="form-check-label" for="radio_TVvqdoqF_4">
+  <input class="form-check-input" type="radio" name="radio_brerHr0S" id="radio_brerHr0S_2" value="2">
+  <label class="form-check-label" for="radio_brerHr0S_2">
     We can talk about the limit at &#36;\infty&#36; of &#36;f&#40;x&#41; - mx&#36; being &#36;b&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TVvqdoqF" id="radio_TVvqdoqF_5" value="5">
-  <label class="form-check-label" for="radio_TVvqdoqF_5">
+  <input class="form-check-input" type="radio" name="radio_brerHr0S" id="radio_brerHr0S_3" value="3">
+  <label class="form-check-label" for="radio_brerHr0S_3">
     We can say &#36;f&#40;x&#41; - &#40;mx&#43;b&#41;&#36; has a horizontal asymptote &#36;y&#61;0&#36;
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_brerHr0S" id="radio_brerHr0S_4" value="4">
+  <label class="form-check-label" for="radio_brerHr0S_4">
+    We can say &#36;f&#40;x&#41; - mx&#36; has a horizontal asymptote &#36;y&#61;b&#36;
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_brerHr0S" id="radio_brerHr0S_5" value="5">
+  <label class="form-check-label" for="radio_brerHr0S_5">
+    Any of the above
+  </label>
+</div>
 
-<div id="TVvqdoqF_message"></div>
+<div id="brerHr0S_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_TVvqdoqF']").on("change", function() {
-  correct = this.value == 2;
+$("input:radio[name='radio_brerHr0S']").on("change", function() {
+  correct = this.value == 5;
 
   if(correct) {
-     $("#TVvqdoqF_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#brerHr0S_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#TVvqdoqF_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#brerHr0S_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -6502,63 +6877,65 @@ $("input:radio[name='radio_TVvqdoqF']").on("change", function() {
 
 
 <h6>Question</h6>
-<p>Suppose a sequence of points <span class="math">$x_n$</span> converges to <span class="math">$a$</span> in the limiting sense. For a function <span class="math">$f(x)$</span>, the sequence of points <span class="math">$f(x_n)$</span> may or may not converge.  One alternative definition of a <a href="https://en.wikipedia.org/wiki/Limit_of_a_function#In_terms_of_sequences">limit</a> due to Heine is that <span class="math">$lim_{x \rightarrow a}f(x) = L$</span> if <em>and</em> only if <strong>all</strong> sequences <span class="math">$x_n \rightarrow a$</span> have <span class="math">$f(x_n) \rightarrow L$</span>.</p>
+<p>Suppose a sequence of points <span class="math">$x_n$</span> converges to <span class="math">$a$</span> in the limiting sense. For a function <span class="math">$f(x)$</span>, the sequence of points <span class="math">$f(x_n)$</span> may or may not converge.  One alternative definition of a <a href="https://en.wikipedia.org/wiki/Limit_of_a_function#In_terms_of_sequences">limit</a> due to Heine is that <span class="math">$\lim_{x \rightarrow a}f(x) = L$</span> if <em>and</em> only if <strong>all</strong> sequences <span class="math">$x_n \rightarrow a$</span> have <span class="math">$f(x_n) \rightarrow L$</span>.</p>
 <p>Consider the function <span class="math">$f(x) = \sin(1/x)$</span>, <span class="math">$a=0$</span>, and the two sequences implicitly defined by <span class="math">$1/x_n = \pi/2 + n \cdot (2\pi)$</span> and <span class="math">$y_n = 3\pi/2 + n \cdot(2\pi)$</span>, <span class="math">$n = 0, 1, 2, \dots$</span>.</p>
 <p>What is <span class="math">$\lim_{x_n \rightarrow 0} f(x_n)$</span>?</p>
 
 
-<form name='WeaveQuestion' data-id='VjUjGfAl' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='uT8HaZ9r' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
-<div class="input-group">
-<input id="VjUjGfAl" type="number" class="form-control">
+<div class="form-floating input-group">
+<input id="uT8HaZ9r" type="number" class="form-control" placeholder="Numeric answer">
+<label for="uT8HaZ9r">Numeric answer</label>
 
 </div>
 
-<div id='VjUjGfAl_message'></div>
+<div id='uT8HaZ9r_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#VjUjGfAl').on('change', function() {
+$('#uT8HaZ9r').on('change', function() {
   correct = Math.abs(this.value - 1) <= 0;
 
   if(correct) {
-     $('#VjUjGfAl_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#uT8HaZ9r_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#VjUjGfAl_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#uT8HaZ9r_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
 
 
-<p>What is <span class="math">$\lim_{x_n \rightarrow 0} f(y_n)$</span>?</p>
+<p>What is <span class="math">$\lim_{y_n \rightarrow 0} f(y_n)$</span>?</p>
 
 
-<form name='WeaveQuestion' data-id='c5L1BGNh' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='i6Zp6zeC' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
-<div class="input-group">
-<input id="c5L1BGNh" type="number" class="form-control">
+<div class="form-floating input-group">
+<input id="i6Zp6zeC" type="number" class="form-control" placeholder="Numeric answer">
+<label for="i6Zp6zeC">Numeric answer</label>
 
 </div>
 
-<div id='c5L1BGNh_message'></div>
+<div id='i6Zp6zeC_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#c5L1BGNh').on('change', function() {
+$('#i6Zp6zeC').on('change', function() {
   correct = Math.abs(this.value - -1) <= 0;
 
   if(correct) {
-     $('#c5L1BGNh_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#i6Zp6zeC_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#c5L1BGNh_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#i6Zp6zeC_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -6567,72 +6944,74 @@ $('#c5L1BGNh').on('change', function() {
 <p>This shows that</p>
 
 
-<form name="WeaveQuestion" data-id="TnI58k5K" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="pyOyHmJy" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TnI58k5K" id="radio_TnI58k5K_1" value="1">
-  <label class="form-check-label" for="radio_TnI58k5K_1">
-    &#36;f&#40;x&#41;&#36; has a limit of &#36;1&#36; as &#36;x \rightarrow 0&#36;
+  <input class="form-check-input" type="radio" name="radio_pyOyHmJy" id="radio_pyOyHmJy_1" value="1">
+  <label class="form-check-label" for="radio_pyOyHmJy_1">
+    &#36;f&#40;x&#41;&#36; has a limit of &#36;-1&#36; as &#36;x \rightarrow 0&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TnI58k5K" id="radio_TnI58k5K_2" value="2">
-  <label class="form-check-label" for="radio_TnI58k5K_2">
-    &#36;f&#40;x&#41;&#36; has a limit of &#36;-11&#36; as &#36;x \rightarrow 0&#36;
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TnI58k5K" id="radio_TnI58k5K_3" value="3">
-  <label class="form-check-label" for="radio_TnI58k5K_3">
+  <input class="form-check-input" type="radio" name="radio_pyOyHmJy" id="radio_pyOyHmJy_2" value="2">
+  <label class="form-check-label" for="radio_pyOyHmJy_2">
     &#36;f&#40;x&#41;&#36; does not have a limit as &#36;x \rightarrow 0&#36;
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_pyOyHmJy" id="radio_pyOyHmJy_3" value="3">
+  <label class="form-check-label" for="radio_pyOyHmJy_3">
+    &#36;f&#40;x&#41;&#36; has a limit of &#36;1&#36; as &#36;x \rightarrow 0&#36;
+  </label>
+</div>
 
-<div id="TnI58k5K_message"></div>
+<div id="pyOyHmJy_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_TnI58k5K']").on("change", function() {
-  correct = this.value == 3;
+$("input:radio[name='radio_pyOyHmJy']").on("change", function() {
+  correct = this.value == 2;
 
   if(correct) {
-     $("#TnI58k5K_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#pyOyHmJy_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#TnI58k5K_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#pyOyHmJy_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
 </script>
 
 
-<hr />
 
+<div class="card" style="">
+  <div class="card-header float-end text-muted">
+    <span class="text-muted  float-end align-middle">
 
-<footer class="footer">
-<div class="span10 offset1 d-flex justify-content-end">
-
-<a href="../limits/limits.html" aria-label="Previous section">
-  <i class="bi bi-arrow-left-circle-fill"></i>
+<a href="../limits/limits.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Previous section" aria-label="Previous section">
+<i class="bi bi-arrow-left-circle-fill"></i>
 </a>
 
 &nbsp;
 
-<a href="../limits/continuity.html" aria-label="Next section">
-  <i class="bi bi-arrow-right-circle-fill"></i>
+<a href="../limits/continuity.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Next section" aria-label="Next section">
+<i class="bi bi-arrow-right-circle-fill"></i>
 </a>
 
 &nbsp;
 
-<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/limits/limits_extensions.jmd" aria-label="Suggest edt">
-  <i class="bi bi-pencil-square"></i>
+<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/limits/limits_extensions.jmd" data-bs-toggle="tooltip" data-bs-placement="top" title="Suggest an edit" aria-label="Suggest an edit">
+<i class="bi bi-pencil-square"></i>
 </a>
 
 &nbsp;
 
-<a href="../misc/toc.html">Calculus with Julia</a>
+<a href="../misc/toc.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Table of contents" aria-label="Table of contents">
+<i class="bi bi-card-list"></i>
+</a>
 
+    </span>
+  </div>
 </div>
-</footer>
 
 
   </div>
@@ -6643,6 +7022,10 @@ $("input:radio[name='radio_TnI58k5K']").on("change", function() {
   hljs.highlightElement(el);                              // then highlight each
   });
 
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
   var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
   var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
     return new bootstrap.Popover(popoverTriggerEl)

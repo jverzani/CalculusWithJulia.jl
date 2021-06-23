@@ -94,15 +94,28 @@ mutable struct JSXGRAPH
     HEIGHT
 end
 
+#<div class="card">
+#   <div class="card-header">{{{CAPTION}}}</div>
+
+#  <div class="card-body">
+#    <div id="{{ID}}" class='{{CLASS}}' style='width:{{WIDTH}}px; height:{{HEIGHT}}px'></div>
+#  </div>
+#</div>
 
 
-jsxgraph_tpl = """
-<div class="card">
-   <div class="card-header">{{{CAPTION}}}</div>
-
-  <div class="card-body">
-    <div id="{{ID}}" class='{{CLASS}}' style='width:{{WIDTH}}px; height:{{HEIGHT}}px'></div>
+## XXX Put in centered
+jsxgraph_tpl = Mustache.mt"""
+<div class="d-flex justify-content-center">
+<div class="card border-light mx-3 px-3 my-3 py-3" style="{{#:width}}width={{:width}}px{{/:width}}{{^:width}} max-width: 560px;{{/:width}}">
+   <div id="{{ID}}" class='{{CLASS}}' style='width:{{WIDTH}}px; height:{{HEIGHT}}px'></div>
+  <div class="card-footer text-muted">
+    <span class="card-text">
+      <small class="text-muted">
+      {{{CAPTION}}}
+      </small>
+    </span>
   </div>
+</div>
 </div>
 
 
