@@ -7,25 +7,98 @@ using Plots
 nothing
 ```
 
-[Julia](http://www.julialang.org) is a programming language that is freely available.
+[Julia](http://www.julialang.org) The `Julia` programming language is well suited as an accompaniment while learning the concepts of calculus. The following overview covers the language-specific aspects of the pre-calculus part of the [Calculus with Julia](calculuswithjulia.github.io) notes.
+
+## Installing `Julia`
+
+`Julia` is an *open source* project which allows anyone with a supported to computer to use it. To install locally, the [downloads](https://julialang.org/downloads/) page has several different binaries for installation. Additionally, the downloads page contains a link to a docker image.  For Microsoft Windows, the new [juilaup](https://github.com/JuliaLang/juliaup) installer may be of interest; it is available from the Windows Store.
+`Julia` can also be compiled from source.
+
+`Julia` can also be run through the web. The [https://mybinder.org/](https://mybinder.org/) service in particular allows free access, though limited in terms of allotted memory and with a relatively short timeout for inactivity.
 
 
 [Launch Binder](https://mybinder.org/v2/gh/CalculusWithJulia/CwJScratchPad.git/master)
 
-We can use `Julia` without installation by clicking the "launch Binder" badge. The notebook `CalculusWithJulia.ipynb` is a blank notebook except for the command to load the `CalculusWithJulia` package.
+## Interacting with `Julia`
+
+The Calculus With Julia notes are formatted as though the commands were run in the notebook interface of `Jupyter` (below), though there are many other interfaces for interacting with `Julia`. Here we describe popular ones.
+
+At a basic level, `Julia` provides a means to read commands or instructions, evaluated those commands, and then print or return those commands. At a user level, there are many different meeans the reading and printing can used:
+
+* The REPL. The `Julia` terminal is the built-in means to interact with `Julia`. A `Julia` Terminal has a command prompt, after which commands are typed and then sent to be evaluated by the `enter` key. The terminal may look something like the following where `2+2` is evaluated:
+
+----
+
+```
+$ julia
+               _
+   _       _ _(_)_     |  Documentation: https://docs.julialang.org
+  (_)     | (_) (_)    |
+   _ _   _| |_  __ _   |  Type "?" for help, "]?" for Pkg help.
+  | | | | | | |/ _` |  |
+  | | |_| | | | (_| |  |  Version 1.6.0 (2021-03-24)
+ _/ |\__'_|_|_|\__'_|  |  Official https://julialang.org/ release
+|__/                   |
+
+julia> 2 + 2
+4
+```
+
+----
+
+* An IDE. For programmers, an integrated development environment is often used to manage bigger projects. `Julia` has `Juno` and `VSCode`.
+
+* A notebook. The [Project Juptyer](https://jupyter.org/) provides a notebook interface for interacting with `Julia` and a more `IDE` style `jupyterlabl` interface. These notes are formatted as though a notebook was used. That is, there are cells where commands are typed and immediately following is the printed output returned by `Julia`. The `Juypter` notebook is used by `binder` and can be used locally through the `IJulia` package. This notebook has the ability to display many different types of outputs in addition to plain text, such as images, marked up math test, etc.
+
+* The [Pluto](https://github.com/fonsp/Pluto.jl) package provides a *reactive* notebook interface. Reactive means when one "cell" is modified and executed, the new values cascade to all other cells which in turn are updated. This is very useful for exploring a parameter space for example.
 
 
-Alternatively, the [juliabox.com](https://www.juliabox.com) service
-provides access to `Julia` through the internet, though the free
-access is slated to be discontinued. Both use the
-[Jupyter](https://jupyter.org/) notebook interface, which we will
-assume, though many other means of interacting with `Julia` are
-available.
+Each interface has some means to send commands to `Julia`'s interpreter. For `Jupyter` the commands in a cell are sent to be executed by the keyboard command `shift-enter` or through the "play" icon (➡) in the toolbar.
+
+## Augmenting base `Julia`
+
+The base `Julia` installation has many features, but leaves many others to `Julia`'s package ecosystem. These notes use packages to provide plotting, symbolic math, access to special functions, numeric routines, and more.
+
+The `Julia` package manager makes add-on packages very easy to install.
+
+Julia comes with just a few built-in packages, one being `Pkg` which manages subsequent package installation. To do so, we first must *load* the `Pkg` package. This is done by issuing the following command:
+
+```julia
+using Pkg
+```
+
+The `using` command loads the specified package and makes all its *exported* values available for direct use. There is also the `import` command which allows the user to select which values should be imported from the package, if any, and otherwise gives access to the new functionality through the dot syntax.
+
+Packages need to be loaded just once per session.
+
+To use `Pkg` to "add" another package, we would have a command like:
+
+```julia, eval=false
+Pkg.add("CalculusWithJulia")
+```
+
+This command instructs `Julia` to look at its *general registry* for the `CalculusWithJulia.jl` package, download it, then install it. Once installed, a package only  needs to be brought into play with the `using` or `import` commands.
+
+Packages can be updated through the command `Pkg.up()`, and removed with `Pkg.rm(pkgname)`.
+
+By default packages are installed in a common area. It may be desirable to keep packages for projects isolated. For this the `Pkg.activate` command can be used. This feature allows a means to have reproducible environments even if `Julia` or the packages used are upgraded, possibly introducing incompatabilities.
 
 
-## Commands
+For these notes, the following packages, among others are used:
 
-Commands are typed into a notebook cell in `Jupyter`. (Or at the command line.)
+```julia; eval=false
+Pkg.add("CalculusWithJulia") # for some simplifying functions and a few packages (SpecialFunctions, ForwardDiff)
+Pkg.add("Plots")  # for basic plotting
+Pkg.add("SymPy")  # for symbolic math
+Pkg.add("Roots")  # for solving  `f(x)=0`
+Pkg.add("QuadGk") # for integration
+Pkg.add("HQuadrature") # for higher-dimensional integration
+```
+
+
+## `Julia` commands
+
+In `Jupyter`, commands are typed into a notebook cell:
 
 ```julia;
 2 + 2   # use shift-enter to evaluate
@@ -33,13 +106,15 @@ Commands are typed into a notebook cell in `Jupyter`. (Or at the command line.)
 
 Commands are executed by using `shift-enter` or the play button in `Jupyter`.
 
-Commands may be separated by new lines or semicolons, allowing multiple commands per cell.
+Commands may be separated by new lines or semicolons, allowing multiple commands per `Jupyter` cell.
 
-On a line, anything after a `#` is a *comment*.
+On a given line, anything **after** a `#` is a *comment* and is not processed.
 
-The results of the last line executed will be displayed in an
+The results of the last command executed will be displayed in an
 output area. Separating values by commas allows more than one value to be
-displayed. Explicit printing can be done to output intermediate values.
+displayed. Explicit printing can be done to output intermediate values. Plots are displayed when the plot object is returned by the  last executed command.
+
+The state of the notebook follows the execution order, not the order with the notebook. (That is there is no reason to assume the state comes by just looking at the cells above the current one. This is not the case with `Pluto` notebooks due to their reactive nature.)
 
 ## Numbers, variable types
 
@@ -53,15 +128,21 @@ displayed. Explicit printing can be done to output intermediate values.
 
 * Complex numbers `2 + 0im`
 
+`Julia`'s parser finds the appropriate type for the value, when read in. These all create the number ``1`` first as an integer, then a rational, then a floating point number, again as floating point number, and finally as a complex number:
+
+```julia
+1, 1//1, 1.0, 1e0, 1 + 0im
+```
+
+
 As much as possible, operations involving  certain types of numbers will produce output of a given type. For example, both of these divisions produce a floating point answer, even though  mathematically, they need not:
 
 ```julia;
 2/1, 1/2
 ```
 
-Some operations won't work with integer types, but will with floating point types, as the type of output can't be assured.
 
-Powers with negative bases, like `(-3.0)^(1/3)`, are not defined. However, `Julia` provides the special-case function `cbrt` (and `sqrt`) for handling these.
+Some powers with negative bases, like `(-3.0)^(1/3)`, are not defined. However, `Julia` provides the special-case function `cbrt` (and `sqrt`) for handling these.
 
 Integer operations may silently overflow, producing odd answers, at first glance:
 
@@ -69,7 +150,7 @@ Integer operations may silently overflow, producing odd answers, at first glance
 2^64
 ```
 
-(Though the output is predictable, if overflow is taken into consideration appropriateley.)
+(Though the output is predictable, if overflow is taken into consideration appropriately.)
 
 When different types of numbers are mixed, `Julia` will usually promote the values to a common type before the operation:
 
@@ -79,7 +160,7 @@ When different types of numbers are mixed, `Julia` will usually promote the valu
 
 `Julia` will first add `2` and `1//2` converting `2` to rational before doing so. Then add the result, `5//2` to `0.5` by promoting `5//2` to the floating point number `2.5` before proceeding.
 
-`Julia` uses a special type to store a handful of constants, of which both `pi` and `e` are used here. Theh special type allows these to be treated without round off, until they mix with other floating point numbers. There are some functions that require these be explicitly promoted to floating point. This can be done by calling `float`.
+`Julia` uses a special type to store a handful of irrational constants, we use `pi`. The special type allows these constants to be treated without round off, until they mix with other floating point numbers. There are some functions that require these be explicitly promoted to floating point. This can be done by calling `float`.
 
 The standard mathematical operations are implemented by `+`, `-`, `*`, `/`, `^`. Parentheses are used for grouping.
 
@@ -92,15 +173,22 @@ A vector is an indexed collection of similarly typed values. Vectors can be cons
 [1,1,2,3,5,8]
 ```
 
-(Vectors are used as a return type so some familiarity is needed.)
+(Vectors are used as a return type from some functions, as such some familiarity is needed.)
 
 Regular arithmetic sequences can be defined by either:
 
 * Range operations:  `a:h:b` or `a:b` which produces a generator of values starting at `a` separated by `h` (`h` is `1` in the last form) until they reach `b`.
 
-* `range(a, b, length=n)` which produces a generator of `n` values between `a` and `b`; (`range(a, stop=b, length=n)` is needed for version `v1.0.0` of `Julia.)
+* The `range` function: `range(a, b, length=n)` which produces a generator of `n` values between `a` and `b`;
 
 These constructs return range objects. A range object *compactly* stores the values it references. To see all the values, they can be collected with the `collect` function, though this is hardly needed in practice.
+
+
+Random sequences are formed by `rand`, among others:
+
+```julia
+rand(3)
+```
 
 ## Variables
 
@@ -114,22 +202,25 @@ a1 = a2 = 0    # chained assignment, sets a2 and a1 to 0
 ```
 
 The names can be short, as above, or more verbose. They can't start
-with a number, but can include numbers. It can also be a fancy [unicode](../unicode.html)
-or even an emoji.
+with a number, but can include numbers. Variables can also include
+[unicode](../misc/unicode.html) or even be an emoji.
 
+```julia;
+α, β = π/3, π/4
+```
 We can then use the variables to reference the values:
 
 ```julia;
-x + a_really_long_name + a - b
+x + a_really_long_name + a - b + α
 ```
 
 Names may be repurposed, even with values of different types (a
 dynamic language), save for function names, which have some special
-rules and can only be redefined as an another function. (Generic functions are central to `Julia`'s design. Generic functions use a method table to dispatch on, so once a name is assigned to a generic function, it can not be used as a variable name; the reverse is also true.
+rules and can only be redefined as another function. Generic functions are central to `Julia`'s design. Generic functions use a method table to dispatch on, so once a name is assigned to a generic function, it can not be used as a variable name; the reverse is also true.
 
 ## Functions
 
-Functions in `Julia` are just regular objects. In these notes, we often pass them as arguments to other functions. There are many built-in functions and it is easy to define new functions.
+Functions in `Julia` are first-class objects. In these notes, we often pass them as arguments to other functions. There are many built-in functions and it is easy to define new functions.
 
 We "call" a function by passing argument(s) to it, grouped by parentheses:
 
@@ -154,15 +245,15 @@ log
 Besides `^`, there are `sqrt` and `cbrt` for powers. In addition basic functions for exponential and  logarithmic functions:
 
 ```
-sqrt(x), cbrt(x)
-exp(x)
-log(x) # base e
-log10(x), log2(x), log(b, x)
+sqrt, cbrt
+exp
+log          # base e
+log10, log2, # also log(b, x)
 ```
 
 #### Trigonometric functions
 
-The $6$ standard trig functions are implemented; their implementation for degree arguments; their inverse functions; and the hyperbolic analogs.
+The ```6``` standard trig functions are implemented; their implementation for degree arguments; their inverse functions; and the hyperbolic analogs.
 
 ```
 sin, cos, tan, csc, sec, cot
@@ -182,17 +273,25 @@ sind, cosd, tand, cscd, secd, cotd
 
 Other useful and familiar functions are defined:
 
-- `abs(x)`: absolute value
+- `abs`: absolute value
 
-- `sign(x)`: is $\lvert x \rvert/x$ except at $x=0$, where it is $0$.
+- `sign`: is ``\lvert x \rvert/x`` except at ``x=0``, where it is ``0``.
 
-- `floor(x)`, `ceil(x)`: greatest integer less or least integer greater
+- `floor`, `ceil`: greatest integer less or least integer greater
 
 - `max(a,b)`, `min(a,b)`: larger (or smaller) of `a` or `b`
 
 - `maximum(xs)`, `minimum(xs)`: largest or smallest of the collection referred to by `xs`
 
+----
 
+The built-in documentation for an object is accessible through, say, `?sign`. There is also the `@doc` macro:
+
+```julia
+@doc sign
+```
+
+----
 
 ### User-defined functions
 
@@ -220,7 +319,7 @@ User defined functions can have 0, 1 or more arguments:
 area(w, h) = w*h
 ```
 
-Julia makes different *methods* for *generic* function names, so functions whose argument specification is different are different functions, even if the name is the same. This is *polymorphism*. The practical use is that it means users need only remember a much smaller set of function names.
+Julia makes different *methods* for *generic* function names, so function definitions whose argument specification is different are for different uses, even if the name is the same. This is *polymorphism*. The practical use is that it means users need only remember a much smaller set of function names, as attempts are made to give common expectations to the same name. (That is, `+` should be used only for "add" ing objects, however defined.)
 
 Functions can be defined with *keyword* arguments that may have defaults specified:
 
@@ -241,6 +340,8 @@ function f(x)
   z
 end
 ```
+
+
 
 Functions without names, *anonymous functions*, are made with the `->` syntax as in:
 
@@ -267,6 +368,19 @@ Iterating over a collection can be done with the traditional `for` loop. However
 [x^2 for x in 1:10]
 ```
 
+Comprehensions can be filtered through the `if` keyword
+
+```julia
+[x^2 for x in 1:10 if iseven(x)]
+```
+
+This is more efficient than creating the collection then filtering, as is done with:
+
+```julia
+filter(iseven, [x^2 for x in 1:10])
+```
+
+
 ## Broadcasting, mapping
 
 A function can be applied to each element of a vector through mapping or broadcasting. The latter is implemented in a succinct notation. Calling a function with a "." before its opening "(` will apply the function to each individual value in the argument:
@@ -276,6 +390,12 @@ xs = [1,2,3,4,5]
 sin.(xs)     # gives back [sin(1), sin(2), sin(3), sin(4), sin(5)]
 ```
 
+Alternatively, the more traditional `map` can be used:
+
+```julia;
+map(sin, xs)
+```
+
 ## Plotting
 
 Plotting is *not* built-in to `Julia`, rather added through add-on
@@ -283,13 +403,13 @@ packages.  `Julia`'s `Plots` package is an interface to several
 plotting packages. We mention `plotly` (built-in) for web based
 graphics, and `gr` for other graphics.
 
-To use an add-on package, it must have been installed and it must be loaded each session. In these notes, the necessary packages are all loaded when an accompanying package, `CalculusWithJulia` is loaded. Assuming it has been installed, this command will do so:
+We must load `Plots` before we can plot (and it must be installed before we can load it):
 
 ```julia;
-using CalculusWithJulia
+using Plots
 ```
 
-With `Plots` loaded, we can plot a function by passing the function object by name to `plot`, specifying the range of $x$ values to show, as follows:
+With `Plots` loaded, we can plot a function by passing the function object by name to `plot`, specifying the range of ```x``` values to show, as follows:
 
 ```julia;
 plot(sin, 0, 2pi) # plot a function - by name - over an interval [a,b]
@@ -301,44 +421,62 @@ This is in the form of **the** basic pattern employed: `verb(function_object, ar
 """)
 ```
 
-Plotting more than one function over $[a,b]$ is achieved through the `plot!` function, which modifies the existing plot (`plot` creates a new one):
+Plotting more than one function over ```[a,b]``` is achieved through the `plot!` function, which modifies the existing plot (`plot` creates a new one) by adding a new layer:
 
 ```julia;
 plot(sin, 0, 2pi)
 plot!(cos, 0, 2pi)
-plot!(zero, 0, 2pi)
+plot!(zero, 0, 2pi) # add the line y=0
 ```
 
+Individual points are added with `scatter` or `scatter!`:
 
+```julia;
+plot(sin, 0, 2pi, legend=false)
+plot!(cos, 0, 2pi)
+scatter!([pi/4, pi+pi/4], [sin(pi/4), sin(pi + pi/4)])
+```
 
-Plotting an *anonymous* function is a bit more immediate:
+(The extra argument `legend=false` suppresses the automatic legend drawing. There are many other useful arguments to adjust a graphic. For example, passing `markersize=10` to the `scatter!` command would draw the points larger than the default.)
+
+Plotting an *anonymous* function is a bit more immediate than the two-step approach of defining a named function then calling `plot` with this as an argument:
 
 ```julia;
 plot( x -> exp(-x/pi) * sin(x), 0, 2pi)
 ```
 
-The `Plots` package has other types of plots. Of note is `scatter` which is used to make a scatter plot of two data sets.
+
+The `scatter!` function used above takes two vectors of values to describe the points to plot, one for the ``x`` values and one for the matching ``y`` values. The `plot` function can also produce plots with this interface. For example, here we use a comprehension to produce `y` values from the specified `x` values:
+
+```julia
+xs = range(0, 2pi, length=251)
+ys = [sin(2x) + sin(3x) + sin(4x) for x in xs]
+plot(xs, ys)
+```
+
+
 
 
 ## Equations
 
 Notation for `Julia` and math is *similar* for functions - but not for equations. In math, an equation  might look like:
 
-$$~
+```math
 x^2 + y^2 = 3
-~$$
+```
 
-In `Julia` the equals sign is **only** for *assignment*. The *left-hand* side of an equals sign in `Julia` is reserved for a) variable assignment; b) function defintion (via `f(x) = ...`); and c) indexed assignment to a vector or array. (Vectors are indexed by a number allow retrieval and setting of the stored value in the container. The notation mentioned here would be `xs[2] = 3` to assign to the 2nd element a value `3`.
+In `Julia` the equals sign is **only** for *assignment*. The *left-hand* side of an equals sign in `Julia` is reserved for a) variable assignment; b) function definition (via `f(x) = ...`); and c) indexed assignment to a vector or array. (Vectors are indexed by a number allow retrieval and setting of the stored value in the container. The notation mentioned here would be `xs[2] = 3` to assign to the 2nd element of `xs` a value `3`.
 
 ## Symbolic math
 
-Symbolic math is available through an add-on package `SymPy`. As with `Plots`, this package is also loaded with `CalculusWithJulia`. Once loaded, symbolic variables are created with `@syms`:
+Symbolic math is available through an add-on package `SymPy`.  Once loaded, symbolic variables are created with `@syms`:
 
 ```julia;
-using SymPy   # load package, not needed here as it was done already with CalculusWithJulia
-@syms x a b c 
+using SymPy
+@syms x a b c
 ```
 
+(A macro rewrites values into other commands before they are interpreted. Macros are prefixed with the `@` sign. In this use, the "macro" `@syms` translates `x a b c` into a command involving `SymPy`s `symbols` function.)
 
 Symbolic expressions - unlike numeric expressions - are not immediately evaluated, though they are simplified:
 
@@ -362,8 +500,14 @@ plot(64 - (1/2)*32 * x^2, 0, 2)
 ```
 
 
-SymPy has functions for manipulating expressions: `simplify`, `expand`, `together`, `factor`, `cancel`, `apart`, `args`, ...
+SymPy has functions for manipulating expressions: `simplify`, `expand`, `together`, `factor`, `cancel`, `apart`,  ``...``
 
-SymPy has functions for basic math: `factor`, `solve`, ...
+SymPy has functions for basic math: `factor`, `roots`, `solve`, `solveset`, ``\dots``
 
-SymPy has functions for calculus: `limit`, `diff`, `integrate`
+SymPy has functions for calculus: `limit`, `diff`, `integrate`, ``\dots``
+
+
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

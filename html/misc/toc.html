@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
 
 <style>
@@ -104,7 +104,7 @@ $( document ).ready(function() {
 });
 </script>
 
-
+<link rel="shortcut icon" href="https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/misc/logo.png" type="image/x-icon" />
 
 </head>
 
@@ -163,7 +163,7 @@ $( document ).ready(function() {
 <h2>Getting started with Julia</h2>
 <p>Before beginning, we need to get started with Julia. This is akin to going out and buying a calculator, though it won&#39;t take as long.</p>
 <ul>
-<li><p><a href="misc/getting-started-with-julia.html">Getting Started</a></p>
+<li><p><a href="misc/getting_started_with_julia.html">Getting started</a></p>
 </li>
 </ul>
 <hr />
@@ -182,9 +182,9 @@ $( document ).ready(function() {
 </ul>
 <p>Calculators really only use one type of number - floating point numbers. Floating point numbers are a model for the real numbers. However, there are many different sets of numbers in mathematics. Common ones include the integers, rational numbers, real numbers, and complex numbers.  As well, we discuss logical values and vectors of numbers. Though integers are rational numbers, rational numbers are real numbers, and real numbers may be viewed as complex numbers, mathematically, these distinctions serve a purpose. <code>Julia</code> also makes these distinctions and more.</p>
 <ul>
-<li><p><a href="precalc/numbers_types.html">Number Systems</a></p>
+<li><p><a href="precalc/numbers_types.html">Number systems</a></p>
 </li>
-<li><p><a href="precalc/logical_expressions.html">Inequalities and Boolean Values</a></p>
+<li><p><a href="precalc/logical_expressions.html">Inequalities and Boolean values</a></p>
 </li>
 </ul>
 <p>Vectors as a mathematical object could be postponed for later, but they are introduced here as the <code>Julia</code> implementation makes an excellent choice for a container of one or more values. We also see how to work with more than one value at a time, a useful facility in future work.</p>
@@ -194,7 +194,7 @@ $( document ).ready(function() {
 </ul>
 <p>An arithmetic progression is a sequence of the form <span class="math">$a, a+h, a+2h, \dots, a+kh$</span>. For example <span class="math">$3, 10, 17, 24, .., 52$</span>. They prove very useful in describing collections of numbers. We introduce the range operator that models these within <code>Julia</code> and comprehensions that allow one to easily modify the simple sequences.</p>
 <ul>
-<li><p><a href="precalc/ranges.html">Arithmetic Progressions</a></p>
+<li><p><a href="precalc/ranges.html">Arithmetic progressions</a></p>
 </li>
 </ul>
 <h3>Functions</h3>
@@ -205,11 +205,11 @@ $( document ).ready(function() {
 </ul>
 <p>A graphing calculator makes it very easy to produce a graph. <code>Julia</code>, using the <code>Plots</code> package, makes it even easier and more flexible.</p>
 <ul>
-<li><p><a href="precalc/plotting.html">Graphs of Functions</a></p>
+<li><p><a href="precalc/plotting.html">Graphs of functions</a></p>
 </li>
-<li><p><a href="precalc/transformations.html">Transformations of Functions</a></p>
+<li><p><a href="precalc/transformations.html">Transformations of functions</a></p>
 </li>
-<li><p><a href="precalc/inversefunctions.html">Inverse Functions</a></p>
+<li><p><a href="precalc/inversefunctions.html">Inverse functions</a></p>
 </li>
 </ul>
 <h4>Polynomials</h4>
@@ -220,7 +220,7 @@ $( document ).ready(function() {
 </ul>
 <p>The roots of a univariate polynomial are the values of <span class="math">$x$</span> for which <span class="math">$p(x)=0$</span>. Roots are related to its factors. In calculus, the zeros of a derived function are used to infer properties of a function. This section shows some tools in <code>SymPy</code> to find factors and roots, when they are available, and introduces the <code>Roots</code> package for estimating roots numerically.</p>
 <ul>
-<li><p><a href="precalc/polynomial_roots.html">Polynomial Roots</a></p>
+<li><p><a href="precalc/polynomial_roots.html">Polynomial roots</a></p>
 </li>
 </ul>
 <p>The <code>Polynomials</code> package provides methods for working with polynomials of different types.</p>
@@ -235,13 +235,13 @@ $( document ).ready(function() {
 </ul>
 <h4>Exponential and logarithmic functions</h4>
 <ul>
-<li><p><a href="precalc/exp_log_functions.html">Exponential and Logarithmic Functions</a></p>
+<li><p><a href="precalc/exp_log_functions.html">Exponential and logarithmic functions</a></p>
 </li>
 </ul>
 <h4>Trigonometric functions</h4>
 <p>Trigonometric functions are used to describe triangles, circles and oscillatory behaviors. This section provide a brief review.</p>
 <ul>
-<li><p><a href="precalc/trig_functions.html">Trigonometric Functions</a></p>
+<li><p><a href="precalc/trig_functions.html">Trigonometric functions</a></p>
 </li>
 </ul>
 <h2>Limits and Continuity</h2>
@@ -249,7 +249,7 @@ $( document ).ready(function() {
 <ul>
 <li><p><a href="limits/limits.html">Limits</a></p>
 </li>
-<li><p><a href="limits/limits_extensions.html">Examples and Extensions of the basic limit definition</a></p>
+<li><p><a href="limits/limits_extensions.html">Examples and extensions of the basic limit definition</a></p>
 </li>
 </ul>
 <p>Continuous functions are at the center of any discussion of calculus concepts. These sections define them and illustrate a few implications for continuous functions.</p>
@@ -264,7 +264,7 @@ $( document ).ready(function() {
 <ul>
 <li><p><a href="derivatives/derivatives.html">Derivatives</a></p>
 </li>
-<li><p><a href="derivatives/numeric_derivatives.html">Numeric Derivatives</a></p>
+<li><p><a href="derivatives/numeric_derivatives.html">Numeric derivatives</a></p>
 </li>
 </ul>
 <p>The derivative of a function has certain features. These next sections explore one of the first uses of the derivative - using its zeros to characterize the original function.</p>
@@ -275,23 +275,25 @@ $( document ).ready(function() {
 <ul>
 <li><p><a href="derivatives/optimization.html">Optimization</a></p>
 </li>
-<li><p><a href="derivatives/curve_sketching.html">Curve Sketching</a></p>
+<li><p><a href="derivatives/curve_sketching.html">Curve sketching</a></p>
 </li>
 </ul>
 <p>The tangent line to the graph of a function at a point has slope given through the derivative. That the tangent line is the best linear approximation to the curve yields some insight to the curve through knowledge of just the tangent lines.</p>
 <ul>
 <li><p><a href="derivatives/linearization.html">Linearization</a></p>
 </li>
-<li><p><a href="derivatives/newtons_method.html">Newton&#39;s Method</a></p>
+<li><p><a href="derivatives/newtons_method.html">Newton&#39;s method</a></p>
 </li>
-<li><p><a href="derivatives/lhospitals_rule.html">L&#39;Hospital&#39;s Rule</a></p>
+<li><p><a href="derivatives/more_zeros.html">Derivative free zero-finding methods</a></p>
+</li>
+<li><p><a href="derivatives/lhospitals_rule.html">L&#39;Hospital&#39;s rule</a></p>
 </li>
 </ul>
 <p>The derivative finds use outside of the traditional way of specifying a function or relationship. These two sections look at some different cases.</p>
 <ul>
-<li><p><a href="derivatives/implicit_differentiation.html">Implicit Derivatives</a></p>
+<li><p><a href="derivatives/implicit_differentiation.html">Implicit derivatives</a></p>
 </li>
-<li><p><a href="derivatives/related_rates.html">Related Rates</a></p>
+<li><p><a href="derivatives/related_rates.html">Related rates</a></p>
 </li>
 </ul>
 <p>A generalization of the tangent line as the &quot;best&quot; approximation to a function by a line leads to the concept of the Taylor polynomial.</p>
@@ -311,17 +313,17 @@ $( document ).ready(function() {
 <ul>
 <li><p><a href="integrals/substitution.html">Substitution</a></p>
 </li>
-<li><p><a href="integrals/integration_by_parts.html">Integration by Parts</a></p>
+<li><p><a href="integrals/integration_by_parts.html">Integration by parts</a></p>
 </li>
-<li><p><a href="integrals/partial_fractions.html">Partial Fractions</a></p>
+<li><p><a href="integrals/partial_fractions.html">Partial fractions</a></p>
 </li>
-<li><p><a href="integrals/improper_integrals.html">Improper Integrals</a></p>
+<li><p><a href="integrals/improper_integrals.html">Improper integrals</a></p>
 </li>
 </ul>
 <h3>Applications</h3>
 <p>Various applications of the integral are presented. The first two sections continue with the idea that an integral is related to area. From there, it is seen that volumes, arc-lengths, and surface areas may be expressed in terms of related integrals.</p>
 <ul>
-<li><p><a href="integrals/mean_value_theorem.html">Mean Value Theorem for Integrals</a></p>
+<li><p><a href="integrals/mean_value_theorem.html">Mean Value Theorem for integrals</a></p>
 </li>
 <li><p><a href="integrals/area_between_curves.html">Area between curves</a></p>
 </li>
@@ -413,7 +415,7 @@ $( document ).ready(function() {
 </ul>
 <h2>A quick review</h2>
 <ul>
-<li><p><a href="misc/quick-notes.html">Quick notes</a></p>
+<li><p><a href="misc/quick_notes.html">Quick notes</a></p>
 </li>
 </ul>
 <p>A review of the <code>Julia</code> concepts used within these notes.</p>

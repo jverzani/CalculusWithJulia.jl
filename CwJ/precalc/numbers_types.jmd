@@ -65,9 +65,10 @@ Similarly, each type is printed slightly differently.
 The key distinction is between integers and floating points. While
 floating point values include integers, and so can be used exclusively
 on the calculator, the difference is that an integer is guaranteed to
-be an exact value, whereas a floating point value is typically just an
-*approximate* value - used to advantage, as floating point values can model a much
-wider set of numbers.
+be an exact value, whereas a floating point value, while often an
+exact representation of a number is also is often just an
+*approximate* value - is used to advantage; floating point values can
+model a much wider set of numbers.
 
 
 Now in nearly all cases, the differences are not noticed. Take for instance this simple calculation involving mixed types.
@@ -256,7 +257,7 @@ The coding of floating point numbers also allows for the special
 values of `Inf`, `-Inf` to represent positive and negative
 infinity. As well, a special value `NaN` ("not a number") is used to
 represent a value that arises when an operation is not closed (e.g.,
-$0.0/0.0$ yields `NaN`). Except for negative bases, the floating point
+$0.0/0.0$ yields `NaN`). (Technically `NaN` has several possible "values," a point ignored here.) Except for negative bases, the floating point
 numbers with the addition of `Inf` and `NaN` are closed under the
 operations `+`, `-`, `*`, `/`, and `^`. Here are some computations
 that produce `NaN`:
@@ -404,8 +405,11 @@ discr = b^2 - 4a*c
 
 When learning calculus, the only common usage of complex numbers arises when solving polynomial equations for roots, or zeros, though they are very important for subsequent work using the concepts of calculus.
 
-!!! Note: 
-    Though complex numbers are stored as pairs of numbers, the imaginary unit, `im`, is of type `Complex{Bool}`, a type that can be promoted to more specific types when `im` is used with different number types.
+```julia;echo=false
+note("""
+Though complex numbers are stored as pairs of numbers, the imaginary unit, `im`, is of type `Complex{Bool}`, a type that can be promoted to more specific types when `im` is used with different number types.
+""")
+```
 
 
 ## Type stability
@@ -637,3 +641,8 @@ yesnoq(false)
 ```
 
 (This shows the special casing that is done when powers use literal numbers.)
+
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

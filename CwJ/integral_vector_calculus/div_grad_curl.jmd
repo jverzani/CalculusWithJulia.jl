@@ -1452,3 +1452,10 @@ L"rh'(r)e_\phi"
 ans=1
 radioq(choices, ans)
 ```
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

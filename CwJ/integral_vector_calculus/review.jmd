@@ -417,3 +417,9 @@ $$~
 The divergence theorem is available for other dimensions. In the $n=2$ case, it is the alternate (flow) form of  Green's theorem.
 
 The divergence theorem is used in Physics to express physical laws in either integral or differential form.
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

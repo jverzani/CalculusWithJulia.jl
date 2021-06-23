@@ -4,6 +4,7 @@
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
 using Plots
+plotly()
 nothing
 ```
 
@@ -15,7 +16,7 @@ the expression yield $0$. For example, the polynomial $x^2 - x$ has
 two roots, $0$ and $1$. A simple graph verifies this:
 
 ```julia;
-using CalculusWithJulia  # loads SymPy
+using CalculusWithJulia
 using Plots
 f(x) = x^2 - x
 plot(f, -2, 2)
@@ -125,7 +126,7 @@ built-in method, `evalpoly`, to compute polynomial evaluations this
 way. To illustrate:
 
 ```julia
-using SymPy # loaded with CalculusWithJulia
+using SymPy
 @syms x
 p = (1, 2, 3, 4, 5) # 1 + 2x + 3x^2 + 4x^3 + 5x^4
 evalpoly(x, p)
@@ -266,10 +267,11 @@ possible complex roots to get all $n$. (Consider $x^2$ to see why
 multiplicity must be accounted for and $x^2 + 1$ to see why complex
 values may be necessary.)
 
-```julia
-alert("""
-The special case of the $0$ polynomial having no degree defined
-eliminates needing to exclude it, as it has infinitely many roots. Otherwise, the language would be qualified to have $n \geq 0$.
+
+```julia; echo=false
+alert(raw"""
+The special case of the ``0`` polynomial having no degree defined
+eliminates needing to exclude it, as it has infinitely many roots. Otherwise, the language would be qualified to have ``n \geq 0``.
 """)
 ```
 
@@ -338,7 +340,7 @@ solve(x^2 + 2x - 3)
 The answer is a vector of values that when substituted in for the free
 variable `x` produce 0. The call to `solve` does not have an equals
 sign. To solve a more complicated expression of the type $f(x) =
-g(x)$, one can solve $f(x) - g(x) = 0$ or use the `Eq` function.
+g(x)$, one can solve $f(x) - g(x) = 0$, use the `Eq` function, or use `f ~ g`.
 
 
 When the expression to solve has more than one free variable, the
@@ -434,10 +436,10 @@ roots((x-1)^2 * (x-2)^2)  # solve doesn't identify multiplicities
 
 For a polynomial with symbolic coefficients, the different between the symbol and the coefficients must be identified. `SymPy` has a `Poly` type to do so. The following call illustrates:
 
-```
+```julia
 @syms a b c x
 p = a*x^2 + b*x + c
-q = sympy.Poly(p, x)  # identify `x` as indeterminate
+q = sympy.Poly(p, x)  # identify `x` as indeterminate; alternatively p.as_poly(x)
 roots(q)
 ```
 
@@ -561,7 +563,7 @@ N.(solve(p))
 
 ```julia; echo=false
 note("""
-The difference of the two roots is around `1e-10`. For the graph over the interval of ``[-5,7]`` there are about 800 "pixels" used, so each pixel represents a size of about `1.5e-2`. So the cluster of roots would safely be hidden under single "pixel."
+The difference of the two roots is around `1e-10`. For the graph over the interval of ``[-5,7]`` there are about 800 "pixels" used, so each pixel represents a size of about `1.5e-2`. So the cluster of roots would safely be hidden under a single "pixel."
 """)
 ```
 
@@ -842,16 +844,16 @@ Consider the polynomial $x^5 - 3x + 1$. Does it have more than one real root?
 
 ```julia; echo=false
 using Roots
-xs = fzeros(x -> x^5 - 3x + 1, -10, 10)
+xs = find_zeros(x -> x^5 - 3x + 1, -10, 10)
 yesnoq(length(xs) > 1)
 ```
 
 
 Consider the polynomial $x^5 - 1.5x + 1$. Does it have more than one real root?
 
-```julia;
+```julia;echo=false
 using Roots
-xs = fzeros(x -> x^5 - 1.5x + 1, -10, 10)
+xs = find_zeros(x -> x^5 - 1.5x + 1, -10, 10)
 yesnoq(length(xs) > 1)
 ```
 
@@ -895,7 +897,7 @@ What is the largest magnitude of a real root?
 
 ```julia; echo=false
 f(x) = x^5 - 4x^4 + x^3 - 2x^2 + x
-rts = fzeros(f, -5, 5)
+rts = find_zeros(f, -5, 5)
 ans = maximum(abs.(rts))
 numericq(ans)
 ```
@@ -916,7 +918,7 @@ m = 0
 for perm in (p, q, q*p, p*q, p*q*p, p^2)
     global a,b,c =  perm([2,3,4])
      fn = x -> x^3 - a*x^2 + b*x - c
-    rts_ = fzeros(fn, -10, 10)
+    rts_ = find_zeros(fn, -10, 10)
 	global a1 = maximum(abs.(rts_))
 	global m = a1 > m ? a1 : m
 end
@@ -975,11 +977,15 @@ yesnoq(true)
 ```
 
 
+
+
 #### Proof of Descartes' rule of signs
 
-(http://www.cut-the-knot.org/fta/ROS2.shtml)
+----
 
-First, we can assume `p` is monic, and `p_0` is non zero. The latter, as we can easily deflate the polynomial by dividing by `x` if `p_0` is zero.
+[Proof modified from this post](http://www.cut-the-knot.org/fta/ROS2.shtml).
+
+First, we can assume ``p`` is monic (``p_n=1``), and ``p_0`` is non zero. The latter, as we can easily deflate the polynomial by dividing by ``x`` if ``p_0`` is zero.
 
 Let `var(p)` be the number of sign changes and `pos(p)` the number of positive real roots of `p`.
 
@@ -989,7 +995,7 @@ This is true for degree ``n=1`` the two sign patterns under the assumption are `
 `+....+-` or `+...--` (if ``p_0 < 0``) or `+...++` or `+...-+` if (``p_0>0``). An induction step applied to all but the last sign for these four patterns leads to even, odd, even, odd as the number of sign changes. Incorporating the last sign leads to odd, odd, even, even as the number of sign changes.
 
 
-Second: if `p_0 < 0` then `pos(p)` is *odd*, if `p_0 > 0` then `pos(p)` is even.
+Second: For a monic ``p`` if `p_0 < 0` then `pos(p)` is *odd*, if `p_0 > 0` then `pos(p)` is even.
 
 This is clearly true for **monic** degree ``1`` polynomials: if ``c``
 is positive ``p = x - c`` has one real root (an odd number) and ``p =
@@ -1010,13 +1016,13 @@ positive. By *induction* ``q`` must have an odd number or roots,
 meaning ``p`` must have an even numbers
 
 
-So if ``p`` is monic and ``p_0 < 0`` then both `var(p)` and `pos(p)` are both odd; and if ``p_0 > 0` both `var(p)` and `pos(p)` are both even.
+So there is parity between `var(p)` and `pos(p)`: if ``p`` is monic and ``p_0 < 0`` then both `var(p)` and `pos(p)` are both odd; and if ``p_0 > 0`` both `var(p)` and `pos(p)` are both even.
 
-Descartes' rule of signs will be established if it can be shown that `var(p)` is atleast as big as `pos(p)`. Supppose ``r`` is a positive real root of ``p`` with ``p = (x-r)q``. We show that ``var(p) > var(q)`` which can be repeatedly applied to show that if ``p=(x-r_1)\cdot(x-r_2)\cdot \cdots \cdot (x-r_l) q``, where the `r_i`s are the postive real roots, then ``var(p) >= l + var(q) >= l = pos(p)``.
+Descartes' rule of signs will be established if it can be shown that `var(p)` is atleast as big as `pos(p)`. Supppose ``r`` is a positive real root of ``p`` with ``p = (x-r)q``. We show that `var(p) > var(q)` which can be repeatedly applied to show that if ``p=(x-r_1)\cdot(x-r_2)\cdot \cdots \cdot (x-r_l) q``, where the ``r_i``s are the postive real roots, then `var(p) >= l + var(q) >= l = pos(p)`.
 
-As ``p = (x-c)q`` we must have the leading term is ``p_nx^n = x \cdot q_{n-1} x^{n-1}`` so ``q_{n+1}`` will also be `+` under our monic assumption. Looking at a possible pattern for the signs of ``q``, we might see the following unfinished synthetic division table:
+As ``p = (x-c)q`` we must have the leading term is ``p_nx^n = x \cdot q_{n-1} x^{n-1}`` so ``q_{n_1}`` will also be `+` under our monic assumption. Looking at a possible pattern for the signs of ``q``, we might see the following unfinished synthetic division table for a specific ``q``:
 
-```julia
+```
   + ? ? ? ? ? ? ? ?
 +   ? ? ? ? ? ? ? ?
   -----------------
@@ -1026,7 +1032,7 @@ As ``p = (x-c)q`` we must have the leading term is ``p_nx^n = x \cdot q_{n-1} x^
 But actually, we can fill in more, as the second row is formed by multiplying a postive ``c``:
 
 
-```julia
+```
   + ? ? ? ? ? ? ? ?
 +   + - - - + - + +
   -----------------
@@ -1036,13 +1042,19 @@ But actually, we can fill in more, as the second row is formed by multiplying a 
 What's more, using the fact that to get `0` the two summands must differ in sign and to have a `?` plus `+` yield a `-`, the `?` must be `-` (and reverse), the following must be the case for the signs of `p`:
 
 
-```julia
+```
   + - ? ? + - + ? -
 +   + - - - + - + +
   -----------------
   + - - - + - + + 0
 ```
 
-If the bottom row represents ``q_7, q_6, \dots, q_0``  and the top row ``p_8, p_7, \dots, p_0``, then the sign changes in ``q`` from `+` to `-` are matched by sign changes in ``p``. The ones in ``q`` from ``-`` to ``+`` are also matched regardless of the sign of the first two question marks (though ``p`` could possibly have more). The last sign change in ``p`` between ``p_2`` and ``p_0`` has no counterpart in ``q``, so there is at least one more sign change in `p`` than ``q``.
+If the bottom row represents ``q_7, q_6, \dots, q_0``  and the top row ``p_8, p_7, \dots, p_0``, then the sign changes in ``q`` from `+` to `-` are matched by sign changes in ``p``. The ones in ``q`` from ``-`` to ``+`` are also matched regardless of the sign of the first two question marks (though ``p`` could possibly have more). The last sign change in ``p`` between ``p_2`` and ``p_0`` has no counterpart in ``q``, so there is at least one more sign change in ``p`` than ``q``.
 
 As such, the ``var(p) \geq 1 + var(q)``
+
+
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

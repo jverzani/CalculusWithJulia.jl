@@ -659,3 +659,11 @@ L"The squeeze theorem applies, as $0 < g(x) < x$",
 ans = 3
 radioq(choices, ans)
 ```
+
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

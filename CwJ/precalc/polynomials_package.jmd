@@ -220,6 +220,78 @@ refine_roots(st)
 ```
 
 
+## Fitting a polynomial to data
+
+The fact that two distinct points determine a line is well known. Deriving the line is easy. Say we have two points ``(x_0, y_0)`` and ``(x_1, y_1)``. The *slope* is then
+
+```math
+m = \frac{y_1 - y_0}{x_1 - x_0}, \quad x_1 \neq x_0
+```
+
+The line is then given from the *point-slope* form by, say, ``y= y_0 + m\cdot (x-x_0)``. This all assumes, ``x_1 \neq x_0``, as were that the case the slope would be infinite (though the vertical line `x=x_0` would still be determined).
+
+A line, `y=mx+b` can be a linear polynomial or a constant depending on ``m``, so we could say ``2`` points determine a polynomial of degree ``1`` or less. Similarly, ``3`` distinct points determine a degree ``2`` polynomial or less, ``\dots``, ``n+1`` distinct points determine a degree ``n`` or less polynomial. Finding a polynomial, ``p``  that goes through ``n+1`` points (i.e., ``p(x_i)=y_i`` for each ``i``) is called  [polynomial interpolation](https://en.wikipedia.org/wiki/Polynomial_interpolation). The main theorem says if the ``x_i`` are distinct, there is a unique polynomial of degree ``n`` *or* less that will interpolate each of the points.
+
+Knowing we can succeed, we approach the problem of ``3`` points, say ``(x_0, y_0)``, ``(x_1,y_1)``, and ``(x_2, y_2)``. There is a polynomial ``p = a\cdot x^2 + b\cdot x + c`` with ``p(x_i) = y_i``. This gives 3 equations for the 3 unknown values ``a``, ``b``, and ``c``:
+
+```math
+\begin{align*}
+a\cdot x_0^2 + b\cdot x_0 + c &= y_0\\
+a\cdot x_1^2 + b\cdot x_1 + c &= y_1\\
+a\cdot x_2^2 + b\cdot x_2 + c &= y_2\\
+\end{align*}
+```
+
+Solving this with `SymPy` is tractable. A comprehension is used below to create the ``3`` equations; the `zip` function is a simple means to iterate over 2 or more iterables simultaneously:
+
+```julia
+using SymPy # mindful now that some functions, e.g. degree, need qualification
+@syms a b c x[0:2] y[0:2]
+eqs = [a*xi^2 + b*xi + c ~ yi for (xi,yi) in zip(x,y)]
+abc = solve(eqs, [a,b,c])
+```
+
+As can be seen, the terms do get quite unwieldy when treated symbolically. Numerically, the `fit` function from the `Polynomials` package will return the interpolating polynomial. To compare,
+
+```julia
+xs, ys = [1,2,3], [3,1,2]
+p = fit(Polynomial, xs,  ys)
+```
+
+and we can compare that the two give the same answer with, for example:
+
+```julia
+abc[b]((x .=> xs)..., (y.=>ys)...)
+```
+
+(Ignore the tricky way of substituting in each value of `xs` and `ys` for the symbolic values in `x` and `y`.)
+
+##### Example Inverse quadratic interpolation
+
+A related problem, that will arise when finding iterative means to solve for zeros of functions, is *inverse* quadratic interpolation. That is finding ``q`` that goes through the points ``(x_0,y_0), (x_1, y_1), \dots, (x_n, y_n)`` satisfying ``q(y_i) = x_i``. (That is ``x``
+and ``y`` are reversed, as with inverse functions.) For the envisioned task, where the inverse quadratic function  intersects the ``x`` axis is of interest, which is at the constant term of the polynomial (as it is like the ``y`` intercept of  typical polynomial). Let's see what that is in general by replicating the above steps (though now the assumption is the ``y`` values are distinct):
+
+```julia
+@syms a b c x[0:2] y[0:2]
+eqs = [a*yi^2 + b*yi + c ~ xi for (xi, yi) in zip(x,y)]
+abc = solve(eqs, [a,b,c])
+abc[c]
+```
+
+We can graphically see the result for the specific values of `xs` and `ys` as follows:
+
+```julia
+xs, ys = [1,2,3], [3,1,2]
+q = fit(Polynomial, ys,  xs)  # reverse
+# plot
+us = range(-1/4, 4, length=100)
+vs = q.(us)
+plot(vs, us, legend=false)
+scatter!(xs, ys)
+plot!(zero)
+x0 = abc[c]((x .=> xs)..., (y .=> ys)...)
+scatter!([N(x0)], [0], markershape=:star)
+```
 
 ## Questions
 
@@ -315,16 +387,16 @@ numericq(4)
 
 ###### Question
 
-The identification of a collection of coefficients with a polynomial depends on an understood **basis**. A basis for the polynomials of degree ``n`` or less, consists of a minimal collection of polynomials for which all the polynomials of degree ``n`` or less can be expressed through a combination of sums of terms, each of which is just a coefficient times a basis member. The typical basis is the ``n+`` polynomials `1`, `x`, `x^2, \dots, x^n`. However, though every basis must have ``n+1`` members, they need not be these.
+The identification of a collection of coefficients with a polynomial depends on an understood **basis**. A basis for the polynomials of degree ``n`` or less, consists of a minimal collection of polynomials for which all the polynomials of degree ``n`` or less can be expressed through a combination of sums of terms, each of which is just a coefficient times a basis member. The typical basis is the ``n+`` polynomials ``1`, `x`, `x^2, \dots, x^n``. However, though every basis must have ``n+1`` members, they need not be these.
 
-A basis used by [Lagrange](https://en.wikipedia.org/wiki/Lagrange_polynomial) is the following. Let there be ``n+1`` points distinct points ``x_0, x_1, \dots, x_n``. Let `l(x) = (x-x_0)\cdot(x-x_1)\cdot \cdots \cdot(x-x_n)`` and for each ``i`` in ``0`` to ``n`` define
+A basis used by [Lagrange](https://en.wikipedia.org/wiki/Lagrange_polynomial) is the following. Let there be ``n+1`` points distinct points ``x_0, x_1, \dots, x_n``. For each ``i`` in ``0`` to ``n`` define
 
 ```math
 l_i(x) = \prod_{0 \leq j \leq n; j \ne i} \frac{x-x_j}{x_i - x_j} =
 \frac{(x-x_1)\cdot(x-x_2)\cdot \cdots \cdot (x-x_{j-1}) \cdot (x-x_{j+1}) \cdot \cdots \cdot (x-x_n)}{(x_i-x_1)\cdot(x_i-x_2)\cdot \cdots \cdot (x_i-x_{j-1}) \cdot (x_i-x_{j+1}) \cdot \cdots \cdot (x_i-x_n)}.
 ```
 
-That is `l_i(x)` is a product of terms like ``(x-x_j)/(x_i-x_j)`` *except* when `j=i`.
+That is ``l_i(x)`` is a product of terms like ``(x-x_j)/(x_i-x_j)`` *except* when ``j=i``.
 
 
 What is is the value of ``l_0(x_0)``?
@@ -392,7 +464,7 @@ choices = ["``0``", "``1``", "``y_j``"]
 radioq(choices, 3)
 ```
 
-This last answer is why ``p`` is called an *interpolating* polynomial.
+This last answer is why ``p`` is called an *interpolating* polynomial and this question shows an alternative way to identify interpolating polynomials from solving a system of linear equations.
 
 
 ###### Question
@@ -430,4 +502,10 @@ The `Polynomials` package has an implementation, so you can check your answer th
 
 The `ApproxFun` package is built on top of polynomials expressed in this basis, as the Chebyshev polynomials have special properties which make them very suitable when approximating functions with polynomials. The `ApproxFun` package uses  easier-to-manipulate polynomials to approximate functions very accurately, thereby being useful for investigating properties of non-linear functions leveraging properties for polynomials.
 """)
+```
+
+
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

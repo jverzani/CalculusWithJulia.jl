@@ -385,3 +385,10 @@ L"The resulting function has an identical domain and is equivalent for all $x$."
 ans = 3
 radioq(choices, ans, keep_order=true)
 ```
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

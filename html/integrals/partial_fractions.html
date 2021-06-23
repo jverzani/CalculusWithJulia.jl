@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
 
 <style>
@@ -104,7 +104,7 @@ $( document ).ready(function() {
 });
 </script>
 
-
+<link rel="shortcut icon" href="https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/misc/logo.png" type="image/x-icon" />
 
 </head>
 
@@ -171,13 +171,8 @@ $( document ).ready(function() {
 <p>The value of this decomposition is that the terms <span class="math">$a_{ij}(x)/q_i(x)^j$</span> each have an antiderivative, and so the sum of them will also have an antiderivative.</p>
 
 
-<div class="alert alert-info" role="alert">
-
-<div class="markdown"><p>Many calculus texts will give some examples for finding a partial fraction decomposition. We push that work off to <code>SymPy</code>, as for all but the easiest cases - a few are in the problems - it can be a bit tedious.</p>
-</div>
-
-</div>
-
+<div class="alert alert-info" role="alert"><div class="markdown"><p>Many calculus texts will give some examples for finding a partial fraction decomposition. We push that work off to <code>SymPy</code>, as for all but the easiest cases - a few are in the problems - it can be a bit tedious.</p>
+</div></div>
 
 <p>In <code>SymPy</code>, the <code>apart</code> function will find the partial fraction decomposition. For example, here we see <span class="math">$n_i$</span> terms for each power of <span class="math">$q_i$</span></p>
 
@@ -188,8 +183,9 @@ $( document ).ready(function() {
 </pre>
 
 
-<pre class="output">
-&#40;a, b, c, A, B, x&#41;
+<pre class="julia-error">
+ERROR: LoadError: UndefVarError: @syms not defined
+in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/integrals/partial_fractions.jmd:3
 </pre>
 
 
@@ -199,9 +195,10 @@ $( document ).ready(function() {
 </pre>
 
 
+<pre class="julia-error">
+ERROR: UndefVarError: x not defined
+</pre>
 
-<div class="well well-sm">$- \frac{8 x - 13}{9 \left(x^{2} + 2\right)^{3}} - \frac{35 x - 34}{54 \left(x^{2} + 2\right)^{2}} - \frac{45 x - 28}{108 \left(x^{2} + 2\right)} - \frac{1}{3 \left(x - 1\right)} + \frac{2}{27 \left(x - 1\right)^{2}} + \frac{3}{4 x}$
-</div>
 
 <h3>Sketch of proof</h3>
 <p>A standard proof uses two facts of number systems: the division algorithm and a representation of the greatest common divisor in terms of sum, extended to polynomials. Our sketch shows how these are used.</p>
@@ -239,9 +236,10 @@ a(x) Q(x) + b(x) q(x) = 1.
 </pre>
 
 
+<pre class="julia-error">
+ERROR: UndefVarError: x not defined
+</pre>
 
-<div class="well well-sm">$\frac{a}{- c + x}$
-</div>
 
 <p>This has a logarithmic antiderivative:</p>
 
@@ -251,9 +249,10 @@ a(x) Q(x) + b(x) q(x) = 1.
 </pre>
 
 
+<pre class="julia-error">
+ERROR: UndefVarError: integrate not defined
+</pre>
 
-<div class="well well-sm">$a \log{\left(- c + x \right)}$
-</div>
 
 <p>For <span class="math">$j > 1$</span>, we have powers.</p>
 
@@ -264,9 +263,11 @@ a(x) Q(x) + b(x) q(x) = 1.
 </pre>
 
 
+<pre class="julia-error">
+ERROR: LoadError: UndefVarError: @syms not defined
+in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/integrals/partial_fractions.jmd:2
+</pre>
 
-<div class="well well-sm">$a \left(\begin{cases} \frac{\left(- c + x\right)^{1 - j}}{1 - j} & \text{for}\: j \neq 1 \\\log{\left(- c + x \right)} & \text{otherwise} \end{cases}\right)$
-</div>
 
 <h3>Quadratic factors</h3>
 <p>When <span class="math">$q_i$</span> is quadratic, it looks like <span class="math">$ax^2 + bx + c$</span>. Then <span class="math">$a_{ij}$</span> can be a constant or a linear polynomial. The latter can be written as <span class="math">$Ax + B$</span>.</p>
@@ -292,9 +293,10 @@ a(x) Q(x) + b(x) q(x) = 1.
 </pre>
 
 
+<pre class="julia-error">
+ERROR: UndefVarError: A not defined
+</pre>
 
-<div class="well well-sm">$- \frac{A}{6 a^{8} x^{6} + 18 a^{6} x^{4} + 18 a^{4} x^{2} + 6 a^{2}}$
-</div>
 
 <p>The integrals of the type <span class="math">$B/((ax)^2\pm 1)$</span> are completed by trigonometric substitution and various reduction formulas. They can get involved, but are tractable. For example:</p>
 
@@ -304,9 +306,10 @@ a(x) Q(x) + b(x) q(x) = 1.
 </pre>
 
 
+<pre class="julia-error">
+ERROR: UndefVarError: a not defined
+</pre>
 
-<div class="well well-sm">$B \left(\frac{15 a^{4} x^{5} + 40 a^{2} x^{3} + 33 x}{48 a^{6} x^{6} + 144 a^{4} x^{4} + 144 a^{2} x^{2} + 48} + \frac{5 \operatorname{atan}{\left(a x \right)}}{16 a}\right)$
-</div>
 
 <p>and</p>
 
@@ -316,9 +319,10 @@ a(x) Q(x) + b(x) q(x) = 1.
 </pre>
 
 
+<pre class="julia-error">
+ERROR: UndefVarError: a not defined
+</pre>
 
-<div class="well well-sm">$B \left(\frac{- 15 a^{4} x^{5} + 40 a^{2} x^{3} - 33 x}{48 a^{6} x^{6} - 144 a^{4} x^{4} + 144 a^{2} x^{2} - 48} - \frac{5 \log{\left(x - \frac{1}{a} \right)}}{32 a} + \frac{5 \log{\left(x + \frac{1}{a} \right)}}{32 a}\right)$
-</div>
 
 <h2>Examples</h2>
 <p>Find an antiderivative for <span class="math">$1/(x\cdot(x^2+1)^2)$</span>.</p>
@@ -331,9 +335,10 @@ a(x) Q(x) + b(x) q(x) = 1.
 </pre>
 
 
+<pre class="julia-error">
+ERROR: UndefVarError: x not defined
+</pre>
 
-<div class="well well-sm">$- \frac{x}{x^{2} + 1} - \frac{x}{\left(x^{2} + 1\right)^{2}} + \frac{1}{x}$
-</div>
 
 <p>We see three terms. The first and second will be done by <span class="math">$u$</span>-substitution, the third by a logarithm:</p>
 
@@ -343,9 +348,10 @@ a(x) Q(x) + b(x) q(x) = 1.
 </pre>
 
 
+<pre class="julia-error">
+ERROR: UndefVarError: q not defined
+</pre>
 
-<div class="well well-sm">$\log{\left(x \right)} - \frac{\log{\left(x^{2} + 1 \right)}}{2} + \frac{1}{2 x^{2} + 2}$
-</div>
 
 <hr />
 <p>Find an antiderivative of <span class="math">$1/(x^2 - 2x-3)$</span>.</p>
@@ -358,9 +364,10 @@ a(x) Q(x) + b(x) q(x) = 1.
 </pre>
 
 
+<pre class="julia-error">
+ERROR: UndefVarError: x not defined
+</pre>
 
-<div class="well well-sm">$- \frac{1}{4 \left(x + 1\right)} + \frac{1}{4 \left(x - 3\right)}$
-</div>
 
 <p>We see what should yield two logarithmic terms:</p>
 
@@ -370,18 +377,14 @@ a(x) Q(x) + b(x) q(x) = 1.
 </pre>
 
 
+<pre class="julia-error">
+ERROR: UndefVarError: q not defined
+</pre>
 
-<div class="well well-sm">$\frac{\log{\left(x - 3 \right)}}{4} - \frac{\log{\left(x + 1 \right)}}{4}$
-</div>
 
 
-<div class="alert alert-info" role="alert">
-
-<div class="markdown"><p><code>SymPy</code> will find &#36;\log&#40;x&#41;&#36; as an antiderivative for &#36;1/x&#36;, but more generally, &#36;\log&#40;\lvert x\rvert&#41;&#36; is one.</p>
-</div>
-
-</div>
-
+<div class="alert alert-info" role="alert"><div class="markdown"><p><code>SymPy</code> will find &#36;\log&#40;x&#41;&#36; as an antiderivative for &#36;1/x&#36;, but more generally, &#36;\log&#40;\lvert x\rvert&#41;&#36; is one.</p>
+</div></div>
 
 <h2>Questions</h2>
 <h6>Question</h6>
@@ -389,28 +392,28 @@ a(x) Q(x) + b(x) q(x) = 1.
 <p>What is <span class="math">$A$</span>? &#40;Use <code>SymPy</code> or just put the sum over a common denominator and solve for <span class="math">$A$</span> and <span class="math">$B$</span>.&#41;</p>
 
 
-<form name='WeaveQuestion' data-id='S0JL2PKt' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='LYF7darT' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="S0JL2PKt" type="number" class="form-control">
+<input id="LYF7darT" type="number" class="form-control">
 
 </div>
 
-<div id='S0JL2PKt_message'></div>
+<div id='LYF7darT_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#S0JL2PKt').on('change', function() {
+$('#LYF7darT').on('change', function() {
   correct = Math.abs(this.value - -1) <= 0;
 
   if(correct) {
-     $('#S0JL2PKt_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#LYF7darT_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#S0JL2PKt_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#LYF7darT_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -419,28 +422,28 @@ $('#S0JL2PKt').on('change', function() {
 <p>What is <span class="math">$B$</span>?</p>
 
 
-<form name='WeaveQuestion' data-id='Akkoej07' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='fuSYbNRr' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="Akkoej07" type="number" class="form-control">
+<input id="fuSYbNRr" type="number" class="form-control">
 
 </div>
 
-<div id='Akkoej07_message'></div>
+<div id='fuSYbNRr_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#Akkoej07').on('change', function() {
+$('#fuSYbNRr').on('change', function() {
   correct = Math.abs(this.value - 1) <= 0;
 
   if(correct) {
-     $('#Akkoej07_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#fuSYbNRr_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#Akkoej07_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#fuSYbNRr_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -456,28 +459,28 @@ $('#Akkoej07').on('change', function() {
 <p>Find <span class="math">$A$</span> &#40;being careful with the sign&#41;:</p>
 
 
-<form name='WeaveQuestion' data-id='mkYJMLtv' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='RZu4OyMh' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="mkYJMLtv" type="number" class="form-control">
+<input id="RZu4OyMh" type="number" class="form-control">
 
 </div>
 
-<div id='mkYJMLtv_message'></div>
+<div id='RZu4OyMh_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#mkYJMLtv').on('change', function() {
+$('#RZu4OyMh').on('change', function() {
   correct = Math.abs(this.value - -1.5) <= 0.001;
 
   if(correct) {
-     $('#mkYJMLtv_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#RZu4OyMh_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#mkYJMLtv_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#RZu4OyMh_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -486,28 +489,28 @@ $('#mkYJMLtv').on('change', function() {
 <p>Find <span class="math">$B$</span>:</p>
 
 
-<form name='WeaveQuestion' data-id='yzvWwMU8' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='ptbv0zpb' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="yzvWwMU8" type="number" class="form-control">
+<input id="ptbv0zpb" type="number" class="form-control">
 
 </div>
 
-<div id='yzvWwMU8_message'></div>
+<div id='ptbv0zpb_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#yzvWwMU8').on('change', function() {
+$('#ptbv0zpb').on('change', function() {
   correct = Math.abs(this.value - 6.5) <= 0.001;
 
   if(correct) {
-     $('#yzvWwMU8_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#ptbv0zpb_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#yzvWwMU8_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#ptbv0zpb_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -523,28 +526,28 @@ $('#yzvWwMU8').on('change', function() {
 <p>Find <span class="math">$A$</span>:</p>
 
 
-<form name='WeaveQuestion' data-id='j5SJf94d' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='qxIEwmXw' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="j5SJf94d" type="number" class="form-control">
+<input id="qxIEwmXw" type="number" class="form-control">
 
 </div>
 
-<div id='j5SJf94d_message'></div>
+<div id='qxIEwmXw_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#j5SJf94d').on('change', function() {
+$('#qxIEwmXw').on('change', function() {
   correct = Math.abs(this.value - 0.25) <= 0.001;
 
   if(correct) {
-     $('#j5SJf94d_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#qxIEwmXw_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#j5SJf94d_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#qxIEwmXw_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -553,28 +556,28 @@ $('#j5SJf94d').on('change', function() {
 <p>Find <span class="math">$B$</span>:</p>
 
 
-<form name='WeaveQuestion' data-id='YIAglMF3' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='S7e3EIUW' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="YIAglMF3" type="number" class="form-control">
+<input id="S7e3EIUW" type="number" class="form-control">
 
 </div>
 
-<div id='YIAglMF3_message'></div>
+<div id='S7e3EIUW_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#YIAglMF3').on('change', function() {
+$('#S7e3EIUW').on('change', function() {
   correct = Math.abs(this.value - -0.25) <= 0.001;
 
   if(correct) {
-     $('#YIAglMF3_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#S7e3EIUW_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#YIAglMF3_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#S7e3EIUW_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -583,28 +586,28 @@ $('#YIAglMF3').on('change', function() {
 <p>Find <span class="math">$C$</span>:</p>
 
 
-<form name='WeaveQuestion' data-id='r45Mkgof' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='RmvhW0Nf' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="r45Mkgof" type="number" class="form-control">
+<input id="RmvhW0Nf" type="number" class="form-control">
 
 </div>
 
-<div id='r45Mkgof_message'></div>
+<div id='RmvhW0Nf_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#r45Mkgof').on('change', function() {
+$('#RmvhW0Nf').on('change', function() {
   correct = Math.abs(this.value - 0.5) <= 0.001;
 
   if(correct) {
-     $('#r45Mkgof_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#RmvhW0Nf_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#r45Mkgof_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#RmvhW0Nf_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -620,32 +623,32 @@ $('#r45Mkgof').on('change', function() {
 <p>Is <span class="math">$-6\log(5) - 5\log(3) - 1/6 + 11\log(4)$</span> the answer?</p>
 
 
-<form name="WeaveQuestion" data-id="32WRxnCu" data-controltype="radio">
+<form name="WeaveQuestion" data-id="psp7kwbQ" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_32WRxnCu" id="radio_32WRxnCu_1" value="1">
-  <label class="form-check-label" for="radio_32WRxnCu_1">
+  <input class="form-check-input" type="radio" name="radio_psp7kwbQ" id="radio_psp7kwbQ_1" value="1">
+  <label class="form-check-label" for="radio_psp7kwbQ_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_32WRxnCu" id="radio_32WRxnCu_2" value="2">
-  <label class="form-check-label" for="radio_32WRxnCu_2">
+  <input class="form-check-input" type="radio" name="radio_psp7kwbQ" id="radio_psp7kwbQ_2" value="2">
+  <label class="form-check-label" for="radio_psp7kwbQ_2">
     No
   </label>
 </div>
 
-<div id="32WRxnCu_message"></div>
+<div id="psp7kwbQ_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_32WRxnCu']").on("change", function() {
+$("input:radio[name='radio_psp7kwbQ']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#32WRxnCu_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#psp7kwbQ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#32WRxnCu_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#psp7kwbQ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -663,38 +666,38 @@ $("input:radio[name='radio_32WRxnCu']").on("change", function() {
 <p>If <span class="math">$m > n$</span>, then why can we cancel out the <span class="math">$(x-c)^n$</span> and not have a concern?</p>
 
 
-<form name="WeaveQuestion" data-id="jCNfqGLJ" data-controltype="radio">
+<form name="WeaveQuestion" data-id="NTnBgwOI" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_jCNfqGLJ" id="radio_jCNfqGLJ_1" value="1">
-  <label class="form-check-label" for="radio_jCNfqGLJ_1">
+  <input class="form-check-input" type="radio" name="radio_NTnBgwOI" id="radio_NTnBgwOI_1" value="1">
+  <label class="form-check-label" for="radio_NTnBgwOI_1">
     <code>SymPy</code> allows it.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_jCNfqGLJ" id="radio_jCNfqGLJ_2" value="2">
-  <label class="form-check-label" for="radio_jCNfqGLJ_2">
+  <input class="form-check-input" type="radio" name="radio_NTnBgwOI" id="radio_NTnBgwOI_2" value="2">
+  <label class="form-check-label" for="radio_NTnBgwOI_2">
     The value &#36;c&#36; is a removable singularity, so the integral will be identical.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_jCNfqGLJ" id="radio_jCNfqGLJ_3" value="3">
-  <label class="form-check-label" for="radio_jCNfqGLJ_3">
+  <input class="form-check-input" type="radio" name="radio_NTnBgwOI" id="radio_NTnBgwOI_3" value="3">
+  <label class="form-check-label" for="radio_NTnBgwOI_3">
     The resulting function has an identical domain and is equivalent for all &#36;x&#36;.
   </label>
 </div>
 
-<div id="jCNfqGLJ_message"></div>
+<div id="NTnBgwOI_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_jCNfqGLJ']").on("change", function() {
+$("input:radio[name='radio_NTnBgwOI']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#jCNfqGLJ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#NTnBgwOI_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#jCNfqGLJ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#NTnBgwOI_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -704,38 +707,38 @@ $("input:radio[name='radio_jCNfqGLJ']").on("change", function() {
 <p>If <span class="math">$m = n$</span>, then why can we cancel out the <span class="math">$(x-c)^n$</span> and not have a concern?</p>
 
 
-<form name="WeaveQuestion" data-id="mDEboSrz" data-controltype="radio">
+<form name="WeaveQuestion" data-id="xOLI3Vsn" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_mDEboSrz" id="radio_mDEboSrz_1" value="1">
-  <label class="form-check-label" for="radio_mDEboSrz_1">
+  <input class="form-check-input" type="radio" name="radio_xOLI3Vsn" id="radio_xOLI3Vsn_1" value="1">
+  <label class="form-check-label" for="radio_xOLI3Vsn_1">
     <code>SymPy</code> allows it.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_mDEboSrz" id="radio_mDEboSrz_2" value="2">
-  <label class="form-check-label" for="radio_mDEboSrz_2">
+  <input class="form-check-input" type="radio" name="radio_xOLI3Vsn" id="radio_xOLI3Vsn_2" value="2">
+  <label class="form-check-label" for="radio_xOLI3Vsn_2">
     The value &#36;c&#36; is a removable singularity, so the integral will be identical.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_mDEboSrz" id="radio_mDEboSrz_3" value="3">
-  <label class="form-check-label" for="radio_mDEboSrz_3">
+  <input class="form-check-input" type="radio" name="radio_xOLI3Vsn" id="radio_xOLI3Vsn_3" value="3">
+  <label class="form-check-label" for="radio_xOLI3Vsn_3">
     The resulting function has an identical domain and is equivalent for all &#36;x&#36;.
   </label>
 </div>
 
-<div id="mDEboSrz_message"></div>
+<div id="xOLI3Vsn_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_mDEboSrz']").on("change", function() {
+$("input:radio[name='radio_xOLI3Vsn']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#mDEboSrz_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#xOLI3Vsn_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#mDEboSrz_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#xOLI3Vsn_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -745,42 +748,49 @@ $("input:radio[name='radio_mDEboSrz']").on("change", function() {
 <p>If <span class="math">$m < n$</span>, then why can we cancel out the <span class="math">$(x-c)^n$</span> and not have a concern?</p>
 
 
-<form name="WeaveQuestion" data-id="lvICBz7D" data-controltype="radio">
+<form name="WeaveQuestion" data-id="HbcWWYrB" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_lvICBz7D" id="radio_lvICBz7D_1" value="1">
-  <label class="form-check-label" for="radio_lvICBz7D_1">
+  <input class="form-check-input" type="radio" name="radio_HbcWWYrB" id="radio_HbcWWYrB_1" value="1">
+  <label class="form-check-label" for="radio_HbcWWYrB_1">
     <code>SymPy</code> allows it.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_lvICBz7D" id="radio_lvICBz7D_2" value="2">
-  <label class="form-check-label" for="radio_lvICBz7D_2">
+  <input class="form-check-input" type="radio" name="radio_HbcWWYrB" id="radio_HbcWWYrB_2" value="2">
+  <label class="form-check-label" for="radio_HbcWWYrB_2">
     The value &#36;c&#36; is a removable singularity, so the integral will be identical.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_lvICBz7D" id="radio_lvICBz7D_3" value="3">
-  <label class="form-check-label" for="radio_lvICBz7D_3">
+  <input class="form-check-input" type="radio" name="radio_HbcWWYrB" id="radio_HbcWWYrB_3" value="3">
+  <label class="form-check-label" for="radio_HbcWWYrB_3">
     The resulting function has an identical domain and is equivalent for all &#36;x&#36;.
   </label>
 </div>
 
-<div id="lvICBz7D_message"></div>
+<div id="HbcWWYrB_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_lvICBz7D']").on("change", function() {
+$("input:radio[name='radio_HbcWWYrB']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#lvICBz7D_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#HbcWWYrB_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#lvICBz7D_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#HbcWWYrB_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
 </script>
+
+
+<hr />
+
+<pre class="julia-error">
+ERROR: &#91;:integrals, :partial_fractions&#93;
+</pre>
 
 
   </div>

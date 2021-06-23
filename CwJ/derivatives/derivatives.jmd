@@ -1424,3 +1424,9 @@ L"f''(x) = -k^2\cdot f(x)"]
 ans = 3
 radioq(choices, ans)
 ```
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

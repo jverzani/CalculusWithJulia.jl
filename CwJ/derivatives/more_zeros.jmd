@@ -18,7 +18,7 @@ The same viewpoint can be used  to create derivative-free methods.
 ## The secant method
 
 
-For example, the  [secant method](https://en.wikipedia.org/wiki/Secant_method) can be seen as the result of fitting a polynomial approximation for  ``f^{-1}`` through two points ``(f(x_0),x_0)`` and ``(f(x_1), x_1)``. 
+For example, the  [secant method](https://en.wikipedia.org/wiki/Secant_method) can be seen as the result of fitting a polynomial approximation for  ``f^{-1}`` through two points ``(f(x_0),x_0)`` and ``(f(x_1), x_1)``.
 
 
 Again, expressing this as ``g(y) = h_0 + h_1(y-f(x_1))`` leads to ``g(f(x_1)) = x_1 = h_0``.
@@ -70,7 +70,7 @@ find_zero(sin, (4,3), Order1(), verbose=true)
 Though the derivative is related to the slope of the secant line, that is in the limit. The convergence of the secant method is not as fast as Newton's method, though at each step of the secant method, only 1 new function evaluation is needed, so it can be more efficient for functions that are expensive to compute or differentiate.
 
 
-Let ``\epsilon_{n+1} = x_{n+1}-\alpha``, where ``\alpha`` is assumed to be a *simple* zero of ``f(x)`` that the secant method converges to. A [calculation](https://math.okstate.edu/people/binegar/4513-F98/4513-l08.pdf) shows that  
+Let ``\epsilon_{n+1} = x_{n+1}-\alpha``, where ``\alpha`` is assumed to be a *simple* zero of ``f(x)`` that the secant method converges to. A [calculation](https://math.okstate.edu/people/binegar/4513-F98/4513-l08.pdf) shows that
 
 ```math
 \begin{align*}
@@ -88,7 +88,7 @@ Assuming the error term has the form ``\epsilon_{n+1} = A|\epsilon_n|^\phi`` and
 \frac{A^{1-1/\phi}}{C} = |\epsilon_n|^{1 - \phi +1/\phi}.
 ```
 
-The left side being a constant suggests ``\phi`` solves: ``1 - \phi + 1/\phi = 0`` or ``\phi^2 -\phi - 1 = 0``. The solution is the golden ratio, ``(1 + \sqrt{5})/2 \approx 1.618\dots``. 
+The left side being a constant suggests ``\phi`` solves: ``1 - \phi + 1/\phi = 0`` or ``\phi^2 -\phi - 1 = 0``. The solution is the golden ratio, ``(1 + \sqrt{5})/2 \approx 1.618\dots``.
 
 
 ### Steffensen's method
@@ -99,7 +99,7 @@ Steffensen's method is a secant-like method that converges with ``|\epsilon_{n+1
 
 ## Inverse quadratic interpolation
 
-Inverse quadratic interpolation fits a quadratic polynomial through three points, not just two like the Secant method. The third being ``(f(x_2), x_2)``. 
+Inverse quadratic interpolation fits a quadratic polynomial through three points, not just two like the Secant method. The third being ``(f(x_2), x_2)``.
 
 
 For example, here is the inverse quadratic function, ``g(y)``, going three points marked with red dots. The blue dot is found from ``(g(0), 0)``.
@@ -114,7 +114,7 @@ ys = range(-2,2, length=100)
 xs = g.(ys)
 plot(xs, ys, legend=false)
 scatter!([a,b,c],[fa,fb,fc], color=:red, markersize=5)
-scatter!([g(0)],[0], color=:blue, markersize=10)	
+scatter!([g(0)],[0], color=:blue, markersize=10)
 ```
 
 
@@ -161,7 +161,7 @@ function chandrapatlu(f, u, v, λ, verbose=false)
     if abs(fa) < abs(fb)
         a,b,fa,fb = b,a,fb,fa
     end
-    
+
     c, fc = a, fa
 
     maxsteps = 100
@@ -173,7 +173,7 @@ function chandrapatlu(f, u, v, λ, verbose=false)
           return abs(fa) < abs(fb) ? a : b
         end
         abs(fa) < ϵ && return a
-        
+
         ξ = (a-b)/(c-b)
         Φ = (fa-fb)/(fc-fb)
 
@@ -184,7 +184,7 @@ function chandrapatlu(f, u, v, λ, verbose=false)
         end
 
         ft = f(xt)
-        
+
         isnan(ft) && break
 
         if sign(fa) == sign(ft)
@@ -194,15 +194,15 @@ function chandrapatlu(f, u, v, λ, verbose=false)
             c,b,a = b,a,xt
             fc,fb,fa = fb,fa,ft
         end
-       
+
     	verbose && @show ns, a, fa
-        
+
     end
     error("no convergence: [a,b] = $(sort([a,b]))")
 end
 ```
 
-Like bisection, this method ensures that ``a`` and ``b`` is a bracket, but it moves ``a`` to the newest estimate, so does not maintain that ``a < b`` throughout. 
+Like bisection, this method ensures that ``a`` and ``b`` is a bracket, but it moves ``a`` to the newest estimate, so does not maintain that ``a < b`` throughout.
 
 We can see it in action on the sine function.   Here we pass in ``\lambda``, but in a real implementation we would have programmed the algorithm to compute the inverse quadratic value.
 
@@ -214,7 +214,7 @@ chandrapatlu(sin, 3, 4,  λ3, true)
 
 The condition `Φ^2 < ξ < 1 - (1-Φ)^2` can be visualized. Assume `a,b=0,1`, `fa,fb=-1/2,1`, Then `c < a < b`, and `fc` has the same sign as `fa`, but what values of `fc` will satisfy the inequality?
 
-```julia; 
+```julia;
 using ImplicitEquations
 using Plots
 ξ(c,fc) = (a-b)/(c-b)
@@ -231,7 +231,7 @@ When `(c,fc)` is in the shaded area, the inverse quadratic step is chosen. We ca
 
 For these values, this area is within the area where a implicit quadratic step will result in a value between `a` and `b`:
 
-```julia; 
+```julia;
 l(c,fc) = λ3(fa,fb,fc,a,b,c)
 r = ImplicitEquations.Lt(l,b) & ImplicitEquations.Gt(l,a)
 plot(r, xlims=(-2,0), ylims=(-3,0))
@@ -243,13 +243,13 @@ There are values in the parameter space where this does not occur.
 
 The `chandrapatlu` alorithm typically waits until `abs(b-a) <= 2max(eps(a),eps(b))` is satisfied. Informally this means the algorithm stops when the two bracketing values are no more than a small amount apart. What is a "small amount?"
 
-To understand, we start with the fact that floating point numbers are an approximation to real numbers. 
+To understand, we start with the fact that floating point numbers are an approximation to real numbers.
 
 Floating point numbers effectively represent a number in scientific
-notation in terms of 
+notation in terms of
 
 * a sign (plus or minus) ,
-* a *mantissa* (a number in ``[1,2)``, in binary ), and 
+* a *mantissa* (a number in ``[1,2)``, in binary ), and
 * an exponent (to represent a power of ``2``).
 
 The mantissa is of the form `1.xxxxx...xxx` where there are ``m``
@@ -260,12 +260,12 @@ included in the sum. As such, the
 mantissa represents a discrete set of values, separated by `1/2^m`, as
 that is the smallest difference possible.
 
-For example if `m=2` then the possible value for the mantissa are `11 => 1 + 1/2 + 1/4 = 7/4`, 
+For example if `m=2` then the possible value for the mantissa are `11 => 1 + 1/2 + 1/4 = 7/4`,
 `10 => 1 + 1/2 = 6/4`, `01 => 1 + 1/4 = 5/4`. and `00 => 1 = 4/4`, values separated by `1/4 = 1/2^m`.
 
-For 64-bit floating point numbers `m=52`, so the values in the mantissa differ by `1/2^52 = 2.220446049250313e-16`. This is the value of `eps()`. 
+For 64-bit floating point numbers `m=52`, so the values in the mantissa differ by `1/2^52 = 2.220446049250313e-16`. This is the value of `eps()`.
 
-However, this "gap" between numbers is for values when the exponent is `0`. That is the numbers in `[1,2)`. For values in `[2,4)` the gap is twice, between `[1/2,1)` the gap is half. That is the gap depends on the size of the number. The gap between `x` and its next largest floating point number  is given by `eps(x)` and that always satisfies `eps(x) <= eps() * abs(x)`. 
+However, this "gap" between numbers is for values when the exponent is `0`. That is the numbers in `[1,2)`. For values in `[2,4)` the gap is twice, between `[1/2,1)` the gap is half. That is the gap depends on the size of the number. The gap between `x` and its next largest floating point number  is given by `eps(x)` and that always satisfies `eps(x) <= eps() * abs(x)`.
 
 One way to think about this is the difference between `x` and the next largest floating point values is *basically* `x*(1+eps()) - x` or `x*eps()`.
 
@@ -293,12 +293,12 @@ Here the issue is `abs(b-a)` is tiny (of the order `1e-119`) but `max(eps(a), ep
 
 
 
-For non-bracketing methods, like Newton's method or the secant method, different criteria are useful. 
+For non-bracketing methods, like Newton's method or the secant method, different criteria are useful.
 There may not be a bracketing interval for `f` (for example `f(x) = (x-1)^2`) so the second criteria above might need to be restated in terms of the last two iterates, ``x_n`` and ``x_{n-1}``. Calling this difference ``\Delta = |x_n - x_{n-1}|``, we might stop if ``\Delta`` is small enough. As there are scenarios where this can happen, but the function is not at a zero, a check on the size of `f` is needed.
 
 However, there may be no floating point value where `f` is exactly `0.0` so checking the size of `f(x_n)` requires some agreement.
 
-First if `f(x_n)` is `0.0` then it makes sense to call `x_n` an *exact zero* of `f`, even though this may hold even if `x_n`, a floating point value, is not mathematically an *exact* zero of `f`. (Consider `f(x) = x^2 - 2x + 1`. Mathematically, this is identical to `g(x) = (x-1)^2`, but `f(1 + eps())` is zero, while `g(1+eps())` is `4.930380657631324e-32`. 
+First if `f(x_n)` is `0.0` then it makes sense to call `x_n` an *exact zero* of `f`, even though this may hold even if `x_n`, a floating point value, is not mathematically an *exact* zero of `f`. (Consider `f(x) = x^2 - 2x + 1`. Mathematically, this is identical to `g(x) = (x-1)^2`, but `f(1 + eps())` is zero, while `g(1+eps())` is `4.930380657631324e-32`.
 
 However, there may never be a value with `f(x_n)` exactly `0.0`. (The value of `sin(pi)` is not zero, for example, as `pi` is an approximation to ``\pi``, as well the `sin` of values adjacent to `float(pi)` do not produce `0.0` exactly.)
 
@@ -320,10 +320,10 @@ Assuming ``f`` has a derivative, the linear approximation gives:
 So we should consider `f(x_n)` an *approximate zero* when it is on the scale of
 ``f'(\alpha) \cdot \alpha \delta``.
 
-That `x_n` means we consider a *relative* tolerance for `f`. 
-Also important -- when `x_n` is close to  `0`, 
-is the need for an *absolute* tolerance, one not dependent on the size of `x`. 
-So a good condition to check if `f(x_n)` is small is 
+That `x_n` means we consider a *relative* tolerance for `f`.
+Also important -- when `x_n` is close to  `0`,
+is the need for an *absolute* tolerance, one not dependent on the size of `x`.
+So a good condition to check if `f(x_n)` is small is
 
 `abs(f(x_n)) <= abs(x_n) * rtol + atol`,
 
@@ -405,3 +405,9 @@ numericq(3, 1)
 The large difference is due to how the tolerances are set within `Roots`. The `Brent method gets pretty close in a few steps, but takes a much longer time to get close enough for the default tolerances
 
 
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

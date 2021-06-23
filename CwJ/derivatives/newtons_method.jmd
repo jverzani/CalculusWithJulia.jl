@@ -1279,3 +1279,10 @@ All methods work quickly with this well-behaved problem. In general
 the convergence rates are slightly different for each, with the
 Steffensen method matching Newton's method and the difference quotient
 method being slower in general. All can be more sensitive to the initial guess.
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

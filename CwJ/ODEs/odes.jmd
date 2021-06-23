@@ -537,7 +537,7 @@ We enter into `Julia`:
 
 ```julia;
 @syms w::positive H::positive x::positive y()
-eqn = y''(x) ⩵ (w/H) * sqrt(1 + y'(x)^2)  
+eqn = y''(x) ⩵ (w/H) * sqrt(1 + y'(x)^2)
 ```
 
 Unfortunately, `SymPy` needs a bit of help with this problem, by breaking the problem into
@@ -559,7 +559,7 @@ out = dsolve(eqn)
 
 So $y'(x) = u(x) = \sinh(C_1 + w \cdot x/H)$. This can be solved by direct
 integration as there is no $y(x)$ term on the right hand
-side. 
+side.
 
 ```julia;
 eqn = y'(x) ⩵ rhs(out)
@@ -889,4 +889,11 @@ choices = [
 ]
 ans = 1
 radioq(choices, ans)
+```
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

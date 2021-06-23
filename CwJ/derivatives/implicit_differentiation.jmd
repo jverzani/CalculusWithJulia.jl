@@ -32,7 +32,7 @@ To plot such an equation in `Julia`, we can use the
 `ImplicitEquations` package, which is loaded when `CalculusWithJulia` is:
 
 ```julia;
-using CalculusWithJulia 
+using CalculusWithJulia
 using Plots
 gr()   # better graphics than plotly() here
 ```
@@ -948,4 +948,10 @@ When $x>0$, the graph of the equation is...
 choices = ["concave up", "concave down", "both concave up and down"]
 ans = 3
 radioq(choices, ans, keep_order=true)
+```
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

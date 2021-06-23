@@ -358,7 +358,7 @@ pyplot()
 thetas = range(0, stop=pi,   length=50)
 phis   = range(0, stop=pi/2, length=50)
 
-xs = [X(1, theta, phi) for theta in thetas, phi in phis] 
+xs = [X(1, theta, phi) for theta in thetas, phi in phis]
 ys = [Y(1, theta, phi) for theta in thetas, phi in phis]
 zs = [Z(1, theta, phi) for theta in thetas, phi in phis]
 

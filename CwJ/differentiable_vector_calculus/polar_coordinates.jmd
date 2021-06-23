@@ -717,3 +717,10 @@ r(theta) = sqrt(cos(2theta) * sec(theta)^4)
 val, _ = quadgk(t -> sqrt(D(r)(t)^2 + r(t)^2), -pi/4, pi/4)
 numericq(val)
 ```
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

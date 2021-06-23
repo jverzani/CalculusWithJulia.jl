@@ -10,12 +10,12 @@ nothing
 ```
 
 An historic problem in the history of math was to find the area under
-the graph of $f(x)=x^2$ between $[0,1]$.
+the graph of ``f(x)=x^2`` between ``[0,1]``.
 
 
 
-There isn't a ready-made formula for the area of this
-shape, as there is for a triangle or a square. However,
+There wasn't a ready-made formula for the area of this
+shape, as was known for a triangle or a square. However,
 [Archimedes](http://en.wikipedia.org/wiki/The_Quadrature_of_the_Parabola)
 found a method to compute areas enclosed by a parabola and line
 segments that cross the parabola.
@@ -33,11 +33,11 @@ function make_triangle_graph(n)
     title = "Area of parabolic cup ..."
     n==1 && (title = "\${Area = }1/2\$")
     n==2 && (title = "\${Area = previous }+ 1/8\$")
-    n==3 && (title = "\${Area = previous }+ 2*(1/8)^2\$")
-    n==4 && (title = "\${Area = previous }+ 4*(1/8)^3\$")
-    n==5 && (title = "\${Area = previous }+ 8*(1/8)^4\$")
-    n==6 && (title = "\${Area = previous }+ 16*(1/8)^5\$")
-    n==7 && (title = "\${Area = previous }+ 32*(1/8)^6\$")
+    n==3 && (title = "\${Area = previous }+ 2\\cdot(1/8)^2\$")
+    n==4 && (title = "\${Area = previous }+ 4\\cdot(1/8)^3\$")
+    n==5 && (title = "\${Area = previous }+ 8\\cdot(1/8)^4\$")
+    n==6 && (title = "\${Area = previous }+ 16\\cdot(1/8)^5\$")
+    n==7 && (title = "\${Area = previous }+ 32\\cdot(1/8)^6\$")
 
 
 
@@ -77,29 +77,110 @@ ImageFile(imgfile, caption)
 ```
 
 The figure illustrates a means to compute the area bounded by the
-parabola, the line $y=1$ and the line $x=0$ using triangles. It
+parabola, the line ``y=1`` and the line ``x=0`` using triangles. It
 suggests that this area can be found by adding the following sum
 
 $$~
 A = 1/2 + 1/8 + 2 \cdot (1/8)^2 + 4 \cdot (1/8)^3 + \cdots
 ~$$
 
-This value is $2/3$, so the area under the curve would be
-$1/3$. Forget about this specific value - which through more modern machinery becomes uneventful - and focus for a minute on the
+
+This value is ``2/3``, so the area under the curve would be
+``1/3``. Forget about this specific value - which through more modern machinery becomes uneventful - and focus for a minute on the
 method: a problem is solved by a suggestion of an infinite process, in
 this case the creation of more triangles to approximate the
 unaccounted for area. This is the so-call method of
 [exhaustion](http://en.wikipedia.org/wiki/Method_of_exhaustion) known
-since the 5th century BC. Archimedes used this method to solve a wide
+since the 5th century BC.
+
+Archimedes used this method to solve a wide
 range of area problems related to basic geometric shapes, including a
 more general statement of what we described above.
 
-The $\cdots$ in the sum expression are the indication that this process continues and that
+The ``\cdots`` in the sum expression are the indication that this process continues and that
 the answer is at the end of an *infinite* process. To make this line of
 reasoning rigorous requires the concept of a limit. The concept of a
 limit is then an old one, but it wasn't until the age of calculus
 that it was formalized.
 
+
+
+Next, we illustrate how Archimedes approximated ``\pi`` -- the ratio of the circumference of a circle to its diameter -- using interior and exterior ``n``-gons whose perimeters could be computed.
+
+
+
+```julia; echo=false
+## Archimedes approximation for pi
+
+using Plots
+gr()
+blue, green, purple, red = :royalblue, :forestgreen, :mediumorchid3, :brown3
+
+
+function archimedes!(p, n, xy=(0,0), radius=1; color=blue)
+
+    x₀,y₀=xy
+    ts = range(0, 2pi, length=100)
+
+
+
+    plot!(p, x₀ .+ sin.(ts), y₀ .+ cos.(ts), linewidth=2)
+
+    α = ((2π)/n)/2
+    αs = (-pi/2 + α):2α:(3pi/2 + α)
+    r = radius/cos(α)
+
+    xs = x₀ .+ r*cos.(αs)
+    ys = y₀ .+ r*sin.(αs)
+
+    plot!(p, xs, ys, linewidth=2, alpha=0.6)
+    plot!(p, xs, ys,
+          fill=true,
+          fillcolor=color,
+          alpha=0.4)
+
+    r = radius
+    xs = x₀ .+ r*cos.(αs)
+    ys = y₀ .+ r*sin.(αs)
+
+    plot!(p, xs, ys, linewidth=2, alpha=0.6)
+    plot!(p, xs, ys,
+          fill=true,
+          fillcolor=color,
+          alpha=0.8)
+
+    p
+end
+
+ns = [4,5,7,9]
+xs = [1, 3.5, 1, 3.5]
+ys = [3.5, 3.5, 1, 1]
+p = plot(;xlims=(-.25, 4.75), ylims=(-0.25, 4.75),
+         axis=nothing,
+         xaxis=false,
+         yaxis=false,
+         legend=false,
+         padding = (0.0, 0.0),
+             background_color = :transparent,
+         foreground_color = :black,
+         aspect_ratio=:equal)
+
+for (x, y, n, col) ∈ zip(xs, ys, ns, (blue, green, purple, red))
+    archimedes!(p, n, (x, y), color=col)
+end
+
+caption = L"""
+The ratio of the circumference of a circle to its diameter, $\pi$, can be approximated from above and below by computing the perimeters of the inscribed $n$-gons. Archimedes computed the perimeters for $n$ being $12$, $24$, $48$, and $96$ to determine that $3~1/7 \leq \pi \leq 3~10/71$.
+"""
+
+plotly()
+ImageFile(p, caption)
+```
+
+
+Here Archimedes uses *bounds* to constrain an unknown value. Had he been able to compute these bounds for larger and larger ``n`` the value of ``\pi`` could be more accurately determined. In a "limit" it would be squeezed in to have a specific value, which we now know is an irrational number.
+
+Continuing these concepts,
 [Fermat](http://en.wikipedia.org/wiki/Adequality) in the 1600s
 essentially took a limit to find the slope of a tangent line to a
 polynomial curve. Newton in the late 1600s, exploited the idea in his
@@ -109,22 +190,23 @@ development of calculus (as did Leibniz). Yet it wasn't until the
 Cauchy and Weierstrass put the idea on a firm footing.
 
 
-To make things more precise, we begin by discussing the limit of a univariate function as $x$ approaches $c$.
+To make things more precise, we begin by discussing the limit of a univariate function as ``x`` approaches ``c``.
 
-Informally, if a limit exists it is the value that $f(x)$ gets close to as $x$ gets close to - but not equal to - $c$.
+Informally, if a limit exists it is the value that ``f(x)`` gets close to as ``x`` gets close to - but not equal to - ``c``.
 
 The modern formulation is due to Weirstrass:
 
-> The limit of $f(x)$ as $x$ approaches $c$ is $L$ if for every real $\epsilon > 0$,
-> there exists a real $\delta > 0$ such that for all real $x$, $0 < \lvert x − c \rvert < \delta$
-> implies $\lvert f(x) − L \rvert < \epsilon$. The notation used is $\lim_{x \rightarrow c}f(x) = L$.
+
+> The limit of ``f(x)`` as ``x`` approaches ``c`` is ``L`` if for every real ``\epsilon > 0``,
+> there exists a real ``\delta > 0`` such that for all real ``x``, ``0 < \lvert x − c \rvert < \delta``
+> implies ``\lvert f(x) − L \rvert < \epsilon``. The notation used is ``\lim_{x \rightarrow c}f(x) = L``.
 
 We comment on this later.
 
 
 Cauchy begins his incredibly influential
 [treatise](http://gallica.bnf.fr/ark:/12148/bpt6k90196z/f25.image) on
-calculus considering two examples, the limit as $x$ goes to $0$ of
+calculus considering two examples, the limit as ``x`` goes to ``0`` of
 
 $$~ \frac{\sin(x)}{x} \quad\text{and}\quad (1 + x)^{1/x}.  ~$$
 
@@ -138,7 +220,7 @@ $$~
 \frac{\sin(x)}{\sin(x)} > \frac{\sin(x)}{x} > \frac{\sin(x)}{\tan(x)}.
 ~$$
 
-This bounds the expression $\sin(x)/x$ between $1$ and $\cos(x)$ and as $x$ gets close to $0$, the value of $\cos(x)$ "clearly" goes to $1$, hence $L$ must be $1$. This is an application of the squeeze theorem.
+This bounds the expression $\sin(x)/x$ between $1$ and $\cos(x)$ and as $x$ gets close to $0$, the value of $\cos(x)$ "clearly" goes to $1$, hence $L$ must be $1$. This is an application of the squeeze theorem, the same idea Archimedes implied when bounding the value for ``\pi`` above and below.
 
 To discuss the case of $(1+x)^{1/x}$, Cauchy first resorts to log tables
 to illustrate an approximate value. We can use `Julia` to find his
@@ -166,7 +248,7 @@ and the intuition of the value of the limit can be gained numerically.
 
 ### Indeterminate forms
 
-First it should be noted that for most of the functions encountered, the concepts of a limit at a typical point $c$ is nothing more than just function evaluation at $c$. This is because, at a typical point, the functions are nicely behaved. However, most questions asked about limits find points that are not typical. For these, the result of evaluating the function at $c$ is typically undefined, and the value comes in one of several *indeterminate forms*: $0/0$, $\infty/\infty$, $0 \cdot \infty$, $\infty - \infty$, $0^0$, $1^\infty$, and $\infty^0$.
+First it should be noted that for most of the functions encountered, the concepts of a limit at a typical point $c$ is nothing more than just function evaluation at $c$. This is because, at a typical point, the functions are nicely behaved (what we will soon call "*continuous*"). However, most questions asked about limits find points that are not typical. For these, the result of evaluating the function at $c$ is typically undefined, and the value comes in one of several *indeterminate forms*: $0/0$, $\infty/\infty$, $0 \cdot \infty$, $\infty - \infty$, $0^0$, $1^\infty$, and $\infty^0$.
 
 `Julia` can help - at times - identify these indeterminate forms, as many such operations produce `NaN`. For example:
 
@@ -187,7 +269,8 @@ x = 1
 sin(x) / x
 ```
 
-But at $x=0$ we get an indicator that there is an issue with just evaluating the function:
+But at ``x=0`` we get an indicator that there is an issue with just evaluating the function:
+
 
 ```julia;
 x = 0
@@ -200,33 +283,41 @@ not true. For example, the $f(x) = \sqrt{x}$ is only defined on $[0,
 is not defined around $0$. Other functions jump at values, and will
 not have a limit, despite having well defined values. The `floor`
 function is the function that rounds down to the nearest integer. At
-integer values there will be a jump, even though the function is
+integer values there will be a jump (and hence have no limit), even though the function is
 defined.
 
 ## Graphical approaches to limits
 
 Let's return to the function $f(x) = \sin(x)/x$. This function was studied by Euler as part of his solution to the [Basel](http://en.wikipedia.org/wiki/Basel_problem) problem. He knew that near $0$, $\sin(x) \approx x$, so the ratio is close to $1$ if $x$ is near $0$. Hence, the intuition is $\lim_{x \rightarrow 0} \sin(x)/x = 1$, as Cauchy wrote. We can verify this limit graphically two ways. First, a simple graph shows no issue at $0$:
 
+
 ```julia;
-using CalculusWithJulia  # loads SymPy
+using CalculusWithJulia
 using Plots
 f(x) = sin(x)/x
-plot(f, -pi/2, pi/2)
+xs, ys = unzip(f, -pi/2, pi/2)  # get points used to plot `f`
+plot(xs,  ys)
+scatter!(xs, ys)
 ```
 
 The $y$ values of the graph seem to go to $1$ as the $x$ values get
 close to 0. (That the graph looks defined at $0$ is due to the fact
-that the points sampled to graph do not include $0$. Otherwise, since
-`f(0)` is `NaN`, there would be no lines connecting to the value with
-`x=0`.)
+that the points sampled to graph do not include $0$, as shown through the `scatter!` command -- which can be checked via `minimum(abs, xs)`.)
 
 We can also verify Euler's intuition through this graph:
 
 ```julia;
-plot([sin, x -> x], -pi/2,  pi/2)
+plot(sin, -pi/2,  pi/2)
+plot!(identity)    # the function y = x, like how zero is y = 0
 ```
 
 That the two are indistinguishable near $0$ makes it easy to see that their ratio should be going towards $1$.
+
+A parametric plot shows the same, we see below the slope at ``(0,0)`` is *basically* ``1``, because the two functions are varying at the same rate when they are each near ``0``
+
+```julia;
+plot(sin, identity, -pi/2, pi/2)  # parametric plot
+```
 
 
 The graphical approach to limits - plotting $f(x)$ around $c$ and
@@ -234,7 +325,16 @@ observing if the $y$ values seem to converge to an $L$ value when $x$
 get close to $c$ - allows us to gather quickly if a function seems to
 have a limit at $c$, though the precise value of $L$ may be hard to identify.
 
+
+```julia; echo=false
+caption = """
+An illustration of the graphical approach to a limit showing as the ``x`` point gets dragged to ``c``m ``f(x)=\\sin(x)/x`` gets close to ``L=1``.
+"""
+CalculusWithJulia.WeaveSupport.JSXGraph(joinpath(@__DIR__, "limit-example.js"), caption)
+```
+
 ##### Example
+
 
 
 Consider now the following limit
@@ -402,7 +502,7 @@ ys = [f(x) for x in xs]
 
 Hmm, the values in `ys` appear to be going to $0.5$, but then end up at
 $0$. Is the limit $0$ or $1/2$? The answer is $1/2$. The last $0$ is
-an artifact of floating point arithmetic. To investigate, we look more carefully at the two ratios:
+an artifact of floating point arithmetic and the last few deviations from `0.5` due to loss of precision in subtraction. To investigate, we look more carefully at the two ratios:
 
 ```julia;
 y1s = [1 - cos(x) for x in xs]
@@ -421,18 +521,58 @@ stopped with `x=1e-6`, say.
 
 In general, some functions will frustrate the numeric approach. It is
 best to be wary of results. At a minimum they should confirm what a quick
-graph shows.
+graph shows, though even that isn't enough, as this next example shows.
+
+
+##### Example
+
+Let ``f(x)`` be defined by
+
+```math
+f(x) = x^2 + 1 + \log(| 11 \cdot x - 15 |)/99.
+```
+
+The question is to investigate
+
+```math
+\lim_{x \rightarrow 15/11} f(x)
+```
+
+A plot shows the answer appears to be straightforward:
+
+```julia;echo=false
+f(x) = x^2 + 1 + log(abs(11*x - 15))/99
+plot(f, 15/11 - 1, 15/11 + 1)
+```
+
+Taking values near ``15/11`` shows nothing too unusual:
+
+```julia
+c = 15/11
+hs = [1/10^i for i in 4:3:16]
+xs = c .+ hs
+[xs f.(xs)]
+```
+
+(Though both the graph and the table hint at something a bit odd.)
+
+However the limit in this case is ``-\infty`` (or DNE), as there is an aysmptote at ``c=15/11``. The problem is the asymptote due to the logarithm is extremely narrow and happens between floating point values to the left and right of ``15/11``.
+
+
 
 ## Symbolic approach to limits
 
+
 The `SymPy` package provides a `limit` function for finding the limit
-of an expression in a given variable. It is loaded above, when the `CalculusWithJulia` package was loaded. The `limit` function's use requires the expression,
-the variable and a value for $c$. (Similar to the three things in the
+of an expression in a given variable. It must be loaded, as done
+below. The `limit` function's use requires the expression, the
+variable and a value for $c$. (Similar to the three things in the
 notation $\lim_{x \rightarrow c}f(x)$.)
 
 For example, the limit at $0$ of $(1-\cos(x))/x^2$ is easily handled:
 
 ```julia;
+using SymPy
 @syms x::real
 f(x) = (1 - cos(x)) / x^2
 limit(f(x), x=>0)		# f(x) is a symbolic expression when x is
@@ -440,13 +580,23 @@ limit(f(x), x=>0)		# f(x) is a symbolic expression when x is
 
 The pair notation (`x=>0`) is used to indicate the variable and the value it is going to.
 
-As a convenience, there is also an "operator" version of `limit` for univariate functions, where only a function object and `c` need be specified:
+##### Example
 
-```julia;
-limit(f, 0)
+We look again at this function which despite having a vertical asymptote at ``x=15/11`` has the property that it is positive for all floating point values, making both a numeric and graphical approach impossible:
+
+```math
+f(x) = x^2 + 1 + \log(| 11 \cdot x - 15 |)/99.
 ```
 
-##### Examples
+We find the limit symbolically at ``c=15/11`` as follows, taking care to use the exact value `15//11` and not the *floating point* approximation returned by `15/11`:
+
+```julia
+@syms x
+f(x) = x^2 + 1 + log(abs(11x - 15))/99
+limit(f(x), x => 15 // 11)
+```
+
+##### Example
 
 Find the [limits](http://en.wikipedia.org/wiki/L%27H%C3%B4pital%27s_rule):
 
@@ -476,15 +626,25 @@ Finally, for the third we define a new variable and proceed:
 limit( (x^(1-rho) - 1) / (1 - rho), rho=>1)
 ```
 
+This last limit demonstrates that the `limit` function of `SymPy` can readily evaluate limits that involve parameters, though at times some assumptions on the parameters may be needed, as was done through `rho::real`
+
+However, for some cases, the assumptions will not be enough, as they
+are broad. (E.g., something might be true for some values of the
+parameter and not others and these values aren't captured in the
+assumptions.)  So the user must be mindful that when parameters are
+involved, the answer may not reflect all possible cases.
+
 ##### Example, floating point conversion issues
 
-The [algorithm](http://www.cybertester.com/data/gruntz.pdf)
+The Gruntz [algorithm](http://www.cybertester.com/data/gruntz.pdf)
 implemented in `SymPy` for symbolic limits is quite powerful. However,
 some care must be exercised to avoid undesirable conversions from
 exact values to floating point values.
 
 
-To Illustrate, let's look at the limit as $x$ goes to $\pi/2$ of $f(x)
+In a previous example, we used `15//11` and not `15/11`, as the former converts to an *exact* symbolic value for use in `SymPy`, but the latter would be approximated in floating point *before* this conversion so the exactness would be lost.
+
+To illustrate further, let's look at the limit as $x$ goes to $\pi/2$ of $f(x)
 = \cos(x) / (x - \pi/2)$. We follow our past practice:
 
 ```julia;
@@ -521,43 +681,89 @@ f(x) = cos(x) / (x - PI/2)
 limit(f(x), x => PI/2)
 ```
 
+(The value `pi` is able to be exactly converted to `PI` when used in `SymPy`, as it is of type `Irrational`, and is not a floating point value. However, the expression `pi/2` converts `pi` to a floating point value and then divides by `2`, hence the loss of exactness when used symbolically.)
+
+##### Example: left and right limits
+
+Right and left limits will be discussed in the next section; here we
+give an example of the idea.  The mathematical convention is to say a
+limit exists if both the left *and* right limits exist and are
+equal. Informally a right (left) limit at ``c`` only considers values of ``x`` less (more) than ``c``. The `limit` function of `SymPy`  finds directional limits by default,
+a right limit, where ``x > c``.
+
+The left limit can be found by passing the argument `dir="-"`. Passing `dir="+-"` (and not `"-+"`) will compute the mathematical limit, throwing an error in `Python` if no limit exists.
+
+```julia
+@syms x
+limit(ceil(x), x=>0), limit(ceil(x), x=>0, dir="-")
+```
+
+This accurately shows the limit does not exist mathematically, but `limit(ceil(x), x=>0)` does exist (as it finds a right limit).
+
+
+
 ## Rules for limits
 
 The `limit` function doesn't compute limits from the definition,
 rather it applies some known facts about functions within a set of
-rules. Some of these rules are the following. Suppose the individual limits of $f$ and $g$ always exist below.
+rules. Some of these rules are the following. Suppose the individual limits of $f$ and $g$ always exist (and are finite) below.
 
-```julia; echo=false
-using DataFrames
-rules = [L"\lim_{x \rightarrow c} (a \cdot f(x) + b \cdot g(x)) = a \cdot
-  \lim_{x \rightarrow c} f(x) + b \cdot \lim_{x \rightarrow c}
-  g(x)",
-  L"\lim_{x \rightarrow c} f(x) \cdot g(x) = \lim_{x \rightarrow c}
-  f(x) \cdot \lim_{x \rightarrow c} g(x)",
-  L" $\lim_{x \rightarrow c} f(x) / g(x) = \lim_{x \rightarrow c} f(x) /
-  \lim_{x \rightarrow c} g(x)$ - provided $\lim_{x \rightarrow c} g(x) \neq 0$",
-  L" $\lim_{x \rightarrow c} (f \circ g)(x) = \lim_{x \rightarrow L}
-  f(x)$, where $\lim_{x \rightarrow c}g(x) = L$"]
-descr = [""" This says that limits involving sums, differences or scalar
-  multiples of functions can be computed by first doing the individual
-  limits and then combining the answers.""",
-  """This says limits of
-  products can be found by computing the limit of the individual
-  factors and then combining.""",
-  L"""This says limits of ratios can be found by computing
-  the limit of the individual terms and then dividing provided you
-  don't divide by $0$. The last part is really important, as this rule
-  is no help with the common indeterminate form $0/0$.""",
-  L"""This says the limit of
-  compositions can be found by taking the limit of the interior
-  function ($L$) and then finding the limit of the exterior function
-  as $x$ approaches $L$."""]
-  d = DataFrame(Rule=rules, Description=descr)
-  table(d)
+```math
+\begin{align*}
+\lim_{x \rightarrow c} (a \cdot f(x) + b \cdot g(x)) &= a \cdot
+  \lim_{x \rightarrow c} f(x) + b \cdot \lim_{x \rightarrow c} g(x)
+  &\\
+%%
+\lim_{x \rightarrow c} f(x) \cdot g(x) &= \lim_{x \rightarrow c}
+  f(x) \cdot \lim_{x \rightarrow c} g(x)
+  &\\
+%%
+\lim_{x \rightarrow c} \frac{f(x)}{g(x)} &=
+  \frac{\lim_{x \rightarrow c} f(x)}{\lim_{x \rightarrow c} g(x)}
+  &(\text{provided }\lim_{x \rightarrow c} g(x) \neq 0)\\
+\end{align*}
+```
+
+These are verbally described as follows, when the individual limits exist and are finite then:
+
+* Limits involving sums, differences or scalar multiples of functions
+  *exist* **and** can be **computed** by first doing the individual
+  limits and then combining the answers appropriately.
+
+* Limits of products exist and can be found by computing the limits of the
+  individual factors and then combining.
+
+* Limits of ratios *exist* and can be found by computing the limit of the
+  individual terms and then dividing **provided** you don't divide by
+  ``0``. The last part is really important, as this rule is no help with
+  the common indeterminate form ``0/0``
+
+
+In addition, consider the composition:
+
+```math
+\lim_{x \rightarrow c} f(g(x))
+```
+
+Suppose ``b = \lim_{x \rightarrow c} g(X)`` **and both**
+
+* ``\lim_{x \rightarrow b} f(x) = L``
+* ``f(b) = L``
+
+then this limit exists and is equal to ``L``:
+
+```math
+L = \lim_{x \rightarrow c} f(g(x)).
 ```
 
 
-These, together with the fact that our basic algebraic functions have limits
+The assumptions on `f` are three fold: ``f`` has a limit at ``b``;
+``f`` is *defined* at ``b``; the limit of ``f`` at ``b`` is
+``f(b)``. (Later we will say then that ``f`` is *continuous* at
+``b``.)
+
+
+These rules, together with the fact that our basic algebraic functions have limits
 that can be found by simple evaluation, mean that many limits are easy to
 compute.
 
@@ -634,6 +840,23 @@ So around $c=1/2$ the ratio should look like $-\pi (x-1/2) / ( -4(x -	 1/2)) = \
 This is the basis of L'Hôpital's rule, which we will return to once the derivative is discussed.
 
 
+##### Example sums
+
+If it is known that the following limit exists by some means:
+
+```math
+L = 0 = \lim_{x \rightarrow 0} \frac{e^{\csc(x)}}{e^{\cot(x)}} - (1 + \frac{1}{2}x  + \frac{1}{8}x^2)
+```
+
+Then this limit will exist
+
+```math
+M = \lim_{x \rightarrow 0} \frac{e^{\csc(x)}}{e^{\cot(x)}}
+```
+
+
+Why? We can express the function ``e^{\csc(x)}/e^{\cot(x)}`` as the above function plus the polynomial ``1 + x/2 + x^2/8``. The above is then the sum of two functions whose limits exist and are finite, hence, we can conclude that ``M = 0 + 1``.
+
 
 ## Limits from the definition
 
@@ -668,8 +891,7 @@ holds for each. Running them again and again should always produce
 (Of course, we should also verify values to the left of $c$.)
 
 
-If there is worry about the possibility that `epsilon == 0`, we could
-replace its definition with `epsilon = max(eps(), rand())`.
+(The random numbers are technically in ``[0,1)``, so in theory `epsilon` could be `0`. So the above approach would be more solid if some guard, such as  `epsilon = max(eps(), rand())`, was used. As the formal definition is the domain of paper-and-pencil, we don't fuss.)
 
 
 In this case, $\delta$ is easy to guess, as the function is linear and
@@ -870,35 +1092,6 @@ radioq(choices, ans)
 ```
 
 
-
-###### Question <small>Squeeze theorem</small>
-
-Let's look at the function $f(x) = x \sin(1/x)$. A graph around $0$
-can be made with:
-
-```julia;
-f(x) = x == 0 ? NaN : x * sin(1/x)
-c, delta = 0, 1/4
-plot([f, abs, x -> -abs(x)], c - delta, c + delta)
-```
-
-This graph clearly oscillates near $0$. To the graph of $f$, we added
-graphs of both $g(x) = \lvert x\rvert$ and $h(x) = - \lvert x\rvert$. From this graph it is
-easy to see by the "squeeze theorem" that the limit at $x=0$ is
-$0$. Why?
-
-```julia; echo=false
-choices=[L"""The functions $g$ and $h$ both have a limit of $0$ at $x=0$ and the function $f$ is in
-between both $g$ and $h$, so must to have a limit of $0$.
-""",
-	L"The functions $g$ and $h$ squeeze each other as $g(x) > h(x)$",
-         L"The function $f$ has no limit - it oscillates too much near $0$"]
-ans = 1
-radioq(choices, ans)
-```
-
-
-
 ###### Question
 
 Find the limit as $x$ goes to $2$ of
@@ -979,7 +1172,7 @@ ans = 3
 radioq(choices, ans)
 ```
 
-###### Question <small>limit properties</small>
+###### Question: limit properties
 
 There are several properties of limits that allow one to break down
 more complicated problems into smaller subproblems. For example,
@@ -999,6 +1192,35 @@ Use one or the either to find the limit of $f(x) = \sin(x) + \tan(x) +
 f(x) = sin(x) + tan(x) + cos(x)
 numericq(f(0), 1e-5)
 ```
+
+###### Question
+
+The key assumption made above in being able to write
+
+```math
+\lim_{x\rightarrow c} f(g(x)) = L,
+```
+
+when ``\lim_{x\rightarrow b} f(x) = L`` and ``\lim_{x\rightarrow c}g(x) = b`` is *continuity*.
+
+This [example](https://en.wikipedia.org/wiki/Limit_of_a_function#Limits_of_compositions_of_functions) shows why it is important.
+
+Take
+
+```math
+f(x) = \begin{cases}
+0 & x \neq 0\\
+1 & x = 0
+\end{cases}
+```
+
+We have ``\lim_{x\rightarrow 0}f(x) = 0``, as ``0`` is clearly a removable discontinuity. So were the above applicable we would have ``\lim_{x \rightarrow 0}f(f(x)) = 0``. But this is not true. What is the limit at ``0`` of ``f(f(x))``?
+
+```julia, echo=false
+numericq(1)
+```
+
+
 
 ###### Question
 
@@ -1025,7 +1247,7 @@ radioq(choices, ans)
 Compute the limit
 
 $$~
-\lim_{x \rightarrow 1} \frac{x}{x-1} - \frac{1}{\log(x)}.
+\lim_{x \rightarrow 1} \frac{x}{x-1} - \frac{1}{\ln(x)}.
 ~$$
 
 ```julia; echo=false
@@ -1046,4 +1268,146 @@ $$~
 f(x) =  1/PI * cos(PI*x)/(1 - (2x)^2)
 val = N(limit(f, 1//2))
 numericq(val)
+```
+
+###### Question
+
+Some limits involve parameters. For example, suppose we define `ex` as follows:
+
+```julia
+@syms x m::real k::real
+ex = (1 + k*x)^(m/x)
+```
+
+What is `limit(ex, x=>0)`?
+
+```julia; echo=false
+choices = [L"e^{km}", L"e^{k/m}", L"k/m", L"m/k", L"0"]
+answer = 1
+radioq(choices, ans)
+```
+
+###### Question
+
+For a given ``a``, what is
+
+```math
+L = \lim_{x \rightarrow 0+} (1 + a\cdot (e^{-x} -1))^{(1/x)}
+```
+
+```julia; echo=false
+choices = [L"e^{-a}", L"e^a", L"a", "``L`` does not exist"]
+radioq(choices, 1)
+```
+
+###### Question
+
+For positive integers ``m`` and ``n`` what is
+
+```math
+\lim_{x \rightarrow 1} \frac{x^{1/m}-1}{x^{1/n}-1}?
+```
+
+```julia; echo=false
+choices = [L"m/n", L"n/m", L"mn", "The limit does not exist"]
+radioq(choices, 1)
+```
+
+###### Question
+
+What does `SymPy` find for the limit of `ex` (`limit(ex, x=>0)`), as defined here:
+
+```julia
+@syms x a
+ex = (a^x - 1)/x
+```
+
+```julia; echo=false
+choices = [L"\log(a)", L"a", L"e^a", L"e^{-a}"]
+radioq(choices, 1)
+```
+
+Should `SymPy` have needed an assumption like
+
+```julia
+@syms a::postive
+```
+
+```julia, echo=false
+yesnoq("yes")
+```
+
+###### Question: The squeeze theorem
+
+Let's look at the function $f(x) = x \sin(1/x)$. A graph around $0$
+can be made with:
+
+```julia;
+f(x) = x == 0 ? NaN : x * sin(1/x)
+c, delta = 0, 1/4
+plot(f, c - delta, c + delta)
+plot!(abs)
+plot!(x -> -abs(x))
+```
+
+This graph clearly oscillates near $0$. To the graph of $f$, we added
+graphs of both $g(x) = \lvert x\rvert$ and $h(x) = - \lvert x\rvert$. From this graph it is
+easy to see by the "squeeze theorem" that the limit at $x=0$ is
+$0$. Why?
+
+```julia; echo=false
+choices=[L"""The functions $g$ and $h$ both have a limit of $0$ at $x=0$ and the function $f$ is in
+between both $g$ and $h$, so must to have a limit of $0$.
+""",
+	L"The functions $g$ and $h$ squeeze each other as $g(x) > h(x)$",
+         L"The function $f$ has no limit - it oscillates too much near $0$"]
+ans = 1
+radioq(choices, ans)
+```
+
+(The [Wikipedia](https://en.wikipedia.org/wiki/Squeeze_theorem) entry for the squeeze theorem has this unverified, but colorful detail:
+
+> In many languages (e.g. French, German, Italian, Hungarian and Russian), the squeeze theorem is also known as the two policemen (and a drunk) theorem, or some variation thereof. The story is that if two policemen are escorting a drunk prisoner between them, and both officers go to a cell, then (regardless of the path taken, and the fact that the prisoner may be wobbling about between the policemen) the prisoner must also end up in the cell.
+
+A slightly informal statement of the squeeze theorem might be:
+
+> Squeeze Theorem: Suppose for all ``x`` near ``c`` that ``l(x) \leq f(x) \leq u(x)``
+> and *both* ``l(x)`` and ``u(x)`` have a limit ``L`` at ``x=c``. Then
+> ``L = \lim_{x \rightarrow c}f(x)``.
+
+###### Question
+
+Archimedes, in finding bounds on the value of ``\pi`` used ``n``-gons with sides ``12, 24, 48,`` and ``96``. This was so the trigonometry involved could be solved exactly for the interior angles (e.g. ``n=12`` is an interior angle of ``\pi/6`` which has `sin` and `cos` computable by simple geometry. See [Damini and Abhishek](https://arxiv.org/pdf/2008.07995.pdf)) These exact solutions led to subsequent bounds. A more modern approach to bound the circumference of a circle of radius ``r`` using a ``n``-gon with interior angle ``\theta`` would be to use the trigonometric functions. An upper bound would be found with (using the triangle with angle ``\theta/2``, opposite side ``x`` and adjacent side ``r``:
+
+```julia;
+@syms theta::real r::real
+x = r * tan(theta/2)
+n = 2PI/theta     # using PI to avoid floaing point roundoff in 2pi
+# C < n * 2x
+upper = n*2x
+```
+
+
+A lower bound would use the triangle with angle ``\theta/2``, hypotenuse ``r`` and opposite side ``x``:
+
+```julia;
+x = r*sin(theta/2)
+n = 2PI/theta
+# C > n * 2x
+lower = n*2x
+```
+
+Using the above, find the limit of `upper` and `lower`. Are the two equal and equal to a familiar value?
+
+```julia; echo=false
+yesnoq("yes")
+```
+
+(If so, then the squeeze theorem would say that ``\pi`` is the common limit.)
+
+
+
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```
