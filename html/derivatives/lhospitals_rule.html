@@ -20,6 +20,8 @@
 .output, .julia-error {
     border-left: thick solid #ff0000;
     padding: 5px;
+    padding-left: 10px;
+    margin-bottom: 15px;
     background-color: #f5f5f5;
 }
 body { padding-top: 60px;
@@ -51,7 +53,7 @@ blockquote {
 }
 </style>
 
-<!-- .julia:before {content: "julia> "} -->
+<!--   padding: 0.5em 10px; .julia:before {content: "julia> "} -->
 
 <style></style>
 
@@ -319,9 +321,21 @@ f''(c) = \lim_{h \rightarrow 0} \frac{f(c + h) - 2f(c) + f(c-h)}{h^2}.
 <p>The proof of L&#39;Hospital&#39;s rule takes advantage of Cauchy&#39;s <a href="http://en.wikipedia.org/wiki/Mean_value_theorem#Cauchy.27s_mean_value_theorem">generalization</a> of the mean value theorem to two functions. Let <span class="math">$f(x)$</span> and <span class="math">$g(x)$</span> be continuous on <span class="math">$[a,b]$</span> and differentiable on <span class="math">$(a,b)$</span> so that on <span class="math">$[c,c+x]$</span> there exists a <span class="math">$\xi$</span> with <span class="math">$f'(\xi) \cdot (f(x) - f(c)) = g'(\xi) \cdot (g(x) - g(c))$</span>. In our formulation, both <span class="math">$f(c)$</span> and <span class="math">$g(c)$</span> are zero, so we have, provided we know that <span class="math">$g(x)$</span> is non zero, that <span class="math">$f(x)/g(x) = f'(\xi)/g'(\xi)$</span> for some <span class="math">$\xi$</span>, <span class="math">$c < \xi < c + x$</span>. That the right-hand side has a limit as <span class="math">$x \rightarrow c+$</span> is true by the assumption that the limit of the derivative&#39;s ratio exists. &#40;The <span class="math">$\xi$</span> part can be removed by considering it as a composition of a function going to <span class="math">$c$</span>.&#41; Thus the right limit of the left hand side is known. Similarly, working with <span class="math">$[c-x, c]$</span> we can get the left limit is known and is equal to the right.</p>
 <h3>L&#39;Hospital&#39;s picture</h3>
 
-<pre class="julia-error">
-ERROR: UndefVarError: fzero not defined
-</pre>
+
+<div class="d-flex justify-content-center">
+<div class="card border-light mx-3 px-3 my-3 py-3" style=" max-width: 560px;">
+    <img src="data:image/gif;base64,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" class="card-img-top" alt="A Figure">
+
+  <div class="card-footer text-muted">
+    <span class="card-text">
+      <small class="text-muted">
+      Geometric interpretation of $L=\lim_{x \rightarrow 0} x^2 / (\sqrt{1 + x} - 1 - x^2)$. At $0$ this limit is indeterminate of the form $0/0$. The value for a fixed $x$ can be seen as the slope of a secant line of a parametric plot of the two functions, plotted as $(g, f)$. In this figure, the limiting "tangent" line has $0$ slope, corresponding to the limit $L$. In general, L'Hospital's rule is nothing more than a statement about slopes of tangent lines.
+
+      </small>
+    </span>
+  </div>
+</div>
+</div>
 
 
 <h2>Generalizations</h2>
@@ -374,7 +388,7 @@ x^x = \exp(\log(x^x)) = \exp(x \log(x)) = \exp(\log(x)/(1/x)).
 \]</p>
 <p>Be just saw that <span class="math">$\lim_{x \rightarrow 0+}\log(x)/(1/x) = 0$</span>. So by the rules for limits of compositions and the fact that <span class="math">$e^x$</span> is continuous, we see <span class="math">$\lim_{x \rightarrow 0+} x^x = e^0 = 1$</span>.</p>
 <ul>
-<li><p>L&#39;Hospital himself was interested in this limit for <span class="math">$a > 0$</span></p>
+<li><p>L&#39;Hospital himself was interested in this limit for <span class="math">$a > 0$</span> &#40;<a href="http://mathoverflow.net/questions/51685/how-did-bernoulli-prove-lh&#37;C3&#37;B4pitals-rule">math overflow</a>&#41;L</p>
 </li>
 </ul>
 <p class="math">\[
@@ -386,17 +400,15 @@ x^x = \exp(\log(x^x)) = \exp(x \log(x)) = \exp(\log(x)/(1/x)).
 
 
 <pre class='hljl'>
-<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>CalculusWithJulia</span><span class='hljl-t'>    </span><span class='hljl-cs'># loads `SymPy`</span><span class='hljl-t'>
-</span><span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>Plots</span><span class='hljl-t'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>SymPy</span><span class='hljl-t'>
 </span><span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>a</span><span class='hljl-oB'>::</span><span class='hljl-n'>positive</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>::</span><span class='hljl-n'>positive</span><span class='hljl-t'>
 </span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>sqrt</span><span class='hljl-p'>(</span><span class='hljl-ni'>2</span><span class='hljl-n'>a</span><span class='hljl-oB'>^</span><span class='hljl-ni'>3</span><span class='hljl-oB'>*</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>4</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-n'>a</span><span class='hljl-t'> </span><span class='hljl-oB'>*</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>a</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-oB'>*</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-oB'>^</span><span class='hljl-p'>(</span><span class='hljl-ni'>1</span><span class='hljl-oB'>//</span><span class='hljl-ni'>3</span><span class='hljl-p'>)</span><span class='hljl-t'>
 </span><span class='hljl-nf'>g</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>a</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>a</span><span class='hljl-oB'>*</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>3</span><span class='hljl-p'>)</span><span class='hljl-oB'>^</span><span class='hljl-p'>(</span><span class='hljl-ni'>1</span><span class='hljl-oB'>//</span><span class='hljl-ni'>4</span><span class='hljl-p'>)</span>
 </pre>
 
 
-<pre class="julia-error">
-ERROR: LoadError: UndefVarError: @syms not defined
-in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/derivatives/lhospitals_rule.jmd:4
+<pre class="output">
+g &#40;generic function with 1 method&#41;
 </pre>
 
 
@@ -408,8 +420,8 @@ in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/derivatives
 </pre>
 
 
-<pre class="julia-error">
-ERROR: UndefVarError: f not defined
+<pre class="output">
+&#40;0, 0&#41;
 </pre>
 
 
@@ -417,12 +429,13 @@ ERROR: UndefVarError: f not defined
 
 
 <pre class='hljl'>
-<span class='hljl-n'>fp</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>gp</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>subs</span><span class='hljl-p'>(</span><span class='hljl-nf'>diff</span><span class='hljl-p'>(</span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>=&gt;</span><span class='hljl-n'>a</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>subs</span><span class='hljl-p'>(</span><span class='hljl-nf'>diff</span><span class='hljl-p'>(</span><span class='hljl-nf'>g</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>=&gt;</span><span class='hljl-n'>a</span><span class='hljl-p'>)</span>
+<span class='hljl-n'>fp</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>gp</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>diff</span><span class='hljl-p'>(</span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>diff</span><span class='hljl-p'>(</span><span class='hljl-nf'>g</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>fp</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>=&gt;</span><span class='hljl-n'>a</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>gp</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>=&gt;</span><span class='hljl-n'>a</span><span class='hljl-p'>)</span>
 </pre>
 
 
-<pre class="julia-error">
-ERROR: UndefVarError: f not defined
+<pre class="output">
+&#40;-4*a/3, -3/4&#41;
 </pre>
 
 
@@ -430,14 +443,13 @@ ERROR: UndefVarError: f not defined
 
 
 <pre class='hljl'>
-<span class='hljl-n'>fp</span><span class='hljl-oB'>/</span><span class='hljl-n'>gp</span>
+<span class='hljl-nf'>fp</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>=&gt;</span><span class='hljl-n'>a</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>/</span><span class='hljl-t'> </span><span class='hljl-nf'>gp</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>=&gt;</span><span class='hljl-n'>a</span><span class='hljl-p'>)</span>
 </pre>
 
 
-<pre class="julia-error">
-ERROR: UndefVarError: fp not defined
-</pre>
 
+<div class="output">$\frac{16 a}{9}$
+</div>
 
 <p>Of course, we could have just relied on <code>limit</code>, which knows about L&#39;Hospital&#39;s rule:</p>
 
@@ -447,65 +459,64 @@ ERROR: UndefVarError: fp not defined
 </pre>
 
 
-<pre class="julia-error">
-ERROR: UndefVarError: f not defined
-</pre>
 
+<div class="output">$\frac{16 a}{9}$
+</div>
 
 <h2>Questions</h2>
 <h6>Question</h6>
 <p>This function <span class="math">$f(x) = \sin(5x)/x$</span> is <em>indeterminate</em> at <span class="math">$x=0$</span>. What type?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="qnkBtbiR" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="DgoVcqBu" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_qnkBtbiR" id="radio_qnkBtbiR_1" value="1">
-  <label class="form-check-label" for="radio_qnkBtbiR_1">
+  <input class="form-check-input" type="radio" name="radio_DgoVcqBu" id="radio_DgoVcqBu_1" value="1">
+  <label class="form-check-label" for="radio_DgoVcqBu_1">
     &#36;0/0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_qnkBtbiR" id="radio_qnkBtbiR_2" value="2">
-  <label class="form-check-label" for="radio_qnkBtbiR_2">
+  <input class="form-check-input" type="radio" name="radio_DgoVcqBu" id="radio_DgoVcqBu_2" value="2">
+  <label class="form-check-label" for="radio_DgoVcqBu_2">
     &#36;\infty/\infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_qnkBtbiR" id="radio_qnkBtbiR_3" value="3">
-  <label class="form-check-label" for="radio_qnkBtbiR_3">
+  <input class="form-check-input" type="radio" name="radio_DgoVcqBu" id="radio_DgoVcqBu_3" value="3">
+  <label class="form-check-label" for="radio_DgoVcqBu_3">
     &#36;0^0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_qnkBtbiR" id="radio_qnkBtbiR_4" value="4">
-  <label class="form-check-label" for="radio_qnkBtbiR_4">
+  <input class="form-check-input" type="radio" name="radio_DgoVcqBu" id="radio_DgoVcqBu_4" value="4">
+  <label class="form-check-label" for="radio_DgoVcqBu_4">
     &#36;\infty - \infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_qnkBtbiR" id="radio_qnkBtbiR_5" value="5">
-  <label class="form-check-label" for="radio_qnkBtbiR_5">
+  <input class="form-check-input" type="radio" name="radio_DgoVcqBu" id="radio_DgoVcqBu_5" value="5">
+  <label class="form-check-label" for="radio_DgoVcqBu_5">
     &#36;0 \cdot \infty&#36;
 
   </label>
 </div>
 
-<div id="qnkBtbiR_message"></div>
+<div id="DgoVcqBu_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_qnkBtbiR']").on("change", function() {
+$("input:radio[name='radio_DgoVcqBu']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#qnkBtbiR_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#DgoVcqBu_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#qnkBtbiR_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#DgoVcqBu_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -516,55 +527,55 @@ $("input:radio[name='radio_qnkBtbiR']").on("change", function() {
 <p>This function <span class="math">$f(x) = \sin(x)^{\sin(x)}$</span> is <em>indeterminate</em> at <span class="math">$x=0$</span>. What type?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="zQYdEx3v" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="L2Je3Kaj" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_zQYdEx3v" id="radio_zQYdEx3v_1" value="1">
-  <label class="form-check-label" for="radio_zQYdEx3v_1">
+  <input class="form-check-input" type="radio" name="radio_L2Je3Kaj" id="radio_L2Je3Kaj_1" value="1">
+  <label class="form-check-label" for="radio_L2Je3Kaj_1">
     &#36;0/0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_zQYdEx3v" id="radio_zQYdEx3v_2" value="2">
-  <label class="form-check-label" for="radio_zQYdEx3v_2">
+  <input class="form-check-input" type="radio" name="radio_L2Je3Kaj" id="radio_L2Je3Kaj_2" value="2">
+  <label class="form-check-label" for="radio_L2Je3Kaj_2">
     &#36;\infty/\infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_zQYdEx3v" id="radio_zQYdEx3v_3" value="3">
-  <label class="form-check-label" for="radio_zQYdEx3v_3">
+  <input class="form-check-input" type="radio" name="radio_L2Je3Kaj" id="radio_L2Je3Kaj_3" value="3">
+  <label class="form-check-label" for="radio_L2Je3Kaj_3">
     &#36;0^0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_zQYdEx3v" id="radio_zQYdEx3v_4" value="4">
-  <label class="form-check-label" for="radio_zQYdEx3v_4">
+  <input class="form-check-input" type="radio" name="radio_L2Je3Kaj" id="radio_L2Je3Kaj_4" value="4">
+  <label class="form-check-label" for="radio_L2Je3Kaj_4">
     &#36;\infty - \infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_zQYdEx3v" id="radio_zQYdEx3v_5" value="5">
-  <label class="form-check-label" for="radio_zQYdEx3v_5">
+  <input class="form-check-input" type="radio" name="radio_L2Je3Kaj" id="radio_L2Je3Kaj_5" value="5">
+  <label class="form-check-label" for="radio_L2Je3Kaj_5">
     &#36;0 \cdot \infty&#36;
 
   </label>
 </div>
 
-<div id="zQYdEx3v_message"></div>
+<div id="L2Je3Kaj_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_zQYdEx3v']").on("change", function() {
+$("input:radio[name='radio_L2Je3Kaj']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#zQYdEx3v_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#L2Je3Kaj_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#zQYdEx3v_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#L2Je3Kaj_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -575,55 +586,55 @@ $("input:radio[name='radio_zQYdEx3v']").on("change", function() {
 <p>This function <span class="math">$f(x) = (x-2)/(x^2 - 4)$</span> is <em>indeterminate</em> at <span class="math">$x=2$</span>. What type?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Z1x8u0de" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="oMOuFO5o" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Z1x8u0de" id="radio_Z1x8u0de_1" value="1">
-  <label class="form-check-label" for="radio_Z1x8u0de_1">
+  <input class="form-check-input" type="radio" name="radio_oMOuFO5o" id="radio_oMOuFO5o_1" value="1">
+  <label class="form-check-label" for="radio_oMOuFO5o_1">
     &#36;0/0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Z1x8u0de" id="radio_Z1x8u0de_2" value="2">
-  <label class="form-check-label" for="radio_Z1x8u0de_2">
+  <input class="form-check-input" type="radio" name="radio_oMOuFO5o" id="radio_oMOuFO5o_2" value="2">
+  <label class="form-check-label" for="radio_oMOuFO5o_2">
     &#36;\infty/\infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Z1x8u0de" id="radio_Z1x8u0de_3" value="3">
-  <label class="form-check-label" for="radio_Z1x8u0de_3">
+  <input class="form-check-input" type="radio" name="radio_oMOuFO5o" id="radio_oMOuFO5o_3" value="3">
+  <label class="form-check-label" for="radio_oMOuFO5o_3">
     &#36;0^0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Z1x8u0de" id="radio_Z1x8u0de_4" value="4">
-  <label class="form-check-label" for="radio_Z1x8u0de_4">
+  <input class="form-check-input" type="radio" name="radio_oMOuFO5o" id="radio_oMOuFO5o_4" value="4">
+  <label class="form-check-label" for="radio_oMOuFO5o_4">
     &#36;\infty - \infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Z1x8u0de" id="radio_Z1x8u0de_5" value="5">
-  <label class="form-check-label" for="radio_Z1x8u0de_5">
+  <input class="form-check-input" type="radio" name="radio_oMOuFO5o" id="radio_oMOuFO5o_5" value="5">
+  <label class="form-check-label" for="radio_oMOuFO5o_5">
     &#36;0 \cdot \infty&#36;
 
   </label>
 </div>
 
-<div id="Z1x8u0de_message"></div>
+<div id="oMOuFO5o_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Z1x8u0de']").on("change", function() {
+$("input:radio[name='radio_oMOuFO5o']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#Z1x8u0de_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#oMOuFO5o_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Z1x8u0de_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#oMOuFO5o_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -634,55 +645,55 @@ $("input:radio[name='radio_Z1x8u0de']").on("change", function() {
 <p>This function <span class="math">$f(x) = (g(x+h) - g(x-h)) / (2h)$</span> &#40;<span class="math">$g$</span> is continuous&#41; is <em>indeterminate</em> at <span class="math">$h=0$</span>. What type?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="1JKqLYuo" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="AMXTcGse" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_1JKqLYuo" id="radio_1JKqLYuo_1" value="1">
-  <label class="form-check-label" for="radio_1JKqLYuo_1">
+  <input class="form-check-input" type="radio" name="radio_AMXTcGse" id="radio_AMXTcGse_1" value="1">
+  <label class="form-check-label" for="radio_AMXTcGse_1">
     &#36;0/0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_1JKqLYuo" id="radio_1JKqLYuo_2" value="2">
-  <label class="form-check-label" for="radio_1JKqLYuo_2">
+  <input class="form-check-input" type="radio" name="radio_AMXTcGse" id="radio_AMXTcGse_2" value="2">
+  <label class="form-check-label" for="radio_AMXTcGse_2">
     &#36;\infty/\infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_1JKqLYuo" id="radio_1JKqLYuo_3" value="3">
-  <label class="form-check-label" for="radio_1JKqLYuo_3">
+  <input class="form-check-input" type="radio" name="radio_AMXTcGse" id="radio_AMXTcGse_3" value="3">
+  <label class="form-check-label" for="radio_AMXTcGse_3">
     &#36;0^0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_1JKqLYuo" id="radio_1JKqLYuo_4" value="4">
-  <label class="form-check-label" for="radio_1JKqLYuo_4">
+  <input class="form-check-input" type="radio" name="radio_AMXTcGse" id="radio_AMXTcGse_4" value="4">
+  <label class="form-check-label" for="radio_AMXTcGse_4">
     &#36;\infty - \infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_1JKqLYuo" id="radio_1JKqLYuo_5" value="5">
-  <label class="form-check-label" for="radio_1JKqLYuo_5">
+  <input class="form-check-input" type="radio" name="radio_AMXTcGse" id="radio_AMXTcGse_5" value="5">
+  <label class="form-check-label" for="radio_AMXTcGse_5">
     &#36;0 \cdot \infty&#36;
 
   </label>
 </div>
 
-<div id="1JKqLYuo_message"></div>
+<div id="AMXTcGse_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_1JKqLYuo']").on("change", function() {
+$("input:radio[name='radio_AMXTcGse']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#1JKqLYuo_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#AMXTcGse_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#1JKqLYuo_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#AMXTcGse_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -693,55 +704,55 @@ $("input:radio[name='radio_1JKqLYuo']").on("change", function() {
 <p>This function <span class="math">$f(x) = x \log(x)$</span> is <em>indeterminate</em> at <span class="math">$x=0$</span>. What type?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Jbbhm31t" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="pdFeB3rA" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Jbbhm31t" id="radio_Jbbhm31t_1" value="1">
-  <label class="form-check-label" for="radio_Jbbhm31t_1">
+  <input class="form-check-input" type="radio" name="radio_pdFeB3rA" id="radio_pdFeB3rA_1" value="1">
+  <label class="form-check-label" for="radio_pdFeB3rA_1">
     &#36;0/0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Jbbhm31t" id="radio_Jbbhm31t_2" value="2">
-  <label class="form-check-label" for="radio_Jbbhm31t_2">
+  <input class="form-check-input" type="radio" name="radio_pdFeB3rA" id="radio_pdFeB3rA_2" value="2">
+  <label class="form-check-label" for="radio_pdFeB3rA_2">
     &#36;\infty/\infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Jbbhm31t" id="radio_Jbbhm31t_3" value="3">
-  <label class="form-check-label" for="radio_Jbbhm31t_3">
+  <input class="form-check-input" type="radio" name="radio_pdFeB3rA" id="radio_pdFeB3rA_3" value="3">
+  <label class="form-check-label" for="radio_pdFeB3rA_3">
     &#36;0^0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Jbbhm31t" id="radio_Jbbhm31t_4" value="4">
-  <label class="form-check-label" for="radio_Jbbhm31t_4">
+  <input class="form-check-input" type="radio" name="radio_pdFeB3rA" id="radio_pdFeB3rA_4" value="4">
+  <label class="form-check-label" for="radio_pdFeB3rA_4">
     &#36;\infty - \infty&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Jbbhm31t" id="radio_Jbbhm31t_5" value="5">
-  <label class="form-check-label" for="radio_Jbbhm31t_5">
+  <input class="form-check-input" type="radio" name="radio_pdFeB3rA" id="radio_pdFeB3rA_5" value="5">
+  <label class="form-check-label" for="radio_pdFeB3rA_5">
     &#36;0 \cdot \infty&#36;
 
   </label>
 </div>
 
-<div id="Jbbhm31t_message"></div>
+<div id="pdFeB3rA_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Jbbhm31t']").on("change", function() {
+$("input:radio[name='radio_pdFeB3rA']").on("change", function() {
   correct = this.value == 5;
 
   if(correct) {
-     $("#Jbbhm31t_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#pdFeB3rA_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Jbbhm31t_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#pdFeB3rA_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -757,32 +768,32 @@ $("input:radio[name='radio_Jbbhm31t']").on("change", function() {
 \]</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Hwn13ivI" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="wulCVdaM" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Hwn13ivI" id="radio_Hwn13ivI_1" value="1">
-  <label class="form-check-label" for="radio_Hwn13ivI_1">
+  <input class="form-check-input" type="radio" name="radio_wulCVdaM" id="radio_wulCVdaM_1" value="1">
+  <label class="form-check-label" for="radio_wulCVdaM_1">
     No. It is not indeterminate
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Hwn13ivI" id="radio_Hwn13ivI_2" value="2">
-  <label class="form-check-label" for="radio_Hwn13ivI_2">
+  <input class="form-check-input" type="radio" name="radio_wulCVdaM" id="radio_wulCVdaM_2" value="2">
+  <label class="form-check-label" for="radio_wulCVdaM_2">
     Yes. It is of the form &#36;0/0&#36;
   </label>
 </div>
 
-<div id="Hwn13ivI_message"></div>
+<div id="wulCVdaM_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Hwn13ivI']").on("change", function() {
+$("input:radio[name='radio_wulCVdaM']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#Hwn13ivI_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#wulCVdaM_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Hwn13ivI_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#wulCVdaM_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -799,29 +810,29 @@ L = \lim_{x \rightarrow 0} \frac{4x - \sin(x)}{x}.
 <p>What is <span class="math">$L$</span>?</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='IvDO3lha' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='IRpTKodb' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="IvDO3lha" type="number" class="form-control" placeholder="Numeric answer">
-<label for="IvDO3lha">Numeric answer</label>
+<input id="IRpTKodb" type="number" class="form-control" placeholder="Numeric answer">
+<label for="IRpTKodb">Numeric answer</label>
 
 </div>
 
-<div id='IvDO3lha_message'></div>
+<div id='IRpTKodb_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#IvDO3lha').on('change', function() {
+$('#IRpTKodb').on('change', function() {
   correct = Math.abs(this.value - 3.0) <= 0.001;
 
   if(correct) {
-     $('#IvDO3lha_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#IRpTKodb_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#IvDO3lha_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#IRpTKodb_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -837,29 +848,29 @@ L = \lim_{x \rightarrow 0} \frac{\sqrt{1+x} - 1}{x}.
 <p>What is <span class="math">$L$</span>?</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='yk4pZi18' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='vDmFSFGc' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="yk4pZi18" type="number" class="form-control" placeholder="Numeric answer">
-<label for="yk4pZi18">Numeric answer</label>
+<input id="vDmFSFGc" type="number" class="form-control" placeholder="Numeric answer">
+<label for="vDmFSFGc">Numeric answer</label>
 
 </div>
 
-<div id='yk4pZi18_message'></div>
+<div id='vDmFSFGc_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#yk4pZi18').on('change', function() {
+$('#vDmFSFGc').on('change', function() {
   correct = Math.abs(this.value - 0.5) <= 0.001;
 
   if(correct) {
-     $('#yk4pZi18_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#vDmFSFGc_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#yk4pZi18_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#vDmFSFGc_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -875,29 +886,29 @@ L = \lim_{x \rightarrow 0} \frac{x - \sin(x)}{x^3}.
 <p>What is <span class="math">$L$</span>?</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='riQbmYB3' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='q6CzAY40' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="riQbmYB3" type="number" class="form-control" placeholder="Numeric answer">
-<label for="riQbmYB3">Numeric answer</label>
+<input id="q6CzAY40" type="number" class="form-control" placeholder="Numeric answer">
+<label for="q6CzAY40">Numeric answer</label>
 
 </div>
 
-<div id='riQbmYB3_message'></div>
+<div id='q6CzAY40_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#riQbmYB3').on('change', function() {
+$('#q6CzAY40').on('change', function() {
   correct = Math.abs(this.value - 0.16666666666666666) <= 0.001;
 
   if(correct) {
-     $('#riQbmYB3_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#q6CzAY40_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#riQbmYB3_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#q6CzAY40_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -913,29 +924,29 @@ L = \lim_{x \rightarrow 0} \frac{1 - x^2/2 - \cos(x)}{x^3}.
 <p>What is <span class="math">$L$</span>?</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='2KRcyj0z' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='7QYsLia2' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="2KRcyj0z" type="number" class="form-control" placeholder="Numeric answer">
-<label for="2KRcyj0z">Numeric answer</label>
+<input id="7QYsLia2" type="number" class="form-control" placeholder="Numeric answer">
+<label for="7QYsLia2">Numeric answer</label>
 
 </div>
 
-<div id='2KRcyj0z_message'></div>
+<div id='7QYsLia2_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#2KRcyj0z').on('change', function() {
+$('#7QYsLia2').on('change', function() {
   correct = Math.abs(this.value - 0.0) <= 0.001;
 
   if(correct) {
-     $('#2KRcyj0z_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#7QYsLia2_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#2KRcyj0z_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#7QYsLia2_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -951,29 +962,29 @@ L = \lim_{x \rightarrow 0} \frac{1}{x} - \frac{1}{\sin(x)}.
 <p>What is <span class="math">$L$</span>?</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='FC0BzlQh' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='DSQPpgxj' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="FC0BzlQh" type="number" class="form-control" placeholder="Numeric answer">
-<label for="FC0BzlQh">Numeric answer</label>
+<input id="DSQPpgxj" type="number" class="form-control" placeholder="Numeric answer">
+<label for="DSQPpgxj">Numeric answer</label>
 
 </div>
 
-<div id='FC0BzlQh_message'></div>
+<div id='DSQPpgxj_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#FC0BzlQh').on('change', function() {
+$('#DSQPpgxj').on('change', function() {
   correct = Math.abs(this.value - 0.0) <= 0.001;
 
   if(correct) {
-     $('#FC0BzlQh_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#DSQPpgxj_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#FC0BzlQh_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#DSQPpgxj_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -989,29 +1000,29 @@ L = \lim_{x \rightarrow \infty} \log(x)/x
 <p>What is <span class="math">$L$</span>?</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='5WZLtrNs' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='UYodNrOr' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="5WZLtrNs" type="number" class="form-control" placeholder="Numeric answer">
-<label for="5WZLtrNs">Numeric answer</label>
+<input id="UYodNrOr" type="number" class="form-control" placeholder="Numeric answer">
+<label for="UYodNrOr">Numeric answer</label>
 
 </div>
 
-<div id='5WZLtrNs_message'></div>
+<div id='UYodNrOr_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#5WZLtrNs').on('change', function() {
+$('#UYodNrOr').on('change', function() {
   correct = Math.abs(this.value - 0.0) <= 0.001;
 
   if(correct) {
-     $('#5WZLtrNs_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#UYodNrOr_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#5WZLtrNs_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#UYodNrOr_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1028,32 +1039,32 @@ $('#5WZLtrNs').on('change', function() {
 <p>Consider <span class="math">$x^{\log(x)} = e^{\log(x)\log(x)}$</span>.</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="z3t2w4WG" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="zHlWviwQ" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_z3t2w4WG" id="radio_z3t2w4WG_1" value="1">
-  <label class="form-check-label" for="radio_z3t2w4WG_1">
+  <input class="form-check-input" type="radio" name="radio_zHlWviwQ" id="radio_zHlWviwQ_1" value="1">
+  <label class="form-check-label" for="radio_zHlWviwQ_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_z3t2w4WG" id="radio_z3t2w4WG_2" value="2">
-  <label class="form-check-label" for="radio_z3t2w4WG_2">
+  <input class="form-check-input" type="radio" name="radio_zHlWviwQ" id="radio_zHlWviwQ_2" value="2">
+  <label class="form-check-label" for="radio_zHlWviwQ_2">
     No
   </label>
 </div>
 
-<div id="z3t2w4WG_message"></div>
+<div id="zHlWviwQ_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_z3t2w4WG']").on("change", function() {
+$("input:radio[name='radio_zHlWviwQ']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#z3t2w4WG_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#zHlWviwQ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#z3t2w4WG_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#zHlWviwQ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1070,78 +1081,59 @@ $("input:radio[name='radio_z3t2w4WG']").on("change", function() {
 <p>&#40;Hint, express as <span class="math">$\exp^{\tan(\pi/2 \cdot x) \cdot \log(2-x)}$</span> and take the limit of the resulting exponent.&#41;</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="20bKvWtC" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="7wcIp4Kn" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_20bKvWtC" id="radio_20bKvWtC_1" value="1">
-  <label class="form-check-label" for="radio_20bKvWtC_1">
+  <input class="form-check-input" type="radio" name="radio_7wcIp4Kn" id="radio_7wcIp4Kn_1" value="1">
+  <label class="form-check-label" for="radio_7wcIp4Kn_1">
     &#36;1&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_20bKvWtC" id="radio_20bKvWtC_2" value="2">
-  <label class="form-check-label" for="radio_20bKvWtC_2">
-    &#36;&#123;2\pi&#125;&#36;
-
+  <input class="form-check-input" type="radio" name="radio_7wcIp4Kn" id="radio_7wcIp4Kn_2" value="2">
+  <label class="form-check-label" for="radio_7wcIp4Kn_2">
+    It does not exist
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_20bKvWtC" id="radio_20bKvWtC_3" value="3">
-  <label class="form-check-label" for="radio_20bKvWtC_3">
+  <input class="form-check-input" type="radio" name="radio_7wcIp4Kn" id="radio_7wcIp4Kn_3" value="3">
+  <label class="form-check-label" for="radio_7wcIp4Kn_3">
     &#36;e^&#123;2/\pi&#125;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_20bKvWtC" id="radio_20bKvWtC_4" value="4">
-  <label class="form-check-label" for="radio_20bKvWtC_4">
-    &#36;0&#36;
+  <input class="form-check-input" type="radio" name="radio_7wcIp4Kn" id="radio_7wcIp4Kn_4" value="4">
+  <label class="form-check-label" for="radio_7wcIp4Kn_4">
+    &#36;&#123;2\pi&#125;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_20bKvWtC" id="radio_20bKvWtC_5" value="5">
-  <label class="form-check-label" for="radio_20bKvWtC_5">
-    It does not exist
+  <input class="form-check-input" type="radio" name="radio_7wcIp4Kn" id="radio_7wcIp4Kn_5" value="5">
+  <label class="form-check-label" for="radio_7wcIp4Kn_5">
+    &#36;0&#36;
+
   </label>
 </div>
 
-<div id="20bKvWtC_message"></div>
+<div id="7wcIp4Kn_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_20bKvWtC']").on("change", function() {
+$("input:radio[name='radio_7wcIp4Kn']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#20bKvWtC_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#7wcIp4Kn_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#20bKvWtC_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#7wcIp4Kn_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
 </script>
 
-
-<h6>Question</h6>
-<p>At <a href="http://mathoverflow.net/questions/51685/how-did-bernoulli-prove-lh&#37;C3&#37;B4pitals-rule">math overflow</a> we learn that L&#39;Hopital was motivated by the following limit:</p>
-<p class="math">\[
-~
-\lim_{x \rightarrow a} \frac{(2a^3x-x^4)^{1/2} - a (a^2x)^{1/3}}{a - (ax^3)^{1/4}}
-~
-\]</p>
-<p>What did he find &#40;with the help of a Bernoulli&#41;?</p>
-<p>You need to inform <code>SymPy</code> that <span class="math">$a > 0$</span>. The following is a good start:</p>
-<pre><code>@syms x, a::positive
-top &#61; &#40;2a^3*x-x^4&#41;^&#40;1//2&#41; - a *&#40;a^2*x&#41;^&#40;1//3&#41; # rationals are converted exactly to SymPy
-bottom &#61;  a - &#40;a*x^3&#41;^&#40;1//4&#41;
-ex &#61; top/bottom</code></pre>
-<p>Now find the limit.</p>
-<pre><code>choices &#61; &#91;L&quot;16a/9&quot;, L&quot;0&quot;, L&quot;9\sqrt&#123;a&#125;&quot;, &quot;Does not exist&quot;&#93;
-ans &#61; 1
-radioq&#40;choices, ans&#41;</code></pre>
-<hr />
 
 
 <div class="card" style="">

@@ -43,7 +43,7 @@ Plot f colored depending on g >= 0 or not.
 function plotif(f, g, a, b)
     xs = range(a, b, length=251)
     cols = identify_colors(g, xs)
-    Plots.plot(xs, f, color=cols, legend=false)
+    Plots.plot(xs, f.(xs), color=cols, legend=false)
 end
 
 """

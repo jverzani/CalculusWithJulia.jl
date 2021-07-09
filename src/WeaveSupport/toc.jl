@@ -27,6 +27,7 @@ table_of_contents = [
     :derivatives		:numeric_derivatives;
     :derivatives		:mean_value_theorem;
     :derivatives		:optimization;
+    :derivatives		:first_second_derivatives;
     :derivatives		:curve_sketching;
     :derivatives		:linearization;
     :derivatives		:newtons_method;

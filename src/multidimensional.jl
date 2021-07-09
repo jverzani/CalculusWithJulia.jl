@@ -45,6 +45,11 @@ quiver!(unzip([p])..., quiver=unzip([v]))
 ```
 
 Based on `unzip` from the `Plots` package.
+
+Note: for a vector of points, `xs`, each of length `2`, a similar functionality would be `(first.(xs), last.(xs))`. If each point had length `3`, then with `second(x)=x[2]`, a similar functionality would be `(first.(xs), second.(xs), last.(xs))`.
+
+```
+
 """
 unzip(vs::Vector) = Tuple([[vs[i][j] for i in eachindex(vs)] for j in eachindex(vs[1])])
 function unzip(ws::Array; recursive=false)

@@ -80,11 +80,12 @@ function __init__()
     @require AbstractPlotting="537997a7-5e4e-5d89-9595-2241ea00577e" include("makie.jl")
     @require SymPy="24249f21-da20-56a4-8eb1-6a02cf4ae2e6" include("sympy.jl")
     @require Polynomials="f27b6e38-b328-58d1-80ce-0feddd5e7a45" include("polynomials.jl")
-    #@require MDBM="" include("implicit_equation.jl")
+    @require MDBM="ea0cff06-48de-41e3-bd0e-d3c1feffd247" include("implicit_equation.jl")
 end
 
 e = exp(1)
 export e
+
 export unzip, rangeclamp, parametric_grid, divergence, gradient, curl, ∇
 export tangent, secant, D
 export riemann, fubini

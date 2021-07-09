@@ -151,7 +151,7 @@ yesnoq(ans::AbstractString, args...; kwargs...) = radioq(["Yes", "No"], ans == "
 yesnoq(ans::Bool, args...; kwargs...) = yesnoq(ans ? "yes" : "no", args...;kwargs...)
 
 function multiq(choices, answer, reminder="", answer_text=nothing; hint::AbstractString="", inline::Bool=false)
-    values = join(1:length, " | ")
+    values = join(1:length(choices), " | ")
     labels =  map(markdown_to_latex, choices) |> x -> map(chomp, x) |> x -> join(x, " | ")
     answers = join(answer, " | ")
     Multiq(choices, answer, reminder, answer_text,
@@ -215,7 +215,7 @@ html_templates["Numericq"] = mt"""
 <div class="form-floating input-group">
 <input id="{{ID}}" type="number" class="form-control" placeholder="Numeric answer">
 <label for="{{ID}}">Numeric answer</label>
-{{#units}}<span class="input-group-addon">{{{units}}}</span>{{/units}}
+{{#units}}<span class="input-group-addon mx-2">{{{units}}}</span>{{/units}}
 </div>
 
 <div id='{{ID}}_message'></div>

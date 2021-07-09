@@ -53,7 +53,7 @@ blockquote {
 }
 </style>
 
-<!-- .julia:before {content: "julia> "} -->
+<!--   padding: 0.5em 10px; .julia:before {content: "julia> "} -->
 
 <style>{{{:style}}}</style>
 

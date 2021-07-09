@@ -106,7 +106,7 @@ end
 ## XXX Put in centered
 jsxgraph_tpl = Mustache.mt"""
 <div class="d-flex justify-content-center">
-<div class="card border-light mx-3 px-3 my-3 py-3" style="{{#:width}}width={{:width}}px{{/:width}}{{^:width}} max-width: 560px;{{/:width}}">
+<div class="card border-light mx-3 px-3 my-3 py-3" style="width:{{WIDTH}}px">
    <div id="{{ID}}" class='{{CLASS}}' style='width:{{WIDTH}}px; height:{{HEIGHT}}px'></div>
   <div class="card-footer text-muted">
     <span class="card-text">
