@@ -117,7 +117,7 @@ that about $\pi/2$ the function has odd-like symmetry, so the answer of $0$ is s
 
 
 ```julia;
-using CalculusWithJulia  # loads  `SymPy`, `QuadGK`
+using CalculusWithJulia
 using Plots
 f(x) = cos(x)^3 * sin(x)
 plot(f, 0, 1pi)
@@ -240,6 +240,7 @@ The `integrate` function in `SymPy` can handle most problems which involve subst
 * This integral, $\int_0^2 4x/\sqrt{x^2 +1}dx$, involves a substitution for $x^2 + 1$:
 
 ```julia;
+using SymPy
 @syms x::real t::real
 f(x) = 4x / sqrt(x^2 + 1)
 integrate(f(x), (x, 0, 2))

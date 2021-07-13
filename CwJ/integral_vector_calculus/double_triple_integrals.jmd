@@ -5,6 +5,8 @@ using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
 using Plots
 using LaTeXStrings
+using QuadGK
+
 nothing
 ```
 
@@ -399,6 +401,7 @@ That is, the variable to integrate and the endpoints are passed as tuples. (Unli
 For example, the last integral to compute the volume of a square pyramid, could be computed through
 
 ```julia;
+using SymPy
 @syms x y a height
 8 * integrate(height * (1 - 2x/a), (y, 0, x), (x, 0, a/2))
 ```
@@ -588,8 +591,7 @@ constant *or* a function of the previous variables.
 
 The use of `FWrapper` is technical, it prevents `quadgk` from specializing on the anonymous function that gets passed to it, which in this usage will prove significantly faster.
 
-```julia; eval=false
-using QuadGK
+```julia
 struct FWrapper
     f
 end
@@ -650,7 +652,7 @@ Show the volume of a sphere of radius $1$ is $4/3\pi = 4/3\pi\cdot 1^3$ by doubl
 
 ```julia;
 f(x,y) = sqrt(1 - x^2 - y^2)
-a = 2 *fubini(f, (x-> -sqrt(1-x^2), x-> sqrt(1-x^2)), (-1, 1))
+a = 2 * fubini(f, (x-> -sqrt(1-x^2), x-> sqrt(1-x^2)), (-1, 1))
 a, a - 4/3*pi
 ```
 
@@ -1577,4 +1579,12 @@ L"m\sqrt{1-m^2}dt^2+(1-2m^2)dtdv -m\sqrt{1-m^2}dv^2"
 ]
 ans = 1
 radioq(choices, ans)
+```
+
+
+
+
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

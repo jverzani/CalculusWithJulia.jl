@@ -58,7 +58,7 @@ Find the area bounded by the line $y=2x$ and the curve $y=2 - x^2$.
 We can plot to see the area in question:
 
 ```julia;
-using CalculusWithJulia  # loads  `Roots`, `QuadGK`, `SymPy`
+using CalculusWithJulia
 using Plots
 f(x) = 2 - x^2
 g(x) = 2x
@@ -69,12 +69,14 @@ plot!(g, -3,3)
 For this problem we need to identify $a$ and $b$. These are found numerically through:
 
 ```julia;
+using Roots
 a,b = find_zeros(x -> f(x) - g(x), -3, 3)
 ```
 
 The answer then can be found numerically:
 
 ```julia;
+using QuadGK
 quadgk(x -> f(x) - g(x), a, b)[1]
 ```
 
@@ -105,6 +107,7 @@ Find the area between $x^n$ and $x^{n+1}$ over $[0,1]$ for $n=1,2,\dots$.
 We have on this interval $x^n \geq x^{n+1}$, so the integral can be found symbolically through:
 
 ```julia;
+using SymPy
 @syms x::positive n::positive
 ex = integrate(x^n - x^(n+1), (x, 0, 1))
 together(ex)

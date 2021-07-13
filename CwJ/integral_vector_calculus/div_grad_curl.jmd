@@ -8,6 +8,7 @@ using Plots
 nothing
 ```
 
+
 The gradient of a scalar function $f:R^n \rightarrow R$ is a vector field of partial derivatives. In $R^2$, we have:
 
 $$~
@@ -477,6 +478,7 @@ f(v) = f(v...)
 F(x,y,z) = [x, y, z]
 F(v) = F(v...)
 
+using SymPy
 @syms x y z
 ∇(f(x,y,z))  # symbolic operation on the symbolic expression f(x,y,z)
 ```
@@ -1453,8 +1455,6 @@ ans=1
 radioq(choices, ans)
 ```
 
-
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

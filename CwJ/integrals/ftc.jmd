@@ -9,7 +9,7 @@ nothing
 ```
 
 
-We refer to the example the section on
+We refer to the example from the section on
 [transformations](../precalc/transformations.html#two_operators_D_S)
 where two operators on functions were defined:
 
@@ -22,14 +22,19 @@ $S(D(f))(k) = f(k) - f(0)$. These being a consequence of the inverse
 relationship between addition and subtraction.  These two
 relationships are examples of a more general pair of relationships
 known as the
-[Fundamental Theorem of Calculus](http://en.wikipedia.org/wiki/Fundamental_theorem_of_calculus) or FTC.
+[Fundamental theorem of calculus](http://en.wikipedia.org/wiki/Fundamental_theorem_of_calculus) or FTC.
+
+
+We will see that with suitable rewriting, the derivative of a function is related to a certain limit of `D(f)` and the definite integral of a function is related to a certain limit of `S(f)`. The addition and subtraction rules encapsulated in the relations of $D(S(f))(k) = f(k)$ and $S(D(f))(k) = f(k) - f(0)$ then generalize to these calculus counterparts.
 
 The FTC details the interconnectivity between the operations of integration and
 differentiation.
 
 For example:
 
-> What is the definite integral of the derivative? That is, what is $A = \int_a^b f'(x) dx$? (Assume $f'$ is continuous.)
+> What is the definite integral of the derivative?
+
+That is, what is $A = \int_a^b f'(x) dx$? (Assume $f'$ is continuous.)
 
 To investigate, we begin with the right Riemann sum using $h = (b-a)/n$:
 
@@ -37,7 +42,7 @@ $$~
 A \approx S_n = \sum_{i=1}^n f'(a + ih) \cdot h.
 ~$$
 
-But the Mean Value Theorem says that for small $h$ we have $f'(x) \approx (f(x) - f(x-h))/h$. Using this approximation with $x=a+ih$ gives:
+But the mean value theorem says that for small $h$ we have $f'(x) \approx (f(x) - f(x-h))/h$. Using this approximation with $x=a+ih$ gives:
 
 $$~
 A \approx
@@ -61,7 +66,9 @@ This is indeed the case.
 
 The other question would be
 
-> What is the derivative of the integral? That is, can we find the derivative of $\int_0^x f(u) du$?
+> What is the derivative of the integral?
+
+That is, can we find the derivative of $\int_0^x f(u) du$? (The derivative in ``x``, the variable ``u`` is a dummy variable of integration.)
 
 
 Let's look first at the integral using the right-Riemann sum, again using $h=(b-a)/n$:
@@ -80,7 +87,7 @@ derivative in $x$?
 
 Again, we fix a large $n$ and let $h=(b-a)/n$. And suppose $x = a +
 Mh$ for some $M$. Then writing out the approximations to both the
-definite integral and derivative we have
+definite integral and the derivative we have
 
 $$~
 \begin{align*}
@@ -91,7 +98,7 @@ F'(x) = & \frac{d}{dx} \int_a^x f(u) du \\
 \end{align*}
 ~$$
 
-If $g(i) = f(a + ih)$, then the above becomes
+If $g(i) = f(a + ih)/h$, then the above becomes
 
 $$~
 \begin{align*}
@@ -114,7 +121,7 @@ $$~
 
 With these heuristics, we now have:
 
-> **The Fundamental Theorem of Calculus**
+> **The fundamental theorem of calculus**
 >
 > Part 1: Let $f$ be a continuous
 > function on a closed interval $[a,b]$ and define $F(x) = \int_a^x
@@ -143,11 +150,11 @@ one.
 """)
 ```
 
-## Using the Fundamental Theorem of Calculus to evaluate definite integrals
+## Using the fundamental theorem of calculus to evaluate definite integrals
 
 The major use of the FTC is the computation of $\int_a^b f(x)
 dx$. Rather then resort to Riemann sums or geometric arguments, there
-is an alternative - find a function $F$ with $F'(x) = f(x)$ and compute $F(b) - F(a)$.
+is an alternative - *when possible*, find a function $F$ with $F'(x) = f(x)$ and compute $F(b) - F(a)$.
 
 Some examples:
 
@@ -248,50 +255,72 @@ expressions given, though all differ by no more than a constant. This means, tha
 $\int f(x) dx$ refers to *an* antiderivative, not *the*
 antiderivative.
 
+### The `integrate` function from `SymPy`
+
 `SymPy` provides the `integrate` function to perform integration. There are two usages:
 
-- `integrate(ex, var)` to find an indefinite integral. For a
-  univariate function `f` this is shortened to `integrate(f)`,
+- `integrate(ex, var)` to find an indefinite integral.
 
 - `integrate(ex, (var, a, b))` to find the definite integral. This integrates the
-  expression in the variable `var` from `a` to `b`. For a univariate
-  function `f` this can also be shortened to `integrate(f, a, b)`,
-  which matches our usual template of `action(function, args...)`.
+  expression in the variable `var` from `a` to `b`.
 
 To illustrate, we have, this call finds an antiderivative:
 
 ```julia;
-using CalculusWithJulia  # loads `SymPy`, `QuadGK`
+using CalculusWithJulia
 using Plots
-integrate(sin)
+using SymPy
+@syms x
+integrate(sin(x),x)
 ```
 
 Whereas this call computes the "area" under $f(x)$ between `a` and `b`:
 
 ```julia;
-integrate(sin, 0, pi)
+integrate(sin(x), (x, 0, pi))
 ```
 
-In the last two example, function objects were integrated. We can also integrate expressions, though in this usage we must specify the variable:
+As does this for a different function:
+
+```julia;
+integrate(acos(1-x), (x, 0, 2))
+```
+
+Answers may depend on conditions, as here, where the case ``n=-1`` breaks a pattern:
 
 ```julia;
 @syms x::real n::real
 integrate(x^n, x)          # indefinite integral
 ```
 
-For a definite integral we have
+Answers may depend on specific assumptions:
 
-```julia;
-integrate(acos(1-x), (x, 0, 2))
+```julia
+@syms u
+integrate(abs(u),u)
 ```
+
+Yet
+
+```julia
+@syms u::real
+integrate(abs(u),u)
+```
+
+Answers may not be available as elementary functions, but there may be special functions that have special cases.
+
+```julia
+@syms x::real
+integrate(x / sqrt(1-x^3), x)
+```
+
+The different cases explored by `integrate` are after the questions.
+
+
 
 ## Rules of integration
 
-The `integrate` function includes an implementation of the
-[Risch](http://en.wikipedia.org/wiki/Risch_algorithm) algorithm. This
-algorithm is implemented for elementary functions and operations
-involving these functions, such as addition, multiplication, division
-and composition. There are some "rules" of integration that allow this to work.
+There are some "rules" of integration that allow integrals to be re-expressed. These follow from the rules of derivatives.
 
 * The integral of a constant times a function:
 
@@ -529,6 +558,7 @@ F'(x) = (-2x)e^{-x^2} \int_0^x e^{t^2} dt + e^{-x^2} e^{x^2} = -2x F(x) + 1
 We need to figure out when this is $0$. For that, we use some numeric math.
 
 ```julia;
+using Roots, QuadGK
 F(x) = exp(-x^2) * quadgk(t -> exp(t^2), 0, x)[1]
 Fp(x) = -2x*F(x) + 1
 cps = find_zeros(Fp, -4,4)
@@ -691,7 +721,7 @@ with a higher-pixel display, then the function to display would be $c(t)
 Thinking a bit harder, she knows that her `update` function is getting
 $C(t)$, and displaying the *rate* of calorie burn leads to the area
 displayed being interpretable as the total calories burned between $t$
-and $t-10$ (or $C(t)-C(t-10)$) by the Fundamental Theorem of Calculus.
+and $t-10$ (or $C(t)-C(t-10)$) by the fundamental theorem of calculus.
 
 ## Questions
 
@@ -922,7 +952,7 @@ radioq(choices, ans, keep_order=true)
 
 ###### Question
 
-Barrow presented a version of the Fundamental Theorem of Calculus in a
+Barrow presented a version of the fundamental theorem of calculus in a
 1670 volume edited by Newton, Barrow's student
 (cf. [Wagner](http://www.maa.org/sites/default/files/0746834234133.di020795.02p0640b.pdf)). His version can be stated as follows (cf. [Jardine](http://www.maa.org/publications/ebooks/mathematical-time-capsules)):
 
@@ -1008,7 +1038,95 @@ radioq(choices, ans, keep_order=true)
 ```
 
 
-----
+## More on `integrate`
+
+
+The documentation on integration indicates that `SymPy` uses several different means to integrate a function:
+
+
+#### Simple heuristics (based on pattern matching and integral table):
+
+* most frequently used functions (e.g. polynomials, products of trigonemtric functions)
+
+####  Integration of rational functions:
+
+*  A complete algorithm for integrating rational functions is
+         implemented (the Lazard-Rioboo-Trager algorithm).  The
+         algorithm also uses the partial fraction decomposition
+         algorithm implemented in `apart` as a preprocessor to make
+         this process faster.  Note that the integral of a rational
+         function is always elementary, but in general, it may include
+         a `RootSum`.
+
+#### Full Risch algorithm:
+
+* The Risch algorithm is a complete decision procedure for integrating
+         elementary functions, which means that given any elementary
+         function, it will either compute an elementary
+         antiderivative, or else prove that none exists.  Currently,
+         part of transcendental case is implemented, meaning
+         elementary integrals containing exponentials, logarithms, and
+         (soon!) trigonometric functions can be computed.  The
+         algebraic case, e.g., functions containing roots, is much
+         more difficult and is not implemented yet.
+
+* If the routine fails (because the integrand is not elementary, or
+         because a case is not implemented yet), it continues on to
+         the next algorithms below.  If the routine proves that the
+         integrals is nonelementary, it still moves on to the
+         algorithms below, because we might be able to find a
+         closed-form solution in terms of special functions.  If
+         `risch=true`, however, it will stop here.
+
+#### The Meijer G-Function algorithm:
+
+* This algorithm works by first rewriting the integrand in terms of
+         very general Meijer G-Function (`meijerg` in `SymPy`),
+         integrating it, and then rewriting the result back, if
+         possible.  This algorithm is particularly powerful for
+         definite integrals (which is actually part of a different
+         method of Integral), since it can compute closed-form
+         solutions of definite integrals even when no closed-form
+         indefinite integral exists.  But it also is capable of
+         computing many indefinite integrals as well.
+
+* Another advantage of this method is that it can use some results
+         about the Meijer G-Function to give a result in terms of a
+         Piecewise expression, which allows to express conditionally
+         convergent integrals.
+
+*  Setting `meijerg=true` will cause `integrate` to use only this
+         method.
+
+#### The "manual integration" algorithm:
+
+* This algorithm tries to mimic how a person would find an
+         antiderivative by hand, for example by looking for a
+         substitution or applying integration by parts. This algorithm
+         does not handle as many integrands but can return results in a
+         more familiar form.
+
+* Sometimes this algorithm can evaluate parts of an integral; in
+         this case `integrate` will try to evaluate the rest of the
+         integrand using the other methods here.
+
+* Setting `manual=true` will cause `integrate` to use only this
+         method.
+
+#### The Heuristic Risch algorithm:
+
+*  This is a heuristic version of the Risch algorithm, meaning that
+         it is not deterministic.  This is tried as a last resort because
+         it can be very slow.  It is still used because not enough of the
+         full Risch algorithm is implemented, so that there are still some
+         integrals that can only be computed using this method.  The goal
+         is to implement enough of the Risch and Meijer G-function methods
+         so that this can be deleted.
+         Setting `heurisch=true` will cause `integrate` to use only this
+         method. Set `heurisch=false  to not use it.
+
+
+
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

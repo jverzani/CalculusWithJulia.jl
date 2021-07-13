@@ -855,7 +855,7 @@ The following shows the algebraic properties stated above hold for
 symbolic vectors. First the linearity of the dot product:
 
 ```julia;
-@syms s u[1:3]::real v[1:3]::real w[1:3]::real
+@syms s t u[1:3]::real v[1:3]::real w[1:3]::real
 
 u ⋅ (s*v + t*w) - (s*(u⋅v) + t*(u⋅w)) |> simplify
 ```
@@ -1324,8 +1324,6 @@ L"\vec{a} + \vec{b} + \vec{c}"
 ans = 1
 radioq(choices, ans)
 ```
-
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

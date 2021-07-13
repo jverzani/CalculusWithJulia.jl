@@ -4,7 +4,7 @@
 ```julia; echo=false; results="hidden"
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
-using Plots
+using Plots, QuadGK
 nothing
 ```
 
@@ -165,6 +165,7 @@ f(\xi(h)) \cdot h = \int_x^{x+h} f(u) du.
 Between $0$ and $1$ a function is constantly $1$. Between $1$ and $2$ the function is constantly $2$. What is the average value of the function over the interval $[0,2]$?
 
 ```julia; echo=false
+using QuadGK
 f(x) = x < 1 ? 1.0 : 2.0
 a,b = 0, 2
 val, _ = quadgk(f, a, b)

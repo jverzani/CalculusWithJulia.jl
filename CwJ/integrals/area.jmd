@@ -33,31 +33,35 @@ For some functions, this area can be computed by geometry, for
 example, here we see the area under $f(x)$ is just $1$, as it is a triangle with base $2$ and height $1$:
 
 ```julia;
-using CalculusWithJulia   # loads `QuadGK`, `Roots`, ...
+using CalculusWithJulia
 using Plots
 f(x) = 1 - abs(x)
-plot([f, zero], -1, 1)
+plot(f, -1, 1)
+plot!(zero)
 ```
 
 Similarly, we know this area is also $1$, it being a square:
 
 ```julia;
 f(x) = 1
-plot([f, zero], 0, 1)
+plot(f, 0, 1)
+plot!(zero)
 ```
 
 This one, is simply $\pi/2$, it being half a circle of radius $1$:
 
 ```julia;
 f(x) = sqrt(1 - x^2)
-plot([f, zero], -1, 1)
+plot(f, -1, 1)
+plot!(zero)
 ```
 
 And this area can be broken into a sum of the area of square and the area of a rectangle, or $1 + 1/2$:
 
 ```julia;
 f(x) = x > 1 ? 2 - x : 1.0
-plot([f, zero], 0, 2)
+plot(f, 0, 2)
+plot!(zero)
 ```
 
 But what of more complicated areas? Can these have their area computed?
@@ -137,7 +141,7 @@ The pursuit of computing areas persisted. The method of computing area
 by finding a square with an equivalent area was known as
 *quadrature*. Over the years, many figures had their area computed,
 for example, the area under the graph of the
-[cycloid](http://en.wikipedia.org/wiki/Cycloid).
+[cycloid](http://en.wikipedia.org/wiki/Cycloid) (...Galileo tried empirically to find this using a tracing on sheet metal and a scale).
 
 However, as areas of geometric objects were replaced by the more
 general question of area related to graphs of functions, a more
@@ -205,7 +209,7 @@ the area of a rectangle with base spanning from $x_{i-1}$ to $x_i$ and
 height given by the function value at $c_i$. The following
 [image](http://en.wikipedia.org/wiki/Riemann_sum) from Wikipedia
 visualizes Riemann sums for different values of $n$ in a way that
-makes it plausible that as the number of rectangles gets larger, the
+makes Beekman's intuition plausible -- that as the number of rectangles gets larger, the
 approximate sum will get closer to the actual area.
 
 ![Illustration of Riemann sums](http://tinyurl.com/pztbwgb)
@@ -220,13 +224,13 @@ $0$ and $1$ -  if we take as a partition $x_i = i/n$ and $c_i = x_i$,
 then the above sum becomes:
 
 $$~
-\begin{align}
+\begin{align*}
 S_n &= f(c_1) \cdot (x_1 - x_0) + f(c_2) \cdot (x_2 - x_1) + \cdots + f(c_n) \cdot (x_n - x_{n-1})\\
 &= (x_1)^2 \cdot \frac{1}{n} + (x_2)^2 \cdot \frac{1}{n} + \cdot + (x_n)^2 \cdot \frac{1}{n}\\
 &= 1^2 \cdot \frac{1}{n^3}  + 2^2 \cdot \frac{1}{n^3} + \cdots + n^2 \cdot \frac{1}{n^3}\\
 &= \frac{1}{n^3} \cdot (1^2 + 2^2 + \cdots + n^2) \\
 &= \frac{1}{n^3} \cdot \frac{n\cdot(n-1)\cdot(2n+1)}{6}.
-\end{align}
+\end{align*}
 ~$$
 
 The latter uses a well-known formula for the sum of squares of the
@@ -241,7 +245,7 @@ The above approach, like Archimedes', ends with a limit being
 taken. The answer comes from using a limit to add a big number of
 small values. As with all limit questions, worrying about whether a
 limit exists is fundamental. For this problem, we will see that for
-the general statement there is a stretching of the concept of a limit.
+the general statement there is a stretching of the formal concept of a limit.
 
 """)
 ```
@@ -294,6 +298,7 @@ a(1+\alpha)^1 < a (1+\alpha)^2 < \cdots < a (1+\alpha)^n = b$. The
 general statement allows for any partition such that the largest gap
 gets small.
 
+----
 
 Riemann sums weren't named after Riemann because he was the first to
 approximate areas using rectangles. Indeed, others had been using even
@@ -400,9 +405,21 @@ would have a "limit" of $\int_{a-c}^{b-c}f(x)dx$.
 
 Similarly, reflections don't effect the area under the curve, they just require a new parameterization:
 
-$$~
-\int_a^b f(x) dx = \int_{-b}^{-a} f(-x) dx
-~$$
+> $$~
+> \int_a^b f(x) dx = \int_{-b}^{-a} f(-x) dx
+> ~$$
+
+The scaling operation ``g(x) = f(cx)`` has the following:
+
+> $\int_a^b f(c\cdot x) dx = \frac{1}{c} \int_{ca}^{cb}f(x) dx$
+
+The scaling operation shifts ``a`` to ``ca`` and ``b`` to ``cb`` so the limits of integration make sense. However, the area stretches by ``c`` in the ``x`` direction, so must contract by ``c`` in the ``y`` direction to stay in balance. Hence the factor of ``1/c``.
+
+Combining two operations above, the operation ``g(x) = \frac{1}{h}f(\frac{x-c}{h})`` will leave the area between ``a`` and ``b`` under ``g`` the same as the area under ``g`` between ``(a-c)/h`` and ``(b-c)/h``.
+
+
+----
+
 
 The area between $a$ and $b$ can be broken up into the sum of the area
 between $a$ and $c$ and that between $c$ and $b$.
@@ -450,9 +467,9 @@ inequality maintained for the sum.
 
 Using the definition, we can compute a few definite integrals:
 
-* $\int_a^b c dx = c \cdot (b-a).$
+> $\int_a^b c dx = c \cdot (b-a).$
 
-* $\int_a^b x dx = (b^2/2 - a^2/2).$
+> $\int_a^b x dx = \frac{b^2}{2} - \frac{a^2}{2}.$
 
 
 This is just the area of a trapezoid with heights $a$ and $b$ and side
@@ -461,38 +478,38 @@ This is just the area of a trapezoid with heights $a$ and $b$ and side
 
 
 $$~
-\begin{align}
+\begin{align*}
 S &= x_1 \cdot (x_1 - x_0) + x_2 \cdot (x_2 - x_1) + \cdots x_n \cdot (x_n - x_{n-1}) \\
 &= (a + 1\frac{b-a}{n}) \cdot \frac{b-a}{n} + (a + 2\frac{b-a}{n}) \cdot \frac{b-a}{n} + \cdots  (a + n\frac{b-a}{n}) \cdot \frac{b-a}{n}\\
 &= n \cdot a \cdot (\frac{b-a}{n})  + (1 + 2 + \cdots n) \cdot (\frac{b-a}{n})^2 \\
 &= n \cdot a \cdot (\frac{b-a}{n})  + \frac{n(n+1)}{2} \cdot (\frac{b-a}{n})^2 \\
 & \rightarrow a \cdot(b-a) + \frac{(b-a)^2}{2} \\
 &= \frac{b^2}{2} - \frac{a^2}{2}.
-\end{align}
+\end{align*}
 ~$$
 
 
-* $\int_a^b x^2 dx = (b^3/3 - a^3/3).$
+> $\int_a^b x^2 dx = \frac{b^3}{3} - \frac{a^3}{3}.$
 
 This is similar to the Archimedes case with $a=0$ and $b=1$ shown above.
 
-* $\int_a^b x^k dx = (b^{k+1}/(k+1) - a^{k+1}/(k+1)),\quad k \neq -1$.
+> $\int_a^b x^k dx = \frac{b^{k+1}}{k+1} - \frac{a^{k+1}}{k+1},\quad k \neq -1$.
 
 Cauchy showed this using a *geometric series* for the partition, not the arithmetic series $x_i = a + i (b-a)/n$. The series defined by $1 + \alpha = (b/a)^{1/n}$, then $x_i = a \cdot (1 + \alpha)^i$. Here the bases $x_{i+1} - x_i$ simplify to $x_i \cdot \alpha$ and $f(x_i) = (a\cdot(1+\alpha)^i)^k = a^k (1+\alpha)^{ik}$, or $f(x_i)(x_{i+1}-x_i) = a^{k+1}\alpha[(1+\alpha)^{k+1}]^i$,
 so, using $u=(1+\alpha)^{k+1}=(b/a)^{(k+1)/n}$, $f(x_i) \cdot(x_{i+1} - x_i) = a^{k+1}\alpha u^i$. This gives
 
 $$~
-\begin{align}
+\begin{align*}
 S &= a^{k+1}\alpha u^0 + a^{k+1}\alpha u^1 + \cdots + a^{k+1}\alpha u^{n-1}
 &= a^{k+1} \cdot \alpha \cdot (u^0 + u^1 + \cdot u^{n-1}) \\
 &= a^{k+1} \cdot \alpha \cdot \frac{u^n - 1}{u - 1}\\
 &= (b^{k+1} - a^{k+1}) \cdot \frac{\alpha}{(1+\alpha)^{k+1} - 1} \\
 &\rightarrow \frac{b^{k+1} - a^{k+1}}{k+1}.
-\end{align}
+\end{align*}
 ~$$
 
 
-* $\int_a^b x^{-1} dx = \log(b) - \log(a), \quad (0 < a < b).$
+> $\int_a^b x^{-1} dx = \log(b) - \log(a), \quad (0 < a < b).$
 
 
 Again, Cauchy showed this using a geometric series. The expression $f(x_i) \cdot(x_{i+1} - x_i)$ becomes just $\alpha$. So the approximating sum becomes:
@@ -538,8 +555,8 @@ the maximum of $f$ over this interval, $M$, and the minimum, $m$ over
 this interval will go to zero as $n$ gets big. That $m$ and $M$ exists
 is due to the extreme value theorem, that this difference goes to $0$
 is a consequence of continuity. What is needed is that this value goes
-to $0$ at the same rate - no matter what interval is being discussed
-- is a consequence of a notion of uniform continuity, a concept
+to $0$ at the same rate -- no matter what interval is being discussed --
+is a consequence of a notion of uniform continuity, a concept
 discussed in advanced calculus, but which holds for continuous
 functions on closed intervals. Armed with this, the Riemann sum for a
 general partition can be bounded by this difference times $b-a$, which
@@ -610,25 +627,28 @@ approximate values, as long as numeric issues don't get involved.
 
 
 Before continuing, we define a function to compute the Riemann sum for
-us with an extra argument to specifying one of three methods for
+us with an extra argument to specifying one of four methods for
 computing $c_i$:
 
 ```julia; eval=false
-function riemann(f, a, b, n; method="left")
-  xs = a:(b-a)/n:b
-  deltas = diff(xs)      # forms x2-x1, x3-x2, ..., xn-xn-1
-  if method == "left"
-    cs = xs[1:end-1]
-  elseif method == "right"
-    cs = xs[2:end]
-  else
-    cs = [(xs[i] + xs[i+1])/2 for i in 1:length(deltas)]
-  end
-  sum(f(cs[i]) * deltas[i] for i in 1:length(deltas))
+function riemann(f::Function, a::Real, b::Real, n::Int; method="right")
+    if method == "right"
+        meth = f -> (lr -> begin l,r = lr; f(r) * (r-l) end)
+    elseif method == "left"
+        meth = f -> (lr -> begin l,r = lr; f(l) * (r-l) end)
+    elseif method == "trapezoid"
+        meth = f -> (lr -> begin l,r = lr; (1/2) * (f(l) + f(r)) * (r-l) end)
+    elseif method == "simpsons"
+        meth = f -> (lr -> begin l,r=lr; (1/6) * (f(l) + 4*(f((l+r)/2)) + f(r)) * (r-l) end)
+    end
+
+    xs = a .+ (0:n) * (b-a)/n
+
+    sum(meth(f), zip(xs[1:end-1], xs[2:end]))
 end
 ```
 
-(This function is defined in `CalculusWithJulia`.)
+(This function is defined in `CalculusWithJulia` and need not be copied over if that package is loaded.)
 
 With this, we can easily find an approximate answer. We wrote the
 function to use the familiar template `action(function,
@@ -640,7 +660,7 @@ f(x) = exp(x)
 riemann(f, 0, 5, 10)   # S_10
 ```
 
-Or with more values intervals in the partition
+Or with more intervals in the partition
 
 ```julia;
 riemann(f, 0, 5, 50_000)
@@ -730,6 +750,8 @@ f(x) = x * log(x)
 riemann(f, 0, 2, 50_000, method="right")
 ```
 
+(The default is `"right"`, so no method specified would also work.)
+
 ##### Example
 
 Let $f(x) = \sqrt{1 - x^2}$. The area under the curve between $-1$ and
@@ -767,12 +789,12 @@ $a < b$ gives:
 
 
 $$~
-\begin{align}
+\begin{align*}
 \lvert f(c_1)(x_1-x_0) + f(c_2)(x_2-x_1) + \cdots + f(c_n) (x_n-x_1) \rvert
 & \leq
 \lvert f(c_1)(x_1-x_0) \rvert + \lvert f(c_2)(x_2-x_1)\rvert + \cdots +\lvert f(c_n) (x_n-x_1) \rvert \\
 &= \lvert f(c_1)\rvert (x_1-x_0) + \lvert f(c_2)\rvert (x_2-x_1)+ \cdots +\lvert f(c_n) \rvert(x_n-x_1).
-\end{align}
+\end{align*}
 ~$$
 
 This suggests that the following inequality holds for integrals:
@@ -799,14 +821,14 @@ estimate and the left sum a lower estimate, so the error in the
 estimate will be between these two values:
 
 $$~
-\begin{align}
+\begin{align*}
 \text{error} &\leq
 \left[
 f(x_1) \cdot (x_{1} - x_0)  + f(x_2) \cdot  (x_{2} - x_1) + \cdots + f(x_{n-1})(x_{n-1} - x_n) + f(x_n) \cdot (x_n - x_{n-1})\right] -
 \left[f(x_0) \cdot (x_{1} - x_0)  + f(x_1) \cdot  (x_{2} - x_1) + \cdots + f(x_{n-1})(x_{n-1} - x_n)\right] \\
 &= \frac{b-a}{n} \cdot (\left[f(x_1) + f(x_2) + \cdots f(x_n)\right] - \left[f(x_0) + \cdots f(x_{n-1})\right]) \\
 &= \frac{b-a}{n} \cdot (f(b) - f(a)).
-\end{align}
+\end{align*}
 ~$$
 
 We see the error goes to $0$ at a rate of $1/n$ with the constant
@@ -885,7 +907,6 @@ for the "nice" functions we encounter.) Some examples are given in the questions
 In `Julia` a modification of the Gauss quadrature rule is implemented
 in the `quadgk` function (from the `QuadGK` package) to give numeric approximations to
 integrals.
-`QuadGK` is loaded when `CalculusWithJulia` is loaded.
 The `quadgk` function also has the familiar interface
 `action(function, arguments...)`. Unlike our `riemann` function, there
 is no `n` specified, as the number of steps is *adaptively*
@@ -898,7 +919,7 @@ trickier problems require a specification of an error threshold.
 To use the function, we have:
 
 ```julia;
-using QuadGK       # loaded with CalculusWithJulia
+using QuadGK
 f(x) = x * log(x)
 quadgk(f, 0, 2)
 ```
@@ -933,7 +954,9 @@ function should be used over the Riemann sums or even Simpson's rule.
 
 Here are some sample integrals computed with `quadgk`:
 
-- $\int_0^\pi \sin(x) dx$
+```math
+\int_0^\pi \sin(x) dx
+```
 
 ```julia;
 quadgk(sin, 0, pi)
@@ -941,14 +964,18 @@ quadgk(sin, 0, pi)
 
 (Again, the actual answer is off only in the last digit, the error estimate is an upper bound.)
 
-- $\int_0^2 x^x dx$
+```math
+\int_0^2 x^x dx
+```
 
 ```julia;
 f(x) = x^x
 quadgk(f, 0, 2)
 ```
 
-- $\int_0^5 e^x dx$
+```math
+\int_0^5 e^x dx
+```
 
 ```julia;
 quadgk(exp, 0, 5)
@@ -967,7 +994,7 @@ A
 The second is to ask for just the first component of the returned value:
 
 ```julia;
-A = quadgk(tan, 0, pi/4)[1]
+A = quadgk(tan, 0, pi/4)[1] # or first(quadgk(tan, 0, pi/4))
 ```
 
 
@@ -1014,7 +1041,7 @@ F(x) = quadgk(f, -pi, x)[1]
 (The trailing `[1]` is so only the answer - and not the error - is returned.)
 
 The question asks us to solve $F(x) = 0.25$, $F(x) = 0.5$ and $F(x)
-= 0.75$. The `Roots` package (loaded with `CalculusWithJulia`) can be used for such work, in particular
+= 0.75$. The `Roots` package can be used for such work, in particular
 `find_zero`. We will use a bracketing method, as clearly $F(x)$ is
 increasing, as $f(u)$ is positive, so we can just bracket our answer
 with $-\pi$ and $\pi$. (We solve $F(x) - p = 0$, so $F(\pi) - p > 0$ and $F(-\pi)-p < 0$.). The only trick below is the use of an anonymous
@@ -1022,7 +1049,7 @@ function to write the function $h(x) = F(x) - p$ for $p$ taking one of
 three values:
 
 ```julia;
-using Roots     # loaded with `CalculusWithJulia`
+using Roots
 [find_zero(x -> F(x) - p, (-pi, pi)) for p in [0.25, 0.5, 0.75]]
 ```
 
@@ -1042,7 +1069,7 @@ $$~
 \int_{-5}^5 \sqrt{5^2 - x^2} dx.
 ~$$
 
-```julia;
+```julia; echo=false
 f(x) = sqrt(5^2 - x^2)
 val, _ = quadgk(f, -5,5)
 numericq(val)
@@ -1057,7 +1084,7 @@ $$~
 \int_{-2}^2 (2 - \lvert x\rvert) dx
 ~$$
 
-```julia;
+```julia; echo=false
 f(x) = 2- abs(x)
 a,b = -2, 2
 val, _ = quadgk(f, a,b)
@@ -1073,7 +1100,7 @@ $$~
 \int_0^3 3 dx + \int_3^9 (3 + 3(x-3)) dx
 ~$$
 
-```julia;
+```julia; echo=false
 f(x) = x <= 3 ? 3.0 : 3 + 3*(x-3)
 a,b = 0, 9
 val, _ = quadgk(f, a, b)
@@ -1091,7 +1118,7 @@ $$~
 
 (The notation $\lfloor x \rfloor$ is the integer such that $\lfloor x \rfloor \leq x < \lfloor x \rfloor + 1$.)
 
-```julia;
+```julia; echo=false
 f(x) = floor(x)
 a, b = 0, 5
 val, _ = quadgk(f, a, b)
@@ -1119,7 +1146,7 @@ plot(f, -3, 3, aspect_ratio=:equal)
 
 The value is:
 
-```julia;
+```julia; echo=false
 val = (1/2 * 2 * 2) * 2 + pi*1^2/2
 numericq(val)
 ```
@@ -1132,7 +1159,7 @@ For the function $f(x) = \sin(\pi x)$, estimate the integral for $-1$
 to $1$ using a left-Riemann sum with the partition $-1 < -1/2 < 0 < 1/2
 < 1$.
 
-```julia;
+```julia; echo=false
 f(x) = sin(x)
 xs = -1:1/2:1
 deltas = diff(xs)
@@ -1150,7 +1177,7 @@ $$~
 ~$$
 
 
-```julia;
+```julia; echo=false
 val = 0
 numericq(val)
 ```
@@ -1164,7 +1191,7 @@ $$~
 ~$$
 
 
-```julia;
+```julia; echo=false
 val = 1
 numericq(val)
 ```
@@ -1176,7 +1203,7 @@ Suppose you know that for the integrable function
 $\int_a^b f(u)du =1$ and $\int_a^c f(u)du = p$. If $a < c < b$ what is
 $\int_c^b f(u)du$?
 
-```julia;
+```julia; echo=false
 choices = [
 L"1",
 L"p",
@@ -1190,7 +1217,7 @@ radioq(choices, ans)
 
 What is $\int_0^2 x^4 dx$? Use the rule for integrating $x^n$.
 
-```julia;
+```julia; echo=false
 choices = [
 L"2^5 - 0^5",
 L"2^5/5 - 0^5/5",
@@ -1209,7 +1236,7 @@ $$~
 \int_1^x \frac{1}{u}du = 1.
 ~$$
 
-```julia;
+```julia;echo=false
 val = exp(1)
 numericq(val)
 ```
@@ -1222,7 +1249,7 @@ $$~
 \int_0^1 x^n dx = \frac{1}{12}.
 ~$$
 
-```julia;
+```julia; echo=false
 val = 11
 numericq(val)
 ```
@@ -1231,7 +1258,7 @@ numericq(val)
 
 Suppose $f(x) > 0$ and $a < c < b$. Define $F(x) = \int_a^x f(u) du$. What can be said about $F(b)$ and $F(c)$?
 
-```julia;
+```julia; echo=false
 choices = [
 L"The area between $c$ and $b$ must be positive, so $F(c) < F(b)$.",
 L"F(b) - F(c) = F(a).",
@@ -1246,7 +1273,7 @@ radioq(choices, ans)
 
 For the right Riemann sum approximating $\int_0^{10} e^x dx$ with $n=100$ subintervals, what would  be a good estimate for the error?
 
-```julia;
+```julia; echo=false
 choices = [
 L"(10 - 0)/100 \cdot (e^{10} - e^{0})",
 L"10/100",
@@ -1265,7 +1292,7 @@ $$~
 \int_1^4 x^x dx   .
 ~$$
 
-```julia;
+```julia; echo=false
 f(x) = x^x
 a, b = 1, 4
 val, _ = quadgk(f, a, b)
@@ -1281,7 +1308,7 @@ $$~
 \int_0^3 e^{-x^2} dx   .
 ~$$
 
-```julia;
+```julia; echo=false
 f(x) = exp(-x^2)
 a, b = 0, 3
 val, _ = quadgk(f, a, b)
@@ -1367,8 +1394,6 @@ val = sum([f(wi)*ni for (wi, ni) in zip(wts, ns)])
 numericq(val)
 ```
 
-
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

@@ -317,8 +317,9 @@ the differential equation using a symbolic function and then call
 Symbolic functions are defined by the  `@syms` macro (also see `?symbols`) using parentheses to distinguish a function from a variable:
 
 ```julia;
-using CalculusWithJulia   # loads `SymPy`
+using CalculusWithJulia
 using Plots
+using SymPy
 @syms x u() # a symbolic variable and a symbolic function
 ```
 

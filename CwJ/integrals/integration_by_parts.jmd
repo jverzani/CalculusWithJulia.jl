@@ -166,7 +166,8 @@ e^x(x^2  - 2x - 1) \big|_a^b.
 In fact, it isn't hard to see that an integral of $x^m e^x$, $m$ a positive integer, can be handled in this manner. For example, when $m=10$, `SymPy` gives:
 
 ```julia;
-using CalculusWithJulia   # loads `SymPy`
+using CalculusWithJulia
+using SymPy
 @syms x
 integrate(x^10 * exp(x), x)
 ```
@@ -396,6 +397,7 @@ radioq(choices, ans)
 Find the value of $\int_1^4 x \log(x) dx$. You can integrate by parts.
 
 ```julia; echo=false
+using QuadGK
 f(x) = x*log(x)
 a,b = 1,4
 val,err = quadgk(f, a, b)

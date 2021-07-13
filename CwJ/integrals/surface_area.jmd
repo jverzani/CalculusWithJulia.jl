@@ -185,8 +185,9 @@ $$~
 This integral is done by a trig substitution, but gets involved. We let `SymPy` do it:
 
 ```julia;
-using CalculusWithJulia  # loads `SymPy`, `QuadGK`, `ForwardDiff`
+using CalculusWithJulia
 using Plots
+using SymPy
 @syms x
 F = integrate(2 * PI * x^2 * sqrt(1 + (2x)^2), x)
 ```
@@ -205,6 +206,7 @@ Rotate the graph of $x^x$ from $0$ to $2$ around the $x$ axis. What is the surfa
 We work numerically for this one, as no antiderivative is forthcoming. Recall, the accompanying `CalculusWithJulia` package defines `f'` to return the automatic derivative through the `ForwardDiff` package.
 
 ```julia;
+using QuadGK
 f(x) = x^x
 a, b = 0, 2
 val, _ = quadgk(x -> 2pi * f(x) * sqrt(1 + f'(x)^2), a, b)

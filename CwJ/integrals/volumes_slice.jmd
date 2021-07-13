@@ -115,8 +115,10 @@ V = \int_0^h \pi r(x)^2 dx
 This is
 
 ```julia;
-using CalculusWithJulia  # loads `QuadGK`, `Roots`, `SymPy`
+using CalculusWithJulia
 using Plots
+using QuadGK
+
 d0, d1, h = 2.5, 3.75, 4.75
 rad(x) = d0/2 + (d1/2 - d0/2)/h * x
 vol, _ = quadgk(x -> pi * rad(x)^2, 0, h)
@@ -159,6 +161,7 @@ Vol(h) = quadgk(x -> pi * rad(x)^2, 0, h)[1]
 Then to solve we have:
 
 ```julia;
+using Roots
 v = 5
 h5 = find_zero(h -> Vol(h) - v*231/128, 4)
 ```
@@ -186,6 +189,7 @@ by noting the radius, as a function of $y$, will be $R = r(1 -
 y/h)$. This gives the well-known volume of a cone:
 
 ```julia;
+using SymPy
 @syms r h x y
 R = r*(1 - y/h)
 integrate(pi*R^2, (y, 0, h))

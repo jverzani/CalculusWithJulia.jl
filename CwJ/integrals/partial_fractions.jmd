@@ -79,7 +79,8 @@ decomposition. For example, here we see $n_i$ terms for each power of
 $q_i$
 
 ```julia;
-using CalculusWithJulia  # loads `SymPy`
+using CalculusWithJulia
+using SymPy
 @syms a::real b::real c::real A::real B::real x::real
 ```
 

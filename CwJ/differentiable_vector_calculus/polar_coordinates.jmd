@@ -457,6 +457,7 @@ with antiderivative $4\sqrt{2\cos(\theta) + 2} \cdot \tan(\theta/2)$,
 but `SymPy` isn't able to find it. Instead we give a numeric answer:
 
 ```julia;
+using QuadGK
 quadgk(t -> sqrt(r'(t)^2 + r(t)^2), 0, 2pi)[1]
 ```
 
@@ -508,6 +509,8 @@ $$~
 Numerically then we have:
 
 ```julia;
+using Roots
+
 dinner = 1 + 5/8
 douter = 5 + 1/4
 r(b,t) = dinner/2 + b*t
@@ -719,7 +722,6 @@ numericq(val)
 ```
 
 
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

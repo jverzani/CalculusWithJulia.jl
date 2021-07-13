@@ -1086,6 +1086,7 @@ cross product will be closer to $1$.
 Let $\vec{r}(t) = k \cdot \langle \cos(t), \sin(t), 0 \rangle$. This will have curvature:
 
 ```julia;
+simplify = SymPy.simplify
 @syms k::positive t::real
 r1 = k * [cos(t), sin(t),0]
 norm(diff.(r1,t) × diff.(r1,t,t)) / norm(diff.(r1,t))^3 |> simplify
@@ -2092,6 +2093,7 @@ ans=2
 radioq(choices, ans)
 ```
 
+
 ###### Question
 
 Let $\vec{\gamma}(s)$ be a parameterization of a curve by arc length and $s(t)$ some continuous increasing function of $t$. Then $\vec{\gamma} \circ s$ also parameterizes the curve. We have
@@ -2242,7 +2244,6 @@ ans = 1
 radioq(choices, ans)
 ```
 
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

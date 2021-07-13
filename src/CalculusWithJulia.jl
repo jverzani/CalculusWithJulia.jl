@@ -88,7 +88,7 @@ export e
 
 export unzip, rangeclamp, parametric_grid, divergence, gradient, curl, ∇
 export tangent, secant, D
-export riemann, fubini
+export riemann
 export plotif, trimplot, signchart,
        plot_polar, plot_polar!,
        plot_parametric_curve,   plot_parametric_curve!,

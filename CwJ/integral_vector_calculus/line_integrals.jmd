@@ -83,9 +83,12 @@ If the composition $f \circ \vec{r}$ is viewed as a density of the arc (as thoug
 Suppose $\rho(x,y,z) = 5 - z$ gives the density of an arc where the arc is parameterized by $\vec{r}(t) = \langle \cos(t), 0, \sin(t) \rangle$, $0 \leq t \leq \pi$. (A half-circular arc.) Find the mass of the arc.
 
 ```julia;
+using SymPy
+
 rho(x,y,z) = 5 - z
 rho(v) = rho(v...)
 r(t) = [cos(t), 0, sin(t)]
+
 @syms t
 rp = diff.(r(t),t)  # r'
 area = integrate((rho ∘ r)(t) * norm(rp), (t, 0, PI))
@@ -111,6 +114,7 @@ Let $f(x,y,z) = x\sin(y)\cos(z)$ and $C$ the path described by $\vec{r}(t) = \la
 We find the numeric value with:
 
 ```julia;
+using QuadGK
 f(x,y,z) = x*sin(y)*cos(z)
 f(v) = f(v...)
 r(t) = [t, t^2, t^3]
@@ -695,6 +699,8 @@ Nope, off by a summand of $\pi(a/b)^2 = \pi r^2$, which may be recognized as the
 The sphere has known surface area $4\pi r^2$. Let's see if we can compute this. With the parameterization from spherical coordinates $(\theta, \phi) \rightarrow \langle r\sin\phi\cos\theta, r\sin\phi\sin\theta,r\cos\phi\rangle$, we have approaching this *numerically*:
 
 ```julia;
+using HCubature
+
 Rad = 1
 Phi(theta, phi) = Rad * [sin(phi)*cos(theta), sin(phi)*sin(theta), cos(phi)]
 Phi(v) = Phi(v...)
@@ -720,7 +726,7 @@ $$~
 Consider the transformation $(x, \theta) \rightarrow \langle x, f(x)\cos(\theta), f(x)\sin(\theta)$. This maps the region $[a,b] \times [0, 2\pi]$ *onto* the surface of revolution. As such, the surface element would be:
 
 ```julia;
-@sym H() x::real theta::real
+@syms H() x::real theta::real
 
 Phi(x, theta) = [x, H(x)*cos(theta), H(x)*sin(theta)]
 Jac = Phi(x, theta).jacobian([x, theta])
@@ -1319,8 +1325,6 @@ L"1/60"
 ans = 1
 radioq(choices, ans)
 ```
-
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

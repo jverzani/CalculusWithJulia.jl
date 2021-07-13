@@ -162,8 +162,9 @@ An analogy might be a sausage maker. These take a mass of ground-up sausage mate
 Let $f(x) = x^2$. The arc length of the graph of $f(x)$ over $[0,1]$ is then $L=\int_0^1 \sqrt{1 + (2x)^2} dx$. A trigonometric substitution of $2x = \sin(\theta)$ leads to the antiderivative:
 
 ```julia;
-using CalculusWithJulia  # loads `SymPy`, `Roots`, `QuadGK`, `ForwardDiff`
+using CalculusWithJulia
 using Plots
+using SymPy
 @syms x
 F = integrate(sqrt(1 + (2x)^2), x)
 ```
@@ -242,6 +243,7 @@ an approximate numeric answer. Recall, the accompanying `CalculusWithJulia` pack
 
 
 ```julia;
+using QuadGK
 quadgk(x -> sqrt(1 + f'(x)^2), -1, 1)[1]
 ```
 
@@ -286,6 +288,7 @@ $$~
 Evaluating at $78/2$ gives: $a \cdot \cosh(78/(2a)) - (a + 118) = 0$. This can be solved numerically for a:
 
 ```julia;
+using Roots
 cat(x; a=1, b=0) = a*cosh(x/a) - b
 a = find_zero(a -> cat(78/2, a=a, b=118 + a), 10)
 ```

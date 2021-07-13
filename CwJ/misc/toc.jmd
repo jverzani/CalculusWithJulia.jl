@@ -221,6 +221,8 @@ Ordinary differential equations are an application of integration and the fundam
 
 - [Euler method](ODEs/euler.html)
 
+- [The problem-algorithm-solve interface](ODEs/solve.html)
+
 ## Multivariable calculus
 
 Univariate functions take a single number as an input and return a number as the output. Notationally, we write $f: R \rightarrow R$. More generally, a function might have several input variables and might return several output variables, notationally $F: R^n \rightarrow R^m$, for positive, integer values of $n$ and $m$. Special cases are when $n=1$ (a space curve) or when $m=1$ (a scalar-valued function). Many of the concepts of calculus for univariate functions carry over, with suitable modifications.

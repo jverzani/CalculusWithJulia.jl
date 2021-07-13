@@ -69,7 +69,7 @@ function unzip(f::Function, a, b)
         return PlotUtils.adapted_grid(f, (a,b))
     else
         xsys = [PlotUtils.adapted_grid(x->f(x)[i], (a,b)) for i ∈ 1:n]
-        xs = sort(vcat([xsys[i][1] for i ∈ 1:3]...))
+        xs = sort(vcat([xsys[i][1] for i ∈ 1:n]...))
         return unzip(f.(xs))
     end
 end

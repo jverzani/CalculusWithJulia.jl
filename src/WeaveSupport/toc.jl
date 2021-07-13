@@ -37,21 +37,22 @@ table_of_contents = [
     :derivatives		:related_rates;
     :derivatives		:taylor_series_polynomials;
 
-    :integration		:area;
-    :integration		:ftc;
-    :integration		:substitution;
-    :integration		:integration_by_parts;
-    :integration		:partial_fractions;
-    :integration		:improper_integrals;
-    :integration		:mean_value_theorem;
-    :integration		:area_between_curves;
-    :integration		:center_fo_mass;
-    :integration		:volumes_slice;
-    :integration		:arc_length;
-    :integration		:surface_area;
+    :integrals		:area;
+    :integrals		:ftc;
+    :integrals		:substitution;
+    :integrals		:integrals_by_parts;
+    :integrals		:partial_fractions;
+    :integrals		:improper_integrals;
+    :integrals		:mean_value_theorem;
+    :integrals		:area_between_curves;
+    :integrals		:center_fo_mass;
+    :integrals		:volumes_slice;
+    :integrals		:arc_length;
+    :integrals		:surface_area;
 
     :ODEs		:odes;
     :ODEs		:euler;
+    :ODEs		:solve;
 
     :differentiable_vector_calculus		:polar_coordinates;
     :differentiable_vector_calculus		:vectors;
@@ -65,7 +66,7 @@ table_of_contents = [
     :integral_vector_calculus		:double_triple_integrals;
     :integral_vector_calculus		:line_inegrals;
     :integral_vector_calculus		:div_grad_curl;
-    :integral_vector_calculus		:integral_vector_calculus;
+    :integral_vector_calculus		:stokes_theorem;
     :integral_vector_calculus		:review;
 
     :alternatives   :symbolics;
