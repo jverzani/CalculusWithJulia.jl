@@ -10,7 +10,7 @@ nothing
 
 The technique of $u$-[substitution](https://en.wikipedia.org/wiki/Integration_by_substitution) is derived from reversing the chain rule: $[f(g(x))]' = f'(g(x)) g'(x)$.
 
-Suppose that $g$ and $u'(x)$ are integrable functions. Then both these integrals are defined:
+Suppose that $g$ is continuous and $u(x)$ is differentiable with ``u'(x)`` being Riemann integrable. Then both these integrals are defined:
 
 $$~
 \int_a^b g(u(t)) \cdot u'(t) dt, \quad \text{and}\quad \int_{u(a)}^{u(b)} g(x) dx.
@@ -27,12 +27,12 @@ $$~
 So,
 
 $$~
-\begin{align}
+\begin{align*}
 \int_a^b g(u(t)) \cdot u'(t) dt &= \int_a^b (G \circ u)'(t) dt\\
 &= (G\circ u)(b) - (G\circ u)(a) \quad\text{(the FTC, part II)}\\
 &= G(u(b)) - G(u(a)) \\
 &= \int_{u(a)}^{u(b)} g(x) dx. \quad\text{(the FTC part II)}
-\end{align}
+\end{align*}
 ~$$
 
 
@@ -44,7 +44,7 @@ We have seen a special case of substitution where $u(x) = x-c$ in the formula $\
 
 
 
-The main use of this is to take complicated things inside of the function $g$ out of the function (the $u(x)$) by renaming them, then account for the change of name.
+The main use of this is to take complicated things inside of the function $g$ out of the function (the $u(x)$) by renaming them, then accounting for the change of name.
 
 Some examples are in order.
 
@@ -57,6 +57,7 @@ $$~
 Clearly the $\sin(x)$ inside the exponential is an issue. If we let $u(x) = \sin(x)$, then $u'(x) = \cos(x)$, and this becomes
 
 $$~
+\int_0^2 u\prime(x) e^{u(x)} dx =
 \int_{u(0)}^{u(\pi/2)} e^x dx = e^x \big|_{\sin(0)}^{\sin(\pi/2)} = e^1 - e^0.
 ~$$
 
@@ -66,7 +67,7 @@ This all worked as the problem was such that it was more or less obvious what to
 
 The process of identifying the result of the chain rule in the
 function to integrate is not automatic, but rather a bit of an art. The basic
-step is to try some values. Typically, this is taught by
+step is to try some values and hope one works. Typically, this is taught by
 "substituting" in some value for part of the expression (basically the
 $u(x)$) and seeing what happens.
 
@@ -251,19 +252,19 @@ integrate(f(x), (x, 0, 2))
 
 ```julia;
 f(x) = 1/(x*log(x))
-integrate(f(x), (x, e, Sym(e)^2))
+integrate(f(x), (x, sympy.E, sympy.E^2))
 ```
 
-(We used `Sym(e)` - and not `e` - to avoid a conversion to floating point, which would yield an inexact answer.)
+(We used `sympy.E)` - and not `e` - to avoid any conversion to floating point, which could yield an inexact answer.)
 
 
-The antiderivative is interesting here:
+The antiderivative is interesting here; it being an *iterated* logarithm.
 
 ```julia;
 integrate(f(x), x)
 ```
 
-The answer is an *iterated* logarithm.
+
 
 ### Failures...
 
@@ -275,16 +276,10 @@ first has no familiar antiderivative, the second is done by a
 different technique.
 
 Even when substitution can be used, `SymPy` may not be able to
-algorithmically identify it. The algorithm used can determine if
+algorithmically identify it. The main algorithm used can determine if
 expressions involving rational functions, radicals, logarithms, and
 exponential functions is integrable. Missing from this list are
-absolute values, so something as simple as
-
-```julia;
-integrate(abs(x), (x, -2, 2))
-```
-
-is not found.
+absolute values.
 
 
 For such problems, we know how to help `SymPy` out - we can break the integral into pieces where we know the sign of the expression.
@@ -654,7 +649,6 @@ radioq(choices, ans)
 
 
 
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

@@ -165,7 +165,7 @@ $( document ).ready(function() {
 
 
 <p>The technique of <span class="math">$u$</span>-<a href="https://en.wikipedia.org/wiki/Integration_by_substitution">substitution</a> is derived from reversing the chain rule: <span class="math">$[f(g(x))]' = f'(g(x)) g'(x)$</span>.</p>
-<p>Suppose that <span class="math">$g$</span> and <span class="math">$u'(x)$</span> are integrable functions. Then both these integrals are defined:</p>
+<p>Suppose that <span class="math">$g$</span> is continuous and <span class="math">$u(x)$</span> is differentiable with <span class="math">$u'(x)$</span> being Riemann integrable. Then both these integrals are defined:</p>
 <p class="math">\[
 ~
 \int_a^b g(u(t)) \cdot u'(t) dt, \quad \text{and}\quad \int_{u(a)}^{u(b)} g(x) dx.
@@ -181,12 +181,12 @@ $( document ).ready(function() {
 <p>So,</p>
 <p class="math">\[
 ~
-\begin{align}
+\begin{align*}
 \int_a^b g(u(t)) \cdot u'(t) dt &= \int_a^b (G \circ u)'(t) dt\\
 &= (G\circ u)(b) - (G\circ u)(a) \quad\text{(the FTC, part II)}\\
 &= G(u(b)) - G(u(a)) \\
 &= \int_{u(a)}^{u(b)} g(x) dx. \quad\text{(the FTC part II)}
-\end{align}
+\end{align*}
 ~
 \]</p>
 <p>That is, this substitution formula applies:</p>
@@ -196,7 +196,7 @@ $( document ).ready(function() {
 \]</p>
 </blockquote>
 <p>We have seen a special case of substitution where <span class="math">$u(x) = x-c$</span> in the formula <span class="math">$\int_{a-c}^{b-c} g(x) dx= \int_a^b g(x-c)dx$</span>.</p>
-<p>The main use of this is to take complicated things inside of the function <span class="math">$g$</span> out of the function &#40;the <span class="math">$u(x)$</span>&#41; by renaming them, then account for the change of name.</p>
+<p>The main use of this is to take complicated things inside of the function <span class="math">$g$</span> out of the function &#40;the <span class="math">$u(x)$</span>&#41; by renaming them, then accounting for the change of name.</p>
 <p>Some examples are in order.</p>
 <p>Consider:</p>
 <p class="math">\[
@@ -207,12 +207,13 @@ $( document ).ready(function() {
 <p>Clearly the <span class="math">$\sin(x)$</span> inside the exponential is an issue. If we let <span class="math">$u(x) = \sin(x)$</span>, then <span class="math">$u'(x) = \cos(x)$</span>, and this becomes</p>
 <p class="math">\[
 ~
+\int_0^2 u\prime(x) e^{u(x)} dx =
 \int_{u(0)}^{u(\pi/2)} e^x dx = e^x \big|_{\sin(0)}^{\sin(\pi/2)} = e^1 - e^0.
 ~
 \]</p>
 <p>This all worked as the problem was such that it was more or less obvious what to choose for <span class="math">$u$</span> and <span class="math">$G$</span>.</p>
 <h3>&quot;u&quot; substitution</h3>
-<p>The process of identifying the result of the chain rule in the function to integrate is not automatic, but rather a bit of an art. The basic step is to try some values. Typically, this is taught by &quot;substituting&quot; in some value for part of the expression &#40;basically the <span class="math">$u(x)$</span>&#41; and seeing what happens.</p>
+<p>The process of identifying the result of the chain rule in the function to integrate is not automatic, but rather a bit of an art. The basic step is to try some values and hope one works. Typically, this is taught by &quot;substituting&quot; in some value for part of the expression &#40;basically the <span class="math">$u(x)$</span>&#41; and seeing what happens.</p>
 <p>In the above problem, <span class="math">$\int_0^{\pi/2} \cos(x) e^{\sin(x)} dx$</span>, we might just rename <span class="math">$\sin(x)$</span> to be <span class="math">$u$</span> &#40;suppressing the &quot;of <span class="math">$x$</span> part&#41;. Then we need to rewrite the &quot;<span class="math">$dx$</span>&quot; part of the integral. We know in this case that <span class="math">$du/dx = \cos(x)$</span>. In terms of differentials, this gives <span class="math">$du = \cos(x) dx$</span>. But this allows us to substitute in with <span class="math">$u$</span> and <span class="math">$du$</span> as is possible:</p>
 <p class="math">\[
 ~
@@ -254,7 +255,318 @@ $( document ).ready(function() {
 </pre>
 
 
-<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIKICAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyBoZWlnaHQ9IjI3Ni40OHB0IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA0MTQuNzIgMjc2LjQ4IiB3aWR0aD0iNDE0LjcycHQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgogPG1ldGFkYXRhPgogIDxyZGY6UkRGIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyMiIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgPGNjOldvcms+CiAgICA8ZGM6dHlwZSByZGY6cmVzb3VyY2U9Imh0dHA6Ly9wdXJsLm9yZy9kYy9kY21pdHlwZS9TdGlsbEltYWdlIi8+CiAgICA8ZGM6ZGF0ZT4yMDIxLTA3LTEzVDA2OjQxOjE4LjU0NTc2NDwvZGM6ZGF0ZT4KICAgIDxkYzpmb3JtYXQ+aW1hZ2Uvc3ZnK3htbDwvZGM6Zm9ybWF0PgogICAgPGRjOmNyZWF0b3I+CiAgICAgPGNjOkFnZW50PgogICAgICA8ZGM6dGl0bGU+TWF0cGxvdGxpYiB2My40LjIsIGh0dHBzOi8vbWF0cGxvdGxpYi5vcmcvPC9kYzp0aXRsZT4KICAgICA8L2NjOkFnZW50PgogICAgPC9kYzpjcmVhdG9yPgogICA8L2NjOldvcms+CiAgPC9yZGY6UkRGPgogPC9tZXRhZGF0YT4KIDxkZWZzPgogIDxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+KntzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjpyb3VuZDt9PC9zdHlsZT4KIDwvZGVmcz4KIDxnIGlkPSJmaWd1cmVfMSI+CiAgPGcgaWQ9InBhdGNoXzEiPgogICA8cGF0aCBkPSJNIDAgMjc2LjQ4IApMIDQxNC43MiAyNzYuNDggCkwgNDE0LjcyIDAgCkwgMCAwIAp6CiIgc3R5bGU9ImZpbGw6I2ZmZmZmZjsiLz4KICA8L2c+CiAgPGcgaWQ9ImF4ZXNfMSI+CiAgIDxnIGlkPSJwYXRjaF8yIj4KICAgIDxwYXRoIGQ9Ik0gMjYuNTIwODU5IDI2MS41MDUzNTQgCkwgNDExLjg4NTM1NCAyNjEuNTA1MzU0IApMIDQxMS44ODUzNTQgMi44MzQ2NDYgCkwgMjYuNTIwODU5IDIuODM0NjQ2IAp6CiIgc3R5bGU9ImZpbGw6I2ZmZmZmZjsiLz4KICAgPC9nPgogICA8ZyBpZD0ibWF0cGxvdGxpYi5heGlzXzEiPgogICAgPGcgaWQ9Inh0aWNrXzEiPgogICAgIDxnIGlkPSJsaW5lMmRfMSI+CiAgICAgIDxwYXRoIGNsaXAtcGF0aD0idXJsKCNwZmUzNGMwNzA1OSkiIGQ9Ik0gMzcuNDI3NDAxIDI2MS41MDUzNTQgCkwgMzcuNDI3NDAxIDIuODM0NjQ2IAoiIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLWxpbmVjYXA6c3F1YXJlO3N0cm9rZS1vcGFjaXR5OjAuMTtzdHJva2Utd2lkdGg6MC41OyIvPgogICAgIDwvZz4KICAgICA8ZyBpZD0ibGluZTJkXzIiPgogICAgICA8ZGVmcz4KICAgICAgIDxwYXRoIGQ9Ik0gMCAwIApMIDAgLTIuNSAKIiBpZD0ibTQzMmFiZjFjNDciIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MC41OyIvPgogICAgICA8L2RlZnM+CiAgICAgIDxnPgogICAgICAgPHVzZSBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjAuNTsiIHg9IjM3LjQyNzQwMSIgeGxpbms6aHJlZj0iI200MzJhYmYxYzQ3IiB5PSIyNjEuNTA1MzU0Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMSI+CiAgICAgIDwhLS0gJFxtYXRocmVndWxhcnswfSQgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM0Ljg2NzQwMSAyNzEuMDg0MTA0KXNjYWxlKDAuMDggLTAuMDgpIj4KICAgICAgIDxkZWZzPgogICAgICAgIDxwYXRoIGQ9Ik0gMjAzNCA0MjUwIApRIDE1NDcgNDI1MCAxMzAxIDM3NzAgClEgMTA1NiAzMjkxIDEwNTYgMjMyOCAKUSAxMDU2IDEzNjkgMTMwMSA4ODkgClEgMTU0NyA0MDkgMjAzNCA0MDkgClEgMjUyNSA0MDkgMjc3MCA4ODkgClEgMzAxNiAxMzY5IDMwMTYgMjMyOCAKUSAzMDE2IDMyOTEgMjc3MCAzNzcwIApRIDI1MjUgNDI1MCAyMDM0IDQyNTAgCnoKTSAyMDM0IDQ3NTAgClEgMjgxOSA0NzUwIDMyMzMgNDEyOSAKUSAzNjQ3IDM1MDkgMzY0NyAyMzI4IApRIDM2NDcgMTE1MCAzMjMzIDUyOSAKUSAyODE5IC05MSAyMDM0IC05MSAKUSAxMjUwIC05MSA4MzYgNTI5IApRIDQyMiAxMTUwIDQyMiAyMzI4IApRIDQyMiAzNTA5IDgzNiA0MTI5IApRIDEyNTAgNDc1MCAyMDM0IDQ3NTAgCnoKIiBpZD0iRGVqYVZ1U2Fucy0zMCIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDwvZGVmcz4KICAgICAgIDx1c2UgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwLjc4MTI1KSIgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMzAiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ4dGlja18yIj4KICAgICA8ZyBpZD0ibGluZTJkXzMiPgogICAgICA8cGF0aCBjbGlwLXBhdGg9InVybCgjcGZlMzRjMDcwNTkpIiBkPSJNIDE1My4xNDk0MSAyNjEuNTA1MzU0IApMIDE1My4xNDk0MSAyLjgzNDY0NiAKIiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTojMDAwMDAwO3N0cm9rZS1saW5lY2FwOnNxdWFyZTtzdHJva2Utb3BhY2l0eTowLjE7c3Ryb2tlLXdpZHRoOjAuNTsiLz4KICAgICA8L2c+CiAgICAgPGcgaWQ9ImxpbmUyZF80Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MC41OyIgeD0iMTUzLjE0OTQxIiB4bGluazpocmVmPSIjbTQzMmFiZjFjNDciIHk9IjI2MS41MDUzNTQiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF8yIj4KICAgICAgPCEtLSAkXG1hdGhyZWd1bGFyezF9JCAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTUwLjU4OTQxIDI3MS4wODQxMDQpc2NhbGUoMC4wOCAtMC4wOCkiPgogICAgICAgPGRlZnM+CiAgICAgICAgPHBhdGggZD0iTSA3OTQgNTMxIApMIDE4MjUgNTMxIApMIDE4MjUgNDA5MSAKTCA3MDMgMzg2NiAKTCA3MDMgNDQ0MSAKTCAxODE5IDQ2NjYgCkwgMjQ1MCA0NjY2IApMIDI0NTAgNTMxIApMIDM0ODEgNTMxIApMIDM0ODEgMCAKTCA3OTQgMCAKTCA3OTQgNTMxIAp6CiIgaWQ9IkRlamFWdVNhbnMtMzEiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTU2MjUpIi8+CiAgICAgICA8L2RlZnM+CiAgICAgICA8dXNlIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMC4wOTM3NSkiIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTMxIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieHRpY2tfMyI+CiAgICAgPGcgaWQ9ImxpbmUyZF81Ij4KICAgICAgPHBhdGggY2xpcC1wYXRoPSJ1cmwoI3BmZTM0YzA3MDU5KSIgZD0iTSAyNjguODcxNDE4IDI2MS41MDUzNTQgCkwgMjY4Ljg3MTQxOCAyLjgzNDY0NiAKIiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTojMDAwMDAwO3N0cm9rZS1saW5lY2FwOnNxdWFyZTtzdHJva2Utb3BhY2l0eTowLjE7c3Ryb2tlLXdpZHRoOjAuNTsiLz4KICAgICA8L2c+CiAgICAgPGcgaWQ9ImxpbmUyZF82Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MC41OyIgeD0iMjY4Ljg3MTQxOCIgeGxpbms6aHJlZj0iI200MzJhYmYxYzQ3IiB5PSIyNjEuNTA1MzU0Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMyI+CiAgICAgIDwhLS0gJFxtYXRocmVndWxhcnsyfSQgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI2Ni4zMTE0MTggMjcxLjA4NDEwNClzY2FsZSgwLjA4IC0wLjA4KSI+CiAgICAgICA8ZGVmcz4KICAgICAgICA8cGF0aCBkPSJNIDEyMjggNTMxIApMIDM0MzEgNTMxIApMIDM0MzEgMCAKTCA0NjkgMCAKTCA0NjkgNTMxIApRIDgyOCA5MDMgMTQ0OCAxNTI5IApRIDIwNjkgMjE1NiAyMjI4IDIzMzggClEgMjUzMSAyNjc4IDI2NTEgMjkxNCAKUSAyNzcyIDMxNTAgMjc3MiAzMzc4IApRIDI3NzIgMzc1MCAyNTExIDM5ODQgClEgMjI1MCA0MjE5IDE4MzEgNDIxOSAKUSAxNTM0IDQyMTkgMTIwNCA0MTE2IApRIDg3NSA0MDEzIDUwMCAzODAzIApMIDUwMCA0NDQxIApRIDg4MSA0NTk0IDEyMTIgNDY3MiAKUSAxNTQ0IDQ3NTAgMTgxOSA0NzUwIApRIDI1NDQgNDc1MCAyOTc1IDQzODcgClEgMzQwNiA0MDI1IDM0MDYgMzQxOSAKUSAzNDA2IDMxMzEgMzI5OCAyODczIApRIDMxOTEgMjYxNiAyOTA2IDIyNjYgClEgMjgyOCAyMTc1IDI0MDkgMTc0MiAKUSAxOTkxIDEzMDkgMTIyOCA1MzEgCnoKIiBpZD0iRGVqYVZ1U2Fucy0zMiIgdHJhbnNmb3JtPSJzY2FsZSgwLjAxNTYyNSkiLz4KICAgICAgIDwvZGVmcz4KICAgICAgIDx1c2UgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwLjc4MTI1KSIgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMzIiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ4dGlja180Ij4KICAgICA8ZyBpZD0ibGluZTJkXzciPgogICAgICA8cGF0aCBjbGlwLXBhdGg9InVybCgjcGZlMzRjMDcwNTkpIiBkPSJNIDM4NC41OTM0MjYgMjYxLjUwNTM1NCAKTCAzODQuNTkzNDI2IDIuODM0NjQ2IAoiIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLWxpbmVjYXA6c3F1YXJlO3N0cm9rZS1vcGFjaXR5OjAuMTtzdHJva2Utd2lkdGg6MC41OyIvPgogICAgIDwvZz4KICAgICA8ZyBpZD0ibGluZTJkXzgiPgogICAgICA8Zz4KICAgICAgIDx1c2Ugc3R5bGU9InN0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDowLjU7IiB4PSIzODQuNTkzNDI2IiB4bGluazpocmVmPSIjbTQzMmFiZjFjNDciIHk9IjI2MS41MDUzNTQiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF80Ij4KICAgICAgPCEtLSAkXG1hdGhyZWd1bGFyezN9JCAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzgyLjAzMzQyNiAyNzEuMDg0MTA0KXNjYWxlKDAuMDggLTAuMDgpIj4KICAgICAgIDxkZWZzPgogICAgICAgIDxwYXRoIGQ9Ik0gMjU5NyAyNTE2IApRIDMwNTAgMjQxOSAzMzA0IDIxMTIgClEgMzU1OSAxODA2IDM1NTkgMTM1NiAKUSAzNTU5IDY2NiAzMDg0IDI4NyAKUSAyNjA5IC05MSAxNzM0IC05MSAKUSAxNDQxIC05MSAxMTMwIC0zMyAKUSA4MTkgMjUgNDg4IDE0MSAKTCA0ODggNzUwIApRIDc1MCA1OTcgMTA2MiA1MTkgClEgMTM3NSA0NDEgMTcxNiA0NDEgClEgMjMwOSA0NDEgMjYyMCA2NzUgClEgMjkzMSA5MDkgMjkzMSAxMzU2IApRIDI5MzEgMTc2OSAyNjQyIDIwMDEgClEgMjM1MyAyMjM0IDE4MzggMjIzNCAKTCAxMjk0IDIyMzQgCkwgMTI5NCAyNzUzIApMIDE4NjMgMjc1MyAKUSAyMzI4IDI3NTMgMjU3NSAyOTM5IApRIDI4MjIgMzEyNSAyODIyIDM0NzUgClEgMjgyMiAzODM0IDI1NjcgNDAyNiAKUSAyMzEzIDQyMTkgMTgzOCA0MjE5IApRIDE1NzggNDIxOSAxMjgxIDQxNjIgClEgOTg0IDQxMDYgNjI4IDM5ODggCkwgNjI4IDQ1NTAgClEgOTg4IDQ2NTAgMTMwMiA0NzAwIApRIDE2MTYgNDc1MCAxODk0IDQ3NTAgClEgMjYxMyA0NzUwIDMwMzEgNDQyMyAKUSAzNDUwIDQwOTcgMzQ1MCAzNTQxIApRIDM0NTAgMzE1MyAzMjI4IDI4ODYgClEgMzAwNiAyNjE5IDI1OTcgMjUxNiAKegoiIGlkPSJEZWphVnVTYW5zLTMzIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPC9kZWZzPgogICAgICAgPHVzZSB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDAuNzgxMjUpIiB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0zMyIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICA8L2c+CiAgIDxnIGlkPSJtYXRwbG90bGliLmF4aXNfMiI+CiAgICA8ZyBpZD0ieXRpY2tfMSI+CiAgICAgPGcgaWQ9ImxpbmUyZF85Ij4KICAgICAgPHBhdGggY2xpcC1wYXRoPSJ1cmwoI3BmZTM0YzA3MDU5KSIgZD0iTSAyNi41MjA4NTkgMjQ1LjA1NjgxMSAKTCA0MTEuODg1MzU0IDI0NS4wNTY4MTEgCiIgc3R5bGU9ImZpbGw6bm9uZTtzdHJva2U6IzAwMDAwMDtzdHJva2UtbGluZWNhcDpzcXVhcmU7c3Ryb2tlLW9wYWNpdHk6MC4xO3N0cm9rZS13aWR0aDowLjU7Ii8+CiAgICAgPC9nPgogICAgIDxnIGlkPSJsaW5lMmRfMTAiPgogICAgICA8ZGVmcz4KICAgICAgIDxwYXRoIGQ9Ik0gMCAwIApMIDIuNSAwIAoiIGlkPSJtMjcwM2NkZjAyNSIgc3R5bGU9InN0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDowLjU7Ii8+CiAgICAgIDwvZGVmcz4KICAgICAgPGc+CiAgICAgICA8dXNlIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MC41OyIgeD0iMjYuNTIwODU5IiB4bGluazpocmVmPSIjbTI3MDNjZGYwMjUiIHk9IjI0NS4wNTY4MTEiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF81Ij4KICAgICAgPCEtLSAkXG1hdGhyZWd1bGFyey0wLjN9JCAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMy41ODA4NTkgMjQ4LjA5NjE4NilzY2FsZSgwLjA4IC0wLjA4KSI+CiAgICAgICA8ZGVmcz4KICAgICAgICA8cGF0aCBkPSJNIDY3OCAyMjcyIApMIDQ2ODQgMjI3MiAKTCA0Njg0IDE3NDEgCkwgNjc4IDE3NDEgCkwgNjc4IDIyNzIgCnoKIiBpZD0iRGVqYVZ1U2Fucy0yMjEyIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgIDxwYXRoIGQ9Ik0gNjg0IDc5NCAKTCAxMzQ0IDc5NCAKTCAxMzQ0IDAgCkwgNjg0IDAgCkwgNjg0IDc5NCAKegoiIGlkPSJEZWphVnVTYW5zLTJlIiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICAgPC9kZWZzPgogICAgICAgPHVzZSB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDAuNzgxMjUpIiB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0yMjEyIi8+CiAgICAgICA8dXNlIHRyYW5zZm9ybT0idHJhbnNsYXRlKDgzLjc4OTA2MiAwLjc4MTI1KSIgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMzAiLz4KICAgICAgIDx1c2UgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTQ3LjQxMjEwOSAwLjc4MTI1KSIgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMmUiLz4KICAgICAgIDx1c2UgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTc5LjE5OTIxOSAwLjc4MTI1KSIgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMzMiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja18yIj4KICAgICA8ZyBpZD0ibGluZTJkXzExIj4KICAgICAgPHBhdGggY2xpcC1wYXRoPSJ1cmwoI3BmZTM0YzA3MDU5KSIgZD0iTSAyNi41MjA4NTkgMjA3LjQ1NzU1OSAKTCA0MTEuODg1MzU0IDIwNy40NTc1NTkgCiIgc3R5bGU9ImZpbGw6bm9uZTtzdHJva2U6IzAwMDAwMDtzdHJva2UtbGluZWNhcDpzcXVhcmU7c3Ryb2tlLW9wYWNpdHk6MC4xO3N0cm9rZS13aWR0aDowLjU7Ii8+CiAgICAgPC9nPgogICAgIDxnIGlkPSJsaW5lMmRfMTIiPgogICAgICA8Zz4KICAgICAgIDx1c2Ugc3R5bGU9InN0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDowLjU7IiB4PSIyNi41MjA4NTkiIHhsaW5rOmhyZWY9IiNtMjcwM2NkZjAyNSIgeT0iMjA3LjQ1NzU1OSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzYiPgogICAgICA8IS0tICRcbWF0aHJlZ3VsYXJ7LTAuMn0kIC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzLjk4MDg1OSAyMTAuNDk2OTM0KXNjYWxlKDAuMDggLTAuMDgpIj4KICAgICAgIDx1c2UgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwLjc4MTI1KSIgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMjIxMiIvPgogICAgICAgPHVzZSB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4My43ODkwNjIgMC43ODEyNSkiIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTMwIi8+CiAgICAgICA8dXNlIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE0Ny40MTIxMDkgMC43ODEyNSkiIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTJlIi8+CiAgICAgICA8dXNlIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE3My42OTkyMTkgMC43ODEyNSkiIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTMyIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfMyI+CiAgICAgPGcgaWQ9ImxpbmUyZF8xMyI+CiAgICAgIDxwYXRoIGNsaXAtcGF0aD0idXJsKCNwZmUzNGMwNzA1OSkiIGQ9Ik0gMjYuNTIwODU5IDE2OS44NTgzMDYgCkwgNDExLjg4NTM1NCAxNjkuODU4MzA2IAoiIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLWxpbmVjYXA6c3F1YXJlO3N0cm9rZS1vcGFjaXR5OjAuMTtzdHJva2Utd2lkdGg6MC41OyIvPgogICAgIDwvZz4KICAgICA8ZyBpZD0ibGluZTJkXzE0Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MC41OyIgeD0iMjYuNTIwODU5IiB4bGluazpocmVmPSIjbTI3MDNjZGYwMjUiIHk9IjE2OS44NTgzMDYiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF83Ij4KICAgICAgPCEtLSAkXG1hdGhyZWd1bGFyey0wLjF9JCAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMy41ODA4NTkgMTcyLjg5NzY4MSlzY2FsZSgwLjA4IC0wLjA4KSI+CiAgICAgICA8dXNlIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMC43ODEyNSkiIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTIyMTIiLz4KICAgICAgIDx1c2UgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoODMuNzg5MDYyIDAuNzgxMjUpIiB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0zMCIvPgogICAgICAgPHVzZSB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNDcuNDEyMTA5IDAuNzgxMjUpIiB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0yZSIvPgogICAgICAgPHVzZSB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNzkuMTk5MjE5IDAuNzgxMjUpIiB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0zMSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inl0aWNrXzQiPgogICAgIDxnIGlkPSJsaW5lMmRfMTUiPgogICAgICA8cGF0aCBjbGlwLXBhdGg9InVybCgjcGZlMzRjMDcwNTkpIiBkPSJNIDI2LjUyMDg1OSAxMzIuMjU5MDU0IApMIDQxMS44ODUzNTQgMTMyLjI1OTA1NCAKIiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTojMDAwMDAwO3N0cm9rZS1saW5lY2FwOnNxdWFyZTtzdHJva2Utb3BhY2l0eTowLjE7c3Ryb2tlLXdpZHRoOjAuNTsiLz4KICAgICA8L2c+CiAgICAgPGcgaWQ9ImxpbmUyZF8xNiI+CiAgICAgIDxnPgogICAgICAgPHVzZSBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjAuNTsiIHg9IjI2LjUyMDg1OSIgeGxpbms6aHJlZj0iI20yNzAzY2RmMDI1IiB5PSIxMzIuMjU5MDU0Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfOCI+CiAgICAgIDwhLS0gJFxtYXRocmVndWxhcnswLjB9JCAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTAuMjIwODU5IDEzNS4yOTg0Mjkpc2NhbGUoMC4wOCAtMC4wOCkiPgogICAgICAgPHVzZSB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDAuNzgxMjUpIiB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0zMCIvPgogICAgICAgPHVzZSB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjMwNDcgMC43ODEyNSkiIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTJlIi8+CiAgICAgICA8dXNlIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk1LjQxMDE1NiAwLjc4MTI1KSIgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMzAiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja181Ij4KICAgICA8ZyBpZD0ibGluZTJkXzE3Ij4KICAgICAgPHBhdGggY2xpcC1wYXRoPSJ1cmwoI3BmZTM0YzA3MDU5KSIgZD0iTSAyNi41MjA4NTkgOTQuNjU5ODAyIApMIDQxMS44ODUzNTQgOTQuNjU5ODAyIAoiIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLWxpbmVjYXA6c3F1YXJlO3N0cm9rZS1vcGFjaXR5OjAuMTtzdHJva2Utd2lkdGg6MC41OyIvPgogICAgIDwvZz4KICAgICA8ZyBpZD0ibGluZTJkXzE4Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MC41OyIgeD0iMjYuNTIwODU5IiB4bGluazpocmVmPSIjbTI3MDNjZGYwMjUiIHk9Ijk0LjY1OTgwMiIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzkiPgogICAgICA8IS0tICRcbWF0aHJlZ3VsYXJ7MC4xfSQgLS0+CiAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEwLjIyMDg1OSA5Ny42OTkxNzcpc2NhbGUoMC4wOCAtMC4wOCkiPgogICAgICAgPHVzZSB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDAuNzgxMjUpIiB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0zMCIvPgogICAgICAgPHVzZSB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2My42MjMwNDcgMC43ODEyNSkiIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTJlIi8+CiAgICAgICA8dXNlIHRyYW5zZm9ybT0idHJhbnNsYXRlKDk1LjQxMDE1NiAwLjc4MTI1KSIgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMzEiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja182Ij4KICAgICA8ZyBpZD0ibGluZTJkXzE5Ij4KICAgICAgPHBhdGggY2xpcC1wYXRoPSJ1cmwoI3BmZTM0YzA3MDU5KSIgZD0iTSAyNi41MjA4NTkgNTcuMDYwNTQ5IApMIDQxMS44ODUzNTQgNTcuMDYwNTQ5IAoiIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLWxpbmVjYXA6c3F1YXJlO3N0cm9rZS1vcGFjaXR5OjAuMTtzdHJva2Utd2lkdGg6MC41OyIvPgogICAgIDwvZz4KICAgICA8ZyBpZD0ibGluZTJkXzIwIj4KICAgICAgPGc+CiAgICAgICA8dXNlIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MC41OyIgeD0iMjYuNTIwODU5IiB4bGluazpocmVmPSIjbTI3MDNjZGYwMjUiIHk9IjU3LjA2MDU0OSIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzEwIj4KICAgICAgPCEtLSAkXG1hdGhyZWd1bGFyezAuMn0kIC0tPgogICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMC43MDA4NTkgNjAuMDk5OTI0KXNjYWxlKDAuMDggLTAuMDgpIj4KICAgICAgIDx1c2UgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwLjc4MTI1KSIgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMzAiLz4KICAgICAgIDx1c2UgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjMuNjIzMDQ3IDAuNzgxMjUpIiB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0yZSIvPgogICAgICAgPHVzZSB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4OS45MTAxNTYgMC43ODEyNSkiIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTMyIi8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfNyI+CiAgICAgPGcgaWQ9ImxpbmUyZF8yMSI+CiAgICAgIDxwYXRoIGNsaXAtcGF0aD0idXJsKCNwZmUzNGMwNzA1OSkiIGQ9Ik0gMjYuNTIwODU5IDE5LjQ2MTI5NyAKTCA0MTEuODg1MzU0IDE5LjQ2MTI5NyAKIiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTojMDAwMDAwO3N0cm9rZS1saW5lY2FwOnNxdWFyZTtzdHJva2Utb3BhY2l0eTowLjE7c3Ryb2tlLXdpZHRoOjAuNTsiLz4KICAgICA8L2c+CiAgICAgPGcgaWQ9ImxpbmUyZF8yMiI+CiAgICAgIDxnPgogICAgICAgPHVzZSBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjAuNTsiIHg9IjI2LjUyMDg1OSIgeGxpbms6aHJlZj0iI20yNzAzY2RmMDI1IiB5PSIxOS40NjEyOTciLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF8xMSI+CiAgICAgIDwhLS0gJFxtYXRocmVndWxhcnswLjN9JCAtLT4KICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTAuMjIwODU5IDIyLjUwMDY3MilzY2FsZSgwLjA4IC0wLjA4KSI+CiAgICAgICA8dXNlIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMC43ODEyNSkiIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTMwIi8+CiAgICAgICA8dXNlIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYzLjYyMzA0NyAwLjc4MTI1KSIgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtMmUiLz4KICAgICAgIDx1c2UgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoOTUuNDEwMTU2IDAuNzgxMjUpIiB4bGluazpocmVmPSIjRGVqYVZ1U2Fucy0zMyIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgPC9nPgogICA8L2c+CiAgIDxnIGlkPSJsaW5lMmRfMjMiPgogICAgPHBhdGggY2xpcC1wYXRoPSJ1cmwoI3BmZTM0YzA3MDU5KSIgZD0iTSAzNy40Mjc0MDEgMTMyLjI1OTA1NCAKTCAzOC4zMTQ5OTYgMTI5LjM3NTQ1MyAKTCAzOS4yMDI1OSAxMjYuNDkzNTQ4IApMIDQwLjA5MDE4NCAxMjMuNjE1MDM0IApMIDQwLjk3Nzc3OSAxMjAuNzQxNjA0IApMIDQ5LjE4NDg3IDk0LjcxMDQ4OSAKTCA1Ny4zOTE5NjEgNzAuNTQ1NTU1IApMIDYxLjQ5NTUwNiA1OS41MzM4NDkgCkwgNjUuNTk5MDUyIDQ5LjQxMDkzIApMIDY5LjcwMjU5OCA0MC4yODk4MTQgCkwgNzMuODA2MTQzIDMyLjI2NjcyNSAKTCA3OC43MzgyNjMgMjQuMTg1MzExIApMIDgzLjY3MDM4MyAxNy44OTk2NjcgCkwgODguNjAyNTAyIDEzLjQ2NTQ1MiAKTCA5My41MzQ2MjIgMTAuODk1Mjc5IApMIDk3LjcwNDY2NiAxMC4xNTU1MTUgCkwgMTAxLjg3NDcxMSAxMC42ODY0OTMgCkwgMTA2LjA0NDc1NSAxMi40MjczNiAKTCAxMTAuMjE0OCAxNS4yOTg5NzkgCkwgMTE5LjI3NDQ3NCAyNC45NTY3MDggCkwgMTI4LjMzNDE0OCAzOC4yOTE2MjIgCkwgMTM2LjY4NjM2NiA1Mi42NTMyNzggCkwgMTQ1LjAzODU4NCA2Ny44Mzk3NTggCkwgMTUzLjk5MzA0NSA4My44MTU4IApMIDE2Mi45NDc1MDUgOTguMzU2ODgyIApMIDE2OC4xMzQ4MTYgMTA1Ljc2OTA4OCAKTCAxNzMuMzIyMTI2IDExMi4yODU4ODQgCkwgMTc4LjUwOTQzNyAxMTcuODMzNzgxIApMIDE4My42OTY3NDcgMTIyLjM4MzI4IApMIDE5Mi45MTY0ODYgMTI4LjA3NDg4MSAKTCAyMDIuMTM2MjI0IDEzMS4wNzg5MzIgCkwgMjEwLjIyMTEwNCAxMzIuMDg0Mjk4IApMIDIxOC4zMDU5ODQgMTMyLjI1ODg3OSAKTCAyMjcuMTIwNjczIDEzMi4zNzg5MTQgCkwgMjM1LjkzNTM2MyAxMzMuMzcyMDU3IApMIDI0NC44MDI0NCAxMzYuMTMzOTQ2IApMIDI1My42Njk1MTggMTQxLjM0MjM5IApMIDI1OC41NzEzNjIgMTQ1LjQyNjczNiAKTCAyNjMuNDczMjA2IDE1MC40MDMzODkgCkwgMjY4LjM3NTA1IDE1Ni4yNTc5OSAKTCAyNzMuMjc2ODk0IDE2Mi45NDEwMSAKTCAyODIuNjA0ODU2IDE3Ny42MTc1NDkgCkwgMjkxLjkzMjgxNyAxOTQuMDY2NTIgCkwgMzAxLjYzMTczMyAyMTEuNzA2OTUyIApMIDMxMS4zMzA2NDkgMjI4LjI0ODkzNCAKTCAzMTUuNDEyODYgMjM0LjQ1Njg3OSAKTCAzMTkuNDk1MDcgMjQwLjAyODIyNiAKTCAzMjMuNTc3MjgxIDI0NC44Mzk2OTIgCkwgMzI3LjY1OTQ5MiAyNDguNzc2MjIgCkwgMzMyLjY0MzQwOCAyNTIuMjQ1MDc4IApMIDMzNy42MjczMjUgMjU0LjA5MTE2MiAKTCAzNDIuNjExMjQxIDI1NC4xODQ0ODUgCkwgMzQ3LjU5NTE1OCAyNTIuNDMzMjAzIApMIDM1Mi4yODAxODYgMjQ5LjA1OTQwNiAKTCAzNTYuOTY1MjE1IDI0NC4wMDQyMDMgCkwgMzYxLjY1MDI0MyAyMzcuMjk2MDIgCkwgMzY2LjMzNTI3MiAyMjguOTk4MjA0IApMIDM3MC4wODgxNjEgMjIxLjI2OTExOCAKTCAzNzMuODQxMDUxIDIxMi42NDY5NDMgCkwgMzc3LjU5Mzk0IDIwMy4yMDkyMjIgCkwgMzgxLjM0NjgzIDE5My4wNDQ5NTMgCkwgMzg4Ljg1MjYwOSAxNzAuOTQyNjQ3IApMIDM5Ni4zNTgzODggMTQ3LjIzMTQzNyAKTCAzOTcuNTEzNDk0IDE0My41MDE0MDcgCkwgMzk4LjY2ODYgMTM5Ljc2MDE4MyAKTCAzOTkuODIzNzA2IDEzNi4wMTE0ODcgCkwgNDAwLjk3ODgxMiAxMzIuMjU5MDU0IAoiIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlOiMwMDlhZmE7Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzMiPgogICAgPHBhdGggZD0iTSAyNi41MjA4NTkgMjYxLjUwNTM1NCAKTCAyNi41MjA4NTkgMi44MzQ2NDYgCiIgc3R5bGU9ImZpbGw6bm9uZTtzdHJva2U6IzAwMDAwMDtzdHJva2UtbGluZWNhcDpzcXVhcmU7c3Ryb2tlLWxpbmVqb2luOm1pdGVyOyIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF80Ij4KICAgIDxwYXRoIGQ9Ik0gMjYuNTIwODU5IDI2MS41MDUzNTQgCkwgNDExLjg4NTM1NCAyNjEuNTA1MzU0IAoiIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLWxpbmVjYXA6c3F1YXJlO3N0cm9rZS1saW5lam9pbjptaXRlcjsiLz4KICAgPC9nPgogICA8ZyBpZD0ibGVnZW5kXzEiPgogICAgPGcgaWQ9InBhdGNoXzUiPgogICAgIDxwYXRoIGQ9Ik0gMzYyLjg2MDM1NCAyNy4zNzcxNDYgCkwgNDA3Ljg4NTM1NCAyNy4zNzcxNDYgCkwgNDA3Ljg4NTM1NCA2LjgzNDY0NiAKTCAzNjIuODYwMzU0IDYuODM0NjQ2IAp6CiIgc3R5bGU9ImZpbGw6I2ZmZmZmZjtzdHJva2U6IzAwMDAwMDtzdHJva2UtbGluZWpvaW46bWl0ZXI7Ii8+CiAgICA8L2c+CiAgICA8ZyBpZD0ibGluZTJkXzI0Ij4KICAgICA8cGF0aCBkPSJNIDM2OS4yNjAzNTQgMTYuNTEzMzk2IApMIDM4NS4yNjAzNTQgMTYuNTEzMzk2IAoiIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlOiMwMDlhZmE7c3Ryb2tlLWxpbmVqb2luOm1pdGVyOyIvPgogICAgPC9nPgogICAgPGcgaWQ9ImxpbmUyZF8yNSIvPgogICAgPGcgaWQ9InRleHRfMTIiPgogICAgIDwhLS0geTEgLS0+CiAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzkxLjY2MDM1NCAxOS4zMTMzOTYpc2NhbGUoMC4wOCAtMC4wOCkiPgogICAgICA8ZGVmcz4KICAgICAgIDxwYXRoIGQ9Ik0gMjA1OSAtMzI1IApRIDE4MTYgLTk1MCAxNTg0IC0xMTQwIApRIDEzNTMgLTEzMzEgOTY2IC0xMzMxIApMIDUwNiAtMTMzMSAKTCA1MDYgLTg1MCAKTCA4NDQgLTg1MCAKUSAxMDgxIC04NTAgMTIxMiAtNzM3IApRIDEzNDQgLTYyNSAxNTAzIC0yMDYgCkwgMTYwNiA1NiAKTCAxOTEgMzUwMCAKTCA4MDAgMzUwMCAKTCAxODk0IDc2MyAKTCAyOTg4IDM1MDAgCkwgMzU5NyAzNTAwIApMIDIwNTkgLTMyNSAKegoiIGlkPSJEZWphVnVTYW5zLTc5IiB0cmFuc2Zvcm09InNjYWxlKDAuMDE1NjI1KSIvPgogICAgICA8L2RlZnM+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI0RlamFWdVNhbnMtNzkiLz4KICAgICAgPHVzZSB4PSI1OS4xNzk2ODgiIHhsaW5rOmhyZWY9IiNEZWphVnVTYW5zLTMxIi8+CiAgICAgPC9nPgogICAgPC9nPgogICA8L2c+CiAgPC9nPgogPC9nPgogPGRlZnM+CiAgPGNsaXBQYXRoIGlkPSJwZmUzNGMwNzA1OSI+CiAgIDxyZWN0IGhlaWdodD0iMjU4LjY3MDcwOSIgd2lkdGg9IjM4NS4zNjQ0OTUiIHg9IjI2LjUyMDg1OSIgeT0iMi44MzQ2NDYiLz4KICA8L2NsaXBQYXRoPgogPC9kZWZzPgo8L3N2Zz4K"  />
+
+    <div id="801994fb-e160-4268-a080-e32a4562e704" style="width:576px;height:384px;"></div>
+    <script>
+    
+        var PLOT = document.getElementById('801994fb-e160-4268-a080-e32a4562e704');
+    Plotly.plot(PLOT, [
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            0.0,
+            0.007670056322213467,
+            0.015340112644426933,
+            0.0230101689666404,
+            0.030680225288853866,
+            0.10160097113119822,
+            0.17252171697354257,
+            0.20798208989471473,
+            0.2434424628158869,
+            0.2789028357370591,
+            0.31436320865823125,
+            0.35698362078856494,
+            0.39960403291889857,
+            0.44222444504923225,
+            0.48484485717956594,
+            0.5208798732139488,
+            0.5569148892483315,
+            0.5929499052827143,
+            0.6289849213170972,
+            0.7072731766942932,
+            0.7855614320714894,
+            0.8577362788103786,
+            0.9299111255492679,
+            1.0072901891756778,
+            1.0846692528020878,
+            1.1294948696061229,
+            1.1743204864101577,
+            1.2191461032141928,
+            1.2639717200182279,
+            1.3436431565239784,
+            1.423314593029729,
+            1.4931792632139245,
+            1.5630439333981199,
+            1.639215177553415,
+            1.71538642170871,
+            1.7920103724793233,
+            1.8686343232499367,
+            1.9109931111894132,
+            1.9533518991288894,
+            1.9957106870683656,
+            2.038069475007842,
+            2.11867611078605,
+            2.1992827465642577,
+            2.2830949451205087,
+            2.3669071436767597,
+            2.4021831530822304,
+            2.437459162487701,
+            2.472735171893172,
+            2.508011181298642,
+            2.5510791904146526,
+            2.5941471995306626,
+            2.637215208646673,
+            2.6802832177626836,
+            2.720768416604875,
+            2.7612536154470666,
+            2.801738814289258,
+            2.8422240131314496,
+            2.874654227158665,
+            2.9070844411858805,
+            2.939514655213096,
+            2.9719448692403114,
+            3.0368052972947424,
+            3.1016657253491733,
+            3.1116474574093282,
+            3.121629189469483,
+            3.131610921529638,
+            3.141592653589793
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y1",
+        "zmin": null,
+        "legendgroup": "y1",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            0.007669304306292525,
+            0.015334097239022758,
+            0.022989871033749217,
+            0.030632125141025007,
+            0.09986519156364906,
+            0.16413490992972482,
+            0.19342194505162794,
+            0.2203451369235095,
+            0.24460390604841703,
+            0.26594233359339603,
+            0.2874358834704769,
+            0.30415335472069116,
+            0.31594671366165944,
+            0.32278241504809535,
+            0.3247499133920887,
+            0.3233377105204389,
+            0.318707652935632,
+            0.3110702160570127,
+            0.285384254984834,
+            0.24991835234045254,
+            0.21172170085811703,
+            0.1713313222460054,
+            0.1288410048920289,
+            0.09016714381269562,
+            0.07045343933240983,
+            0.053121189044454835,
+            0.03836585027255424,
+            0.026265877929030002,
+            0.011128340328477046,
+            0.003138685296415506,
+            0.0004647866864799453,
+            4.6588776769976706e-7,
+            -0.0003187816978654533,
+            -0.0029601728075224955,
+            -0.010305769109987902,
+            -0.024158287537425792,
+            -0.035021126028792496,
+            -0.04825716968974166,
+            -0.06382822700509279,
+            -0.0816025706720114,
+            -0.12063669413221158,
+            -0.16438482852869815,
+            -0.21130180350270916,
+            -0.2552973094230215,
+            -0.2718081320316722,
+            -0.28662583907608696,
+            -0.299422544082839,
+            -0.30989224092096673,
+            -0.3191181106017528,
+            -0.3240280066026407,
+            -0.32427621222911057,
+            -0.31961845492560864,
+            -0.31064541027986436,
+            -0.2972004556402404,
+            -0.27935918718309344,
+            -0.257290089452959,
+            -0.2367336014240254,
+            -0.21380182761582853,
+            -0.1887010068308938,
+            -0.16166783929120174,
+            -0.10288394109172733,
+            -0.0398209600112205,
+            -0.02990046962786713,
+            -0.019950207318470442,
+            -0.009980074623080462,
+            -1.2246467991473532e-16
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": true,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            0.0,
+            1.0,
+            2.0,
+            3.0
+        ],
+        "range": [
+            -0.09424777960769379,
+            3.235840433197487
+        ],
+        "domain": [
+            0.06856347817633907,
+            0.9931649168853893
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "0",
+            "1",
+            "2",
+            "3"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [],
+    "height": 384,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            -0.30000000000000004,
+            -0.2,
+            -0.1,
+            0.0,
+            0.1,
+            0.2,
+            0.30000000000000004
+        ],
+        "range": [
+            -0.34374699599774655,
+            0.3442206971607247
+        ],
+        "domain": [
+            0.0391878098571012,
+            0.989747375328084
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−0.3",
+            "−0.2",
+            "−0.1",
+            "0.0",
+            "0.1",
+            "0.2",
+            "0.3"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "legend": {
+        "yanchor": "auto",
+        "xanchor": "auto",
+        "bordercolor": "rgba(0, 0, 0, 1.000)",
+        "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
+        "font": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
+        "traceorder": "normal",
+        "x": 1.0
+    },
+    "width": 576
+}
+);
+
+    
+    </script>
+
 
 <hr />
 <p>Consider <span class="math">$\int_1^e \log(x)/x dx$</span>. There isn&#39;t really an &quot;inside&quot; function here, but instead just a tricky <span class="math">$\log(x)$</span>. If we let <span class="math">$u=\log(x)$</span>, what happens? We get <span class="math">$du = 1/x \cdot dx$</span>, which we see present in the original. So with this, we have:</p>
@@ -354,16 +666,16 @@ td(t) = \int_0^t s(u) du = \int_0^t \lvert v(u) \rvert du,
 
 <pre class='hljl'>
 <span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>*</span><span class='hljl-nf'>log</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>))</span><span class='hljl-t'>
-</span><span class='hljl-nf'>integrate</span><span class='hljl-p'>(</span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>e</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>Sym</span><span class='hljl-p'>(</span><span class='hljl-n'>e</span><span class='hljl-p'>)</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-p'>))</span>
+</span><span class='hljl-nf'>integrate</span><span class='hljl-p'>(</span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>sympy</span><span class='hljl-oB'>.</span><span class='hljl-n'>E</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>sympy</span><span class='hljl-oB'>.</span><span class='hljl-n'>E</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-p'>))</span>
 </pre>
 
 
 
-<div class="output">$0.693147180559945$
+<div class="output">$\log{\left(2 \right)}$
 </div>
 
-<p>&#40;We used <code>Sym&#40;e&#41;</code> - and not <code>e</code> - to avoid a conversion to floating point, which would yield an inexact answer.&#41;</p>
-<p>The antiderivative is interesting here:</p>
+<p>&#40;We used <code>sympy.E&#41;</code> - and not <code>e</code> - to avoid any conversion to floating point, which could yield an inexact answer.&#41;</p>
+<p>The antiderivative is interesting here; it being an <em>iterated</em> logarithm.</p>
 
 
 <pre class='hljl'>
@@ -375,22 +687,9 @@ td(t) = \int_0^t s(u) du = \int_0^t \lvert v(u) \rvert du,
 <div class="output">$\log{\left(\log{\left(x \right)} \right)}$
 </div>
 
-<p>The answer is an <em>iterated</em> logarithm.</p>
 <h3>Failures...</h3>
 <p>Not every integral problem lends itself to solution by substitution. For example, we can use substitution to evaluate the integral of <span class="math">$xe^{-x^2}$</span>, but for <span class="math">$e^{-x^2}$</span> or <span class="math">$x^2e^{-x^2}$</span>. The first has no familiar antiderivative, the second is done by a different technique.</p>
-<p>Even when substitution can be used, <code>SymPy</code> may not be able to algorithmically identify it. The algorithm used can determine if expressions involving rational functions, radicals, logarithms, and exponential functions is integrable. Missing from this list are absolute values, so something as simple as</p>
-
-
-<pre class='hljl'>
-<span class='hljl-nf'>integrate</span><span class='hljl-p'>(</span><span class='hljl-nf'>abs</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-p'>))</span>
-</pre>
-
-
-
-<div class="output">$4$
-</div>
-
-<p>is not found.</p>
+<p>Even when substitution can be used, <code>SymPy</code> may not be able to algorithmically identify it. The main algorithm used can determine if expressions involving rational functions, radicals, logarithms, and exponential functions is integrable. Missing from this list are absolute values.</p>
 <p>For such problems, we know how to help <code>SymPy</code> out - we can break the integral into pieces where we know the sign of the expression.</p>
 <p>For substitution problems, we can also help out. For example, find an antiderivative for</p>
 <p class="math">\[
@@ -540,41 +839,41 @@ td(t) = \int_0^t s(u) du = \int_0^t \lvert v(u) \rvert du,
 <p>For <span class="math">$\int \sin(x) \cos(x) dx$</span>, let <span class="math">$u=\sin(x)$</span>. What is the resulting substitution?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="e36UYF1O" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Zo2NYiyj" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_e36UYF1O" id="radio_e36UYF1O_1" value="1">
-  <label class="form-check-label" for="radio_e36UYF1O_1">
+  <input class="form-check-input" type="radio" name="radio_Zo2NYiyj" id="radio_Zo2NYiyj_1" value="1">
+  <label class="form-check-label" for="radio_Zo2NYiyj_1">
     &#36;\int u &#40;1 - u^2&#41; du&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_e36UYF1O" id="radio_e36UYF1O_2" value="2">
-  <label class="form-check-label" for="radio_e36UYF1O_2">
+  <input class="form-check-input" type="radio" name="radio_Zo2NYiyj" id="radio_Zo2NYiyj_2" value="2">
+  <label class="form-check-label" for="radio_Zo2NYiyj_2">
     &#36;\int u du&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_e36UYF1O" id="radio_e36UYF1O_3" value="3">
-  <label class="form-check-label" for="radio_e36UYF1O_3">
+  <input class="form-check-input" type="radio" name="radio_Zo2NYiyj" id="radio_Zo2NYiyj_3" value="3">
+  <label class="form-check-label" for="radio_Zo2NYiyj_3">
     &#36;\int u \cos&#40;x&#41; du&#36;
 
   </label>
 </div>
 
-<div id="e36UYF1O_message"></div>
+<div id="Zo2NYiyj_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_e36UYF1O']").on("change", function() {
+$("input:radio[name='radio_Zo2NYiyj']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#e36UYF1O_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#Zo2NYiyj_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#e36UYF1O_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#Zo2NYiyj_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -585,48 +884,48 @@ $("input:radio[name='radio_e36UYF1O']").on("change", function() {
 <p>For <span class="math">$\int \tan(x)^4 \sec(x)2 dx$</span> what <span class="math">$u$</span>-substitution makes this easy?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="GW8lFDCP" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="tNN6O3EG" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_GW8lFDCP" id="radio_GW8lFDCP_1" value="1">
-  <label class="form-check-label" for="radio_GW8lFDCP_1">
-    &#36;u&#61;\tan&#40;x&#41;^4&#36;
-
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_GW8lFDCP" id="radio_GW8lFDCP_2" value="2">
-  <label class="form-check-label" for="radio_GW8lFDCP_2">
+  <input class="form-check-input" type="radio" name="radio_tNN6O3EG" id="radio_tNN6O3EG_1" value="1">
+  <label class="form-check-label" for="radio_tNN6O3EG_1">
     &#36;u&#61;\tan&#40;x&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_GW8lFDCP" id="radio_GW8lFDCP_3" value="3">
-  <label class="form-check-label" for="radio_GW8lFDCP_3">
+  <input class="form-check-input" type="radio" name="radio_tNN6O3EG" id="radio_tNN6O3EG_2" value="2">
+  <label class="form-check-label" for="radio_tNN6O3EG_2">
+    &#36;u&#61;\sec&#40;x&#41;^2&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_tNN6O3EG" id="radio_tNN6O3EG_3" value="3">
+  <label class="form-check-label" for="radio_tNN6O3EG_3">
     &#36;u&#61;\sec&#40;x&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_GW8lFDCP" id="radio_GW8lFDCP_4" value="4">
-  <label class="form-check-label" for="radio_GW8lFDCP_4">
-    &#36;u&#61;\sec&#40;x&#41;^2&#36;
+  <input class="form-check-input" type="radio" name="radio_tNN6O3EG" id="radio_tNN6O3EG_4" value="4">
+  <label class="form-check-label" for="radio_tNN6O3EG_4">
+    &#36;u&#61;\tan&#40;x&#41;^4&#36;
 
   </label>
 </div>
 
-<div id="GW8lFDCP_message"></div>
+<div id="tNN6O3EG_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_GW8lFDCP']").on("change", function() {
-  correct = this.value == 2;
+$("input:radio[name='radio_tNN6O3EG']").on("change", function() {
+  correct = this.value == 1;
 
   if(correct) {
-     $("#GW8lFDCP_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#tNN6O3EG_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#GW8lFDCP_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#tNN6O3EG_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -637,48 +936,48 @@ $("input:radio[name='radio_GW8lFDCP']").on("change", function() {
 <p>For <span class="math">$\int x \sqrt{x^2 - 1} dx$</span> what <span class="math">$u$</span> substitution makes this easy?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="eCeVKge6" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="recG2poy" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_eCeVKge6" id="radio_eCeVKge6_1" value="1">
-  <label class="form-check-label" for="radio_eCeVKge6_1">
-    &#36;u&#61;x^2&#36;
-
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_eCeVKge6" id="radio_eCeVKge6_2" value="2">
-  <label class="form-check-label" for="radio_eCeVKge6_2">
-    &#36;u&#61;x^2 - 1&#36;
-
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_eCeVKge6" id="radio_eCeVKge6_3" value="3">
-  <label class="form-check-label" for="radio_eCeVKge6_3">
+  <input class="form-check-input" type="radio" name="radio_recG2poy" id="radio_recG2poy_1" value="1">
+  <label class="form-check-label" for="radio_recG2poy_1">
     &#36;u&#61;\sqrt&#123;x^2 - 1&#125;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_eCeVKge6" id="radio_eCeVKge6_4" value="4">
-  <label class="form-check-label" for="radio_eCeVKge6_4">
+  <input class="form-check-input" type="radio" name="radio_recG2poy" id="radio_recG2poy_2" value="2">
+  <label class="form-check-label" for="radio_recG2poy_2">
+    &#36;u&#61;x^2 - 1&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_recG2poy" id="radio_recG2poy_3" value="3">
+  <label class="form-check-label" for="radio_recG2poy_3">
+    &#36;u&#61;x^2&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_recG2poy" id="radio_recG2poy_4" value="4">
+  <label class="form-check-label" for="radio_recG2poy_4">
     &#36;u&#61;x&#36;
 
   </label>
 </div>
 
-<div id="eCeVKge6_message"></div>
+<div id="recG2poy_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_eCeVKge6']").on("change", function() {
+$("input:radio[name='radio_recG2poy']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#eCeVKge6_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#recG2poy_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#eCeVKge6_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#recG2poy_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -689,32 +988,32 @@ $("input:radio[name='radio_eCeVKge6']").on("change", function() {
 <p>For <span class="math">$\int x^2(1-x)^2 dx$</span> will the substitution <span class="math">$u=1-x$</span> prove effective?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Yt7fLHOC" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="akTIKKpY" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Yt7fLHOC" id="radio_Yt7fLHOC_1" value="1">
-  <label class="form-check-label" for="radio_Yt7fLHOC_1">
+  <input class="form-check-input" type="radio" name="radio_akTIKKpY" id="radio_akTIKKpY_1" value="1">
+  <label class="form-check-label" for="radio_akTIKKpY_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Yt7fLHOC" id="radio_Yt7fLHOC_2" value="2">
-  <label class="form-check-label" for="radio_Yt7fLHOC_2">
+  <input class="form-check-input" type="radio" name="radio_akTIKKpY" id="radio_akTIKKpY_2" value="2">
+  <label class="form-check-label" for="radio_akTIKKpY_2">
     No
   </label>
 </div>
 
-<div id="Yt7fLHOC_message"></div>
+<div id="akTIKKpY_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Yt7fLHOC']").on("change", function() {
+$("input:radio[name='radio_akTIKKpY']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#Yt7fLHOC_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#akTIKKpY_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Yt7fLHOC_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#akTIKKpY_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -724,32 +1023,32 @@ $("input:radio[name='radio_Yt7fLHOC']").on("change", function() {
 <p>What about expanding the factored polynomial to get a fourth degree polynomial, will this prove effective?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="ABf0T0Fl" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="wtsbB4MM" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ABf0T0Fl" id="radio_ABf0T0Fl_1" value="1">
-  <label class="form-check-label" for="radio_ABf0T0Fl_1">
+  <input class="form-check-input" type="radio" name="radio_wtsbB4MM" id="radio_wtsbB4MM_1" value="1">
+  <label class="form-check-label" for="radio_wtsbB4MM_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ABf0T0Fl" id="radio_ABf0T0Fl_2" value="2">
-  <label class="form-check-label" for="radio_ABf0T0Fl_2">
+  <input class="form-check-input" type="radio" name="radio_wtsbB4MM" id="radio_wtsbB4MM_2" value="2">
+  <label class="form-check-label" for="radio_wtsbB4MM_2">
     No
   </label>
 </div>
 
-<div id="ABf0T0Fl_message"></div>
+<div id="wtsbB4MM_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_ABf0T0Fl']").on("change", function() {
+$("input:radio[name='radio_wtsbB4MM']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#ABf0T0Fl_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#wtsbB4MM_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#ABf0T0Fl_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#wtsbB4MM_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -760,41 +1059,41 @@ $("input:radio[name='radio_ABf0T0Fl']").on("change", function() {
 <p>For  <span class="math">$\int (\log(x))^3/x dx$</span> the substitution <span class="math">$u=\log(x)$</span> reduces this to what?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="naFQ3ijb" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="PBQGZeXL" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_naFQ3ijb" id="radio_naFQ3ijb_1" value="1">
-  <label class="form-check-label" for="radio_naFQ3ijb_1">
-    &#36;\int u^3/x du&#36;
+  <input class="form-check-input" type="radio" name="radio_PBQGZeXL" id="radio_PBQGZeXL_1" value="1">
+  <label class="form-check-label" for="radio_PBQGZeXL_1">
+    &#36;\int u^3 du&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_naFQ3ijb" id="radio_naFQ3ijb_2" value="2">
-  <label class="form-check-label" for="radio_naFQ3ijb_2">
+  <input class="form-check-input" type="radio" name="radio_PBQGZeXL" id="radio_PBQGZeXL_2" value="2">
+  <label class="form-check-label" for="radio_PBQGZeXL_2">
     &#36;\int u du&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_naFQ3ijb" id="radio_naFQ3ijb_3" value="3">
-  <label class="form-check-label" for="radio_naFQ3ijb_3">
-    &#36;\int u^3 du&#36;
+  <input class="form-check-input" type="radio" name="radio_PBQGZeXL" id="radio_PBQGZeXL_3" value="3">
+  <label class="form-check-label" for="radio_PBQGZeXL_3">
+    &#36;\int u^3/x du&#36;
 
   </label>
 </div>
 
-<div id="naFQ3ijb_message"></div>
+<div id="PBQGZeXL_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_naFQ3ijb']").on("change", function() {
-  correct = this.value == 3;
+$("input:radio[name='radio_PBQGZeXL']").on("change", function() {
+  correct = this.value == 1;
 
   if(correct) {
-     $("#naFQ3ijb_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#PBQGZeXL_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#naFQ3ijb_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#PBQGZeXL_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -805,41 +1104,41 @@ $("input:radio[name='radio_naFQ3ijb']").on("change", function() {
 <p>For <span class="math">$\int \tan(x) dx$</span> what substitution will prove effective?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="8e1qI2aH" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="fglUqb36" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_8e1qI2aH" id="radio_8e1qI2aH_1" value="1">
-  <label class="form-check-label" for="radio_8e1qI2aH_1">
+  <input class="form-check-input" type="radio" name="radio_fglUqb36" id="radio_fglUqb36_1" value="1">
+  <label class="form-check-label" for="radio_fglUqb36_1">
+    &#36;u&#61;\sin&#40;x&#41;&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_fglUqb36" id="radio_fglUqb36_2" value="2">
+  <label class="form-check-label" for="radio_fglUqb36_2">
     &#36;u&#61;\cos&#40;x&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_8e1qI2aH" id="radio_8e1qI2aH_2" value="2">
-  <label class="form-check-label" for="radio_8e1qI2aH_2">
+  <input class="form-check-input" type="radio" name="radio_fglUqb36" id="radio_fglUqb36_3" value="3">
+  <label class="form-check-label" for="radio_fglUqb36_3">
     &#36;u&#61;\tan&#40;x&#41;&#36;
 
   </label>
 </div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_8e1qI2aH" id="radio_8e1qI2aH_3" value="3">
-  <label class="form-check-label" for="radio_8e1qI2aH_3">
-    &#36;u&#61;\sin&#40;x&#41;&#36;
 
-  </label>
-</div>
-
-<div id="8e1qI2aH_message"></div>
+<div id="fglUqb36_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_8e1qI2aH']").on("change", function() {
-  correct = this.value == 1;
+$("input:radio[name='radio_fglUqb36']").on("change", function() {
+  correct = this.value == 2;
 
   if(correct) {
-     $("#8e1qI2aH_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#fglUqb36_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#8e1qI2aH_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#fglUqb36_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -856,48 +1155,48 @@ $("input:radio[name='radio_8e1qI2aH']").on("change", function() {
 <p>What are <span class="math">$a$</span> and <span class="math">$b$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="7JBxAaUX" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="9D4EWnr5" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_7JBxAaUX" id="radio_7JBxAaUX_1" value="1">
-  <label class="form-check-label" for="radio_7JBxAaUX_1">
+  <input class="form-check-input" type="radio" name="radio_9D4EWnr5" id="radio_9D4EWnr5_1" value="1">
+  <label class="form-check-label" for="radio_9D4EWnr5_1">
     &#36;a&#61;1,~ b&#61;1&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_7JBxAaUX" id="radio_7JBxAaUX_2" value="2">
-  <label class="form-check-label" for="radio_7JBxAaUX_2">
-    &#36;a&#61;0,~ b&#61;1&#36;
-
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_7JBxAaUX" id="radio_7JBxAaUX_3" value="3">
-  <label class="form-check-label" for="radio_7JBxAaUX_3">
+  <input class="form-check-input" type="radio" name="radio_9D4EWnr5" id="radio_9D4EWnr5_2" value="2">
+  <label class="form-check-label" for="radio_9D4EWnr5_2">
     &#36;a&#61;0,~ b&#61;0&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_7JBxAaUX" id="radio_7JBxAaUX_4" value="4">
-  <label class="form-check-label" for="radio_7JBxAaUX_4">
+  <input class="form-check-input" type="radio" name="radio_9D4EWnr5" id="radio_9D4EWnr5_3" value="3">
+  <label class="form-check-label" for="radio_9D4EWnr5_3">
+    &#36;a&#61;0,~ b&#61;1&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_9D4EWnr5" id="radio_9D4EWnr5_4" value="4">
+  <label class="form-check-label" for="radio_9D4EWnr5_4">
     &#36;a&#61;1,~ b&#61;0&#36;
 
   </label>
 </div>
 
-<div id="7JBxAaUX_message"></div>
+<div id="9D4EWnr5_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_7JBxAaUX']").on("change", function() {
-  correct = this.value == 2;
+$("input:radio[name='radio_9D4EWnr5']").on("change", function() {
+  correct = this.value == 3;
 
   if(correct) {
-     $("#7JBxAaUX_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#9D4EWnr5_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#7JBxAaUX_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#9D4EWnr5_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -908,48 +1207,48 @@ $("input:radio[name='radio_7JBxAaUX']").on("change", function() {
 <p>The integral <span class="math">$\int \sqrt{1 - x^2} dx$</span> lends itself to what substitution?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="cYEz2UpD" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="uaLzSdpg" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_cYEz2UpD" id="radio_cYEz2UpD_1" value="1">
-  <label class="form-check-label" for="radio_cYEz2UpD_1">
+  <input class="form-check-input" type="radio" name="radio_uaLzSdpg" id="radio_uaLzSdpg_1" value="1">
+  <label class="form-check-label" for="radio_uaLzSdpg_1">
     &#36;\sin&#40;u&#41; &#61; x&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_cYEz2UpD" id="radio_cYEz2UpD_2" value="2">
-  <label class="form-check-label" for="radio_cYEz2UpD_2">
-    &#36;u &#61; 1 - x^2&#36;
-
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_cYEz2UpD" id="radio_cYEz2UpD_3" value="3">
-  <label class="form-check-label" for="radio_cYEz2UpD_3">
+  <input class="form-check-input" type="radio" name="radio_uaLzSdpg" id="radio_uaLzSdpg_2" value="2">
+  <label class="form-check-label" for="radio_uaLzSdpg_2">
     &#36;\tan&#40;u&#41; &#61; x&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_cYEz2UpD" id="radio_cYEz2UpD_4" value="4">
-  <label class="form-check-label" for="radio_cYEz2UpD_4">
+  <input class="form-check-input" type="radio" name="radio_uaLzSdpg" id="radio_uaLzSdpg_3" value="3">
+  <label class="form-check-label" for="radio_uaLzSdpg_3">
     &#36;\sec&#40;u&#41; &#61; x&#36;
 
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_uaLzSdpg" id="radio_uaLzSdpg_4" value="4">
+  <label class="form-check-label" for="radio_uaLzSdpg_4">
+    &#36;u &#61; 1 - x^2&#36;
 
-<div id="cYEz2UpD_message"></div>
+  </label>
+</div>
+
+<div id="uaLzSdpg_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_cYEz2UpD']").on("change", function() {
+$("input:radio[name='radio_uaLzSdpg']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#cYEz2UpD_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#uaLzSdpg_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#cYEz2UpD_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#uaLzSdpg_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -960,48 +1259,48 @@ $("input:radio[name='radio_cYEz2UpD']").on("change", function() {
 <p>The integral <span class="math">$\int x/(1+x^2) dx$</span> lends itself to what substitution?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Rq3aHgWh" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="YiJYGrLa" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Rq3aHgWh" id="radio_Rq3aHgWh_1" value="1">
-  <label class="form-check-label" for="radio_Rq3aHgWh_1">
-    &#36;\sin&#40;u&#41; &#61; x&#36;
+  <input class="form-check-input" type="radio" name="radio_YiJYGrLa" id="radio_YiJYGrLa_1" value="1">
+  <label class="form-check-label" for="radio_YiJYGrLa_1">
+    &#36;u &#61; 1 &#43; x^2&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Rq3aHgWh" id="radio_Rq3aHgWh_2" value="2">
-  <label class="form-check-label" for="radio_Rq3aHgWh_2">
-    &#36;\sec&#40;u&#41; &#61; x&#36;
-
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Rq3aHgWh" id="radio_Rq3aHgWh_3" value="3">
-  <label class="form-check-label" for="radio_Rq3aHgWh_3">
+  <input class="form-check-input" type="radio" name="radio_YiJYGrLa" id="radio_YiJYGrLa_2" value="2">
+  <label class="form-check-label" for="radio_YiJYGrLa_2">
     &#36;\tan&#40;u&#41; &#61; x&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Rq3aHgWh" id="radio_Rq3aHgWh_4" value="4">
-  <label class="form-check-label" for="radio_Rq3aHgWh_4">
-    &#36;u &#61; 1 &#43; x^2&#36;
+  <input class="form-check-input" type="radio" name="radio_YiJYGrLa" id="radio_YiJYGrLa_3" value="3">
+  <label class="form-check-label" for="radio_YiJYGrLa_3">
+    &#36;\sin&#40;u&#41; &#61; x&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_YiJYGrLa" id="radio_YiJYGrLa_4" value="4">
+  <label class="form-check-label" for="radio_YiJYGrLa_4">
+    &#36;\sec&#40;u&#41; &#61; x&#36;
 
   </label>
 </div>
 
-<div id="Rq3aHgWh_message"></div>
+<div id="YiJYGrLa_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Rq3aHgWh']").on("change", function() {
-  correct = this.value == 4;
+$("input:radio[name='radio_YiJYGrLa']").on("change", function() {
+  correct = this.value == 1;
 
   if(correct) {
-     $("#Rq3aHgWh_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#YiJYGrLa_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Rq3aHgWh_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#YiJYGrLa_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1012,48 +1311,48 @@ $("input:radio[name='radio_Rq3aHgWh']").on("change", function() {
 <p>The integral <span class="math">$\int dx / \sqrt{1 - x^2}$</span> lends itself to what substitution?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="TY8vNZUU" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="uSTt3EPg" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TY8vNZUU" id="radio_TY8vNZUU_1" value="1">
-  <label class="form-check-label" for="radio_TY8vNZUU_1">
-    &#36;\sin&#40;u&#41; &#61; x&#36;
-
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TY8vNZUU" id="radio_TY8vNZUU_2" value="2">
-  <label class="form-check-label" for="radio_TY8vNZUU_2">
+  <input class="form-check-input" type="radio" name="radio_uSTt3EPg" id="radio_uSTt3EPg_1" value="1">
+  <label class="form-check-label" for="radio_uSTt3EPg_1">
     &#36;u &#61; 1 - x^2&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TY8vNZUU" id="radio_TY8vNZUU_3" value="3">
-  <label class="form-check-label" for="radio_TY8vNZUU_3">
-    &#36;\tan&#40;u&#41; &#61; x&#36;
-
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TY8vNZUU" id="radio_TY8vNZUU_4" value="4">
-  <label class="form-check-label" for="radio_TY8vNZUU_4">
+  <input class="form-check-input" type="radio" name="radio_uSTt3EPg" id="radio_uSTt3EPg_2" value="2">
+  <label class="form-check-label" for="radio_uSTt3EPg_2">
     &#36;\sec&#40;u&#41; &#61; x&#36;
 
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_uSTt3EPg" id="radio_uSTt3EPg_3" value="3">
+  <label class="form-check-label" for="radio_uSTt3EPg_3">
+    &#36;\sin&#40;u&#41; &#61; x&#36;
 
-<div id="TY8vNZUU_message"></div>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_uSTt3EPg" id="radio_uSTt3EPg_4" value="4">
+  <label class="form-check-label" for="radio_uSTt3EPg_4">
+    &#36;\tan&#40;u&#41; &#61; x&#36;
+
+  </label>
+</div>
+
+<div id="uSTt3EPg_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_TY8vNZUU']").on("change", function() {
-  correct = this.value == 1;
+$("input:radio[name='radio_uSTt3EPg']").on("change", function() {
+  correct = this.value == 3;
 
   if(correct) {
-     $("#TY8vNZUU_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#uSTt3EPg_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#TY8vNZUU_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#uSTt3EPg_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1064,48 +1363,48 @@ $("input:radio[name='radio_TY8vNZUU']").on("change", function() {
 <p>The integral <span class="math">$\int dx / \sqrt{x^2 - 16}$</span> lends itself to what substitution?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="AvV9AQiS" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="1ENg3GkP" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_AvV9AQiS" id="radio_AvV9AQiS_1" value="1">
-  <label class="form-check-label" for="radio_AvV9AQiS_1">
-    &#36;4\sin&#40;u&#41; &#61; x&#36;
+  <input class="form-check-input" type="radio" name="radio_1ENg3GkP" id="radio_1ENg3GkP_1" value="1">
+  <label class="form-check-label" for="radio_1ENg3GkP_1">
+    &#36;\sec&#40;u&#41; &#61; x&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_AvV9AQiS" id="radio_AvV9AQiS_2" value="2">
-  <label class="form-check-label" for="radio_AvV9AQiS_2">
+  <input class="form-check-input" type="radio" name="radio_1ENg3GkP" id="radio_1ENg3GkP_2" value="2">
+  <label class="form-check-label" for="radio_1ENg3GkP_2">
     &#36;4\sec&#40;u&#41; &#61; x&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_AvV9AQiS" id="radio_AvV9AQiS_3" value="3">
-  <label class="form-check-label" for="radio_AvV9AQiS_3">
+  <input class="form-check-input" type="radio" name="radio_1ENg3GkP" id="radio_1ENg3GkP_3" value="3">
+  <label class="form-check-label" for="radio_1ENg3GkP_3">
     &#36;\sin&#40;u&#41; &#61; x&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_AvV9AQiS" id="radio_AvV9AQiS_4" value="4">
-  <label class="form-check-label" for="radio_AvV9AQiS_4">
-    &#36;\sec&#40;u&#41; &#61; x&#36;
+  <input class="form-check-input" type="radio" name="radio_1ENg3GkP" id="radio_1ENg3GkP_4" value="4">
+  <label class="form-check-label" for="radio_1ENg3GkP_4">
+    &#36;4\sin&#40;u&#41; &#61; x&#36;
 
   </label>
 </div>
 
-<div id="AvV9AQiS_message"></div>
+<div id="1ENg3GkP_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_AvV9AQiS']").on("change", function() {
+$("input:radio[name='radio_1ENg3GkP']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#AvV9AQiS_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#1ENg3GkP_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#AvV9AQiS_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#1ENg3GkP_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1116,48 +1415,48 @@ $("input:radio[name='radio_AvV9AQiS']").on("change", function() {
 <p>The integral <span class="math">$\int dx / (a^2 + x^2)$</span> lends itself to what substitution?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="G7bk2goo" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="dT7SY9eE" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_G7bk2goo" id="radio_G7bk2goo_1" value="1">
-  <label class="form-check-label" for="radio_G7bk2goo_1">
+  <input class="form-check-input" type="radio" name="radio_dT7SY9eE" id="radio_dT7SY9eE_1" value="1">
+  <label class="form-check-label" for="radio_dT7SY9eE_1">
+    &#36;a\sec&#40;u&#41; &#61; x&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_dT7SY9eE" id="radio_dT7SY9eE_2" value="2">
+  <label class="form-check-label" for="radio_dT7SY9eE_2">
     &#36;\sec&#40;u&#41; &#61; x&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_G7bk2goo" id="radio_G7bk2goo_2" value="2">
-  <label class="form-check-label" for="radio_G7bk2goo_2">
+  <input class="form-check-input" type="radio" name="radio_dT7SY9eE" id="radio_dT7SY9eE_3" value="3">
+  <label class="form-check-label" for="radio_dT7SY9eE_3">
     &#36;\tan&#40;u&#41; &#61; x&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_G7bk2goo" id="radio_G7bk2goo_3" value="3">
-  <label class="form-check-label" for="radio_G7bk2goo_3">
+  <input class="form-check-input" type="radio" name="radio_dT7SY9eE" id="radio_dT7SY9eE_4" value="4">
+  <label class="form-check-label" for="radio_dT7SY9eE_4">
     &#36;\tan&#40;u&#41; &#61; x&#36;
 
   </label>
 </div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_G7bk2goo" id="radio_G7bk2goo_4" value="4">
-  <label class="form-check-label" for="radio_G7bk2goo_4">
-    &#36;a\sec&#40;u&#41; &#61; x&#36;
 
-  </label>
-</div>
-
-<div id="G7bk2goo_message"></div>
+<div id="dT7SY9eE_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_G7bk2goo']").on("change", function() {
-  correct = this.value == 2;
+$("input:radio[name='radio_dT7SY9eE']").on("change", function() {
+  correct = this.value == 3;
 
   if(correct) {
-     $("#G7bk2goo_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#dT7SY9eE_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#G7bk2goo_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#dT7SY9eE_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1174,48 +1473,48 @@ $("input:radio[name='radio_G7bk2goo']").on("change", function() {
 <p>What are <span class="math">$a$</span> and <span class="math">$b$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="d2pVG9Bj" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="AiP8ePSq" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_d2pVG9Bj" id="radio_d2pVG9Bj_1" value="1">
-  <label class="form-check-label" for="radio_d2pVG9Bj_1">
-    &#36;a&#61;\pi/6,~ b&#61;\pi/2&#36;
-
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_d2pVG9Bj" id="radio_d2pVG9Bj_2" value="2">
-  <label class="form-check-label" for="radio_d2pVG9Bj_2">
-    &#36;a&#61;1/2,~ b&#61; 1&#36;
-
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_d2pVG9Bj" id="radio_d2pVG9Bj_3" value="3">
-  <label class="form-check-label" for="radio_d2pVG9Bj_3">
+  <input class="form-check-input" type="radio" name="radio_AiP8ePSq" id="radio_AiP8ePSq_1" value="1">
+  <label class="form-check-label" for="radio_AiP8ePSq_1">
     &#36;a&#61;\pi/4,~ b&#61;\pi/2&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_d2pVG9Bj" id="radio_d2pVG9Bj_4" value="4">
-  <label class="form-check-label" for="radio_d2pVG9Bj_4">
+  <input class="form-check-input" type="radio" name="radio_AiP8ePSq" id="radio_AiP8ePSq_2" value="2">
+  <label class="form-check-label" for="radio_AiP8ePSq_2">
     &#36;a&#61;\pi/3,~ b&#61;\pi/2&#36;
 
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_AiP8ePSq" id="radio_AiP8ePSq_3" value="3">
+  <label class="form-check-label" for="radio_AiP8ePSq_3">
+    &#36;a&#61;1/2,~ b&#61; 1&#36;
 
-<div id="d2pVG9Bj_message"></div>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_AiP8ePSq" id="radio_AiP8ePSq_4" value="4">
+  <label class="form-check-label" for="radio_AiP8ePSq_4">
+    &#36;a&#61;\pi/6,~ b&#61;\pi/2&#36;
+
+  </label>
+</div>
+
+<div id="AiP8ePSq_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_d2pVG9Bj']").on("change", function() {
-  correct = this.value == 1;
+$("input:radio[name='radio_AiP8ePSq']").on("change", function() {
+  correct = this.value == 4;
 
   if(correct) {
-     $("#d2pVG9Bj_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#AiP8ePSq_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#d2pVG9Bj_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#AiP8ePSq_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1226,39 +1525,37 @@ $("input:radio[name='radio_d2pVG9Bj']").on("change", function() {
 <p>How would we verify that <span class="math">$\log\lvert (\sec(u) + \tan(u))\rvert$</span> is an antiderivative for <span class="math">$\sec(u)$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="8DON8rAP" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="KrTtZW68" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_8DON8rAP" id="radio_8DON8rAP_1" value="1">
-  <label class="form-check-label" for="radio_8DON8rAP_1">
-    We could differentiate &#36;\log\lvert &#40;\sec&#40;u&#41; &#43; \tan&#40;u&#41;&#41;\rvert&#36; 
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_8DON8rAP" id="radio_8DON8rAP_2" value="2">
-  <label class="form-check-label" for="radio_8DON8rAP_2">
+  <input class="form-check-input" type="radio" name="radio_KrTtZW68" id="radio_KrTtZW68_1" value="1">
+  <label class="form-check-label" for="radio_KrTtZW68_1">
     We could differentiate &#36;\sec&#40;u&#41;&#36;.
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_KrTtZW68" id="radio_KrTtZW68_2" value="2">
+  <label class="form-check-label" for="radio_KrTtZW68_2">
+    We could differentiate &#36;\log\lvert &#40;\sec&#40;u&#41; &#43; \tan&#40;u&#41;&#41;\rvert&#36; 
+  </label>
+</div>
 
-<div id="8DON8rAP_message"></div>
+<div id="KrTtZW68_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_8DON8rAP']").on("change", function() {
-  correct = this.value == 1;
+$("input:radio[name='radio_KrTtZW68']").on("change", function() {
+  correct = this.value == 2;
 
   if(correct) {
-     $("#8DON8rAP_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#KrTtZW68_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#8DON8rAP_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#KrTtZW68_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
 </script>
 
-
-<hr />
 
 
 <div class="card" style="">
@@ -1271,7 +1568,7 @@ $("input:radio[name='radio_8DON8rAP']").on("change", function() {
 
 &nbsp;
 
-<a href="../integrals/integrals_by_parts.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Next section" aria-label="Next section">
+<a href="../integrals/integration_by_parts.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Next section" aria-label="Next section">
 <i class="bi bi-arrow-right-circle-fill"></i>
 </a>
 

@@ -272,6 +272,7 @@ As seen, the computation of the center of mass in the $y$ direction has an ident
 
 ##### Example
 
+
 More generally, consider a right triangle with vertices $(0,0)$, $(0,a)$, and $(b,0)$. The center of mass of this can be computed with the help of the equation for the line that forms the hypotenuse: $x/b + y/a = 1$. We find the center of mass symbolically in the $y$ variable by solving for $x$ in terms of $y$, then integrating from $0$ to $a$:
 
 ```julia;
@@ -515,7 +516,6 @@ numericq(val)
 ```
 
 
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

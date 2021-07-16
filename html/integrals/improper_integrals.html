@@ -186,7 +186,7 @@ $( document ).ready(function() {
 
 <h2>Infinite domains</h2>
 <p>Let <span class="math">$f(x)$</span> be a reasonable function, so reasonable that for any <span class="math">$a < b$</span> the function is Riemann integrable, meaning <span class="math">$\int_a^b f(x)dx$</span> exists.</p>
-<p>What needs to be the case so that we can discuss the limit over the entire real number line?</p>
+<p>What needs to be the case so that we can discuss the integral over the entire real number line?</p>
 <p>Clearly something. The function <span class="math">$f(x) = 1$</span> is reasonable by the idea above. Clearly the integral over and <span class="math">$[a,b]$</span> is just <span class="math">$b-a$</span>, but the limit over an unbounded domain would be <span class="math">$\infty$</span>. Even though limits of infinity can be of interest in some cases, not so here. What will ensure that the area is finite over an infinite region?</p>
 <p>Or is that even the right question. Now consider <span class="math">$f(x) = \sin(\pi x)$</span>. Over every interval of the type <span class="math">$[-2n, 2n]$</span> the area is <span class="math">$0$</span>, and over any interval, <span class="math">$[a,b]$</span> the area never gets bigger than <span class="math">$2$</span>. But still this function does not have a well defined area on an infinite domain.</p>
 <p>The right question involves a limit. Fix a finite <span class="math">$a$</span>. We define the definite integral over <span class="math">$[a,\infty)$</span> to be</p>
@@ -323,7 +323,7 @@ $( document ).ready(function() {
 \]</p>
 
 
-<div class="alert alert-info" role="alert"><div class="markdown"><p>The cases &#36;f&#40;x&#41; &#61; x^&#123;-n&#125;&#36; for &#36;n &gt; 0&#36; are tricky. For &#36;n &gt; 1&#36;, the functions can be integrated over &#36;&#91;1,\infty&#41;&#36;, but not &#36;&#40;0,1&#93;&#36;. For &#36;0 &lt; n &lt; 1&#36;, the functions can be integrated over &#36;&#40;0,1&#93;&#36; but not &#36;&#91;1, \infty&#41;&#36;.</p>
+<div class="alert alert-info" role="alert"><div class="markdown"><p>The cases &#36;f&#40;x&#41; &#61; x^&#123;-n&#125;&#36; for &#36;n &gt; 0&#36; are tricky to keep straight. For &#36;n &gt; 1&#36;, the functions can be integrated over &#36;&#91;1,\infty&#41;&#36;, but not &#36;&#40;0,1&#93;&#36;. For &#36;0 &lt; n &lt; 1&#36;, the functions can be integrated over &#36;&#40;0,1&#93;&#36; but not &#36;&#91;1, \infty&#41;&#36;.</p>
 </div></div>
 
 <ul>
@@ -339,7 +339,7 @@ $( document ).ready(function() {
 \]</p>
 <p>As the limit does not exist, the function is not integrable around <span class="math">$0$</span>.</p>
 <ul>
-<li><p><code>SymPy</code> may give answers which do not coincide with our definitions, as it uses complex numbers as a default assumption. In this case it returns <code>NaN</code> for an integral with no answer:</p>
+<li><p><code>SymPy</code> may give answers which do not coincide with our definitions, as it uses complex numbers as a default assumption. In this case it returns the proper answer when integrated from <span class="math">$0$</span> to <span class="math">$q1$</span> and <code>NaN</code> for an integral over <span class="math">$(-1,1)$</span>:</p>
 </li>
 </ul>
 
@@ -347,13 +347,14 @@ $( document ).ready(function() {
 <pre class='hljl'>
 <span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>SymPy</span><span class='hljl-t'>
 </span><span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'>
-</span><span class='hljl-nf'>integrate</span><span class='hljl-p'>(</span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>))</span>
+</span><span class='hljl-nf'>integrate</span><span class='hljl-p'>(</span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>)),</span><span class='hljl-t'> </span><span class='hljl-nf'>integrate</span><span class='hljl-p'>(</span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>))</span>
 </pre>
 
 
+<pre class="output">
+&#40;oo, nan&#41;
+</pre>
 
-<div class="output">$\text{NaN}$
-</div>
 
 <ul>
 <li><p>Suppose you know <span class="math">$\int_1^\infty x^2 f(x) dx$</span> exists. Does this imply <span class="math">$\int_0^1 f(1/x) dx$</span> exists?</p>
@@ -404,6 +405,7 @@ $( document ).ready(function() {
 \int_{-\infty}^\infty f(x) dx = \int_a^b \frac{1}{b-a} dx = 1.
 ~
 \]</p>
+<p>&#40;One might also comment that <span class="math">$f$</span> is Riemann integrable on any <span class="math">$[0,M]$</span> despite being discontinuous at <span class="math">$a$</span> and <span class="math">$b$</span>.&#41;</p>
 <ul>
 <li><p>Show that if <span class="math">$f(x)$</span> is a probability density then so is <span class="math">$f(x-c)$</span> for any <span class="math">$c$</span>.</p>
 </li>
@@ -436,32 +438,32 @@ $( document ).ready(function() {
 <p>Is <span class="math">$f(x) = 1/x^{100}$</span> integrable around <span class="math">$0$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="7LC3oPZS" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="ASR4Bu17" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_7LC3oPZS" id="radio_7LC3oPZS_1" value="1">
-  <label class="form-check-label" for="radio_7LC3oPZS_1">
+  <input class="form-check-input" type="radio" name="radio_ASR4Bu17" id="radio_ASR4Bu17_1" value="1">
+  <label class="form-check-label" for="radio_ASR4Bu17_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_7LC3oPZS" id="radio_7LC3oPZS_2" value="2">
-  <label class="form-check-label" for="radio_7LC3oPZS_2">
+  <input class="form-check-input" type="radio" name="radio_ASR4Bu17" id="radio_ASR4Bu17_2" value="2">
+  <label class="form-check-label" for="radio_ASR4Bu17_2">
     No
   </label>
 </div>
 
-<div id="7LC3oPZS_message"></div>
+<div id="ASR4Bu17_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_7LC3oPZS']").on("change", function() {
+$("input:radio[name='radio_ASR4Bu17']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#7LC3oPZS_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#ASR4Bu17_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#7LC3oPZS_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#ASR4Bu17_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -472,32 +474,32 @@ $("input:radio[name='radio_7LC3oPZS']").on("change", function() {
 <p>Is <span class="math">$f(x) = 1/x^{1/3}$</span> integrable around <span class="math">$0$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="4peA5WdN" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Mn0WsIWt" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_4peA5WdN" id="radio_4peA5WdN_1" value="1">
-  <label class="form-check-label" for="radio_4peA5WdN_1">
+  <input class="form-check-input" type="radio" name="radio_Mn0WsIWt" id="radio_Mn0WsIWt_1" value="1">
+  <label class="form-check-label" for="radio_Mn0WsIWt_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_4peA5WdN" id="radio_4peA5WdN_2" value="2">
-  <label class="form-check-label" for="radio_4peA5WdN_2">
+  <input class="form-check-input" type="radio" name="radio_Mn0WsIWt" id="radio_Mn0WsIWt_2" value="2">
+  <label class="form-check-label" for="radio_Mn0WsIWt_2">
     No
   </label>
 </div>
 
-<div id="4peA5WdN_message"></div>
+<div id="Mn0WsIWt_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_4peA5WdN']").on("change", function() {
+$("input:radio[name='radio_Mn0WsIWt']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#4peA5WdN_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#Mn0WsIWt_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#4peA5WdN_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#Mn0WsIWt_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -508,32 +510,32 @@ $("input:radio[name='radio_4peA5WdN']").on("change", function() {
 <p>Is <span class="math">$f(x) = x\cdot\log(x)$</span> integrable on <span class="math">$[1,\infty)$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="VRUXvo5y" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="EPuSErqL" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_VRUXvo5y" id="radio_VRUXvo5y_1" value="1">
-  <label class="form-check-label" for="radio_VRUXvo5y_1">
+  <input class="form-check-input" type="radio" name="radio_EPuSErqL" id="radio_EPuSErqL_1" value="1">
+  <label class="form-check-label" for="radio_EPuSErqL_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_VRUXvo5y" id="radio_VRUXvo5y_2" value="2">
-  <label class="form-check-label" for="radio_VRUXvo5y_2">
+  <input class="form-check-input" type="radio" name="radio_EPuSErqL" id="radio_EPuSErqL_2" value="2">
+  <label class="form-check-label" for="radio_EPuSErqL_2">
     No
   </label>
 </div>
 
-<div id="VRUXvo5y_message"></div>
+<div id="EPuSErqL_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_VRUXvo5y']").on("change", function() {
+$("input:radio[name='radio_EPuSErqL']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#VRUXvo5y_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#EPuSErqL_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#VRUXvo5y_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#EPuSErqL_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -544,32 +546,32 @@ $("input:radio[name='radio_VRUXvo5y']").on("change", function() {
 <p>Is <span class="math">$f(x) = \log(x)/ x$</span> integrable on <span class="math">$[1,\infty)$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Rkqdx3eo" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="HsUJ9NGj" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Rkqdx3eo" id="radio_Rkqdx3eo_1" value="1">
-  <label class="form-check-label" for="radio_Rkqdx3eo_1">
+  <input class="form-check-input" type="radio" name="radio_HsUJ9NGj" id="radio_HsUJ9NGj_1" value="1">
+  <label class="form-check-label" for="radio_HsUJ9NGj_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Rkqdx3eo" id="radio_Rkqdx3eo_2" value="2">
-  <label class="form-check-label" for="radio_Rkqdx3eo_2">
+  <input class="form-check-input" type="radio" name="radio_HsUJ9NGj" id="radio_HsUJ9NGj_2" value="2">
+  <label class="form-check-label" for="radio_HsUJ9NGj_2">
     No
   </label>
 </div>
 
-<div id="Rkqdx3eo_message"></div>
+<div id="HsUJ9NGj_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Rkqdx3eo']").on("change", function() {
+$("input:radio[name='radio_HsUJ9NGj']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#Rkqdx3eo_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#HsUJ9NGj_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Rkqdx3eo_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#HsUJ9NGj_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -580,32 +582,32 @@ $("input:radio[name='radio_Rkqdx3eo']").on("change", function() {
 <p>Is <span class="math">$f(x) = \log(x)$</span> integrable on <span class="math">$[1,\infty)$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="0JmDh5s6" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Xkt9QQSv" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_0JmDh5s6" id="radio_0JmDh5s6_1" value="1">
-  <label class="form-check-label" for="radio_0JmDh5s6_1">
+  <input class="form-check-input" type="radio" name="radio_Xkt9QQSv" id="radio_Xkt9QQSv_1" value="1">
+  <label class="form-check-label" for="radio_Xkt9QQSv_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_0JmDh5s6" id="radio_0JmDh5s6_2" value="2">
-  <label class="form-check-label" for="radio_0JmDh5s6_2">
+  <input class="form-check-input" type="radio" name="radio_Xkt9QQSv" id="radio_Xkt9QQSv_2" value="2">
+  <label class="form-check-label" for="radio_Xkt9QQSv_2">
     No
   </label>
 </div>
 
-<div id="0JmDh5s6_message"></div>
+<div id="Xkt9QQSv_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_0JmDh5s6']").on("change", function() {
+$("input:radio[name='radio_Xkt9QQSv']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#0JmDh5s6_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#Xkt9QQSv_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#0JmDh5s6_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#Xkt9QQSv_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -616,29 +618,29 @@ $("input:radio[name='radio_0JmDh5s6']").on("change", function() {
 <p>Compute the integral <span class="math">$\int_0^\infty 1/(1+x^2) dx$</span>.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='6adbwRDD' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='cYI4mr8X' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="6adbwRDD" type="number" class="form-control" placeholder="Numeric answer">
-<label for="6adbwRDD">Numeric answer</label>
+<input id="cYI4mr8X" type="number" class="form-control" placeholder="Numeric answer">
+<label for="cYI4mr8X">Numeric answer</label>
 
 </div>
 
-<div id='6adbwRDD_message'></div>
+<div id='cYI4mr8X_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#6adbwRDD').on('change', function() {
+$('#cYI4mr8X').on('change', function() {
   correct = Math.abs(this.value - 1.5707963267948966) <= 0.001;
 
   if(correct) {
-     $('#6adbwRDD_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#cYI4mr8X_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#6adbwRDD_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#cYI4mr8X_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -648,29 +650,29 @@ $('#6adbwRDD').on('change', function() {
 <p>Compute the the integral <span class="math">$\int_1^\infty \log(x)/x^2 dx$</span>.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='Q98QG1UN' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='OyJlODmB' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="Q98QG1UN" type="number" class="form-control" placeholder="Numeric answer">
-<label for="Q98QG1UN">Numeric answer</label>
+<input id="OyJlODmB" type="number" class="form-control" placeholder="Numeric answer">
+<label for="OyJlODmB">Numeric answer</label>
 
 </div>
 
-<div id='Q98QG1UN_message'></div>
+<div id='OyJlODmB_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#Q98QG1UN').on('change', function() {
+$('#OyJlODmB').on('change', function() {
   correct = Math.abs(this.value - 0.999999998385741) <= 0.001;
 
   if(correct) {
-     $('#Q98QG1UN_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#OyJlODmB_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#Q98QG1UN_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#OyJlODmB_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -680,29 +682,29 @@ $('#Q98QG1UN').on('change', function() {
 <p>Compute the integral <span class="math">$\int_0^2 (x-1)^{2/3} dx$</span>.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='A10RoyNX' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='KNKkOMdC' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="A10RoyNX" type="number" class="form-control" placeholder="Numeric answer">
-<label for="A10RoyNX">Numeric answer</label>
+<input id="KNKkOMdC" type="number" class="form-control" placeholder="Numeric answer">
+<label for="KNKkOMdC">Numeric answer</label>
 
 </div>
 
-<div id='A10RoyNX_message'></div>
+<div id='KNKkOMdC_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#A10RoyNX').on('change', function() {
+$('#KNKkOMdC').on('change', function() {
   correct = Math.abs(this.value - 1.2000000004723115) <= 0.001;
 
   if(correct) {
-     $('#A10RoyNX_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#KNKkOMdC_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#A10RoyNX_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#KNKkOMdC_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -720,38 +722,38 @@ $('#A10RoyNX').on('change', function() {
 <p>What can you say about <span class="math">$\int_1^\infty f(x) dx$</span>, as <span class="math">$f(x) \leq 1/x^2$</span> on <span class="math">$[1, \infty)$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Jka6px2W" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="WQLzyvUc" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Jka6px2W" id="radio_Jka6px2W_1" value="1">
-  <label class="form-check-label" for="radio_Jka6px2W_1">
+  <input class="form-check-input" type="radio" name="radio_WQLzyvUc" id="radio_WQLzyvUc_1" value="1">
+  <label class="form-check-label" for="radio_WQLzyvUc_1">
     It is convergent
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Jka6px2W" id="radio_Jka6px2W_2" value="2">
-  <label class="form-check-label" for="radio_Jka6px2W_2">
+  <input class="form-check-input" type="radio" name="radio_WQLzyvUc" id="radio_WQLzyvUc_2" value="2">
+  <label class="form-check-label" for="radio_WQLzyvUc_2">
     It is divergent
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Jka6px2W" id="radio_Jka6px2W_3" value="3">
-  <label class="form-check-label" for="radio_Jka6px2W_3">
+  <input class="form-check-input" type="radio" name="radio_WQLzyvUc" id="radio_WQLzyvUc_3" value="3">
+  <label class="form-check-label" for="radio_WQLzyvUc_3">
     Can&#39;t say
   </label>
 </div>
 
-<div id="Jka6px2W_message"></div>
+<div id="WQLzyvUc_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Jka6px2W']").on("change", function() {
+$("input:radio[name='radio_WQLzyvUc']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#Jka6px2W_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#WQLzyvUc_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Jka6px2W_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#WQLzyvUc_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -763,38 +765,38 @@ $("input:radio[name='radio_Jka6px2W']").on("change", function() {
 <p>What can you say about <span class="math">$\int_1^\infty f(x) dx$</span>, as <span class="math">$f(x) \leq 1/x$</span> on <span class="math">$[1, \infty)$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="3XGPm3Os" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="jOKkrNBz" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_3XGPm3Os" id="radio_3XGPm3Os_1" value="1">
-  <label class="form-check-label" for="radio_3XGPm3Os_1">
+  <input class="form-check-input" type="radio" name="radio_jOKkrNBz" id="radio_jOKkrNBz_1" value="1">
+  <label class="form-check-label" for="radio_jOKkrNBz_1">
     It is convergent
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_3XGPm3Os" id="radio_3XGPm3Os_2" value="2">
-  <label class="form-check-label" for="radio_3XGPm3Os_2">
+  <input class="form-check-input" type="radio" name="radio_jOKkrNBz" id="radio_jOKkrNBz_2" value="2">
+  <label class="form-check-label" for="radio_jOKkrNBz_2">
     It is divergent
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_3XGPm3Os" id="radio_3XGPm3Os_3" value="3">
-  <label class="form-check-label" for="radio_3XGPm3Os_3">
+  <input class="form-check-input" type="radio" name="radio_jOKkrNBz" id="radio_jOKkrNBz_3" value="3">
+  <label class="form-check-label" for="radio_jOKkrNBz_3">
     Can&#39;t say
   </label>
 </div>
 
-<div id="3XGPm3Os_message"></div>
+<div id="jOKkrNBz_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_3XGPm3Os']").on("change", function() {
+$("input:radio[name='radio_jOKkrNBz']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#3XGPm3Os_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#jOKkrNBz_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#3XGPm3Os_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#jOKkrNBz_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -805,38 +807,38 @@ $("input:radio[name='radio_3XGPm3Os']").on("change", function() {
 <p>Let <span class="math">$f(x) = 1/\sqrt{x^2 - 1}$</span>. What can you say about <span class="math">$\int_1^\infty f(x) dx$</span>, as <span class="math">$f(x) \geq 1/x$</span> on <span class="math">$[1, \infty)$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="LnC4ox7R" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="kQA0hHY0" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_LnC4ox7R" id="radio_LnC4ox7R_1" value="1">
-  <label class="form-check-label" for="radio_LnC4ox7R_1">
+  <input class="form-check-input" type="radio" name="radio_kQA0hHY0" id="radio_kQA0hHY0_1" value="1">
+  <label class="form-check-label" for="radio_kQA0hHY0_1">
     It is convergent
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_LnC4ox7R" id="radio_LnC4ox7R_2" value="2">
-  <label class="form-check-label" for="radio_LnC4ox7R_2">
+  <input class="form-check-input" type="radio" name="radio_kQA0hHY0" id="radio_kQA0hHY0_2" value="2">
+  <label class="form-check-label" for="radio_kQA0hHY0_2">
     It is divergent
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_LnC4ox7R" id="radio_LnC4ox7R_3" value="3">
-  <label class="form-check-label" for="radio_LnC4ox7R_3">
+  <input class="form-check-input" type="radio" name="radio_kQA0hHY0" id="radio_kQA0hHY0_3" value="3">
+  <label class="form-check-label" for="radio_kQA0hHY0_3">
     Can&#39;t say
   </label>
 </div>
 
-<div id="LnC4ox7R_message"></div>
+<div id="kQA0hHY0_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_LnC4ox7R']").on("change", function() {
+$("input:radio[name='radio_kQA0hHY0']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#LnC4ox7R_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#kQA0hHY0_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#LnC4ox7R_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#kQA0hHY0_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -847,38 +849,38 @@ $("input:radio[name='radio_LnC4ox7R']").on("change", function() {
 <p>Let <span class="math">$f(x) = 1 + 4x^2$</span>. What can you say about <span class="math">$\int_1^\infty f(x) dx$</span>, as <span class="math">$f(x) \leq 1/x^2$</span> on <span class="math">$[1, \infty)$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="JrkeNYEv" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="pEiU3lKt" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_JrkeNYEv" id="radio_JrkeNYEv_1" value="1">
-  <label class="form-check-label" for="radio_JrkeNYEv_1">
+  <input class="form-check-input" type="radio" name="radio_pEiU3lKt" id="radio_pEiU3lKt_1" value="1">
+  <label class="form-check-label" for="radio_pEiU3lKt_1">
     It is convergent
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_JrkeNYEv" id="radio_JrkeNYEv_2" value="2">
-  <label class="form-check-label" for="radio_JrkeNYEv_2">
+  <input class="form-check-input" type="radio" name="radio_pEiU3lKt" id="radio_pEiU3lKt_2" value="2">
+  <label class="form-check-label" for="radio_pEiU3lKt_2">
     It is divergent
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_JrkeNYEv" id="radio_JrkeNYEv_3" value="3">
-  <label class="form-check-label" for="radio_JrkeNYEv_3">
+  <input class="form-check-input" type="radio" name="radio_pEiU3lKt" id="radio_pEiU3lKt_3" value="3">
+  <label class="form-check-label" for="radio_pEiU3lKt_3">
     Can&#39;t say
   </label>
 </div>
 
-<div id="JrkeNYEv_message"></div>
+<div id="pEiU3lKt_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_JrkeNYEv']").on("change", function() {
+$("input:radio[name='radio_pEiU3lKt']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#JrkeNYEv_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#pEiU3lKt_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#JrkeNYEv_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#pEiU3lKt_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -889,38 +891,38 @@ $("input:radio[name='radio_JrkeNYEv']").on("change", function() {
 <p>Let <span class="math">$f(x) = \lvert \sin(x)^{10}\rvert/e^x$</span>. What can you say about <span class="math">$\int_1^\infty f(x) dx$</span>, as <span class="math">$f(x) \leq e^{-x}$</span> on <span class="math">$[1, \infty)$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="xDMfN4d6" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="zRDEwOAq" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_xDMfN4d6" id="radio_xDMfN4d6_1" value="1">
-  <label class="form-check-label" for="radio_xDMfN4d6_1">
+  <input class="form-check-input" type="radio" name="radio_zRDEwOAq" id="radio_zRDEwOAq_1" value="1">
+  <label class="form-check-label" for="radio_zRDEwOAq_1">
     It is convergent
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_xDMfN4d6" id="radio_xDMfN4d6_2" value="2">
-  <label class="form-check-label" for="radio_xDMfN4d6_2">
+  <input class="form-check-input" type="radio" name="radio_zRDEwOAq" id="radio_zRDEwOAq_2" value="2">
+  <label class="form-check-label" for="radio_zRDEwOAq_2">
     It is divergent
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_xDMfN4d6" id="radio_xDMfN4d6_3" value="3">
-  <label class="form-check-label" for="radio_xDMfN4d6_3">
+  <input class="form-check-input" type="radio" name="radio_zRDEwOAq" id="radio_zRDEwOAq_3" value="3">
+  <label class="form-check-label" for="radio_zRDEwOAq_3">
     Can&#39;t say
   </label>
 </div>
 
-<div id="xDMfN4d6_message"></div>
+<div id="zRDEwOAq_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_xDMfN4d6']").on("change", function() {
+$("input:radio[name='radio_zRDEwOAq']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#xDMfN4d6_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#zRDEwOAq_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#xDMfN4d6_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#zRDEwOAq_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -931,41 +933,41 @@ $("input:radio[name='radio_xDMfN4d6']").on("change", function() {
 <p>The difference between &quot;blowing up&quot; at <span class="math">$0$</span> versus being integrable at <span class="math">$\infty$</span> can be seen to be related through the <span class="math">$u$</span>-substitution <span class="math">$u=1/x$</span>. With this <span class="math">$u$</span>-substitution, what becomes of <span class="math">$\int_0^1 x^{-2/3} dx$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="tWgczdx9" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Unkd59Y6" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_tWgczdx9" id="radio_tWgczdx9_1" value="1">
-  <label class="form-check-label" for="radio_tWgczdx9_1">
+  <input class="form-check-input" type="radio" name="radio_Unkd59Y6" id="radio_Unkd59Y6_1" value="1">
+  <label class="form-check-label" for="radio_Unkd59Y6_1">
+    &#36;\int_0^1 u^&#123;2/3&#125; \cdot du&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_Unkd59Y6" id="radio_Unkd59Y6_2" value="2">
+  <label class="form-check-label" for="radio_Unkd59Y6_2">
     &#36;\int_1^\infty u^&#123;2/3&#125;/u^2 \cdot du&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_tWgczdx9" id="radio_tWgczdx9_2" value="2">
-  <label class="form-check-label" for="radio_tWgczdx9_2">
+  <input class="form-check-input" type="radio" name="radio_Unkd59Y6" id="radio_Unkd59Y6_3" value="3">
+  <label class="form-check-label" for="radio_Unkd59Y6_3">
     &#36;\int_0^\infty 1/u \cdot du&#36;
 
   </label>
 </div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_tWgczdx9" id="radio_tWgczdx9_3" value="3">
-  <label class="form-check-label" for="radio_tWgczdx9_3">
-    &#36;\int_0^1 u^&#123;2/3&#125; \cdot du&#36;
 
-  </label>
-</div>
-
-<div id="tWgczdx9_message"></div>
+<div id="Unkd59Y6_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_tWgczdx9']").on("change", function() {
-  correct = this.value == 1;
+$("input:radio[name='radio_Unkd59Y6']").on("change", function() {
+  correct = this.value == 2;
 
   if(correct) {
-     $("#tWgczdx9_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#Unkd59Y6_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#tWgczdx9_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#Unkd59Y6_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -977,35 +979,33 @@ $("input:radio[name='radio_tWgczdx9']").on("change", function() {
 <p>Find <span class="math">$\int_0^1 f(x) dx$</span>.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='KUj0nTFD' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='xcBQ1fP9' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="KUj0nTFD" type="number" class="form-control" placeholder="Numeric answer">
-<label for="KUj0nTFD">Numeric answer</label>
+<input id="xcBQ1fP9" type="number" class="form-control" placeholder="Numeric answer">
+<label for="xcBQ1fP9">Numeric answer</label>
 
 </div>
 
-<div id='KUj0nTFD_message'></div>
+<div id='xcBQ1fP9_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#KUj0nTFD').on('change', function() {
+$('#xcBQ1fP9').on('change', function() {
   correct = Math.abs(this.value - 0.9999999921866226) <= 0.001;
 
   if(correct) {
-     $('#KUj0nTFD_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#xcBQ1fP9_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#KUj0nTFD_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#xcBQ1fP9_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
 
-
-<hr />
 
 
 <div class="card" style="">

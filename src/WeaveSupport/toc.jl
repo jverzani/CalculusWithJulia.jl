@@ -40,12 +40,12 @@ table_of_contents = [
     :integrals		:area;
     :integrals		:ftc;
     :integrals		:substitution;
-    :integrals		:integrals_by_parts;
+    :integrals		:integration_by_parts;
     :integrals		:partial_fractions;
     :integrals		:improper_integrals;
     :integrals		:mean_value_theorem;
     :integrals		:area_between_curves;
-    :integrals		:center_fo_mass;
+    :integrals		:center_of_mass;
     :integrals		:volumes_slice;
     :integrals		:arc_length;
     :integrals		:surface_area;

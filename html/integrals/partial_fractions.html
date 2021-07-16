@@ -168,7 +168,7 @@ $( document ).ready(function() {
 <p>However, despite integration being an algorithmic procedure, integration is not. There are &quot;tricks&quot; to try, such as substitution and integration by parts. These work in some cases. However, there are classes of functions for which algorithms exist. For example, the <code>SymPy</code> <code>integrate</code> function implements an algorithm that decides if an elementary function has an antiderivative. The <a href="http://en.wikipedia.org/wiki/Elementary_function">elementary</a> functions include exponentials, their inverses &#40;logarithms&#41;, trigonometric functions, their inverses, and powers, including <span class="math">$n$</span>th roots. Not every elementary function will have an antiderivative comprised of &#40;finite&#41; combinations of elementary functions. The typical example is <span class="math">$e^{x^2}$</span>, which has no simple antiderivative, despite its ubiquitousness.</p>
 <p>There are classes of functions where an &#40;elementary&#41; antiderivative can always be found. Polynomials provide a case. More surprisingly, so do their ratios, <em>rational functions</em>.</p>
 <h2>Partial fraction decomposition</h2>
-<p>Let <span class="math">$f(x) = p(x)/q(x)$</span>, where  <span class="math">$p$</span> and <span class="math">$q$</span> are polynomial functions. Further, we assume without comment that <span class="math">$p$</span> and <span class="math">$q$</span> have no common factors. &#40;If they did, we can divide them out, an act which has no effect on the integrability of <span class="math">$f(x)$</span>.</p>
+<p>Let <span class="math">$f(x) = p(x)/q(x)$</span>, where  <span class="math">$p$</span> and <span class="math">$q$</span> are polynomial functions with real coefficients. Further, we assume without comment that <span class="math">$p$</span> and <span class="math">$q$</span> have no common factors. &#40;If they did, we can divide them out, an act which has no effect on the integrability of <span class="math">$f(x)$</span>.</p>
 <p>The function <span class="math">$q(x)$</span> will factor over the real numbers. The fundamental theorem of algebra can be applied to say that <span class="math">$q(x)=q_1(x)^{n_1} \cdots q_k(x)^{n_k}$</span> where <span class="math">$q_i(x)$</span> is a linear or quadratic polynomial and <span class="math">$n_k$</span> a positive integer.</p>
 <blockquote>
 <p><strong>Partial Fraction Decomposition</strong>: There are unique polynomials <span class="math">$a_{ij}$</span> with degree <span class="math">$a_{ij} <$</span> degree <span class="math">$q_i$</span> such that <span class="math">$~ \frac{p(x)}{q(x)} = a(x) + \sum_{i=1}^k \sum_{j=1}^{n_i} \frac{a_{ij}(x)}{q_i(x)^j}. ~$</span></p>
@@ -177,17 +177,17 @@ $( document ).ready(function() {
 <p>This basically says that each factor <span class="math">$q_i(x)^{n_i}$</span> contributes a term like:</p>
 <p class="math">\[
 ~
-\frac{a_{i1}}{q_i(x)^1} + \frac{a_{i2}}{q_i(x)^2} + \cdots + \frac{a_{in_i}}{q_i(x)^{n_i}},
+\frac{a_{i1}(x)}{q_i(x)^1} + \frac{a_{i2}(x)}{q_i(x)^2} + \cdots + \frac{a_{in_i}(x)}{q_i(x)^{n_i}},
 ~
 \]</p>
-<p>where each <span class="math">$a_{ij}$</span> has degree less than the degree of <span class="math">$q_i$</span>.</p>
+<p>where each <span class="math">$a_{ij}(x)$</span> has degree less than the degree of <span class="math">$q_i(x)$</span>.</p>
 <p>The value of this decomposition is that the terms <span class="math">$a_{ij}(x)/q_i(x)^j$</span> each have an antiderivative, and so the sum of them will also have an antiderivative.</p>
 
 
 <div class="alert alert-info" role="alert"><div class="markdown"><p>Many calculus texts will give some examples for finding a partial fraction decomposition. We push that work off to <code>SymPy</code>, as for all but the easiest cases - a few are in the problems - it can be a bit tedious.</p>
 </div></div>
 
-<p>In <code>SymPy</code>, the <code>apart</code> function will find the partial fraction decomposition. For example, here we see <span class="math">$n_i$</span> terms for each power of <span class="math">$q_i$</span></p>
+<p>In <code>SymPy</code>, the <code>apart</code> function will find the partial fraction decomposition when a factorization is available. For example, here we see <span class="math">$n_i$</span> terms for each power of <span class="math">$q_i$</span></p>
 
 
 <pre class='hljl'>
@@ -213,7 +213,7 @@ $( document ).ready(function() {
 </div>
 
 <h3>Sketch of proof</h3>
-<p>A standard proof uses two facts of number systems: the division algorithm and a representation of the greatest common divisor in terms of sum, extended to polynomials. Our sketch shows how these are used.</p>
+<p>A standard proof uses two facts of number systems: the division algorithm and a representation of the greatest common divisor in terms of sums, extended to polynomials. Our sketch shows how these are used.</p>
 <p>Take one of the factors of the denominators, and consider this representation of the rational function <span class="math">$P(x)/(q(x)^k Q(x))$</span> where there are no common factors to any of the three polynomials.</p>
 <p>Since <span class="math">$q(x)$</span> and <span class="math">$Q(x)$</span> share no factors, <a href="http://tinyurl.com/kd6prns">Bezout&#39;s</a> identity says there exists polynomials <span class="math">$a(x)$</span> and <span class="math">$b(x)$</span>  with:</p>
 <p class="math">\[
@@ -235,10 +235,21 @@ a(x) Q(x) + b(x) q(x) = 1.
 \]</p>
 <p>This may look more complicated, but what it does is peel off one term &#40;The first&#41; and leave something which is smaller, in this case by a factor of <span class="math">$q(x)$</span>. This process can be repeated pulling off a power of a factor at a time until nothing is left to do.</p>
 <p>What remains is to establish that we can take <span class="math">$A(x) = a(x)\cdot P(x)$</span> with a degree less than that of <span class="math">$q(x)$</span>.</p>
-<p>In Proposition 3.8 of <a href="http://www.m-hikari.com/imf/imf-2012/29-32-2012/cookIMF29-32-2012.pdf">Bradley</a> and Cook it is shown how an expression of the form <span class="math">$A(x)/a(x)^k$</span> can be written as <span class="math">$q_1(x) + r_k(x)/a(x)^k + \cdots + r_2(x)/a(x)^2 + r_1(x)/a(x)$</span> with the degree of each <span class="math">$r_i(x)$</span> less than that of <span class="math">$a(x)$</span> by repeated application of the division algorithm. This fact can be used to finish the proof.</p>
-<p>To generate the <span class="math">$r_1$</span>, <span class="math">$r_2$</span>, <span class="math">$\dots$</span>, <span class="math">$r_k$</span>, the division algorithm is applied <span class="math">$k$</span> times giving: <span class="math">$A=aq_k + r_k$</span>, <span class="math">$q_k = a q_{k-1} + r_{k-1}$</span>, <span class="math">$\dots$</span>, <span class="math">$q_2 = a q_1 + r_1$</span>. These are put together to show <span class="math">$A/a^k=q_1 + r_k/a^k + r_{k-1}/a^{k-1} + \cdots + r_2/a^2 + r_1/a$</span>.</p>
+<p>In Proposition 3.8 of <a href="http://www.m-hikari.com/imf/imf-2012/29-32-2012/cookIMF29-32-2012.pdf">Bradley</a> and Cook we can see how. Recall the division algorithm, for example, says there are <span class="math">$q_k$</span> and <span class="math">$r_k$</span> with <span class="math">$A=q\cdot q_k + r_k$</span> where the degree of <span class="math">$r_k$</span> is less than that of <span class="math">$q$</span>, which is linear or quadratic. This is repeatedly applied below:</p>
+<p class="math">\[
+\begin{align*}
+\frac{A}{q^k} &= \frac{q\cdot q_k + r_k}{q^k}\\
+&= \frac{r_k}{q^k} + \frac{q_k}{q^{k-1}}\\
+&= \frac{r_k}{q^k} + \frac{q \cdot q_{k-1} + r_{k-1}}{q^{k-1}}\\
+&= \frac{r_k}{q^k} + \frac{r_{k-1}}{q^{k-1}} + \frac{q_{k-1}}{q^{k-2}}\\
+&= \frac{r_k}{q^k} + \frac{r_{k-1}}{q^{k-1}} + \frac{q\cdot q_{k-2} + r_{k-2}}{q^{k-2}}\\
+&= \cdots\\
+&= \frac{r_k}{q^k} + \frac{r_{k-1}}{q^{k-1}} + \cdots + q_1
+\end{align*}
+\]</p>
+<p>So the term <span class="math">$A(x)/q(x)^k$</span> can be expressed in terms of a sum where the numerators or each term have degree less than <span class="math">$q(x)$</span>, as expected by the statement of the theorem.</p>
 <h2>Integrating the terms in a partial fraction decomposition</h2>
-<p>We discuss by example how each type of possible terms in a partial fraction decomposition has an antiderivative. Hence, rational functions will <em>always</em> have an antiderivative that can be computed.</p>
+<p>We discuss by example how each type of possible term in a partial fraction decomposition has an antiderivative. Hence, rational functions will <em>always</em> have an antiderivative that can be computed.</p>
 <h3>Linear factors</h3>
 <p>For <span class="math">$j=1$</span>, if <span class="math">$q_i$</span> is linear, then <span class="math">$a_{ij}/q_i^j$</span> must look like a constant over a linear term, or something like:</p>
 
@@ -279,13 +290,13 @@ a(x) Q(x) + b(x) q(x) = 1.
 
 <h3>Quadratic factors</h3>
 <p>When <span class="math">$q_i$</span> is quadratic, it looks like <span class="math">$ax^2 + bx + c$</span>. Then <span class="math">$a_{ij}$</span> can be a constant or a linear polynomial. The latter can be written as <span class="math">$Ax + B$</span>.</p>
-<p>Rather than try to consider the general case of</p>
+<p>The integral of the following general form is presented below:</p>
 <p class="math">\[
 ~
 \frac{Ax +B }{(ax^2  + bx + c)^j},
 ~
 \]</p>
-<p>which can be handled, it is best to shift the value of <span class="math">$x$</span> so that this is no more than a constant times:</p>
+<p>With <code>SymPy</code>, we consider a few cases of the following form, which results from a shift of <code>x</code></p>
 <p class="math">\[
 ~
 \frac{Ax + B}{((ax)^2 \pm 1)^j}
@@ -329,6 +340,22 @@ a(x) Q(x) + b(x) q(x) = 1.
 <div class="output">$B \left(\frac{- 15 a^{4} x^{5} + 40 a^{2} x^{3} - 33 x}{48 a^{6} x^{6} - 144 a^{4} x^{4} + 144 a^{2} x^{2} - 48} - \frac{5 \log{\left(x - \frac{1}{a} \right)}}{32 a} + \frac{5 \log{\left(x + \frac{1}{a} \right)}}{32 a}\right)$
 </div>
 
+<hr />
+<p>In <a href="http://www-sop.inria.fr/cafe/Manuel.Bronstein/publications/issac98.pdf">Bronstein</a> this characterization can be found - &quot;This method, which dates back to Newton, Leibniz and Bernoulli, should not be used in practice, yet it remains the method found in most calculus texts and is often taught. Its major drawback is the factorization of the denominator of the integrand over the real or complex numbers.&quot; We can also find the following formulas which formalize the above exploratory calculations &#40;<span class="math">$j>1$</span> and <span class="math">$b^2 - 4c < 0$</span> below&#41;:</p>
+<p class="math">\[
+\begin{align*}
+\int \frac{A}{(x-a)^j} &= \frac{A}{1-j}\frac{1}{(x-a)^{1-j}}\\
+\int \frac{A}{x-a}     &= A\log(x-a)\\
+\int \frac{Bx+C}{x^2 + bx + c}     &= \frac{B}{2} \log(x^2 + bx + c) + \frac{2C-bB}{\sqrt{4c-b^2}}\cdot \arctan\left(\frac{2x+b}{\sqrt{4c-b^2}}\right)\\
+\int \frac{Bx+C}{(x^2 + bx + c)^j} &= \frac{B' x + C'}{(x^2 + bx + c)^{j-1}} + \int \frac{C''}{(x^2 + bx + c)^{j-1}}
+\end{align*}
+\]</p>
+<p>The first returns a rational function; the second yields a logarithm term; the third yields a logarithm and an arctangent term; while the last, which has explicit constants available, provides a reduction that can be recursively applied;</p>
+<p>That is integrating <span class="math">$f(x)/g(x)$</span>, a rational function, will yield an output that looks like the following, where the functions are polynomials:</p>
+<p class="math">\[
+\int f(x)/g(x) = P(x) + \frac{C(x)}{D{x}} + \sum v_i \log(V_i(x)) + \sum w_j \arctan(W_j(x))
+\]</p>
+<p>&#40;Bronstein also sketches the modern method which is to use a Hermite reduction to express <span class="math">$\int f/g dx = p/q + \int g/h dx$</span>, where <span class="math">$h$</span> is square free &#40;the &quot;<code>j</code>&quot; are all <span class="math">$1$</span>&#41;. The latter can be written over the complex numbers as logarithmic terms of the form <span class="math">$\log(x-a)$</span>, that <code>a</code>s found following a method due to Trager and Lazard &amp; Rioboo, which is mentioned in the SymPy documentation as the method used.&#41;</p>
 <h2>Examples</h2>
 <p>Find an antiderivative for <span class="math">$1/(x\cdot(x^2+1)^2)$</span>.</p>
 <p>We have a partial fraction decomposition is:</p>
@@ -387,35 +414,61 @@ a(x) Q(x) + b(x) q(x) = 1.
 <div class="alert alert-info" role="alert"><div class="markdown"><p><code>SymPy</code> will find &#36;\log&#40;x&#41;&#36; as an antiderivative for &#36;1/x&#36;, but more generally, &#36;\log&#40;\lvert x\rvert&#41;&#36; is one.</p>
 </div></div>
 
+<h5>Example</h5>
+<p>The answers found can become quite involved. <a href="https://arxiv.org/pdf/1712.01752.pdf">Corless</a>, Moir, Maza, and Xie use this example which at first glance seems tame enough:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>::</span><span class='hljl-n'>real</span><span class='hljl-t'>
+</span><span class='hljl-n'>ex</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>/</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>4</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-ni'>7</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+<div class="output">$\frac{x^{2} - 1}{x^{4} + 5 x^{2} + 7}$
+</div>
+
+<p>But the integral is something best suited to a computer algebra system:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>integrate</span><span class='hljl-p'>(</span><span class='hljl-n'>ex</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+<div class="output">$\sqrt{\frac{17}{84} + \frac{13 \sqrt{7}}{168}} \log{\left(x^{2} + x \left(- \frac{38 \sqrt{6} \sqrt{34 + 13 \sqrt{7}}}{9} - \frac{1301 \sqrt{42} \sqrt{34 + 13 \sqrt{7}}}{1638} + \frac{19 \sqrt{42} \sqrt{34 + 13 \sqrt{7}} \sqrt{884 \sqrt{7} + 2339}}{546}\right) - \frac{2124092 \sqrt{884 \sqrt{7} + 2339}}{31941} - \frac{9481 \sqrt{7} \sqrt{884 \sqrt{7} + 2339}}{378} + \frac{290246555}{63882} + \frac{4221850 \sqrt{7}}{2457} \right)} - \sqrt{\frac{17}{84} + \frac{13 \sqrt{7}}{168}} \log{\left(x^{2} + x \left(- \frac{19 \sqrt{42} \sqrt{34 + 13 \sqrt{7}} \sqrt{884 \sqrt{7} + 2339}}{546} + \frac{1301 \sqrt{42} \sqrt{34 + 13 \sqrt{7}}}{1638} + \frac{38 \sqrt{6} \sqrt{34 + 13 \sqrt{7}}}{9}\right) - \frac{2124092 \sqrt{884 \sqrt{7} + 2339}}{31941} - \frac{9481 \sqrt{7} \sqrt{884 \sqrt{7} + 2339}}{378} + \frac{290246555}{63882} + \frac{4221850 \sqrt{7}}{2457} \right)} + 2 \sqrt{- \frac{\sqrt{884 \sqrt{7} + 2339}}{84} + \frac{17}{84} + \frac{13 \sqrt{7}}{56}} \operatorname{atan}{\left(\frac{78 \sqrt{42} x}{- 9 \sqrt{- 2 \sqrt{884 \sqrt{7} + 2339} + 34 + 39 \sqrt{7}} + 19 \sqrt{884 \sqrt{7} + 2339} \sqrt{- 2 \sqrt{884 \sqrt{7} + 2339} + 34 + 39 \sqrt{7}}} - \frac{988 \sqrt{7} \sqrt{34 + 13 \sqrt{7}}}{- 9 \sqrt{- 2 \sqrt{884 \sqrt{7} + 2339} + 34 + 39 \sqrt{7}} + 19 \sqrt{884 \sqrt{7} + 2339} \sqrt{- 2 \sqrt{884 \sqrt{7} + 2339} + 34 + 39 \sqrt{7}}} - \frac{1301 \sqrt{34 + 13 \sqrt{7}}}{- 9 \sqrt{- 2 \sqrt{884 \sqrt{7} + 2339} + 34 + 39 \sqrt{7}} + 19 \sqrt{884 \sqrt{7} + 2339} \sqrt{- 2 \sqrt{884 \sqrt{7} + 2339} + 34 + 39 \sqrt{7}}} + \frac{57 \sqrt{34 + 13 \sqrt{7}} \sqrt{884 \sqrt{7} + 2339}}{- 9 \sqrt{- 2 \sqrt{884 \sqrt{7} + 2339} + 34 + 39 \sqrt{7}} + 19 \sqrt{884 \sqrt{7} + 2339} \sqrt{- 2 \sqrt{884 \sqrt{7} + 2339} + 34 + 39 \sqrt{7}}} \right)} + 2 \sqrt{- \frac{\sqrt{884 \sqrt{7} + 2339}}{84} + \frac{17}{84} + \frac{13 \sqrt{7}}{56}} \operatorname{atan}{\left(\frac{78 \sqrt{42} x}{- 9 \sqrt{- 2 \sqrt{884 \sqrt{7} + 2339} + 34 + 39 \sqrt{7}} + 19 \sqrt{884 \sqrt{7} + 2339} \sqrt{- 2 \sqrt{884 \sqrt{7} + 2339} + 34 + 39 \sqrt{7}}} - \frac{57 \sqrt{34 + 13 \sqrt{7}} \sqrt{884 \sqrt{7} + 2339}}{- 9 \sqrt{- 2 \sqrt{884 \sqrt{7} + 2339} + 34 + 39 \sqrt{7}} + 19 \sqrt{884 \sqrt{7} + 2339} \sqrt{- 2 \sqrt{884 \sqrt{7} + 2339} + 34 + 39 \sqrt{7}}} + \frac{1301 \sqrt{34 + 13 \sqrt{7}}}{- 9 \sqrt{- 2 \sqrt{884 \sqrt{7} + 2339} + 34 + 39 \sqrt{7}} + 19 \sqrt{884 \sqrt{7} + 2339} \sqrt{- 2 \sqrt{884 \sqrt{7} + 2339} + 34 + 39 \sqrt{7}}} + \frac{988 \sqrt{7} \sqrt{34 + 13 \sqrt{7}}}{- 9 \sqrt{- 2 \sqrt{884 \sqrt{7} + 2339} + 34 + 39 \sqrt{7}} + 19 \sqrt{884 \sqrt{7} + 2339} \sqrt{- 2 \sqrt{884 \sqrt{7} + 2339} + 34 + 39 \sqrt{7}}} \right)}$
+</div>
+
 <h2>Questions</h2>
 <h6>Question</h6>
 <p>The partial fraction decomposition of <span class="math">$1/(x(x-1))$</span> must be of the form <span class="math">$A/x + B/(x-1)$</span>.</p>
 <p>What is <span class="math">$A$</span>? &#40;Use <code>SymPy</code> or just put the sum over a common denominator and solve for <span class="math">$A$</span> and <span class="math">$B$</span>.&#41;</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='Z7wWfXWK' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='swXW8EPP' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="Z7wWfXWK" type="number" class="form-control" placeholder="Numeric answer">
-<label for="Z7wWfXWK">Numeric answer</label>
+<input id="swXW8EPP" type="number" class="form-control" placeholder="Numeric answer">
+<label for="swXW8EPP">Numeric answer</label>
 
 </div>
 
-<div id='Z7wWfXWK_message'></div>
+<div id='swXW8EPP_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#Z7wWfXWK').on('change', function() {
+$('#swXW8EPP').on('change', function() {
   correct = Math.abs(this.value - -1) <= 0;
 
   if(correct) {
-     $('#Z7wWfXWK_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#swXW8EPP_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#Z7wWfXWK_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#swXW8EPP_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -424,29 +477,29 @@ $('#Z7wWfXWK').on('change', function() {
 <p>What is <span class="math">$B$</span>?</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='SDUSbDwH' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='PEh2UCwx' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="SDUSbDwH" type="number" class="form-control" placeholder="Numeric answer">
-<label for="SDUSbDwH">Numeric answer</label>
+<input id="PEh2UCwx" type="number" class="form-control" placeholder="Numeric answer">
+<label for="PEh2UCwx">Numeric answer</label>
 
 </div>
 
-<div id='SDUSbDwH_message'></div>
+<div id='PEh2UCwx_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#SDUSbDwH').on('change', function() {
+$('#PEh2UCwx').on('change', function() {
   correct = Math.abs(this.value - 1) <= 0;
 
   if(correct) {
-     $('#SDUSbDwH_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#PEh2UCwx_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#SDUSbDwH_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#PEh2UCwx_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -462,29 +515,29 @@ $('#SDUSbDwH').on('change', function() {
 <p>Find <span class="math">$A$</span> &#40;being careful with the sign&#41;:</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='4kV4MzjH' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='kd5CDMB8' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="4kV4MzjH" type="number" class="form-control" placeholder="Numeric answer">
-<label for="4kV4MzjH">Numeric answer</label>
+<input id="kd5CDMB8" type="number" class="form-control" placeholder="Numeric answer">
+<label for="kd5CDMB8">Numeric answer</label>
 
 </div>
 
-<div id='4kV4MzjH_message'></div>
+<div id='kd5CDMB8_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#4kV4MzjH').on('change', function() {
+$('#kd5CDMB8').on('change', function() {
   correct = Math.abs(this.value - -1.5) <= 0.001;
 
   if(correct) {
-     $('#4kV4MzjH_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#kd5CDMB8_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#4kV4MzjH_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#kd5CDMB8_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -493,29 +546,29 @@ $('#4kV4MzjH').on('change', function() {
 <p>Find <span class="math">$B$</span>:</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='z5yz0Rg3' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='pdzaDYSK' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="z5yz0Rg3" type="number" class="form-control" placeholder="Numeric answer">
-<label for="z5yz0Rg3">Numeric answer</label>
+<input id="pdzaDYSK" type="number" class="form-control" placeholder="Numeric answer">
+<label for="pdzaDYSK">Numeric answer</label>
 
 </div>
 
-<div id='z5yz0Rg3_message'></div>
+<div id='pdzaDYSK_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#z5yz0Rg3').on('change', function() {
+$('#pdzaDYSK').on('change', function() {
   correct = Math.abs(this.value - 6.5) <= 0.001;
 
   if(correct) {
-     $('#z5yz0Rg3_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#pdzaDYSK_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#z5yz0Rg3_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#pdzaDYSK_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -531,29 +584,29 @@ $('#z5yz0Rg3').on('change', function() {
 <p>Find <span class="math">$A$</span>:</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='33x0cFLY' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='r3zd6req' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="33x0cFLY" type="number" class="form-control" placeholder="Numeric answer">
-<label for="33x0cFLY">Numeric answer</label>
+<input id="r3zd6req" type="number" class="form-control" placeholder="Numeric answer">
+<label for="r3zd6req">Numeric answer</label>
 
 </div>
 
-<div id='33x0cFLY_message'></div>
+<div id='r3zd6req_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#33x0cFLY').on('change', function() {
+$('#r3zd6req').on('change', function() {
   correct = Math.abs(this.value - 0.25) <= 0.001;
 
   if(correct) {
-     $('#33x0cFLY_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#r3zd6req_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#33x0cFLY_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#r3zd6req_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -562,29 +615,29 @@ $('#33x0cFLY').on('change', function() {
 <p>Find <span class="math">$B$</span>:</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='o3SVHI7G' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='NLvINq6m' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="o3SVHI7G" type="number" class="form-control" placeholder="Numeric answer">
-<label for="o3SVHI7G">Numeric answer</label>
+<input id="NLvINq6m" type="number" class="form-control" placeholder="Numeric answer">
+<label for="NLvINq6m">Numeric answer</label>
 
 </div>
 
-<div id='o3SVHI7G_message'></div>
+<div id='NLvINq6m_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#o3SVHI7G').on('change', function() {
+$('#NLvINq6m').on('change', function() {
   correct = Math.abs(this.value - -0.25) <= 0.001;
 
   if(correct) {
-     $('#o3SVHI7G_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#NLvINq6m_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#o3SVHI7G_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#NLvINq6m_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -593,29 +646,29 @@ $('#o3SVHI7G').on('change', function() {
 <p>Find <span class="math">$C$</span>:</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='2e3hYzwC' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='WduTqA2Z' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="2e3hYzwC" type="number" class="form-control" placeholder="Numeric answer">
-<label for="2e3hYzwC">Numeric answer</label>
+<input id="WduTqA2Z" type="number" class="form-control" placeholder="Numeric answer">
+<label for="WduTqA2Z">Numeric answer</label>
 
 </div>
 
-<div id='2e3hYzwC_message'></div>
+<div id='WduTqA2Z_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#2e3hYzwC').on('change', function() {
+$('#WduTqA2Z').on('change', function() {
   correct = Math.abs(this.value - 0.5) <= 0.001;
 
   if(correct) {
-     $('#2e3hYzwC_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#WduTqA2Z_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#2e3hYzwC_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#WduTqA2Z_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -631,32 +684,32 @@ $('#2e3hYzwC').on('change', function() {
 <p>Is <span class="math">$-6\log(5) - 5\log(3) - 1/6 + 11\log(4)$</span> the answer?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="kVwxIWtz" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="w28q7K3k" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_kVwxIWtz" id="radio_kVwxIWtz_1" value="1">
-  <label class="form-check-label" for="radio_kVwxIWtz_1">
+  <input class="form-check-input" type="radio" name="radio_w28q7K3k" id="radio_w28q7K3k_1" value="1">
+  <label class="form-check-label" for="radio_w28q7K3k_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_kVwxIWtz" id="radio_kVwxIWtz_2" value="2">
-  <label class="form-check-label" for="radio_kVwxIWtz_2">
+  <input class="form-check-input" type="radio" name="radio_w28q7K3k" id="radio_w28q7K3k_2" value="2">
+  <label class="form-check-label" for="radio_w28q7K3k_2">
     No
   </label>
 </div>
 
-<div id="kVwxIWtz_message"></div>
+<div id="w28q7K3k_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_kVwxIWtz']").on("change", function() {
+$("input:radio[name='radio_w28q7K3k']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#kVwxIWtz_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#w28q7K3k_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#kVwxIWtz_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#w28q7K3k_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -674,38 +727,38 @@ $("input:radio[name='radio_kVwxIWtz']").on("change", function() {
 <p>If <span class="math">$m > n$</span>, then why can we cancel out the <span class="math">$(x-c)^n$</span> and not have a concern?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="59EVK7ha" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="JAYdqDEM" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_59EVK7ha" id="radio_59EVK7ha_1" value="1">
-  <label class="form-check-label" for="radio_59EVK7ha_1">
+  <input class="form-check-input" type="radio" name="radio_JAYdqDEM" id="radio_JAYdqDEM_1" value="1">
+  <label class="form-check-label" for="radio_JAYdqDEM_1">
     <code>SymPy</code> allows it.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_59EVK7ha" id="radio_59EVK7ha_2" value="2">
-  <label class="form-check-label" for="radio_59EVK7ha_2">
+  <input class="form-check-input" type="radio" name="radio_JAYdqDEM" id="radio_JAYdqDEM_2" value="2">
+  <label class="form-check-label" for="radio_JAYdqDEM_2">
     The value &#36;c&#36; is a removable singularity, so the integral will be identical.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_59EVK7ha" id="radio_59EVK7ha_3" value="3">
-  <label class="form-check-label" for="radio_59EVK7ha_3">
+  <input class="form-check-input" type="radio" name="radio_JAYdqDEM" id="radio_JAYdqDEM_3" value="3">
+  <label class="form-check-label" for="radio_JAYdqDEM_3">
     The resulting function has an identical domain and is equivalent for all &#36;x&#36;.
   </label>
 </div>
 
-<div id="59EVK7ha_message"></div>
+<div id="JAYdqDEM_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_59EVK7ha']").on("change", function() {
+$("input:radio[name='radio_JAYdqDEM']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#59EVK7ha_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#JAYdqDEM_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#59EVK7ha_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#JAYdqDEM_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -715,38 +768,38 @@ $("input:radio[name='radio_59EVK7ha']").on("change", function() {
 <p>If <span class="math">$m = n$</span>, then why can we cancel out the <span class="math">$(x-c)^n$</span> and not have a concern?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="nhaczlxp" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="4gGk9kjd" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_nhaczlxp" id="radio_nhaczlxp_1" value="1">
-  <label class="form-check-label" for="radio_nhaczlxp_1">
+  <input class="form-check-input" type="radio" name="radio_4gGk9kjd" id="radio_4gGk9kjd_1" value="1">
+  <label class="form-check-label" for="radio_4gGk9kjd_1">
     <code>SymPy</code> allows it.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_nhaczlxp" id="radio_nhaczlxp_2" value="2">
-  <label class="form-check-label" for="radio_nhaczlxp_2">
+  <input class="form-check-input" type="radio" name="radio_4gGk9kjd" id="radio_4gGk9kjd_2" value="2">
+  <label class="form-check-label" for="radio_4gGk9kjd_2">
     The value &#36;c&#36; is a removable singularity, so the integral will be identical.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_nhaczlxp" id="radio_nhaczlxp_3" value="3">
-  <label class="form-check-label" for="radio_nhaczlxp_3">
+  <input class="form-check-input" type="radio" name="radio_4gGk9kjd" id="radio_4gGk9kjd_3" value="3">
+  <label class="form-check-label" for="radio_4gGk9kjd_3">
     The resulting function has an identical domain and is equivalent for all &#36;x&#36;.
   </label>
 </div>
 
-<div id="nhaczlxp_message"></div>
+<div id="4gGk9kjd_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_nhaczlxp']").on("change", function() {
+$("input:radio[name='radio_4gGk9kjd']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#nhaczlxp_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#4gGk9kjd_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#nhaczlxp_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#4gGk9kjd_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -756,52 +809,141 @@ $("input:radio[name='radio_nhaczlxp']").on("change", function() {
 <p>If <span class="math">$m < n$</span>, then why can we cancel out the <span class="math">$(x-c)^n$</span> and not have a concern?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="0LnVgpdw" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="dwu8JkzE" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_0LnVgpdw" id="radio_0LnVgpdw_1" value="1">
-  <label class="form-check-label" for="radio_0LnVgpdw_1">
+  <input class="form-check-input" type="radio" name="radio_dwu8JkzE" id="radio_dwu8JkzE_1" value="1">
+  <label class="form-check-label" for="radio_dwu8JkzE_1">
     <code>SymPy</code> allows it.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_0LnVgpdw" id="radio_0LnVgpdw_2" value="2">
-  <label class="form-check-label" for="radio_0LnVgpdw_2">
+  <input class="form-check-input" type="radio" name="radio_dwu8JkzE" id="radio_dwu8JkzE_2" value="2">
+  <label class="form-check-label" for="radio_dwu8JkzE_2">
     The value &#36;c&#36; is a removable singularity, so the integral will be identical.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_0LnVgpdw" id="radio_0LnVgpdw_3" value="3">
-  <label class="form-check-label" for="radio_0LnVgpdw_3">
+  <input class="form-check-input" type="radio" name="radio_dwu8JkzE" id="radio_dwu8JkzE_3" value="3">
+  <label class="form-check-label" for="radio_dwu8JkzE_3">
     The resulting function has an identical domain and is equivalent for all &#36;x&#36;.
   </label>
 </div>
 
-<div id="0LnVgpdw_message"></div>
+<div id="dwu8JkzE_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_0LnVgpdw']").on("change", function() {
+$("input:radio[name='radio_dwu8JkzE']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#0LnVgpdw_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#dwu8JkzE_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#0LnVgpdw_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#dwu8JkzE_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
 </script>
 
 
-<hr />
+<h5>Question</h5>
+<p>The partial fraction decomposition, as presented, factors the denominator polynomial into linear and quadratic factors over the real numbers. Alternatively, factoring over the complex numbers is possible, resulting in terms like:</p>
+<p class="math">\[
+\frac{a + ib}{x - (\alpha + i \beta)} + \frac{a - ib}{x - (\alpha - i \beta)}
+\]</p>
+<p>How to see that these give rise to real answers on integration is the point of this question.</p>
+<p>Breaking the terms up over <span class="math">$a$</span> and <span class="math">$b$</span> we have:</p>
+<p class="math">\[
+\begin{align*}
+I &= \frac{a}{x - (\alpha + i \beta)} + \frac{a}{x - (\alpha - i \beta)} \\
+II &= i\frac{b}{x - (\alpha + i \beta)} - i\frac{b}{x - (\alpha - i \beta)}
+\end{align*}
+\]</p>
+<p>Integrating <span class="math">$I$</span> leads to two logarithmic terms, which are combined to give:</p>
+<p class="math">\[
+\int I dx = a\cdot \log((x-(\alpha+i\beta)) \cdot (x - (\alpha-i\beta)))
+\]</p>
+<p>This involves no complex numbers, as:</p>
+
+
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="q24Fsrz8" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_q24Fsrz8" id="radio_q24Fsrz8_1" value="1">
+  <label class="form-check-label" for="radio_q24Fsrz8_1">
+    The complex numbers are complex conjugates, so the term in the logarithm will simply be &#36;x - 2\alpha x &#43; \alpha^2 &#43; \beta^2&#36;
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_q24Fsrz8" id="radio_q24Fsrz8_2" value="2">
+  <label class="form-check-label" for="radio_q24Fsrz8_2">
+    The &#36;\beta&#36; are &#36;0&#36;, as the polynomials in question are real
+  </label>
+</div>
+
+<div id="q24Fsrz8_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_q24Fsrz8']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#q24Fsrz8_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#q24Fsrz8_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
+
+<p>The term <span class="math">$II$</span> benefits from this computation &#40;attributed to Rioboo by <a href="https://arxiv.org/pdf/1712.01752.pdf">Corless et. al</a>&#41;</p>
+<p class="math">\[
+\frac{d}{dx} i \log(\frac{X+iY}{X-iY}) = 2\frac{d}{dx}\arctan(\frac{X}{Y})
+\]</p>
+<p>Applying this with <span class="math">$X=x - \alpha$</span> and <span class="math">$Y=-\beta$</span> shows that <span class="math">$\int II dx$</span> will be</p>
+
+
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="8Hjh1QX1" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_8Hjh1QX1" id="radio_8Hjh1QX1_1" value="1">
+  <label class="form-check-label" for="radio_8Hjh1QX1_1">
+    &#36;-2b\arctan&#40;&#40;x - \alpha&#41;/&#40;\beta&#41;&#41;&#36;
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_8Hjh1QX1" id="radio_8Hjh1QX1_2" value="2">
+  <label class="form-check-label" for="radio_8Hjh1QX1_2">
+    &#36;2b\sec^2&#40;-&#40;x-\alpha&#41;/&#40;-\beta&#41;&#41;&#36;
+  </label>
+</div>
+
+<div id="8Hjh1QX1_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_8Hjh1QX1']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#8Hjh1QX1_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#8Hjh1QX1_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+  }
+});
+
+</script>
+
 
 
 <div class="card" style="">
   <div class="card-header float-end text-muted">
     <span class="text-muted  float-end align-middle">
 
-<a href="../integrals/integrals_by_parts.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Previous section" aria-label="Previous section">
+<a href="../integrals/integration_by_parts.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Previous section" aria-label="Previous section">
 <i class="bi bi-arrow-left-circle-fill"></i>
 </a>
 

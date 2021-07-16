@@ -201,11 +201,11 @@ V = \pi \cdot r_1^2 \cdot h_1 + \pi \cdot r_2^2 \cdot h_2 + \cdot + \pi \cdot r_
 \]</p>
 <p>The weight would come by multiplying the volume by some appropriate density.</p>
 <p>Looking at the sum though, we see the makings of an approximate integral. If the heights were to get infinitely small, we might expect this to approach something like <span class="math">$V=\int_a^b \pi r(h)^2  dh$</span>.</p>
-<p>In fact, we have in general</p>
+<p>In fact, we have in general:</p>
 <blockquote>
-<p><strong>Volume of a figure with a known cross section</strong>: The volume of a solid with known cross-sectional area <span class="math">$CA(x)$</span> from <span class="math">$x=a$</span> to <span class="math">$x=b$</span> is given by <span class="math">$~ V = \int_a^b CA(x) dx. ~$</span> This assumes <span class="math">$CA(x)$</span> is integrable.</p>
+<p><strong>Volume of a figure with a known cross section</strong>: The volume of a solid with known cross-sectional area <span class="math">$A_{xc}(x)$</span> from <span class="math">$x=a$</span> to <span class="math">$x=b$</span> is given by <span class="math">$~ V = \int_a^b A_{xc}(x) dx. ~$</span> This assumes <span class="math">$A_{xc}(x)$</span> is integrable.</p>
 </blockquote>
-<p>This formula is derived by approximating the volume by &quot;slabs&quot; with volume <span class="math">$CA(x) \Delta x$</span> and using the Riemann integral&#39;s definition to pass to the limit. The discs of the Michelin man are an example, where the cross-sectional area is just that of a circle, or <span class="math">$\pi r^2$</span>.</p>
+<p>This formula is derived by approximating the volume by &quot;slabs&quot; with volume <span class="math">$A_{xc}(x) \Delta x$</span> and using the Riemann integral&#39;s definition to pass to the limit. The discs of the Michelin man are an example, where the cross-sectional area is just that of a circle, or <span class="math">$\pi r^2$</span>.</p>
 <h2>Solids of revolution</h2>
 <p>We begin with some examples of a special class of solids - solids of revolution. These have an axis of symmetry from which the slabs are then just circular disks.</p>
 <p>Consider the volume contained in this glass, it will depend on the radius at different values of <span class="math">$x$</span>:</p>
@@ -275,7 +275,7 @@ V = \int_0^h \pi r(x)^2 dx
 
 
 <pre class='hljl'>
-<span class='hljl-n'>vol</span><span class='hljl-t'> </span><span class='hljl-oB'>/</span><span class='hljl-t'> </span><span class='hljl-ni'>231</span><span class='hljl-t'> </span><span class='hljl-oB'>*</span><span class='hljl-t'> </span><span class='hljl-ni'>128</span>
+<span class='hljl-n'>ozs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>vol</span><span class='hljl-t'> </span><span class='hljl-oB'>/</span><span class='hljl-t'> </span><span class='hljl-ni'>231</span><span class='hljl-t'> </span><span class='hljl-oB'>*</span><span class='hljl-t'> </span><span class='hljl-ni'>128</span>
 </pre>
 
 
@@ -285,6 +285,20 @@ V = \int_0^h \pi r(x)^2 dx
 
 
 <p>Full it is about <span class="math">$20$</span> ounces, though this doesn&#39;t really account for the volume taken up by the bottom of the cup, etc.</p>
+<p>If you are poor with units, <code>Julia</code> can provide some help through the <code>Unitful</code> package. Here the additional <code>UnitfulUS</code> package must also be included to access fluid ounces:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>Unitful</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>UnitfulUS</span><span class='hljl-t'>
+</span><span class='hljl-n'>vol</span><span class='hljl-t'> </span><span class='hljl-oB'>*</span><span class='hljl-t'> </span><span class='hljl-so'>u&quot;inch&quot;</span><span class='hljl-oB'>^</span><span class='hljl-ni'>3</span><span class='hljl-t'> </span><span class='hljl-oB'>|&gt;</span><span class='hljl-t'> </span><span class='hljl-so'>us&quot;floz&quot;</span>
+</pre>
+
+
+<pre class="output">
+20.456618830193282 fl ozᵘˢ
+</pre>
+
+
 <p>Before Solo &quot;squared&quot; the cup, the Solo cup had markings that - <a href="http://www.snopes.com/food/prepare/solocups.asp">some thought</a> - indicated certain volume amounts.</p>
 
 
@@ -362,23 +376,12 @@ Vol &#40;generic function with 1 method&#41;
 </pre>
 
 
-<h5>Example</h5>
-<p>By rotating the line segment <span class="math">$x/r + y/h=1$</span> that sits in the first quadrant around the <span class="math">$y$</span> axis, we will generate a right-circular cone. The volume of which can be expressed through the above formula by noting the radius, as a function of <span class="math">$y$</span>, will be <span class="math">$R = r(1 - y/h)$</span>. This gives the well-known volume of a cone:</p>
-
-
-<pre class='hljl'>
-<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>SymPy</span><span class='hljl-t'>
-</span><span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>r</span><span class='hljl-t'> </span><span class='hljl-n'>h</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-t'>
-</span><span class='hljl-n'>R</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>r</span><span class='hljl-oB'>*</span><span class='hljl-p'>(</span><span class='hljl-ni'>1</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-oB'>/</span><span class='hljl-n'>h</span><span class='hljl-p'>)</span><span class='hljl-t'>
-</span><span class='hljl-nf'>integrate</span><span class='hljl-p'>(</span><span class='hljl-n'>pi</span><span class='hljl-oB'>*</span><span class='hljl-n'>R</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>y</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>h</span><span class='hljl-p'>))</span>
+<pre class="julia-error">
+ERROR: syntax: extra token &quot;rotating&quot; after end of expression
 </pre>
 
 
-
-<div class="output">$\frac{\pi h r^{2}}{3}$
-</div>
-
-<p>The frustum of a cone is simply viewed as a cone with its top cut off. If the original height would have been <span class="math">$h_0$</span> and the actual height <span class="math">$h_1$</span>, then the volume remaining is just <span class="math">$\pi h_1 r^2/3 - \pi h_0 r^2/3 = \pi r^2 (h_1-h_0)/3$</span>.</p>
+<p>The frustum of a cone is simply viewed as a cone with its top cut off. If the original height would have been <span class="math">$h_0$</span> and the actual height <span class="math">$h_1$</span>, then the volume remaining is just <span class="math">$\int_{h_0}^h \pi r(y)^2 dy = \pi h_1 r^2/3 - \pi h_0 r^2/3 = \pi r^2 (h_1-h_0)/3$</span>.</p>
 <p>It is not unusual to parameterize a cone by the angle <span class="math">$\theta$</span> it makes and the height. Since <span class="math">$r/h=\tan\theta$</span>, this gives the formula <span class="math">$V = \pi/3\cdot h^3\tan(\theta)^2$</span>.</p>
 <h5>Example</h5>
 <p><a href="http://tinyurl.com/8a6ygv">Gabriel&#39;s</a> horn is a geometric figure of mathematics - but not the real world - which has infinite height, but not volume&#33; The figure is found by rotating the curve <span class="math">$y=1/x$</span> around the <span class="math">$x$</span> axis from <span class="math">$1$</span> to <span class="math">$\infty$</span>. If the volume formula holds, what is the volume of this &quot;horn?&quot;</p>
@@ -398,7 +401,7 @@ Vol &#40;generic function with 1 method&#41;
 <p>That is a value very reminiscent of <span class="math">$\pi$</span>, which it is as <span class="math">$\int_1^\infty 1/x^2 dx = -1/x\big|_1^\infty=1$</span>.</p>
 
 
-<div class="alert alert-info" role="alert"><div class="markdown"><p>The interest in this figure is that it has <strong>infinite</strong> surface area, leading to the <a href="http://tinyurl.com/osawwqm">paradox</a> that it seems possible to fill it with paint, but not paint the outside.</p>
+<div class="alert alert-info" role="alert"><div class="markdown"><p>The interest in this figure is that soon we will be able to show that it has <strong>infinite</strong> surface area, leading to the <a href="http://tinyurl.com/osawwqm">paradox</a> that it seems possible to fill it with paint, but not paint the outside.</p>
 </div></div>
 
 <h5>Example</h5>
@@ -475,7 +478,7 @@ rad &#40;generic function with 1 method&#41;
 ~
 \]</p>
 <p>Rather than use <span class="math">$\pi r(x)^2$</span> for a cross section, we would use <span class="math">$\pi (R(x)^2 - r(x)^2)$</span>.</p>
-<p>In general we call a shape like the tire a &quot;washer&quot; and use this formula for a washer&#39;s cross section <span class="math">$CA(x) = \pi(R(x)^2 - r(x)^2)$</span>.</p>
+<p>In general we call a shape like the tire a &quot;washer&quot; and use this formula for a washer&#39;s cross section <span class="math">$A_{xc}(x) = \pi(R(x)^2 - r(x)^2)$</span>.</p>
 <p>Then the volume for the solid of revolution whose cross sections are washers would be:</p>
 <p class="math">\[
 ~
@@ -530,23 +533,1388 @@ R(x) = \sqrt{1^2 - (x-1)^2}, \quad r(x) = x,
 <blockquote>
 <p>A cone is the solid figure bounded by a base in a plane and by a surface &#40;called the lateral surface&#41; formed by the locus of all straight line segments joining the apex to the perimeter of the base.</p>
 </blockquote>
-<p>Let <span class="math">$h$</span> be the distance from the apex to the base. Consider cones with the property that all planes parallel to the base intersect the cone with the same shape, though perhaps a different scale.</p>
+<p>Let <span class="math">$h$</span> be the distance from the apex to the base. Consider cones with the property that all planes parallel to the base intersect the cone with the same shape, though perhaps a different scale. This figure shows an example, with the rays coming from the apex defining the volume.</p>
+
+
+    <div id="7a4cc178-11da-4201-897e-d850df64f468" style="width:576px;height:384px;"></div>
+    <script>
+    
+        var PLOT = document.getElementById('7a4cc178-11da-4201-897e-d850df64f468');
+    Plotly.plot(PLOT, [
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            1.0,
+            0.99397218166959,
+            0.9760580928771146,
+            0.9467599061548253,
+            0.9068950355735347,
+            0.8575675656985087,
+            0.8001297030125261,
+            0.7361346375923228,
+            0.6672825117582742,
+            0.5953614400550648,
+            0.5221857023189385,
+            0.4495333323392336,
+            0.37908534509248143,
+            0.31236878498215226,
+            0.25070563814966107,
+            0.19516943877477425,
+            0.14655112006460563,
+            0.10533532543624086,
+            0.07168801634779043,
+            0.045455804030173075,
+            0.02617700781050933,
+            0.013104018145749158,
+            0.0052361332501977,
+            0.001361659096402859,
+            0.00010772729948549387,
+            -3.993920170260179e-6,
+            -0.0004977337652345842,
+            -0.002882375454492242,
+            -0.008590773656093398,
+            -0.01892185074125874,
+            -0.03498758928027096,
+            -0.057666861015828325,
+            -0.08756778513865388,
+            -0.12499999999999983,
+            -0.169957873583906,
+            -0.22211528209923162,
+            -0.28083216725116833,
+            -0.34517265625347304,
+            -0.41393410986401646,
+            -0.48568606780661866,
+            -0.5588177021950178,
+            -0.6315920809702974,
+            -0.7022052960595138,
+            -0.7688483339034076,
+            -0.829769465589431,
+            -0.8833349136971943,
+            -0.9280856138497521,
+            -0.9627880286710266,
+            -0.9864771853334378,
+            -0.9984903874306599,
+            -0.9984903874306601,
+            -0.9864771853334378,
+            -0.9627880286710269,
+            -0.9280856138497522,
+            -0.8833349136971945,
+            -0.8297694655894313,
+            -0.7688483339034079,
+            -0.7022052960595138,
+            -0.6315920809702977,
+            -0.5588177021950179,
+            -0.48568606780661894,
+            -0.4139341098640166,
+            -0.3451726562534734,
+            -0.28083216725116866,
+            -0.22211528209923173,
+            -0.1699578735839063,
+            -0.12500000000000033,
+            -0.08756778513865382,
+            -0.057666861015828325,
+            -0.034987589280271014,
+            -0.018921850741258794,
+            -0.00859077365609362,
+            -0.0028823754544920477,
+            -0.0004977337652347577,
+            -3.993920170150891e-6,
+            0.00010772729948543835,
+            0.0013616590964028452,
+            0.005236133250197728,
+            0.013104018145749047,
+            0.02617700781050944,
+            0.045455804030172825,
+            0.07168801634779032,
+            0.105335325436241,
+            0.14655112006460563,
+            0.19516943877477408,
+            0.2507056381496605,
+            0.31236878498215226,
+            0.37908534509248143,
+            0.4495333323392329,
+            0.5221857023189381,
+            0.5953614400550648,
+            0.6672825117582736,
+            0.7361346375923223,
+            0.800129703012526,
+            0.8575675656985089,
+            0.9068950355735345,
+            0.9467599061548252,
+            0.9760580928771143,
+            0.9939721816695899,
+            1.0
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y1",
+        "zmin": null,
+        "legendgroup": "y1",
+        "z": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            0.00025512865232082266,
+            0.0020287262652300686,
+            0.006778228906408251,
+            0.01584123751528141,
+            0.030381096261281382,
+            0.05133884290661608,
+            0.07939329198599329,
+            0.11493071727959955,
+            0.15802525262146494,
+            0.2084307421123132,
+            0.26558435631879473,
+            0.3286218650230194,
+            0.3964040349379986,
+            0.467553217786965,
+            0.5404988248273943,
+            0.6135300616360901,
+            0.6848540334117322,
+            0.752657135726246,
+            0.8151675256306826,
+            0.8707164276382068,
+            0.9177960698312208,
+            0.9551121657052656,
+            0.9816290530246077,
+            0.9966058648574891,
+            0.9996224305511583,
+            0.9905939740448422,
+            0.9697740802493292,
+            0.937745822673668,
+            0.8954013717904847,
+            0.8439108183999007,
+            0.7846813344935178,
+            0.7193081418086044,
+            0.6495190528383291,
+            0.577114579885976,
+            0.5039057664830425,
+            0.4316519764017944,
+            0.3620008756636195,
+            0.2964327623746349,
+            0.23621124082682465,
+            0.1823420058161927,
+            0.13554120888430274,
+            0.09621453082532472,
+            0.06444769687629309,
+            0.04000875654814187,
+            0.0223620240425077,
+            0.01069315303475421,
+            0.003944416548159926,
+            0.0008588932677796868,
+            3.1939297504852276e-5,
+            -3.1939297504855746e-5,
+            -0.0008588932677796868,
+            -0.0039444165481599125,
+            -0.010693153034754155,
+            -0.022362024042507617,
+            -0.040008756548141816,
+            -0.06444769687629293,
+            -0.0962145308253245,
+            -0.13554120888430254,
+            -0.1823420058161925,
+            -0.23621124082682435,
+            -0.2964327623746347,
+            -0.36200087566361927,
+            -0.4316519764017942,
+            -0.5039057664830424,
+            -0.5771145798859756,
+            -0.6495190528383288,
+            -0.7193081418086047,
+            -0.7846813344935178,
+            -0.8439108183999005,
+            -0.8954013717904843,
+            -0.9377458226736681,
+            -0.969774080249329,
+            -0.9905939740448422,
+            -0.9996224305511583,
+            -0.9966058648574891,
+            -0.9816290530246078,
+            -0.9551121657052659,
+            -0.9177960698312213,
+            -0.8707164276382069,
+            -0.8151675256306827,
+            -0.7526571357262469,
+            -0.684854033411732,
+            -0.6135300616360901,
+            -0.5404988248273946,
+            -0.46755321778696557,
+            -0.3964040349379986,
+            -0.3286218650230194,
+            -0.26558435631879523,
+            -0.20843074211231358,
+            -0.15802525262146488,
+            -0.11493071727959958,
+            -0.07939329198599343,
+            -0.051338842906616444,
+            -0.03038109626128155,
+            -0.015841237515281298,
+            -0.006778228906408501,
+            -0.002028726265229902,
+            -0.0002551286523203994,
+            0.0
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            1.0
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y2",
+        "zmin": null,
+        "legendgroup": "y2",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            0.0
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            0.9012210650134381
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y3",
+        "zmin": null,
+        "legendgroup": "y3",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            0.01733758853025369
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            0.649519052838329
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y4",
+        "zmin": null,
+        "legendgroup": "y4",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            0.12499999999999994
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            0.35355339059327384
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y5",
+        "zmin": null,
+        "legendgroup": "y5",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            0.35355339059327373
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            0.1250000000000001
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y6",
+        "zmin": null,
+        "legendgroup": "y6",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            0.649519052838329
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            0.017337588530253634
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y7",
+        "zmin": null,
+        "legendgroup": "y7",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            0.9012210650134381
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            0.0
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y8",
+        "zmin": null,
+        "legendgroup": "y8",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            1.0
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            -0.017337588530253634
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y9",
+        "zmin": null,
+        "legendgroup": "y9",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            0.9012210650134382
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            -0.12499999999999983
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y10",
+        "zmin": null,
+        "legendgroup": "y10",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            0.6495190528383291
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            -0.3535533905932737
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y11",
+        "zmin": null,
+        "legendgroup": "y11",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            0.35355339059327384
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            -0.6495190528383289
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y12",
+        "zmin": null,
+        "legendgroup": "y12",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            0.12499999999999994
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            -0.9012210650134378
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y13",
+        "zmin": null,
+        "legendgroup": "y13",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            0.01733758853025369
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            -1.0
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y14",
+        "zmin": null,
+        "legendgroup": "y14",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            0.0
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            -0.901221065013438
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y15",
+        "zmin": null,
+        "legendgroup": "y15",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            -0.017337588530253634
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            -0.6495190528383292
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y16",
+        "zmin": null,
+        "legendgroup": "y16",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            -0.12499999999999978
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            -0.35355339059327406
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y17",
+        "zmin": null,
+        "legendgroup": "y17",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            -0.3535533905932735
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            -0.12500000000000033
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y18",
+        "zmin": null,
+        "legendgroup": "y18",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            -0.6495190528383288
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            -0.01733758853025366
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y19",
+        "zmin": null,
+        "legendgroup": "y19",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            -0.9012210650134382
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            0.0
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y20",
+        "zmin": null,
+        "legendgroup": "y20",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            -1.0
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            0.017337588530253606
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y21",
+        "zmin": null,
+        "legendgroup": "y21",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            -0.9012210650134385
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            0.1250000000000001
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y22",
+        "zmin": null,
+        "legendgroup": "y22",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            -0.6495190528383291
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            0.3535533905932736
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y23",
+        "zmin": null,
+        "legendgroup": "y23",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            -0.3535533905932738
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            0.6495190528383281
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y24",
+        "zmin": null,
+        "legendgroup": "y24",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            -0.12500000000000033
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            0.9012210650134385
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y25",
+        "zmin": null,
+        "legendgroup": "y25",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            -0.017337588530253967
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    },
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "zaxis": "z",
+        "x": [
+            0.0,
+            1.0
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y26",
+        "zmin": null,
+        "legendgroup": "y26",
+        "z": [
+            5.0,
+            0.0
+        ],
+        "zmax": null,
+        "line": {
+            "color": "rgba(255, 0, 0, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            0.0,
+            0.0
+        ],
+        "type": "scatter3d",
+        "scene": "scene"
+    }
+]
+, {
+    "showlegend": false,
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [],
+    "height": 384,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "scene": {
+        "camera": {
+            "eye": {
+                "y": -1.9499999999999997,
+                "z": 1.3,
+                "x": 1.12583302491977
+            }
+        },
+        "xaxis": {
+            "tickangle": 0,
+            "showline": true,
+            "gridcolor": "rgba(0, 0, 0, 0.100)",
+            "showticklabels": true,
+            "gridwidth": 0.5,
+            "titlefont": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "visible": true,
+            "ticks": "inside",
+            "range": [
+                -1.06,
+                1.06
+            ],
+            "tickmode": "array",
+            "tickvals": [
+                -1.0,
+                -0.5,
+                0.0,
+                0.5,
+                1.0
+            ],
+            "tickcolor": "rgb(0, 0, 0)",
+            "ticktext": [
+                "−1.0",
+                "−0.5",
+                "0.0",
+                "0.5",
+                "1.0"
+            ],
+            "linecolor": "rgba(0, 0, 0, 1.000)",
+            "showgrid": true,
+            "zeroline": false,
+            "type": "-",
+            "tickfont": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 11
+            },
+            "title": "",
+            "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+            "mirror": false
+        },
+        "domain": {
+            "y": [
+                0.0391878098571012,
+                0.989747375328084
+            ],
+            "x": [
+                0.06856347817633907,
+                0.9931649168853893
+            ]
+        },
+        "yaxis": {
+            "tickangle": 0,
+            "showline": true,
+            "gridcolor": "rgba(0, 0, 0, 0.100)",
+            "showticklabels": true,
+            "gridwidth": 0.5,
+            "titlefont": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "visible": true,
+            "ticks": "inside",
+            "range": [
+                -1.06,
+                1.06
+            ],
+            "tickmode": "array",
+            "tickvals": [
+                -1.0,
+                -0.5,
+                0.0,
+                0.5,
+                1.0
+            ],
+            "tickcolor": "rgb(0, 0, 0)",
+            "ticktext": [
+                "−1.0",
+                "−0.5",
+                "0.0",
+                "0.5",
+                "1.0"
+            ],
+            "linecolor": "rgba(0, 0, 0, 1.000)",
+            "showgrid": true,
+            "zeroline": false,
+            "type": "-",
+            "tickfont": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 11
+            },
+            "title": "",
+            "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+            "mirror": false
+        },
+        "zaxis": {
+            "tickangle": 0,
+            "showline": true,
+            "gridcolor": "rgba(0, 0, 0, 0.100)",
+            "showticklabels": true,
+            "gridwidth": 0.5,
+            "titlefont": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "visible": true,
+            "ticks": "inside",
+            "range": [
+                -0.15,
+                5.15
+            ],
+            "tickmode": "array",
+            "tickvals": [
+                0.0,
+                1.0,
+                2.0,
+                3.0,
+                4.0,
+                5.0
+            ],
+            "tickcolor": "rgb(0, 0, 0)",
+            "ticktext": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"
+            ],
+            "linecolor": "rgba(0, 0, 0, 1.000)",
+            "showgrid": true,
+            "zeroline": false,
+            "type": "-",
+            "tickfont": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 11
+            },
+            "title": "",
+            "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+            "mirror": false
+        }
+    },
+    "width": 576
+}
+);
+
+    
+    </script>
+
+
 <p>A right circular cone is one where this shape is a circle. This definition can be more general, as a square-based right pyramid is also such a cone. After possibly reorienting the cone in space so the base is at <span class="math">$u=0$</span> and the apex at <span class="math">$u=h$</span> the volume of the cone can be found from:</p>
 <p class="math">\[
 ~
-V = \int_0^h C(u) du.
+V = \int_0^h A_{xc}(u) du.
 ~
 \]</p>
-<p>The cross sectional area <span class="math">$C(u)$</span> satisfies a formula in terms of <span class="math">$C(0)$</span>, the area of the base:</p>
+<p>The cross sectional area <span class="math">$A_{xc}(u)$</span> satisfies a formula in terms of <span class="math">$A_{xc}(0)$</span>, the area of the base:</p>
 <p class="math">\[
 ~
-C(u)  = C(0) \cdot (1 - \frac{u}{h})^2
+A_{xc}(u)  = A_{xc}(0) \cdot (1 - \frac{u}{h})^2
 ~
 \]</p>
 <p>So the integral becomes:</p>
 <p class="math">\[
 ~
-V = \int_0^h C(u) du = C(0) \int_0^h (1 - \frac{u}{h})^2 du = C(0) \int_0^1 v^2 \frac{1}{h} dv = C(0) \frac{h}{3}.
+V = \int_0^h A_{xc}(u) du = A_{xc}(0) \int_0^h (1 - \frac{u}{h})^2 du = A_{xc}(0) \int_0^1 v^2 \frac{1}{h} dv = A_{xc}(0) \frac{h}{3}.
 ~
 \]</p>
 <p>This gives a general formula for the volume of such cones.</p>
@@ -555,10 +1923,10 @@ V = \int_0^h C(u) du = C(0) \int_0^h (1 - \frac{u}{h})^2 du = C(0) \int_0^1 v^2 
 <p>With the formula for the volume of solids based on cross sections, this is a trivial observation, as the functions giving the cross-sectional area are identical. Still, it can be surprising. Consider a sphere with an interior cylinder bored out of it.  &#40;The <a href="http://tinyurl.com/o237v83">Napkin</a> ring problem.&#41; The bore has height <span class="math">$h$</span> - for larger radius spheres this means very wide bores.</p>
 
 
-    <div id="04d376e0-0d10-4c80-abe6-0001f9a57a00" style="width:576px;height:384px;"></div>
+    <div id="d7336201-f2bd-4ac9-9c56-a4adb6d4e96f" style="width:576px;height:384px;"></div>
     <script>
     
-    PLOT = document.getElementById('04d376e0-0d10-4c80-abe6-0001f9a57a00');
+        var PLOT = document.getElementById('d7336201-f2bd-4ac9-9c56-a4adb6d4e96f');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -1291,11 +2659,12 @@ V = \int_0^h C(u) du = C(0) \int_0^h (1 - \frac{u}{h})^2 du = C(0) \int_0^1 v^2 
     "width": 576
 }
 );
+
     
     </script>
 
 
-<p>The small orange line is rotated, so using the washer method we get the cross sections given by <span class="math">$\pi(r_o^2 - r_i^2)$</span>, the outer and inner radii, as a function of <span class="math">$y$</span>.</p>
+<p>The small orange line is rotated, so using the washer method we get the cross sections given by <span class="math">$\pi(r_0^2 - r_i^2)$</span>, the outer and inner radii, as a function of <span class="math">$y$</span>.</p>
 <p>The outer radii has points <span class="math">$(x,y)$</span> satisfying <span class="math">$x^2 + y^2 = R^2$</span>, so is <span class="math">$\sqrt{R^2 - y^2}$</span>. The inner radii has a constant value, and as indicated in the figure, is <span class="math">$\sqrt{R^2 - (h/2)^2}$</span>, by the Pythagorean theorem.</p>
 <p>Thus the cross sectional area is</p>
 <p class="math">\[
@@ -1308,10 +2677,10 @@ V = \int_0^h C(u) du = C(0) \int_0^h (1 - \frac{u}{h})^2 du = C(0) \int_0^1 v^2 
 <p>As this does not depend on <span class="math">$R$</span>, and the limits of integration would always be <span class="math">$-h/2$</span> to <span class="math">$h/2$</span> by Cavalieri&#39;s principle, the volume of the solid will be independent of <span class="math">$R$</span> too.</p>
 <p>To actually compute this volume, we take <span class="math">$R=h/2$</span>, so that the bore hole is just a line of no volume, the resulting volume is then that of a sphere with radius <span class="math">$h/2$</span>, or <span class="math">$4/3\pi(h/2)^3 = \pi h^3/6$</span>.</p>
 <h2>Pappus theorem &#40;2nd&#41;</h2>
-<p>The second theorem of <a href="http://tinyurl.com/l43vw4">Pappus</a> say that if a plane figure <span class="math">$F$</span> is rotated around an axis to form a solid of revolution, the total volume can be written as <span class="math">$2\pi r A(F)$</span>, where <span class="math">$r$</span> is the distance the centroid is from the axis of revolution, and <span class="math">$A(F)$</span> is the area of the plane figure. In short, the distance traveled by the centroid times the area.</p>
+<p>The second theorem of <a href="http://tinyurl.com/l43vw4">Pappus</a> says that if a plane figure <span class="math">$F$</span> is rotated around an axis to form a solid of revolution, the total volume can be written as <span class="math">$2\pi r A(F)$</span>, where <span class="math">$r$</span> is the distance the centroid is from the axis of revolution, and <span class="math">$A(F)$</span> is the area of the plane figure. In short, the distance traveled by the centroid times the area.</p>
 <p>This can make some computations trivial. For example, we can make a torus &#40;or donut&#41; by rotating the circle <span class="math">$(x-2)^2 + y^2 = 1$</span> about the <span class="math">$y$</span> axis. As the centroid is clearly <span class="math">$(2, 0)$</span>, with <span class="math">$r=2$</span> in the above formula, and the area of the circle is <span class="math">$\pi 1^2$</span>, the volume of the donut is <span class="math">$2\pi(2)(\pi) = 4\pi^2$</span>.</p>
 <h5>Example</h5>
-<p>Above, we found the volume of cone, as it is a solid of revolution, through the general formula. However, parameterizing the cone as the revolution of a triangle with vertices <span class="math">$(0,0)$</span>, <span class="math">$(r, 0)$</span>, and <span class="math">$(0,h)$</span> and using the formula for the center of mass in the <span class="math">$x$</span> direction of such a triangle, <span class="math">$r/3$</span>, we get that the volume of a cone with height <span class="math">$h$</span> and radius <span class="math">$r$</span> is just <span class="math">$2\pi (r/3)\cdot (rh/2) = \pi r^2 h/3$</span>.</p>
+<p>Above, we found the volume of a cone, as it is a solid of revolution, through the general formula. However, parameterizing the cone as the revolution of a triangle with vertices <span class="math">$(0,0)$</span>, <span class="math">$(r, 0)$</span>, and <span class="math">$(0,h)$</span> and using the formula for the center of mass in the <span class="math">$x$</span> direction of such a triangle, <span class="math">$r/3$</span>, we get that the volume of a cone with height <span class="math">$h$</span> and radius <span class="math">$r$</span> is  <span class="math">$2\pi (r/3)\cdot (rh/2) = \pi r^2 h/3$</span>, in agreement with the calculus based computation.</p>
 <h2>Questions</h2>
 <h6>Question</h6>
 <p>Consider this big Solo cup:</p>
@@ -1343,29 +2712,29 @@ V = \int_0^h C(u) du = C(0) \int_0^h (1 - \frac{u}{h})^2 du = C(0) \int_0^1 v^2 
 </ul>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='LiYmH8Gl' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='rlDAme1l' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="LiYmH8Gl" type="number" class="form-control" placeholder="Numeric answer">
-<label for="LiYmH8Gl">Numeric answer</label>
+<input id="rlDAme1l" type="number" class="form-control" placeholder="Numeric answer">
+<label for="rlDAme1l">Numeric answer</label>
 
 </div>
 
-<div id='LiYmH8Gl_message'></div>
+<div id='rlDAme1l_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#LiYmH8Gl').on('change', function() {
+$('#rlDAme1l').on('change', function() {
   correct = Math.abs(this.value - 15157.98160668533) <= 10.0;
 
   if(correct) {
-     $('#LiYmH8Gl_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#rlDAme1l_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#LiYmH8Gl_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#rlDAme1l_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1427,29 +2796,29 @@ s_vol &#40;generic function with 1 method&#41;
 </ul>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='iNcMKxLp' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='Mng37Taw' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="iNcMKxLp" type="number" class="form-control" placeholder="Numeric answer">
-<label for="iNcMKxLp">Numeric answer</label>
+<input id="Mng37Taw" type="number" class="form-control" placeholder="Numeric answer">
+<label for="Mng37Taw">Numeric answer</label>
 
 </div>
 
-<div id='iNcMKxLp_message'></div>
+<div id='Mng37Taw_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#iNcMKxLp').on('change', function() {
+$('#Mng37Taw').on('change', function() {
   correct = Math.abs(this.value - 9.168923214523724) <= 0.001;
 
   if(correct) {
-     $('#iNcMKxLp_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#Mng37Taw_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#iNcMKxLp_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#Mng37Taw_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1461,29 +2830,29 @@ $('#iNcMKxLp').on('change', function() {
 </ul>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='MIlSgmHa' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='stGKKFDg' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="MIlSgmHa" type="number" class="form-control" placeholder="Numeric answer">
-<label for="MIlSgmHa">Numeric answer</label>
+<input id="stGKKFDg" type="number" class="form-control" placeholder="Numeric answer">
+<label for="stGKKFDg">Numeric answer</label>
 
 </div>
 
-<div id='MIlSgmHa_message'></div>
+<div id='stGKKFDg_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#MIlSgmHa').on('change', function() {
+$('#stGKKFDg').on('change', function() {
   correct = Math.abs(this.value - 5.603662378152273) <= 0.001;
 
   if(correct) {
-     $('#MIlSgmHa_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#stGKKFDg_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#MIlSgmHa_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#stGKKFDg_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1495,29 +2864,29 @@ $('#MIlSgmHa').on('change', function() {
 </ul>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='pKOavYMC' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='8TP4aNwa' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="pKOavYMC" type="number" class="form-control" placeholder="Numeric answer">
-<label for="pKOavYMC">Numeric answer</label>
+<input id="8TP4aNwa" type="number" class="form-control" placeholder="Numeric answer">
+<label for="8TP4aNwa">Numeric answer</label>
 <span class="input-group-addon mx-2">percent</span>
 </div>
 
-<div id='pKOavYMC_message'></div>
+<div id='8TP4aNwa_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#pKOavYMC').on('change', function() {
+$('#8TP4aNwa').on('change', function() {
   correct = Math.abs(this.value - 1.2452583062560607) <= 2;
 
   if(correct) {
-     $('#pKOavYMC_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#8TP4aNwa_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#pKOavYMC_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#8TP4aNwa_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1529,29 +2898,29 @@ $('#pKOavYMC').on('change', function() {
 </ul>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='FcD4WyJn' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='usLU94Jl' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="FcD4WyJn" type="number" class="form-control" placeholder="Numeric answer">
-<label for="FcD4WyJn">Numeric answer</label>
+<input id="usLU94Jl" type="number" class="form-control" placeholder="Numeric answer">
+<label for="usLU94Jl">Numeric answer</label>
 <span class="input-group-addon mx-2">percent</span>
 </div>
 
-<div id='FcD4WyJn_message'></div>
+<div id='usLU94Jl_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#FcD4WyJn').on('change', function() {
+$('#usLU94Jl').on('change', function() {
   correct = Math.abs(this.value - 38.505616912184344) <= 2;
 
   if(correct) {
-     $('#FcD4WyJn_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#usLU94Jl_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#FcD4WyJn_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#usLU94Jl_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1564,29 +2933,29 @@ $('#FcD4WyJn').on('change', function() {
 </ul>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='An1Bs42G' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='fyHfuWvd' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="An1Bs42G" type="number" class="form-control" placeholder="Numeric answer">
-<label for="An1Bs42G">Numeric answer</label>
+<input id="fyHfuWvd" type="number" class="form-control" placeholder="Numeric answer">
+<label for="fyHfuWvd">Numeric answer</label>
 
 </div>
 
-<div id='An1Bs42G_message'></div>
+<div id='fyHfuWvd_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#An1Bs42G').on('change', function() {
+$('#fyHfuWvd').on('change', function() {
   correct = Math.abs(this.value - 10.37133536401327) <= 0.001;
 
   if(correct) {
-     $('#An1Bs42G_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#fyHfuWvd_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#An1Bs42G_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#fyHfuWvd_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1598,29 +2967,29 @@ $('#An1Bs42G').on('change', function() {
 </ul>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='fCltgLk0' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='9oUR4Y8P' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="fCltgLk0" type="number" class="form-control" placeholder="Numeric answer">
-<label for="fCltgLk0">Numeric answer</label>
+<input id="9oUR4Y8P" type="number" class="form-control" placeholder="Numeric answer">
+<label for="9oUR4Y8P">Numeric answer</label>
 
 </div>
 
-<div id='fCltgLk0_message'></div>
+<div id='9oUR4Y8P_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#fCltgLk0').on('change', function() {
+$('#9oUR4Y8P').on('change', function() {
   correct = Math.abs(this.value - 6.372119100356652) <= 0.001;
 
   if(correct) {
-     $('#fCltgLk0_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#9oUR4Y8P_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#fCltgLk0_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#9oUR4Y8P_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1632,29 +3001,29 @@ $('#fCltgLk0').on('change', function() {
 </ul>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='f0bcm5Kt' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='wTPcj5EU' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="f0bcm5Kt" type="number" class="form-control" placeholder="Numeric answer">
-<label for="f0bcm5Kt">Numeric answer</label>
+<input id="wTPcj5EU" type="number" class="form-control" placeholder="Numeric answer">
+<label for="wTPcj5EU">Numeric answer</label>
 <span class="input-group-addon mx-2">percent</span>
 </div>
 
-<div id='f0bcm5Kt_message'></div>
+<div id='wTPcj5EU_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#f0bcm5Kt').on('change', function() {
+$('#wTPcj5EU').on('change', function() {
   correct = Math.abs(this.value - 1.4160264667459228) <= 2;
 
   if(correct) {
-     $('#f0bcm5Kt_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#wTPcj5EU_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#f0bcm5Kt_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#wTPcj5EU_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1666,29 +3035,29 @@ $('#f0bcm5Kt').on('change', function() {
 </ul>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='w0fzo2Bs' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='cuYrzk4u' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="w0fzo2Bs" type="number" class="form-control" placeholder="Numeric answer">
-<label for="w0fzo2Bs">Numeric answer</label>
+<input id="cuYrzk4u" type="number" class="form-control" placeholder="Numeric answer">
+<label for="cuYrzk4u">Numeric answer</label>
 <span class="input-group-addon mx-2">percent</span>
 </div>
 
-<div id='w0fzo2Bs_message'></div>
+<div id='cuYrzk4u_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#w0fzo2Bs').on('change', function() {
+$('#cuYrzk4u').on('change', function() {
   correct = Math.abs(this.value - 37.31833223550184) <= 2;
 
   if(correct) {
-     $('#w0fzo2Bs_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#cuYrzk4u_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#w0fzo2Bs_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#cuYrzk4u_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1704,32 +3073,32 @@ V = \int_0^h w^2 (1 - \frac{y}{h})^2 dy?
 \]</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="vCrb15xk" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="1CXvXiyY" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_vCrb15xk" id="radio_vCrb15xk_1" value="1">
-  <label class="form-check-label" for="radio_vCrb15xk_1">
+  <input class="form-check-input" type="radio" name="radio_1CXvXiyY" id="radio_1CXvXiyY_1" value="1">
+  <label class="form-check-label" for="radio_1CXvXiyY_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_vCrb15xk" id="radio_vCrb15xk_2" value="2">
-  <label class="form-check-label" for="radio_vCrb15xk_2">
+  <input class="form-check-input" type="radio" name="radio_1CXvXiyY" id="radio_1CXvXiyY_2" value="2">
+  <label class="form-check-label" for="radio_1CXvXiyY_2">
     No
   </label>
 </div>
 
-<div id="vCrb15xk_message"></div>
+<div id="1CXvXiyY_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_vCrb15xk']").on("change", function() {
+$("input:radio[name='radio_1CXvXiyY']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#vCrb15xk_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#1CXvXiyY_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#vCrb15xk_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#1CXvXiyY_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1739,41 +3108,41 @@ $("input:radio[name='radio_vCrb15xk']").on("change", function() {
 <p>What is the volume?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="elTVLNJQ" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="mLdYz6Rb" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_elTVLNJQ" id="radio_elTVLNJQ_1" value="1">
-  <label class="form-check-label" for="radio_elTVLNJQ_1">
+  <input class="form-check-input" type="radio" name="radio_mLdYz6Rb" id="radio_mLdYz6Rb_1" value="1">
+  <label class="form-check-label" for="radio_mLdYz6Rb_1">
     &#36;1/3 \cdot b\cdot h&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_elTVLNJQ" id="radio_elTVLNJQ_2" value="2">
-  <label class="form-check-label" for="radio_elTVLNJQ_2">
+  <input class="form-check-input" type="radio" name="radio_mLdYz6Rb" id="radio_mLdYz6Rb_2" value="2">
+  <label class="form-check-label" for="radio_mLdYz6Rb_2">
     &#36;1/3 \cdot w^2\cdot h&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_elTVLNJQ" id="radio_elTVLNJQ_3" value="3">
-  <label class="form-check-label" for="radio_elTVLNJQ_3">
+  <input class="form-check-input" type="radio" name="radio_mLdYz6Rb" id="radio_mLdYz6Rb_3" value="3">
+  <label class="form-check-label" for="radio_mLdYz6Rb_3">
     &#36;l\cdot w \cdot h/ 3&#36;
 
   </label>
 </div>
 
-<div id="elTVLNJQ_message"></div>
+<div id="mLdYz6Rb_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_elTVLNJQ']").on("change", function() {
+$("input:radio[name='radio_mLdYz6Rb']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#elTVLNJQ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#mLdYz6Rb_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#elTVLNJQ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#mLdYz6Rb_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1784,29 +3153,29 @@ $("input:radio[name='radio_elTVLNJQ']").on("change", function() {
 <p>An ellipsoid is formed by rotating the region in the first and second quadrants bounded by the ellipse <span class="math">$(x/2)^2 + (y/3)^2=1$</span> and the <span class="math">$x$</span> axis around the <span class="math">$x$</span> axis. What is the volume of this ellipsoid? Find it numerically.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='5ogiNkcN' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='OOMuMUoX' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="5ogiNkcN" type="number" class="form-control" placeholder="Numeric answer">
-<label for="5ogiNkcN">Numeric answer</label>
+<input id="OOMuMUoX" type="number" class="form-control" placeholder="Numeric answer">
+<label for="OOMuMUoX">Numeric answer</label>
 
 </div>
 
-<div id='5ogiNkcN_message'></div>
+<div id='OOMuMUoX_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#5ogiNkcN').on('change', function() {
+$('#OOMuMUoX').on('change', function() {
   correct = Math.abs(this.value - 75.39822368615503) <= 0.001;
 
   if(correct) {
-     $('#5ogiNkcN_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#OOMuMUoX_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#5ogiNkcN_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#OOMuMUoX_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1816,41 +3185,41 @@ $('#5ogiNkcN').on('change', function() {
 <p>An ellipsoid is formed by rotating the region in the first and second quadrants bounded by the ellipse <span class="math">$(x/a)^2 + (y/b)^2=1$</span> and the <span class="math">$x$</span> axis around the <span class="math">$x$</span> axis. What is the volume of this ellipsoid? Find it symbolically.</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="ucPG85E6" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="JUfZKcSh" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ucPG85E6" id="radio_ucPG85E6_1" value="1">
-  <label class="form-check-label" for="radio_ucPG85E6_1">
+  <input class="form-check-input" type="radio" name="radio_JUfZKcSh" id="radio_JUfZKcSh_1" value="1">
+  <label class="form-check-label" for="radio_JUfZKcSh_1">
+    &#36;4/3 \cdot \pi a b^2&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_JUfZKcSh" id="radio_JUfZKcSh_2" value="2">
+  <label class="form-check-label" for="radio_JUfZKcSh_2">
     &#36;4/3 \cdot \pi a^2 b&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ucPG85E6" id="radio_ucPG85E6_2" value="2">
-  <label class="form-check-label" for="radio_ucPG85E6_2">
+  <input class="form-check-input" type="radio" name="radio_JUfZKcSh" id="radio_JUfZKcSh_3" value="3">
+  <label class="form-check-label" for="radio_JUfZKcSh_3">
     &#36;\pi/3 \cdot a b^2&#36;
 
   </label>
 </div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ucPG85E6" id="radio_ucPG85E6_3" value="3">
-  <label class="form-check-label" for="radio_ucPG85E6_3">
-    &#36;4/3 \cdot \pi a b^2&#36;
 
-  </label>
-</div>
-
-<div id="ucPG85E6_message"></div>
+<div id="JUfZKcSh_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_ucPG85E6']").on("change", function() {
-  correct = this.value == 3;
+$("input:radio[name='radio_JUfZKcSh']").on("change", function() {
+  correct = this.value == 1;
 
   if(correct) {
-     $("#ucPG85E6_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#JUfZKcSh_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#ucPG85E6_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#JUfZKcSh_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1861,29 +3230,29 @@ $("input:radio[name='radio_ucPG85E6']").on("change", function() {
 <p>A solid is generated by rotating the region enclosed by the graph <span class="math">$y=\sqrt{x}$</span>, the lines <span class="math">$x=1$</span>, <span class="math">$x=2$</span>, and <span class="math">$y=1$</span> about the <span class="math">$x$</span> axis. Find the volume of the solid.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='hFyS5YFd' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='ZRYiehb8' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="hFyS5YFd" type="number" class="form-control" placeholder="Numeric answer">
-<label for="hFyS5YFd">Numeric answer</label>
+<input id="ZRYiehb8" type="number" class="form-control" placeholder="Numeric answer">
+<label for="ZRYiehb8">Numeric answer</label>
 
 </div>
 
-<div id='hFyS5YFd_message'></div>
+<div id='ZRYiehb8_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#hFyS5YFd').on('change', function() {
+$('#ZRYiehb8').on('change', function() {
   correct = Math.abs(this.value - 1.5707963267948963) <= 0.001;
 
   if(correct) {
-     $('#hFyS5YFd_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#ZRYiehb8_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#hFyS5YFd_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#ZRYiehb8_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1894,15 +3263,18 @@ $('#hFyS5YFd').on('change', function() {
 
 
 <pre class='hljl'>
-<span class='hljl-nf'>plot</span><span class='hljl-p'>([</span><span class='hljl-n'>x</span><span class='hljl-oB'>-&gt;</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>3</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-&gt;</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-p'>],</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>)</span>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>SymPy</span><span class='hljl-t'>
+</span><span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'>
+</span><span class='hljl-nf'>plot</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>3</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>legend</span><span class='hljl-oB'>=</span><span class='hljl-kc'>false</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>plot!</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-p'>)</span>
 </pre>
 
 
 
-    <div id="9ee56982-899f-48f5-826f-db806408b759" style="width:576px;height:384px;"></div>
+    <div id="6a8fa0ba-cc8d-4cb8-a2c8-439a96ce6968" style="width:576px;height:384px;"></div>
     <script>
     
-    PLOT = document.getElementById('9ee56982-899f-48f5-826f-db806408b759');
+        var PLOT = document.getElementById('6a8fa0ba-cc8d-4cb8-a2c8-439a96ce6968');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -1985,27 +3357,27 @@ $('#hFyS5YFd').on('change', function() {
         },
         "yaxis": "y",
         "x": [
-            0.0,
-            0.009765819019788131,
-            0.10006491716837283,
-            0.15433091130562387,
-            0.20021211871576575,
-            0.2500519700330514,
-            0.29599990453462816,
-            0.3452609464064898,
-            0.4023346943385323,
-            0.45305510611102146,
-            0.49753233654022,
-            0.5460244566553195,
-            0.5948047787528121,
-            0.6487376626244042,
-            0.7000534407448434,
-            0.7534099435113505,
-            0.7983247536668452,
-            0.8531606459863641,
-            0.9047080021287085,
-            0.9872908640160599,
-            1.0
+            -0.03,
+            -0.01964823183902458,
+            0.0760688121984752,
+            0.1335907659839613,
+            0.18222484583871168,
+            0.23505508823503451,
+            0.2837598988067058,
+            0.33597660319087924,
+            0.39647477599884423,
+            0.45023841247768276,
+            0.4973842767326332,
+            0.5487859240546387,
+            0.6004930654779808,
+            0.6576619223818686,
+            0.712056647189534,
+            0.7686145401220316,
+            0.8162242388868558,
+            0.874350284745546,
+            0.928990482256431,
+            1.0165283158570235,
+            1.03
         ],
         "showlegend": true,
         "mode": "lines",
@@ -2020,33 +3392,33 @@ $('#hFyS5YFd').on('change', function() {
             "width": 1
         },
         "y": [
-            -1.0,
-            -0.9902341809802119,
-            -0.8999350828316272,
-            -0.8456690886943761,
-            -0.7997878812842343,
-            -0.7499480299669485,
-            -0.7040000954653718,
-            -0.6547390535935103,
-            -0.5976653056614677,
-            -0.5469448938889785,
-            -0.50246766345978,
-            -0.4539755433446805,
-            -0.4051952212471879,
-            -0.35126233737559576,
-            -0.29994655925515656,
-            -0.2465900564886495,
-            -0.2016752463331548,
-            -0.1468393540136359,
-            -0.0952919978712915,
-            -0.012709135983940079,
-            0.0
+            -1.03,
+            -1.0196482318390245,
+            -0.9239311878015248,
+            -0.8664092340160388,
+            -0.8177751541612883,
+            -0.7649449117649655,
+            -0.7162401011932942,
+            -0.6640233968091207,
+            -0.6035252240011557,
+            -0.5497615875223172,
+            -0.5026157232673668,
+            -0.45121407594536134,
+            -0.39950693452201924,
+            -0.3423380776181314,
+            -0.287943352810466,
+            -0.23138545987796844,
+            -0.1837757611131442,
+            -0.125649715254454,
+            -0.071009517743569,
+            0.016528315857023523,
+            0.030000000000000027
         ],
         "type": "scatter"
     }
 ]
 , {
-    "showlegend": true,
+    "showlegend": false,
     "xaxis": {
         "showticklabels": true,
         "gridwidth": 0.5,
@@ -2058,8 +3430,8 @@ $('#hFyS5YFd').on('change', function() {
             1.0
         ],
         "range": [
-            -0.03,
-            1.03
+            -0.0618,
+            1.0618
         ],
         "domain": [
             0.08399557694177116,
@@ -2119,8 +3491,8 @@ $('#hFyS5YFd').on('change', function() {
             0.0
         ],
         "range": [
-            -1.03,
-            0.03
+            -1.0618,
+            0.06180000000000003
         ],
         "domain": [
             0.0391878098571012,
@@ -2159,61 +3531,38 @@ $('#hFyS5YFd').on('change', function() {
         "tickcolor": "rgb(0, 0, 0)",
         "type": "-"
     },
-    "legend": {
-        "yanchor": "auto",
-        "xanchor": "auto",
-        "bordercolor": "rgba(0, 0, 0, 1.000)",
-        "bgcolor": "rgba(255, 255, 255, 1.000)",
-        "borderwidth": 1,
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "font": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "title": {
-            "font": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "family": "sans-serif",
-                "size": 15
-            },
-            "text": ""
-        },
-        "traceorder": "normal",
-        "x": 1.0
-    },
     "width": 576
 }
 );
+
     
     </script>
 
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='jU6taRK2' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='JTYPyexk' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="jU6taRK2" type="number" class="form-control" placeholder="Numeric answer">
-<label for="jU6taRK2">Numeric answer</label>
+<input id="JTYPyexk" type="number" class="form-control" placeholder="Numeric answer">
+<label for="JTYPyexk">Numeric answer</label>
 
 </div>
 
-<div id='jU6taRK2_message'></div>
+<div id='JTYPyexk_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#jU6taRK2').on('change', function() {
+$('#JTYPyexk').on('change', function() {
   correct = Math.abs(this.value - -3.2309774707332535) <= 0.001;
 
   if(correct) {
-     $('#jU6taRK2_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#JTYPyexk_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#jU6taRK2_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#JTYPyexk_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -2224,29 +3573,29 @@ $('#jU6taRK2').on('change', function() {
 <p>&#40;Be careful, the radius in the formula <span class="math">$V=\int_a^b \pi r(u)^2 du$</span> is from the line <span class="math">$x=\log(2)$</span>.&#41;</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='ncXh0i6c' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='TWiS41tV' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="ncXh0i6c" type="number" class="form-control" placeholder="Numeric answer">
-<label for="ncXh0i6c">Numeric answer</label>
+<input id="TWiS41tV" type="number" class="form-control" placeholder="Numeric answer">
+<label for="TWiS41tV">Numeric answer</label>
 
 </div>
 
-<div id='ncXh0i6c_message'></div>
+<div id='TWiS41tV_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#ncXh0i6c').on('change', function() {
+$('#TWiS41tV').on('change', function() {
   correct = Math.abs(this.value - 12.56637058324514) <= 0.001;
 
   if(correct) {
-     $('#ncXh0i6c_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#TWiS41tV_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#ncXh0i6c_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#TWiS41tV_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -2256,29 +3605,29 @@ $('#ncXh0i6c').on('change', function() {
 <p>Find the volume of rotating the region bounded by the line <span class="math">$y=x$</span>, <span class="math">$x=1$</span> and the <span class="math">$x$</span>-axis around the line <span class="math">$y=x$</span>. &#40;The Theorem of Pappus is convenient and the fact that the centroid of the triangular region lies at <span class="math">$(2/3, 1/3)$</span>.&#41;</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='OoNtf1xc' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='myW6q15V' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="OoNtf1xc" type="number" class="form-control" placeholder="Numeric answer">
-<label for="OoNtf1xc">Numeric answer</label>
+<input id="myW6q15V" type="number" class="form-control" placeholder="Numeric answer">
+<label for="myW6q15V">Numeric answer</label>
 
 </div>
 
-<div id='OoNtf1xc_message'></div>
+<div id='myW6q15V_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#OoNtf1xc').on('change', function() {
+$('#myW6q15V').on('change', function() {
   correct = Math.abs(this.value - 0.740480489693061) <= 0.001;
 
   if(correct) {
-     $('#OoNtf1xc_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#myW6q15V_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#OoNtf1xc_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#myW6q15V_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -2307,29 +3656,29 @@ rad &#40;generic function with 1 method&#41;
 <p>With this, find the volume.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='5sBA9RVw' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='yQskMpnD' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="5sBA9RVw" type="number" class="form-control" placeholder="Numeric answer">
-<label for="5sBA9RVw">Numeric answer</label>
+<input id="yQskMpnD" type="number" class="form-control" placeholder="Numeric answer">
+<label for="yQskMpnD">Numeric answer</label>
 
 </div>
 
-<div id='5sBA9RVw_message'></div>
+<div id='yQskMpnD_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#5sBA9RVw').on('change', function() {
+$('#yQskMpnD').on('change', function() {
   correct = Math.abs(this.value - 0.07404804896930604) <= 0.001;
 
   if(correct) {
-     $('#5sBA9RVw_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#yQskMpnD_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#5sBA9RVw_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#yQskMpnD_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -2339,42 +3688,40 @@ $('#5sBA9RVw').on('change', function() {
 <p>Repeat &#40;find the volume&#41; only this time with the function <span class="math">$f(x) = x^{20}$</span>.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='bo5XDwd6' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='DvKWCzw1' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="bo5XDwd6" type="number" class="form-control" placeholder="Numeric answer">
-<label for="bo5XDwd6">Numeric answer</label>
+<input id="DvKWCzw1" type="number" class="form-control" placeholder="Numeric answer">
+<label for="DvKWCzw1">Numeric answer</label>
 
 </div>
 
-<div id='bo5XDwd6_message'></div>
+<div id='DvKWCzw1_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#bo5XDwd6').on('change', function() {
+$('#DvKWCzw1').on('change', function() {
   correct = Math.abs(this.value - 0.5927127644771495) <= 0.001;
 
   if(correct) {
-     $('#bo5XDwd6_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#DvKWCzw1_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#bo5XDwd6_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#DvKWCzw1_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
 
-
-<hr />
 
 
 <div class="card" style="">
   <div class="card-header float-end text-muted">
     <span class="text-muted  float-end align-middle">
 
-<a href="../integrals/center_fo_mass.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Previous section" aria-label="Previous section">
+<a href="../integrals/center_of_mass.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Previous section" aria-label="Previous section">
 <i class="bi bi-arrow-left-circle-fill"></i>
 </a>
 

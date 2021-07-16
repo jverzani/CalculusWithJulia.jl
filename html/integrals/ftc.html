@@ -188,7 +188,7 @@ A \approx S_n = \sum_{i=1}^n f'(a + ih) \cdot h.
 <p class="math">\[
 ~
 A \approx
-\sum_{i=1}^n (f(a + ih) - f(a + (i-1)h)).
+\sum_{i=1}^n \left(f(a + ih) - f(a + (i-1)h)\right).
 ~
 \]</p>
 <p>If we let <span class="math">$g(i) = f(a + ih)$</span>, then the summand above is just <span class="math">$g(i) - g(i-1) = D(g)(i)$</span> and the above then is just the sum of the <span class="math">$D(g)(i)$</span>s, or:</p>
@@ -197,7 +197,7 @@ A \approx
 A \approx S(D(g))(n) = g(n) - g(0).
 ~
 \]</p>
-<p>But <span class="math">$g(n) - g(0) = f(a + nh) - f(a + 0h) = f(b) - f(a)$</span>. That is we expect that if <span class="math">$\approx$</span> in the limit becomes <span class="math">$=$</span> then:</p>
+<p>But <span class="math">$g(n) - g(0) = f(a + nh) - f(a + 0h) = f(b) - f(a)$</span>. That is, we expect that the <span class="math">$\approx$</span> in the limit becomes <span class="math">$=$</span>, or:</p>
 <p class="math">\[
 ~
 \int_a^b f'(x) dx = f(b) - f(a).
@@ -222,12 +222,14 @@ A \approx S(D(g))(n) = g(n) - g(0).
 \begin{align*}
 F'(x) = & \frac{d}{dx} \int_a^x f(u) du \\
 & \approx \frac{F(x) - F(x-h)}{h} = \frac{\int_a^x f(u) du - \int_a^{x-h} f(u) du}{h}\\
-& \approx \frac{(f(a + 1h)h + f(a + 2h)h + \cdots + f(a + (M-1)h)h + f(a + Mh)h)}{h} -
-\frac{(f(a + 1h)h + f(a + 2h)h + \cdots + f(a + (M-1)h)h )}{h}.
+& \approx \frac{\left(f(a + 1h)h + f(a + 2h)h + \cdots + f(a + (M-1)h)h + f(a + Mh)h\right)}{h} -
+\frac{\left(f(a + 1h)h + f(a + 2h)h + \cdots + f(a + (M-1)h)h \right)}{h} \\
+& = \left(f(a + 1h) + f(a + 2h) + \cdots + f(a + (M-1)h) + f(a + Mh)\right) -
+\left(f(a + 1h) + f(a + 2h) + \cdots + f(a + (M-1)h) \right)
 \end{align*}
 ~
 \]</p>
-<p>If <span class="math">$g(i) = f(a + ih)/h$</span>, then the above becomes</p>
+<p>If <span class="math">$g(i) = f(a + ih)$</span>, then the above becomes</p>
 <p class="math">\[
 ~
 \begin{align*}
@@ -281,7 +283,7 @@ F(x) = x^{n+1}/(n+1)
 ~
 \]</p>
 <p>&#40;Well almost&#33; We must be careful to know that <span class="math">$a \cdot b > 0$</span>, as otherwise we will encounter a place where <span class="math">$f(x)$</span> may not be integrable.&#41;</p>
-<p>We note that the above includes the case of a constant, or <span class="math">$n=0$</span>: <span class="math">$\int 1 dx = x^1/1=x$</span>.</p>
+<p>We note that the above includes the case of a constant, or <span class="math">$n=0$</span>.</p>
 <p>What about the case <span class="math">$n=-1$</span>, or <span class="math">$f(x) = 1/x$</span>, that is not covered by the above? For this special case, it is known that <span class="math">$F(x) = \log(x)$</span> &#40;natural log&#41; will have <span class="math">$F'(x) = 1/x$</span>. This gives for <span class="math">$0 < a < b$</span>:</p>
 <p class="math">\[
 ~
@@ -561,6 +563,33 @@ F(x) = \int_{a_0}^x f(u)du, \quad G(x) = \int_{a_0}^x f(u)du,
 \]</p>
 <p>That <span class="math">$F(x) = G(x) + \int_{a_0}^{a_1} f(u) du$</span>. The additional part may look complicated, but the point is that as far as <span class="math">$x$</span> is involved, it is a constant. Hence both <span class="math">$F$</span> and <span class="math">$G$</span> are antiderivatives if either one is.</p>
 <h5>Example</h5>
+<p>From the familiar formula rate <span class="math">$\times$</span> time <span class="math">$=$</span> distance, we &quot;know,&quot; for example, that a car traveling 60 miles an hour for one hour will have traveled 60 miles. This allows us to translate statements about the speed &#40;or more generally velocity&#41; into statements about position at a given time. If the speed is not constant, we don&#39;t have such an easy conversion.</p>
+<p>Suppose our velocity at time <span class="math">$t$</span> is <span class="math">$v(t)$</span>, and always positive. We want to find the position at time <span class="math">$t$</span>, <span class="math">$x(t)$</span>. Let&#39;s assume <span class="math">$x(0) = 0$</span>. Let <span class="math">$h$</span> be some small time step, say <span class="math">$h=(t - 0)/n$</span> for some large <span class="math">$n>0$</span>. Then we can <em>approximate</em> <span class="math">$v(t)$</span> between <span class="math">$[ih, (i+1)h)$</span> by <span class="math">$v(ih)$</span>.  This is a constant so the change in position over the time interval <span class="math">$[ih, (i+1)h)$</span> would simply be <span class="math">$v(ih) \cdot h$</span>, and ignoring the accumulated errors, the approximate position at time <span class="math">$t$</span> would be found by adding this pieces together: <span class="math">$x(t) \approx v(0h)\cdot h + v(1h)\cdot h + v(2h) \cdot h + \cdots + v(nh)h$</span>. But we recognize this &#40;as did <a href="http://www.math.harvard.edu/~knill/teaching/math1a_2011/exhibits/bressoud/">Beeckman</a> in 1618&#41; as nothing more than an approximation for the Riemann sum of <span class="math">$v$</span> over the interval <span class="math">$[0, t]$</span>. That is, we expect:</p>
+<p class="math">\[
+~
+x(t) = \int_0^t v(u) du.
+~
+\]</p>
+<p>Hopefully this makes sense: our position is the result of accumulating our change in position over small units of time. The old one-foot-in-front-of-another approach to walking out the door.</p>
+<p>The above was simplified by the assumption that <span class="math">$x(0) = 0$</span>. What if <span class="math">$x(0) = x_0$</span> for some non-zero value. Then the above is not exactly correct, as <span class="math">$\int_0^0 v(u) du = 0$</span>. So instead, we might write this more concretely as:</p>
+<p class="math">\[
+~
+x(t) = x_0 + \int_0^t v(u) du.
+~
+\]</p>
+<p>There is a similar relationship between velocity and acceleration, but let&#39;s think about it formally. If we know that the acceleration is the rate of change of velocity, then we have <span class="math">$a(t) = v'(t)$</span>. By the FTC, then</p>
+<p class="math">\[
+~
+\int_0^t a(u) du = \int_0^t v'(t) = v(t) - v(0).
+~
+\]</p>
+<p>Rewriting gives a similar statement as before:</p>
+<p class="math">\[
+~
+v(t) = v_0 + \int_0^t a(u) du.
+~
+\]</p>
+<h5>Example</h5>
 <p>In probability theory, for a positive, continuous random variable, the probability that the random value is less than <span class="math">$a$</span> is given by <span class="math">$P(X \leq a) = F(a) = \int_{0}^a f(x) dx$</span>. &#40;Positive means the integral starts at <span class="math">$0$</span>, whereas in general it could be <span class="math">$-\infty$</span>, a minor complication that we haven&#39;t yet  discussed.&#41;</p>
 <p>For example, the exponential distribution with rate <span class="math">$1$</span> has <span class="math">$f(x) = e^{-x}$</span>. Compute <span class="math">$F(x)$</span>.</p>
 <p>This is just <span class="math">$F(x) = \int_0^x e^{-u} du = -e^{-u}\big|_0^x = 1 - e^{-x}$</span>.</p>
@@ -646,34 +675,106 @@ F'(x) = (-2x)e^{-x^2} \int_0^x e^{t^2} dt + e^{-x^2} e^{x^2} = -2x F(x) + 1
 
 <p>The first value being positive says there is a relative minimum at <span class="math">$-0.924139$</span>, at <span class="math">$0.924139$</span> there is a relative maximum.</p>
 <h5>Example</h5>
-<p>From the familiar formula rate <span class="math">$\times$</span> time <span class="math">$=$</span> distance, we &quot;know,&quot; for example, that a car traveling 60 miles an hour for one hour will have traveled 60 miles. This allows us to translate statements about the speed &#40;or more generally velocity&#41; into statements about position at a given time. If the speed is not constant, we don&#39;t have such an easy conversion.</p>
-<p>Suppose our velocity at time <span class="math">$t$</span> is <span class="math">$v(t)$</span>, and always positive. We want to find the position at time <span class="math">$t$</span>, <span class="math">$x(t)$</span>. Let&#39;s assume <span class="math">$x(0) = 0$</span>. Let <span class="math">$h$</span> be some small time step, say <span class="math">$h=(t - 0)/n$</span> for some large <span class="math">$n>0$</span>. Then we can <em>approximate</em> <span class="math">$v(t)$</span> between <span class="math">$[ih, (i+1)h)$</span> by <span class="math">$v(ih)$</span>.  This is a constant so the change in position over the time interval <span class="math">$[ih, (i+1)h)$</span> would simply be <span class="math">$v(ih) \cdot h$</span>, and ignoring the accumulated errors, the approximate position at time <span class="math">$t$</span> would be found by adding this pieces together: <span class="math">$x(t) \approx v(0h)\cdot h + v(1h)\cdot h + v(2h) \cdot h + \cdots + v(nh)h$</span>. But we recognize this &#40;as did <a href="http://www.math.harvard.edu/~knill/teaching/math1a_2011/exhibits/bressoud/">Beeckman</a> in 1618&#41; as nothing more than an approximation for the Riemann sum of <span class="math">$v$</span> over the interval <span class="math">$[0, t]$</span>. That is, we expect:</p>
+<p>Returning to probability, suppose there are <span class="math">$n$</span> positive random numbers <span class="math">$X_1$</span>, <span class="math">$X_2$</span>, ..., <span class="math">$X_n$</span>. A natural question might be to ask what formulas describes the largest of these values, assuming each is identical in some way. A description that is helpful is to define <span class="math">$F(a) = P(X \leq a)$</span> for some random number <span class="math">$X$</span>. That is the probability that <span class="math">$X$</span> is less than or equal to <span class="math">$a$</span> is <span class="math">$F(a)$</span>. For many situations, there is a <em>density</em> function, <span class="math">$f$</span>, for which <span class="math">$F(a) = \int_0^a f(x) dx$</span>.</p>
+<p>Under assumptions that the <span class="math">$X$</span> are identical and independent, the largest value, <span class="math">$M$</span>, may b characterized by <span class="math">$P(M \leq a) = \left[F(a)\right]^n$</span>. Using <span class="math">$f$</span> and <span class="math">$F$</span> describe the derivative of this expression.</p>
+<p>This problem is constructed to take advantage of the FTC, and we have:</p>
 <p class="math">\[
-~
-x(t) = \int_0^t v(u) du.
-~
-\]</p>
-<p>Hopefully this makes sense: our position is the result of accumulating our change in position over small units of time. The old one-foot-in-front-of-another approach to walking out the door.</p>
-<p>The above was simplified by the assumption that <span class="math">$x(0) = 0$</span>. What if <span class="math">$x(0) = x_0$</span> for some non-zero value. Then the above is not exactly correct, as <span class="math">$\int_0^0 v(u) du = 0$</span>. So instead, we might write this more concretely as:</p>
-<p class="math">\[
-~
-x(t) = x_0 + \int_0^t v(u) du.
-~
-\]</p>
-<p>There is a similar relationship between velocity and acceleration, but let&#39;s think about it formally. If we know that the acceleration is the rate of change of velocity, then we have <span class="math">$a(t) = v'(t)$</span>. By the FTC, then</p>
-<p class="math">\[
-~
-\int_0^t a(u) du = \int_0^t v'(t) = v(t) - v(0).
-~
-\]</p>
-<p>Rewriting gives a similar statement as before:</p>
-<p class="math">\[
-~
-v(t) = v_0 + \int_0^t a(u) du.
-~
+\begin{align*}
+\left[P(M \leq a)\right]'
+&= \left[F(a)^n\right]'\\
+&= n \cdot F(a)^{n-1} \left[F(a)\right]'\\
+&= n F(a)^{n-1}f(a)
+\end{align*}
 \]</p>
 <h5>Example</h5>
-<p>A junior engineer at <code>Treadmills.com</code> is tasked with updating the display of calories burned for an older-model treadmill. The old display involved a sequence of LED &quot;dots&quot; that updated each minute. The last 10 minutes were displayed. Each dot corresponded to one calorie burned, so the total number of calories burned in the past 10 minutes was the number of dots displayed, or the sum of each column of dots. An example might be:</p>
+<p>Suppose again probabilities of a random number between <span class="math">$0$</span> and <span class="math">$1$</span>, say, are given by a positive, continuous function <span class="math">$f(x)$</span>on <span class="math">$(0,1)$</span> by <span class="math">$F(a) = P(X \leq a) = \int_0^a f(x) dx$</span>. The median value of the random number is a value of <span class="math">$a$</span> for which <span class="math">$P(X \leq a) = 1/2$</span>. Such an <span class="math">$a$</span> makes <span class="math">$X$</span> a coin toss – betting if <span class="math">$X$</span> is less than <span class="math">$a$</span> is like betting on heads to come up. More generally the <span class="math">$q$</span>th quantile of <span class="math">$X$</span> is a number <span class="math">$a$</span> with <span class="math">$P(X \leq a) = q$</span>. The definition is fine, but for a given <span class="math">$f$</span> and <span class="math">$q$</span> can we find <span class="math">$a$</span>?</p>
+<p>Abstractly, we are solving <span class="math">$F(a) = q$</span> or <span class="math">$F(a)-q = 0$</span> for <span class="math">$a$</span>. That is, this is a zero-finding question. We have discussed different options for this problem: bisection, a range of derivative free methods, and Newton&#39;s method. As evaluating <span class="math">$F$</span> involves an integral, which may involve many evaluations of <span class="math">$f$</span>, a method which converges quickly is preferred. For that, Newton&#39;s method is a good idea, it having quadratic convergence in this case, as <span class="math">$a$</span> is a simple zero given that <span class="math">$F$</span> is increasing under the assumptions above.</p>
+<p>Newton&#39;s method involves the update step <code>x &#61; x - f&#40;x&#41;/f&#39;&#40;x&#41;</code>. For this &quot;<span class="math">$f$</span>&quot; is <span class="math">$h(x) = \int_0^x f(u) du - q$</span>. The derivative is easy, the FTC just applies: <span class="math">$h'(x) = f(x)$</span>; no need for automatic differentiation, which may not even apply to this setup.</p>
+<p>To do a concrete example, we take the <a href="https://en.wikipedia.org/wiki/Beta_distribution">Beta</a>&#40;<span class="math">$\alpha, \beta$</span>&#41; distribution &#40;<span class="math">$\alpha, \beta > 0$</span>&#41;  which has density, <span class="math">$f$</span>, over <span class="math">$[0,1]$</span> given by</p>
+<p class="math">\[
+f(x) = x^{\alpha-1}\cdot (1-x)^{\beta-1} \cdot \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}
+\]</p>
+<p>The Wikipedia link above gives an approximate answer for the median of <span class="math">$(\alpha-1/3)/(\alpha+\beta-2/3)$</span> when <span class="math">$\alpha,\beta > 1$</span>. Let&#39;s see how correct this is when <span class="math">$\alpha=5$</span> and <span class="math">$\beta=6$</span>. The <code>gamma</code> function used below implements <span class="math">$\Gamma$</span>. It is in the <code>SpecialFunctions</code> package, which is loaded with the <code>CalculusWithJulia</code> package.</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>alpha</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>beta</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-ni'>6</span><span class='hljl-t'>
+</span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-p'>(</span><span class='hljl-n'>alpha</span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-p'>)</span><span class='hljl-oB'>*</span><span class='hljl-p'>(</span><span class='hljl-ni'>1</span><span class='hljl-oB'>-</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-oB'>^</span><span class='hljl-p'>(</span><span class='hljl-n'>beta</span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>*</span><span class='hljl-t'> </span><span class='hljl-nf'>gamma</span><span class='hljl-p'>(</span><span class='hljl-n'>alpha</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>beta</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>/</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-nf'>gamma</span><span class='hljl-p'>(</span><span class='hljl-n'>alpha</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>*</span><span class='hljl-t'> </span><span class='hljl-nf'>gamma</span><span class='hljl-p'>(</span><span class='hljl-n'>beta</span><span class='hljl-p'>))</span><span class='hljl-t'>
+</span><span class='hljl-n'>q</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-ni'>2</span><span class='hljl-t'>
+</span><span class='hljl-nf'>h</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>first</span><span class='hljl-p'>(</span><span class='hljl-nf'>quadgk</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-p'>))</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-n'>q</span><span class='hljl-t'>
+</span><span class='hljl-nf'>hp</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'>  </span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'>
+
+</span><span class='hljl-n'>x0</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>alpha</span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-oB'>/</span><span class='hljl-ni'>3</span><span class='hljl-p'>)</span><span class='hljl-oB'>/</span><span class='hljl-p'>(</span><span class='hljl-n'>alpha</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>beta</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-oB'>/</span><span class='hljl-ni'>3</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>xstar</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>find_zero</span><span class='hljl-p'>((</span><span class='hljl-n'>h</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>hp</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>x0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>Roots</span><span class='hljl-oB'>.</span><span class='hljl-nf'>Newton</span><span class='hljl-p'>())</span><span class='hljl-t'>
+
+</span><span class='hljl-n'>xstar</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>x0</span>
+</pre>
+
+
+<pre class="output">
+&#40;0.4516941562236631, 0.45161290322580644&#41;
+</pre>
+
+
+<p>The asymptotic answer agrees with the answer in the first four decimal places.</p>
+<p>As an aside, we ask how many function evaluations were taken? We can track this with a trick - using a closure to record when <span class="math">$f$</span> is called:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-k'>function</span><span class='hljl-t'> </span><span class='hljl-nf'>FnWrapper</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-p'>)</span><span class='hljl-t'>
+    </span><span class='hljl-n'>ctr</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-t'>
+    </span><span class='hljl-k'>function</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'>
+        </span><span class='hljl-n'>ctr</span><span class='hljl-t'> </span><span class='hljl-oB'>+=</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-t'>
+        </span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'>
+    </span><span class='hljl-k'>end</span><span class='hljl-t'>
+</span><span class='hljl-k'>end</span>
+</pre>
+
+
+<pre class="output">
+FnWrapper &#40;generic function with 1 method&#41;
+</pre>
+
+
+<p>Then we have the above using <code>FnWrapper&#40;f&#41;</code> in place of <code>f</code>:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>ff</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>FnWrapper</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-nf'>F</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>first</span><span class='hljl-p'>(</span><span class='hljl-nf'>quadgk</span><span class='hljl-p'>(</span><span class='hljl-n'>ff</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-p'>))</span><span class='hljl-t'>
+</span><span class='hljl-nf'>h</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>F</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-n'>q</span><span class='hljl-t'>
+</span><span class='hljl-nf'>hp</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'>  </span><span class='hljl-nf'>ff</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>xstar</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>find_zero</span><span class='hljl-p'>((</span><span class='hljl-n'>h</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>hp</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>x0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>Roots</span><span class='hljl-oB'>.</span><span class='hljl-nf'>Newton</span><span class='hljl-p'>())</span>
+</pre>
+
+
+<pre class="output">
+0.4516941562236631
+</pre>
+
+
+<p>So the answer is the same. Newton&#39;s method converged in 3 steps, and called <code>h</code> or <code>hp</code> 5 times. This evaluation required this many function evaluations of <code>f</code>:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>ff</span><span class='hljl-oB'>.</span><span class='hljl-n'>ctr</span>
+</pre>
+
+
+<pre class="output">
+Core.Box&#40;48&#41;
+</pre>
+
+
+<p>Assuming the number inside <code>Core.Box</code> is the value of <code>ctr</code>, we see not so many function calls, <span class="math">$48$</span>.</p>
+<p>Were <code>f</code> very expensive to compute or <code>h</code> expensive to compute &#40;which can happen if, say, <code>f</code> were highly oscillatory&#41; then steps could be made to cut this number down, such as evaluating <span class="math">$F(x_n) = \int_{x_0}^{x_n} f(x) dx$</span>, using linearity, as <span class="math">$\int_0^{x_0} f(x) dx + \int_{x_0}^{x_1}f(x)dx + \int_{x_1}^{x_2}f(x)dx + \cdots + \int_{x_{n-1}}^{x_n}f(x)dx$</span>. Then all but the last term could be stored from the previous steps of Newton&#39;s method. The last term presumably being less costly as it would typically involve a small interval.</p>
+
+
+<div class="alert alert-info" role="alert"><div class="markdown"><p>The trick using a closure relies on an internal way of accessing elements in a closure. The same trick could be implemented many different ways which aren&#39;t reliant on undocumented internals, this approach was just a tad more convenient. It shouldn&#39;t be copied for work intended for distribution.</p>
+</div></div>
+
+<h5>Example</h5>
+<p>A junior engineer at <code>Treadmillz.com</code> is tasked with updating the display of calories burned for an older-model treadmill. The old display involved a sequence of LED &quot;dots&quot; that updated each minute. The last 10 minutes were displayed. Each dot corresponded to one calorie burned, so the total number of calories burned in the past 10 minutes was the number of dots displayed, or the sum of each column of dots. An example might be:</p>
 <pre><code>
   **
   ****
@@ -741,29 +842,29 @@ update &#40;generic function with 2 methods&#41;
 <p>If <span class="math">$F(x) = e^{x^2}$</span> is an antiderivative for <span class="math">$f$</span>, find <span class="math">$\int_0^2 f(x) dx$</span>.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='Mos6iJNb' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='jn99gpVO' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="Mos6iJNb" type="number" class="form-control" placeholder="Numeric answer">
-<label for="Mos6iJNb">Numeric answer</label>
+<input id="jn99gpVO" type="number" class="form-control" placeholder="Numeric answer">
+<label for="jn99gpVO">Numeric answer</label>
 
 </div>
 
-<div id='Mos6iJNb_message'></div>
+<div id='jn99gpVO_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#Mos6iJNb').on('change', function() {
+$('#jn99gpVO').on('change', function() {
   correct = Math.abs(this.value - 53.598150033144236) <= 0.001;
 
   if(correct) {
-     $('#Mos6iJNb_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#jn99gpVO_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#Mos6iJNb_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#jn99gpVO_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -773,29 +874,29 @@ $('#Mos6iJNb').on('change', function() {
 <p>If <span class="math">$\sin(x) - x\cos(x)$</span> is an antiderivative for <span class="math">$x\sin(x)$</span>, find the following integral <span class="math">$\int_0^\pi x\sin(x) dx$</span>.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='z8qr4XxK' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='cTzYOLh0' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="z8qr4XxK" type="number" class="form-control" placeholder="Numeric answer">
-<label for="z8qr4XxK">Numeric answer</label>
+<input id="cTzYOLh0" type="number" class="form-control" placeholder="Numeric answer">
+<label for="cTzYOLh0">Numeric answer</label>
 
 </div>
 
-<div id='z8qr4XxK_message'></div>
+<div id='cTzYOLh0_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#z8qr4XxK').on('change', function() {
+$('#cTzYOLh0').on('change', function() {
   correct = Math.abs(this.value - 3.141592653589793) <= 0.001;
 
   if(correct) {
-     $('#z8qr4XxK_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#cTzYOLh0_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#z8qr4XxK_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#cTzYOLh0_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -805,29 +906,29 @@ $('#z8qr4XxK').on('change', function() {
 <p>Find an antiderivative then evaluate <span class="math">$\int_0^1 x(1-x) dx$</span>.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='Zk4k2nSb' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='WIkXpoSB' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="Zk4k2nSb" type="number" class="form-control" placeholder="Numeric answer">
-<label for="Zk4k2nSb">Numeric answer</label>
+<input id="WIkXpoSB" type="number" class="form-control" placeholder="Numeric answer">
+<label for="WIkXpoSB">Numeric answer</label>
 
 </div>
 
-<div id='Zk4k2nSb_message'></div>
+<div id='WIkXpoSB_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#Zk4k2nSb').on('change', function() {
+$('#WIkXpoSB').on('change', function() {
   correct = Math.abs(this.value - 0.16666666666666669) <= 0.001;
 
   if(correct) {
-     $('#Zk4k2nSb_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#WIkXpoSB_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#Zk4k2nSb_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#WIkXpoSB_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -837,29 +938,29 @@ $('#Zk4k2nSb').on('change', function() {
 <p>Use the fact that <span class="math">$[e^x]' = e^x$</span> to evaluate <span class="math">$\int_0^e (e^x - 1) dx$</span>.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='kxrUtj1m' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='f8UTku3G' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="kxrUtj1m" type="number" class="form-control" placeholder="Numeric answer">
-<label for="kxrUtj1m">Numeric answer</label>
+<input id="f8UTku3G" type="number" class="form-control" placeholder="Numeric answer">
+<label for="f8UTku3G">Numeric answer</label>
 
 </div>
 
-<div id='kxrUtj1m_message'></div>
+<div id='f8UTku3G_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#kxrUtj1m').on('change', function() {
+$('#f8UTku3G').on('change', function() {
   correct = Math.abs(this.value - 0.7182818284590451) <= 0.001;
 
   if(correct) {
-     $('#kxrUtj1m_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#f8UTku3G_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#kxrUtj1m_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#f8UTku3G_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -869,29 +970,29 @@ $('#kxrUtj1m').on('change', function() {
 <p>Find the value of <span class="math">$\int_0^1 (1-x^2/2 + x^4/24) dx$</span>.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='vyaOJMXf' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='D7UoDJpI' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="vyaOJMXf" type="number" class="form-control" placeholder="Numeric answer">
-<label for="vyaOJMXf">Numeric answer</label>
+<input id="D7UoDJpI" type="number" class="form-control" placeholder="Numeric answer">
+<label for="D7UoDJpI">Numeric answer</label>
 
 </div>
 
-<div id='vyaOJMXf_message'></div>
+<div id='D7UoDJpI_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#vyaOJMXf').on('change', function() {
+$('#D7UoDJpI').on('change', function() {
   correct = Math.abs(this.value - 0.8416666666666667) <= 0.001;
 
   if(correct) {
-     $('#vyaOJMXf_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#D7UoDJpI_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#vyaOJMXf_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#D7UoDJpI_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -901,41 +1002,41 @@ $('#vyaOJMXf').on('change', function() {
 <p>Using <code>SymPy</code>, what is an antiderivative for <span class="math">$x^2 \sin(x)$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="pAM7CYL1" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="exhZIt8y" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_pAM7CYL1" id="radio_pAM7CYL1_1" value="1">
-  <label class="form-check-label" for="radio_pAM7CYL1_1">
+  <input class="form-check-input" type="radio" name="radio_exhZIt8y" id="radio_exhZIt8y_1" value="1">
+  <label class="form-check-label" for="radio_exhZIt8y_1">
     &#36;-x^2\cos&#40;x&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_pAM7CYL1" id="radio_pAM7CYL1_2" value="2">
-  <label class="form-check-label" for="radio_pAM7CYL1_2">
+  <input class="form-check-input" type="radio" name="radio_exhZIt8y" id="radio_exhZIt8y_2" value="2">
+  <label class="form-check-label" for="radio_exhZIt8y_2">
     &#36;-x^2\cos&#40;x&#41; &#43; 2x\sin&#40;x&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_pAM7CYL1" id="radio_pAM7CYL1_3" value="3">
-  <label class="form-check-label" for="radio_pAM7CYL1_3">
+  <input class="form-check-input" type="radio" name="radio_exhZIt8y" id="radio_exhZIt8y_3" value="3">
+  <label class="form-check-label" for="radio_exhZIt8y_3">
     &#36;-x^2\cos&#40;x&#41; &#43; 2x\sin&#40;x&#41; &#43; 2\cos&#40;x&#41;&#36;
 
   </label>
 </div>
 
-<div id="pAM7CYL1_message"></div>
+<div id="exhZIt8y_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_pAM7CYL1']").on("change", function() {
+$("input:radio[name='radio_exhZIt8y']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#pAM7CYL1_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#exhZIt8y_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#pAM7CYL1_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#exhZIt8y_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -946,48 +1047,48 @@ $("input:radio[name='radio_pAM7CYL1']").on("change", function() {
 <p>Using <code>SymPy</code>, what is an antiderivative for <span class="math">$xe^{-x}$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="D0k4bMpz" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="tBKoCbsB" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_D0k4bMpz" id="radio_D0k4bMpz_1" value="1">
-  <label class="form-check-label" for="radio_D0k4bMpz_1">
+  <input class="form-check-input" type="radio" name="radio_tBKoCbsB" id="radio_tBKoCbsB_1" value="1">
+  <label class="form-check-label" for="radio_tBKoCbsB_1">
     &#36;-e^&#123;-x&#125;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_D0k4bMpz" id="radio_D0k4bMpz_2" value="2">
-  <label class="form-check-label" for="radio_D0k4bMpz_2">
+  <input class="form-check-input" type="radio" name="radio_tBKoCbsB" id="radio_tBKoCbsB_2" value="2">
+  <label class="form-check-label" for="radio_tBKoCbsB_2">
     &#36;-xe^&#123;-x&#125;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_D0k4bMpz" id="radio_D0k4bMpz_3" value="3">
-  <label class="form-check-label" for="radio_D0k4bMpz_3">
+  <input class="form-check-input" type="radio" name="radio_tBKoCbsB" id="radio_tBKoCbsB_3" value="3">
+  <label class="form-check-label" for="radio_tBKoCbsB_3">
     &#36;-&#40;1&#43;x&#41; e^&#123;-x&#125;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_D0k4bMpz" id="radio_D0k4bMpz_4" value="4">
-  <label class="form-check-label" for="radio_D0k4bMpz_4">
+  <input class="form-check-input" type="radio" name="radio_tBKoCbsB" id="radio_tBKoCbsB_4" value="4">
+  <label class="form-check-label" for="radio_tBKoCbsB_4">
     &#36;-&#40;1 &#43; x &#43; x^2&#41; e^&#123;-x&#125;&#36;
 
   </label>
 </div>
 
-<div id="D0k4bMpz_message"></div>
+<div id="tBKoCbsB_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_D0k4bMpz']").on("change", function() {
+$("input:radio[name='radio_tBKoCbsB']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#D0k4bMpz_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#tBKoCbsB_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#D0k4bMpz_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#tBKoCbsB_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -998,29 +1099,29 @@ $("input:radio[name='radio_D0k4bMpz']").on("change", function() {
 <p>Using <code>SymPy</code>, integrate the function <span class="math">$\int_0^{2\pi} e^x \cdot \sin(x) dx$</span>.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='BVroo8X1' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='gKhpSrkO' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="BVroo8X1" type="number" class="form-control" placeholder="Numeric answer">
-<label for="BVroo8X1">Numeric answer</label>
+<input id="gKhpSrkO" type="number" class="form-control" placeholder="Numeric answer">
+<label for="gKhpSrkO">Numeric answer</label>
 
 </div>
 
-<div id='BVroo8X1_message'></div>
+<div id='gKhpSrkO_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#BVroo8X1').on('change', function() {
+$('#gKhpSrkO').on('change', function() {
   correct = Math.abs(this.value - -267.24582776238236) <= 0.001;
 
   if(correct) {
-     $('#BVroo8X1_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#gKhpSrkO_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#BVroo8X1_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#gKhpSrkO_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1030,29 +1131,29 @@ $('#BVroo8X1').on('change', function() {
 <p>A particle has velocity <span class="math">$v(t) = 2t^2 - t$</span> between <span class="math">$0$</span> and <span class="math">$1$</span>. If <span class="math">$x(0) = 0$</span>, find the position <span class="math">$x(1)$</span>.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='joTPGM4M' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='Mx75Zh18' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="joTPGM4M" type="number" class="form-control" placeholder="Numeric answer">
-<label for="joTPGM4M">Numeric answer</label>
+<input id="Mx75Zh18" type="number" class="form-control" placeholder="Numeric answer">
+<label for="Mx75Zh18">Numeric answer</label>
 
 </div>
 
-<div id='joTPGM4M_message'></div>
+<div id='Mx75Zh18_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#joTPGM4M').on('change', function() {
+$('#Mx75Zh18').on('change', function() {
   correct = Math.abs(this.value - 0.16666666666666669) <= 0.001;
 
   if(correct) {
-     $('#joTPGM4M_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#Mx75Zh18_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#joTPGM4M_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#Mx75Zh18_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1062,29 +1163,29 @@ $('#joTPGM4M').on('change', function() {
 <p>A particle has acceleration given by <span class="math">$\sin(t)$</span> between <span class="math">$0$</span> and <span class="math">$\pi$</span>. If the initial velocity is <span class="math">$v(0) = 0$</span>, find <span class="math">$v(\pi/2)$</span>.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='toOFBewn' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='dgZPVpoU' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="toOFBewn" type="number" class="form-control" placeholder="Numeric answer">
-<label for="toOFBewn">Numeric answer</label>
+<input id="dgZPVpoU" type="number" class="form-control" placeholder="Numeric answer">
+<label for="dgZPVpoU">Numeric answer</label>
 
 </div>
 
-<div id='toOFBewn_message'></div>
+<div id='dgZPVpoU_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#toOFBewn').on('change', function() {
+$('#dgZPVpoU').on('change', function() {
   correct = Math.abs(this.value - 0.9999999999999999) <= 0.001;
 
   if(correct) {
-     $('#toOFBewn_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#dgZPVpoU_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#toOFBewn_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#dgZPVpoU_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1094,10 +1195,10 @@ $('#toOFBewn').on('change', function() {
 <p>The position of a particle is given by <span class="math">$x(t) = \int_0^t g(u) du$</span>, where <span class="math">$x(0)=0$</span> and <span class="math">$g(u)$</span> is given by this piecewise linear graph:</p>
 
 
-    <div id="56c54684-6c06-48c3-b79b-ebbdfb6ba5d9" style="width:576px;height:384px;"></div>
+    <div id="49a75ef4-36fd-4317-8cc5-47b223e5d7ee" style="width:576px;height:384px;"></div>
     <script>
     
-    PLOT = document.getElementById('56c54684-6c06-48c3-b79b-ebbdfb6ba5d9');
+        var PLOT = document.getElementById('49a75ef4-36fd-4317-8cc5-47b223e5d7ee');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -1315,6 +1416,7 @@ $('#toOFBewn').on('change', function() {
     "width": 576
 }
 );
+
     
     </script>
 
@@ -1325,44 +1427,44 @@ $('#toOFBewn').on('change', function() {
 </ul>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="lwYF0oZ7" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Ruzms3eB" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_lwYF0oZ7" id="radio_lwYF0oZ7_1" value="1">
-  <label class="form-check-label" for="radio_lwYF0oZ7_1">
+  <input class="form-check-input" type="radio" name="radio_Ruzms3eB" id="radio_Ruzms3eB_1" value="1">
+  <label class="form-check-label" for="radio_Ruzms3eB_1">
     It is always positive
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_lwYF0oZ7" id="radio_lwYF0oZ7_2" value="2">
-  <label class="form-check-label" for="radio_lwYF0oZ7_2">
+  <input class="form-check-input" type="radio" name="radio_Ruzms3eB" id="radio_Ruzms3eB_2" value="2">
+  <label class="form-check-label" for="radio_Ruzms3eB_2">
     It is always negative
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_lwYF0oZ7" id="radio_lwYF0oZ7_3" value="3">
-  <label class="form-check-label" for="radio_lwYF0oZ7_3">
+  <input class="form-check-input" type="radio" name="radio_Ruzms3eB" id="radio_Ruzms3eB_3" value="3">
+  <label class="form-check-label" for="radio_Ruzms3eB_3">
     Between &#36;0&#36; and &#36;1&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_lwYF0oZ7" id="radio_lwYF0oZ7_4" value="4">
-  <label class="form-check-label" for="radio_lwYF0oZ7_4">
+  <input class="form-check-input" type="radio" name="radio_Ruzms3eB" id="radio_Ruzms3eB_4" value="4">
+  <label class="form-check-label" for="radio_Ruzms3eB_4">
     Between &#36;1&#36; and &#36;5&#36;
   </label>
 </div>
 
-<div id="lwYF0oZ7_message"></div>
+<div id="Ruzms3eB_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_lwYF0oZ7']").on("change", function() {
+$("input:radio[name='radio_Ruzms3eB']").on("change", function() {
   correct = this.value == 4;
 
   if(correct) {
-     $("#lwYF0oZ7_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#Ruzms3eB_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#lwYF0oZ7_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#Ruzms3eB_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1375,48 +1477,48 @@ $("input:radio[name='radio_lwYF0oZ7']").on("change", function() {
 </ul>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="I2WBchAZ" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="J1YvyTeE" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_I2WBchAZ" id="radio_I2WBchAZ_1" value="1">
-  <label class="form-check-label" for="radio_I2WBchAZ_1">
+  <input class="form-check-input" type="radio" name="radio_J1YvyTeE" id="radio_J1YvyTeE_1" value="1">
+  <label class="form-check-label" for="radio_J1YvyTeE_1">
     &#36;t&#61;1&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_I2WBchAZ" id="radio_I2WBchAZ_2" value="2">
-  <label class="form-check-label" for="radio_I2WBchAZ_2">
+  <input class="form-check-input" type="radio" name="radio_J1YvyTeE" id="radio_J1YvyTeE_2" value="2">
+  <label class="form-check-label" for="radio_J1YvyTeE_2">
     &#36;t&#61;2&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_I2WBchAZ" id="radio_I2WBchAZ_3" value="3">
-  <label class="form-check-label" for="radio_I2WBchAZ_3">
+  <input class="form-check-input" type="radio" name="radio_J1YvyTeE" id="radio_J1YvyTeE_3" value="3">
+  <label class="form-check-label" for="radio_J1YvyTeE_3">
     &#36;t&#61;3&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_I2WBchAZ" id="radio_I2WBchAZ_4" value="4">
-  <label class="form-check-label" for="radio_I2WBchAZ_4">
+  <input class="form-check-input" type="radio" name="radio_J1YvyTeE" id="radio_J1YvyTeE_4" value="4">
+  <label class="form-check-label" for="radio_J1YvyTeE_4">
     &#36;t&#61;4&#36;
 
   </label>
 </div>
 
-<div id="I2WBchAZ_message"></div>
+<div id="J1YvyTeE_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_I2WBchAZ']").on("change", function() {
+$("input:radio[name='radio_J1YvyTeE']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#I2WBchAZ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#J1YvyTeE_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#I2WBchAZ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#J1YvyTeE_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1429,29 +1531,29 @@ $("input:radio[name='radio_I2WBchAZ']").on("change", function() {
 </ul>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='dvrLfXyp' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='51g7ZhzL' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="dvrLfXyp" type="number" class="form-control" placeholder="Numeric answer">
-<label for="dvrLfXyp">Numeric answer</label>
+<input id="51g7ZhzL" type="number" class="form-control" placeholder="Numeric answer">
+<label for="51g7ZhzL">Numeric answer</label>
 
 </div>
 
-<div id='dvrLfXyp_message'></div>
+<div id='51g7ZhzL_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#dvrLfXyp').on('change', function() {
+$('#51g7ZhzL').on('change', function() {
   correct = Math.abs(this.value - 4) <= 0;
 
   if(correct) {
-     $('#dvrLfXyp_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#51g7ZhzL_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#dvrLfXyp_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#51g7ZhzL_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1463,44 +1565,44 @@ $('#dvrLfXyp').on('change', function() {
 </ul>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="hLeFeNlW" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="EJyi7Zy9" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_hLeFeNlW" id="radio_hLeFeNlW_1" value="1">
-  <label class="form-check-label" for="radio_hLeFeNlW_1">
+  <input class="form-check-input" type="radio" name="radio_EJyi7Zy9" id="radio_EJyi7Zy9_1" value="1">
+  <label class="form-check-label" for="radio_EJyi7Zy9_1">
     The position, &#36;x&#40;t&#41;&#36;, stays constant
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_hLeFeNlW" id="radio_hLeFeNlW_2" value="2">
-  <label class="form-check-label" for="radio_hLeFeNlW_2">
+  <input class="form-check-input" type="radio" name="radio_EJyi7Zy9" id="radio_EJyi7Zy9_2" value="2">
+  <label class="form-check-label" for="radio_EJyi7Zy9_2">
     The position, &#36;x&#40;t&#41;&#36;, increases with a slope of &#36;1&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_hLeFeNlW" id="radio_hLeFeNlW_3" value="3">
-  <label class="form-check-label" for="radio_hLeFeNlW_3">
+  <input class="form-check-input" type="radio" name="radio_EJyi7Zy9" id="radio_EJyi7Zy9_3" value="3">
+  <label class="form-check-label" for="radio_EJyi7Zy9_3">
     The position, &#36;x&#40;t&#41;&#36;, increases quadratically from &#36;-1/2&#36; to &#36;1&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_hLeFeNlW" id="radio_hLeFeNlW_4" value="4">
-  <label class="form-check-label" for="radio_hLeFeNlW_4">
+  <input class="form-check-input" type="radio" name="radio_EJyi7Zy9" id="radio_EJyi7Zy9_4" value="4">
+  <label class="form-check-label" for="radio_EJyi7Zy9_4">
     The position, &#36;x&#40;t&#41;&#36;, increases quadratically from &#36;0&#36; to &#36;1&#36;
   </label>
 </div>
 
-<div id="hLeFeNlW_message"></div>
+<div id="EJyi7Zy9_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_hLeFeNlW']").on("change", function() {
+$("input:radio[name='radio_EJyi7Zy9']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#hLeFeNlW_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#EJyi7Zy9_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#hLeFeNlW_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#EJyi7Zy9_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1511,41 +1613,41 @@ $("input:radio[name='radio_hLeFeNlW']").on("change", function() {
 <p>Let <span class="math">$F(x) = \int_{t-10}^t f(u) du$</span> for <span class="math">$f(u)$</span> a positive, continuous function. What is <span class="math">$F'(t)$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="JIvQfaoA" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="qCoXQvYt" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_JIvQfaoA" id="radio_JIvQfaoA_1" value="1">
-  <label class="form-check-label" for="radio_JIvQfaoA_1">
+  <input class="form-check-input" type="radio" name="radio_qCoXQvYt" id="radio_qCoXQvYt_1" value="1">
+  <label class="form-check-label" for="radio_qCoXQvYt_1">
     &#36;f&#40;t&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_JIvQfaoA" id="radio_JIvQfaoA_2" value="2">
-  <label class="form-check-label" for="radio_JIvQfaoA_2">
+  <input class="form-check-input" type="radio" name="radio_qCoXQvYt" id="radio_qCoXQvYt_2" value="2">
+  <label class="form-check-label" for="radio_qCoXQvYt_2">
     &#36;-f&#40;t-10&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_JIvQfaoA" id="radio_JIvQfaoA_3" value="3">
-  <label class="form-check-label" for="radio_JIvQfaoA_3">
+  <input class="form-check-input" type="radio" name="radio_qCoXQvYt" id="radio_qCoXQvYt_3" value="3">
+  <label class="form-check-label" for="radio_qCoXQvYt_3">
     &#36;f&#40;t&#41; - f&#40;t-10&#41;&#36;
 
   </label>
 </div>
 
-<div id="JIvQfaoA_message"></div>
+<div id="qCoXQvYt_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_JIvQfaoA']").on("change", function() {
+$("input:radio[name='radio_qCoXQvYt']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#JIvQfaoA_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#qCoXQvYt_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#JIvQfaoA_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#qCoXQvYt_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1556,38 +1658,38 @@ $("input:radio[name='radio_JIvQfaoA']").on("change", function() {
 <p>Suppose <span class="math">$f(x) \geq 0$</span> and <span class="math">$F(x) = \int_0^x f(u) du$</span>. <span class="math">$F(x)$</span> is continuous and so has a maximum value on the interval <span class="math">$[0,1]$</span> taken at some <span class="math">$c$</span> in <span class="math">$[0,1]$</span>. It is</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="4waxvZI7" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="nytToYOr" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_4waxvZI7" id="radio_4waxvZI7_1" value="1">
-  <label class="form-check-label" for="radio_4waxvZI7_1">
+  <input class="form-check-input" type="radio" name="radio_nytToYOr" id="radio_nytToYOr_1" value="1">
+  <label class="form-check-label" for="radio_nytToYOr_1">
     At a critical point
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_4waxvZI7" id="radio_4waxvZI7_2" value="2">
-  <label class="form-check-label" for="radio_4waxvZI7_2">
+  <input class="form-check-input" type="radio" name="radio_nytToYOr" id="radio_nytToYOr_2" value="2">
+  <label class="form-check-label" for="radio_nytToYOr_2">
     At the endpoint &#36;0&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_4waxvZI7" id="radio_4waxvZI7_3" value="3">
-  <label class="form-check-label" for="radio_4waxvZI7_3">
+  <input class="form-check-input" type="radio" name="radio_nytToYOr" id="radio_nytToYOr_3" value="3">
+  <label class="form-check-label" for="radio_nytToYOr_3">
     At the endpoint &#36;1&#36;
   </label>
 </div>
 
-<div id="4waxvZI7_message"></div>
+<div id="nytToYOr_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_4waxvZI7']").on("change", function() {
+$("input:radio[name='radio_nytToYOr']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#4waxvZI7_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#nytToYOr_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#4waxvZI7_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#nytToYOr_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1598,44 +1700,44 @@ $("input:radio[name='radio_4waxvZI7']").on("change", function() {
 <p>Suppose <span class="math">$f(x)$</span> is monotonically decreasing with <span class="math">$f(0)=1$</span>, <span class="math">$f(1/2) = 0$</span> and <span class="math">$f(1) = -1$</span>. Let <span class="math">$F(x) = \int_0^x f(u) du$</span>. <span class="math">$F(x)$</span> is continuous and so has a maximum value on the interval <span class="math">$[0,1]$</span> taken at some <span class="math">$c$</span> in <span class="math">$[0,1]$</span>. It is</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="djE5teAZ" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="EqlDGKUt" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_djE5teAZ" id="radio_djE5teAZ_1" value="1">
-  <label class="form-check-label" for="radio_djE5teAZ_1">
+  <input class="form-check-input" type="radio" name="radio_EqlDGKUt" id="radio_EqlDGKUt_1" value="1">
+  <label class="form-check-label" for="radio_EqlDGKUt_1">
     At a critical point, either &#36;0&#36; or &#36;1&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_djE5teAZ" id="radio_djE5teAZ_2" value="2">
-  <label class="form-check-label" for="radio_djE5teAZ_2">
+  <input class="form-check-input" type="radio" name="radio_EqlDGKUt" id="radio_EqlDGKUt_2" value="2">
+  <label class="form-check-label" for="radio_EqlDGKUt_2">
     At a critical point, &#36;1/2&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_djE5teAZ" id="radio_djE5teAZ_3" value="3">
-  <label class="form-check-label" for="radio_djE5teAZ_3">
+  <input class="form-check-input" type="radio" name="radio_EqlDGKUt" id="radio_EqlDGKUt_3" value="3">
+  <label class="form-check-label" for="radio_EqlDGKUt_3">
     At the endpoint &#36;0&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_djE5teAZ" id="radio_djE5teAZ_4" value="4">
-  <label class="form-check-label" for="radio_djE5teAZ_4">
+  <input class="form-check-input" type="radio" name="radio_EqlDGKUt" id="radio_EqlDGKUt_4" value="4">
+  <label class="form-check-label" for="radio_EqlDGKUt_4">
     At the endpoint &#36;1&#36;
   </label>
 </div>
 
-<div id="djE5teAZ_message"></div>
+<div id="EqlDGKUt_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_djE5teAZ']").on("change", function() {
+$("input:radio[name='radio_EqlDGKUt']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#djE5teAZ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#EqlDGKUt_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#djE5teAZ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#EqlDGKUt_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1647,10 +1749,10 @@ $("input:radio[name='radio_djE5teAZ']").on("change", function() {
 <p>Consider the following figure where <span class="math">$f$</span> is a strictly increasing function with <span class="math">$f(0) = 0$</span>. and <span class="math">$x > 0$</span>. The function <span class="math">$A(x) = \int_0^x f(u) du$</span> is also plotted. The point <span class="math">$Q$</span> is <span class="math">$f(x)$</span>, and the point <span class="math">$P$</span> is <span class="math">$A(x)$</span>. The point <span class="math">$T$</span> is chosen to so that the length between <span class="math">$T$</span> and <span class="math">$x$</span> times the length between <span class="math">$Q$</span> and <span class="math">$x$</span> equals the length from <span class="math">$P$</span> to <span class="math">$x$</span>. &#40;<span class="math">$\lvert Tx \rvert \cdot \lvert Qx \rvert = \lvert Px \rvert$</span>.&#41; Barrow showed that the line segment <span class="math">$PT$</span> is tangent to the graph of <span class="math">$A(x)$</span>. This figure illustrates the labeling for some function:</p>
 
 
-    <div id="2a2892fc-d8b1-4e08-9489-3867f5bf8a19" style="width:576px;height:384px;"></div>
+    <div id="000e94c8-15c2-4398-a2da-97b8084d0917" style="width:576px;height:384px;"></div>
     <script>
     
-    PLOT = document.getElementById('2a2892fc-d8b1-4e08-9489-3867f5bf8a19');
+        var PLOT = document.getElementById('000e94c8-15c2-4398-a2da-97b8084d0917');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -2076,6 +2178,7 @@ $("input:radio[name='radio_djE5teAZ']").on("change", function() {
     "width": 576
 }
 );
+
     
     </script>
 
@@ -2083,41 +2186,41 @@ $("input:radio[name='radio_djE5teAZ']").on("change", function() {
 <p>The fact that <span class="math">$\lvert Tx \rvert \cdot \lvert Qx \rvert = \lvert Px \rvert$</span> says what in terms of <span class="math">$f(x)$</span>, <span class="math">$A(x)$</span> and <span class="math">$A'(x)$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="fx4Lg9Z5" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="p2geGsT0" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_fx4Lg9Z5" id="radio_fx4Lg9Z5_1" value="1">
-  <label class="form-check-label" for="radio_fx4Lg9Z5_1">
+  <input class="form-check-input" type="radio" name="radio_p2geGsT0" id="radio_p2geGsT0_1" value="1">
+  <label class="form-check-label" for="radio_p2geGsT0_1">
     &#36;\lvert Tx \rvert \cdot f&#40;x&#41; &#61; A&#40;x&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_fx4Lg9Z5" id="radio_fx4Lg9Z5_2" value="2">
-  <label class="form-check-label" for="radio_fx4Lg9Z5_2">
+  <input class="form-check-input" type="radio" name="radio_p2geGsT0" id="radio_p2geGsT0_2" value="2">
+  <label class="form-check-label" for="radio_p2geGsT0_2">
     &#36;A&#40;x&#41; / \lvert Tx \rvert &#61; A&#39;&#40;x&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_fx4Lg9Z5" id="radio_fx4Lg9Z5_3" value="3">
-  <label class="form-check-label" for="radio_fx4Lg9Z5_3">
+  <input class="form-check-input" type="radio" name="radio_p2geGsT0" id="radio_p2geGsT0_3" value="3">
+  <label class="form-check-label" for="radio_p2geGsT0_3">
     &#36;A&#40;x&#41; \cdot A&#39;&#40;x&#41; &#61; f&#40;x&#41;&#36;
 
   </label>
 </div>
 
-<div id="fx4Lg9Z5_message"></div>
+<div id="p2geGsT0_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_fx4Lg9Z5']").on("change", function() {
+$("input:radio[name='radio_p2geGsT0']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#fx4Lg9Z5_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#p2geGsT0_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#fx4Lg9Z5_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#p2geGsT0_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -2127,41 +2230,41 @@ $("input:radio[name='radio_fx4Lg9Z5']").on("change", function() {
 <p>The fact that <span class="math">$\lvert PT \rvert$</span> is tangent says what in terms of <span class="math">$f(x)$</span>, <span class="math">$A(x)$</span> and <span class="math">$A'(x)$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="qDHJKrzc" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="r2vXsaeV" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_qDHJKrzc" id="radio_qDHJKrzc_1" value="1">
-  <label class="form-check-label" for="radio_qDHJKrzc_1">
+  <input class="form-check-input" type="radio" name="radio_r2vXsaeV" id="radio_r2vXsaeV_1" value="1">
+  <label class="form-check-label" for="radio_r2vXsaeV_1">
     &#36;\lvert Tx \rvert \cdot f&#40;x&#41; &#61; A&#40;x&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_qDHJKrzc" id="radio_qDHJKrzc_2" value="2">
-  <label class="form-check-label" for="radio_qDHJKrzc_2">
+  <input class="form-check-input" type="radio" name="radio_r2vXsaeV" id="radio_r2vXsaeV_2" value="2">
+  <label class="form-check-label" for="radio_r2vXsaeV_2">
     &#36;A&#40;x&#41; / \lvert Tx \rvert &#61; A&#39;&#40;x&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_qDHJKrzc" id="radio_qDHJKrzc_3" value="3">
-  <label class="form-check-label" for="radio_qDHJKrzc_3">
+  <input class="form-check-input" type="radio" name="radio_r2vXsaeV" id="radio_r2vXsaeV_3" value="3">
+  <label class="form-check-label" for="radio_r2vXsaeV_3">
     &#36;A&#40;x&#41; \cdot A&#39;&#40;x&#41; &#61; f&#40;x&#41;&#36;
 
   </label>
 </div>
 
-<div id="qDHJKrzc_message"></div>
+<div id="r2vXsaeV_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_qDHJKrzc']").on("change", function() {
+$("input:radio[name='radio_r2vXsaeV']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#qDHJKrzc_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#r2vXsaeV_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#qDHJKrzc_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#r2vXsaeV_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -2171,48 +2274,48 @@ $("input:radio[name='radio_qDHJKrzc']").on("change", function() {
 <p>Solving, we get:</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="zrejiAAJ" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="c03Osm2b" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_zrejiAAJ" id="radio_zrejiAAJ_1" value="1">
-  <label class="form-check-label" for="radio_zrejiAAJ_1">
-    &#36;A&#39;&#40;x&#41; &#61; f&#40;x&#41;&#36;
-
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_zrejiAAJ" id="radio_zrejiAAJ_2" value="2">
-  <label class="form-check-label" for="radio_zrejiAAJ_2">
+  <input class="form-check-input" type="radio" name="radio_c03Osm2b" id="radio_c03Osm2b_1" value="1">
+  <label class="form-check-label" for="radio_c03Osm2b_1">
     &#36;A&#40;x&#41; &#61; f&#40;x&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_zrejiAAJ" id="radio_zrejiAAJ_3" value="3">
-  <label class="form-check-label" for="radio_zrejiAAJ_3">
+  <input class="form-check-input" type="radio" name="radio_c03Osm2b" id="radio_c03Osm2b_2" value="2">
+  <label class="form-check-label" for="radio_c03Osm2b_2">
+    &#36;A&#40;x&#41; &#61; A^2&#40;x&#41; / f&#40;x&#41;&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_c03Osm2b" id="radio_c03Osm2b_3" value="3">
+  <label class="form-check-label" for="radio_c03Osm2b_3">
     &#36;A&#39;&#40;x&#41; &#61; A&#40;x&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_zrejiAAJ" id="radio_zrejiAAJ_4" value="4">
-  <label class="form-check-label" for="radio_zrejiAAJ_4">
-    &#36;A&#40;x&#41; &#61; A^2&#40;x&#41; / f&#40;x&#41;&#36;
+  <input class="form-check-input" type="radio" name="radio_c03Osm2b" id="radio_c03Osm2b_4" value="4">
+  <label class="form-check-label" for="radio_c03Osm2b_4">
+    &#36;A&#39;&#40;x&#41; &#61; f&#40;x&#41;&#36;
 
   </label>
 </div>
 
-<div id="zrejiAAJ_message"></div>
+<div id="c03Osm2b_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_zrejiAAJ']").on("change", function() {
-  correct = this.value == 1;
+$("input:radio[name='radio_c03Osm2b']").on("change", function() {
+  correct = this.value == 4;
 
   if(correct) {
-     $("#zrejiAAJ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#c03Osm2b_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#zrejiAAJ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#c03Osm2b_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -2223,32 +2326,32 @@ $("input:radio[name='radio_zrejiAAJ']").on("change", function() {
 <p>According to <a href="http://www.math.harvard.edu/~knill/teaching/math1a_2011/exhibits/bressoud/">Bressoud</a> &quot;Newton observes that the rate of change of an accumulated quantity is the rate at which that quantity is accumulating&quot;. Which part of the FTC does this refer to:</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="T7ixn0sA" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="oSmUmH7q" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_T7ixn0sA" id="radio_T7ixn0sA_1" value="1">
-  <label class="form-check-label" for="radio_T7ixn0sA_1">
+  <input class="form-check-input" type="radio" name="radio_oSmUmH7q" id="radio_oSmUmH7q_1" value="1">
+  <label class="form-check-label" for="radio_oSmUmH7q_1">
     Part 1: &#36;&#91;\int_a^x f&#40;u&#41; du&#93;&#39; &#61; f&#36;
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_T7ixn0sA" id="radio_T7ixn0sA_2" value="2">
-  <label class="form-check-label" for="radio_T7ixn0sA_2">
+  <input class="form-check-input" type="radio" name="radio_oSmUmH7q" id="radio_oSmUmH7q_2" value="2">
+  <label class="form-check-label" for="radio_oSmUmH7q_2">
     Part 2: &#36;\int_a^b f&#40;u&#41; du &#61; F&#40;b&#41;- F&#40;a&#41;&#36;.
   </label>
 </div>
 
-<div id="T7ixn0sA_message"></div>
+<div id="oSmUmH7q_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_T7ixn0sA']").on("change", function() {
+$("input:radio[name='radio_oSmUmH7q']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#T7ixn0sA_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#oSmUmH7q_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#T7ixn0sA_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#oSmUmH7q_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -2256,7 +2359,7 @@ $("input:radio[name='radio_T7ixn0sA']").on("change", function() {
 
 
 <h2>More on <code>integrate</code></h2>
-<p>The documentation on integration indicates that <code>SymPy</code> uses several different means to integrate a function:</p>
+<p>Finding the value of a definite integral through the fundamental theorem of calculus relies on the algebraic identification of an antiderivative. This is difficult to do by hand and by computer, and is complicated by the fact that not every <a href="https://en.wikipedia.org/wiki/Elementary_function">elementary </a>function has an elementary antiderivative. <code>SymPy</code>&#39;s documentation on integration indicates that several different means to integrate a function are used internally. As it is of interest here, it is copied with just minor edits below:</p>
 <h4>Simple heuristics &#40;based on pattern matching and integral table&#41;:</h4>
 <ul>
 <li><p>most frequently used functions &#40;e.g. polynomials, products of trigonemtric functions&#41;</p>

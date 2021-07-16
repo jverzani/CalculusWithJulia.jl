@@ -46,7 +46,7 @@ But the mean value theorem says that for small $h$ we have $f'(x) \approx (f(x) 
 
 $$~
 A \approx
-\sum_{i=1}^n (f(a + ih) - f(a + (i-1)h)).
+\sum_{i=1}^n \left(f(a + ih) - f(a + (i-1)h)\right).
 ~$$
 
 If we let $g(i) = f(a + ih)$, then the summand above is just $g(i) - g(i-1) = D(g)(i)$ and the above then is just the sum of the $D(g)(i)$s, or:
@@ -55,8 +55,8 @@ $$~
 A \approx S(D(g))(n) = g(n) - g(0).
 ~$$
 
-But $g(n) - g(0) = f(a + nh) - f(a + 0h) = f(b) - f(a)$. That is we
-expect that if $\approx$ in the limit becomes $=$ then:
+But $g(n) - g(0) = f(a + nh) - f(a + 0h) = f(b) - f(a)$. That is, we
+expect that the $\approx$ in the limit becomes $=$, or:
 
 $$~
 \int_a^b f'(x) dx = f(b) - f(a).
@@ -93,12 +93,14 @@ $$~
 \begin{align*}
 F'(x) = & \frac{d}{dx} \int_a^x f(u) du \\
 & \approx \frac{F(x) - F(x-h)}{h} = \frac{\int_a^x f(u) du - \int_a^{x-h} f(u) du}{h}\\
-& \approx \frac{(f(a + 1h)h + f(a + 2h)h + \cdots + f(a + (M-1)h)h + f(a + Mh)h)}{h} -
-\frac{(f(a + 1h)h + f(a + 2h)h + \cdots + f(a + (M-1)h)h )}{h}.
+& \approx \frac{\left(f(a + 1h)h + f(a + 2h)h + \cdots + f(a + (M-1)h)h + f(a + Mh)h\right)}{h} -
+\frac{\left(f(a + 1h)h + f(a + 2h)h + \cdots + f(a + (M-1)h)h \right)}{h} \\
+& = \left(f(a + 1h) + f(a + 2h) + \cdots + f(a + (M-1)h) + f(a + Mh)\right) -
+\left(f(a + 1h) + f(a + 2h) + \cdots + f(a + (M-1)h) \right)
 \end{align*}
 ~$$
 
-If $g(i) = f(a + ih)/h$, then the above becomes
+If $g(i) = f(a + ih)$, then the above becomes
 
 $$~
 \begin{align*}
@@ -178,7 +180,8 @@ $$~
 otherwise we will encounter a place where $f(x)$ may not be
 integrable.)
 
-We note that the above includes the case of a constant, or $n=0$: $\int 1 dx = x^1/1=x$.
+We note that the above includes the case of a constant, or $n=0$.
+
 
 
 What about the case $n=-1$, or $f(x) = 1/x$, that is not covered by
@@ -485,6 +488,50 @@ one is.
 
 ##### Example
 
+From the familiar formula rate $\times$ time $=$ distance, we "know,"
+for example, that a car traveling 60 miles an hour for one hour will
+have traveled 60 miles. This allows us to translate statements about
+the speed (or more generally velocity) into statements about position
+at a given time. If the speed is not constant, we don't have such an
+easy conversion.
+
+Suppose our velocity at time $t$ is $v(t)$, and always positive. We
+want to find the position at time $t$, $x(t)$. Let's assume $x(0) =
+0$. Let $h$ be some small time step, say $h=(t - 0)/n$ for some large
+$n>0$. Then we can *approximate* $v(t)$ between
+$[ih, (i+1)h)$ by $v(ih)$.  This is a constant so the change in position over the time interval $[ih, (i+1)h)$ would simply be $v(ih) \cdot h$, and ignoring the accumulated errors, the approximate position at time $t$ would be found by adding this pieces together: $x(t) \approx v(0h)\cdot h + v(1h)\cdot h + v(2h) \cdot h + \cdots + v(nh)h$. But we recognize this (as did [Beeckman](http://www.math.harvard.edu/~knill/teaching/math1a_2011/exhibits/bressoud/)
+in 1618) as nothing more than an approximation for the Riemann sum of
+$v$ over the interval $[0, t]$. That is, we expect:
+
+$$~
+x(t) = \int_0^t v(u) du.
+~$$
+
+Hopefully this makes sense: our position is the result of accumulating
+our change in position over small units of time. The old
+one-foot-in-front-of-another approach to walking out the door.
+
+The above was simplified by the assumption that $x(0) = 0$. What if $x(0) = x_0$ for some non-zero value. Then the above is not exactly correct, as $\int_0^0 v(u) du = 0$. So instead, we might write this more concretely as:
+
+$$~
+x(t) = x_0 + \int_0^t v(u) du.
+~$$
+
+There is a similar relationship between velocity and acceleration, but let's think about it formally. If we know that the acceleration is the rate of change of velocity, then we have $a(t) = v'(t)$. By the FTC, then
+
+$$~
+\int_0^t a(u) du = \int_0^t v'(t) = v(t) - v(0).
+~$$
+
+Rewriting gives a similar statement as before:
+
+$$~
+v(t) = v_0 + \int_0^t a(u) du.
+~$$
+
+
+##### Example
+
 In probability theory, for a positive, continuous random variable, the
 probability that the random value is less than $a$ is given by $P(X
 \leq a) = F(a) = \int_{0}^a f(x) dx$. (Positive means the integral
@@ -574,52 +621,107 @@ Fpp.(cps)
 
 The first value being positive says there is a relative minimum at $-0.924139$, at $0.924139$ there is a relative maximum.
 
-##### Example
-
-From the familiar formula rate $\times$ time $=$ distance, we "know,"
-for example, that a car traveling 60 miles an hour for one hour will
-have traveled 60 miles. This allows us to translate statements about
-the speed (or more generally velocity) into statements about position
-at a given time. If the speed is not constant, we don't have such an
-easy conversion.
-
-Suppose our velocity at time $t$ is $v(t)$, and always positive. We
-want to find the position at time $t$, $x(t)$. Let's assume $x(0) =
-0$. Let $h$ be some small time step, say $h=(t - 0)/n$ for some large
-$n>0$. Then we can *approximate* $v(t)$ between
-$[ih, (i+1)h)$ by $v(ih)$.  This is a constant so the change in position over the time interval $[ih, (i+1)h)$ would simply be $v(ih) \cdot h$, and ignoring the accumulated errors, the approximate position at time $t$ would be found by adding this pieces together: $x(t) \approx v(0h)\cdot h + v(1h)\cdot h + v(2h) \cdot h + \cdots + v(nh)h$. But we recognize this (as did [Beeckman](http://www.math.harvard.edu/~knill/teaching/math1a_2011/exhibits/bressoud/)
-in 1618) as nothing more than an approximation for the Riemann sum of
-$v$ over the interval $[0, t]$. That is, we expect:
-
-$$~
-x(t) = \int_0^t v(u) du.
-~$$
-
-Hopefully this makes sense: our position is the result of accumulating
-our change in position over small units of time. The old
-one-foot-in-front-of-another approach to walking out the door.
-
-The above was simplified by the assumption that $x(0) = 0$. What if $x(0) = x_0$ for some non-zero value. Then the above is not exactly correct, as $\int_0^0 v(u) du = 0$. So instead, we might write this more concretely as:
-
-$$~
-x(t) = x_0 + \int_0^t v(u) du.
-~$$
-
-There is a similar relationship between velocity and acceleration, but let's think about it formally. If we know that the acceleration is the rate of change of velocity, then we have $a(t) = v'(t)$. By the FTC, then
-
-$$~
-\int_0^t a(u) du = \int_0^t v'(t) = v(t) - v(0).
-~$$
-
-Rewriting gives a similar statement as before:
-
-$$~
-v(t) = v_0 + \int_0^t a(u) du.
-~$$
 
 ##### Example
 
-A junior engineer at `Treadmills.com` is tasked with updating the
+Returning to probability, suppose there are ``n`` positive random numbers ``X_1``, ``X_2``, ..., ``X_n``. A natural question might be to ask what formulas describes the largest of these values, assuming each is identical in some way. A description that is helpful is to define ``F(a) = P(X \leq a)`` for some random number ``X``. That is the probability that ``X`` is less than or equal to ``a`` is ``F(a)``. For many situations, there is a *density* function, ``f``, for which ``F(a) = \int_0^a f(x) dx``.
+
+Under assumptions that the ``X`` are identical and independent, the largest value, ``M``, may b
+characterized by ``P(M \leq a) = \left[F(a)\right]^n``. Using ``f`` and ``F`` describe the derivative of this expression.
+
+This problem is constructed to take advantage of the FTC, and we have:
+
+```math
+\begin{align*}
+\left[P(M \leq a)\right]'
+&= \left[F(a)^n\right]'\\
+&= n \cdot F(a)^{n-1} \left[F(a)\right]'\\
+&= n F(a)^{n-1}f(a)
+\end{align*}
+```
+
+##### Example
+
+Suppose again probabilities of a random number between ``0`` and ``1``, say, are given by a positive, continuous function ``f(x)``on ``(0,1)`` by ``F(a) = P(X \leq a) = \int_0^a f(x) dx``. The median value of the random number is a value of ``a`` for which ``P(X \leq a) = 1/2``. Such an ``a`` makes ``X`` a coin toss -- betting if ``X`` is less than ``a`` is like betting on heads to come up. More generally the ``q``th quantile of ``X`` is a number ``a`` with ``P(X \leq a) = q``. The definition is fine, but for a given ``f`` and ``q`` can we find ``a``?
+
+Abstractly, we are solving ``F(a) = q`` or ``F(a)-q = 0`` for ``a``. That is, this is a zero-finding question. We have discussed different options for this problem: bisection, a range of derivative free methods, and Newton's method. As evaluating ``F`` involves an integral, which may involve many evaluations of ``f``, a method which converges quickly is preferred. For that, Newton's method is a good idea, it having quadratic convergence in this case, as ``a`` is a simple zero given that ``F`` is increasing under the assumptions above.
+
+Newton's method involves the update step `x = x - f(x)/f'(x)`. For this "``f``" is ``h(x) = \int_0^x f(u) du - q``. The derivative is easy, the FTC just applies: ``h'(x) = f(x)``; no need for automatic differentiation, which may not even apply to this setup.
+
+To do a concrete example, we take the [Beta](https://en.wikipedia.org/wiki/Beta_distribution)(``\alpha, \beta``) distribution (``\alpha, \beta > 0``)  which has density, ``f``, over ``[0,1]`` given by
+
+```math
+f(x) = x^{\alpha-1}\cdot (1-x)^{\beta-1} \cdot \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}
+```
+
+The Wikipedia link above gives an approximate answer for the median of ``(\alpha-1/3)/(\alpha+\beta-2/3)`` when ``\alpha,\beta > 1``. Let's see how correct this is when ``\alpha=5`` and ``\beta=6``. The `gamma` function used below implements ``\Gamma``. It is in the `SpecialFunctions` package, which is loaded with the `CalculusWithJulia` package.
+
+```julia
+alpha, beta = 5,6
+f(x) = x^(alpha-1)*(1-x)^(beta-1) * gamma(alpha + beta) / (gamma(alpha) * gamma(beta))
+q = 1/2
+h(x) = first(quadgk(f, 0, x)) - q
+hp(x) =  f(x)
+
+x0 = (alpha-1/3)/(alpha + beta - 2/3)
+xstar = find_zero((h, hp), x0, Roots.Newton())
+
+xstar, x0
+```
+
+The asymptotic answer agrees with the answer in the first four decimal places.
+
+As an aside, we ask how many function evaluations were taken? We can track this with a trick - using a closure to record when ``f`` is called:
+
+```julia
+function FnWrapper(f)
+    ctr = 0
+    function(x)
+        ctr += 1
+        f(x)
+    end
+end
+```
+
+Then we have the above using `FnWrapper(f)` in place of `f`:
+
+```julia
+ff = FnWrapper(f)
+F(x) = first(quadgk(ff, 0, x))
+h(x) = F(x) - q
+hp(x) =  ff(x)
+xstar = find_zero((h, hp), x0, Roots.Newton())
+```
+
+So the answer is the same. Newton's method converged in 3 steps, and called `h` or `hp` 5 times. This evaluation required this many function evaluations of `f`:
+
+```julia
+ff.ctr
+```
+
+Assuming the number inside `Core.Box` is the value of `ctr`, we see not so many function calls, ``48``.
+
+Were `f` very expensive to compute or `h` expensive to compute (which can happen
+if, say, `f` were highly oscillatory) then steps could be made to cut
+this number down, such as evaluating ``F(x_n) = \int_{x_0}^{x_n} f(x)
+dx``, using linearity, as ``\int_0^{x_0} f(x) dx +
+\int_{x_0}^{x_1}f(x)dx + \int_{x_1}^{x_2}f(x)dx + \cdots +
+\int_{x_{n-1}}^{x_n}f(x)dx``. Then all but the last term could be
+stored from the previous steps of Newton's method. The last term presumably being less costly as it would typically involve a small interval.
+
+```julia;echo=false
+note("""
+The trick using a closure relies on an internal way of accessing elements in a closure. The same trick could be implemented many different ways which aren't reliant on undocumented internals, this approach was just a tad more convenient. It shouldn't be copied for work intended for distribution.
+""")
+```
+
+
+
+
+
+##### Example
+
+A junior engineer at `Treadmillz.com` is tasked with updating the
 display of calories burned for an older-model treadmill. The old display
 involved a sequence of LED "dots" that updated each minute. The last
 10 minutes were displayed. Each dot corresponded to one calorie
@@ -1040,8 +1142,8 @@ radioq(choices, ans, keep_order=true)
 
 ## More on `integrate`
 
-
-The documentation on integration indicates that `SymPy` uses several different means to integrate a function:
+Finding the value of a definite integral through the fundamental theorem of calculus relies on the algebraic identification of an antiderivative. This is difficult to do by hand and by computer, and is complicated by the fact that not every [elementary ](https://en.wikipedia.org/wiki/Elementary_function)function has an elementary antiderivative.
+`SymPy`'s documentation on integration indicates that several different means to integrate a function are used internally. As it is of interest here, it is copied with just minor edits below:
 
 
 #### Simple heuristics (based on pattern matching and integral table):

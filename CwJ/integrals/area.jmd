@@ -1351,6 +1351,43 @@ numericq(val)
 ###### Question
 
 
+```julia; echo=false
+caption = """
+The area under a curve approximated by a Riemann sum.
+"""
+CalculusWithJulia.WeaveSupport.JSXGraph(joinpath(@__DIR__, "riemann.js"), caption)
+```
+
+The interactive graphic shows the area of a right-Riemann sum for different partitions. The function is
+
+```math
+f(x) = \frac{1}{\sqrt{ x^4 +  10x^2 - 60x + 100}}
+```
+
+When ``n=5`` what is the area of the Riemann sum?
+
+```julia; echo=false
+numericq(0.1224)
+```
+
+When ``n=50`` what is the area of the Riemann sum?
+
+```julia; echo=false
+numericq(0.1887)
+```
+
+Using `quadgk` what is the area under the curve?
+
+```julia; echo=false
+g(x) = 1/sqrt(x^4 + 10x^2 - 60x + 100)
+val, tmp = quadgk(g, 0, 1)
+numericq(val)
+```
+
+
+###### Question
+
+
 Gauss nodes for approximating the integral $\int_{-1}^1 f(x) dx$ for $n=4$ are:
 
 ```julia;
@@ -1393,7 +1430,6 @@ f(x) = exp(x)
 val = sum([f(wi)*ni for (wi, ni) in zip(wts, ns)])
 numericq(val)
 ```
-
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
