@@ -6,8 +6,13 @@ end
 
 ## -----
 
-export plotif, trimplot, signchart
-export arrow!, vectorfieldplot!
+export plotif, trimplot, signchart,
+       plot_polar, plot_polar!,
+       plot_parametric,   plot_parametric!,
+       vectorfieldplot,   vectorfieldplot!,
+       vectorfieldplot3d, vectorfieldplot3d,
+       arrow, arrow!
+
 export newton_vis
 
 
@@ -57,8 +62,124 @@ function signchart(f, a, b)
     p
 end
 
+## --- parametric plots
+
+adapted_grid = CalculusWithJulia.PlotUtils.adapted_grid
+function xyzs(ab::ClosedInterval, r)
+    a, b = abs = extrema(ab)
+    xs = sort(union([adapted_grid(t -> r(t)[i], abs)[1] for i in eachindex(r(a))]...))
+    unzip(r.(xs))
+end
+
+"""
+    plot_parametric(ab, r; kwargs...)
+    plot_parametric!(ab, r; kwargs...)
+    plot_parametric(u, v, F; kwargs...)
+    plot_parametric!(u, v, F; kwargs...)
+
+Make a parametric plot of a space curve or parametrized surface
+
+The intervals to plot over are specifed using `a..b` notation, from IntervalSets
+"""
+plot_parametric(ab::ClosedInterval, r; kwargs...) = Plots.plot(xyzs(ab, r)...; kwargs...)
+plot_parametric!(ab::ClosedInterval, r; kwargs...) = Plots.plot!(xyzs(ab, r)...; kwargs...)
+
+plot_polar(ab::ClosedInterval, r; kwargs...) =
+    plot_parametric(ab, t->[r(t)*cos(t), r(t)*sin(t)]; kwargs...)
+plot_polar!(ab::ClosedInterval, r; kwargs...) =
+    plot_parametric!(ab, t->[r(t)*cos(t), r(t)*sin(t)]; kwargs...)
+
+## ----
+
+function XYZs(u::ClosedInterval, v::ClosedInterval, r; n=51)
+    us = range(extrema(u)..., length=n)
+    vs = range(extrema(v)..., length=n)
+    unzip(r.(us', vs))  # Plots.jl style; flip for Makie
+end
+
+# needs plotly(); not gr()
+plot_parametric(u::ClosedInterval, v::ClosedInterval, F;  kwargs...) =
+    Plots.surface(XYZs(u,v,F)...;  kwargs..., )
+plot_parametric!(u::ClosedInterval, v::ClosedInterval, F; kwargs...) =
+    Plots.surface!(XYZs(u,v,F)...;  kwargs...)
 
 
+
+
+import Contour
+
+"""
+    Visualize `F(x,y,z) = c` by plotting assorted contour lines
+
+This graphic makes slices in the `x`, `y`, and/or `z` direction of the 3-D level surface and plots them accordingly. Which slices (and their colors) are specified through a dictionary.
+
+Examples:
+```
+F(x,y,z) = x^2 + y^2 + x^2
+plot_implicit_surface(F, 20)  # 20 slices in z direction
+plot_implicit_surface(F, 20, slices=Dict(:x=>:blue, :y=>:red, :z=>:green), nlevels=6) # all 3 shown
+
+# A heart
+a,b = 1,3
+F(x,y,z) = (x^2+((1+b)*y)^2+z^2-1)^3-x^2*z^3-a*y^2*z^3
+plot_implicit_surface(F, xlims=-2..2,ylims=-1..1,zlims=-1..2)
+```
+
+Note: Idea [from](https://stackoverflow.com/questions/4680525/plotting-implicit-equations-in-3d).
+
+Not exported.
+"""
+function plot_implicit_surface(F, c=0;
+                       xlim=(-5,5), ylim=xlim, zlim=xlim,
+                       nlevels=25,         # number of levels in a direction
+                       slices=Dict(:z => :blue), # Dict(:x => :color, :y=>:color, :z=>:color)
+                       kwargs...          # passed to initial `plot` call
+                       )
+
+    _linspace(rng, n=150) = range(extrema(rng)[1], stop=extrema(rng)[2], length=n)
+
+    X1, Y1, Z1 = _linspace(xlim), _linspace(ylim), _linspace(zlim)
+
+    p = Plots.plot(;legend=false,kwargs...)
+
+    if :x ∈ keys(slices)
+        for x in _linspace(xlim, nlevels)
+            local X1 = [F(x,y,z) for y in Y1, z in Z1]
+            cnt = Contour.contours(Y1,Z1,X1, [c])
+            for line in Contour.lines(Contour.levels(cnt)[1])
+                ys, zs = Contour.coordinates(line) # coordinates of this line segment
+                Plots.plot!(p, x .+ 0 * ys, ys, zs, color=slices[:x])
+          end
+        end
+    end
+
+    if :y ∈ keys(slices)
+        for y in _linspace(ylim, nlevels)
+            local Y1 = [F(x,y,z) for x in X1, z in Z1]
+            cnt = Contour.contours(Z1,X1,Y1, [c])
+            for line in Contour.lines(Contour.levels(cnt)[1])
+                xs, zs = Contour.coordinates(line) # coordinates of this line segment
+                Plots.plot!(p, xs, y .+ 0 * xs, zs, color=slices[:y])
+            end
+        end
+    end
+
+    if :z ∈ keys(slices)
+        for z in _linspace(zlim, nlevels)
+            local Z1 = [F(x, y, z) for x in X1, y in Y1]
+            cnt = Contour.contours(X1, Y1, Z1, [c])
+            for line in Contour.lines(Contour.levels(cnt)[1])
+                xs, ys = Contour.coordinates(line) # coordinates of this line segment
+                Plots.plot!(p, xs, ys, z .+ 0 * xs, color=slices[:z])
+            end
+        end
+    end
+
+
+    p
+end
+
+## ----
 
 """
    `arrow!(p, v)`
@@ -87,6 +208,9 @@ function arrow!(plt, p, v; kwargs...)
 	end
 end
 arrow!(p,v;kwargs...) = arrow!(Plots.current(), p, v; kwargs...)
+
+
+
 
 """
 

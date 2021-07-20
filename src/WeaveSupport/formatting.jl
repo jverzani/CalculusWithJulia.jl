@@ -426,26 +426,42 @@ footer_html_tpl = """
   <div class="card-header float-end text-muted">
     <span class="text-muted  float-end align-middle">
 
-<a href="{{{:prev_url}}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Previous section" aria-label="Previous section">
-<i class="bi bi-arrow-left-circle-fill"></i>
+<a href="{{{:prev_url}}}"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Previous section"
+aria-label="Previous section"
+class="bi bi-arrow-left-circle-fill">
 </a>
 
 &nbsp;
 
-<a href="{{{:next_url}}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Next section" aria-label="Next section">
-<i class="bi bi-arrow-right-circle-fill"></i>
+<a href="{{{:next_url}}}"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Next section"
+aria-label="Next section"
+class="bi bi-arrow-right-circle-fill">
 </a>
 
 &nbsp;
 
-<a href="{{{:suggest_edit_url}}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Suggest an edit" aria-label="Suggest an edit">
-<i class="bi bi-pencil-square"></i>
+<a href="{{{:suggest_edit_url}}}"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Suggest an edit"
+aria-label="Suggest an edit"
+class="bi bi-pencil-square">
 </a>
 
 &nbsp;
 
-<a href="{{{:toc_url}}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Table of contents" aria-label="Table of contents">
-<i class="bi bi-card-list"></i>
+<a href="{{{:toc_url}}}"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Table of contents"
+aria-label="Table of contents"
+class="bi bi-card-list">
 </a>
 
     </span>

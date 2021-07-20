@@ -175,10 +175,10 @@ $( document ).ready(function() {
 <p>The following illustrates integration by parts of the integral <span class="math">$(uv)'$</span> over <span class="math">$[a,b]$</span> <a href="http://en.wikipedia.org/wiki/Integration_by_parts#Visualization">original</a>.</p>
 
 
-    <div id="03d7dd84-1b32-406d-95fa-37055f282cee" style="width:576px;height:384px;"></div>
+    <div id="9434bb81-5be0-4e85-a56e-e13218053ce1" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('03d7dd84-1b32-406d-95fa-37055f282cee');
+        var PLOT = document.getElementById('9434bb81-5be0-4e85-a56e-e13218053ce1');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -1185,41 +1185,41 @@ du &= f''(t + x_i) & v = \frac{(t + A)^2}{2} + B
 <p>In the integral of <span class="math">$\int \log(x) dx$</span> we let <span class="math">$u=\log(x)$</span> and <span class="math">$dv=dx$</span>. What are <span class="math">$du$</span> and <span class="math">$v$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="HmOC4g65" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="yTyUH1QB" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_HmOC4g65" id="radio_HmOC4g65_1" value="1">
-  <label class="form-check-label" for="radio_HmOC4g65_1">
+  <input class="form-check-input" type="radio" name="radio_yTyUH1QB" id="radio_yTyUH1QB_1" value="1">
+  <label class="form-check-label" for="radio_yTyUH1QB_1">
     &#36;du&#61;1/x dx\quad v &#61; x^2/2&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_HmOC4g65" id="radio_HmOC4g65_2" value="2">
-  <label class="form-check-label" for="radio_HmOC4g65_2">
-    &#36;du&#61;1/x dx \quad v &#61; x&#36;
-
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_HmOC4g65" id="radio_HmOC4g65_3" value="3">
-  <label class="form-check-label" for="radio_HmOC4g65_3">
+  <input class="form-check-input" type="radio" name="radio_yTyUH1QB" id="radio_yTyUH1QB_2" value="2">
+  <label class="form-check-label" for="radio_yTyUH1QB_2">
     &#36;du&#61;x\log&#40;x&#41; dx\quad v &#61; 1&#36;
 
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_yTyUH1QB" id="radio_yTyUH1QB_3" value="3">
+  <label class="form-check-label" for="radio_yTyUH1QB_3">
+    &#36;du&#61;1/x dx \quad v &#61; x&#36;
 
-<div id="HmOC4g65_message"></div>
+  </label>
+</div>
+
+<div id="yTyUH1QB_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_HmOC4g65']").on("change", function() {
-  correct = this.value == 2;
+$("input:radio[name='radio_yTyUH1QB']").on("change", function() {
+  correct = this.value == 3;
 
   if(correct) {
-     $("#HmOC4g65_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#yTyUH1QB_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#HmOC4g65_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#yTyUH1QB_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1230,41 +1230,41 @@ $("input:radio[name='radio_HmOC4g65']").on("change", function() {
 <p>In the integral <span class="math">$\int \sec(x)^3 dx$</span> we let <span class="math">$u=\sec(x)$</span> and <span class="math">$dv = \sec(x)^2 dx$</span>. What are <span class="math">$du$</span> and <span class="math">$v$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="vOCZcn6J" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Z7eujH6J" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_vOCZcn6J" id="radio_vOCZcn6J_1" value="1">
-  <label class="form-check-label" for="radio_vOCZcn6J_1">
-    &#36;du&#61;\tan&#40;x&#41;  dx \quad v&#61;\sec&#40;x&#41;\tan&#40;x&#41;&#36;
+  <input class="form-check-input" type="radio" name="radio_Z7eujH6J" id="radio_Z7eujH6J_1" value="1">
+  <label class="form-check-label" for="radio_Z7eujH6J_1">
+    &#36;du&#61;\csc&#40;x&#41; dx \quad v&#61;\sec&#40;x&#41;^3 / 3&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_vOCZcn6J" id="radio_vOCZcn6J_2" value="2">
-  <label class="form-check-label" for="radio_vOCZcn6J_2">
+  <input class="form-check-input" type="radio" name="radio_Z7eujH6J" id="radio_Z7eujH6J_2" value="2">
+  <label class="form-check-label" for="radio_Z7eujH6J_2">
     &#36;du&#61;\sec&#40;x&#41;\tan&#40;x&#41;dx \quad v&#61;\tan&#40;x&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_vOCZcn6J" id="radio_vOCZcn6J_3" value="3">
-  <label class="form-check-label" for="radio_vOCZcn6J_3">
-    &#36;du&#61;\csc&#40;x&#41; dx \quad v&#61;\sec&#40;x&#41;^3 / 3&#36;
+  <input class="form-check-input" type="radio" name="radio_Z7eujH6J" id="radio_Z7eujH6J_3" value="3">
+  <label class="form-check-label" for="radio_Z7eujH6J_3">
+    &#36;du&#61;\tan&#40;x&#41;  dx \quad v&#61;\sec&#40;x&#41;\tan&#40;x&#41;&#36;
 
   </label>
 </div>
 
-<div id="vOCZcn6J_message"></div>
+<div id="Z7eujH6J_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_vOCZcn6J']").on("change", function() {
+$("input:radio[name='radio_Z7eujH6J']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#vOCZcn6J_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#Z7eujH6J_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#vOCZcn6J_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#Z7eujH6J_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1275,41 +1275,41 @@ $("input:radio[name='radio_vOCZcn6J']").on("change", function() {
 <p>In the integral <span class="math">$\int e^{-x} \cos(x)dx$</span> we let <span class="math">$u=e^{-x}$</span> and <span class="math">$dv=\cos(x) dx$</span>. What are <span class="math">$du$</span> and <span class="math">$v$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="NYS6Ls5g" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="8P6CU7xZ" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_NYS6Ls5g" id="radio_NYS6Ls5g_1" value="1">
-  <label class="form-check-label" for="radio_NYS6Ls5g_1">
+  <input class="form-check-input" type="radio" name="radio_8P6CU7xZ" id="radio_8P6CU7xZ_1" value="1">
+  <label class="form-check-label" for="radio_8P6CU7xZ_1">
     &#36;du&#61;-e^&#123;-x&#125; dx \quad v&#61;-\sin&#40;x&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_NYS6Ls5g" id="radio_NYS6Ls5g_2" value="2">
-  <label class="form-check-label" for="radio_NYS6Ls5g_2">
-    &#36;du&#61;\sin&#40;x&#41;dx \quad v&#61;-e^&#123;-x&#125;&#36;
-
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_NYS6Ls5g" id="radio_NYS6Ls5g_3" value="3">
-  <label class="form-check-label" for="radio_NYS6Ls5g_3">
+  <input class="form-check-input" type="radio" name="radio_8P6CU7xZ" id="radio_8P6CU7xZ_2" value="2">
+  <label class="form-check-label" for="radio_8P6CU7xZ_2">
     &#36;du&#61;-e^&#123;-x&#125; dx \quad v&#61;\sin&#40;x&#41;&#36;
 
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_8P6CU7xZ" id="radio_8P6CU7xZ_3" value="3">
+  <label class="form-check-label" for="radio_8P6CU7xZ_3">
+    &#36;du&#61;\sin&#40;x&#41;dx \quad v&#61;-e^&#123;-x&#125;&#36;
 
-<div id="NYS6Ls5g_message"></div>
+  </label>
+</div>
+
+<div id="8P6CU7xZ_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_NYS6Ls5g']").on("change", function() {
-  correct = this.value == 3;
+$("input:radio[name='radio_8P6CU7xZ']").on("change", function() {
+  correct = this.value == 2;
 
   if(correct) {
-     $("#NYS6Ls5g_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#8P6CU7xZ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#NYS6Ls5g_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#8P6CU7xZ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1320,29 +1320,29 @@ $("input:radio[name='radio_NYS6Ls5g']").on("change", function() {
 <p>Find the value of <span class="math">$\int_1^4 x \log(x) dx$</span>. You can integrate by parts.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='fqoZvVsN' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='StpZB0xa' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="fqoZvVsN" type="number" class="form-control" placeholder="Numeric answer">
-<label for="fqoZvVsN">Numeric answer</label>
+<input id="StpZB0xa" type="number" class="form-control" placeholder="Numeric answer">
+<label for="StpZB0xa">Numeric answer</label>
 
 </div>
 
-<div id='fqoZvVsN_message'></div>
+<div id='StpZB0xa_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#fqoZvVsN').on('change', function() {
+$('#StpZB0xa').on('change', function() {
   correct = Math.abs(this.value - 7.340354888959126) <= 0.001;
 
   if(correct) {
-     $('#fqoZvVsN_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#StpZB0xa_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#fqoZvVsN_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#StpZB0xa_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1352,29 +1352,29 @@ $('#fqoZvVsN').on('change', function() {
 <p>Find the value of <span class="math">$\int_0^{\pi/2} x\cos(2x) dx$</span>. You can integrate by parts.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='siHAcIHk' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='vDD6mwbi' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="siHAcIHk" type="number" class="form-control" placeholder="Numeric answer">
-<label for="siHAcIHk">Numeric answer</label>
+<input id="vDD6mwbi" type="number" class="form-control" placeholder="Numeric answer">
+<label for="vDD6mwbi">Numeric answer</label>
 
 </div>
 
-<div id='siHAcIHk_message'></div>
+<div id='vDD6mwbi_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#siHAcIHk').on('change', function() {
+$('#vDD6mwbi').on('change', function() {
   correct = Math.abs(this.value - -0.49999999999999983) <= 0.001;
 
   if(correct) {
-     $('#siHAcIHk_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#vDD6mwbi_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#siHAcIHk_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#vDD6mwbi_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1384,29 +1384,29 @@ $('#siHAcIHk').on('change', function() {
 <p>Find the value of <span class="math">$\int_1^e (\log(x))^2 dx$</span>. You can integrate by parts.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='cLLGLPHI' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='9xsLdjDg' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="cLLGLPHI" type="number" class="form-control" placeholder="Numeric answer">
-<label for="cLLGLPHI">Numeric answer</label>
+<input id="9xsLdjDg" type="number" class="form-control" placeholder="Numeric answer">
+<label for="9xsLdjDg">Numeric answer</label>
 
 </div>
 
-<div id='cLLGLPHI_message'></div>
+<div id='9xsLdjDg_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#cLLGLPHI').on('change', function() {
+$('#9xsLdjDg').on('change', function() {
   correct = Math.abs(this.value - 0.7182818284590451) <= 0.001;
 
   if(correct) {
-     $('#cLLGLPHI_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#9xsLdjDg_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#cLLGLPHI_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#9xsLdjDg_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1416,41 +1416,41 @@ $('#cLLGLPHI').on('change', function() {
 <p>Integration by parts can be used to provide &quot;reduction&quot; formulas, where an antiderivative is written in terms of another antiderivative with a lower power. Which is the proper reduction formula for <span class="math">$\int (\log(x))^n dx$</span>?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="IGzlK5rJ" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="D8uFKGvx" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_IGzlK5rJ" id="radio_IGzlK5rJ_1" value="1">
-  <label class="form-check-label" for="radio_IGzlK5rJ_1">
-    &#36;x&#40;\log&#40;x&#41;&#41;^n - \int &#40;\log&#40;x&#41;&#41;^&#123;n-1&#125; dx&#36;
+  <input class="form-check-input" type="radio" name="radio_D8uFKGvx" id="radio_D8uFKGvx_1" value="1">
+  <label class="form-check-label" for="radio_D8uFKGvx_1">
+    &#36;x&#40;\log&#40;x&#41;&#41;^n - n \int &#40;\log&#40;x&#41;&#41;^&#123;n-1&#125; dx&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_IGzlK5rJ" id="radio_IGzlK5rJ_2" value="2">
-  <label class="form-check-label" for="radio_IGzlK5rJ_2">
+  <input class="form-check-input" type="radio" name="radio_D8uFKGvx" id="radio_D8uFKGvx_2" value="2">
+  <label class="form-check-label" for="radio_D8uFKGvx_2">
     &#36;\int &#40;\log&#40;x&#41;&#41;^&#123;n&#43;1&#125;/&#40;n&#43;1&#41; dx&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_IGzlK5rJ" id="radio_IGzlK5rJ_3" value="3">
-  <label class="form-check-label" for="radio_IGzlK5rJ_3">
-    &#36;x&#40;\log&#40;x&#41;&#41;^n - n \int &#40;\log&#40;x&#41;&#41;^&#123;n-1&#125; dx&#36;
+  <input class="form-check-input" type="radio" name="radio_D8uFKGvx" id="radio_D8uFKGvx_3" value="3">
+  <label class="form-check-label" for="radio_D8uFKGvx_3">
+    &#36;x&#40;\log&#40;x&#41;&#41;^n - \int &#40;\log&#40;x&#41;&#41;^&#123;n-1&#125; dx&#36;
 
   </label>
 </div>
 
-<div id="IGzlK5rJ_message"></div>
+<div id="D8uFKGvx_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_IGzlK5rJ']").on("change", function() {
-  correct = this.value == 3;
+$("input:radio[name='radio_D8uFKGvx']").on("change", function() {
+  correct = this.value == 1;
 
   if(correct) {
-     $("#IGzlK5rJ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#D8uFKGvx_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#IGzlK5rJ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#D8uFKGvx_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1462,50 +1462,50 @@ $("input:radio[name='radio_IGzlK5rJ']").on("change", function() {
 <p>Consider the integral <span class="math">$\int x \cos(x) dx$</span>. Which letter should be tried first?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="kcAqicQX" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="eGWufI72" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_kcAqicQX" id="radio_kcAqicQX_1" value="1">
-  <label class="form-check-label" for="radio_kcAqicQX_1">
+  <input class="form-check-input" type="radio" name="radio_eGWufI72" id="radio_eGWufI72_1" value="1">
+  <label class="form-check-label" for="radio_eGWufI72_1">
     L
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_kcAqicQX" id="radio_kcAqicQX_2" value="2">
-  <label class="form-check-label" for="radio_kcAqicQX_2">
+  <input class="form-check-input" type="radio" name="radio_eGWufI72" id="radio_eGWufI72_2" value="2">
+  <label class="form-check-label" for="radio_eGWufI72_2">
     I
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_kcAqicQX" id="radio_kcAqicQX_3" value="3">
-  <label class="form-check-label" for="radio_kcAqicQX_3">
+  <input class="form-check-input" type="radio" name="radio_eGWufI72" id="radio_eGWufI72_3" value="3">
+  <label class="form-check-label" for="radio_eGWufI72_3">
     A
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_kcAqicQX" id="radio_kcAqicQX_4" value="4">
-  <label class="form-check-label" for="radio_kcAqicQX_4">
+  <input class="form-check-input" type="radio" name="radio_eGWufI72" id="radio_eGWufI72_4" value="4">
+  <label class="form-check-label" for="radio_eGWufI72_4">
     T
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_kcAqicQX" id="radio_kcAqicQX_5" value="5">
-  <label class="form-check-label" for="radio_kcAqicQX_5">
+  <input class="form-check-input" type="radio" name="radio_eGWufI72" id="radio_eGWufI72_5" value="5">
+  <label class="form-check-label" for="radio_eGWufI72_5">
     E
   </label>
 </div>
 
-<div id="kcAqicQX_message"></div>
+<div id="eGWufI72_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_kcAqicQX']").on("change", function() {
+$("input:radio[name='radio_eGWufI72']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#kcAqicQX_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#eGWufI72_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#kcAqicQX_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#eGWufI72_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1516,50 +1516,50 @@ $("input:radio[name='radio_kcAqicQX']").on("change", function() {
 <p>Consider the integral <span class="math">$\int x^2\log(x) dx$</span>. Which letter should be tried first?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="vWlFRDpQ" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="WIxo600V" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_vWlFRDpQ" id="radio_vWlFRDpQ_1" value="1">
-  <label class="form-check-label" for="radio_vWlFRDpQ_1">
+  <input class="form-check-input" type="radio" name="radio_WIxo600V" id="radio_WIxo600V_1" value="1">
+  <label class="form-check-label" for="radio_WIxo600V_1">
     L
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_vWlFRDpQ" id="radio_vWlFRDpQ_2" value="2">
-  <label class="form-check-label" for="radio_vWlFRDpQ_2">
+  <input class="form-check-input" type="radio" name="radio_WIxo600V" id="radio_WIxo600V_2" value="2">
+  <label class="form-check-label" for="radio_WIxo600V_2">
     I
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_vWlFRDpQ" id="radio_vWlFRDpQ_3" value="3">
-  <label class="form-check-label" for="radio_vWlFRDpQ_3">
+  <input class="form-check-input" type="radio" name="radio_WIxo600V" id="radio_WIxo600V_3" value="3">
+  <label class="form-check-label" for="radio_WIxo600V_3">
     A
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_vWlFRDpQ" id="radio_vWlFRDpQ_4" value="4">
-  <label class="form-check-label" for="radio_vWlFRDpQ_4">
+  <input class="form-check-input" type="radio" name="radio_WIxo600V" id="radio_WIxo600V_4" value="4">
+  <label class="form-check-label" for="radio_WIxo600V_4">
     T
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_vWlFRDpQ" id="radio_vWlFRDpQ_5" value="5">
-  <label class="form-check-label" for="radio_vWlFRDpQ_5">
+  <input class="form-check-input" type="radio" name="radio_WIxo600V" id="radio_WIxo600V_5" value="5">
+  <label class="form-check-label" for="radio_WIxo600V_5">
     E
   </label>
 </div>
 
-<div id="vWlFRDpQ_message"></div>
+<div id="WIxo600V_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_vWlFRDpQ']").on("change", function() {
+$("input:radio[name='radio_WIxo600V']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#vWlFRDpQ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#WIxo600V_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#vWlFRDpQ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#WIxo600V_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1570,50 +1570,50 @@ $("input:radio[name='radio_vWlFRDpQ']").on("change", function() {
 <p>Consider the integral <span class="math">$\int x^2 \sin^{-1}(x) dx$</span>. Which letter should be tried first?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="pZfFuRdb" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Qhnr5nzc" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_pZfFuRdb" id="radio_pZfFuRdb_1" value="1">
-  <label class="form-check-label" for="radio_pZfFuRdb_1">
+  <input class="form-check-input" type="radio" name="radio_Qhnr5nzc" id="radio_Qhnr5nzc_1" value="1">
+  <label class="form-check-label" for="radio_Qhnr5nzc_1">
     L
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_pZfFuRdb" id="radio_pZfFuRdb_2" value="2">
-  <label class="form-check-label" for="radio_pZfFuRdb_2">
+  <input class="form-check-input" type="radio" name="radio_Qhnr5nzc" id="radio_Qhnr5nzc_2" value="2">
+  <label class="form-check-label" for="radio_Qhnr5nzc_2">
     I
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_pZfFuRdb" id="radio_pZfFuRdb_3" value="3">
-  <label class="form-check-label" for="radio_pZfFuRdb_3">
+  <input class="form-check-input" type="radio" name="radio_Qhnr5nzc" id="radio_Qhnr5nzc_3" value="3">
+  <label class="form-check-label" for="radio_Qhnr5nzc_3">
     A
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_pZfFuRdb" id="radio_pZfFuRdb_4" value="4">
-  <label class="form-check-label" for="radio_pZfFuRdb_4">
+  <input class="form-check-input" type="radio" name="radio_Qhnr5nzc" id="radio_Qhnr5nzc_4" value="4">
+  <label class="form-check-label" for="radio_Qhnr5nzc_4">
     T
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_pZfFuRdb" id="radio_pZfFuRdb_5" value="5">
-  <label class="form-check-label" for="radio_pZfFuRdb_5">
+  <input class="form-check-input" type="radio" name="radio_Qhnr5nzc" id="radio_Qhnr5nzc_5" value="5">
+  <label class="form-check-label" for="radio_Qhnr5nzc_5">
     E
   </label>
 </div>
 
-<div id="pZfFuRdb_message"></div>
+<div id="Qhnr5nzc_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_pZfFuRdb']").on("change", function() {
+$("input:radio[name='radio_Qhnr5nzc']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#pZfFuRdb_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#Qhnr5nzc_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#pZfFuRdb_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#Qhnr5nzc_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1624,50 +1624,50 @@ $("input:radio[name='radio_pZfFuRdb']").on("change", function() {
 <p>Consider the integral <span class="math">$\int e^x \sin(x) dx$</span>. Which letter should be tried first?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Bzphy8v9" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="LxKhyE6e" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Bzphy8v9" id="radio_Bzphy8v9_1" value="1">
-  <label class="form-check-label" for="radio_Bzphy8v9_1">
+  <input class="form-check-input" type="radio" name="radio_LxKhyE6e" id="radio_LxKhyE6e_1" value="1">
+  <label class="form-check-label" for="radio_LxKhyE6e_1">
     L
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Bzphy8v9" id="radio_Bzphy8v9_2" value="2">
-  <label class="form-check-label" for="radio_Bzphy8v9_2">
+  <input class="form-check-input" type="radio" name="radio_LxKhyE6e" id="radio_LxKhyE6e_2" value="2">
+  <label class="form-check-label" for="radio_LxKhyE6e_2">
     I
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Bzphy8v9" id="radio_Bzphy8v9_3" value="3">
-  <label class="form-check-label" for="radio_Bzphy8v9_3">
+  <input class="form-check-input" type="radio" name="radio_LxKhyE6e" id="radio_LxKhyE6e_3" value="3">
+  <label class="form-check-label" for="radio_LxKhyE6e_3">
     A
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Bzphy8v9" id="radio_Bzphy8v9_4" value="4">
-  <label class="form-check-label" for="radio_Bzphy8v9_4">
+  <input class="form-check-input" type="radio" name="radio_LxKhyE6e" id="radio_LxKhyE6e_4" value="4">
+  <label class="form-check-label" for="radio_LxKhyE6e_4">
     T
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Bzphy8v9" id="radio_Bzphy8v9_5" value="5">
-  <label class="form-check-label" for="radio_Bzphy8v9_5">
+  <input class="form-check-input" type="radio" name="radio_LxKhyE6e" id="radio_LxKhyE6e_5" value="5">
+  <label class="form-check-label" for="radio_LxKhyE6e_5">
     E
   </label>
 </div>
 
-<div id="Bzphy8v9_message"></div>
+<div id="LxKhyE6e_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Bzphy8v9']").on("change", function() {
+$("input:radio[name='radio_LxKhyE6e']").on("change", function() {
   correct = this.value == 4;
 
   if(correct) {
-     $("#Bzphy8v9_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#LxKhyE6e_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Bzphy8v9_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#LxKhyE6e_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1678,41 +1678,41 @@ $("input:radio[name='radio_Bzphy8v9']").on("change", function() {
 <p>Find an antiderivative for <span class="math">$\cos^{-1}(x)$</span> using the integration by parts formula.</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="0tIMTRlG" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="z0WRoEYF" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_0tIMTRlG" id="radio_0tIMTRlG_1" value="1">
-  <label class="form-check-label" for="radio_0tIMTRlG_1">
+  <input class="form-check-input" type="radio" name="radio_z0WRoEYF" id="radio_z0WRoEYF_1" value="1">
+  <label class="form-check-label" for="radio_z0WRoEYF_1">
     &#36;x\cos^&#123;-1&#125;&#40;x&#41;-\sqrt&#123;1 - x^2&#125;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_0tIMTRlG" id="radio_0tIMTRlG_2" value="2">
-  <label class="form-check-label" for="radio_0tIMTRlG_2">
+  <input class="form-check-input" type="radio" name="radio_z0WRoEYF" id="radio_z0WRoEYF_2" value="2">
+  <label class="form-check-label" for="radio_z0WRoEYF_2">
     &#36;-\sin^&#123;-1&#125;&#40;x&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_0tIMTRlG" id="radio_0tIMTRlG_3" value="3">
-  <label class="form-check-label" for="radio_0tIMTRlG_3">
+  <input class="form-check-input" type="radio" name="radio_z0WRoEYF" id="radio_z0WRoEYF_3" value="3">
+  <label class="form-check-label" for="radio_z0WRoEYF_3">
     &#36;x^2/2 \cos^&#123;-1&#125;&#40;x&#41; - x\sqrt&#123;1-x^2&#125;/4 - \cos^&#123;-1&#125;&#40;x&#41;/4&#36;
 
   </label>
 </div>
 
-<div id="0tIMTRlG_message"></div>
+<div id="z0WRoEYF_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_0tIMTRlG']").on("change", function() {
+$("input:radio[name='radio_z0WRoEYF']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#0tIMTRlG_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#z0WRoEYF_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#0tIMTRlG_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#z0WRoEYF_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1724,26 +1724,42 @@ $("input:radio[name='radio_0tIMTRlG']").on("change", function() {
   <div class="card-header float-end text-muted">
     <span class="text-muted  float-end align-middle">
 
-<a href="../integrals/substitution.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Previous section" aria-label="Previous section">
-<i class="bi bi-arrow-left-circle-fill"></i>
+<a href="../integrals/substitution.html"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Previous section"
+aria-label="Previous section"
+class="bi bi-arrow-left-circle-fill">
 </a>
 
 &nbsp;
 
-<a href="../integrals/partial_fractions.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Next section" aria-label="Next section">
-<i class="bi bi-arrow-right-circle-fill"></i>
+<a href="../integrals/partial_fractions.html"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Next section"
+aria-label="Next section"
+class="bi bi-arrow-right-circle-fill">
 </a>
 
 &nbsp;
 
-<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/integrals/integration_by_parts.jmd" data-bs-toggle="tooltip" data-bs-placement="top" title="Suggest an edit" aria-label="Suggest an edit">
-<i class="bi bi-pencil-square"></i>
+<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/integrals/integration_by_parts.jmd"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Suggest an edit"
+aria-label="Suggest an edit"
+class="bi bi-pencil-square">
 </a>
 
 &nbsp;
 
-<a href="../misc/toc.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Table of contents" aria-label="Table of contents">
-<i class="bi bi-card-list"></i>
+<a href="../misc/toc.html"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Table of contents"
+aria-label="Table of contents"
+class="bi bi-card-list">
 </a>
 
     </span>

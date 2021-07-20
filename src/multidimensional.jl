@@ -1,15 +1,4 @@
-# helpful bits for working with n \geq 2
-
-"""
-   uvec(x)
-
-Helper to find a unit vector.
-"""
-function uvec(x)
-    nm = norm(x)
-    nm == 0 && return x
-    return x/nm
-end
+# helpful bits for working with n ≥ 2
 
 """
     `unzip(vs)`
@@ -74,17 +63,19 @@ function unzip(f::Function, a, b)
     end
 end
 
+## ----
 
 """
-    parametric_grid(us, vs, r)
+   uvec(x)
 
-Create matrices for `xs`, `ys`, `zs` from `r(u,v) = [x(u,v), y(u,v), z(u,v)]`
-
-Used to plot parametrically defined surfaces.
+Helper to find a unit vector.
 """
-function parametric_grid(us, vs, r)
-    unzip(r.(us, vs'))
+function uvec(x)
+    nm = norm(x)
+    nm == 0 && return x
+    return x/nm
 end
+
 
 ## -----------------------------------
 

@@ -18,14 +18,14 @@
     f(v) = f(v...)
     @test ∇(f)([1,2,3]) ≈  [2*3, 1*3, 1*2]
 
-    F(x,y,z) = [x,y,z]
-    F(v) = F(v...)
-    @test  (∇⋅F)([1,0,0]) ≈ 3
+    F₁(x,y,z) = [x,y,z]
+    F₁(v) = F₁(v...)
+    @test  (∇⋅F₁)([1,0,0]) ≈ 3
 
 
-    F(x,y,z) = [-y, x, 0]
-    F(v) = F(v...)
-    @test all((∇ × F)([1,2,3]) .≈ [0.0, 0.0, 2.0])
+    F₂(x,y,z) = [-y, x, 0]
+    F₂(v) = F₂(v...)
+    @test all((∇ × F₂)([1,2,3]) .≈ [0.0, 0.0, 2.0])
 
 end
 
@@ -83,7 +83,8 @@ end
 
         pyplot() # surface doesn't work with gr()
         Phi(u,v) = [u*cos(v), u*sin(v), u]
-        xs, ys, zs = parametric_grid(0:.1:1, 0:pi/8:2pi, Phi)
+        us, vs = 0:.1:1, 0:pi/8:2pi
+        xs, ys, zs = unzip(Phi.(us, vs'))
         surface(Phi, xlims=(0, 1), ylims=(0,2pi))
 
         V(x,y) = [x, x-y]
@@ -92,9 +93,6 @@ end
         V(x,y,z) = [-y, x, 0]
         vectorfieldplot3d(V, nx=4, ny=4, nz=3)
 
-        a,b = 1, 3
-        F(x,y,z) =  (x^2+((1+b)*y)^2+z^2-1)^3-x^2*z^3-a*y^2*z^3
-        CalculusWithJulia.plot_implicit_surface(F, xlims=(-2,2),ylims=(-1,1),zlims=(-1,2))
     end
 
 end
