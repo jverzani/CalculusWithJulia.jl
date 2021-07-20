@@ -226,7 +226,7 @@ sin(c)
 ### The `find_zero` function.
 
 The `Roots` package has a function `find_zero` that implements the
-bisection method when called as `find_zero(f, (a, b))` where $[a,b]$
+bisection method when called as `find_zero(f, a..b)` where $[a,b]$
 is a bracket. Its use is similar to `bisection` above. This package is loaded when `CalculusWithJulia` is. We illlustrate the usage of `find_zero`
 in the following:
 
@@ -234,12 +234,12 @@ in the following:
 using CalculusWithJulia
 using Roots
 using Plots
-xstar = find_zero(sin, (3, 4))   # use a tuple, (a, b), to specify the bracketing interval
+xstar = find_zero(sin, 3..4)   # using interval notation a..b to specify the bracketing interval. Could use (a,b) as well
 ```
 
 ```julia; echo=false
 alert("""
-Notice, the call `find_zero(sin, (3,4))` again fits the template `action(function, args...)` that we see repeatedly. The `find_zero` function can also be called through `fzero`.
+Notice, the call `find_zero(sin, 3..4)` again fits the template `action(function, args...)` that we see repeatedly. The `find_zero` function can also be called through `fzero`.
 """)
 ```
 
@@ -257,7 +257,7 @@ The polynomial $f(x) = x^5 - x + 1$ has a zero between $-2$ and $-1$. Find it.
 
 ```julia;
 f(x) = x^5 - x + 1
-c = find_zero(f, (-2, -1))
+c = find_zero(f, -2..-1)
 (c, f(c))
 ```
 
@@ -281,7 +281,7 @@ plot(f, 5, 10)
 Find the zero numerically. The plot shows $f(5) < 0 < f(10)$, so $[5,10]$ is a bracket. We thus have:
 
 ```julia;
-find_zero(f, (5, 10))
+find_zero(f, 5..10)
 ```
 
 
@@ -303,7 +303,7 @@ plot(x^3 - x + 1, -3, 3)
 It appears (and a plot over $[0,1]$ verifies) that there is one zero between $-2$ and $-1$. It is found with:
 
 ```julia;
-find_zero(x^3 - x + 1, (-2, -1))
+find_zero(x^3 - x + 1, -2..-1)
 ```
 
 
@@ -326,7 +326,7 @@ We see from the graph that it is clearly between $0$ and $2$, so all we need is 
 
 ```julia;
 h(x) = f(x) - g(x)
-find_zero(h, (0, 2))
+find_zero(h, 0..2)
 ```
 
 
@@ -365,7 +365,7 @@ cheaper.
 Let's get a numeric value, using a simple bracket and an anonymous function:
 
 ```julia;
-find_zero(x -> plan1(x) - plan2(x), (10, 20))
+find_zero(x -> plan1(x) - plan2(x), 10..20)
 ```
 
 ##### Example, the flight of an arrow
@@ -462,7 +462,7 @@ y(b)
 From the graph,  we can see the zero is around `b`. As `y(b)` is `-Inf` we can use the bracket `(b/2,b)`
 
 ```julia;
-x1 = find_zero(y, (b/2, b))
+x1 = find_zero(y, (b/2)..b)
 ```
 
 The answer is approximately $140.7$
@@ -509,7 +509,7 @@ does the algorithm yield:
 
 ```julia;
 f(x) = 1/x
-x0 = find_zero(f, (-1, 1))
+x0 = find_zero(f, -1..1)
 ```
 
 
@@ -541,21 +541,21 @@ interval.
 
 Still, with some engineering, this can be a useful approach, save the
 caveats. This idea is implemented in the `find_zeros` function of the `Roots` package. The function is
-called via `find_zeros(f, a, b)` but here the interval
+called via `find_zeros(f, a.. b)` but here the interval
 $[a,b]$ is not necessarily a bracketing interval.
 
 To see, we have:
 
 ```julia;
 f(x) = cos(10*pi*x)
-find_zeros(f, 0, 1)
+find_zeros(f, 0..1)
 ```
 
 Or for a polynomial:
 
 ```julia;
 f(x) = x^5 - x^4 + x^3 - x^2 + 1
-find_zeros(f, -10, 10)
+find_zeros(f, -10..10)
 ```
 
 (Here $-10$ and $10$ were arbitrarily chosen. Cauchy's method could be used to be more systematic.)
@@ -575,7 +575,7 @@ The zeros are then found with:
 
 ```julia;
 f(x) = exp(x) - x^5
-zs = find_zeros(f, -20, 20)
+zs = find_zeros(f, -20..20)
 ```
 
 
@@ -621,7 +621,7 @@ for i in o
 end
 ```
 
-The command `find_zero(f, (1,2), FalsePosition(), verbose=true)` would
+The command `find_zero(f, 1..2, FalsePosition(), verbose=true)` would
 give more detail on the algorithm in a standard format, but this
 method may be of interest, as it allows the combination of different
 models.
@@ -762,7 +762,7 @@ $f(x) = e^x - x^4$. Find its value numerically:
 
 ```julia; echo=false
 f(x) = exp(x) - x^4
-val = find_zero(f, (-10, 0));
+val = find_zero(f, -10..0);
 numericq(val, 1e-3)
 ```
 
@@ -774,7 +774,7 @@ $f(x) = e^x - x^4$. Find its value numerically:
 
 ```julia; echo=false
 f(x) = exp(x) - x^4
-val = find_zero(f, (0, 5));
+val = find_zero(f, 0..5);
 numericq(val, 1e-3)
 ```
 
@@ -788,7 +788,7 @@ zeros on the positive $x$ axis. You are asked to find the largest
 ```julia; echo=false
 b = 10
 f(x) =  x^2 - b * x * log(x)
-val = find_zero(f, (10, 500))
+val = find_zero(f, 10..500)
 numericq(val, 1e-3)
 ```
 
@@ -806,7 +806,7 @@ plot(airyai, -10, 10)   # `airyai` loaded in `SpecialFunctions` by `CalculusWith
 The second largest root is:
 
 ```julia; echo=false
-val = find_zero(airyai, (-5, -4));
+val = find_zero(airyai, -5..-4);
 numericq(val, 1e-8)
 ```
 
@@ -817,7 +817,7 @@ numericq(val, 1e-8)
 Certainly $x^3$ equals $3^x$ at $x=3$. Find the largest value for which $x^3 = 3x$.
 
 ```julia; echo=false
-val = maximum(find_zeros(x -> x^3 - 3^x, 0, 20))
+val = maximum(find_zeros(x -> x^3 - 3^x, 0..20))
 numericq(val)
 ```
 
@@ -916,8 +916,8 @@ ground.
 
 ```julia; echo=false
 t0 = 0.0
-tf = find_zero(h, (10, 20))
-ta = find_zero(D(h), (t0, tf))
+tf = find_zero(h, 10..20)
+ta = find_zero(D(h), t0..tf)
 choices = [L"(0, 13.187, 30.0)",
 	L"(0, 32.0, 390.0)",
 	L"(0, 2.579, 13.187)"]
@@ -1066,7 +1066,7 @@ radioq(choices, ans)
 The zeros of the equation $\cos(x) \cdot \cosh(x) = 1$ are related to vibrations of rods. Using `find_zeros`, what is the largest zero in the interval $[0, 6\pi]$?
 
 ```julia; echo=false
-val = maximum(find_zeros(x -> cos(x) * cosh(x) - 1, 0, 6pi))
+val = maximum(find_zeros(x -> cos(x) * cosh(x) - 1, 0..6pi))
 numericq(val)
 ```
 
@@ -1122,7 +1122,7 @@ For some problems, `find_zeros` is more direct, as with this one:
 
 
 ```julia
-find_zeros(f, -10, 10)
+find_zeros(f, -10..10)
 ```
 
 Which can be useful if there is some prior understanding of the zeros expected to be found.

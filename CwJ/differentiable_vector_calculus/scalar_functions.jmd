@@ -444,10 +444,10 @@ f(x) = f(x...)
 xs = ys = range(-1, 1, length=100)
 surface(xs, ys, f)
 r3(t) = [γ(t)..., f(γ(t))]  # to plot the path on the surface
-plot_parametric_curve!(r3, 0, 1/2, linewidth=5, color=:black)
+plot_parametric!(0..1/2, r3, linewidth=5, color=:black)
 
 r2(t) = [γ(t)..., 0]
-plot_parametric_curve!(r2, 0, 1/2, linewidth=5, color=:black) # in the $x$-$y$ plane
+plot_parametric!(0..1/2, r2, linewidth=5, color=:black) # in the $x$-$y$ plane
 ```
 
 
@@ -821,7 +821,7 @@ xs = ys = range(-3/2, 3/2, length=100)
 surface(xs, ys, f, legend=false)
 
 r(t) = [γ(t)..., (f∘γ)(t)]
-plot_parametric_curve!(r, 0, pi/2, linewidth=5, color=:black)
+plot_parametric!(0..1/2, r, linewidth=5, color=:black)
 
 t0 = pi/6
 arrow!(r(t0), r'(t0), linewidth=5, color=:black)
@@ -900,7 +900,7 @@ xs = ys = range(-3/2, 3/2, length=100)
 plotly()
 surface(xs, ys, f, legend=false)
 r(t) = [γ(t)..., (f∘γ)(t)]
-plot_parametric_curve!(r, 0, pi/2, linewidth=5, color=:black)
+plot_parametric!(0..1/2, r, linewidth=5, color=:black)
 ```
 
 
@@ -976,12 +976,12 @@ M=f(3/2,3/2)
 x0,y0 = 1/2, -1/2
 plot!([-3/2, 3/2, 3/2, -3/2, -3/2], y0 .+ [0,0,0,0, 0], [M,M,2,2,M], linestyle=:dash)
 r(x) = [x, y0, f(x,y0)]
-plot_parametric_curve!(r, -3/2, 3/2, linewidth=5, color=:black)
+plot_parametric!(-3/2..3/2, r, linewidth=5, color=:black)
 
 
 plot!(x0 .+ [0,0,0,0, 0], [-3/2, 3/2, 3/2, -3/2, -3/2], [M,M,2,2,M], linestyle=:dash)
 r(y) = [x0, y, f(x0, y)]
-plot_parametric_curve!(r, -3/2, 3/2, linewidth=5, color=:black)
+plot_parametric!(-3/2..3/2, r, linewidth=5, color=:black)
 
 
 scatter!([x0],[y0],[M])
@@ -1007,7 +1007,7 @@ rrx, rry = l1(1)
 plot!([llx, rrx, rrx, llx, llx], [lly, rry, rry, lly, lly], [M,M, 2, 2, M], linestyle=:dash)
 
 r(t) = [l1(t)..., f(l1(t))]
-plot_parametric_curve!(r, -1, 1, linewidth=5, color=:black)
+plot_parametric!(-1..1, r, linewidth=5, color=:black)
 arrow!(r(0), r'(0), linewidth=5, color=:black)
 
 
@@ -1067,7 +1067,7 @@ xs = ys = range(-2, 2, length=100)
 p = surface(xs, ys, f, legend=false)
 
 γ(t) = [cos(t), sin(t), f(cos(t), sin(t))]
-plot_parametric_curve!(γ, 0, 2pi, linewidth=2)
+plot_parametric!(0..2pi, γ, linewidth=2)
 
 t =7pi/4;
 scatter!(p, unzip([γ(t)])...)
@@ -1075,7 +1075,7 @@ scatter!(p, unzip([γ(t)])...)
 
 rad(t) = 1 * [cos(t), sin(t)]
 γ(t) = [rad(t)..., 0]
-plot_parametric_curve!(γ, 0, 2pi, linestyle=:dash)
+plot_parametric!(0..2pi, γ, linestyle=:dash)
 
 
 

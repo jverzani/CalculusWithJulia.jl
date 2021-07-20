@@ -1,7 +1,7 @@
 # The problem-algorithm-solve interface
 
 
-The [DifferentialEquations.jl](https://github.com/SciML) package is an entry point to a suite of `Julia` packages for numerically solving differential equations in `Julia` and other languages. A common interface is implemented that flexibly adjusts to the many different problems and algorithms ocvered by this suite of packages. In this section, we review a very informative [post](https://discourse.julialang.org/t/function-depending-on-the-global-variable-inside-module/64322/10) by discourse user `@genkuroki` which very nicely demonstrates the usefulness of the problem-algorithm-solve approach used with `DifferentialEquations.jl`. We slightly modify the presentation below for our needs, but suggest a perusal of the very informative original post.
+The [DifferentialEquations.jl](https://github.com/SciML) package is an entry point to a suite of `Julia` packages for numerically solving differential equations in `Julia` and other languages. A common interface is implemented that flexibly adjusts to the many different problems and algorithms covered by this suite of packages. In this section, we review a very informative [post](https://discourse.julialang.org/t/function-depending-on-the-global-variable-inside-module/64322/10) by discourse user `@genkuroki` which very nicely demonstrates the usefulness of the problem-algorithm-solve approach used with `DifferentialEquations.jl`. We slightly modify the presentation below for our needs, but suggest a perusal of the original post.
 
 ##### Example: FreeFall
 
@@ -211,3 +211,9 @@ plot(P, Q, R; size=(720, 600))
 The only change was in the problem, `Problem(y0 = 0.0 ± 0.0, v0 = 30.0 ± 1.0)`, where a different number type is used which accounts for uncertainty. The rest follows the same pattern.
 
 This example, shows the flexibility of the problem-algorithm-solver pattern while maintaining a consistent pattern for execution.
+
+
+```julia; echo=false
+using CalculusWithJulia
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

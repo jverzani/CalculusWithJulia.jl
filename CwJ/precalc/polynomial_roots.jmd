@@ -844,7 +844,7 @@ Consider the polynomial $x^5 - 3x + 1$. Does it have more than one real root?
 
 ```julia; echo=false
 using Roots
-xs = find_zeros(x -> x^5 - 3x + 1, -10, 10)
+xs = find_zeros(x -> x^5 - 3x + 1, -10..10)
 yesnoq(length(xs) > 1)
 ```
 
@@ -853,7 +853,7 @@ Consider the polynomial $x^5 - 1.5x + 1$. Does it have more than one real root?
 
 ```julia;echo=false
 using Roots
-xs = find_zeros(x -> x^5 - 1.5x + 1, -10, 10)
+xs = find_zeros(x -> x^5 - 1.5x + 1, -10..10)
 yesnoq(length(xs) > 1)
 ```
 
@@ -897,7 +897,7 @@ What is the largest magnitude of a real root?
 
 ```julia; echo=false
 f(x) = x^5 - 4x^4 + x^3 - 2x^2 + x
-rts = find_zeros(f, -5, 5)
+rts = find_zeros(f, -5..5)
 ans = maximum(abs.(rts))
 numericq(ans)
 ```
@@ -918,7 +918,7 @@ m = 0
 for perm in (p, q, q*p, p*q, p*q*p, p^2)
     global a,b,c =  perm([2,3,4])
      fn = x -> x^3 - a*x^2 + b*x - c
-    rts_ = find_zeros(fn, -10, 10)
+    rts_ = find_zeros(fn, -10..10)
 	global a1 = maximum(abs.(rts_))
 	global m = a1 > m ? a1 : m
 end
