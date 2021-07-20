@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
 
 <style>
@@ -104,7 +104,7 @@ $( document ).ready(function() {
 });
 </script>
 
-
+<link rel="shortcut icon" href="https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/misc/logo.png" type="image/x-icon" />
 
 </head>
 
@@ -160,10 +160,10 @@ $( document ).ready(function() {
 <p>can be interpreted as the &quot;signed&quot; area between <span class="math">$f(x)$</span> and <span class="math">$g(x)$</span> over <span class="math">$[a,b]$</span>. If on this interval <span class="math">$[a,b]$</span> it is true that <span class="math">$f(x) \geq g(x)$</span>, then this would just be the area, as seen in this figure. The rectangle in the figure has area: <span class="math">$(f(a)-g(a)) \cdot (b-a)$</span> which could be a term in a left Riemann sum of the integral of <span class="math">$f(x) - g(x)$</span>:</p>
 
 
-    <div id="5d193d3d-5125-491d-b52c-c483ee0247dc" style="width:576px;height:384px;"></div>
+    <div id="24419ccc-c393-428d-966b-0130e5932524" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('5d193d3d-5125-491d-b52c-c483ee0247dc');
+        var PLOT = document.getElementById('24419ccc-c393-428d-966b-0130e5932524');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -3618,10 +3618,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="2e1f350a-f632-4e8b-840d-d11a0ac72be6" style="width:576px;height:384px;"></div>
+    <div id="87ec81c8-75cf-4f69-80af-219ee86a6144" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('2e1f350a-f632-4e8b-840d-d11a0ac72be6');
+        var PLOT = document.getElementById('87ec81c8-75cf-4f69-80af-219ee86a6144');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -3954,10 +3954,8 @@ $( document ).ready(function() {
 </pre>
 
 
-<pre class="output">
-2-element Vector&#123;Float64&#125;:
- -2.732050807568877
-  0.7320508075688773
+<pre class="julia-error">
+ERROR: UndefVarError: find_zeros not defined
 </pre>
 
 
@@ -3969,8 +3967,8 @@ $( document ).ready(function() {
 </pre>
 
 
-<pre class="output">
-6.928203230275509
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
 </pre>
 
 
@@ -3987,10 +3985,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="af1d62fd-6797-4396-ba96-85848fdd693c" style="width:576px;height:384px;"></div>
+    <div id="08e6ea7e-6c47-4e6b-93f2-f1068d8a4438" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('af1d62fd-6797-4396-ba96-85848fdd693c');
+        var PLOT = document.getElementById('08e6ea7e-6c47-4e6b-93f2-f1068d8a4438');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -4388,8 +4386,8 @@ $( document ).ready(function() {
 </pre>
 
 
-<pre class="output">
-2.8284271247461903
+<pre class="julia-error">
+ERROR: UndefVarError: find_zeros not defined
 </pre>
 
 
@@ -4405,9 +4403,11 @@ $( document ).ready(function() {
 </pre>
 
 
+<pre class="julia-error">
+ERROR: LoadError: UndefVarError: @syms not defined
+in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/integrals/area_between_curves.jmd:2
+</pre>
 
-<div class="well well-sm">$\frac{1}{\left(n + 1\right) \left(n + 2\right)}$
-</div>
 
 <p>Based on this answer, what is the value of this</p>
 <p class="math">\[
@@ -4423,18 +4423,19 @@ $( document ).ready(function() {
 </pre>
 
 
+<pre class="julia-error">
+ERROR: UndefVarError: n not defined
+</pre>
 
-<div class="well well-sm">$\frac{1}{2}$
-</div>
 
 <h5>Example</h5>
 <p>Verify <a href="http://en.wikipedia.org/wiki/The_Quadrature_of_the_Parabola">Archimedes&#39;</a> finding that the area of the parabolic segment is <span class="math">$4/3$</span>rds that of the triangle joining <span class="math">$a$</span>, <span class="math">$(a+b)/2$</span> and <span class="math">$b$</span>.</p>
 
 
-    <div id="e123f2d6-4552-433b-81c5-655d2dd451aa" style="width:576px;height:384px;"></div>
+    <div id="e7d37870-f0e3-41f4-af6d-6ff229deb6a6" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('e123f2d6-4552-433b-81c5-655d2dd451aa');
+        var PLOT = document.getElementById('e7d37870-f0e3-41f4-af6d-6ff229deb6a6');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -4693,8 +4694,8 @@ $( document ).ready(function() {
 </pre>
 
 
-<pre class="output">
-0.421875
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
 </pre>
 
 
@@ -4707,8 +4708,8 @@ $( document ).ready(function() {
 </pre>
 
 
-<pre class="output">
-0.5625000000000001
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
 </pre>
 
 
@@ -4720,8 +4721,8 @@ $( document ).ready(function() {
 </pre>
 
 
-<pre class="output">
--1.1102230246251565e-16
+<pre class="julia-error">
+ERROR: UndefVarError: val1 not defined
 </pre>
 
 
@@ -4738,10 +4739,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="11f46bf6-3532-4666-9d72-09cda12a4fba" style="width:576px;height:384px;"></div>
+    <div id="8d462c59-f4f1-4224-bab1-87dc9d860744" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('11f46bf6-3532-4666-9d72-09cda12a4fba');
+        var PLOT = document.getElementById('8d462c59-f4f1-4224-bab1-87dc9d860744');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -5091,8 +5092,8 @@ $( document ).ready(function() {
 </pre>
 
 
-<pre class="output">
-3980.1173881924947
+<pre class="julia-error">
+ERROR: UndefVarError: find_zeros not defined
 </pre>
 
 
@@ -5108,10 +5109,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="8d4f202c-0d99-482e-9684-32aaabcdf5ac" style="width:576px;height:384px;"></div>
+    <div id="38ac0c1a-89b9-4f3c-8c7f-44c80208119a" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('8d4f202c-0d99-482e-9684-32aaabcdf5ac');
+        var PLOT = document.getElementById('38ac0c1a-89b9-4f3c-8c7f-44c80208119a');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -5431,8 +5432,8 @@ $( document ).ready(function() {
 </pre>
 
 
-<pre class="output">
-0.4207978950529467
+<pre class="julia-error">
+ERROR: UndefVarError: find_zeros not defined
 </pre>
 
 
@@ -5457,223 +5458,9 @@ area &#40;generic function with 1 method&#41;
 </pre>
 
 
-
-    <div id="21416a8c-c741-4f7a-bb41-eb11b0a3a365" style="width:576px;height:384px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('21416a8c-c741-4f7a-bb41-eb11b0a3a365');
-    Plotly.plot(PLOT, [
-    {
-        "xaxis": "x",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y",
-        "x": [
-            0.0,
-            0.009765819019788131,
-            0.10006491716837283,
-            0.15433091130562387,
-            0.20021211871576575,
-            0.2500519700330514,
-            0.29599990453462816,
-            0.3452609464064898,
-            0.4023346943385323,
-            0.45305510611102146,
-            0.49753233654022,
-            0.5460244566553195,
-            0.5948047787528121,
-            0.6487376626244042,
-            0.7000534407448434,
-            0.7534099435113505,
-            0.7983247536668452,
-            0.8531606459863641,
-            0.9047080021287085,
-            0.9872908640160599,
-            1.0
-        ],
-        "showlegend": true,
-        "mode": "lines",
-        "name": "y1",
-        "zmin": null,
-        "legendgroup": "y1",
-        "zmax": null,
-        "line": {
-            "color": "rgba(0, 154, 250, 1.000)",
-            "shape": "linear",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            2.0,
-            1.9522737367264023,
-            1.5514010773657665,
-            1.3415898465997214,
-            1.1801838646385958,
-            1.020070881781974,
-            0.8855090176754599,
-            0.7542326366454772,
-            0.6178816500816611,
-            0.5100424603627501,
-            0.4252442945274473,
-            0.34269506950173584,
-            0.26961774076714407,
-            0.19993559911245554,
-            0.14400756623996228,
-            0.09613495952656109,
-            0.06365686645131022,
-            0.03334363250104627,
-            0.013889287738461467,
-            0.00024290174658383754,
-            0.0
-        ],
-        "type": "scatter"
-    }
-]
-, {
-    "showlegend": true,
-    "xaxis": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.0,
-            0.25,
-            0.5,
-            0.75,
-            1.0
-        ],
-        "range": [
-            -0.03,
-            1.03
-        ],
-        "domain": [
-            0.05313137941090697,
-            0.9931649168853892
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "0.00",
-            "0.25",
-            "0.50",
-            "0.75",
-            "1.00"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "annotations": [],
-    "height": 384,
-    "margin": {
-        "l": 0,
-        "b": 20,
-        "r": 0,
-        "t": 20
-    },
-    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "yaxis": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.0,
-            0.5,
-            1.0,
-            1.5,
-            2.0
-        ],
-        "range": [
-            -0.06,
-            2.06
-        ],
-        "domain": [
-            0.0391878098571012,
-            0.989747375328084
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "0.0",
-            "0.5",
-            "1.0",
-            "1.5",
-            "2.0"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "legend": {
-        "yanchor": "auto",
-        "xanchor": "auto",
-        "bordercolor": "rgba(0, 0, 0, 1.000)",
-        "bgcolor": "rgba(255, 255, 255, 1.000)",
-        "borderwidth": 1,
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "font": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "title": {
-            "font": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "family": "sans-serif",
-                "size": 15
-            },
-            "text": ""
-        },
-        "traceorder": "normal",
-        "x": 1.0
-    },
-    "width": 576
-}
-);
-
-    
-    </script>
+<pre class="julia-error">
+ERROR: UndefVarError: find_zeros not defined
+</pre>
 
 
 <p>While here, let&#39;s also answer the question of which <span class="math">$m$</span> gives an area of <span class="math">$1$</span>, or one-half the total? This can be done as follows:</p>
@@ -5684,8 +5471,8 @@ area &#40;generic function with 1 method&#41;
 </pre>
 
 
-<pre class="output">
-0.2566498569701879
+<pre class="julia-error">
+ERROR: UndefVarError: find_zero not defined
 </pre>
 
 
@@ -5703,10 +5490,10 @@ area &#40;generic function with 1 method&#41;
 
 
 
-    <div id="ed584f31-320a-4d0e-a9da-c58eae77b4ae" style="width:576px;height:384px;"></div>
+    <div id="1da7005c-7421-459b-843e-236a4d24a2fb" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('ed584f31-320a-4d0e-a9da-c58eae77b4ae');
+        var PLOT = document.getElementById('1da7005c-7421-459b-843e-236a4d24a2fb');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -6058,8 +5845,8 @@ area &#40;generic function with 1 method&#41;
 </pre>
 
 
-<pre class="output">
-2.1461932206205825
+<pre class="julia-error">
+ERROR: UndefVarError: find_zero not defined
 </pre>
 
 
@@ -6075,8 +5862,8 @@ area &#40;generic function with 1 method&#41;
 </pre>
 
 
-<pre class="output">
-0.8030726701188743
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
 </pre>
 
 
@@ -6092,8 +5879,8 @@ area &#40;generic function with 1 method&#41;
 </pre>
 
 
-<pre class="output">
-0.8030726629434394
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
 </pre>
 
 
@@ -6112,19 +5899,14 @@ area &#40;generic function with 1 method&#41;
 </pre>
 
 
-<pre class="output">
-0.8030726701188743
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
 </pre>
 
 
 
-<div class="alert alert-info" role="alert">
-
-<div class="markdown"><p>When doing problems by hand this latter style can often reduce the complications, but when approaching the task numerically, the first two styles are generally easier, though computationally more expensive.</p>
-</div>
-
-</div>
-
+<div class="alert alert-info" role="alert"><div class="markdown"><p>When doing problems by hand this latter style can often reduce the complications, but when approaching the task numerically, the first two styles are generally easier, though computationally more expensive.</p>
+</div></div>
 
 <h4>Integrating in different directions</h4>
 <p>The last example suggested integrating in the <span class="math">$y$</span> variable. This could have more explanation.</p>
@@ -6141,10 +5923,10 @@ area &#40;generic function with 1 method&#41;
 
 
 
-    <div id="987b5b8b-8ed6-490b-9337-cecbb1bd344b" style="width:576px;height:384px;"></div>
+    <div id="faee7078-67f1-403d-9203-75b4b2a76d03" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('987b5b8b-8ed6-490b-9337-cecbb1bd344b');
+        var PLOT = document.getElementById('faee7078-67f1-403d-9203-75b4b2a76d03');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -6429,10 +6211,10 @@ area &#40;generic function with 1 method&#41;
 
 
 
-    <div id="d6caf384-b1d0-4dff-aca1-91c02a16a110" style="width:576px;height:384px;"></div>
+    <div id="cd7bc7d1-770e-4a61-9dbb-049e3aaada69" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('d6caf384-b1d0-4dff-aca1-91c02a16a110');
+        var PLOT = document.getElementById('cd7bc7d1-770e-4a61-9dbb-049e3aaada69');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -6720,10 +6502,10 @@ area &#40;generic function with 1 method&#41;
 
 
 
-    <div id="7ced785b-ff1d-4710-ae23-1b372de5db65" style="width:576px;height:384px;"></div>
+    <div id="cd055954-ff27-49a0-b992-6a4f681f1e70" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('7ced785b-ff1d-4710-ae23-1b372de5db65');
+        var PLOT = document.getElementById('cd055954-ff27-49a0-b992-6a4f681f1e70');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -7197,8 +6979,8 @@ area &#40;generic function with 1 method&#41;
 </pre>
 
 
-<pre class="output">
-1.1666666666666667
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
 </pre>
 
 
@@ -7206,250 +6988,66 @@ area &#40;generic function with 1 method&#41;
 <h6>Question</h6>
 <p>Find the area enclosed by the curves <span class="math">$y=2-x^2$</span> and <span class="math">$y=x^2 - 3$</span>.</p>
 
-
-<form name='WeaveQuestion' data-id='p0XjIYQS' data-controltype='numeric'>
-<div class='form-group '>
-<div class='controls'>
-
-
-<div class="input-group">
-<input id="p0XjIYQS" type="number" class="form-control">
-
-</div>
-
-<div id='p0XjIYQS_message'></div>
-</div>
-</div>
-</form>
-<script text='text/javascript'>
-$('#p0XjIYQS').on('change', function() {
-  correct = Math.abs(this.value - 10.5409255338946) <= 0.001;
-
-  if(correct) {
-     $('#p0XjIYQS_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#p0XjIYQS_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-  }
-});
-</script>
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
+</pre>
 
 
 <h6>Question</h6>
 <p>Find the area between <span class="math">$f(x) = \cos(x)$</span>, <span class="math">$g(x) = x$</span> and the <span class="math">$y$</span> axis.</p>
 
-
-<form name='WeaveQuestion' data-id='JJkzxjT6' data-controltype='numeric'>
-<div class='form-group '>
-<div class='controls'>
-
-
-<div class="input-group">
-<input id="JJkzxjT6" type="number" class="form-control">
-
-</div>
-
-<div id='JJkzxjT6_message'></div>
-</div>
-</div>
-</form>
-<script text='text/javascript'>
-$('#JJkzxjT6').on('change', function() {
-  correct = Math.abs(this.value - 0.400488612113379) <= 0.001;
-
-  if(correct) {
-     $('#JJkzxjT6_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#JJkzxjT6_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-  }
-});
-</script>
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
+</pre>
 
 
 <h6>Question</h6>
 <p>Find the area between the line <span class="math">$y=1/2(x+1)$</span> and half circle <span class="math">$y=\sqrt{1 - x^2}$</span>.</p>
 
-
-<form name='WeaveQuestion' data-id='Eg29FAsu' data-controltype='numeric'>
-<div class='form-group '>
-<div class='controls'>
-
-
-<div class="input-group">
-<input id="Eg29FAsu" type="number" class="form-control">
-
-</div>
-
-<div id='Eg29FAsu_message'></div>
-</div>
-</div>
-</form>
-<script text='text/javascript'>
-$('#Eg29FAsu').on('change', function() {
-  correct = Math.abs(this.value - 0.7071487182097226) <= 0.001;
-
-  if(correct) {
-     $('#Eg29FAsu_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#Eg29FAsu_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-  }
-});
-</script>
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
+</pre>
 
 
 <h6>Question</h6>
 <p>Find the area in the first quadrant between the lines <span class="math">$y=x$</span>, <span class="math">$y=1$</span>, and the curve <span class="math">$y=x^2 + 4$</span>.</p>
 
-
-<form name='WeaveQuestion' data-id='zsjmti9j' data-controltype='numeric'>
-<div class='form-group '>
-<div class='controls'>
-
-
-<div class="input-group">
-<input id="zsjmti9j" type="number" class="form-control">
-
-</div>
-
-<div id='zsjmti9j_message'></div>
-</div>
-</div>
-</form>
-<script text='text/javascript'>
-$('#zsjmti9j').on('change', function() {
-  correct = Math.abs(this.value - 0.8333333333333333) <= 0.001;
-
-  if(correct) {
-     $('#zsjmti9j_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#zsjmti9j_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-  }
-});
-</script>
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
+</pre>
 
 
 <h6>Question</h6>
 <p>Find the area between <span class="math">$y=x^2$</span> and <span class="math">$y=-x^4$</span> for <span class="math">$\lvert x \rvert \leq 1$</span>.</p>
 
-
-<form name='WeaveQuestion' data-id='SdFBGjoG' data-controltype='numeric'>
-<div class='form-group '>
-<div class='controls'>
-
-
-<div class="input-group">
-<input id="SdFBGjoG" type="number" class="form-control">
-
-</div>
-
-<div id='SdFBGjoG_message'></div>
-</div>
-</div>
-</form>
-<script text='text/javascript'>
-$('#SdFBGjoG').on('change', function() {
-  correct = Math.abs(this.value - 1.0666666666666667) <= 0.001;
-
-  if(correct) {
-     $('#SdFBGjoG_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#SdFBGjoG_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-  }
-});
-</script>
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
+</pre>
 
 
 <h6>Question</h6>
 <p>Let <code>f&#40;x&#41; &#61; 1/&#40;sqrt&#40;pi&#41;*gamma&#40;1/2&#41;&#41; * &#40;1 &#43; t^2&#41;^&#40;-1&#41;</code> and <code>g&#40;x&#41; &#61; 1/sqrt&#40;2*pi&#41; * exp&#40;-x^2/2&#41;</code>. These graphs intersect in two points. Find the area bounded by them.</p>
 
-
-<form name='WeaveQuestion' data-id='3KR7UKCk' data-controltype='numeric'>
-<div class='form-group '>
-<div class='controls'>
-
-
-<div class="input-group">
-<input id="3KR7UKCk" type="number" class="form-control">
-
-</div>
-
-<div id='3KR7UKCk_message'></div>
-</div>
-</div>
-</form>
-<script text='text/javascript'>
-$('#3KR7UKCk').on('change', function() {
-  correct = Math.abs(this.value - -0.25116455428885115) <= 0.001;
-
-  if(correct) {
-     $('#3KR7UKCk_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#3KR7UKCk_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-  }
-});
-</script>
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
+</pre>
 
 
 <p>&#40;Where <code>gamma&#40;1/2&#41;</code> is a call to the <a href="http://en.wikipedia.org/wiki/Gamma_function">gamma</a> function.&#41;</p>
 <h6>Question</h6>
 <p>Find the area in the first quadrant bounded by the graph of <span class="math">$x = (y-1)^2$</span>, <span class="math">$x=3-y$</span> and <span class="math">$x=2\sqrt{y}$</span>. &#40;Hint: integrate in the <span class="math">$y$</span> variable.&#41;</p>
 
-
-<form name='WeaveQuestion' data-id='DuFjJTQH' data-controltype='numeric'>
-<div class='form-group '>
-<div class='controls'>
-
-
-<div class="input-group">
-<input id="DuFjJTQH" type="number" class="form-control">
-
-</div>
-
-<div id='DuFjJTQH_message'></div>
-</div>
-</div>
-</form>
-<script text='text/javascript'>
-$('#DuFjJTQH').on('change', function() {
-  correct = Math.abs(this.value - 2.166666667488131) <= 0.001;
-
-  if(correct) {
-     $('#DuFjJTQH_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#DuFjJTQH_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-  }
-});
-</script>
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
+</pre>
 
 
 <h6>Question</h6>
 <p>Find the total area bounded by the lines <span class="math">$x=0$</span>, <span class="math">$x=2$</span> and the curves <span class="math">$y=x^2$</span> and <span class="math">$y=x$</span>. This would be <span class="math">$\int_a^b \lvert f(x) - g(x) \rvert dx$</span>.</p>
 
-
-<form name='WeaveQuestion' data-id='j1nR6FkC' data-controltype='numeric'>
-<div class='form-group '>
-<div class='controls'>
-
-
-<div class="input-group">
-<input id="j1nR6FkC" type="number" class="form-control">
-
-</div>
-
-<div id='j1nR6FkC_message'></div>
-</div>
-</div>
-</form>
-<script text='text/javascript'>
-$('#j1nR6FkC').on('change', function() {
-  correct = Math.abs(this.value - 0.9999999999999999) <= 0.001;
-
-  if(correct) {
-     $('#j1nR6FkC_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#j1nR6FkC_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-  }
-});
-</script>
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
+</pre>
 
 
 <h6>Question</h6>
@@ -7475,63 +7073,40 @@ f(x) = x^2/70, \quad g(x) = 35 + x^2/140
 \]</p>
 <p>Put this altogether to give an estimated weight in pounds.</p>
 
-
-<form name='WeaveQuestion' data-id='uDZpUsTc' data-controltype='numeric'>
-<div class='form-group '>
-<div class='controls'>
-
-
-<div class="input-group">
-<input id="uDZpUsTc" type="number" class="form-control">
-
-</div>
-
-<div id='uDZpUsTc_message'></div>
-</div>
-</div>
-</form>
-<script text='text/javascript'>
-$('#uDZpUsTc').on('change', function() {
-  correct = Math.abs(this.value - 4647.180185596263) <= 0.001;
-
-  if(correct) {
-     $('#uDZpUsTc_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#uDZpUsTc_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-  }
-});
-</script>
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
+</pre>
 
 
 <p>Is the guess that the entire sculpture is more than two tons?</p>
 
 
-<form name="WeaveQuestion" data-id="1mk6P5ae" data-controltype="radio">
+<form name="WeaveQuestion" data-id="j529743Z" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_1mk6P5ae" id="radio_1mk6P5ae_1" value="1">
-  <label class="form-check-label" for="radio_1mk6P5ae_1">
+  <input class="form-check-input" type="radio" name="radio_j529743Z" id="radio_j529743Z_1" value="1">
+  <label class="form-check-label" for="radio_j529743Z_1">
     Less than two tons
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_1mk6P5ae" id="radio_1mk6P5ae_2" value="2">
-  <label class="form-check-label" for="radio_1mk6P5ae_2">
+  <input class="form-check-input" type="radio" name="radio_j529743Z" id="radio_j529743Z_2" value="2">
+  <label class="form-check-label" for="radio_j529743Z_2">
     More than two tons
   </label>
 </div>
 
-<div id="1mk6P5ae_message"></div>
+<div id="j529743Z_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_1mk6P5ae']").on("change", function() {
+$("input:radio[name='radio_j529743Z']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#1mk6P5ae_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#j529743Z_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#1mk6P5ae_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#j529743Z_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -7548,32 +7123,16 @@ $("input:radio[name='radio_1mk6P5ae']").on("change", function() {
 \]</p>
 <p>Find the profit to produce 100 units: <span class="math">$P = \int_0^{100} (\text{mr}(x) - \text{mc}(x)) dx$</span>.</p>
 
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
+</pre>
 
-<form name='WeaveQuestion' data-id='PCjD8Byd' data-controltype='numeric'>
-<div class='form-group '>
-<div class='controls'>
 
+<hr />
 
-<div class="input-group">
-<input id="PCjD8Byd" type="number" class="form-control">
-
-</div>
-
-<div id='PCjD8Byd_message'></div>
-</div>
-</div>
-</form>
-<script text='text/javascript'>
-$('#PCjD8Byd').on('change', function() {
-  correct = Math.abs(this.value - 105.19814987036037) <= 0.001;
-
-  if(correct) {
-     $('#PCjD8Byd_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#PCjD8Byd_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-  }
-});
-</script>
+<pre class="julia-error">
+ERROR: &#91;:integrals, :area_between_curves&#93;
+</pre>
 
 
   </div>

@@ -203,7 +203,7 @@ html_templates=Dict()
 
 
 html_templates["Numericq"] = mt"""
-<form name='WeaveQuestion' data-id='{{ID}}' data-controltype='{{TYPE}}'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='{{ID}}' data-controltype='{{TYPE}}'>
 <div class='form-group {{status}}'>
 <div class='controls'>
 {{{form}}}
@@ -212,8 +212,9 @@ html_templates["Numericq"] = mt"""
 <script>$('#{{ID}}_hint').tooltip({title:'{{{hint}}}', html:true, placement:'right'});</script>
 {{/hint}}
 
-<div class="input-group">
-<input id="{{ID}}" type="number" class="form-control">
+<div class="form-floating input-group">
+<input id="{{ID}}" type="number" class="form-control" placeholder="Numeric answer">
+<label for="{{ID}}">Numeric answer</label>
 {{#units}}<span class="input-group-addon">{{{units}}}</span>{{/units}}
 </div>
 
@@ -275,7 +276,7 @@ html_templates["3Radioq"] = mt"""
 """
 
 html_templates["question_tpl"] = mt"""
-<form name="WeaveQuestion" data-id="{{ID}}" data-controltype="{{TYPE}}">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="{{ID}}" data-controltype="{{TYPE}}">
 <div class="form-group {{status}}">
 {{{form}}}
 {{#hint}}

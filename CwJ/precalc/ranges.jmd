@@ -33,7 +33,7 @@ a_0, a_0 + h, a_0 + 2h, a_0 + 3h, \dots, a_0 + nh
 
 
 The formula for the $a_n$th term can be written in terms of $a_0$, or
-any other $0 < m \leq n$ with $a_n = a_m + (n-m)\cdot h$.
+any other $0 \leq m \leq n$ with $a_n = a_m + (n-m)\cdot h$.
 
 
 A typical question might be: The first term of an arithmetic sequence
@@ -45,15 +45,15 @@ a0, h, n = 200, -10, 20
 a0 + n * h
 ```
 
-More complicated questions involve solving for an unknown first, as
+More complicated questions involve an unknown first value, as
 with: an arithmetic sequence has a common difference equal to 10 and
 its 6th term is equal to 52. Find its 15th term, $a_{15}$. Here we have to
-answer: $a_0 + 15 \cdot 10$, but to find $a_0$, we use $52 = a_0 +
-6\cdot(10)$. This yields $a_0=-8$, and so:
+answer: $a_0 + 15 \cdot 10$. Either we could find $a_0$ (using $52 = a_0 +
+6\cdot(10)$) or use the above formula
 
 ```julia;
-a0, h, n = -8, 10, 15
-a0 + n * h
+a6, h, m, n = 52, 10, 6, 15
+a15 = a6 + (n-m)*h
 ```
 
 
@@ -155,6 +155,11 @@ and
 collect(xs)
 ```
 
+```julia;echo=false
+note("""
+There is also the `LinRange(a,b,n)` function which is faster than `range` as it doesn't try to correct for floating point errors.
+""")
+```
 
 ## Filtering and modifying arithmetic progressions
 
@@ -335,6 +340,12 @@ multiple of `7`:
 sum(k for k in 1:100 if rem(k,7) == 0)  ## add multiples of 7
 ```
 
+The same `if` can be used in a comprehension. For example, this is an alternative to `filter` for identifying the numbers divisble by `7` in a range of numbers:
+
+```julia;
+[k for k in 1:100 if rem(k,7) == 0]
+```
+
 #### Example: Making change
 
 This example of Stefan Karpinski comes from a
@@ -397,13 +408,13 @@ our condition is simply expressed: `q > d > n > p`:
 
 We have been discussing structured sets of numbers. On the opposite
 end of the spectrum are random numbers. `Julia` makes them easy to
-generate, especially random numbers chosen uniformly for $(0,1)$.
+generate, especially random numbers chosen uniformly from $[0,1)$.
 
-- The `rand()` function returns a randomly chosen number in $(0,1)$.
+- The `rand()` function returns a randomly chosen number in $[0,1)$.
 
-- The `rand(n)` function returns `n` randomly chosen numbers in $(0,1)$.
+- The `rand(n)` function returns a vector of `n` randomly chosen numbers in $[0,1)$.
 
-To illustrate, this will return a single number
+To illustrate, this will command return a single number
 
 ```julia;
 rand()
@@ -423,12 +434,6 @@ rand(10)
 ```
 
 The `rand` function is easy to use. The only common source of confusion is the subtle distinction between `rand()` and `rand(1)`, as the latter is a vector of 1 random number and the former just 1 random number.
-
-```julia;echo=false;
-alert(L"""
-The documentation for `rand` shows that the value is in $[0,1)$, but in practice $0$ doesn't come up with any frequency - about 1 out of every $10^{19}$ numbers - so we say $(0,1)$.
-""")
-```
 
 
 ## Questions
@@ -639,4 +644,10 @@ can be found by an expression of the form `prod(a:h:b)`.  Find the product of th
 ```julia;echo=false;
 val = prod(1:2:19)
 numericq(val)
+```
+
+
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

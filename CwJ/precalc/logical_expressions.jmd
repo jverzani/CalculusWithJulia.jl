@@ -70,18 +70,18 @@ a < b, a + c < b + c
 Trying other choices will show that the two answers are either both `false` or both `true`.
 
 ```julia; echo=false;
-alert(""" Well, almost... When `Inf` or `NaN` are involved, this may not hold, for example `1 + Inf < 2 + Inf` is actually `false`. """)
+alert(""" Well, almost... When `Inf` or `NaN` are involved, this may not hold, for example `1 + Inf < 2 + Inf` is actually `false`. As would be `1 + (typemax(1)-1) < 2 + (typemax(1)-1)`.""")
 ```
 
 
-So adding or subtracting any finite value from an inequality will preserve the inequality, just as it does for equations.
+So adding or subtracting most any finite value from an inequality will preserve the inequality, just as it does for equations.
 
 What about addition and multiplication?
 
 Consider the case $a < b$ and $c > 0$. Then $ca < cb$. Here we investigate using 3 random values (which will be positive):
 
 ```julia;
-a,b,c = rand(3)   # 3 random numbers in (0,1)
+a,b,c = rand(3)   # 3 random numbers in [0,1)
 a < b, c*a < c*b
 ```
 
@@ -133,13 +133,13 @@ x =  0; exp(x) >= 1 + x
 x =  1; exp(x) >= 1 + x
 ```
 
-Now, let's investigate that for any distinct real numbers, $a$ and $b$ that
+Now, let's investigate that for any distinct real numbers, $a$ and $b$, that
 
 $$~
 \frac{e^b - e^a}{b - a} > e^{(a+b)/2}
 ~$$
 
-For this, we use `rand(2)` to generate two random numbers in $(0,1)$:
+For this, we use `rand(2)` to generate two random numbers in $[0,1)$:
 
 ```julia;
 a, b = rand(2)
@@ -267,7 +267,7 @@ x - 5 < -7 || x - 5 > 7
 
 So no, they were not.
 
-An operator (such as `<`, `>`, `||` above) has an associated associativity and precedence. The associativity is whether an expression like `a - b - c` is `(a-b) - c` or `a - (b-c)`. The former being left associative, the latter right. Of issue here is *precedence*, as in which operation of the 3 happens first.
+An operator (such as `<`, `>`, `||` above) has an associated associativity and precedence. The associativity is whether an expression like `a - b - c` is `(a-b) - c` or `a - (b-c)`. The former being left associative, the latter right. Of issue here is *precedence*, as in with two or more different operations, which happens first, second, ``\dots``.
 
 The table in the manual on [operator precedence and associativity](https://docs.julialang.org/en/v1/manual/mathematical-operations/#Operator-Precedence-and-Associativity) shows that for these operations "control flow" (the `&&` above) is lower than "comparisons" (the `<`, `>`), which are lower than "Addition" (the `-` above). So the expression without parentheses would be equivalent to:
 
@@ -543,4 +543,9 @@ In the manual we can read that "In the expression `a && b`, the subexpression `b
 "Since the second value is \"`missing`\" all such answers would be missing."]
 ans = 1
 radioq(choices, ans)
+```
+
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

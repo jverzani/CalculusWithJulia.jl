@@ -1325,3 +1325,11 @@ choices = [
 ans = 1
 radioq(choices, ans, keep_order=true)
 ```
+
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

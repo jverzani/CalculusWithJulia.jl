@@ -2241,3 +2241,9 @@ L"A cyloid of the form $c\langle t + \sin(t), 1 - \cos(t)\rangle$"
 ans = 1
 radioq(choices, ans)
 ```
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

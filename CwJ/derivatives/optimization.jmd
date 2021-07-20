@@ -1090,3 +1090,10 @@ L"about $2.6$ times as big",
 ans = 1
 radioq(choices, ans)
 ```
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

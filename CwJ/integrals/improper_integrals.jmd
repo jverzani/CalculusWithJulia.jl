@@ -500,3 +500,10 @@ a, b= 0, 1
 val, _ = quadgk(f, a, b)
 numericq(val)
 ```
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

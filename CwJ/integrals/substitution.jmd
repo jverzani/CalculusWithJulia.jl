@@ -650,3 +650,11 @@ L"We could differentiate $\log\lvert (\sec(u) + \tan(u))\rvert$ "]
 ans = 2
 radioq(choices, ans)
 ```
+
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

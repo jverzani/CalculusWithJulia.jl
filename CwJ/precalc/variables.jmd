@@ -138,7 +138,7 @@ x = x^2
 
 What happens instead? The right hand side is evaluated (`x` is
 squared), the result is stored and bound to the variable `x` (so that
-`x` will end up pointing to the new value `4` and not the old one `2`); finally the value computed on the
+`x` will end up pointing to the new value `9` and not the old one `3`); finally the value computed on the
 right-hand side is returned and in this case displayed, as there is no
 trailing semicolon to suppress the output.
 
@@ -263,12 +263,12 @@ such as `\\:snowman:[tab]` or `\\:koala:[tab]`
 
 ##### Example
 
-As mentioned the value of $e$ is bound to
-the unicode value `\euler[tab]` and not the letter `e`, so Unicode
-entry is required to access this constant This isn't quite true. The
-`MathConstants` module defines `e`, as well as a few other values
-accessed via unicode. This is loaded with the accompanying `CalculusWithJulia` package.
-Alternatively, one can define `e = exp(1)` and use the variable as desired.
+As mentioned the value of $e$ is bound to the unicode value
+`\euler[tab]` and not the letter `e`, so Unicode entry is required to
+access this constant This isn't quite true. The `MathConstants` module
+defines `e`, as well as a few other values accessed via unicode. When
+the `CalculusWithJulia` package is loaded, as will often be done in
+these notes, a value of `exp(1)` is assigned to `e`.
 
 
 
@@ -478,4 +478,10 @@ choices = ["Assign all three variables at once to a value of 3",
 ]
 ans = 1
 radioq(choices, ans)
+```
+
+
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

@@ -147,7 +147,7 @@ Z(theta,phi) = cos(phi)
 
 Only *some* backends for `Plots` will produce this type of plot. Both `plotly()` and `pyplot()` will, but not `gr()`.
 
-```julia; 
+```julia;
 thetas = range(0, stop=pi/2, length=50)
 phis   = range(0, stop=pi,   length=50)
 
@@ -998,3 +998,9 @@ radioq(choices, ans)
 ```
 
 (The latter is of interest, as only when the expression is $0$ will the vector field be the gradient of a scalar function.)
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

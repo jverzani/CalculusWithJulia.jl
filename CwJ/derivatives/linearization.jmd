@@ -558,3 +558,9 @@ tl(x) = 4 + 4x
 ans = tl(.2) - 4
 numericq(abs(ans))
 ```
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

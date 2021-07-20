@@ -1,30 +1,3 @@
-## test package
-@testset "test packages" begin
-
-    ## Roots
-    @test fzero(sin, 3, 4)  ≈ pi
-    @test fzero(sin, 3.0)  ≈ pi
-
-    ## ForwardDiff
-    f(x) = sin(x)
-    @test f'(2)  ≈ cos(2)
-    @test f''(2)  ≈ -sin(2)
-
-    ## QuadGK
-    @test quadgk(sin, 0, pi)[1]  ≈ 2
-    @test abs(quadgk(x -> x^2, 0, 1)[2]) <= 1e-14
-
-    ## HQuadrature
-    @test hquadrature(x -> 2, (0.0, 0.0), (2pi, 1pi))[1]  ≈ 2 * (2pi) * (1pi)
-
-    ## SymPy
-    @test limit(x -> sin(x)/x, 0) == 1
-    @test integrate(sin,  0, pi) == 2
-
-
-
-end
-
 
 
 @testset "multidimensional" begin
@@ -40,22 +13,18 @@ end
     @test unzip(M, recursive=true)  == ([[1,2,3], [1,2,3]], [[1,1,1], [2,2,2]])
 
 
-    @vars x y z real=true
 
     f(x,y,z) = x*y*z
     f(v) = f(v...)
-    @test gradient(f(x,y,z), [x,y,z]) == [y*z, x*z, x*y]
     @test ∇(f)([1,2,3]) ≈  [2*3, 1*3, 1*2]
 
     F(x,y,z) = [x,y,z]
     F(v) = F(v...)
-    @test divergence(F(x,y,z), [x,y,z]) == 3
     @test  (∇⋅F)([1,0,0]) ≈ 3
 
 
     F(x,y,z) = [-y, x, 0]
     F(v) = F(v...)
-    @test curl(F(x,y,z), [x,y,z]) == [0,0,2]
     @test all((∇ × F)([1,2,3]) .≈ [0.0, 0.0, 2.0])
 
 end
@@ -77,11 +46,8 @@ end
 
 @testset "integration" begin
 
-    @test quadgk(sin, 0, pi)[1]  ≈ 2
-    @test hcubature(xy -> sin(xy[1])*sin(xy[2]), (0,0), (pi,pi))[1] ≈ 4
     @test riemann(sin, 0, pi, 10_000)  ≈ 2
-    @test fubini((x,y) -> 1, (x->-sqrt(1-x^2), x->sqrt(1-x^2)), (-1,1)) ≈ pi
-
+#    @test fubini((x,y) -> 1, (x->-sqrt(1-x^2), x->sqrt(1-x^2)), (-1,1)) ≈ pi
 
 end
 

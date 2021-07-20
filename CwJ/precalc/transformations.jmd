@@ -103,10 +103,9 @@ note("""
 
 Unlike how the basic arithmetic operations are treated, `Julia` defines the infix
 Unicode operator `\\circ[tab]` to represent composition of functions,
-mirroring mathematical notation. It's use with generic functions is a bit
-cumbersome, as the operation returns an anonymous function. However, it
+mirroring mathematical notation. This infix operations takes in two functions and returns an anonymous function. It
 can be useful and will mirror standard mathematical usage up to issues
-with precedence rules.)
+with precedence rules.
 
 """)
 ```
@@ -329,6 +328,20 @@ delta = (newyork(184) - datetime) * 60
 
 This is off by a fair amount - almost 12 minutes. Clearly a trigonometric model, based on the assumption of circular motion of the earth around the sun, is not accurate enough for precise work.
 
+
+##### Example: a growth model in fisheries
+
+The von Bertanlaffy growth
+[equation](http://www.fao.org/docrep/W5449e/w5449e05.htm) is
+$L(t) =L_\infty \cdot (1 - e^{k\cdot(t-t_0)})$. This family of functions can
+be viewed as a transformation of the exponential function $f(t)=e^t$.
+Part is a scaling and shifting (the $e^{k \cdot (t - t_0)}$)
+along with some shifting and stretching. The various parameters have
+physical importance which can be measured: $L_\infty$ is a carrying
+capacity for the species or organism, and $k$ is a rate of growth. These
+parameters may be estimated from data by finding the "closest" curve
+to a given data set.
+
 ##### Example: the pipeline operator
 
 In the last example, we described our sequence as scale, over,
@@ -352,20 +365,6 @@ This notation is especially convenient when the enclosing function is not the ma
 (Some programming languages have more developed [fluent interfaces](https://en.wikipedia.org/wiki/Fluent_interface) for chaining function calls. Julia has some macros provided in packages.)
 
 
-
-
-##### Example: a growth model in fisheries
-
-The von Bertanlaffy growth
-[equation](http://www.fao.org/docrep/W5449e/w5449e05.htm) is
-$L(t) =L_\infty \cdot (1 - e^{k\cdot(t-t_0)})$. This family of functions can
-be viewed as a transformation of the exponential function $f(t)=e^t$.
-Part is a scaling and shifting (the $e^{k \cdot (t - t_0)}$)
-along with some shifting and stretching. The various parameters have
-physical importance which can be measured: $L_\infty$ is a carrying
-capacity for the species or organism, and $k$ is a rate of growth. These
-parameters may be estimated from data by finding the "closest" curve
-to a given data set.
 
 
 ## Operators
@@ -603,4 +602,11 @@ q"S(D(f))(n) = f(n) - f(0)"
 ]
 ans = 1
 radioq(choices, ans, keep_order=true)
+```
+
+
+
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

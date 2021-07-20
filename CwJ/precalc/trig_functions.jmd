@@ -4,6 +4,7 @@
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
 using Plots
+plotly()
 nothing
 ```
 
@@ -45,11 +46,11 @@ With these, the basic definitions for the primary
 trigonometric functions are
 
 $$~
-\begin{align}
+\begin{align*}
 \sin(\theta) &= \frac{\text{opposite}}{\text{hypotenuse}} &\quad(\text{the sine function})\\
 \cos(\theta) &= \frac{\text{adjacent}}{\text{hypotenuse}} &\quad(\text{the cosine function})\\
 \tan(\theta) &= \frac{\text{opposite}}{\text{adjacent}}.  &\quad(\text{the tangent function})
-\end{align}
+\end{align*}
 ~$$
 
 ```julia; echo=false
@@ -104,6 +105,7 @@ imgfile = tempname() * ".gif"
 gif(anim, imgfile, fps = 1)
 caption = "An angle in radian measure corresponds to a point on the unit circle, whose coordinates define the sine and cosine of the angle."
 
+plotly()
 ImageFile(imgfile, caption)
 ```
 
@@ -118,10 +120,10 @@ computed from basic geometry. In particular, this leads to the following values,
 usually committed to memory:
 
 $$~
-\begin{align}
+\begin{align*}
 \sin(0) &= 0, \quad \sin(\pi/6) = \frac{1}{2}, \quad \sin(\pi/4) = \frac{\sqrt{2}}{2}, \quad\sin(\pi/3) = \frac{\sqrt{3}}{2},\text{ and } \sin(\pi/2) = 1\\
 \cos(0) &= 1, \quad \cos(\pi/6) =  \frac{\sqrt{3}}{2}, \quad \cos(\pi/4) = \frac{\sqrt{2}}{2}, \quad\cos(\pi/3) = \frac{1}{2},\text{ and } \cos(\pi/2) = 0.
-\end{align}
+\end{align*}
 ~$$
 
 Using the circle definition allows these basic values to inform us of
@@ -160,7 +162,8 @@ This basic fact can be manipulated many ways. For example, dividing through by $
 These are floating point approximations, as can be seen clearly in the last value. Symbolic math can be used if exactness matters:
 
 ```julia;
-using CalculusWithJulia   # to load the `SymPy` package
+using CalculusWithJulia
+using SymPy
 using Plots
 cos.([0, PI/6, PI/4, PI/3, PI/2])
 ```
@@ -199,7 +202,7 @@ methods taking advantage of similar triangles.
 
 You can also measure distance with your
 [thumb](http://www.vendian.org/mncharity/dir3/bodyruler_angle/) or
-fist. How, the fist takes up about $10$ degree of view when held
+fist. How? The fist takes up about $10$ degrees of view when held
 straight out. So, pacing off backwards until the fist completely
 occludes the tree will give the distance of the adjacent side of a
 right triangle. If that distance is $30$ paces what is the height of the tree?
@@ -270,7 +273,7 @@ pt
 
 Trigonometric function are functions of angles which have two common descriptions: in terms of degrees or radians. Degrees are common when right triangles are considered, radians much more common in general, as the relationship with arc-length holds in that $r\theta = l$, where $r$ is the radius of a circle and $l$ the length of the arc formed by angle $\theta$.
 
-The two are related, as a circle of $2\pi$ radians and 360 degrees. So to convert from degrees into radians it takes multiplying by $2\pi/360$ and to convert from radians to degrees it takes multiplying by $360/(2\pi)$. The `deg2rad` and `rad2deg` functions are available for this task.
+The two are related, as a circle has both  $2\pi$ radians and ``360`` degrees. So to convert from degrees into radians it takes multiplying by $2\pi/360$ and to convert from radians to degrees it takes multiplying by $360/(2\pi)$. The `deg2rad` and `rad2deg` functions are available for this task.
 
 
 In `Julia`, the functions `sind`, `cosd`, `tand`, `cscd`, `secd`, and `cotd` are available to simplify the task of composing the two operations (that is `sin(deg2rad(x))` is the same as `sind(x)`).
@@ -286,18 +289,19 @@ using the values just involving $\beta$ and $\alpha$ separately?
 According to [Wikipedia](https://en.wikipedia.org/wiki/Trigonometric_functions#Identities) the following figure (from [mathalino.com](http://www.mathalino.com/reviewer/derivation-of-formulas/derivation-of-sum-and-difference-of-two-angles)) has ideas that date to Ptolemy:
 
 ```julia; echo=false
-ImageFile("figures/summary-sum-and-difference-of-two-angles.jpg", "Geometric picture")
+ImageFile("figures/summary-sum-and-difference-of-two-angles.jpg", "Relations between angles")
 ```
+
 
 To read this, there are three triangles: the bigger (green with pink part) has hypotenuse $1$ (and adjacent and opposite sides that form the hypotenuses of the other two); the next biggest (yellow) hypotenuse $\cos(\beta)$,  adjacent side (of angle $\alpha$) $\cos(\beta)\cdot \cos(\alpha)$, and opposite side $\cos(\beta)\cdot\sin(\alpha)$; and  the smallest (pink) hypotenuse $\sin(\beta)$, adjacent side (of angle $\alpha$) $\sin(\beta)\cdot \cos(\alpha)$, and opposite side $\sin(\beta)\sin(\alpha)$.
 
 This figure shows the following sum formula for sine and cosine:
 
 $$~
-\begin{align}
-\sin(\alpha + \beta) &= \sin(\alpha)\cos(\beta) + \sin(\beta)\cos(\alpha)\\
-\cos(\alpha + \beta) &= \cos(\alpha)\cos(\beta) - \sin(\alpha)\sin(\beta).
-\end{align}
+\begin{align*}
+\sin(\alpha + \beta) &= \sin(\alpha)\cos(\beta) + \cos(\alpha)\sin(\beta), & (\overline{CE} + \overline{DF})\\
+\cos(\alpha + \beta) &= \cos(\alpha)\cos(\beta) - \sin(\alpha)\sin(\beta). & (\overline{AC} - \overline{DE})
+\end{align*}
 ~$$
 
 Using the fact that $\sin$ is an odd function and $\cos$ an even function, related formulas for the difference $\alpha - \beta$ can be derived.
@@ -305,10 +309,10 @@ Using the fact that $\sin$ is an odd function and $\cos$ an even function, relat
 Taking $\alpha = \beta$ we immediately get the "double-angle" formulas:
 
 $$~
-\begin{align}
+\begin{align*}
 \sin(2\alpha) &= 2\sin(\alpha)\cos(\alpha)\\
 \cos(2\alpha) &= \cos(\alpha)^2 - \sin(\alpha)^2.
-\end{align}
+\end{align*}
 ~$$
 
 The latter looks like the Pythagorean identify, but has a minus sign. In fact, the Pythagorean identify is often used to rewrite this, for example $\cos(2\alpha) = 2\cos(\alpha)^2 - 1$ or $1 - 2\sin(\alpha)^2$.
@@ -322,10 +326,10 @@ Applying the above with $\alpha = \beta/2$, we get that $\cos(\beta) = 2\cos(\be
 Consider the expressions $\cos((n+1)\theta)$ and $\cos((n-1)\theta)$. These can be re-expressed as:
 
 $$~
-\begin{align}
+\begin{align*}
 \cos((n+1)\theta) &= \cos(n\theta + \theta) = \cos(n\theta) \cos(\theta) - \sin(n\theta)\sin(\theta), \text{ and}\\
 \cos((n-1)\theta) &= \cos(n\theta - \theta) = \cos(n\theta) \cos(-\theta) - \sin(n\theta)\sin(-\theta).
-\end{align}
+\end{align*}
 ~$$
 
 But $\cos(-\theta) = \cos(\theta)$, whereas $\sin(-\theta) = -\sin(\theta)$. Using this, we add the two formulas above to get:
@@ -388,9 +392,11 @@ atan(y, x)
 ```
 
 
+
+
 ##### Example
 
-A (white) light shining through a [prism](http://tinyurl.com/y8sczg4t) will be deflected depending on the material of the prism and the angles involved (cf. the link for a figure). The relationship can be analyzed by tracing a ray through the figure and utilizing Snell's law. If the prism has index of refraction $n$ then the ray will deflect by an amount $\delta$ that depends on the angle, $\alpha$ of the prism and the initial angle ($\theta_0$) according to:
+A (white) light shining through a [prism](http://tinyurl.com/y8sczg4t) will be deflected depending on the material of the prism and the angles involved (refer to the link for a figure). The relationship can be analyzed by tracing a ray through the figure and utilizing Snell's law. If the prism has index of refraction $n$ then the ray will deflect by an amount $\delta$ that depends on the angle, $\alpha$ of the prism and the initial angle ($\theta_0$) according to:
 
 $$~
 \delta = \theta_0 - \alpha  + \arcsin(n \sin(\alpha - \arcsin(\frac{1}{n}\sin(\theta_0)))).
@@ -572,19 +578,29 @@ end
 imgfile = tempname() * ".gif"
 gif(anim, imgfile, fps = 5)
 
-caption = "Superposition of sines and cosines"
+caption = "Superposition of sines and cosines represented by an epicycle"
+
+plotly()
 ImageFile(imgfile, caption)
 
 ```
 
-As can be seen, even a somewhat simple combination can produce complicated graphs (a fact knew by [Ptolemy](https://en.wikipedia.org/wiki/Deferent_and_epicycle)) . How complicated can such a graph get? This won't be answered here, but for fun enjoy this video produced by the same technique using more moving parts from the [`Javis.jl`](https://github.com/Wikunia/Javis.jl/blob/master/examples/fourier.jl) package:
+
+
+
+
+
+As can be seen, even a somewhat simple combination can produce complicated graphs (a fact known to [Ptolemy](https://en.wikipedia.org/wiki/Deferent_and_epicycle)) . How complicated can such a graph get? This won't be answered here, but for fun enjoy this video produced by the same technique using more moving parts from the [`Javis.jl`](https://github.com/Wikunia/Javis.jl/blob/master/examples/fourier.jl) package:
 
 ```julia; echo=false;
 txt ="""
 <iframe width="560" height="315" src="https://www.youtube.com/embed/rrmx2Q3sO1Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 """
+tpl = CalculusWithJulia.WeaveSupport.centered_content_tpl
+txt = CalculusWithJulia.WeaveSupport.Mustache.render(tpl, content=txt, caption="Julia logo animated")
 CalculusWithJulia.WeaveSupport.HTMLoutput(txt)
 ```
+
 
 
 ## Hyperbolic trigonometric functions
@@ -592,7 +608,7 @@ CalculusWithJulia.WeaveSupport.HTMLoutput(txt)
 Related to the trigonometric functions are the hyperbolic
 trigonometric functions. Instead of associating a point $(x,y)$ on the
 unit circle with an angle $\theta$, we associate a point $(x,y)$ on
-the unit *hyperbola* (with $x^2 - y^2 = 1$. We define the hyperbolic
+the unit *hyperbola* ($x^2 - y^2 = 1$). We define the hyperbolic
 sine ($\sinh$) and hyperbolic cosine ($\cosh$) through $(\cosh(\theta),
 \sinh(\theta)) = (x,y)$.
 
@@ -643,10 +659,10 @@ p
 These values are more commonly expressed using the exponential function as:
 
 $$~
-\begin{align}
+\begin{align*}
 \sinh(x) &= \frac{e^x - e^{-x}}{2}\\
 \cosh(x) &= \frac{e^x + e^{-x}}{2}.
-\end{align}
+\end{align*}
 ~$$
 
 The hyperbolic tangent is then the ratio of $\sinh$ and $\cosh$. As well, three inverse hyperbolic functions can be defined.
@@ -794,4 +810,11 @@ Is this identical to the pattern for the regular sine function?
 
 ```julia; echo=false
 yesnoq(false)
+```
+
+
+
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

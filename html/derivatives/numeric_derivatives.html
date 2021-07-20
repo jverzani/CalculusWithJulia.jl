@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
 
 <style>
@@ -104,7 +104,7 @@ $( document ).ready(function() {
 });
 </script>
 
-
+<link rel="shortcut icon" href="https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/misc/logo.png" type="image/x-icon" />
 
 </head>
 
@@ -114,8 +114,9 @@ $( document ).ready(function() {
   <header class="navbar navbar-expand-md navbar-dark bd-navbar">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top navbar-nav">
     <div class="container-fluid">
-
-      <a class="navbar-brand" href="https://juliahub.com/docs/CalculusWithJulia/">Calculus with Julia</a>
+      <a class="navbar-brand" href="https://juliahub.com/docs/CalculusWithJulia/">
+      <img src="data:image/gif;base64,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"/>
+      Calculus with Julia</a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -194,9 +195,9 @@ f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}.
 </pre>
 
 
-<pre class="output">
-1.1784039743341233922198211703441918135487186955682892158735056519413744332
-99215e-08
+<pre class="julia-error">
+ERROR: LoadError: UndefVarError: @syms not defined
+in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/derivatives/numeric_derivatives.jmd:3
 </pre>
 
 
@@ -211,9 +212,8 @@ f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}.
 </pre>
 
 
-<pre class="output">
-1.5675682314574593707716021679222822987186955682892158735056519413744332992
-14873e-11
+<pre class="julia-error">
+ERROR: UndefVarError: actual not defined
 </pre>
 
 
@@ -244,9 +244,8 @@ f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}.
 </pre>
 
 
-<pre class="output">
-6.5931784154914140329521870533312554431710784126494348058625566700785127332
-95529e-19
+<pre class="julia-error">
+ERROR: UndefVarError: actual not defined
 </pre>
 
 
@@ -293,10 +292,9 @@ f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}.
 </pre>
 
 
-<pre class="output">
-&#40;-5.29413734954932810851790641707227270040811239385425461541883810861494031
-49753e-17, 1.50937462785566413119613527120569001018547612091887606145745384
-5811618913850597e-09&#41;
+<pre class="julia-error">
+ERROR: LoadError: UndefVarError: @syms not defined
+in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/derivatives/numeric_derivatives.jmd:2
 </pre>
 
 
@@ -326,8 +324,8 @@ f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}.
 </pre>
 
 
-<pre class="output">
-1.0
+<pre class="julia-error">
+ERROR: UndefVarError: fzero not defined
 </pre>
 
 
@@ -356,8 +354,9 @@ f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}.
 </pre>
 
 
-<pre class="output">
-&#40;-exp&#40;-x&#41;*sin&#40;x&#41; &#43; exp&#40;-x&#41;*cos&#40;x&#41;, -exp&#40;-pi&#41;&#41;
+<pre class="julia-error">
+ERROR: LoadError: UndefVarError: @syms not defined
+in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/derivatives/numeric_derivatives.jmd:5
 </pre>
 
 
@@ -379,28 +378,28 @@ f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}.
 <p>Find the derivative using a forward difference approximation of <span class="math">$f(x) = x^x$</span> at the point <span class="math">$x=2$</span> using <code>h&#61;0.1</code>:</p>
 
 
-<form name='WeaveQuestion' data-id='lgElKafk' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='EXAj8wG9' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="lgElKafk" type="number" class="form-control">
+<input id="EXAj8wG9" type="number" class="form-control">
 
 </div>
 
-<div id='lgElKafk_message'></div>
+<div id='EXAj8wG9_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#lgElKafk').on('change', function() {
+$('#EXAj8wG9').on('change', function() {
   correct = Math.abs(this.value - 7.496380917422423) <= 0.001;
 
   if(correct) {
-     $('#lgElKafk_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#EXAj8wG9_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#lgElKafk_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#EXAj8wG9_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -409,28 +408,28 @@ $('#lgElKafk').on('change', function() {
 <p>Using <code>D</code> or <code>f&#39;</code> find the value using automatic differentiation</p>
 
 
-<form name='WeaveQuestion' data-id='ZZroLHa6' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='5i85j4DA' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="ZZroLHa6" type="number" class="form-control">
+<input id="5i85j4DA" type="number" class="form-control">
 
 </div>
 
-<div id='ZZroLHa6_message'></div>
+<div id='5i85j4DA_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#ZZroLHa6').on('change', function() {
+$('#5i85j4DA').on('change', function() {
   correct = Math.abs(this.value - 6.772588722239782) <= 0.001;
 
   if(correct) {
-     $('#ZZroLHa6_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#5i85j4DA_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#ZZroLHa6_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#5i85j4DA_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -441,28 +440,28 @@ $('#ZZroLHa6').on('change', function() {
 <p>For <code>1e-16</code> what is the error &#40;in absolute value&#41; in finding the forward difference approximation for the derivative of <span class="math">$\sin(x)$</span> at <span class="math">$x=0$</span>?</p>
 
 
-<form name='WeaveQuestion' data-id='f2J0lfuK' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='zTzlYXGs' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="f2J0lfuK" type="number" class="form-control">
+<input id="zTzlYXGs" type="number" class="form-control">
 
 </div>
 
-<div id='f2J0lfuK_message'></div>
+<div id='zTzlYXGs_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#f2J0lfuK').on('change', function() {
+$('#zTzlYXGs').on('change', function() {
   correct = Math.abs(this.value - 37.637359812630166) <= 0.001;
 
   if(correct) {
-     $('#f2J0lfuK_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#zTzlYXGs_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#f2J0lfuK_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#zTzlYXGs_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -471,28 +470,28 @@ $('#f2J0lfuK').on('change', function() {
 <p>Repeat for <span class="math">$x=pi/4$</span>:</p>
 
 
-<form name='WeaveQuestion' data-id='d7VVjWc5' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='YPYTTzeQ' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="d7VVjWc5" type="number" class="form-control">
+<input id="YPYTTzeQ" type="number" class="form-control">
 
 </div>
 
-<div id='d7VVjWc5_message'></div>
+<div id='YPYTTzeQ_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#d7VVjWc5').on('change', function() {
+$('#YPYTTzeQ').on('change', function() {
   correct = Math.abs(this.value - 1.0) <= 0.001;
 
   if(correct) {
-     $('#d7VVjWc5_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#YPYTTzeQ_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#d7VVjWc5_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#YPYTTzeQ_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -502,28 +501,28 @@ $('#d7VVjWc5').on('change', function() {
 <p>Let <span class="math">$f(x) = x^x$</span>. Using <code>D</code>, find <span class="math">$f'(3)$</span>.</p>
 
 
-<form name='WeaveQuestion' data-id='Ia4hfQhj' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='6aMZVKLy' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="Ia4hfQhj" type="number" class="form-control">
+<input id="6aMZVKLy" type="number" class="form-control">
 
 </div>
 
-<div id='Ia4hfQhj_message'></div>
+<div id='6aMZVKLy_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#Ia4hfQhj').on('change', function() {
+$('#6aMZVKLy').on('change', function() {
   correct = Math.abs(this.value - 56.66253179403897) <= 0.001;
 
   if(correct) {
-     $('#Ia4hfQhj_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#6aMZVKLy_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#Ia4hfQhj_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#6aMZVKLy_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -533,28 +532,28 @@ $('#Ia4hfQhj').on('change', function() {
 <p>Let <span class="math">$f(x) = \lvert 1 - \sqrt{1 + x}\rvert$</span>. Using <code>D</code>, find <span class="math">$f'(3)$</span>.</p>
 
 
-<form name='WeaveQuestion' data-id='yIoGXb5h' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='wQSPFBXR' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="yIoGXb5h" type="number" class="form-control">
+<input id="wQSPFBXR" type="number" class="form-control">
 
 </div>
 
-<div id='yIoGXb5h_message'></div>
+<div id='wQSPFBXR_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#yIoGXb5h').on('change', function() {
+$('#wQSPFBXR').on('change', function() {
   correct = Math.abs(this.value - 0.25) <= 0.001;
 
   if(correct) {
-     $('#yIoGXb5h_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#wQSPFBXR_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#yIoGXb5h_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#wQSPFBXR_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -564,28 +563,28 @@ $('#yIoGXb5h').on('change', function() {
 <p>Let <span class="math">$f(x) = e^{\sin(x)}$</span>. Using <code>D</code>, find <span class="math">$f'(3)$</span>.</p>
 
 
-<form name='WeaveQuestion' data-id='TusEAXq8' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='inGXaDty' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="TusEAXq8" type="number" class="form-control">
+<input id="inGXaDty" type="number" class="form-control">
 
 </div>
 
-<div id='TusEAXq8_message'></div>
+<div id='inGXaDty_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#TusEAXq8').on('change', function() {
+$('#inGXaDty').on('change', function() {
   correct = Math.abs(this.value - -1.1400385675133151) <= 0.001;
 
   if(correct) {
-     $('#TusEAXq8_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#inGXaDty_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#TusEAXq8_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#inGXaDty_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -595,28 +594,28 @@ $('#TusEAXq8').on('change', function() {
 <p>For <code>Julia</code>&#39;s <code>airyai</code> function find a numeric derivative using the forward difference. For <span class="math">$c=3$</span> and <span class="math">$h=10^{-8}$</span> find the forward difference approximation to <span class="math">$f'(3)$</span> for the <code>airyai</code> function.</p>
 
 
-<form name='WeaveQuestion' data-id='cq7rm09Z' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='1SElSnNl' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="cq7rm09Z" type="number" class="form-control">
+<input id="1SElSnNl" type="number" class="form-control">
 
 </div>
 
-<div id='cq7rm09Z_message'></div>
+<div id='1SElSnNl_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#cq7rm09Z').on('change', function() {
+$('#1SElSnNl').on('change', function() {
   correct = Math.abs(this.value - -0.011912976768252426) <= 0.001;
 
   if(correct) {
-     $('#cq7rm09Z_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#1SElSnNl_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#cq7rm09Z_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#1SElSnNl_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -626,28 +625,28 @@ $('#cq7rm09Z').on('change', function() {
 <p>Find the rate of change with respect to time of the function <span class="math">$f(t)= 64 - 16t^2$</span> at <span class="math">$t=1$</span>.</p>
 
 
-<form name='WeaveQuestion' data-id='cFkrqgjh' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='xBCSUX5f' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="cFkrqgjh" type="number" class="form-control">
+<input id="xBCSUX5f" type="number" class="form-control">
 
 </div>
 
-<div id='cFkrqgjh_message'></div>
+<div id='xBCSUX5f_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#cFkrqgjh').on('change', function() {
+$('#xBCSUX5f').on('change', function() {
   correct = Math.abs(this.value - -32) <= 0;
 
   if(correct) {
-     $('#cFkrqgjh_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#xBCSUX5f_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#cFkrqgjh_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#xBCSUX5f_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -657,31 +656,61 @@ $('#cFkrqgjh').on('change', function() {
 <p>Find the rate of change with respect to height, <span class="math">$h$</span>, of <span class="math">$f(h) = 32h^3 - 62 h + 12$</span> at <span class="math">$h=2$</span>.</p>
 
 
-<form name='WeaveQuestion' data-id='vNWEwDko' data-controltype='numeric'>
+<form name='WeaveQuestion' data-id='2UXMO4F8' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="input-group">
-<input id="vNWEwDko" type="number" class="form-control">
+<input id="2UXMO4F8" type="number" class="form-control">
 
 </div>
 
-<div id='vNWEwDko_message'></div>
+<div id='2UXMO4F8_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#vNWEwDko').on('change', function() {
+$('#2UXMO4F8').on('change', function() {
   correct = Math.abs(this.value - 322) <= 0;
 
   if(correct) {
-     $('#vNWEwDko_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#2UXMO4F8_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#vNWEwDko_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#2UXMO4F8_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
+
+
+<hr />
+
+
+<footer class="footer">
+<div class="span10 offset1 d-flex justify-content-end">
+
+<a href="../derivatives/derivatives.html" aria-label="Previous section">
+  <i class="bi bi-arrow-left-circle-fill"></i>
+</a>
+
+&nbsp;
+
+<a href="../derivatives/mean_value_theorem.html" aria-label="Next section">
+  <i class="bi bi-arrow-right-circle-fill"></i>
+</a>
+
+&nbsp;
+
+<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/derivatives/numeric_derivatives.jmd" aria-label="Suggest edt">
+  <i class="bi bi-pencil-square"></i>
+</a>
+
+&nbsp;
+
+<a href="../misc/toc.html">Calculus with Julia</a>
+
+</div>
+</footer>
 
 
   </div>

@@ -745,3 +745,11 @@ rad(u) = sqrt((u*cos(theta) - xval(u))^2 + (u*sin(theta) - f(xval(u)))^2)
 val, _ = quadgk(u -> pi*rad(u)^2, a, b)
 numericq(val)
 ```
+
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

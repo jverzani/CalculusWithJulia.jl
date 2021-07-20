@@ -51,16 +51,18 @@ module CalculusWithJulia
 using Reexport
 using RecipesBase
 import PlotUtils
-import ImplicitEquations # handle conflict with SymPy in plot-utils.jl
-import ImplicitEquations: Pred
-@reexport using LinearAlgebra
-@reexport using SpecialFunctions
-@reexport using Roots
-@reexport using SymPy
 import ForwardDiff
 export ForwardDiff
-@reexport using QuadGK
-@reexport using HCubature
+
+@reexport using LinearAlgebra
+@reexport using SpecialFunctions
+
+#import ImplicitEquations # handle conflict with SymPy in plot-utils.jl
+#import ImplicitEquations: Pred
+#@reexport using Roots
+#@reexport using SymPy
+#@reexport using QuadGK
+#@reexport using HCubature
 
 
 
@@ -76,6 +78,8 @@ function __init__()
     @require SimplePlots="307c2aad-90be-4152-b348-f51955fac6ce" include("simpleplots.jl")
     @require Plots="91a5bcdd-55d7-5caf-9e0b-520d859cae80" include("plots.jl")
     @require AbstractPlotting="537997a7-5e4e-5d89-9595-2241ea00577e" include("makie.jl")
+    @require SymPy="24249f21-da20-56a4-8eb1-6a02cf4ae2e6" include("sympy.jl")
+    @require Polynomials="f27b6e38-b328-58d1-80ce-0feddd5e7a45" include("polynomials.jl")
     #@require MDBM="" include("implicit_equation.jl")
 end
 

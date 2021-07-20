@@ -342,3 +342,11 @@ L"The exponential of the average of $\log(f)$"
 ans = val1 > val2 ? 1 : 2
 radioq(choices, ans)
 ```
+
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```

@@ -1,3 +1,11 @@
+
+# just show body, not standalone
+function Plots._show(io::IO, ::MIME"text/html", plt::Plots.Plot{Plots.PlotlyBackend})
+    write(io, Plots.html_body(plt))
+end
+
+## -----
+
 export plotif, trimplot, signchart
 export arrow!, vectorfieldplot!
 export newton_vis
@@ -134,4 +142,3 @@ function newton_vis(f, x0, a=Inf,b=-Inf; steps=5, kwargs...)
     Plots.scatter!(p, [xs[steps+1]], [0])
     p
 end
-

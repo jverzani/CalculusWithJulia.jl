@@ -635,3 +635,10 @@ a, b = 0, 2pi
 val, _ = quadgk( x -> sqrt(D(g)(x)^2 + D(f)(x)^2), a, b)
 numericq(val)
 ```
+
+
+----
+
+```julia; echo=false
+CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```
