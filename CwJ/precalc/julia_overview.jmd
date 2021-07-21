@@ -11,7 +11,7 @@ nothing
 
 ## Installing `Julia`
 
-`Julia` is an *open source* project which allows anyone with a supported to computer to use it. To install locally, the [downloads](https://julialang.org/downloads/) page has several different binaries for installation. Additionally, the downloads page contains a link to a docker image.  For Microsoft Windows, the new [juilaup](https://github.com/JuliaLang/juliaup) installer may be of interest; it is available from the Windows Store.
+`Julia` is an *open source* project which allows anyone with a supported  computer to use it. To install locally, the [downloads](https://julialang.org/downloads/) page has several different binaries for installation. Additionally, the downloads page contains a link to a docker image.  For Microsoft Windows, the new [juilaup](https://github.com/JuliaLang/juliaup) installer may be of interest; it is available from the Windows Store.
 `Julia` can also be compiled from source.
 
 `Julia` can also be run through the web. The [https://mybinder.org/](https://mybinder.org/) service in particular allows free access, though limited in terms of allotted memory and with a relatively short timeout for inactivity.
@@ -21,9 +21,9 @@ nothing
 
 ## Interacting with `Julia`
 
-The Calculus With Julia notes are formatted as though the commands were run in the notebook interface of `Jupyter` (below), though there are many other interfaces for interacting with `Julia`. Here we describe popular ones.
+The Calculus With Julia notes are formatted as though the commands were run in the notebook interface of `Jupyter` (below), though there are many other interfaces for interacting with `Julia`.
 
-At a basic level, `Julia` provides a means to read commands or instructions, evaluated those commands, and then print or return those commands. At a user level, there are many different meeans the reading and printing can used:
+At a basic level, `Julia` provides a means to read commands or instructions, evaluate those commands, and then print or return those commands. At a user level, there are many different ways to interact with the reading and printing. For example:
 
 * The REPL. The `Julia` terminal is the built-in means to interact with `Julia`. A `Julia` Terminal has a command prompt, after which commands are typed and then sent to be evaluated by the `enter` key. The terminal may look something like the following where `2+2` is evaluated:
 
@@ -48,9 +48,9 @@ julia> 2 + 2
 
 * An IDE. For programmers, an integrated development environment is often used to manage bigger projects. `Julia` has `Juno` and `VSCode`.
 
-* A notebook. The [Project Juptyer](https://jupyter.org/) provides a notebook interface for interacting with `Julia` and a more `IDE` style `jupyterlabl` interface. These notes are formatted as though a notebook was used. That is, there are cells where commands are typed and immediately following is the printed output returned by `Julia`. The `Juypter` notebook is used by `binder` and can be used locally through the `IJulia` package. This notebook has the ability to display many different types of outputs in addition to plain text, such as images, marked up math test, etc.
+* A notebook. The [Project Juptyer](https://jupyter.org/) provides a notebook interface for interacting with `Julia` and a more `IDE` style `jupyterlab` interface. These notes are formatted as though a notebook was used. That is, there are cells where commands are typed and immediately following is the printed output returned by `Julia`. The `Juypter` notebook is used by `binder` and can be used locally through the `IJulia` package. This notebook has the ability to display many different types of outputs in addition to plain text, such as images, marked up math text, etc.
 
-* The [Pluto](https://github.com/fonsp/Pluto.jl) package provides a *reactive* notebook interface. Reactive means when one "cell" is modified and executed, the new values cascade to all other cells which in turn are updated. This is very useful for exploring a parameter space for example.
+* The [Pluto](https://github.com/fonsp/Pluto.jl) package provides a *reactive* notebook interface. Reactive means when one "cell" is modified and executed, the new values cascade to all other dependent cells which in turn are updated. This is very useful for exploring a parameter space, say.
 
 
 Each interface has some means to send commands to `Julia`'s interpreter. For `Jupyter` the commands in a cell are sent to be executed by the keyboard command `shift-enter` or through the "play" icon (➡) in the toolbar.
@@ -61,7 +61,7 @@ The base `Julia` installation has many features, but leaves many others to `Juli
 
 The `Julia` package manager makes add-on packages very easy to install.
 
-Julia comes with just a few built-in packages, one being `Pkg` which manages subsequent package installation. To do so, we first must *load* the `Pkg` package. This is done by issuing the following command:
+Julia comes with just a few built-in packages, one being `Pkg` which manages subsequent package installation. To add more package, we first must *load* the `Pkg` package. This is done by issuing the following command:
 
 ```julia
 using Pkg
@@ -173,7 +173,7 @@ A vector is an indexed collection of similarly typed values. Vectors can be cons
 [1,1,2,3,5,8]
 ```
 
-(Vectors are used as a return type from some functions, as such some familiarity is needed.)
+(Vectors are used as a return type from some functions, as such, some familiarity is needed.)
 
 Regular arithmetic sequences can be defined by either:
 
@@ -181,7 +181,14 @@ Regular arithmetic sequences can be defined by either:
 
 * The `range` function: `range(a, b, length=n)` which produces a generator of `n` values between `a` and `b`;
 
-These constructs return range objects. A range object *compactly* stores the values it references. To see all the values, they can be collected with the `collect` function, though this is hardly needed in practice.
+These constructs return range objects. A range object *compactly* stores the values it references. To see all the values, they can be collected with the `collect` function, though this is rarely needed in practice.
+
+
+Random sequences are formed by `rand`, among others:
+
+```julia
+rand(3)
+```
 
 
 Random sequences are formed by `rand`, among others:
@@ -201,7 +208,7 @@ a, b = 1, 2    # multiple assignment
 a1 = a2 = 0    # chained assignment, sets a2 and a1 to 0
 ```
 
-The names can be short, as above, or more verbose. They can't start
+The names can be short, as above, or more verbose. Variable names can't start
 with a number, but can include numbers. Variables can also include
 [unicode](../misc/unicode.html) or even be an emoji.
 
@@ -214,7 +221,7 @@ We can then use the variables to reference the values:
 x + a_really_long_name + a - b + α
 ```
 
-Names may be repurposed, even with values of different types (a
+Names may be repurposed, even with values of different types (`Julia` is a
 dynamic language), save for function names, which have some special
 rules and can only be redefined as another function. Generic functions are central to `Julia`'s design. Generic functions use a method table to dispatch on, so once a name is assigned to a generic function, it can not be used as a variable name; the reverse is also true.
 
@@ -262,7 +269,7 @@ sinh, cosh, tanh, csch, sech, coth
 asinh, acosh, atanh, acsch, asech, acoth
 ```
 
-If degrees are preferred, the following are defined to work with degrees:
+If degrees are preferred, the following are defined to work with arguments in degrees:
 
 ```
 sind, cosd, tand, cscd, secd, cotd
@@ -401,7 +408,7 @@ map(sin, xs)
 Plotting is *not* built-in to `Julia`, rather added through add-on
 packages.  `Julia`'s `Plots` package is an interface to several
 plotting packages. We mention `plotly` (built-in) for web based
-graphics, and `gr` for other graphics.
+graphics, and `gr` (also built into `Plots`) for other graphics.
 
 We must load `Plots` before we can plot (and it must be installed before we can load it):
 
@@ -469,7 +476,7 @@ In `Julia` the equals sign is **only** for *assignment*. The *left-hand* side of
 
 ## Symbolic math
 
-Symbolic math is available through an add-on package `SymPy`.  Once loaded, symbolic variables are created with `@syms`:
+Symbolic math is available through an add-on package `SymPy`.  Once loaded, symbolic variables are created with the macro `@syms`:
 
 ```julia;
 using SymPy
@@ -478,19 +485,19 @@ using SymPy
 
 (A macro rewrites values into other commands before they are interpreted. Macros are prefixed with the `@` sign. In this use, the "macro" `@syms` translates `x a b c` into a command involving `SymPy`s `symbols` function.)
 
-Symbolic expressions - unlike numeric expressions - are not immediately evaluated, though they are simplified:
+Symbolic expressions - unlike numeric expressions - are not immediately evaluated, though they may be  simplified:
 
 ```julia;
 p = a*x^2 + b*x + c
 ```
 
-To substitute a value, we can use `pair` notation (`variable=>value`):
+To substitute a value, we can use `Julia`'s `pair` notation (`variable=>value`):
 
 ```julia;
 p(x=>2), p(x=>2, a=>3, b=>4, c=>1)
 ```
 
-This is convenient notation for calling the `subs` function.
+This is convenient notation for calling the `subs` function for `SymPy`.
 
 
 SymPy expressions of a single free variable can be plotted directly:

@@ -29,23 +29,21 @@ tangent(f, c) = x -> f(c) + f'(c) * (x - c)
 
 (Recall, the `->` indicates that an anonymous function is being generated.)
 
-This function along with the `f'` notation, as defined in the
-`CalculusWithJulia` package, through
-`Base.adjoint(f::Function)=x->ForwardDiff.derivative(f, float(x))`,
-is loaded with:
+This function along with the `f'` notation for automatic derivatives is defined in the
+`CalculusWithJulia` package:
 
 ```julia;
 using CalculusWithJulia
 using Plots
 ```
 
-To illustrate the tangent line, we can make some graphs:
+We make some graphs with tangent lines:
 
 ```julia;
 f(x) = x^2
 plot(f, -3, 3)
-plot!(tangent(f, -1), -3, 3)
-plot!(tangent(f, 2), -3, 3)
+plot!(tangent(f, -1))
+plot!(tangent(f, 2))
 ```
 
 The graph shows that near the point, the line and function are close,
@@ -69,7 +67,7 @@ There are several approximations that are well known in physics, due to their wi
 ```julia;
 f(x) = sin(x)
 plot(f, -pi/2, pi/2)
-plot!(tangent(f, 0), -pi/2, pi/2)
+plot!(tangent(f, 0))
 ```
 
 * That $\log(1 + x) \approx x$ around $x=0$:
@@ -77,7 +75,7 @@ plot!(tangent(f, 0), -pi/2, pi/2)
 ```julia;
 f(x) = log(1 + x)
 plot(f, -1/2, 1/2)
-plot!(tangent(f, 0), -1/2, 1/2)
+plot!(tangent(f, 0))
 ```
 
 * That $1/(1-x) \approx x$ around $x=0$:
@@ -85,7 +83,7 @@ plot!(tangent(f, 0), -1/2, 1/2)
 ```julia;
 f(x) = 1/(1-x)
 plot(f, -1/2, 1/2)
-plot!(tangent(f, 0), -1/2, 1/2)
+plot!(tangent(f, 0))
 ```
 
 In each of these  cases, a more complicated non-linear function
@@ -258,9 +256,11 @@ say this (the
 [Lagrange](http://en.wikipedia.org/wiki/Taylor%27s_theorem) form of a
 more general Taylor remainder theorem):
 
-> Let $f(x)$ be twice differentiable on $I=(a,b)$, and $a < c <
-> b$. Then for any $x$ in $I$, there exists some value $\xi$ between $c$  and $x$ such that
-> $$~f(x) = f(c) + f'(c)(x-c) + f''(\xi)\cdot(x-c)^2/2.~$$
+> Let ``f(x)`` be twice differentiable on ``I=(a,b)``,
+>``f`` is continuous on ``[a,b]``, and
+> ``a < c < b``. Then for any ``x`` in ``I``, there exists some value ``\xi`` between ``c``  and ``x`` such that
+> ``f(x) = f(c) + f'(c)(x-c) + (f''(\xi)/2)\cdot(x-c)^2``.
+
 
 That is, the error is basically a constant depending on the concavity
 of $f$ times a quadratic function centered at $c$.
@@ -278,6 +278,8 @@ g(x) = x^2/2
 plot(h, -2, 2)
 plot!(g, -2, 2)
 ```
+
+The graph shows a tight bound near ``0`` and then a bound over this viewing window.
 
 
 Similarly, for $f(x) = \log(1 + x)$ we have the following at $c=0$:
@@ -305,7 +307,7 @@ $$~
 ~$$
 
 
-Plotting we verify:
+Plotting we verify the bound on ``|\log(1+x)-x|``:
 
 ```julia;
 h(x) = abs(log(1+x) - x)
@@ -314,10 +316,12 @@ plot(h, -0.5, 2)
 plot!(g, -0.5, 2)
 ```
 
+Again, we see the very close bound near ``0``, which widens at the edges of the viewing window.
+
 ### Why is the remainder term as it is?
 
 To see formally why the remainder is as it is, we recall the mean value
-theorem in the extended form of Cauchy. Suppose $c=0$ and let $h(x) = f(x) - (f(0) +
+theorem in the extended form of Cauchy. Suppose $c=0$, $x > 0$, and let $h(x) = f(x) - (f(0) +
 f'(0) x)$ and $g(x) = x^2$. Then we have that there exists a $e$ with
 $0 < e < x$ such that
 
@@ -331,70 +335,83 @@ satisfies $0 < \xi < e < x$, so is in $[0,x]$.
 
 ### The big (and small) "oh"
 
-`SymPy` can find the tangent line expression as a special case of its `series` function (which implements Taylor series). Here we see the answer provided for $e^{\sin(x)}$:
+`SymPy` can find the tangent line expression as a special case of its `series` function (which implements [Taylor series](../taylor_series_polynomials.html)). The `series` function needs an expression to approximate; a variable specified, as there may be parameters in the expression; a value ``c`` for *where* the expansion is taken, with default ``0``; and a number of terms, for this example ``2`` for a constant and linear term. (There is also an optional `dir` argument for one-sided expansions.)
+
+
+
+
+Here we see the answer provided for $e^{\sin(x)}$:
 
 ```julia;
+using SymPy
 @syms x
 series(exp(sin(x)), x, 0, 2)
 ```
 
-We see the expression $1 + x$ which comes from the fact that `exp(sin(0))` is $1$, and the derivative `exp(sin(0)) * cos(0)` is *also* $1$. But what is the $\mathcal{O}(x^2)$?
+The expression $1 + x$  comes from the fact that `exp(sin(0))` is $1$, and the derivative `exp(sin(0)) * cos(0)` is *also* $1$. But what is the $\mathcal{O}(x^2)$?
 
-We know the answer is *precisely* $f''(\xi)/2 \cdot x^2$, but were we
-only concerned about the scale as $x$ goes to zero we would say this
-is some well-behaved value (converging to $1 - f''(0)/2$) times
-$x^2$. The [big](http://en.wikipedia.org/wiki/Big_O_notation) "oh"
-notation says just that: were we take this term and divide by $x^2$
-the limit - if it exists - would be bounded. A little "oh" (e.g., $\mathcal{o}(x^2)$) would mean
-that limit would be $0$.
+We know the answer is *precisely* $f''(\xi)/2 \cdot x^2$ for some ``\xi``, but were we
+only concerned about the scale as $x$ goes to zero
+that when ``f''`` is continuous that the error when divided by ``x^2`` goes to some finite value (``f''(0)/2``). More generally, if the error divided by ``x^2`` is *bounded* as ``x`` goes to ``0``, then we say the error is "big oh" of ``x^2``.
+
+
+The [big](http://en.wikipedia.org/wiki/Big_O_notation) "oh" notation,
+``f(x) = \mathcal{O}(g(x))``, says that the ratio ``f(x)/g(x)`` is
+bounded as ``x`` goes to ``0`` (or some other value ``c``, depending
+on the context).  A little "oh" (e.g., ``f(x) = \mathcal{o}(g(x))``)
+would mean that the limit ``f(x)/g(x)`` would be ``0``, as
+``x\rightarrow 0``, a much stronger assertion.
 
 Big "oh" and little "oh" give us a sense of how good an approximation
 is without being bogged down in the details of the exact value. As
 such they are useful guides in focusing on what is primary and what is
 secondary. Applying this to our case, we have this rough form of the
-tangent line approximation valid for functions having a second
-derivative:
+tangent line approximation valid for functions having a continuous second
+derivative at ``c``:
 
-$$~
+```math
 f(x) = f(c) + f'(c)(x-c) + \mathcal{O}((x-c)^2).
-~$$
+```
 
 ##### Example: the algebra of tangent line approximations
 
 Suppose $f(x)$ and $g(x)$ are represented by their tangent lines about $c$, respectively:
 
-$$~
-f(x) = f(c) + f'(c)(x-c) + \mathcal{O}((x-c)^2), \quad
-g(x) = g(c) + g'(c)(x-c) + \mathcal{O}((x-c)^2).
-~$$
+
+```math
+\begin{align*}
+f(x) &= f(c) + f'(c)(x-c) + \mathcal{O}((x-c)^2), \\
+g(x) &= g(c) + g'(c)(x-c) + \mathcal{O}((x-c)^2).
+\end{align*}
+```
 
 Consider the sum, after rearranging we have:
 
-$$~
-\begin{align}
-f(x) + g(x) &=  f(c) + f'(c)(x-c) + \mathcal{O}((x-c)^2) + g(c) + g'(c)(x-c) + \mathcal{O}((x-c)^2)\\
-&= (f(c) + g(c)) + (f'(c)+g'(c))(x-c) + \mathcal{O}((x-c)^2).
-\end{align}
-~$$
+```math
+\begin{align*}
+f(x) + g(x) &=  \left(f(c) + f'(c)(x-c) + \mathcal{O}((x-c)^2)\right) + \left(g(c) + g'(c)(x-c) + \mathcal{O}((x-c)^2)\right)\\
+&= \left(f(c) + g(c)\right) + \left(f'(c)+g'(c)\right)(x-c) + \mathcal{O}((x-c)^2).
+\end{align*}
+```
 
 The two big "Oh" terms become just one as the sum of a constant times $(x-c)^2$ plus a constant time $(x-c)^2$ is just some other constant times $(x-c)^2$. What we can read off from this is the term multiplying $(x-c)$ is just the derivative of $f(x) + g(x)$ (from the sum rule), so this too is a tangent line approximation.
 
 
-Is it a coincidence that s basic algebraic operation wit tangent lines approximations produces a tangent line approximation? Let's try multiplication:
+Is it a coincidence that a basic algebraic operation with tangent lines approximations produces a tangent line approximation? Let's try multiplication:
 
-$$~
-\begin{align}
+```math
+\begin{align*}
 f(x) \cdot g(x) &=  [f(c) + f'(c)(x-c) + \mathcal{O}((x-c)^2)] \cdot [g(c) + g'(c)(x-c) + \mathcal{O}((x-c)^2)]\\
 &=[(f(c) + f'(c)(x-c)] \cdot  [g(c) + g'(c)(x-c)] + (f(c) + f'(c)(x-c) \cdot \mathcal{O}((x-c)^2)) + g(c) + g'(c)(x-c) \cdot \mathcal{O}((x-c)^2)) + [\mathcal{O}((x-c)^2))]^2\\
 &= [(f(c) + f'(c)(x-c)] \cdot  [g(c) + g'(c)(x-c)] + \mathcal{O}((x-c)^2)\\
 &= f(c) \cdot g(c) + [f'(c)\cdot g(c) + f(c)\cdot g'(c)] \cdot (x-c) + [f'(c)\cdot g'(c) \cdot (x-c)^2 + \mathcal{O}((x-c)^2)] \\
 &= f(c) \cdot g(c) + [f'(c)\cdot g(c) + f(c)\cdot g'(c)] \cdot (x-c) + \mathcal{O}((x-c)^2)
-\end{align}
-~$$
+\end{align*}
+```
 
 The big "oh" notation just sweeps up many things including any products of it *and* the term $f'(c)\cdot g'(c) \cdot (x-c)^2$. Again, we see from the product rule that this is just a tangent line approximation for $f(x) \cdot g(x)$.
 
-In conclusion, basic mathematical operations involving tangent lines can be computed just using the tangent lines when the desired accuracy is at the tangent line level. This is even true for composition, though there the outer and inner functions may have different "$c$"s.
+The basic mathematical operations involving tangent lines can be computed just using the tangent lines when the desired accuracy is at the tangent line level. This is even true for composition, though there the outer and inner functions may have different "$c$"s.
 
 Knowing this can simplify the task of finding tangent line approximations of compound expressions.
 
@@ -427,6 +444,42 @@ e^{\sin(x)} \approx e^x \approx 1 + x.
 
 Note that $\sin(\exp(x))$ is approximately $\sin(1+x)$ but not approximately $1+x$, as the expansion for $\sin$ about $1$ is not simply $x$.
 
+
+### The TaylorSeries package
+
+The `TaylorSeries` packages will do these calculations in a  manner similar to how `SymPy` transforms a function and a symbolic variable into a symbolic expression.
+
+For example, we have
+
+```julia
+using TaylorSeries
+t = Taylor1(Float64, 1)
+```
+
+The number type and the order is specified to the constructor. Linearization is order ``1``, other orders will be discussed later. This variable can now be composed with mathematical functions and the linearization of the function will be returned:
+
+```julia
+sin(t), exp(t), 1/(1+t)
+```
+
+```julia
+sin(t)/exp(t), exp(sin(t))
+```
+
+
+##### Example: Automatic differentiation
+
+Automatic differentiation (forward mode) essentially uses this technique. When a function is evaluated, both ``(f(x), f'(x))`` are found. if "``x``" were there result of some other function computation, say ``(g(y), g'(y))``, then the computation of ``f'`` is possible with this information, it being ``f'(g(y)) \cdot g'(y)``. The values ``(f(x), f'(x))`` and ``(g(x),g'(x))`` can also be added and multiplied, as by the sum and product rules
+``(f(x),f'(x)) \oplus (g(x),g'(x)) = (f(x)+g(x), f'(x) + g'(x))`` and
+``(f(x),f'(x)) \otimes (g(x),g'(x)) = (f(x)+g(x), f'(x)\cdot g(x) + f(x)\cdot g'(x))``. These are the rules for derivatives, but also the ones for tangent line approximations.
+
+So with rules to compute the mathematical functions (`Julia` has these in the [ChainRules.jl](https://github.com/JuliaDiff/ChainRules.jl) package) and identifying a number, say ``2``, as ``(2,0)`` then we can compute derivatives at ``2``. Take the function ``f(x)=\exp(\sin(x))``. To find ``f'(2)`` the steps would involve
+
+* begin with ``(2,0)``
+* the sine would be computed as ``(\sin(2), \cos(2))`` using the rule for derivative of ``\sin``
+* the exponential computed on ``(\sin(2),\cos(2))`` would be ``(\exp(\sin(2)), \exp(\sin(2)) \cdot \cos(2))``. To compute some ``g(x)``, such as ``\exp(x)``, the ability to evaluate both ``g(x)`` and ``(g'(x)`` is needed, the chain rule used above then uses just details of ``(\sin(2), \cos(2))``, ``(\exp(\sin(2)), \exp(\sin(2)))`` -- which are the pieces available.
+
+In the end, the computation carries both the function evaluation and the derivative evaluation at ``2``, both built up step by step. As seen, it should be exact as floating point allows and requires *essentially* twice the work, as two steps are needed for each function evaluation.
 
 
 
@@ -559,7 +612,54 @@ ans = tl(.2) - 4
 numericq(abs(ans))
 ```
 
-----
+
+###### Question
+
+The [Birthday problem](https://en.wikipedia.org/wiki/Birthday_problem) computes the probability that in a group of ``n`` people, under some assumptions, that no two share a birthday. Without trying to spoil the problem, we focus on the calculus specific part of the problem below:
+
+```math
+\begin{align*}
+p
+&= \frac{365 \cdot 364 \cdot \cdots (365-n+1)}{365^n} \\
+&=  \frac{365(1 - 0/365) \cdot 365(1 - 1/365) \cdot 365(1-2/365) \cdot \cdots \cdot 365(1-(n-1)/365)}{365^n}\\
+&= (1 - \frac{0}{365})\cdot(1 -\frac{1}{365})\cdot \cdots \cdot (1-\frac{n-1}{365}).
+\end{align*}
+```
+
+Taking logarithms, we have ``\log(p)`` is
+
+```math
+\log(1 - \frac{0}{365}) + \log(1 -\frac{1}{365})+ \cdots + \log(1-\frac{n-1}{365}).
+```
+
+Now, use the tangent line approximation for ``\log(1 - x)`` and the sum formula for ``0 + 1 + 2 + \dots + (n-1)`` to simplify the value of ``\log(p)``:
+
+```julia; echo=false
+choices = [L"-n(n-1)/2/365",
+           L"-n(n-1)/2\cdot 365",
+           L"-n^2/(2\cdot 365)",
+           L"-n^2 / 2 \cdot 365"]
+radioq(choices, 1, keep_order=true)
+```
+
+
+If ``n = 10``, what is the approximation for ``p`` (not ``\log(p)``)?
+
+```julia; echo=false
+n=10
+val = exp(-n*(n-1)/2/365)
+numericq(val)
+```
+
+If ``n=100``, what is the approximation for ``p`` (not ``\log(p)``?
+
+```julia; echo=false
+n=100
+val = exp(-n*(n-1)/2/365)
+numericq(val, 1e-2)
+```
+
+
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

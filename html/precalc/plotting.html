@@ -20,6 +20,8 @@
 .output, .julia-error {
     border-left: thick solid #ff0000;
     padding: 5px;
+    padding-left: 10px;
+    margin-bottom: 15px;
     background-color: #f5f5f5;
 }
 body { padding-top: 60px;
@@ -42,10 +44,16 @@ main > .container {
   padding: 60px 15px 0;
 }
 
-
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
 </style>
 
-<!-- .julia:before {content: "julia> "} -->
+<!--   padding: 0.5em 10px; .julia:before {content: "julia> "} -->
 
 <style></style>
 
@@ -128,7 +136,7 @@ $( document ).ready(function() {
     </button>
 
     <ul class="nav navbar-nav navbar-right">
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown dropstart">
 	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 	   role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Jump to...
@@ -207,10 +215,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="63feddf1-930d-4937-b3b1-d51fc14a6f7b" style="width:576px;height:384px;"></div>
+    <div id="abd9ed6e-d8df-4129-807c-57dc6df1d14d" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('63feddf1-930d-4937-b3b1-d51fc14a6f7b');
+        var PLOT = document.getElementById('abd9ed6e-d8df-4129-807c-57dc6df1d14d');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -494,10 +502,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="d22671bb-ea62-4639-87d5-877a5b60d3f7" style="width:576px;height:384px;"></div>
+    <div id="9682316a-e439-43fc-b2b8-f0684e196766" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('d22671bb-ea62-4639-87d5-877a5b60d3f7');
+        var PLOT = document.getElementById('9682316a-e439-43fc-b2b8-f0684e196766');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -774,10 +782,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="d2caebab-5a54-4eab-a304-f20d1b1c4dff" style="width:576px;height:384px;"></div>
+    <div id="c60a3ed5-7017-4762-84ce-334369c8652f" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('d2caebab-5a54-4eab-a304-f20d1b1c4dff');
+        var PLOT = document.getElementById('c60a3ed5-7017-4762-84ce-334369c8652f');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -1058,10 +1066,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="c7fa5834-e261-4a8a-bb0c-696cf9c64156" style="width:576px;height:384px;"></div>
+    <div id="e3f76037-c752-4ca7-badc-081545f2a0bf" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('c7fa5834-e261-4a8a-bb0c-696cf9c64156');
+        var PLOT = document.getElementById('e3f76037-c752-4ca7-badc-081545f2a0bf');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -1317,10 +1325,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="cf91b3a3-dbab-4025-bd1e-4995f9796ee2" style="width:576px;height:384px;"></div>
+    <div id="493e2bc4-4f85-4592-a9cf-522b7c92904e" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('cf91b3a3-dbab-4025-bd1e-4995f9796ee2');
+        var PLOT = document.getElementById('493e2bc4-4f85-4592-a9cf-522b7c92904e');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -1539,6 +1547,237 @@ $( document ).ready(function() {
 <div class="alert alert-info" role="alert"><div class="markdown"><p>The function object in the general pattern <code>action&#40;function, args...&#41;</code> is commonly specified in one of three ways: by a name, as with <code>f</code>; as an anonymous function; or as the return value of some other action through composition.</p>
 </div></div>
 
+<p>Anonymous functions are also created by <code>Julia&#39;s</code> <code>do</code> notation, which is useful when the first argument to  function &#40;like <code>plot</code>&#41; accepts a function:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>plot</span><span class='hljl-p'>(</span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>pi</span><span class='hljl-oB'>/</span><span class='hljl-ni'>2</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-k'>do</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'>
+    </span><span class='hljl-nf'>cos</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'>
+</span><span class='hljl-k'>end</span>
+</pre>
+
+
+
+    <div id="a116bdeb-0dba-41cc-896e-c17ba314e73f" style="width:576px;height:384px;"></div>
+    <script>
+    
+        var PLOT = document.getElementById('a116bdeb-0dba-41cc-896e-c17ba314e73f');
+    Plotly.plot(PLOT, [
+    {
+        "xaxis": "x",
+        "colorbar": {
+            "title": ""
+        },
+        "yaxis": "y",
+        "x": [
+            0.0,
+            0.015340112644426933,
+            0.15718160432911563,
+            0.24242242858978297,
+            0.3144924606585486,
+            0.3927807160357447,
+            0.46495556277463396,
+            0.5423346264010439,
+            0.6319858600091139,
+            0.7116572965148645,
+            0.7815219666990599,
+            0.857693210854355,
+            0.9343171616249684,
+            1.019034737503921,
+            1.0996413732821289,
+            1.1834535718383798,
+            1.254005590649321,
+            1.3401416088813418,
+            1.4211120065657248,
+            1.5508328626745866,
+            1.5707963267948966
+        ],
+        "showlegend": true,
+        "mode": "lines",
+        "name": "y1",
+        "zmin": null,
+        "legendgroup": "y1",
+        "zmax": null,
+        "line": {
+            "color": "rgba(0, 154, 250, 1.000)",
+            "shape": "linear",
+            "dash": "solid",
+            "width": 1
+        },
+        "y": [
+            1.0,
+            0.9845422301348772,
+            0.8304907792504922,
+            0.728336879205224,
+            0.6364610398357751,
+            0.531067573288844,
+            0.4288859286146672,
+            0.31417140313219183,
+            0.17487009677337595,
+            0.04562325666302092,
+            -0.07167961950343715,
+            -0.20350929714173926,
+            -0.3399494626058829,
+            -0.494846522282103,
+            -0.6457256702621276,
+            -0.8057242060830401,
+            -0.942486991638567,
+            -1.1115266574229732,
+            -1.2719860165602583,
+            -1.530870724567351,
+            -1.5707963267948966
+        ],
+        "type": "scatter"
+    }
+]
+, {
+    "showlegend": true,
+    "xaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            0.0,
+            0.5,
+            1.0,
+            1.5
+        ],
+        "range": [
+            -0.047123889803846894,
+            1.6179202165987434
+        ],
+        "domain": [
+            0.06856347817633907,
+            0.9931649168853893
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "0.0",
+            "0.5",
+            "1.0",
+            "1.5"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "y",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "annotations": [],
+    "height": 384,
+    "margin": {
+        "l": 0,
+        "b": 20,
+        "r": 0,
+        "t": 20
+    },
+    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
+    "yaxis": {
+        "showticklabels": true,
+        "gridwidth": 0.5,
+        "tickvals": [
+            -1.5,
+            -1.0,
+            -0.5,
+            0.0,
+            0.5,
+            1.0
+        ],
+        "range": [
+            -1.6479202165987434,
+            1.0771238898038469
+        ],
+        "domain": [
+            0.0391878098571012,
+            0.989747375328084
+        ],
+        "mirror": false,
+        "tickangle": 0,
+        "showline": true,
+        "ticktext": [
+            "−1.5",
+            "−1.0",
+            "−0.5",
+            "0.0",
+            "0.5",
+            "1.0"
+        ],
+        "zeroline": false,
+        "tickfont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
+        "anchor": "x",
+        "visible": true,
+        "ticks": "inside",
+        "tickmode": "array",
+        "linecolor": "rgba(0, 0, 0, 1.000)",
+        "showgrid": true,
+        "title": "",
+        "gridcolor": "rgba(0, 0, 0, 0.100)",
+        "titlefont": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 15
+        },
+        "tickcolor": "rgb(0, 0, 0)",
+        "type": "-"
+    },
+    "legend": {
+        "yanchor": "auto",
+        "xanchor": "auto",
+        "bordercolor": "rgba(0, 0, 0, 1.000)",
+        "bgcolor": "rgba(255, 255, 255, 1.000)",
+        "borderwidth": 1,
+        "tracegroupgap": 0,
+        "y": 1.0,
+        "font": {
+            "color": "rgba(0, 0, 0, 1.000)",
+            "family": "sans-serif",
+            "size": 11
+        },
+        "title": {
+            "font": {
+                "color": "rgba(0, 0, 0, 1.000)",
+                "family": "sans-serif",
+                "size": 15
+            },
+            "text": ""
+        },
+        "traceorder": "normal",
+        "x": 1.0
+    },
+    "width": 576
+}
+);
+
+    
+    </script>
+
+
+<p>The <code>do</code> notation can be a bit confusing to read when unfamiliar, though its convenience makes it appealing.</p>
+<hr />
 <p>Making a graph with <code>Plots</code> is easy, but producing a graph that is informative can be a challenge, as the choice of a viewing window can make a big difference in what is seen. For example, trying to make a graph of <span class="math">$f(x) = \tan(x)$</span>, as below, will result in a bit of a mess - the chosen viewing window crosses several places where the function blows up:</p>
 
 
@@ -1549,10 +1788,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="43b2512a-9225-44d1-afe1-e987b4118084" style="width:576px;height:384px;"></div>
+    <div id="4618c2b2-67de-45d3-9687-ab22ac139dcc" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('43b2512a-9225-44d1-afe1-e987b4118084');
+        var PLOT = document.getElementById('4618c2b2-67de-45d3-9687-ab22ac139dcc');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -2123,10 +2362,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="ea8fea04-aab8-44db-897c-92334402c041" style="width:576px;height:384px;"></div>
+    <div id="8cbb4d75-ce63-4fdb-b4b1-89cff243591d" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('ea8fea04-aab8-44db-897c-92334402c041');
+        var PLOT = document.getElementById('8cbb4d75-ce63-4fdb-b4b1-89cff243591d');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -2337,10 +2576,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="12a26c11-dc6c-4ebb-9ba9-70ac5affc74e" style="width:576px;height:384px;"></div>
+    <div id="f01c34cc-f11c-4d7d-b968-9b5a578ad3b4" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('12a26c11-dc6c-4ebb-9ba9-70ac5affc74e');
+        var PLOT = document.getElementById('f01c34cc-f11c-4d7d-b968-9b5a578ad3b4');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -2726,10 +2965,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="2c063a6a-6c18-4f4d-9029-ea5219f383ce" style="width:576px;height:384px;"></div>
+    <div id="480f4d0a-7db2-4ba2-bb13-f1fa877717bd" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('2c063a6a-6c18-4f4d-9029-ea5219f383ce');
+        var PLOT = document.getElementById('480f4d0a-7db2-4ba2-bb13-f1fa877717bd');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -3127,10 +3366,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="53b68128-2cb4-465c-a6eb-378e059752b0" style="width:576px;height:384px;"></div>
+    <div id="c818b6f3-9782-43fd-aff8-b98f45a92eef" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('53b68128-2cb4-465c-a6eb-378e059752b0');
+        var PLOT = document.getElementById('c818b6f3-9782-43fd-aff8-b98f45a92eef');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -3516,10 +3755,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="45bb28f1-d901-4970-90ca-f94228409c7b" style="width:576px;height:384px;"></div>
+    <div id="010e9b86-5382-4c21-b93c-4fe5974c6c5d" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('45bb28f1-d901-4970-90ca-f94228409c7b');
+        var PLOT = document.getElementById('010e9b86-5382-4c21-b93c-4fe5974c6c5d');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -3908,10 +4147,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="b70e0dd3-cca4-46f7-be78-e7ed390b2c3d" style="width:576px;height:384px;"></div>
+    <div id="5f273d4f-7459-4b1c-b7a8-b3202193768e" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('b70e0dd3-cca4-46f7-be78-e7ed390b2c3d');
+        var PLOT = document.getElementById('5f273d4f-7459-4b1c-b7a8-b3202193768e');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -4300,10 +4539,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="b76941f4-bf97-48be-8b92-45722540b9cc" style="width:576px;height:384px;"></div>
+    <div id="579bb7f5-b56e-4d43-8fe1-2887e3ee0eb9" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('b76941f4-bf97-48be-8b92-45722540b9cc');
+        var PLOT = document.getElementById('579bb7f5-b56e-4d43-8fe1-2887e3ee0eb9');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -4703,10 +4942,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="e3c4b200-1f80-49bb-aac3-76db44edb472" style="width:576px;height:384px;"></div>
+    <div id="03013f86-c5c4-4eaa-b4d5-ba87f3d80973" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('e3c4b200-1f80-49bb-aac3-76db44edb472');
+        var PLOT = document.getElementById('03013f86-c5c4-4eaa-b4d5-ba87f3d80973');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -4913,10 +5152,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="6c094ae8-577f-4e29-820c-202ef2e950ac" style="width:576px;height:384px;"></div>
+    <div id="82d39a57-d7dc-4054-a86c-175efae022a6" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('6c094ae8-577f-4e29-820c-202ef2e950ac');
+        var PLOT = document.getElementById('82d39a57-d7dc-4054-a86c-175efae022a6');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -5237,10 +5476,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="17e0efe4-ec5f-43ef-86a2-87bbc67cd103" style="width:576px;height:384px;"></div>
+    <div id="3b6e7b0b-8afe-4c02-a527-6ec40ad38192" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('17e0efe4-ec5f-43ef-86a2-87bbc67cd103');
+        var PLOT = document.getElementById('3b6e7b0b-8afe-4c02-a527-6ec40ad38192');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -5566,10 +5805,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="35fc4afd-b1df-47f2-8134-0c48ae7728e2" style="width:576px;height:384px;"></div>
+    <div id="f73a6fea-3d4e-4f09-8ce5-cb73b1440358" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('35fc4afd-b1df-47f2-8134-0c48ae7728e2');
+        var PLOT = document.getElementById('f73a6fea-3d4e-4f09-8ce5-cb73b1440358');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -6277,10 +6516,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="3ce1e111-cea4-4a8d-92b3-51de8274af06" style="width:576px;height:384px;"></div>
+    <div id="635acf24-c5a1-4e87-80b2-7ad4e33503be" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('3ce1e111-cea4-4a8d-92b3-51de8274af06');
+        var PLOT = document.getElementById('635acf24-c5a1-4e87-80b2-7ad4e33503be');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -6615,10 +6854,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="ba458c38-7ca1-4d83-81fa-afb25a4bd6fe" style="width:576px;height:384px;"></div>
+    <div id="69712e9f-929d-44e8-9ccb-9dc6e5d2713e" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('ba458c38-7ca1-4d83-81fa-afb25a4bd6fe');
+        var PLOT = document.getElementById('69712e9f-929d-44e8-9ccb-9dc6e5d2713e');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -6984,10 +7223,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="1a367199-29df-450c-9ddc-747eaf00451c" style="width:576px;height:384px;"></div>
+    <div id="e931e89e-2729-45b5-895d-4446c13ed6ef" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('1a367199-29df-450c-9ddc-747eaf00451c');
+        var PLOT = document.getElementById('e931e89e-2729-45b5-895d-4446c13ed6ef');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -7118,27 +7357,27 @@ $( document ).ready(function() {
         },
         "yaxis": "y",
         "x": [
-            -1.587,
-            -1.5569798723331714,
-            -1.279400444624422,
-            -1.112586778646512,
-            -0.9715479470677361,
-            -0.8183402441183999,
-            -0.6770962934605531,
-            -0.5256678507464502,
-            -0.3502231496033518,
-            -0.19430860381472012,
-            -0.05758559747536373,
-            0.09147917975845196,
-            0.24142988988614436,
-            0.4072195749074186,
-            0.5649642768496488,
-            0.7289821663538915,
-            0.8670502927718817,
-            1.035615825762083,
-            1.1940723985436499,
-            1.4479321159853682,
-            1.4869999999999999
+            -1.5,
+            -1.4716791248426144,
+            -1.2098117402117188,
+            -1.0524403572136907,
+            -0.9193848557242794,
+            -0.7748492869041509,
+            -0.6416002768495783,
+            -0.4987432554211794,
+            -0.3332293864182564,
+            -0.18614019227803782,
+            -0.05715622403336197,
+            0.08347092430042644,
+            0.22493385838315508,
+            0.3813392216107724,
+            0.5301549781600461,
+            0.6848888361829166,
+            0.8151417856338508,
+            0.9741658733604559,
+            1.1236532061732547,
+            1.3631435056465737,
+            1.4
         ],
         "showlegend": true,
         "mode": "lines",
@@ -7189,12 +7428,11 @@ $( document ).ready(function() {
             -0.5,
             0.0,
             0.5,
-            1.0,
-            1.5
+            1.0
         ],
         "range": [
-            -1.67922,
-            1.5792199999999998
+            -1.587,
+            1.4869999999999999
         ],
         "domain": [
             0.03769928064547487,
@@ -7209,8 +7447,7 @@ $( document ).ready(function() {
             "−0.5",
             "0.0",
             "0.5",
-            "1.0",
-            "1.5"
+            "1.0"
         ],
         "zeroline": false,
         "tickfont": {
@@ -7342,10 +7579,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="870fdb63-d781-4832-95d6-13c119e4f532" style="width:576px;height:384px;"></div>
+    <div id="bd218632-a1ce-4534-aa53-b67d497bbf73" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('870fdb63-d781-4832-95d6-13c119e4f532');
+        var PLOT = document.getElementById('bd218632-a1ce-4534-aa53-b67d497bbf73');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -7460,27 +7697,27 @@ $( document ).ready(function() {
         },
         "yaxis": "y",
         "x": [
-            -1.09,
-            -1.0589446955170738,
-            -0.7717935634045744,
-            -0.599227702048116,
-            -0.45332546248386496,
-            -0.29483473529489646,
-            -0.14872030357988245,
-            0.007929809572637714,
-            0.18942432799653267,
-            0.3507152374330482,
-            0.4921528301978996,
-            0.6463577721639159,
-            0.8014791964339424,
-            0.9729857671456056,
-            1.1361699415686022,
-            1.3058436203660946,
-            1.4486727166605675,
-            1.6230508542366378,
-            1.786971446769293,
-            2.049584947571071,
-            2.09
+            -1.0,
+            -0.9707025429406356,
+            -0.6998052484948815,
+            -0.5370072660831284,
+            -0.39936364385270284,
+            -0.2498440899008457,
+            -0.11200028639611552,
+            0.035782839219469544,
+            0.20700408301559686,
+            0.3591653183330643,
+            0.49259700962066005,
+            0.6380733699659584,
+            0.7844143362584364,
+            0.9462129878732127,
+            1.1001603222345304,
+            1.2602298305340516,
+            1.3949742610005353,
+            1.5594819379590923,
+            1.7141240063861254,
+            1.9618725920481797,
+            2.0
         ],
         "showlegend": true,
         "mode": "lines",
@@ -7563,8 +7800,8 @@ $( document ).ready(function() {
             2.0
         ],
         "range": [
-            -1.1854,
-            2.1854
+            -1.09,
+            2.09
         ],
         "domain": [
             0.05313137941090697,
@@ -7726,10 +7963,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="858869ab-bd75-4a05-a7f9-2ad2618d535d" style="width:576px;height:384px;"></div>
+    <div id="145bbeba-d00d-4354-84d2-68464f8ba963" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('858869ab-bd75-4a05-a7f9-2ad2618d535d');
+        var PLOT = document.getElementById('145bbeba-d00d-4354-84d2-68464f8ba963');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -8119,10 +8356,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="61c152b4-50c0-449d-9f1b-6c89dc49c3d7" style="width:576px;height:384px;"></div>
+    <div id="68f3323f-120f-4815-9676-a276afc5d735" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('61c152b4-50c0-449d-9f1b-6c89dc49c3d7');
+        var PLOT = document.getElementById('68f3323f-120f-4815-9676-a276afc5d735');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -8359,10 +8596,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="ab236cff-5f11-4d19-9725-972a568fc694" style="width:576px;height:384px;"></div>
+    <div id="f0e998d0-ace0-4d92-b4c8-7df01eade314" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('ab236cff-5f11-4d19-9725-972a568fc694');
+        var PLOT = document.getElementById('f0e998d0-ace0-4d92-b4c8-7df01eade314');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -8952,10 +9189,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="c537b0ec-1934-4908-b918-75752e8522b9" style="width:576px;height:384px;"></div>
+    <div id="3747d816-39e5-4b50-9aea-f13f61fc46ed" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('c537b0ec-1934-4908-b918-75752e8522b9');
+        var PLOT = document.getElementById('3747d816-39e5-4b50-9aea-f13f61fc46ed');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -9253,10 +9490,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="b2987770-29b8-46b4-ada8-bbc9335f0d82" style="width:576px;height:384px;"></div>
+    <div id="e6dc3265-6b51-4d21-b86a-e9b919c90533" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('b2987770-29b8-46b4-ada8-bbc9335f0d82');
+        var PLOT = document.getElementById('e6dc3265-6b51-4d21-b86a-e9b919c90533');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -9845,10 +10082,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="aa5d8975-44e9-4f19-87ae-7e270703f70f" style="width:576px;height:384px;"></div>
+    <div id="963b9b7d-d30d-4960-84a7-87ca7c231b55" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('aa5d8975-44e9-4f19-87ae-7e270703f70f');
+        var PLOT = document.getElementById('963b9b7d-d30d-4960-84a7-87ca7c231b55');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -10452,10 +10689,10 @@ $( document ).ready(function() {
 
 
 
-    <div id="34ec9d27-18a5-4ea7-ba3c-3223a1d525f7" style="width:576px;height:384px;"></div>
+    <div id="197edc31-0789-4a6a-ac3c-2a7ab3e3b8c3" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('34ec9d27-18a5-4ea7-ba3c-3223a1d525f7');
+        var PLOT = document.getElementById('197edc31-0789-4a6a-ac3c-2a7ab3e3b8c3');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -11034,38 +11271,38 @@ $( document ).ready(function() {
 <p>Plot the function <span class="math">$f(x) = x^3 - x$</span>. When is the function positive?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="h3WLZOwQ" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="cxMrXvYR" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_h3WLZOwQ" id="radio_h3WLZOwQ_1" value="1">
-  <label class="form-check-label" for="radio_h3WLZOwQ_1">
+  <input class="form-check-input" type="radio" name="radio_cxMrXvYR" id="radio_cxMrXvYR_1" value="1">
+  <label class="form-check-label" for="radio_cxMrXvYR_1">
+    <code>&#40;-Inf, -1&#41;</code> and <code>&#40;0,1&#41;</code>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_cxMrXvYR" id="radio_cxMrXvYR_2" value="2">
+  <label class="form-check-label" for="radio_cxMrXvYR_2">
     <code>&#40;-Inf, -0.577&#41;</code> and <code>&#40;0.577, Inf&#41;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_h3WLZOwQ" id="radio_h3WLZOwQ_2" value="2">
-  <label class="form-check-label" for="radio_h3WLZOwQ_2">
+  <input class="form-check-input" type="radio" name="radio_cxMrXvYR" id="radio_cxMrXvYR_3" value="3">
+  <label class="form-check-label" for="radio_cxMrXvYR_3">
     <code>&#40;-1, 0&#41;</code> and <code>&#40;1, Inf&#41;</code>
   </label>
 </div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_h3WLZOwQ" id="radio_h3WLZOwQ_3" value="3">
-  <label class="form-check-label" for="radio_h3WLZOwQ_3">
-    <code>&#40;-Inf, -1&#41;</code> and <code>&#40;0,1&#41;</code>
-  </label>
-</div>
 
-<div id="h3WLZOwQ_message"></div>
+<div id="cxMrXvYR_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_h3WLZOwQ']").on("change", function() {
-  correct = this.value == 2;
+$("input:radio[name='radio_cxMrXvYR']").on("change", function() {
+  correct = this.value == 3;
 
   if(correct) {
-     $("#h3WLZOwQ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#cxMrXvYR_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#h3WLZOwQ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#cxMrXvYR_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -11076,29 +11313,29 @@ $("input:radio[name='radio_h3WLZOwQ']").on("change", function() {
 <p>Plot the function <span class="math">$f(x) = 3x^4 + 8x^3 - 18x^2$</span>. Where &#40;what <span class="math">$x$</span> value&#41; is the smallest value? &#40;That is, for which input <span class="math">$x$</span> is the output <span class="math">$f(x)$</span> as small as possible.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='L6az4LLP' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='q23ps5ql' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="L6az4LLP" type="number" class="form-control" placeholder="Numeric answer">
-<label for="L6az4LLP">Numeric answer</label>
+<input id="q23ps5ql" type="number" class="form-control" placeholder="Numeric answer">
+<label for="q23ps5ql">Numeric answer</label>
 
 </div>
 
-<div id='L6az4LLP_message'></div>
+<div id='q23ps5ql_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#L6az4LLP').on('change', function() {
+$('#q23ps5ql').on('change', function() {
   correct = Math.abs(this.value - -3) <= 0.25;
 
   if(correct) {
-     $('#L6az4LLP_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#q23ps5ql_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#L6az4LLP_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#q23ps5ql_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -11108,38 +11345,38 @@ $('#L6az4LLP').on('change', function() {
 <p>Plot the function <span class="math">$f(x) = 3x^4 + 8x^3 - 18x^2$</span>. When is the function increasing?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="xe68asEB" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Rd4CbuKw" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_xe68asEB" id="radio_xe68asEB_1" value="1">
-  <label class="form-check-label" for="radio_xe68asEB_1">
+  <input class="form-check-input" type="radio" name="radio_Rd4CbuKw" id="radio_Rd4CbuKw_1" value="1">
+  <label class="form-check-label" for="radio_Rd4CbuKw_1">
     <code>&#40;-3, 0&#41;</code> and <code>&#40;1, Inf&#41;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_xe68asEB" id="radio_xe68asEB_2" value="2">
-  <label class="form-check-label" for="radio_xe68asEB_2">
-    <code>&#40;-Inf, -3&#41;</code> and <code>&#40;0, 1&#41;</code>
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_xe68asEB" id="radio_xe68asEB_3" value="3">
-  <label class="form-check-label" for="radio_xe68asEB_3">
+  <input class="form-check-input" type="radio" name="radio_Rd4CbuKw" id="radio_Rd4CbuKw_2" value="2">
+  <label class="form-check-label" for="radio_Rd4CbuKw_2">
     <code>&#40;-Inf, -4.1&#41;</code> and <code>&#40;1.455, Inf&#41;</code>
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_Rd4CbuKw" id="radio_Rd4CbuKw_3" value="3">
+  <label class="form-check-label" for="radio_Rd4CbuKw_3">
+    <code>&#40;-Inf, -3&#41;</code> and <code>&#40;0, 1&#41;</code>
+  </label>
+</div>
 
-<div id="xe68asEB_message"></div>
+<div id="Rd4CbuKw_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_xe68asEB']").on("change", function() {
+$("input:radio[name='radio_Rd4CbuKw']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#xe68asEB_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#Rd4CbuKw_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#xe68asEB_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#Rd4CbuKw_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -11150,29 +11387,29 @@ $("input:radio[name='radio_xe68asEB']").on("change", function() {
 <p>Graphing both <code>f</code> and the line <span class="math">$y=0$</span>  helps focus on the <em>zeros</em> of <code>f</code>. When <code>f&#40;x&#41;&#61;log&#40;x&#41;-2</code>, plot <code>f</code> and the line <span class="math">$y=0$</span>.  Identify the lone zero.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='xflRsaqm' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='uQvaA8wn' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="xflRsaqm" type="number" class="form-control" placeholder="Numeric answer">
-<label for="xflRsaqm">Numeric answer</label>
+<input id="uQvaA8wn" type="number" class="form-control" placeholder="Numeric answer">
+<label for="uQvaA8wn">Numeric answer</label>
 
 </div>
 
-<div id='xflRsaqm_message'></div>
+<div id='uQvaA8wn_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#xflRsaqm').on('change', function() {
+$('#uQvaA8wn').on('change', function() {
   correct = Math.abs(this.value - 7.38905609893065) <= 0.5;
 
   if(correct) {
-     $('#xflRsaqm_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#uQvaA8wn_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#xflRsaqm_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#uQvaA8wn_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -11182,29 +11419,29 @@ $('#xflRsaqm').on('change', function() {
 <p>Plot the function <span class="math">$f(x) = x^3 - x$</span> over <span class="math">$[-2,2]$</span>. How many zeros are there?</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='cPz7kE8O' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='TKG5BkRT' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="cPz7kE8O" type="number" class="form-control" placeholder="Numeric answer">
-<label for="cPz7kE8O">Numeric answer</label>
+<input id="TKG5BkRT" type="number" class="form-control" placeholder="Numeric answer">
+<label for="TKG5BkRT">Numeric answer</label>
 
 </div>
 
-<div id='cPz7kE8O_message'></div>
+<div id='TKG5BkRT_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#cPz7kE8O').on('change', function() {
+$('#TKG5BkRT').on('change', function() {
   correct = Math.abs(this.value - 3) <= 1.0e-16;
 
   if(correct) {
-     $('#cPz7kE8O_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#TKG5BkRT_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#cPz7kE8O_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#TKG5BkRT_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -11215,29 +11452,29 @@ $('#cPz7kE8O').on('change', function() {
 <p>Plot this function from <span class="math">$-5$</span> to <span class="math">$5$</span>. How many times does it cross the <span class="math">$x$</span> axis?</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='1I3htN4a' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='VSe3vjJO' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="1I3htN4a" type="number" class="form-control" placeholder="Numeric answer">
-<label for="1I3htN4a">Numeric answer</label>
+<input id="VSe3vjJO" type="number" class="form-control" placeholder="Numeric answer">
+<label for="VSe3vjJO">Numeric answer</label>
 
 </div>
 
-<div id='1I3htN4a_message'></div>
+<div id='VSe3vjJO_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#1I3htN4a').on('change', function() {
+$('#VSe3vjJO').on('change', function() {
   correct = Math.abs(this.value - 3) <= 0.2;
 
   if(correct) {
-     $('#1I3htN4a_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#VSe3vjJO_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#1I3htN4a_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#VSe3vjJO_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -11247,38 +11484,38 @@ $('#1I3htN4a').on('change', function() {
 <p>A trash collection plan charges a flat rate of 35 dollars a month for the first 10 bags of trash and is 4 dollars a bag thereafter. Which function will model this:</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="ftUmjqK0" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="WM4WvOwh" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ftUmjqK0" id="radio_ftUmjqK0_1" value="1">
-  <label class="form-check-label" for="radio_ftUmjqK0_1">
-    <code>f&#40;x&#41; &#61; x &lt;&#61; 10   ? 35.0 : 35.0 &#43;  4.0 * &#40;x-10&#41;</code>
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ftUmjqK0" id="radio_ftUmjqK0_2" value="2">
-  <label class="form-check-label" for="radio_ftUmjqK0_2">
+  <input class="form-check-input" type="radio" name="radio_WM4WvOwh" id="radio_WM4WvOwh_1" value="1">
+  <label class="form-check-label" for="radio_WM4WvOwh_1">
     <code>f&#40;x&#41; &#61; x &lt;&#61; 35.0 ? 10.0 : 10.0 &#43; 35.0 * &#40;x-4&#41;</code>
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ftUmjqK0" id="radio_ftUmjqK0_3" value="3">
-  <label class="form-check-label" for="radio_ftUmjqK0_3">
+  <input class="form-check-input" type="radio" name="radio_WM4WvOwh" id="radio_WM4WvOwh_2" value="2">
+  <label class="form-check-label" for="radio_WM4WvOwh_2">
     <code>f&#40;x&#41; &#61; x &lt;&#61; 4    ? 35.0 : 35.0 &#43; 10.0 * &#40;x-4&#41;</code>
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_WM4WvOwh" id="radio_WM4WvOwh_3" value="3">
+  <label class="form-check-label" for="radio_WM4WvOwh_3">
+    <code>f&#40;x&#41; &#61; x &lt;&#61; 10   ? 35.0 : 35.0 &#43;  4.0 * &#40;x-10&#41;</code>
+  </label>
+</div>
 
-<div id="ftUmjqK0_message"></div>
+<div id="WM4WvOwh_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_ftUmjqK0']").on("change", function() {
-  correct = this.value == 1;
+$("input:radio[name='radio_WM4WvOwh']").on("change", function() {
+  correct = this.value == 3;
 
   if(correct) {
-     $("#ftUmjqK0_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#WM4WvOwh_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#ftUmjqK0_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#WM4WvOwh_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -11288,29 +11525,29 @@ $("input:radio[name='radio_ftUmjqK0']").on("change", function() {
 <p>Make a plot of the model. Graphically estimate how many bags of trash will cost 55 dollars.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='7Mrm9Fw2' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='ymUNRNOf' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="7Mrm9Fw2" type="number" class="form-control" placeholder="Numeric answer">
-<label for="7Mrm9Fw2">Numeric answer</label>
+<input id="ymUNRNOf" type="number" class="form-control" placeholder="Numeric answer">
+<label for="ymUNRNOf">Numeric answer</label>
 
 </div>
 
-<div id='7Mrm9Fw2_message'></div>
+<div id='ymUNRNOf_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#7Mrm9Fw2').on('change', function() {
+$('#ymUNRNOf').on('change', function() {
   correct = Math.abs(this.value - 15) <= 0.5;
 
   if(correct) {
-     $('#7Mrm9Fw2_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#ymUNRNOf_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#7Mrm9Fw2_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#ymUNRNOf_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -11320,29 +11557,29 @@ $('#7Mrm9Fw2').on('change', function() {
 <p>Plot the functions <span class="math">$f(x) = \cos(x)$</span> and <span class="math">$g(x) = x$</span>. Estimate the <span class="math">$x$</span> value of where the two graphs intersect.</p>
 
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='Whn9ZdcR' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='65tShK7Y' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="Whn9ZdcR" type="number" class="form-control" placeholder="Numeric answer">
-<label for="Whn9ZdcR">Numeric answer</label>
+<input id="65tShK7Y" type="number" class="form-control" placeholder="Numeric answer">
+<label for="65tShK7Y">Numeric answer</label>
 
 </div>
 
-<div id='Whn9ZdcR_message'></div>
+<div id='65tShK7Y_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#Whn9ZdcR').on('change', function() {
+$('#65tShK7Y').on('change', function() {
   correct = Math.abs(this.value - 0.7390851332151607) <= 0.25;
 
   if(correct) {
-     $('#Whn9ZdcR_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#65tShK7Y_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#Whn9ZdcR_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#65tShK7Y_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -11363,38 +11600,38 @@ $('#Whn9ZdcR').on('change', function() {
 <p>What is seen?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="TjAIm2cM" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="5sv0Knro" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TjAIm2cM" id="radio_TjAIm2cM_1" value="1">
-  <label class="form-check-label" for="radio_TjAIm2cM_1">
+  <input class="form-check-input" type="radio" name="radio_5sv0Knro" id="radio_5sv0Knro_1" value="1">
+  <label class="form-check-label" for="radio_5sv0Knro_1">
+    It should oscillate evenly, but instead doesn&#39;t oscillate very much near 0 and 1
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_5sv0Knro" id="radio_5sv0Knro_2" value="2">
+  <label class="form-check-label" for="radio_5sv0Knro_2">
     It oscillates wildly, as the period is &#36;T&#61;2\pi/&#40;500 \pi&#41;&#36; so there are 250 oscillations.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TjAIm2cM" id="radio_TjAIm2cM_2" value="2">
-  <label class="form-check-label" for="radio_TjAIm2cM_2">
+  <input class="form-check-input" type="radio" name="radio_5sv0Knro" id="radio_5sv0Knro_3" value="3">
+  <label class="form-check-label" for="radio_5sv0Knro_3">
     Oddly, it looks exactly like the graph of &#36;f&#40;x&#41; &#61; \sin&#40;2\pi x&#41;&#36;.
   </label>
 </div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_TjAIm2cM" id="radio_TjAIm2cM_3" value="3">
-  <label class="form-check-label" for="radio_TjAIm2cM_3">
-    It should oscillate evenly, but instead doesn&#39;t oscillate very much near 0 and 1
-  </label>
-</div>
 
-<div id="TjAIm2cM_message"></div>
+<div id="5sv0Knro_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_TjAIm2cM']").on("change", function() {
-  correct = this.value == 2;
+$("input:radio[name='radio_5sv0Knro']").on("change", function() {
+  correct = this.value == 3;
 
   if(correct) {
-     $("#TjAIm2cM_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#5sv0Knro_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#TjAIm2cM_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#5sv0Knro_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -11404,38 +11641,38 @@ $("input:radio[name='radio_TjAIm2cM']").on("change", function() {
 <p>The algorithm to plot a function works to avoid aliasing issues. Does the graph generated by <code>plot&#40;f, 0, 1&#41;</code> look the same, as the one above?</p>
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="eZRlJo7v" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="rBoPG4nd" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_eZRlJo7v" id="radio_eZRlJo7v_1" value="1">
-  <label class="form-check-label" for="radio_eZRlJo7v_1">
-    Yes
+  <input class="form-check-input" type="radio" name="radio_rBoPG4nd" id="radio_rBoPG4nd_1" value="1">
+  <label class="form-check-label" for="radio_rBoPG4nd_1">
+    No, but is still looks pretty bad, as fitting 250 periods into a too small number of pixels is a problem.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_eZRlJo7v" id="radio_eZRlJo7v_2" value="2">
-  <label class="form-check-label" for="radio_eZRlJo7v_2">
+  <input class="form-check-input" type="radio" name="radio_rBoPG4nd" id="radio_rBoPG4nd_2" value="2">
+  <label class="form-check-label" for="radio_rBoPG4nd_2">
     No, the graph shows clearly all 250 periods.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_eZRlJo7v" id="radio_eZRlJo7v_3" value="3">
-  <label class="form-check-label" for="radio_eZRlJo7v_3">
-    No, but is still looks pretty bad, as fitting 250 periods into a too small number of pixels is a problem.
+  <input class="form-check-input" type="radio" name="radio_rBoPG4nd" id="radio_rBoPG4nd_3" value="3">
+  <label class="form-check-label" for="radio_rBoPG4nd_3">
+    Yes
   </label>
 </div>
 
-<div id="eZRlJo7v_message"></div>
+<div id="rBoPG4nd_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_eZRlJo7v']").on("change", function() {
-  correct = this.value == 3;
+$("input:radio[name='radio_rBoPG4nd']").on("change", function() {
+  correct = this.value == 1;
 
   if(correct) {
-     $("#eZRlJo7v_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#rBoPG4nd_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#eZRlJo7v_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#rBoPG4nd_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -11456,44 +11693,44 @@ $("input:radio[name='radio_eZRlJo7v']").on("change", function() {
 
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="yGWCJjG9" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="5PNzMhW8" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_yGWCJjG9" id="radio_yGWCJjG9_1" value="1">
-  <label class="form-check-label" for="radio_yGWCJjG9_1">
-    Four sharp points, like a star
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_yGWCJjG9" id="radio_yGWCJjG9_2" value="2">
-  <label class="form-check-label" for="radio_yGWCJjG9_2">
-    A straight line
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_yGWCJjG9" id="radio_yGWCJjG9_3" value="3">
-  <label class="form-check-label" for="radio_yGWCJjG9_3">
+  <input class="form-check-input" type="radio" name="radio_5PNzMhW8" id="radio_5PNzMhW8_1" value="1">
+  <label class="form-check-label" for="radio_5PNzMhW8_1">
     Four petals, like a flower
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_yGWCJjG9" id="radio_yGWCJjG9_4" value="4">
-  <label class="form-check-label" for="radio_yGWCJjG9_4">
+  <input class="form-check-input" type="radio" name="radio_5PNzMhW8" id="radio_5PNzMhW8_2" value="2">
+  <label class="form-check-label" for="radio_5PNzMhW8_2">
+    Four sharp points, like a star
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_5PNzMhW8" id="radio_5PNzMhW8_3" value="3">
+  <label class="form-check-label" for="radio_5PNzMhW8_3">
     An ellipse
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_5PNzMhW8" id="radio_5PNzMhW8_4" value="4">
+  <label class="form-check-label" for="radio_5PNzMhW8_4">
+    A straight line
+  </label>
+</div>
 
-<div id="yGWCJjG9_message"></div>
+<div id="5PNzMhW8_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_yGWCJjG9']").on("change", function() {
-  correct = this.value == 3;
+$("input:radio[name='radio_5PNzMhW8']").on("change", function() {
+  correct = this.value == 1;
 
   if(correct) {
-     $("#yGWCJjG9_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#5PNzMhW8_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#yGWCJjG9_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#5PNzMhW8_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -11528,50 +11765,50 @@ spirograph &#40;generic function with 1 method&#41;
 
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="wCS5tTjD" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="iJwde9K9" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_wCS5tTjD" id="radio_wCS5tTjD_1" value="1">
-  <label class="form-check-label" for="radio_wCS5tTjD_1">
+  <input class="form-check-input" type="radio" name="radio_iJwde9K9" id="radio_iJwde9K9_1" value="1">
+  <label class="form-check-label" for="radio_iJwde9K9_1">
     Four sharp points, like a star
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_wCS5tTjD" id="radio_wCS5tTjD_2" value="2">
-  <label class="form-check-label" for="radio_wCS5tTjD_2">
+  <input class="form-check-input" type="radio" name="radio_iJwde9K9" id="radio_iJwde9K9_2" value="2">
+  <label class="form-check-label" for="radio_iJwde9K9_2">
     Four petals, like a flower
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_wCS5tTjD" id="radio_wCS5tTjD_3" value="3">
-  <label class="form-check-label" for="radio_wCS5tTjD_3">
+  <input class="form-check-input" type="radio" name="radio_iJwde9K9" id="radio_iJwde9K9_3" value="3">
+  <label class="form-check-label" for="radio_iJwde9K9_3">
     An ellipse
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_wCS5tTjD" id="radio_wCS5tTjD_4" value="4">
-  <label class="form-check-label" for="radio_wCS5tTjD_4">
+  <input class="form-check-input" type="radio" name="radio_iJwde9K9" id="radio_iJwde9K9_4" value="4">
+  <label class="form-check-label" for="radio_iJwde9K9_4">
     A straight line
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_wCS5tTjD" id="radio_wCS5tTjD_5" value="5">
-  <label class="form-check-label" for="radio_wCS5tTjD_5">
+  <input class="form-check-input" type="radio" name="radio_iJwde9K9" id="radio_iJwde9K9_5" value="5">
+  <label class="form-check-label" for="radio_iJwde9K9_5">
     None of the above
   </label>
 </div>
 
-<div id="wCS5tTjD_message"></div>
+<div id="iJwde9K9_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_wCS5tTjD']").on("change", function() {
+$("input:radio[name='radio_iJwde9K9']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#wCS5tTjD_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#iJwde9K9_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#wCS5tTjD_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#iJwde9K9_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -11587,50 +11824,50 @@ $("input:radio[name='radio_wCS5tTjD']").on("change", function() {
 
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="wMFVCAXz" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="YOPsibRi" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_wMFVCAXz" id="radio_wMFVCAXz_1" value="1">
-  <label class="form-check-label" for="radio_wMFVCAXz_1">
+  <input class="form-check-input" type="radio" name="radio_YOPsibRi" id="radio_YOPsibRi_1" value="1">
+  <label class="form-check-label" for="radio_YOPsibRi_1">
     Four sharp points, like a star
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_wMFVCAXz" id="radio_wMFVCAXz_2" value="2">
-  <label class="form-check-label" for="radio_wMFVCAXz_2">
+  <input class="form-check-input" type="radio" name="radio_YOPsibRi" id="radio_YOPsibRi_2" value="2">
+  <label class="form-check-label" for="radio_YOPsibRi_2">
     Four petals, like a flower
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_wMFVCAXz" id="radio_wMFVCAXz_3" value="3">
-  <label class="form-check-label" for="radio_wMFVCAXz_3">
+  <input class="form-check-input" type="radio" name="radio_YOPsibRi" id="radio_YOPsibRi_3" value="3">
+  <label class="form-check-label" for="radio_YOPsibRi_3">
     An ellipse
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_wMFVCAXz" id="radio_wMFVCAXz_4" value="4">
-  <label class="form-check-label" for="radio_wMFVCAXz_4">
+  <input class="form-check-input" type="radio" name="radio_YOPsibRi" id="radio_YOPsibRi_4" value="4">
+  <label class="form-check-label" for="radio_YOPsibRi_4">
     A straight line
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_wMFVCAXz" id="radio_wMFVCAXz_5" value="5">
-  <label class="form-check-label" for="radio_wMFVCAXz_5">
+  <input class="form-check-input" type="radio" name="radio_YOPsibRi" id="radio_YOPsibRi_5" value="5">
+  <label class="form-check-label" for="radio_YOPsibRi_5">
     None of the above
   </label>
 </div>
 
-<div id="wMFVCAXz_message"></div>
+<div id="YOPsibRi_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_wMFVCAXz']").on("change", function() {
+$("input:radio[name='radio_YOPsibRi']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#wMFVCAXz_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#YOPsibRi_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#wMFVCAXz_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#YOPsibRi_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -11646,50 +11883,50 @@ $("input:radio[name='radio_wMFVCAXz']").on("change", function() {
 
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="0qHDmSUF" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="HuAZ0eZj" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_0qHDmSUF" id="radio_0qHDmSUF_1" value="1">
-  <label class="form-check-label" for="radio_0qHDmSUF_1">
+  <input class="form-check-input" type="radio" name="radio_HuAZ0eZj" id="radio_HuAZ0eZj_1" value="1">
+  <label class="form-check-label" for="radio_HuAZ0eZj_1">
     Four sharp points, like a star
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_0qHDmSUF" id="radio_0qHDmSUF_2" value="2">
-  <label class="form-check-label" for="radio_0qHDmSUF_2">
+  <input class="form-check-input" type="radio" name="radio_HuAZ0eZj" id="radio_HuAZ0eZj_2" value="2">
+  <label class="form-check-label" for="radio_HuAZ0eZj_2">
     Four petals, like a flower
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_0qHDmSUF" id="radio_0qHDmSUF_3" value="3">
-  <label class="form-check-label" for="radio_0qHDmSUF_3">
+  <input class="form-check-input" type="radio" name="radio_HuAZ0eZj" id="radio_HuAZ0eZj_3" value="3">
+  <label class="form-check-label" for="radio_HuAZ0eZj_3">
     A circle
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_0qHDmSUF" id="radio_0qHDmSUF_4" value="4">
-  <label class="form-check-label" for="radio_0qHDmSUF_4">
+  <input class="form-check-input" type="radio" name="radio_HuAZ0eZj" id="radio_HuAZ0eZj_4" value="4">
+  <label class="form-check-label" for="radio_HuAZ0eZj_4">
     A straight line
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_0qHDmSUF" id="radio_0qHDmSUF_5" value="5">
-  <label class="form-check-label" for="radio_0qHDmSUF_5">
+  <input class="form-check-input" type="radio" name="radio_HuAZ0eZj" id="radio_HuAZ0eZj_5" value="5">
+  <label class="form-check-label" for="radio_HuAZ0eZj_5">
     None of the above
   </label>
 </div>
 
-<div id="0qHDmSUF_message"></div>
+<div id="HuAZ0eZj_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_0qHDmSUF']").on("change", function() {
+$("input:radio[name='radio_HuAZ0eZj']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#0qHDmSUF_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#HuAZ0eZj_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#0qHDmSUF_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#HuAZ0eZj_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -11705,50 +11942,50 @@ $("input:radio[name='radio_0qHDmSUF']").on("change", function() {
 
 
 
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="OYY6ot1H" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="yTrXPho9" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_OYY6ot1H" id="radio_OYY6ot1H_1" value="1">
-  <label class="form-check-label" for="radio_OYY6ot1H_1">
+  <input class="form-check-input" type="radio" name="radio_yTrXPho9" id="radio_yTrXPho9_1" value="1">
+  <label class="form-check-label" for="radio_yTrXPho9_1">
     Four sharp points, like a star
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_OYY6ot1H" id="radio_OYY6ot1H_2" value="2">
-  <label class="form-check-label" for="radio_OYY6ot1H_2">
+  <input class="form-check-input" type="radio" name="radio_yTrXPho9" id="radio_yTrXPho9_2" value="2">
+  <label class="form-check-label" for="radio_yTrXPho9_2">
     Four petals, like a flower
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_OYY6ot1H" id="radio_OYY6ot1H_3" value="3">
-  <label class="form-check-label" for="radio_OYY6ot1H_3">
+  <input class="form-check-input" type="radio" name="radio_yTrXPho9" id="radio_yTrXPho9_3" value="3">
+  <label class="form-check-label" for="radio_yTrXPho9_3">
     A circle
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_OYY6ot1H" id="radio_OYY6ot1H_4" value="4">
-  <label class="form-check-label" for="radio_OYY6ot1H_4">
+  <input class="form-check-input" type="radio" name="radio_yTrXPho9" id="radio_yTrXPho9_4" value="4">
+  <label class="form-check-label" for="radio_yTrXPho9_4">
     A straight line
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_OYY6ot1H" id="radio_OYY6ot1H_5" value="5">
-  <label class="form-check-label" for="radio_OYY6ot1H_5">
+  <input class="form-check-input" type="radio" name="radio_yTrXPho9" id="radio_yTrXPho9_5" value="5">
+  <label class="form-check-label" for="radio_yTrXPho9_5">
     None of the above
   </label>
 </div>
 
-<div id="OYY6ot1H_message"></div>
+<div id="yTrXPho9_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_OYY6ot1H']").on("change", function() {
+$("input:radio[name='radio_yTrXPho9']").on("change", function() {
   correct = this.value == 5;
 
   if(correct) {
-     $("#OYY6ot1H_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#yTrXPho9_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#OYY6ot1H_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+     $("#yTrXPho9_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -11765,26 +12002,42 @@ $("input:radio[name='radio_OYY6ot1H']").on("change", function() {
   <div class="card-header float-end text-muted">
     <span class="text-muted  float-end align-middle">
 
-<a href="../precalc/functions.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Previous section" aria-label="Previous section">
-<i class="bi bi-arrow-left-circle-fill"></i>
+<a href="../precalc/functions.html"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Previous section"
+aria-label="Previous section"
+class="bi bi-arrow-left-circle-fill">
 </a>
 
 &nbsp;
 
-<a href="../precalc/transformations.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Next section" aria-label="Next section">
-<i class="bi bi-arrow-right-circle-fill"></i>
+<a href="../precalc/transformations.html"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Next section"
+aria-label="Next section"
+class="bi bi-arrow-right-circle-fill">
 </a>
 
 &nbsp;
 
-<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/precalc/plotting.jmd" data-bs-toggle="tooltip" data-bs-placement="top" title="Suggest an edit" aria-label="Suggest an edit">
-<i class="bi bi-pencil-square"></i>
+<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/precalc/plotting.jmd"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Suggest an edit"
+aria-label="Suggest an edit"
+class="bi bi-pencil-square">
 </a>
 
 &nbsp;
 
-<a href="../misc/toc.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Table of contents" aria-label="Table of contents">
-<i class="bi bi-card-list"></i>
+<a href="../misc/toc.html"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Table of contents"
+aria-label="Table of contents"
+class="bi bi-card-list">
 </a>
 
     </span>

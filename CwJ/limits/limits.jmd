@@ -76,6 +76,7 @@ plotly()
 ImageFile(imgfile, caption)
 ```
 
+
 The figure illustrates a means to compute the area bounded by the
 parabola, the line ``y=1`` and the line ``x=0`` using triangles. It
 suggests that this area can be found by adding the following sum
@@ -558,6 +559,52 @@ xs = c .+ hs
 
 However the limit in this case is ``-\infty`` (or DNE), as there is an aysmptote at ``c=15/11``. The problem is the asymptote due to the logarithm is extremely narrow and happens between floating point values to the left and right of ``15/11``.
 
+### Richardson extrapolation
+
+The [`Richardson`](https://github.com/JuliaMath/Richardson.jl) package provides a function to extrapolate a function `f(x)` to `f(x0)`, as the numeric limit does. We illustrate its use by example:
+
+```julia
+using Richardson
+f(x) = sin(x)/x
+extrapolate(f, 1)
+```
+
+The answer involves two terms, the second being an estimate for the error in the estimation of `f(0)`.
+
+The values the method chooses could be viewed as follows:
+
+```julia
+extrapolate(1) do x  # using `do` notation for the function
+    @show x
+    f(x)
+end
+```
+
+
+
+The `extrapolate` function avoids the numeric problems encountered in the following example
+
+```julia
+f(x) = (1 - cos(x)) / x^2
+extrapolate(f, 1)
+```
+
+To find limits at a value of `c` not equal to `0`, we set the `x_0` argument. For example,
+
+```julia
+f(x) = (sqrt(x) - 5) / (sqrt(x-16) - 3)
+c = 25
+extrapolate(f, 26, x0=25)
+```
+
+This value can also be `Inf`, in anticipation of infinite limits to be discussed in a subsequent section:
+
+```julia
+f(x) = (x^2 - 2x + 1)/(x^3 - 3x^2 + 2x + 1)
+extrapolate(f, 10, x0=Inf)
+```
+
+(The starting value should be to the right of any zeros of the denominator.)
 
 
 ## Symbolic approach to limits
@@ -697,6 +744,7 @@ The left limit can be found by passing the argument `dir="-"`. Passing `dir="+-"
 @syms x
 limit(ceil(x), x=>0), limit(ceil(x), x=>0, dir="-")
 ```
+
 
 This accurately shows the limit does not exist mathematically, but `limit(ceil(x), x=>0)` does exist (as it finds a right limit).
 

@@ -19,6 +19,7 @@ introduced with definitions to handle the two cases above.
 
 ```julia; echo=false; cache=true
 ### {{{sqrt_graph}}}
+using SymPy
 pyplot()
 fig_size=(600, 400)
 
@@ -62,7 +63,7 @@ Let $f(x)$ be a reasonable function, so reasonable that for any $a <
 b$ the function is Riemann integrable, meaning $\int_a^b f(x)dx$
 exists.
 
-What needs to be the case so that we can discuss the limit over the entire real number line?
+What needs to be the case so that we can discuss the integral over the entire real number line?
 
 Clearly something. The function $f(x) = 1$ is reasonable by the idea
 above. Clearly the integral over and $[a,b]$ is just $b-a$, but the
@@ -156,17 +157,19 @@ As $M$ goes to $\infty$, this will converge to $1$.
 * The sinc function $f(x) = \sin(\pi x)/(\pi x)$ does not have a nice antiderivative.  Seeing if the limit exists is a bit of a problem. However, this function is important enough that there is a built-in function, `Si`, that computes $\int_0^x \sin(u)/u\cdot du$. This function can be used through `sympy.Si(...)`:
 
 ```julia;
-using CalculusWithJulia    # loads `SymPy`, `QuadGK`
+using CalculusWithJulia
 using Plots
+using SymPy
 @syms M
 limit(sympy.Si(M), M => oo)
 ```
 
 ### Numeric integrals
 
-The `quadgk` function (available through `QuadGK` which is loaded with `CalculusWithJulia`) is able to accept `Inf` and `-Inf` as endpoints of the interval. For example, this will integrate $e^{-x^2/2}$ over the real line:
+The `quadgk` function (available through `QuadGK`) is able to accept `Inf` and `-Inf` as endpoints of the interval. For example, this will integrate $e^{-x^2/2}$ over the real line:
 
 ```julia;
+using QuadGK
 f(x) = exp(-x^2/2)
 quadgk(f, -Inf, Inf)
 ```
@@ -194,7 +197,7 @@ $$~
 ```julia; echo=false
 note(L"""
 
-The cases $f(x) = x^{-n}$ for $n > 0$ are tricky. For $n > 1$, the functions can be integrated over $[1,\infty)$, but not $(0,1]$. For $0 < n < 1$, the functions can be integrated over $(0,1]$ but not $[1, \infty)$.
+The cases $f(x) = x^{-n}$ for $n > 0$ are tricky to keep straight. For $n > 1$, the functions can be integrated over $[1,\infty)$, but not $(0,1]$. For $0 < n < 1$, the functions can be integrated over $(0,1]$ but not $[1, \infty)$.
 
 """)
 ```
@@ -209,11 +212,12 @@ $$~
 
 As the limit does not exist, the function is not integrable around $0$.
 
-* `SymPy` may give answers which do not coincide with our definitions, as it uses complex numbers as a default assumption. In this case it returns `NaN` for an integral with no answer:
+* `SymPy` may give answers which do not coincide with our definitions, as it uses complex numbers as a default assumption. In this case it returns the proper answer when integrated from ``0`` to ``q1`` and `NaN` for an integral over ``(-1,1)``:
 
 ```julia;
+using SymPy
 @syms x
-integrate(1/x, (x, -1, 1))
+integrate(1/x, (x, 0, 1)), integrate(1/x, (x, -1, 1))
 ```
 
 * Suppose you know $\int_1^\infty x^2 f(x) dx$ exists. Does this imply $\int_0^1 f(1/x) dx$ exists?
@@ -269,6 +273,8 @@ The integral for $-\infty$ to $a$ of $f(x)$ is just an integral of the constant 
 $$~
 \int_{-\infty}^\infty f(x) dx = \int_a^b \frac{1}{b-a} dx = 1.
 ~$$
+
+(One might also comment that ``f`` is Riemann integrable on any ``[0,M]`` despite being discontinuous at ``a`` and ``b``.)
 
 * Show that if $f(x)$ is a probability density then so is $f(x-c)$ for any $c$.
 
@@ -502,7 +508,6 @@ numericq(val)
 ```
 
 
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

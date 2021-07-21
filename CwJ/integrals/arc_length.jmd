@@ -29,12 +29,12 @@ Recall the distance formula gives the distance between two points: $\sqrt{(x_1 -
 Consider now two functions $g(t)$ and $f(t)$ and the parameterized
 graph between $a$ and $b$ given by the points $(g(t), f(t))$ for $a
 \leq t \leq b$. Assume that both $g$ and $f$ are differentiable on
-$(a,b)$ and continuous on $[a,b]$ and furthermore that $\sqrt{f'(t) +
-g'(t)}$ is Riemann integrable.
+$(a,b)$ and continuous on $[a,b]$ and furthermore that $\sqrt{f'(t)^2 +
+g'(t)^2}$ is Riemann integrable.
 
 
 > **The arc length of a curve**. For $f$ and $g$ as described, the arc length of the parameterized curve is given by
-> $$~ L = \int_a^b \sqrt{g'(t) + f'(t)} dt. ~$$ For the special case of the graph of a function $f(x)$ between $a$ and $b$ the formula becomes $L = \int_a^b \sqrt{ 1 + f'(x)} dx$ (taking $g(t) = t$).
+> $$~ L = \int_a^b \sqrt{g'(t)^2 + f'(t)^2} dt. ~$$ For the special case of the graph of a function $f(x)$ between $a$ and $b$ the formula becomes $L = \int_a^b \sqrt{ 1 + f'(x)^2} dx$ (taking $g(t) = t$).
 
 
 ```julia; echo=false
@@ -117,21 +117,22 @@ L_n = d_1 \cdot \frac{t_1 - t_0}{t_1 - t_0} + d_2 \cdot \frac{t_2 - t_1}{t_2 - t
 But looking at each term, we can push the denominator into the square root as:
 
 $$~
-\begin{align}
+\begin{align*}
 d_i &= d_i \cdot \frac{t_i - t_{i-1}}{t_i - t_{i-1}}
 \\
 &= \sqrt{ \left(\frac{g(t_i)-g(t_{i-1})}{t_i-t_{i-1}}\right)^2 +
 \left(\frac{f(t_i)-f(t_{i-1})}{t_i-t_{i-1}}\right)^2} \cdot (t_i - t_{i-1}) \\
 &= \sqrt{ g'(\xi_i)^2 + f'(\psi_i)^2} \cdot (t_i - t_{i-1}).
-\end{align}
+\end{align*}
 ~$$
 
 The values $\xi_i$ and $\psi_i$ are guaranteed by the mean value theorem and must be in $[t_{i-1}, t_i]$.
 
-With this, if $\sqrt{f'(t) + g'(t)}$ is integrable, as assumed, then as the size of the partition goes to zero, the sum of the $d_i$, $L_n$, must converge to the integral:
+
+With this, if $\sqrt{f'(t)^2 + g'(t)^2}$ is integrable, as assumed, then as the size of the partition goes to zero, the sum of the $d_i$, $L_n$, must converge to the integral:
 
 $$~
-L = \int_a^b \sqrt{f'(t) + g'(t)} dt.
+L = \int_a^b \sqrt{f'(t)^2 + g'(t)^2} dt.
 ~$$
 
 (This needs a technical adjustment to the Riemann theorem, as we are evaluating our function at two points in the interval. A general proof is [here](https://randomproofs.files.wordpress.com/2010/11/arc_length.pdf).)
@@ -149,7 +150,7 @@ as part of the fundamental theorem of calculus was contained in his
 work.  Gregory then posed this inverse question: given a curve
 $y=g(x)$ find a function $u(x)$ so that the area under $g$ is equal to
 the length of the second curve. The answer given was $u(x) =
-(1/c)\int_a^x \sqrt{g^2(t) - c^2}$, which if $g(t) = \sqrt{1 + f'(t)}$
+(1/c)\int_a^x \sqrt{g^2(t) - c^2}$, which if $g(t) = \sqrt{1 + f'(t)^2}$
 and $c=1$ says $u(x) = \int_a^x f(t)dt$.
 
 An analogy might be a sausage maker. These take a mass of ground-up sausage material and return a long length of sausage. The material going in would depend on time via an equation like $\int_0^t g(u) du$ and the length coming out would be a constant (accounting for the cross section) times $u(t) = \int_0^t \sqrt{1 + g'(s)} ds$.
@@ -162,8 +163,9 @@ An analogy might be a sausage maker. These take a mass of ground-up sausage mate
 Let $f(x) = x^2$. The arc length of the graph of $f(x)$ over $[0,1]$ is then $L=\int_0^1 \sqrt{1 + (2x)^2} dx$. A trigonometric substitution of $2x = \sin(\theta)$ leads to the antiderivative:
 
 ```julia;
-using CalculusWithJulia  # loads `SymPy`, `Roots`, `QuadGK`, `ForwardDiff`
+using CalculusWithJulia
 using Plots
+using SymPy
 @syms x
 F = integrate(sqrt(1 + (2x)^2), x)
 ```
@@ -204,14 +206,14 @@ Let $f(x) = \log(x)$. Find the length of the graph of $f$ over $[1/e, e]$.
 The answer is
 
 $$~
-L = \int_{1/e}^e \sqrt{1 + (\frac{1}{x})^2} dx.
+L = \int_{1/e}^e \sqrt{1 + \left(\frac{1}{x}\right)^2} dx.
 ~$$
 
 This has a *messy* antiderivative, so we let `SymPy` compute for us:
 
 ```julia;
 @syms x
-ex = integrate(sqrt(1 + (1/x)^2), (x, 1/Sym(e), e))    # 1/Sym(e) keeps as symbolic value
+ex = integrate(sqrt(1 + (1/x)^2), (x, 1/sympy.E, sympy.E))    # sympy.E is symbolic
 ```
 
 Which isn't so satisfying. From a quick graph, we see the answer should be no more than 4, and we see in fact it is
@@ -242,6 +244,7 @@ an approximate numeric answer. Recall, the accompanying `CalculusWithJulia` pack
 
 
 ```julia;
+using QuadGK
 quadgk(x -> sqrt(1 + f'(x)^2), -1, 1)[1]
 ```
 
@@ -286,6 +289,7 @@ $$~
 Evaluating at $78/2$ gives: $a \cdot \cosh(78/(2a)) - (a + 118) = 0$. This can be solved numerically for a:
 
 ```julia;
+using Roots
 cat(x; a=1, b=0) = a*cosh(x/a) - b
 a = find_zero(a -> cat(78/2, a=a, b=118 + a), 10)
 ```
@@ -303,15 +307,20 @@ quadgk(x -> sqrt(1 + f'(x)^2), -78/2, 78/2)[1]
 ##### Example
 
 
-Suspension bridges, like the Verrazano bridge, have different loading
+Suspension bridges, like the Verrazzano-Narrows Bridge, have different loading
 than a cable and hence a different shape. A parabola is the shape the
 cable takes under uniform loading (cf. [page 19](http://calteches.library.caltech.edu/4007/1/Calculus.pdf) for a
 picture).
 
-The Verrazano-Narrows
-[bridge](http://observer.com/2012/09/staten-island/s-i-8/) has a span
-of $1298$m. (Though, in the picture from the link the cable is
-basically unloaded so will form a catenary.) Suppose the drop of the
+
+
+
+The Verrazzano-Narrows
+[Bridge](https://www.brownstoner.com/brooklyn-life/verrazano-narrows-bridge-anniversary-historic-photos/) has a span
+of $1298$m.
+
+
+Suppose the drop of the
 main cables is $147$ meters over this span. Then the cable itself can
 be modeled as a parabola with
 
@@ -334,6 +343,24 @@ val, _ = quadgk(x -> sqrt(1 + f'(x)^2), -a, a)
 val
 ```
 
+```julia; echo=false
+imgfile="figures/verrazzano-unloaded.jpg"
+caption = """
+The Verrazzano-Narrows Bridge during construction. The unloaded suspension cables form a catenary.
+"""
+ImageFile(imgfile, caption)
+```
+
+```julia; echo=false
+imgfile="figures/verrazzano-loaded.jpg"
+caption = """
+A rendering of the Verrazzano-Narrows Bridge after construction (https://www.nycgovparks.org/highlights/verrazano-bridge). The uniformly loaded suspension cables would form a parabola, presumably a fact the artist of this rendering knew. (The spelling in the link is not the official spelling, which carries two zs.)
+"""
+ImageFile(imgfile, caption)
+```
+
+
+
 ##### Example
 
 The
@@ -341,10 +368,10 @@ The
 is a curve that can be described parametrically by
 
 $$~
-\begin{align}
-g(t) &= a(3\cos(t) - \cos(3t)) \\
+\begin{align*}
+g(t) &= a(3\cos(t) - \cos(3t)), \\
 f(t) &= a(3\sin(t) - \sin(3t)).
-\end{align}
+\end{align*}
 ~$$
 
 Taking $a=1$ we have this graph:
@@ -358,7 +385,7 @@ plot(g, f, 0, 2pi)
 
 Find the length of the perimeter of the closed figure formed by the graph.
 
-We have $\sqrt{g'(t)^ + f'(t)^2} = \sqrt{18 - 18\cos(2t)}$.
+We have $\sqrt{g'(t)^2 + f'(t)^2} = \sqrt{18 - 18\cos(2t)}$.
 An antiderivative isn't forthcoming through `SymPy`, so we take a numeric approach to find the length:
 
 
@@ -369,7 +396,7 @@ quadgk(t -> sqrt(g'(t)^2 + f'(t)^2), 0, 2pi)[1]
 The answer seems like a floating point approximation of $24$, which  suggests that  this integral is tractable. Pursuing this, the integrand simplifies:
 
 $$~
-\begin{align}
+\begin{align*}
 \sqrt{g'(t)^2 + f'(t)^2}
 &= \sqrt{(-3\sin(t) + 3\sin(3t))^2 + (3\cos(t) - 3\cos(3t))^2} \\
 &= 3\sqrt{(\sin(t)^2 - 2\sin(t)\sin(3t) + \sin(3t)^2) + (\cos(t)^2 -2\cos(t)\cos(3t) + \cos(3t)^2)} \\
@@ -377,7 +404,7 @@ $$~
 &= 3\sqrt{2(1 - (\sin(t)\sin(3t) + \cos(t)\cos(3t)))}\\
 &= 3\sqrt{2}\sqrt{1 - \cos(2t)}\\
 &= 3\sqrt{2}\sqrt{2\sin(t)^2}.
-\end{align}
+\end{align*}
 ~$$
 
 The second to last line comes from a double angle formula expansion of $\cos(3t - t)$ and the last line from the half angle formula for $\cos$.
@@ -393,20 +420,20 @@ L = \int_0^{2\pi} \sqrt{g'(t)^2 + f'(t)^2}dt = \int_0^{2\pi} 3\sqrt{2}\sqrt{2\si
 
 A teacher of small children assigns his students the task of computing the length of a jump rope by counting the number of $1$-inch segments it is made of. He knows that if a student is accurate, no matter how fast or slow they count the answer will be the same. (That is, unless the student starts counting in the wrong direction by mistake). The teacher knows this, as he is certain that the length of curve is independent of its parameterization, as it is a property intrinsic to the curve.
 
-Mathematically, suppose a curve is described parametrically by $(g(t), f(t))$ for $a \leq t \leq b$. A new parameterization is provided by $\gamma(t)$. Suppose $\gamma$ is strictly increasing, so that an inverse function exists. (This assumption is implicitly made by the teacher, as it implies the student won't start counting in the wrong direction.) Then the same curve is described by composition through $(g(\gamma(u)), f(\gamma(u)))$ $\gamma^{-1}(a) \leq u \leq \gamma^{-1}(b)$. That the arc length is the same follows from substitution:
+Mathematically, suppose a curve is described parametrically by $(g(t), f(t))$ for $a \leq t \leq b$. A new parameterization is provided by $\gamma(t)$. Suppose $\gamma$ is strictly increasing, so that an inverse function exists. (This assumption is implicitly made by the teacher, as it implies the student won't start counting in the wrong direction.) Then the same curve is described by composition through $(g(\gamma(u)), f(\gamma(u)))$, $\gamma^{-1}(a) \leq u \leq \gamma^{-1}(b)$. That the arc length is the same follows from substitution:
 
 $$~
-\begin{align}
+\begin{align*}
 \int_{\gamma^{-1}(a)}^{\gamma^{-1}(b)} \sqrt{([g(\gamma(t))]')^2 + ([f(\gamma(t))]')^2} dt
 &=\int_{\gamma^{-1}(a)}^{\gamma^{-1}(b)} \sqrt{(g'(\gamma(t) )\gamma'(t))^2 + (f'(\gamma(t) )\gamma'(t))^2 } dt \\
 &=\int_{\gamma^{-1}(a)}^{\gamma^{-1}(b)} \sqrt{g'(\gamma(t))^2 + f'(\gamma(t))^2} \gamma'(t) dt\\
 &=\int_a^b \sqrt{g'(u)^2 + f'(u)^2} du = L
-\end{align}
+\end{align*}
 ~$$
 
 (Using $u=\gamma(t)$ for the substitution.)
 
-In traveling there are two natural parameterizations: one by time, as in "how long have we been driving?"; and the other by distance, as in "how  far have we been driving?" Parameterizing by distance, or more technically arc length has other mathematical advantages.
+In traveling there are two natural parameterizations: one by time, as in "how long have we been driving?"; and the other by distance, as in "how  far have we been driving?" Parameterizing by distance, or more technically arc length, has other mathematical advantages.
 
 To parameterize by arc length, we just need to consider a special $\gamma$ defined by:
 
@@ -435,7 +462,7 @@ s(u) = \int_0^u \sqrt{(-\sin(t))^2 + b\cos(t)^2} dt = \int_0^u \sqrt{\sin(t))^2 
 \int_0^u \sqrt{1 + c\cos(t)^2} dt.
 ~$$
 
-But, despite it not being too daunting, this integral is not tractable through our techniques and has an answer involving elliptic integrals. We can work numerically though. Letting $a=1$ and $b=2$, we have the arc length is given by:
+But, despite it not looking too daunting, this integral is not tractable through our techniques and has an answer involving elliptic integrals. We can work numerically though. Letting $a=1$ and $b=2$, we have the arc length is given by:
 
 ```julia;
 a, b= 1, 2
@@ -450,7 +477,7 @@ plot(s, 0, 2pi)
 
 The range is $[0, s(2\pi)]$.
 
-The inverse function can be found by solving, we use `find_zero` for this:
+The inverse function can be found by solving, we use the bracketing version of `find_zero` for this:
 
 ```julia;
 using Roots
@@ -463,7 +490,7 @@ Here we see that the new parameterization yields the same curve:
 g(t) = a*cos(t)
 f(t) = b*sin(t)
 
-plot(t->g(s(t)), t-> f(s(t)), 0, s(2*pi))
+plot(t -> g(s(t)), t -> f(s(t)), 0, s(2*pi))
 ```
 
 
@@ -588,6 +615,25 @@ To see an example of how the tractrix can be found in an everyday observation, f
 
 ###### Question
 
+`SymPy` fails with the brute force approach to finding the length of a catenary, but can with a little help:
+
+```julia
+@syms x::real a::real
+f(x,a) = a * cosh(x/a)
+inside = 1 + diff(f(x,a), x)^2
+```
+
+Just trying `integrate(sqrt(inside), x)` will fail, but if we try `integrate(sqrt(simplify(inside), x))` an antiderivative can be found. What is it?
+
+```julia; echo=false
+choices = ["``a \\sinh{\\left(\\frac{x}{a} \\right)}``",
+           "``\\frac{a \\sinh{\\left(\\frac{x}{a} \\right)} \\cosh{\\left(\\frac{x}{a} \\right)}}{2} - \\frac{x \\sinh^{2}{\\left(\\frac{x}{a} \\right)}}{2} + \\frac{x \\cosh^{2}{\\left(\\frac{x}{a} \\right)}}{2}``"
+           ]
+radioq(choices, 1)
+```
+
+###### Question
+
 A curve is parameterized by $g(t) = t + \sin(t)$ and $f(t) = \cos(t)$. Find the arc length of the curve between $t=0$ and $\pi$.
 
 ```julia; echo=false
@@ -626,18 +672,52 @@ numericq(val)
 
 ###### Question
 
-The cycloid is parameterized by $g(t) = a(t - \sin(t))$ and $f(t) = a(1 - \cos(t))$ for $a > 0$. Taking $a=1$, and $t$ in $[0, 2\pi]$, find the length of the curve traced out.
+The cycloid is parameterized by $g(t) = a(t - \sin(t))$ and $f(t) = a(1 - \cos(t))$ for $a > 0$. Taking $a=3$, and $t$ in $[0, 2\pi]$, find the length of the curve traced out. (This was solved by the architect and polymath [Wren](https://www.maa.org/sites/default/files/pdf/cmj_ftp/CMJ/January%202010/3%20Articles/3%20Martin/08-170.pdf) in 1650.)
+
 
 ```julia; echo=false
-g(t) = t - sin(t)
-f(t) = 1 - cos(t)
-a, b = 0, 2pi
-val, _ = quadgk( x -> sqrt(D(g)(x)^2 + D(f)(x)^2), a, b)
+a = 3
+g(t) = a*(t - sin(t))
+f(t) = a*(1 - cos(t))
+val, _ = quadgk( x -> sqrt(D(g)(x)^2 + D(f)(x)^2), 0, 2pi)
 numericq(val)
 ```
 
+<<<<<<< HEAD
+A cycloid parameterized this way can be generated by a circle of radius ``a``. Based on this example, what do you think Wren wrote to Pascal about this length:
+
+```julia; echo=false
+choices = ["The length of the cycloidal arch is exactly **two** times the radius of the generating
+circle.",
+           "The length of the cycloidal arch is exactly **four** times the radius of the generating
+circle.",
+           "The length of the cycloidal arch is exactly **eight** times the radius of the generating
+circle."]
+radioq(choices, 3, keep_order=true)
+```
+
+```julia; echo=false
+note("""
+In [Martin](https://www.maa.org/sites/default/files/pdf/cmj_ftp/CMJ/January%202010/3%20Articles/3%20Martin/08-170.pdf) we read why Wren was mailing Pascal:
+
+After demonstrating mathematical talent at an early age, Blaise Pascal
+turned his attention to theology, denouncing the study of mathematics
+as a vainglorious pursuit. Then one night, unable to sleep as the
+result of a toothache, he began thinking about the cycloid and to his
+surprise, his tooth stopped aching. Taking this as a sign that he had
+God’s approval to continue, Pascal spent the next eight days studying
+the curve.  During this time he discovered nearly all of the geometric
+properties of the cycloid. He issued some of his results in ``1658`` in
+the form of a contest, offering a prize of forty Spanish gold pieces
+and a second prize of twenty pieces.
+
+""")
+```
+
+=======
 
 ----
+>>>>>>> master
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

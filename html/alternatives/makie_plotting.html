@@ -20,9 +20,12 @@
 .output, .julia-error {
     border-left: thick solid #ff0000;
     padding: 5px;
+    padding-left: 10px;
+    margin-bottom: 15px;
     background-color: #f5f5f5;
 }
-body { padding-top: 60px; }
+body { padding-top: 60px;
+}
 .output {color:#0033CC;}
 h5:before {content:"\2746\ ";}
 h6:before {content:"\2742\ ";}
@@ -37,10 +40,20 @@ tr:hover {background-color: #f5f5f5;}
 .admonition-title:before {content:"\2746\ ";}
 .admonition-title { color:#0033CC}
 
+main > .container {
+  padding: 60px 15px 0;
+}
 
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
 </style>
 
-<!-- .julia:before {content: "julia> "} -->
+<!--   padding: 0.5em 10px; .julia:before {content: "julia> "} -->
 
 <style></style>
 
@@ -123,7 +136,7 @@ $( document ).ready(function() {
     </button>
 
     <ul class="nav navbar-nav navbar-right">
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown dropstart">
 	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 	   role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Jump to...
@@ -678,12 +691,6 @@ ERROR: UndefVarError: Scene not defined
 </pre>
 
 
-<pre class="julia-error">
-ERROR: ArgumentError: Package MDBM not found in current path:
-- Run &#96;import Pkg; Pkg.add&#40;&quot;MDBM&quot;&#41;&#96; to install the MDBM package.
-
-</pre>
-
 
 
 <pre class='hljl'>
@@ -718,8 +725,8 @@ implicit_equation &#40;generic function with 1 method&#41;
 </pre>
 
 
-<pre class="julia-error">
-ERROR: UndefVarError: MDBM_Problem not defined
+<pre class="output">
+MDBM.MDBM_Problem&#123;MDBM.MemF&#123;typeof&#40;Main.##WeaveSandBox#257.f&#41;, MDBM.var&quot;#17#19&quot;, Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;, 2, 1, 1, StaticArrays.SVector&#123;4, StaticArrays.SVector&#123;2, Bool&#125;&#125;, StaticArrays.SMatrix&#123;3, 4, Float64, 12&#125;, Int64, Float64, Tuple&#123;MDBM.Axis&#123;Float64&#125;, MDBM.Axis&#123;Float64&#125;&#125;&#125;&#40;MDBM.MemF&#123;typeof&#40;Main.##WeaveSandBox#257.f&#41;, MDBM.var&quot;#17#19&quot;, Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;Main.##WeaveSandBox#257.f, MDBM.var&quot;#17#19&quot;&#40;&#41;, MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#91;MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;-154.0, true, &#40;-5.0, -10.0&#41;&#41;, MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;-149.0, true, &#40;-5.0, -9.0&#41;&#41;, MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;-144.0, true, &#40;-5.0, -8.0&#41;&#41;, MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;-139.0, true, &#40;-5.0, -7.0&#41;&#41;, MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;-134.0, true, &#40;-5.0, -6.0&#41;&#41;, MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;-129.0, true, &#40;-5.0, -5.0&#41;&#41;, MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;-124.0, true, &#40;-5.0, -4.0&#41;&#41;, MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;-119.0, true, &#40;-5.0, -3.0&#41;&#41;, MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;-114.0, true, &#40;-5.0, -2.0&#41;&#41;, MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;-109.0, true, &#40;-5.0, -1.0&#41;&#41;  …  MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;151.0, true, &#40;5.0, 1.0&#41;&#41;, MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;146.0, true, &#40;5.0, 2.0&#41;&#41;, MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;141.0, true, &#40;5.0, 3.0&#41;&#41;, MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;136.0, true, &#40;5.0, 4.0&#41;&#41;, MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;131.0, true, &#40;5.0, 5.0&#41;&#41;, MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;126.0, true, &#40;5.0, 6.0&#41;&#41;, MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;121.0, true, &#40;5.0, 7.0&#41;&#41;, MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;116.0, true, &#40;5.0, 8.0&#41;&#41;, MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;111.0, true, &#40;5.0, 9.0&#41;&#41;, MDBM.MDBMcontainer&#123;Float64, Bool, Tuple&#123;Float64, Float64&#125;&#125;&#40;106.0, true, &#40;5.0, 10.0&#41;&#41;&#93;, &#91;18976&#93;&#41;, MDBM.Axes&#123;2, Tuple&#123;MDBM.Axis&#123;Float64&#125;, MDBM.Axis&#123;Float64&#125;&#125;&#125;&#40;&#40;&#91;-5.0, -4.9375, -4.875, -4.8125, -4.75, -4.6875, -4.625, -4.5625, -4.5, -4.4375  …  4.4375, 4.5, 4.5625, 4.625, 4.6875, 4.75, 4.8125, 4.875, 4.9375, 5.0&#93;, &#91;-10.0, -9.9375, -9.875, -9.8125, -9.75, -9.6875, -9.625, -9.5625, -9.5, -9.4375  …  9.4375, 9.5, 9.5625, 9.625, 9.6875, 9.75, 9.8125, 9.875, 9.9375, 10.0&#93;&#41;&#41;, MDBM.NCube&#123;Int64, Float64, 2&#125;&#91;MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;23, 316&#93;, &#91;1, 1&#93;, &#91;1.6063732892989169, 0.25275584507525284&#93;, true&#41;, MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;23, 317&#93;, &#91;1, 1&#93;, &#91;1.3026770110598742, 0.205532987510733&#93;, true&#41;, MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;23, 318&#93;, &#91;1, 1&#93;, &#91;0.9973904105883838, 0.15779865481363942&#93;, true&#41;, MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;23, 319&#93;, &#91;1, 1&#93;, &#91;0.6905013026761199, 0.10954668019693573&#93;, true&#41;, MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;23, 320&#93;, &#91;1, 1&#93;, &#91;0.3819973811799878, 0.06077080938709818&#93;, true&#41;, MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;24, 310&#93;, &#91;1, 1&#93;, &#91;1.5730148223057674, 0.25244193136240256&#93;, true&#41;, MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;24, 311&#93;, &#91;1, 1&#93;, &#91;1.2635163443540753, 0.2033503249592459&#93;, true&#41;, MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;24, 312&#93;, &#91;1, 1&#93;, &#91;0.9523386316264015, 0.15370721710235083&#93;, true&#41;, MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;24, 313&#93;, &#91;1, 1&#93;, &#91;0.6394683680980245, 0.1035057125802353&#93;, true&#41;, MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;24, 314&#93;, &#91;1, 1&#93;, &#91;0.324892101175531, 0.05273881477153529&#93;, true&#41;  …  MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;119, 316&#93;, &#91;1, 1&#93;, &#91;0.5737847603815756, -0.10253884896868308&#93;, true&#41;, MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;119, 317&#93;, &#91;1, 1&#93;, &#91;0.9241595306873377, -0.16592313346062373&#93;, true&#41;, MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;119, 318&#93;, &#91;1, 1&#93;, &#91;1.2776102439518204, -0.23045619627359337&#93;, true&#41;, MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;119, 319&#93;, &#91;1, 1&#93;, &#91;1.6341761101488126, -0.2961613662405615&#93;, true&#41;, MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;120, 315&#93;, &#91;1, 1&#93;, &#91;-1.6639239167933426, 0.28200587702155877&#93;, true&#41;, MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;120, 316&#93;, &#91;1, 1&#93;, &#91;-1.3398508634660045, 0.22805972144102202&#93;, true&#41;, MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;120, 317&#93;, &#91;1, 1&#93;, &#91;-1.013129945313339, 0.17319397496295114&#93;, true&#41;, MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;120, 318&#93;, &#91;1, 1&#93;, &#91;-0.6837296229134533, 0.11739123110059835&#93;, true&#41;, MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;120, 319&#93;, &#91;1, 1&#93;, &#91;-0.35161787289425867, 0.060633695953389216&#93;, true&#41;, MDBM.NCube&#123;Int64, Float64, 2&#125;&#40;&#91;120, 320&#93;, &#91;1, 1&#93;, &#91;-0.01676217906067428, 0.002903178176581569&#93;, true&#41;&#93;, StaticArrays.SVector&#123;2, Bool&#125;&#91;&#91;0, 0&#93;, &#91;1, 0&#93;, &#91;0, 1&#93;, &#91;1, 1&#93;&#93;, &#91;-0.25 0.25 -0.25 0.25; -0.25 -0.25 0.25 0.25; -0.25 -0.25 -0.25 -0.25&#93;&#41;
 </pre>
 
 
@@ -737,8 +744,8 @@ ERROR: UndefVarError: MDBM_Problem not defined
 </pre>
 
 
-<pre class="julia-error">
-ERROR: UndefVarError: MDBM_Problem not defined
+<pre class="output">
+_dim &#40;generic function with 1 method&#41;
 </pre>
 
 
@@ -762,10 +769,6 @@ ERROR: UndefVarError: MDBM_Problem not defined
 </span><span class='hljl-k'>end</span>
 </pre>
 
-
-<pre class="julia-error">
-ERROR: UndefVarError: MDBM_Problem not defined
-</pre>
 
 
 
@@ -795,10 +798,6 @@ ERROR: UndefVarError: MDBM_Problem not defined
 </span><span class='hljl-k'>end</span>
 </pre>
 
-
-<pre class="julia-error">
-ERROR: UndefVarError: MDBM_Problem not defined
-</pre>
 
 
 <p>We see that the equation <code>ie</code> has two pieces. &#40;This is known as Newton&#39;s trident, as Newton was interested in this form of equation.&#41;</p>
@@ -905,7 +904,7 @@ ERROR: UndefVarError: surface&#33; not defined
 
 
 <pre class="julia-error">
-ERROR: UndefVarError: MDBM_Problem not defined
+ERROR: UndefVarError: plot not defined
 </pre>
 
 
@@ -1259,6 +1258,10 @@ end</code></pre>
   hljs.highlightElement(el);                              // then highlight each
   });
 
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
   var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
   var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
     return new bootstrap.Popover(popoverTriggerEl)

@@ -5,6 +5,7 @@
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
 using Plots
+using LaTeXStrings
 nothing
 ```
 
@@ -31,7 +32,7 @@ ratios, *rational functions*.
 ## Partial fraction decomposition
 
 Let $f(x) = p(x)/q(x)$, where  $p$ and $q$ are polynomial
-functions. Further, we assume without comment that $p$ and $q$ have no common
+functions with real coefficients. Further, we assume without comment that $p$ and $q$ have no common
 factors. (If they did, we can divide them out, an act which has no
 effect on the integrability of $f(x)$.
 
@@ -55,10 +56,10 @@ Bernoulli was a mentor to Euler.
 This basically says that each factor $q_i(x)^{n_i}$ contributes a term like:
 
 $$~
-\frac{a_{i1}}{q_i(x)^1} + \frac{a_{i2}}{q_i(x)^2} + \cdots + \frac{a_{in_i}}{q_i(x)^{n_i}},
+\frac{a_{i1}(x)}{q_i(x)^1} + \frac{a_{i2}(x)}{q_i(x)^2} + \cdots + \frac{a_{in_i}(x)}{q_i(x)^{n_i}},
 ~$$
 
-where each $a_{ij}$ has degree less than the degree of $q_i$.
+where each $a_{ij}(x)$ has degree less than the degree of $q_i(x)$.
 
 The value of this decomposition is that the terms $a_{ij}(x)/q_i(x)^j$
 each have an antiderivative, and so the sum of them will also have an
@@ -75,11 +76,12 @@ but the easiest cases - a few are in the problems - it can be a bit tedious.
 ```
 
 In `SymPy`, the `apart` function will find the partial fraction
-decomposition. For example, here we see $n_i$ terms for each power of
+decomposition when a factorization is available. For example, here we see $n_i$ terms for each power of
 $q_i$
 
 ```julia;
-using CalculusWithJulia  # loads `SymPy`
+using CalculusWithJulia
+using SymPy
 @syms a::real b::real c::real A::real B::real x::real
 ```
 
@@ -92,7 +94,7 @@ apart((x-2)*(x-3) / (x*(x-1)^2*(x^2 + 2)^3))
 
 A standard proof uses two facts of number systems: the division
 algorithm and a representation of the greatest common divisor in terms
-of sum, extended to polynomials. Our sketch shows how these are used.
+of sums, extended to polynomials. Our sketch shows how these are used.
 
 Take one of the factors of the denominators, and consider this
 representation of the rational function $P(x)/(q(x)^k Q(x))$ where
@@ -128,22 +130,27 @@ What remains is to establish that we can take $A(x) = a(x)\cdot P(x)$ with a deg
 
 In Proposition 3.8 of
 [Bradley](http://www.m-hikari.com/imf/imf-2012/29-32-2012/cookIMF29-32-2012.pdf)
-and Cook it is shown how an expression of the form $A(x)/a(x)^k$ can
-be written as $q_1(x) + r_k(x)/a(x)^k + \cdots + r_2(x)/a(x)^2 +
-r_1(x)/a(x)$ with the degree of each $r_i(x)$ less than that of $a(x)$
-by repeated application of the division algorithm. This fact can be used to
-finish the proof.
+and Cook we can see how. Recall the division algorithm, for example, says there are ``q_k`` and ``r_k`` with ``A=q\cdot q_k + r_k`` where the degree of ``r_k`` is less than that of ``q``, which is linear or quadratic. This is repeatedly applied below:
 
-To generate the $r_1$, $r_2$, $\dots$, $r_k$, the division
-algorithm is applied $k$ times giving: $A=aq_k + r_k$, $q_k = a q_{k-1} +
-r_{k-1}$, $\dots$, $q_2 = a q_1 + r_1$. These are put together to show
-$A/a^k=q_1 + r_k/a^k + r_{k-1}/a^{k-1} + \cdots + r_2/a^2 + r_1/a$.
+```math
+\begin{align*}
+\frac{A}{q^k} &= \frac{q\cdot q_k + r_k}{q^k}\\
+&= \frac{r_k}{q^k} + \frac{q_k}{q^{k-1}}\\
+&= \frac{r_k}{q^k} + \frac{q \cdot q_{k-1} + r_{k-1}}{q^{k-1}}\\
+&= \frac{r_k}{q^k} + \frac{r_{k-1}}{q^{k-1}} + \frac{q_{k-1}}{q^{k-2}}\\
+&= \frac{r_k}{q^k} + \frac{r_{k-1}}{q^{k-1}} + \frac{q\cdot q_{k-2} + r_{k-2}}{q^{k-2}}\\
+&= \cdots\\
+&= \frac{r_k}{q^k} + \frac{r_{k-1}}{q^{k-1}} + \cdots + q_1
+\end{align*}
+```
+
+So the term ``A(x)/q(x)^k`` can be expressed in terms of a sum where the numerators or each term have degree less than ``q(x)``, as expected by the statement of the theorem.
 
 
 
 ## Integrating the terms in a partial fraction decomposition
 
-We discuss by example how each type of possible terms in a partial
+We discuss by example how each type of possible term in a partial
 fraction decomposition has an antiderivative. Hence, rational
 functions will *always* have an antiderivative that can be computed.
 
@@ -177,13 +184,13 @@ can be a constant or a linear polynomial. The latter can be written as
 $Ax + B$.
 
 
-Rather than try to consider the general case of
+The integral of the following general form is presented below:
 
 $$~
 \frac{Ax +B }{(ax^2  + bx + c)^j},
 ~$$
 
-which can be handled, it is best to shift the value of $x$ so that this is no more than a constant times:
+With `SymPy`, we consider a few cases of the following form, which results from a shift of `x`
 
 $$~
 \frac{Ax + B}{((ax)^2 \pm 1)^j}
@@ -212,6 +219,43 @@ and
 ```julia;
 integrate(B/((a*x)^2 - 1)^4, x)
 ```
+
+----
+
+
+In [Bronstein](http://www-sop.inria.fr/cafe/Manuel.Bronstein/publications/issac98.pdf) this characterization can be found - "This method, which dates back to Newton, Leibniz and Bernoulli, should not be
+used in practice, yet it remains the method found in most calculus texts and is
+often taught. Its major drawback is the factorization of the denominator of the
+integrand over the real or complex numbers." We can also find the following formulas which formalize the above exploratory calculations (``j>1`` and ``b^2 - 4c < 0`` below):
+
+```math
+\begin{align*}
+\int \frac{A}{(x-a)^j} &= \frac{A}{1-j}\frac{1}{(x-a)^{1-j}}\\
+\int \frac{A}{x-a}     &= A\log(x-a)\\
+\int \frac{Bx+C}{x^2 + bx + c}     &= \frac{B}{2} \log(x^2 + bx + c) + \frac{2C-bB}{\sqrt{4c-b^2}}\cdot \arctan\left(\frac{2x+b}{\sqrt{4c-b^2}}\right)\\
+\int \frac{Bx+C}{(x^2 + bx + c)^j} &= \frac{B' x + C'}{(x^2 + bx + c)^{j-1}} + \int \frac{C''}{(x^2 + bx + c)^{j-1}}
+\end{align*}
+```
+
+
+
+
+
+The first returns a rational function; the second yields a logarithm
+term; the third yields a logarithm and an arctangent term; while the
+last, which has explicit constants available, provides a reduction
+that can be recursively applied;
+
+That is integrating ``f(x)/g(x)``, a rational function, will yield an output that looks like the following, where the functions are polynomials:
+
+```math
+\int f(x)/g(x) = P(x) + \frac{C(x)}{D{x}} + \sum v_i \log(V_i(x)) + \sum w_j \arctan(W_j(x))
+```
+
+
+(Bronstein also sketches the modern method which is to use a Hermite reduction to express ``\int f/g dx = p/q + \int g/h dx``, where ``h`` is square free (the "`j`" are all ``1``). The latter can be written over the complex numbers as logarithmic terms of the form ``\log(x-a)``, that `a`s found following a method due to Trager and Lazard & Rioboo, which is mentioned in the SymPy documentation as the method used.)
+
+
 
 ## Examples
 
@@ -255,6 +299,21 @@ note(L"""
 generally, $\log(\lvert x\rvert)$ is one.
 
 """)
+```
+
+##### Example
+
+The answers found can become quite involved. [Corless](https://arxiv.org/pdf/1712.01752.pdf), Moir, Maza, and Xie use this example which at first glance seems tame enough:
+
+```julia
+@syms x::real
+ex = (x^2 - 1) / (x^4 + 5x^2 + 7)
+```
+
+But the integral is something best suited to a computer algebra system:
+
+```julia
+integrate(ex, x)
 ```
 
 ## Questions
@@ -387,7 +446,54 @@ radioq(choices, ans, keep_order=true)
 ```
 
 
-----
+##### Question
+
+The partial fraction decomposition, as presented, factors the denominator polynomial into linear and quadratic factors over the real numbers. Alternatively, factoring over the complex numbers is possible, resulting in terms like:
+
+```math
+\frac{a + ib}{x - (\alpha + i \beta)} + \frac{a - ib}{x - (\alpha - i \beta)}
+```
+
+How to see that these give rise to real answers on integration is the point of this question.
+
+Breaking the terms up over ``a`` and ``b`` we have:
+
+```math
+\begin{align*}
+I &= \frac{a}{x - (\alpha + i \beta)} + \frac{a}{x - (\alpha - i \beta)} \\
+II &= i\frac{b}{x - (\alpha + i \beta)} - i\frac{b}{x - (\alpha - i \beta)}
+\end{align*}
+```
+
+Integrating ``I`` leads to two logarithmic terms, which are combined to give:
+
+```math
+\int I dx = a\cdot \log((x-(\alpha+i\beta)) \cdot (x - (\alpha-i\beta)))
+```
+
+This involves no complex numbers, as:
+
+```julia; echo=false
+choices = ["The complex numbers are complex conjugates, so the term in the logarithm will simply be ``x - 2\\alpha x + \\alpha^2 + \\beta^2``",
+           "The ``\\beta`` are ``0``, as the polynomials in question are real"]
+radioq(choices, 1)
+```
+
+
+The term ``II`` benefits from this computation (attributed to Rioboo by [Corless et. al](https://arxiv.org/pdf/1712.01752.pdf))
+
+```math
+\frac{d}{dx} i \log(\frac{X+iY}{X-iY}) = 2\frac{d}{dx}\arctan(\frac{X}{Y})
+```
+
+Applying this with ``X=x - \alpha`` and ``Y=-\beta`` shows that ``\int II dx`` will be
+
+```julia; echo=false
+choices = ["``-2b\\arctan((x - \\alpha)/(\\beta))``",
+           "``2b\\sec^2(-(x-\\alpha)/(-\\beta))``"]
+radioq(choices, 1)
+```
+
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

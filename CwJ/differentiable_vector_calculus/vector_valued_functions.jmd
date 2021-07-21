@@ -160,19 +160,21 @@ ts = range(-2, 2, length=200)
 plot(unzip(h.(ts))...)
 ```
 
-### The `plot_parametric_curve` function
+### The `plot_parametric` function
 
 While the `unzip` function is easy to understand as a function that reshapes data from one format into one that `plot` can use, it's usage is a bit cumbersome.
-The `CalculusWithJulia` package provides a function `plot_parametric_curve` which hides the use of `unzip` and the splatting within a function definition. It expects a vector-valued function and a range of $t$ values specified by two values. For example, the last plot can be produced with
+The `CalculusWithJulia` package provides a function `plot_parametric` which hides the use of `unzip` and the splatting within a function definition.
+
+The function borrows a calling style for `Makie`. The interval to plot over is specified first using `a..b` notation (from `IntervalSets`),  then the function is specified. Additional keyword arguments are passed along to `plot`.
 
 ```julia;
-plot_parametric_curve(h, -2, 2)
+plot_parametric(-2..2, h)
 ```
 
 
 ```julia; echo=false
 note("""
-Defining plotting functions in `Julia` for `Plots` is facilitated by the `RecipesBase` package. There are two common choices: creating a new function for plotting, as is done with `plot_parametric_curve` and `plot_polar`; or creating a new type so that `plot` can dispatch to an appropriate plotting method. The latter would also be a reasonable choice, but wasn't taken here.
+Defining plotting functions in `Julia` for `Plots` is facilitated by the `RecipesBase` package. There are two common choices: creating a new function for plotting, as is done with `plot_parametric` and `plot_polar`; or creating a new type so that `plot` can dispatch to an appropriate plotting method. The latter would also be a reasonable choice, but wasn't taken here.
 """)
 ```
 
@@ -230,7 +232,7 @@ For example:
 ```julia;
 a, ecc = 20, 3/4
 f(t) = a*(1-ecc^2)/(1 + ecc*cos(t)) * [cos(t), sin(t)]
-plot_parametric_curve(f, 0, 2pi, legend=false)
+plot_parametric(0..2pi, f, legend=false)
 scatter!([0],[0], markersize=4)
 ```
 
@@ -258,7 +260,7 @@ $$~
 To visualize this we first define a helper function to draw a circle at point $P$ with radius $R$:
 
 ```julia;
-circle!(P, R; kwargs...) = plot_parametric_curve!(t -> P + R*[cos(t), sin(t)], 0, 2pi;kwargs...)
+circle!(P, R; kwargs...) = plot_parametric!(0..2pi, t -> P + R*[cos(t), sin(t)]; kwargs...)
 ```
 
 Then we have this function to visualize the spirograph for different $t$ values:
@@ -275,7 +277,7 @@ function spiro(t; r=2, R=5, rho=0.8*r)
     tp(t) = -R/r * t
 
     s(t) = cent(t) + rho * [cos(tp(t)), sin(tp(t))]
-    plot_parametric_curve!(s, 0, t, n=1000, color=:red)
+    plot_parametric!(0..t, s, color=:red)
 
     p
 end
@@ -333,8 +335,11 @@ S, T = 8, 2
 outer(t) = [M * sin(2pi*t/T), M * cos(2pi*t/T), height*(1 +sin(2pi * (t-pi/2)/T))]
 inner(t) = [m * sin(2pi*t/S), m * cos(2pi*t/S), 0]
 f(t) = outer(t) + inner(t)
-plot_parametric_curve(f, 0, 8, n=1000)
+plot_parametric(0..8, f)
 ```
+
+
+
 
 ## Limits and continuity
 
@@ -393,7 +398,7 @@ We can visualize the tangential property through a graph:
 
 ```julia;
 f(t) = [3cos(t), 2sin(t)]
-p = plot_parametric_curve(f, 0, 2pi, legend=false, aspect_ratio=:equal)
+p = plot_parametric(0..2pi, f, legend=false, aspect_ratio=:equal)
 for t in [1,2,3]
     arrow!(f(t), f'(t))   # add arrow with tail on curve, in direction of derivative
 end
@@ -491,7 +496,7 @@ xpos(t) = x0 + v0*t + (1/2)*a*t^2
 using Roots
 t_0 = fzero(t -> xpos(t)[2], 1/10, 100)  # find when y=0
 
-plot_parametric_curve(xpos, 0, t_0)
+plot_parametric(0..t_0, xpos)
 ```
 
 
@@ -555,6 +560,7 @@ discussed in [ODEs](../ODEs/odes.html). Though here we will use the
 
 We can define our equation as follows, using `p` to pass in the two parameters: the wheel-base length $a$, and $F(t)$, the parameterization of the front wheel in time:
 
+
 ```julia;
 using DifferentialEquations, LinearAlgebra
 
@@ -589,8 +595,8 @@ We qualify the `solve` function, as `SymPy` also has a `solve` function. (We wou
 To plot the two trajectories, we could use that `out.u` holds the $x$ and $y$ components of the computed trajectory, but more simply, we  call `out` like a function.
 
 ```julia;
-plt = plot_parametric_curve(F, t0, t1, legend=false)
-plot_parametric_curve!(out,  t0, t1, linewidth=3)
+plt = plot_parametric(t0..t1, F, legend=false)
+plot_parametric!(t0.. t1, out,   linewidth=3)
 
 ## add the bicycle as a line segment at a few times along the path
 for t in range(t0, t1, length=11)
@@ -613,8 +619,8 @@ B0 = F(0) - [0, a]  # some initial position for the back
 prob = ODEProblem(bicycle, B0, tspan, p)
 
 out = DifferentialEquations.solve(prob, reltol=1e-6)
-plt = plot_parametric_curve(F, t0, t1, legend=false)
-plot_parametric_curve!(t->out(t),  t0, t1, linewidth=3)
+plt = plot_parametric(t0..t1, F, legend=false)
+plot_parametric!(t0..t1, t->out(t),  linewidth=3)
 ```
 
 Again, the back wheel moves less than the front.
@@ -631,8 +637,8 @@ B0 = F(0) - [0,a]
 prob = ODEProblem(bicycle, B0, tspan, p)
 
 out = DifferentialEquations.solve(prob, reltol=1e-6)
-plt = plot_parametric_curve(F, t0, t1, legend=false)
-plot_parametric_curve!(t->out(t),  t0, t1, linewidth=3)
+plt = plot_parametric(t0..t1, F, legend=false)
+plot_parametric!(t0..t1, t->out(t), linewidth=3)
 ```
 
 The back wheel is moving backwards for part of the above trajectory.
@@ -652,8 +658,8 @@ B0 = F(0) - [0,a]
 prob = ODEProblem(bicycle, B0, tspan, p)
 
 out = DifferentialEquations.solve(prob, reltol=1e-6)
-plt = plot_parametric_curve(F, t0, t1, legend=false, aspect_ratio=:equal)
-plot_parametric_curve!(t->out(t),  t0, t1, linewidth=3)
+plt = plot_parametric(t0..t1, F, legend=false, aspect_ratio=:equal)
+plot_parametric!(t0..t1, t->out(t), linewidth=3)
 ```
 
 
@@ -879,7 +885,7 @@ The second law states that the area being swept out during a time duration only 
 ```julia;
 x1(t) = [cos(t), 2 * sin(t)]
 t0, t1, Delta = 1.0, 2.0, 1/10
-plot_parametric_curve(x1, 0, pi/2)
+plot_parametric(0..pi/2, x1)
 
 arrow!([0,0], x1(t0)); arrow!([0,0], x1(t0 + Delta))
 arrow!(x1(t0), x1(t0+Delta)- x1(t0), linewidth=5)
@@ -1049,7 +1055,7 @@ Normal(t) = Tangent'(t)/norm(Tangent'(t))
 Binormal(t) = Tangent(t) × Normal(t)
 
 p = plot(legend=false, aspect_ratio=:equal)
-plot_parametric_curve!(viviani, -2pi, 2pi)
+plot_parametric!(-2pi..2pi, viviani)
 
 t0, t1 = -pi/3, pi/2 + 2pi/5
 r0, r1 = viviani(t0), viviani(t1)
@@ -1086,6 +1092,7 @@ cross product will be closer to $1$.
 Let $\vec{r}(t) = k \cdot \langle \cos(t), \sin(t), 0 \rangle$. This will have curvature:
 
 ```julia;
+simplify = SymPy.simplify
 @syms k::positive t::real
 r1 = k * [cos(t), sin(t),0]
 norm(diff.(r1,t) × diff.(r1,t,t)) / norm(diff.(r1,t))^3 |> simplify
@@ -1292,10 +1299,10 @@ B0 = F(t0) + a*[cos(t), sin(t)]
 prob = ODEProblem(bicycle, B0, tspan, p)
 
 out = DifferentialEquations.solve(prob, reltol=1e-6)
-plt = plot_parametric_curve(F, t0, t1, linewidth=3,
-                            xticks=nothing, yticks=nothing, border=:none,
-                            legend=false, aspect_ratio=:equal)
-plot_parametric_curve!(t->out(t),  t0, t1, linewidth=3)
+plt = plot_parametric(t0..t1, F, linewidth=3,
+                      xticks=nothing, yticks=nothing, border=:none,
+                      legend=false, aspect_ratio=:equal)
+plot_parametric!(t0..t1, t->out(t),  linewidth=3)
 
 t = pi/4
 arrow!(out(t), 2*(F(t) - out(t)))
@@ -1446,7 +1453,7 @@ p = plot(legend=false, aspect_ratio=:equal)
 ts = range(0, 2pi, length=50)
 for t in ts
     P, V = r(t), unit_vec([-Y'(t), X'(t)])
-    plot_parametric_curve!(x -> P + x*V, -4, 4 )
+    plot_parametric!(-4..4, x -> P + x*V)
 end
 plot!(X, Y, 0, 2pi, linewidth=5)
 p
@@ -1507,8 +1514,8 @@ Tangent(t) = unit_vec(r'(t))
 Normal(t) = unit_vec(Tangent'(t))
 curvature(t) = norm(r'(t) × r''(t) ) / norm(r'(t))^3
 
-plot_parametric_curve(t -> r(t)[1:2], 0, 2pi, legend=false, aspect_ratio=:equal)
-plot_parametric_curve!(t -> (r(t) + Normal(t)/curvature(t))[1:2], 0, 2pi)
+plot_parametric(0..2pi, t -> r(t)[1:2], legend=false, aspect_ratio=:equal)
+plot_parametric!(0..2pi, t -> (r(t) + Normal(t)/curvature(t))[1:2])
 ```
 
 We computed the above illustration using $3$ dimensions (hence the use of `[1:2]...`) as the curvature formula is easier to express. Recall, the curvature also appears in the [Frenet-Serret](https://en.wikipedia.org/wiki/Frenet%E2%80%93Serret_formulas) formulas: $d\hat{T}/ds = \kappa \hat{N}$ and $d\hat{N}/ds = -\kappa \hat{T}+ \tau \hat{B}$. In a planar curve, as under consideration, the binormal is $\vec{0}$. This allow the computation of $\vec\beta(s)'$:
@@ -1537,9 +1544,9 @@ function evolute(r)
     t -> r(t) + 1/curvature(t)*Normal(t)
 end
 
-plot_parametric_curve(t -> r(t)[1:2], 0, 2pi, legend=false, aspect_ratio=:equal)
-plot_parametric_curve!(t -> evolute(r)(t)[1:2], 0, 2pi...)
-plot_parametric_curve!(t -> ((evolute∘evolute)(r)(t))[1:2], 0, 2pi)
+plot_parametric(0..2pi, t -> r(t)[1:2],  legend=false, aspect_ratio=:equal)
+plot_parametric!(0..2pi, t -> evolute(r)(t)[1:2])
+plot_parametric!(0..2pi, t -> ((evolute∘evolute)(r)(t))[1:2])
 ```
 
 ----
@@ -1556,8 +1563,8 @@ a = t1
 Tangent(t) = unit_vec(r'(t))
 beta(t) = r(t) - Tangent(t) * quadgk(t -> norm(r'(t)), a, t)[1]
 
-p = plot_parametric_curve(r, -2, 2, legend=false)
-plot_parametric_curve!(beta, t0, t1)
+p = plot_parametric(-2..2, r, legend=false)
+plot_parametric!(t0..t1, beta)
 for t in range(t0,-0.2, length=4)
     arrow!(r(t), -Tangent(t) * quadgk(t -> norm(r'(t)), a, t)[1])
     scatter!(unzip([r(t)])...)
@@ -1662,8 +1669,8 @@ speed = 2sin(t/2)
 
 ex = r(t) - rp/speed * integrate(speed, a, t)
 
-plot_parametric_curve(r, 0, 4pi, legend=false)
-plot_parametric_curve!(u -> SymPy.N.(subs.(ex, t .=> u)), 0, 4pi)
+plot_parametric(0..4pi, r, legend=false)
+plot_parametric!(0..4pi, u -> SymPy.N.(subs.(ex, t .=> u)))
 ```
 
 
@@ -2092,6 +2099,7 @@ ans=2
 radioq(choices, ans)
 ```
 
+
 ###### Question
 
 Let $\vec{\gamma}(s)$ be a parameterization of a curve by arc length and $s(t)$ some continuous increasing function of $t$. Then $\vec{\gamma} \circ s$ also parameterizes the curve. We have
@@ -2242,7 +2250,6 @@ ans = 1
 radioq(choices, ans)
 ```
 
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

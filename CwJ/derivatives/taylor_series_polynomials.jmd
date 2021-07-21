@@ -4,6 +4,7 @@
 ```julia; echo=false; results="hidden"
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
+using SymPy
 using Plots
 nothing
 ```
@@ -66,9 +67,11 @@ ImageFile(imgfile, caption)
 
 ## The secant line and the tangent line
 
-To motivate, we have two related formulas. Suppose we have a function
-$f(x)$ which is defined in a neighborhood of $c$ and has as many
-derivatives as we care to take at $c$.
+We approach this general problem more indirectly than is needed, introducing notations that are attributed to Newton. We leverage `SymPy` to avoid what would be tedious computations otherwise.
+
+We have two related formulas. Suppose ``f(x) is a function
+which is defined in a neighborhood of $c$ and has as many
+continuous derivatives as we care to take at $c$.
 
 
 The secant line connecting $(c, f(c))$ and $(c+h, f(c+h))$ for a value of $h>0$ is given in point-slope form by
@@ -88,7 +91,7 @@ tl(x) = f(c) + f'(c) \cdot(x - c).
 The secant line is important here, as it approximates the tangent
 line, which in turn is important, as it is the linear function that
 best approximates the function at the point $(c, f(c))$. This is
-quantified by the *Mean Value Theorem* which states that there exists
+quantified by the *mean value theorem* which states that there exists
 some $\xi$ between $x$ and $c$ for which:
 
 $$~
@@ -102,6 +105,15 @@ $(x-c)^2$ term for $x$ "near" $c$.)
 
 
 The secant line also has an interpretation that will generalize - it is the smallest order polynomial that goes through the points $(c,f(c))$ and $(c+h, f(c+h))$. This is obvious from the construction - as this is how the slope is derived - but from the formula itself requires showing $tl(c) = f(c)$ and $tl(c+h) = f(c+h)$. The former is straightforward, as $(c-c) = 0$, so clearly $tl(c) = f(c)$. The latter requires a bit of algebra.
+
+
+We have:
+
+> The *linear* approximation at a point ``c`` is related to the *linear* polynomial approximation through the points ``c`` and ``c+h`` as ``h`` goes to ``0``.
+
+
+
+
 
 
 Now, we take a small detour to define some notation. Instead of
@@ -319,9 +331,10 @@ f0 = divided_differences(f, x0)
 fd = divided_differences(f, x0, x1)
 fdd = divided_differences(f, x0, x1, x2)
 
-plot(f, a, b,                  color=:blue, linewidth=5, legend=false)
-plot!(x -> f0 + fd*(x-x0), a, b,     color=:green, alpha=0.25, linewidth=5);
-plot!(x -> f0 + fd*(x-x0) + fdd * (x-x0)*(x-x1), a,b,  color=:green, alpha=0.25, linewidth=5);
+p = plot(f, a, b,                  color=:blue, linewidth=5, legend=false)
+plot!(p, x -> f0 + fd*(x-x0), a, b,     color=:green, alpha=0.25, linewidth=5);
+plot!(p, x -> f0 + fd*(x-x0) + fdd * (x-x0)*(x-x1), a,b,  color=:green, alpha=0.25, linewidth=5);
+p
 ```
 
 Though similar, the graphs aren't identical, as the interpolating
@@ -420,8 +433,14 @@ f(c) + f'(c)\cdot(x-c) + \frac{f''(c)}{2!}(x-c)^2 + \cdots + \frac{f^{(n)}(c)}{n
 
 
 This polynomial will be a good approximation to the function $f$, near
-$c$. The error will be given - again by an application of the Mean
-Value Theorem - by $(1/(n+1)!) \cdot f^{(n+1)}(\xi) \cdot (x-c)^n$ for some $\xi$ between $c$ and $x$.
+$c$. The error will be given - again by an application of the mean
+value theorem:
+
+```math
+\frac{1}{(n+1)!} \cdot f^{(n+1)}(\xi) \cdot (x-c)^n
+```
+
+for some $\xi$ between $c$ and $x$.
 
 
 
@@ -470,7 +489,18 @@ scale of the error, but also gets in the way of using the
 output. `SymPy` provides the `removeO` method to strip this. (It is called as `object.removeO()`, as it is a method of an object in SymPy.)
 
 
-However, we will define our own function to compute Taylor polynomials from a function. The following returns a function, not a symbolic object, using `D`, from `CalculusWithJulia`, which is based on `ForwardDiff.derivative`, to find higher-order derivatives:
+
+```julia; echo=false
+note("""
+
+A Taylor polynomial of degree ``n`` consists of ``n+1`` terms and an error term.
+The "Taylor series" is an *infinite* collection of terms, the first ``n+1`` matching the Taylor polynomial of degree ``n``. The fact that series are *infinite* means care must be taken when even talking about their existence, unlike a Tyalor polynomial, which is just a polynomial and exists as long as a sufficient number of derivatives are available.
+
+""")
+```
+
+
+However, for this section only, we will define our own function to compute Taylor polynomials from a function. The following returns a function, not a symbolic object, using `D`, from `CalculusWithJulia`, which is based on `ForwardDiff.derivative`, to find higher-order derivatives:
 
 ```julia;
 function taylor_poly(f, c=0, n=2)
@@ -543,9 +573,9 @@ In this graph we make a plot of the Taylor polynomial for different sizes of $n$
 f(x) = 1 - cos(x)
 a, b = -pi, pi
 plot(f, a, b, linewidth=5)
-plot!(taylor_poly(f, 0, 2), a, b)
-plot!(taylor_poly(f, 0, 4), a, b)
-plot!(taylor_poly(f, 0, 6), a, b)
+plot!(taylor_poly(f, 0, 2))
+plot!(taylor_poly(f, 0, 4))
+plot!(taylor_poly(f, 0, 6))
 ```
 
 Though all are good approximations near $c=0$, as more terms are
@@ -584,14 +614,14 @@ P \approx P_0 \cdot (1 + \frac{3(h/R)}{2} + \frac{3(h/R)^2}{8} - \frac{(h/R)^3}{
 Typically, if $h$ is much smaller than $R$ the first term is enough giving a formula like $P \approx P_0 \cdot(1 + \frac{3h}{2R})$.
 
 
-A satellite phone utilizes low orbit satellites to relay phone communications. The [Iridium](http://www.kddi.com/english/business/cloud-network-voice/satellite/iridium/mobile/) system uses satellites with an elevation $h=780km$. The radius of the earth is $3,959$ miles, the mass of the earth is $5.972 × 10^{24} kg$, and the gravitational [constant](https://en.wikipedia.org/wiki/Gravitational_constant), $G$ is $6.67408 \cdot 10^{-11}$ $m^3/(kg \cdot s^2)$.
+A satellite phone utilizes low orbit satellites to relay phone communications. The [Iridium](http://www.kddi.com/english/business/cloud-network-voice/satellite/iridium/mobile/) system uses satellites with an elevation ``h=780km``. The radius of the earth is $3,959$ miles, the mass of the earth is $5.972 × 10^{24} kg$, and the gravitational [constant](https://en.wikipedia.org/wiki/Gravitational_constant), $G$ is $6.67408 \cdot 10^{-11}$ $m^3/(kg \cdot s^2)$.
 
 Compare the approximate value with 1 term to the exact value.
 
 ```julia;
 G = 6.67408e-11
 h = 780 * 1000
-R =  3959 * 1609.34   # 1609 meters per mile
+R = 3959 * 1609.34   # 1609 meters per mile
 M = 5.972e24
 P0, hR = (2pi)/sqrt(G*M) * R^(3/2), h/R
 
@@ -695,9 +725,9 @@ computed using  pre-computed value of $\log(2)$, the second then *reduces* the p
 
 Now, for this problem a further
 trick is utilized, writing $s= f/(2+f)$ so that
-$\log(1+m)=\log(1+s)-\log(1-s)$.  $\log(1+s) - \log(1-s)$ for some small range of $s$ values then makes it possible to compute $\log(x)$ for any real $x$.
+$\log(1+m)=\log(1+s)-\log(1-s)$ for some small range of $s$ values. These combined make it possible to compute $\log(x)$ for any real $x$.
 
-To compute $\log(1\pm s)$, we can find a Taylor series. Let's go out to degree $19$ and use `SymPy` to do the work:
+To compute $\log(1\pm s)$, we can find a Taylor polynomial. Let's go out to degree $19$ and use `SymPy` to do the work:
 
 ```julia;
 @syms s
@@ -768,59 +798,61 @@ solve for all applicable values.
 
 ##### Example Higher order derivatives of the inverse function
 
-For notational purposes, let ``g(x)`` be the inverse function for ``f(x)``. Assume *both* functions have a Taylor series expansion:
+For notational purposes, let ``g(x)`` be the inverse function for ``f(x)``. Assume *both* functions have a Taylor polynomial expansion:
 
 ```math
 \begin{align*}
 f(x_0 + \Delta_x) &= f(x_0) + a_1 \Delta_x + a_2 (\Delta_x)^2 + \cdots a_n (\Delta_x)^n + \dots\\
-g(y_0 + \Delta_y) &= f(x_0) + b_1 \Delta_y + b_2 (\Delta_y)^2 + \cdots b_n (\Delta_y)^n + \dots.
+g(y_0 + \Delta_y) &= g(y_0) + b_1 \Delta_y + b_2 (\Delta_y)^2 + \cdots b_n (\Delta_y)^n + \dots
 \end{align*}
 ```
 
-Then using ``x = g(f(x))``, we have:
+Then using ``x = g(f(x))``, we have expanding the terms and using ``\approx`` to drop the ``\dots``:
 
 ```math
 \begin{align*}
 x_0 + \Delta_x &= g(f(x_0 + \Delta_x)) \\
 &\approx g(f(x_0) + \sum_{j=1}^n a_j (\Delta_x)^j) \\
-&\approx x_0 + \sum_{i=1}^n b_i (\sum_{j=1}^n a_j (\Delta_x)^j)^i \\
-&\approx x_0 + \sum_{i=1}^{n-1} b_i (\sum_{j=1}^n a_j (\Delta_x)^j)^i + b_n  (\sum_{j=1}^n a_j (\Delta_x)^j)^n
+&\approx g(f(x_0)) + \sum_{i=1}^n b_i \left(\sum_{j=1}^n a_j (\Delta_x)^j \right)^i \\
+&\approx x_0 + \sum_{i=1}^{n-1} b_i \left(\sum_{j=1}^n a_j (\Delta_x)^j\right)^i + b_n \left(\sum_{j=1}^n a_j (\Delta_x)^j\right)^n
 \end{align*}
 ```
 
 That is:
 
 ```math
-b_n (\sum_{j=1}^n a_j (\Delta_x)^j)^n =
-(x_0 + \Delta_x) - ( x_0 + \sum_{i=1}^{n-1} b_i (\sum_{j=1}^n a_j (\Delta_x)^j)^i)
+b_n \left(\sum_{j=1}^n a_j (\Delta_x)^j \right)^n =
+(x_0 + \Delta_x) - \left( x_0 + \sum_{i=1}^{n-1} b_i \left(\sum_{j=1}^n a_j (\Delta_x)^j \right)^i \right)
 ```
 
 Solving for ``b_n = g^{(n)}(y_0) / n!`` gives the formal expression:
 
 ```math
 g^{(n)}(y_0) = n! \cdot \lim_{\Delta_x \rightarrow 0}
-\frac{\Delta_x -  \sum_{i=1}^{n-1} b_i (\sum_{j=1}^n a_j (\Delta_x)^j)^i}{
-\sum_{j=1}^n a_j (\Delta_x^j)^i}
+\frac{\Delta_x -  \sum_{i=1}^{n-1} b_i \left(\sum_{j=1}^n a_j (\Delta_x)^j \right)^i}{
+\left(\sum_{j=1}^n a_j \left(\Delta_x^j\right)^i\right)^n}
 ```
 
 (This is following [Liptaj](https://vixra.org/pdf/1703.0295v1.pdf)).
 
-We will use `SymPy` to take this limit for the first `4` derivatives. Here is some code:
+We will use `SymPy` to take this limit for the first `4` derivatives. Here is some code that expands ``x + \Delta_x = g(f(x_0 + \Delta_x))`` and then uses `SymPy` to solve:
 
 ```julia;
 @syms x₀ Δₓ f′[1:4] g′[1:4]
 
-a(i) = f′[i]/factorial(i)
-b(i) = g′[i]/factorial(i)
+as(i) = f′[i]/factorial(i)
+bs(i) = g′[i]/factorial(i)
 
 gᵏs = Any[]
 eqns = Any[]
 for n ∈ 1:4
-    Δy = sum(a(j) * Δₓ^j for j ∈ 1:n)
-    l = x₀ + Δₓ
-    r = x₀ + sum(b(i)*Δy^i for i ∈ 1:n)
-    eqn = Eq(l, r)
-	push!(eqns, eqn)
+    Δy = sum(as(j) * Δₓ^j for j ∈ 1:n)
+    left = x₀ + Δₓ
+    right = x₀ + sum(bs(i)*Δy^i for i ∈ 1:n)
+
+    eqn = left ~ right
+
+    push!(eqns, eqn)
     gⁿ = g′[n]
     ϕ = solve(eqn, gⁿ)[1]
 
@@ -838,7 +870,7 @@ gᵏs
 
 We can see the expected `g' = 1/f'` (where the point of evalution is ``g(y) = 1/f'(f^{-1}(y))`` is not written). In addition, we get 3 more formulas, hinting that the answers grow rapidly in terms of their complexity.
 
-In the above, for each `n`, the code above sets up the two sides, `l` and `r`, of an equation involving the higher-order derivatives of ``g``. For example, when `n=2` we have:
+In the above, for each `n`, the code above sets up the two sides, `left` and `right`, of an equation involving the higher-order derivatives of ``g``. For example, when `n=2` we have:
 
 ```julia;
 eqns[2]
@@ -1109,7 +1141,6 @@ $0 = h^{(n)}(\xi) = f^{(n)}(\xi)  - g^{(n)}(\xi)$. But $g$ is a degree $n$ polyn
 
 
 
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

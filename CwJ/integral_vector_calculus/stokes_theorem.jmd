@@ -5,6 +5,8 @@
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
 using Plots
+using QuadGK
+
 nothing
 ```
 
@@ -200,6 +202,8 @@ This gives a means to compute the area of a region by integrating around its bou
 To compute the area of an ellipse, we have:
 
 ```julia;
+using SymPy
+
 F(x,y) = [-y,x]
 F(v) = F(v...)
 
@@ -1326,9 +1330,6 @@ ans = 1
 radioq(choices, ans, keep_order=true)
 ```
 
-
-
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

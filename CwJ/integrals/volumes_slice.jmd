@@ -45,15 +45,15 @@ Looking at the sum though, we see the makings of an approximate
 integral. If the heights were to get infinitely small, we might expect
 this to approach something like $V=\int_a^b \pi r(h)^2  dh$.
 
-In fact, we have in general
+In fact, we have in general:
 
 > **Volume of a figure with a known cross section**: The volume of a solid with known cross-sectional
-> area $CA(x)$ from $x=a$ to $x=b$ is given by
-> $$~ V = \int_a^b CA(x) dx. ~$$
-> This assumes $CA(x)$ is integrable.
+> area $A_{xc}(x)$ from $x=a$ to $x=b$ is given by
+> $$~ V = \int_a^b A_{xc}(x) dx. ~$$
+> This assumes $A_{xc}(x)$ is integrable.
 
 This formula is derived by approximating the volume by "slabs" with
-volume $CA(x) \Delta x$ and using the Riemann integral's definition to
+volume $A_{xc}(x) \Delta x$ and using the Riemann integral's definition to
 pass to the limit. The discs of the Michelin man are an example, where
 the cross-sectional area is just that of a circle, or $\pi r^2$.
 
@@ -115,8 +115,10 @@ V = \int_0^h \pi r(x)^2 dx
 This is
 
 ```julia;
-using CalculusWithJulia  # loads `QuadGK`, `Roots`, `SymPy`
+using CalculusWithJulia
 using Plots
+using QuadGK
+
 d0, d1, h = 2.5, 3.75, 4.75
 rad(x) = d0/2 + (d1/2 - d0/2)/h * x
 vol, _ = quadgk(x -> pi * rad(x)^2, 0, h)
@@ -130,10 +132,18 @@ pounds.
 So our cup holds this many ounces:
 
 ```julia;
-vol / 231 * 128
+ozs = vol / 231 * 128
 ```
 
 Full it is about $20$ ounces, though this doesn't really account for the volume taken up by the bottom of the cup, etc.
+
+If you are poor with units, `Julia` can provide some help through the `Unitful` package. Here the additional `UnitfulUS` package must also be included to access fluid ounces:
+
+```julia
+using Unitful, UnitfulUS
+vol * u"inch"^3 |> us"floz"
+```
+
 
 Before Solo "squared" the cup, the Solo cup had markings that - [some thought](http://www.snopes.com/food/prepare/solocups.asp) - indicated certain volume amounts.
 
@@ -159,6 +169,7 @@ Vol(h) = quadgk(x -> pi * rad(x)^2, 0, h)[1]
 Then to solve we have:
 
 ```julia;
+using Roots
 v = 5
 h5 = find_zero(h -> Vol(h) - v*231/128, 4)
 ```
@@ -176,6 +187,12 @@ As a percentage of the total height, these are:
 h5/h, h12/h
 ```
 
+```julia;echo=false
+note("""
+Were performance at issue, Newton's method might also have been considered here, as the derivative is easily computed by the fundamental theorem of calculus.
+""")
+
+
 
 ##### Example
 
@@ -186,12 +203,13 @@ by noting the radius, as a function of $y$, will be $R = r(1 -
 y/h)$. This gives the well-known volume of a cone:
 
 ```julia;
+using SymPy
 @syms r h x y
 R = r*(1 - y/h)
 integrate(pi*R^2, (y, 0, h))
 ```
 
-The frustum of a cone is simply viewed as a cone with its top cut off. If the original height would have been $h_0$ and the actual height $h_1$, then the volume remaining is just $\pi h_1 r^2/3 - \pi h_0 r^2/3 = \pi r^2 (h_1-h_0)/3$.
+The frustum of a cone is simply viewed as a cone with its top cut off. If the original height would have been $h_0$ and the actual height $h_1$, then the volume remaining is just $\int_{h_0}^h \pi r(y)^2 dy = \pi h_1 r^2/3 - \pi h_0 r^2/3 = \pi r^2 (h_1-h_0)/3$.
 
 It is not unusual to parameterize a cone by the angle $\theta$ it
 makes and the height. Since $r/h=\tan\theta$, this gives the formula
@@ -211,9 +229,10 @@ That is a value very reminiscent of $\pi$, which it is as $\int_1^\infty 1/x^2 d
 ```julia; echo=false
 note("""
 
-The interest in this figure is that it has **infinite** surface area,
-leading to the [paradox](http://tinyurl.com/osawwqm) that it seems possible to
-fill it with paint, but not paint the outside.
+The interest in this figure is that soon we will be able to show that
+it has **infinite** surface area, leading to the
+[paradox](http://tinyurl.com/osawwqm) that it seems possible to fill
+it with paint, but not paint the outside.
 
 """)
 ```
@@ -279,7 +298,7 @@ $$~
 Rather than use $\pi r(x)^2$ for a cross section, we would use $\pi (R(x)^2 - r(x)^2)$.
 
 In general we call a shape like the tire a "washer" and use this formula for a washer's cross section
-$CA(x) = \pi(R(x)^2 - r(x)^2)$.
+$A_{xc}(x) = \pi(R(x)^2 - r(x)^2)$.
 
 Then the volume for the solid of revolution whose cross sections are washers would be:
 
@@ -345,7 +364,22 @@ For a general cone, we use this [definition](http://en.wikipedia.org/wiki/Cone):
 > straight line segments joining the apex to the perimeter of the
 > base.
 
-Let $h$ be the distance from the apex to the base. Consider cones with the property that all planes parallel to the base intersect the cone with the same shape, though perhaps a different scale.
+Let $h$ be the distance from the apex to the base. Consider cones with the property that all planes parallel to the base intersect the cone with the same shape, though perhaps a different scale. This figure shows an example, with the rays coming from the apex defining the volume.
+
+```julia; echo=false
+h = 5
+R, r, rho = 1, 1/4, 1/4
+f(t) = (R-r) * cos(t) + rho * cos((R-r)/r * t)
+g(t) = (R-r) * sin(t) - rho * sin((R-r)/r * t)
+ts = range(0, 2pi, length=100)
+
+p = plot(f.(ts), g.(ts), zero.(ts), legend=false)
+for t ∈ range(0, 2pi, length=25)
+    plot!(p, [0,f(t)], [0,g(t)], [h, 0], linecolor=:red)
+end
+p
+```
+
 
 A right circular cone is one where this shape is a circle. This
 definition can be more general, as a square-based right pyramid is also
@@ -354,19 +388,19 @@ is at $u=0$ and the apex at $u=h$ the volume of the cone can be found
 from:
 
 $$~
-V = \int_0^h C(u) du.
+V = \int_0^h A_{xc}(u) du.
 ~$$
 
-The cross sectional area $C(u)$ satisfies a formula in terms of $C(0)$, the area of the base:
+The cross sectional area $A_{xc}(u)$ satisfies a formula in terms of $A_{xc}(0)$, the area of the base:
 
 $$~
-C(u)  = C(0) \cdot (1 - \frac{u}{h})^2
+A_{xc}(u)  = A_{xc}(0) \cdot (1 - \frac{u}{h})^2
 ~$$
 
 So the integral becomes:
 
 $$~
-V = \int_0^h C(u) du = C(0) \int_0^h (1 - \frac{u}{h})^2 du = C(0) \int_0^1 v^2 \frac{1}{h} dv = C(0) \frac{h}{3}.
+V = \int_0^h A_{xc}(u) du = A_{xc}(0) \int_0^h (1 - \frac{u}{h})^2 du = A_{xc}(0) \int_0^1 v^2 \frac{1}{h} dv = A_{xc}(0) \frac{h}{3}.
 ~$$
 
 This gives a general formula for the volume of such cones.
@@ -419,7 +453,7 @@ p
 ```
 
 
-The small orange line is rotated, so using the washer method we get the cross sections given by $\pi(r_o^2 - r_i^2)$, the outer and inner radii, as a function of $y$.
+The small orange line is rotated, so using the washer method we get the cross sections given by $\pi(r_0^2 - r_i^2)$, the outer and inner radii, as a function of $y$.
 
 The outer radii has points $(x,y)$ satisfying $x^2 + y^2 = R^2$, so is $\sqrt{R^2 - y^2}$. The inner radii has a constant value, and as indicated in the figure, is $\sqrt{R^2 - (h/2)^2}$, by the Pythagorean theorem.
 
@@ -441,7 +475,7 @@ a sphere with radius $h/2$, or $4/3\pi(h/2)^3 = \pi h^3/6$.
 
 ## Pappus theorem (2nd)
 
-The second theorem of [Pappus](http://tinyurl.com/l43vw4) say that if
+The second theorem of [Pappus](http://tinyurl.com/l43vw4) says that if
 a plane figure $F$ is rotated around an axis to form a solid of
 revolution, the total volume can be written as $2\pi r A(F)$, where
 $r$ is the distance the centroid is from the axis of revolution, and
@@ -456,12 +490,12 @@ donut is $2\pi(2)(\pi) = 4\pi^2$.
 
 ##### Example
 
-Above, we found the volume of cone, as it is a solid of revolution,
+Above, we found the volume of a cone, as it is a solid of revolution,
 through the general formula. However, parameterizing the cone as the
 revolution of a triangle with vertices $(0,0)$, $(r, 0)$, and $(0,h)$
 and using the formula for the center of mass in the $x$ direction of
 such a triangle, $r/3$, we get that the volume of a cone with
-height $h$ and radius $r$ is just $2\pi (r/3)\cdot (rh/2) = \pi r^2 h/3$.
+height $h$ and radius $r$ is  $2\pi (r/3)\cdot (rh/2) = \pi r^2 h/3$, in agreement with the calculus based computation.
 
 ## Questions
 
@@ -672,7 +706,10 @@ numericq(val)
 The region enclosed by the graphs of $y=x^3 - 1$ and $y=x-1$ are rotated around the $y$ axis. What is the volume of the solid?
 
 ```julia;
-plot([x->x^3 - 1, x -> x-1], 0, 1)
+using SymPy
+@syms x
+plot(x^3 - 1, 0, 1, legend=false)
+plot!(x-1)
 ```
 
 ```julia; echo=false
@@ -746,9 +783,6 @@ val, _ = quadgk(u -> pi*rad(u)^2, a, b)
 numericq(val)
 ```
 
-
-
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

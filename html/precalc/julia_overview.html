@@ -20,6 +20,8 @@
 .output, .julia-error {
     border-left: thick solid #ff0000;
     padding: 5px;
+    padding-left: 10px;
+    margin-bottom: 15px;
     background-color: #f5f5f5;
 }
 body { padding-top: 60px;
@@ -42,10 +44,16 @@ main > .container {
   padding: 60px 15px 0;
 }
 
-
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
 </style>
 
-<!-- .julia:before {content: "julia> "} -->
+<!--   padding: 0.5em 10px; .julia:before {content: "julia> "} -->
 
 <style></style>
 
@@ -128,7 +136,7 @@ $( document ).ready(function() {
     </button>
 
     <ul class="nav navbar-nav navbar-right">
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown dropstart">
 	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 	   role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Jump to...
@@ -158,12 +166,12 @@ $( document ).ready(function() {
 
 <p><a href="http://www.julialang.org">Julia</a> The <code>Julia</code> programming language is well suited as an accompaniment while learning the concepts of calculus. The following overview covers the language-specific aspects of the pre-calculus part of the <a href="calculuswithjulia.github.io">Calculus with Julia</a> notes.</p>
 <h2>Installing <code>Julia</code></h2>
-<p><code>Julia</code> is an <em>open source</em> project which allows anyone with a supported to computer to use it. To install locally, the <a href="https://julialang.org/downloads/">downloads</a> page has several different binaries for installation. Additionally, the downloads page contains a link to a docker image.  For Microsoft Windows, the new <a href="https://github.com/JuliaLang/juliaup">juilaup</a> installer may be of interest; it is available from the Windows Store. <code>Julia</code> can also be compiled from source.</p>
+<p><code>Julia</code> is an <em>open source</em> project which allows anyone with a supported  computer to use it. To install locally, the <a href="https://julialang.org/downloads/">downloads</a> page has several different binaries for installation. Additionally, the downloads page contains a link to a docker image.  For Microsoft Windows, the new <a href="https://github.com/JuliaLang/juliaup">juilaup</a> installer may be of interest; it is available from the Windows Store. <code>Julia</code> can also be compiled from source.</p>
 <p><code>Julia</code> can also be run through the web. The <a href="https://mybinder.org/">https://mybinder.org/</a> service in particular allows free access, though limited in terms of allotted memory and with a relatively short timeout for inactivity.</p>
 <p><a href="https://mybinder.org/v2/gh/CalculusWithJulia/CwJScratchPad.git/master">Launch Binder</a></p>
 <h2>Interacting with <code>Julia</code></h2>
-<p>The Calculus With Julia notes are formatted as though the commands were run in the notebook interface of <code>Jupyter</code> &#40;below&#41;, though there are many other interfaces for interacting with <code>Julia</code>. Here we describe popular ones.</p>
-<p>At a basic level, <code>Julia</code> provides a means to read commands or instructions, evaluated those commands, and then print or return those commands. At a user level, there are many different meeans the reading and printing can used:</p>
+<p>The Calculus With Julia notes are formatted as though the commands were run in the notebook interface of <code>Jupyter</code> &#40;below&#41;, though there are many other interfaces for interacting with <code>Julia</code>.</p>
+<p>At a basic level, <code>Julia</code> provides a means to read commands or instructions, evaluate those commands, and then print or return those commands. At a user level, there are many different ways to interact with the reading and printing. For example:</p>
 <ul>
 <li><p>The REPL. The <code>Julia</code> terminal is the built-in means to interact with <code>Julia</code>. A <code>Julia</code> Terminal has a command prompt, after which commands are typed and then sent to be evaluated by the <code>enter</code> key. The terminal may look something like the following where <code>2&#43;2</code> is evaluated:</p>
 </li>
@@ -185,16 +193,16 @@ julia&gt; 2 &#43; 2
 <ul>
 <li><p>An IDE. For programmers, an integrated development environment is often used to manage bigger projects. <code>Julia</code> has <code>Juno</code> and <code>VSCode</code>.</p>
 </li>
-<li><p>A notebook. The <a href="https://jupyter.org/">Project Juptyer</a> provides a notebook interface for interacting with <code>Julia</code> and a more <code>IDE</code> style <code>jupyterlabl</code> interface. These notes are formatted as though a notebook was used. That is, there are cells where commands are typed and immediately following is the printed output returned by <code>Julia</code>. The <code>Juypter</code> notebook is used by <code>binder</code> and can be used locally through the <code>IJulia</code> package. This notebook has the ability to display many different types of outputs in addition to plain text, such as images, marked up math test, etc.</p>
+<li><p>A notebook. The <a href="https://jupyter.org/">Project Juptyer</a> provides a notebook interface for interacting with <code>Julia</code> and a more <code>IDE</code> style <code>jupyterlab</code> interface. These notes are formatted as though a notebook was used. That is, there are cells where commands are typed and immediately following is the printed output returned by <code>Julia</code>. The <code>Juypter</code> notebook is used by <code>binder</code> and can be used locally through the <code>IJulia</code> package. This notebook has the ability to display many different types of outputs in addition to plain text, such as images, marked up math text, etc.</p>
 </li>
-<li><p>The <a href="https://github.com/fonsp/Pluto.jl">Pluto</a> package provides a <em>reactive</em> notebook interface. Reactive means when one &quot;cell&quot; is modified and executed, the new values cascade to all other cells which in turn are updated. This is very useful for exploring a parameter space for example.</p>
+<li><p>The <a href="https://github.com/fonsp/Pluto.jl">Pluto</a> package provides a <em>reactive</em> notebook interface. Reactive means when one &quot;cell&quot; is modified and executed, the new values cascade to all other dependent cells which in turn are updated. This is very useful for exploring a parameter space, say.</p>
 </li>
 </ul>
 <p>Each interface has some means to send commands to <code>Julia</code>&#39;s interpreter. For <code>Jupyter</code> the commands in a cell are sent to be executed by the keyboard command <code>shift-enter</code> or through the &quot;play&quot; icon &#40;➡&#41; in the toolbar.</p>
 <h2>Augmenting base <code>Julia</code></h2>
 <p>The base <code>Julia</code> installation has many features, but leaves many others to <code>Julia</code>&#39;s package ecosystem. These notes use packages to provide plotting, symbolic math, access to special functions, numeric routines, and more.</p>
 <p>The <code>Julia</code> package manager makes add-on packages very easy to install.</p>
-<p>Julia comes with just a few built-in packages, one being <code>Pkg</code> which manages subsequent package installation. To do so, we first must <em>load</em> the <code>Pkg</code> package. This is done by issuing the following command:</p>
+<p>Julia comes with just a few built-in packages, one being <code>Pkg</code> which manages subsequent package installation. To add more package, we first must <em>load</em> the <code>Pkg</code> package. This is done by issuing the following command:</p>
 
 
 <pre class='hljl'>
@@ -337,7 +345,7 @@ julia&gt; 2 &#43; 2
 </pre>
 
 
-<p>&#40;Vectors are used as a return type from some functions, as such some familiarity is needed.&#41;</p>
+<p>&#40;Vectors are used as a return type from some functions, as such, some familiarity is needed.&#41;</p>
 <p>Regular arithmetic sequences can be defined by either:</p>
 <ul>
 <li><p>Range operations:  <code>a:h:b</code> or <code>a:b</code> which produces a generator of values starting at <code>a</code> separated by <code>h</code> &#40;<code>h</code> is <code>1</code> in the last form&#41; until they reach <code>b</code>.</p>
@@ -345,7 +353,7 @@ julia&gt; 2 &#43; 2
 <li><p>The <code>range</code> function: <code>range&#40;a, b, length&#61;n&#41;</code> which produces a generator of <code>n</code> values between <code>a</code> and <code>b</code>;</p>
 </li>
 </ul>
-<p>These constructs return range objects. A range object <em>compactly</em> stores the values it references. To see all the values, they can be collected with the <code>collect</code> function, though this is hardly needed in practice.</p>
+<p>These constructs return range objects. A range object <em>compactly</em> stores the values it references. To see all the values, they can be collected with the <code>collect</code> function, though this is rarely needed in practice.</p>
 <p>Random sequences are formed by <code>rand</code>, among others:</p>
 
 
@@ -356,9 +364,25 @@ julia&gt; 2 &#43; 2
 
 <pre class="output">
 3-element Vector&#123;Float64&#125;:
- 0.8560082381112755
- 0.8457031142820837
- 0.0005980738717654699
+ 0.5207430790662317
+ 0.601707078457371
+ 0.5718261081035458
+</pre>
+
+
+<p>Random sequences are formed by <code>rand</code>, among others:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>rand</span><span class='hljl-p'>(</span><span class='hljl-ni'>3</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<pre class="output">
+3-element Vector&#123;Float64&#125;:
+ 0.9433876444534524
+ 0.19588987108786848
+ 0.07754529218007877
 </pre>
 
 
@@ -379,7 +403,7 @@ julia&gt; 2 &#43; 2
 </pre>
 
 
-<p>The names can be short, as above, or more verbose. They can&#39;t start with a number, but can include numbers. Variables can also include <a href="../misc/unicode.html">unicode</a> or even be an emoji.</p>
+<p>The names can be short, as above, or more verbose. Variable names can&#39;t start with a number, but can include numbers. Variables can also include <a href="../misc/unicode.html">unicode</a> or even be an emoji.</p>
 
 
 <pre class='hljl'>
@@ -405,7 +429,7 @@ julia&gt; 2 &#43; 2
 </pre>
 
 
-<p>Names may be repurposed, even with values of different types &#40;a dynamic language&#41;, save for function names, which have some special rules and can only be redefined as another function. Generic functions are central to <code>Julia</code>&#39;s design. Generic functions use a method table to dispatch on, so once a name is assigned to a generic function, it can not be used as a variable name; the reverse is also true.</p>
+<p>Names may be repurposed, even with values of different types &#40;<code>Julia</code> is a dynamic language&#41;, save for function names, which have some special rules and can only be redefined as another function. Generic functions are central to <code>Julia</code>&#39;s design. Generic functions use a method table to dispatch on, so once a name is assigned to a generic function, it can not be used as a variable name; the reverse is also true.</p>
 <h2>Functions</h2>
 <p>Functions in <code>Julia</code> are first-class objects. In these notes, we often pass them as arguments to other functions. There are many built-in functions and it is easy to define new functions.</p>
 <p>We &quot;call&quot; a function by passing argument&#40;s&#41; to it, grouped by parentheses:</p>
@@ -432,7 +456,7 @@ julia&gt; 2 &#43; 2
 
 
 <pre class="output">
-log &#40;generic function with 33 methods&#41;
+log &#40;generic function with 42 methods&#41;
 </pre>
 
 
@@ -450,7 +474,7 @@ log10, log2, # also log&#40;b, x&#41;</code></pre>
 asin, acos, atan, acsc, asec, acot
 sinh, cosh, tanh, csch, sech, coth
 asinh, acosh, atanh, acsch, asech, acoth</code></pre>
-<p>If degrees are preferred, the following are defined to work with degrees:</p>
+<p>If degrees are preferred, the following are defined to work with arguments in degrees:</p>
 <pre><code>sind, cosd, tand, cscd, secd, cotd</code></pre>
 <h4>Useful functions</h4>
 <p>Other useful and familiar functions are defined:</p>
@@ -478,6 +502,10 @@ asinh, acosh, atanh, acsch, asech, acoth</code></pre>
 
 <div class="markdown"><pre><code>sign&#40;x&#41;</code></pre>
 <p>Return zero if <code>x&#61;&#61;0</code> and &#36;x/|x|&#36; otherwise &#40;i.e., ±1 for real <code>x</code>&#41;.</p>
+
+
+<pre><code>sign&#40;x::AbstractQuantity&#41;</code></pre>
+<p>Returns the sign of <code>x</code>.</p>
 
 
 </div>
@@ -689,7 +717,7 @@ our_abs &#40;generic function with 1 method&#41;
 
 
 <h2>Plotting</h2>
-<p>Plotting is <em>not</em> built-in to <code>Julia</code>, rather added through add-on packages.  <code>Julia</code>&#39;s <code>Plots</code> package is an interface to several plotting packages. We mention <code>plotly</code> &#40;built-in&#41; for web based graphics, and <code>gr</code> for other graphics.</p>
+<p>Plotting is <em>not</em> built-in to <code>Julia</code>, rather added through add-on packages.  <code>Julia</code>&#39;s <code>Plots</code> package is an interface to several plotting packages. We mention <code>plotly</code> &#40;built-in&#41; for web based graphics, and <code>gr</code> &#40;also built into <code>Plots</code>&#41; for other graphics.</p>
 <p>We must load <code>Plots</code> before we can plot &#40;and it must be installed before we can load it&#41;:</p>
 
 
@@ -708,10 +736,10 @@ our_abs &#40;generic function with 1 method&#41;
 
 
 
-    <div id="13b6ec9f-93be-4c96-8e0d-c43ad7d06822" style="width:576px;height:384px;"></div>
+    <div id="76e5f273-a6cb-4b3f-8861-292d0c14e767" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('13b6ec9f-93be-4c96-8e0d-c43ad7d06822');
+        var PLOT = document.getElementById('76e5f273-a6cb-4b3f-8861-292d0c14e767');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -993,10 +1021,10 @@ our_abs &#40;generic function with 1 method&#41;
 
 
 
-    <div id="c3b1044a-716a-45bd-9e47-cf3bd250f6fc" style="width:576px;height:384px;"></div>
+    <div id="4406f57a-aee7-4e06-b74d-0416ba5e05fc" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('c3b1044a-716a-45bd-9e47-cf3bd250f6fc');
+        var PLOT = document.getElementById('4406f57a-aee7-4e06-b74d-0416ba5e05fc');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -1462,10 +1490,10 @@ our_abs &#40;generic function with 1 method&#41;
 
 
 
-    <div id="51055a39-c89d-4a82-8c92-25c18b396215" style="width:576px;height:384px;"></div>
+    <div id="0261f476-d1b6-437a-9a88-234f1e85b65d" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('51055a39-c89d-4a82-8c92-25c18b396215');
+        var PLOT = document.getElementById('0261f476-d1b6-437a-9a88-234f1e85b65d');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -1871,10 +1899,10 @@ our_abs &#40;generic function with 1 method&#41;
 
 
 
-    <div id="c8e89c60-1d1c-4d5c-b89d-ccf17f914a08" style="width:576px;height:384px;"></div>
+    <div id="09b87d1b-fed0-4aa7-95d2-15eca0c501cb" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('c8e89c60-1d1c-4d5c-b89d-ccf17f914a08');
+        var PLOT = document.getElementById('09b87d1b-fed0-4aa7-95d2-15eca0c501cb');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -2160,10 +2188,10 @@ our_abs &#40;generic function with 1 method&#41;
 
 
 
-    <div id="cc942ded-6708-4a73-ae7a-4fc6fb96f777" style="width:576px;height:384px;"></div>
+    <div id="dd85c034-b5fb-4f6a-980f-094d60ac846f" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('cc942ded-6708-4a73-ae7a-4fc6fb96f777');
+        var PLOT = document.getElementById('dd85c034-b5fb-4f6a-980f-094d60ac846f');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -2849,7 +2877,7 @@ x^2 + y^2 = 3
 \]</p>
 <p>In <code>Julia</code> the equals sign is <strong>only</strong> for <em>assignment</em>. The <em>left-hand</em> side of an equals sign in <code>Julia</code> is reserved for a&#41; variable assignment; b&#41; function definition &#40;via <code>f&#40;x&#41; &#61; ...</code>&#41;; and c&#41; indexed assignment to a vector or array. &#40;Vectors are indexed by a number allow retrieval and setting of the stored value in the container. The notation mentioned here would be <code>xs&#91;2&#93; &#61; 3</code> to assign to the 2nd element of <code>xs</code> a value <code>3</code>.</p>
 <h2>Symbolic math</h2>
-<p>Symbolic math is available through an add-on package <code>SymPy</code>.  Once loaded, symbolic variables are created with <code>@syms</code>:</p>
+<p>Symbolic math is available through an add-on package <code>SymPy</code>.  Once loaded, symbolic variables are created with the macro <code>@syms</code>:</p>
 
 
 <pre class='hljl'>
@@ -2864,7 +2892,7 @@ x^2 + y^2 = 3
 
 
 <p>&#40;A macro rewrites values into other commands before they are interpreted. Macros are prefixed with the <code>@</code> sign. In this use, the &quot;macro&quot; <code>@syms</code> translates <code>x a b c</code> into a command involving <code>SymPy</code>s <code>symbols</code> function.&#41;</p>
-<p>Symbolic expressions - unlike numeric expressions - are not immediately evaluated, though they are simplified:</p>
+<p>Symbolic expressions - unlike numeric expressions - are not immediately evaluated, though they may be  simplified:</p>
 
 
 <pre class='hljl'>
@@ -2876,7 +2904,7 @@ x^2 + y^2 = 3
 <div class="output">$a x^{2} + b x + c$
 </div>
 
-<p>To substitute a value, we can use <code>pair</code> notation &#40;<code>variable&#61;&gt;value</code>&#41;:</p>
+<p>To substitute a value, we can use <code>Julia</code>&#39;s <code>pair</code> notation &#40;<code>variable&#61;&gt;value</code>&#41;:</p>
 
 
 <pre class='hljl'>
@@ -2889,7 +2917,7 @@ x^2 + y^2 = 3
 </pre>
 
 
-<p>This is convenient notation for calling the <code>subs</code> function.</p>
+<p>This is convenient notation for calling the <code>subs</code> function for <code>SymPy</code>.</p>
 <p>SymPy expressions of a single free variable can be plotted directly:</p>
 
 
@@ -2899,10 +2927,10 @@ x^2 + y^2 = 3
 
 
 
-    <div id="a1a4af2b-c142-4664-bbae-1d2e67546420" style="width:576px;height:384px;"></div>
+    <div id="51e31632-d571-4c33-af9f-57f73477030f" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('a1a4af2b-c142-4664-bbae-1d2e67546420');
+        var PLOT = document.getElementById('51e31632-d571-4c33-af9f-57f73477030f');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -3130,26 +3158,42 @@ x^2 + y^2 = 3
   <div class="card-header float-end text-muted">
     <span class="text-muted  float-end align-middle">
 
-<a href="../precalc/trig_functions.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Previous section" aria-label="Previous section">
-<i class="bi bi-arrow-left-circle-fill"></i>
+<a href="../precalc/trig_functions.html"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Previous section"
+aria-label="Previous section"
+class="bi bi-arrow-left-circle-fill">
 </a>
 
 &nbsp;
 
-<a href="../limits/limits.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Next section" aria-label="Next section">
-<i class="bi bi-arrow-right-circle-fill"></i>
+<a href="../limits/limits.html"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Next section"
+aria-label="Next section"
+class="bi bi-arrow-right-circle-fill">
 </a>
 
 &nbsp;
 
-<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/precalc/julia_overview.jmd" data-bs-toggle="tooltip" data-bs-placement="top" title="Suggest an edit" aria-label="Suggest an edit">
-<i class="bi bi-pencil-square"></i>
+<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/precalc/julia_overview.jmd"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Suggest an edit"
+aria-label="Suggest an edit"
+class="bi bi-pencil-square">
 </a>
 
 &nbsp;
 
-<a href="../misc/toc.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Table of contents" aria-label="Table of contents">
-<i class="bi bi-card-list"></i>
+<a href="../misc/toc.html"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Table of contents"
+aria-label="Table of contents"
+class="bi bi-card-list">
 </a>
 
     </span>

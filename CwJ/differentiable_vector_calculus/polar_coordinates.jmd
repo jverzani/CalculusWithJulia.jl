@@ -134,11 +134,7 @@ rs = r.(ts)
 plot(ts, rs, proj=:polar, legend=false)
 ```
 
-To avoid having to create values for $\theta$ and values for $r$, the `CalculusWithJulia` package provides a helper function, `plot_polar`. It is essentially this:
-
-```julia; eval=false
-plot_polar(r, a, b; kwargs...) = plot(t -> r(t)*cos(t), t -> r(t)*sin(t), a, b; kwargs...)
-```
+To avoid having to create values for $\theta$ and values for $r$, the `CalculusWithJulia` package provides a helper function, `plot_polar`. To distinguish it from other functions provided by `Plots`, the calling pattern is different. It specifies an interval to plot over by `a..b` and puts that first, followed by `r`. Other keyword arguments are passed onto a `plot` call.
 
 We will use this in the following, as the graphs are a bit more familiar and the calling pattern similar to how we have plotted functions.
 
@@ -159,14 +155,14 @@ function plot_general_circle!(r0, gamma, R)
 
     if R < r0
         theta = asin(R/r0)-1e-6                 # avoid round off issues
-        plot_polar!(r, gamma-theta, gamma+theta)
-        plot_polar!(l, gamma-theta, gamma+theta)
+        plot_polar!((gamma-theta)..(gamma+theta), r)
+        plot_polar!((gamma-theta)..(gamma+theta), l)
 	else
-		plot_polar!(r, 0, 2pi)
+		plot_polar!(0..2pi, r)
 	end
 end
 
-plot_polar(r, 0, 2pi, aspect_ratio=:equal, legend=false)
+plot_polar(0..2pi, r, aspect_ratio=:equal, legend=false)
 plot_general_circle!(2, 0, 2)
 plot_general_circle!(3, 0, 1)
 ```
@@ -186,7 +182,7 @@ r(\theta) = a \sin(k\theta)
 ```julia;
 a, k = 4, 5
 r(theta) = a * sin(k * theta)
-plot_polar(r, 0, pi)
+plot_polar(0..pi, r)
 ```
 
 This graph has radius $0$ whenever $\sin(k\theta) = 0$ or $k\theta
@@ -210,7 +206,7 @@ r(\theta) = -b \cos(\theta) + 4a \cos(\theta) \sin(2\theta)
 ```julia;
 a, b = 4, 2
 r(theta) = -b * cos(theta) + 4a * cos(theta) * sin(2theta)
-plot_polar(r, 0, 2pi)
+plot_polar(0..2pi, r)
 ```
 
 The folium has radial part $0$ when $\cos(\theta) = 0$ or
@@ -221,20 +217,20 @@ $a_0=\sin^{-1}(1/8)/2=0.0626...$ and $\pi/2 - a_0$, $\pi+a_0$ and $3\pi/2 - a_0$
 
 ```julia;
 a0 = (1/2) * asin(1/8)
-plot_polar(r, a0, pi/2 - a0)
+plot_polar(a0..(pi/2-a0), r)
 ```
 
 
 The second - which is too small to appear in the initial plot without zooming in - with
 
 ```julia;
-plot_polar(r, pi/2 - a0, pi/2)
+plot_polar((pi/2 - a0)..(pi/2), r)
 ```
 
 The third with
 
 ```julia;
-plot_polar(r, pi/2, pi + a0)
+plot_polar((pi/2)..(pi + a0), r)
 ```
 
 The plot repeats from there, so the initial plot could have been made over $[0, \pi + a_0]$.
@@ -250,7 +246,7 @@ r(\theta) = b + 2a\cos(\theta)
 ```julia;
 a,b = 4, 2
 r(theta) = b + 2a*cos(theta)
-plot_polar(r, 0, 2pi)
+plot_polar(0..2pi, r)
 ```
 
 ##### Example
@@ -261,7 +257,7 @@ half period:
 
 ```julia;
 r(theta) = sqrt(abs(cos(theta/8)))
-plot_polar(r, 0, 8pi)
+plot_polar(0..8pi, r)
 ```
 
 ## Area of polar graphs
@@ -270,7 +266,7 @@ Consider the [cardioid](http://www-history.mcs.st-and.ac.uk/Curves/Cardioid.html
 
 ```julia;
 r(theta) = 2(1 + cos(theta))
-plot_polar(r, 0, 2pi)
+plot_polar(0..2pi, r)
 ```
 
 How much area is contained in the graph?
@@ -284,7 +280,7 @@ The area can be approximated by wedges (not rectangles). For example, here we se
 ```julia; echo=false
 gr()
 r(theta) = 1/(1 + (1/3)cos(theta))
-p = plot_polar(r, 0, pi/2, legend=false, linewidth=3, aspect_ratio=:equal)
+p = plot_polar(0..pi/2, r,  legend=false, linewidth=3, aspect_ratio=:equal)
 t0, t1, t2, t3 = collect(range(pi/12, pi/2 - pi/12, length=4))
 
 for s in (t0,t1,t2,t3)
@@ -457,6 +453,7 @@ with antiderivative $4\sqrt{2\cos(\theta) + 2} \cdot \tan(\theta/2)$,
 but `SymPy` isn't able to find it. Instead we give a numeric answer:
 
 ```julia;
+using QuadGK
 quadgk(t -> sqrt(r'(t)^2 + r(t)^2), 0, 2pi)[1]
 ```
 
@@ -508,6 +505,8 @@ $$~
 Numerically then we have:
 
 ```julia;
+using Roots
+
 dinner = 1 + 5/8
 douter = 5 + 1/4
 r(b,t) = dinner/2 + b*t
@@ -719,7 +718,6 @@ numericq(val)
 ```
 
 
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

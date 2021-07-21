@@ -1,15 +1,4 @@
-# helpful bits for working with n \geq 2
-
-"""
-   uvec(x)
-
-Helper to find a unit vector.
-"""
-function uvec(x)
-    nm = norm(x)
-    nm == 0 && return x
-    return x/nm
-end
+# helpful bits for working with n ≥ 2
 
 """
     `unzip(vs)`
@@ -45,6 +34,11 @@ quiver!(unzip([p])..., quiver=unzip([v]))
 ```
 
 Based on `unzip` from the `Plots` package.
+
+Note: for a vector of points, `xs`, each of length `2`, a similar functionality would be `(first.(xs), last.(xs))`. If each point had length `3`, then with `second(x)=x[2]`, a similar functionality would be `(first.(xs), second.(xs), last.(xs))`.
+
+```
+
 """
 unzip(vs::Vector) = Tuple([[vs[i][j] for i in eachindex(vs)] for j in eachindex(vs[1])])
 function unzip(ws::Array; recursive=false)
@@ -64,22 +58,24 @@ function unzip(f::Function, a, b)
         return PlotUtils.adapted_grid(f, (a,b))
     else
         xsys = [PlotUtils.adapted_grid(x->f(x)[i], (a,b)) for i ∈ 1:n]
-        xs = sort(vcat([xsys[i][1] for i ∈ 1:3]...))
+        xs = sort(vcat([xsys[i][1] for i ∈ 1:n]...))
         return unzip(f.(xs))
     end
 end
 
+## ----
 
 """
-    parametric_grid(us, vs, r)
+   uvec(x)
 
-Create matrices for `xs`, `ys`, `zs` from `r(u,v) = [x(u,v), y(u,v), z(u,v)]`
-
-Used to plot parametrically defined surfaces.
+Helper to find a unit vector.
 """
-function parametric_grid(us, vs, r)
-    unzip(r.(us, vs'))
+function uvec(x)
+    nm = norm(x)
+    nm == 0 && return x
+    return x/nm
 end
+
 
 ## -----------------------------------
 

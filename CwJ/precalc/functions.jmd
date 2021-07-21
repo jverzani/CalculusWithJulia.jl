@@ -762,6 +762,27 @@ p
 In most cases, this method can fairly quickly find a zero provided two good starting points are used.
 
 
+### The `do` notation
+
+Many functions in `Julia` accept a function as the first argument. A common pattern for calling some function is `action(f, args...)` where `action` is the function that will act on another function `f` using the value(s) in `args...`. There `do` notation is syntactical sugar for creating an anonymous function which is useful when more complicated function bodies are needed.
+
+Here is an artificial example to illustrate of a task we won't have cause to use in these notes, but is an important skill in some contexts. The `do` notation can be confusing to read, as it moves the function definition to the end and not the beginning, but is convenient to write and is used very often with the task of this example.
+
+To save some text to a file requires a few steps: opening the file; writing to the file; closing the file. The `open` function does the first. It has this signature `open(f::Function, args...; kwargs....)` and is documented to "Apply the function f to the result of `open(args...; kwargs...)` and close the
+  resulting file descriptor upon completion." Which is great, the open and close stages are handled by `Julia` and only the writing is up to the user.
+
+The writing is done in the function of a body, so the `do` notation allows the creation of the function to be handled anonymously. In this context, the argument to this function will be an `IO` handle, which is typically called `io`.
+
+So the pattern would be
+
+```julia; eval=false
+open("somefile.txt", "w") do io
+    write(io, "Four score and seven")
+    write(io, "years ago...")
+end
+```
+
+The name of the file to open appears, how the file is to be opened (`w` means write, `r` would mean read), and then a function with argument `io` which writes to lines to `io`.
 
 ## Questions
 
@@ -1121,15 +1142,15 @@ They all contain all real numbers between the endpoints, the distinction is whet
 
 A domain is some set, but typically that set is an interval such as *all real numbers* (``(-\infty,\infty)``), *all non-negative numbers* (``[0,\infty)``), or, say, *all positive numbers* (``(0,\infty)``).
 
-The `IntervalArithmetic` package provides an easy  means to define closed intervals using the symbol `..`:
+The `IntervalArithmetic` package provides an easy  means to define closed intervals using the symbol `..`, but this is also used by the `CalculusWithJulia` package in different manner, so we use the fully qualified named constructor in the following to construct intervals:
 
 ```julia
-using IntervalArithmetic
-I1 = -Inf..Inf
+import IntervalArithmetic
+I1 = IntervalArithmetic.Interval(-Inf, Inf)
 ```
 
 ```julia
-I2 = 0..Inf
+I2 = IntervalArithmetic.Interval(0, Inf)
 ```
 
 The main feature of the package is not to construct intervals, but rather to *rigorously* bound with an interval the output of the image of a closed interval under a function. That is, for a function ``f`` and *closed* interval ``[a,b]``, a bound for the set ``\{f(x) \text{ for } x \text{ in } [a,b]\}``. When `[a,b]` is the domain of ``f``, then this is a bound for the range of ``f``.
@@ -1138,7 +1159,7 @@ The main feature of the package is not to construct intervals, but rather to *ri
 For example the function ``f(x) = x^2 + 2`` had a domain of all real ``x``, the range can be found with:
 
 ```julia
-ab = -Inf..Inf
+ab = IntervalArithmetic.Interval(-Inf, Inf)
 f(x) = x^2 + 2
 f(ab)
 ```
@@ -1168,7 +1189,8 @@ Now consider the evaluation
 
 ```julia;
 f(x) = x^x
-f(0..Inf)
+I = IntervalArithmetic.Interval(0, Inf)
+f(I)
 ```
 
 Make a graph of `f`. Does the interval found above provide a nearly exact estimate of the true range (as the previous two questions have)?

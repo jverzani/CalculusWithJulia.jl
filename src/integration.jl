@@ -30,6 +30,8 @@ function riemann(f::Function, a::Real, b::Real, n::Int; method="right")
     sum(meth(f), zip(xs[1:end-1], xs[2:end]))
 end
 
+
+#==
 #######
 ## simplified multivariable integrals
 
@@ -68,3 +70,5 @@ fubini(f, zs, ys, xs) = fubini(x ->
             endpoints(zs, (x,y))),
         endpoints(ys,x)),
     xs)
+
+==#
