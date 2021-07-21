@@ -35,7 +35,10 @@ For an illustration of *really* basic calculator, have some fun watching this vi
 
 ```julia; echo=false;
 txt = """
-<iframe width="560" height="315" src="https://www.youtube.com/embed/sxLdGjV-_yg" frameborder="0" allowfullscreen></iframe>
+<center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/sxLdGjV-_yg" frameborder="0" allowfullscreen>
+</iframe>
+</center>
 """
 CalculusWithJulia.WeaveSupport.HTMLoutput(txt)
 ```

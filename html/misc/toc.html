@@ -20,9 +20,12 @@
 .output, .julia-error {
     border-left: thick solid #ff0000;
     padding: 5px;
+    padding-left: 10px;
+    margin-bottom: 15px;
     background-color: #f5f5f5;
 }
-body { padding-top: 60px; }
+body { padding-top: 60px;
+}
 .output {color:#0033CC;}
 h5:before {content:"\2746\ ";}
 h6:before {content:"\2742\ ";}
@@ -37,10 +40,20 @@ tr:hover {background-color: #f5f5f5;}
 .admonition-title:before {content:"\2746\ ";}
 .admonition-title { color:#0033CC}
 
+main > .container {
+  padding: 60px 15px 0;
+}
 
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
 </style>
 
-<!-- .julia:before {content: "julia> "} -->
+<!--   padding: 0.5em 10px; .julia:before {content: "julia> "} -->
 
 <style></style>
 
@@ -123,7 +136,7 @@ $( document ).ready(function() {
     </button>
 
     <ul class="nav navbar-nav navbar-right">
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown dropstart">
 	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 	   role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Jump to...
@@ -275,6 +288,8 @@ $( document ).ready(function() {
 <ul>
 <li><p><a href="derivatives/optimization.html">Optimization</a></p>
 </li>
+<li><p><a href="derivatives/first_second_derivatives.html">First and second derivatives</a></p>
+</li>
 <li><p><a href="derivatives/curve_sketching.html">Curve sketching</a></p>
 </li>
 </ul>
@@ -342,6 +357,8 @@ $( document ).ready(function() {
 <li><p><a href="ODEs/odes.html">ODEs</a></p>
 </li>
 <li><p><a href="ODEs/euler.html">Euler method</a></p>
+</li>
+<li><p><a href="ODEs/solve.html">The problem-algorithm-solve interface</a></p>
 </li>
 </ul>
 <h2>Multivariable calculus</h2>
@@ -431,7 +448,38 @@ $( document ).ready(function() {
 <hr />
 <h2>Contributing, commenting, ...</h2>
 <p>This is a work in progress. To report an issue, make a comment, or suggest something new, please file an <a href="https://github.com/jverzani/CalculusWithJulia.jl/issues/">issue</a>. In your message add the tag <code>@jverzani</code> to ensure it is not overlooked. Otherwise, an email to <code>verzani</code> at <code>math.csi.cuny.edu</code> will also work.</p>
-<p>To make edits to the documents directly, a pull request with the modified <code>*.jmd</code> files in the <code>CwJ</code> directory should be made. Minor edits to the <code>*.jmd</code> files should be possible through the GitHub web interface. The <code>*.html</code> files are generated using <code>Julia&#39;s</code> <code>Weave</code> package. This need not be done.</p>
+<p>To make edits to the documents directly, a pull request with the modified <code>*.jmd</code> files in the <code>CwJ</code> directory should be made. Minor edits to the <code>*.jmd</code> files should be possible through the GitHub web interface. In the footer of each page a pencil icon &#40;like the one below&#41; when clicked should cause the opening of the corresponding <code>*.jmd</code> file on GitHub for suggesting modifications. The <code>*.html</code> files are generated using <code>Julia&#39;s</code> <code>Weave</code> package. This need not be done.</p>
+
+
+<div class="card" style="">
+  <div class="card-header float-end text-muted">
+    <span class="text-muted  float-end align-middle">
+
+<a href="../precalc/calculator.html"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Next section"
+aria-label="Next section"
+class="bi bi-arrow-right-circle-fill">
+</a>
+
+&nbsp;
+
+<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/misc/toc.jmd"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Suggest an edit"
+aria-label="Suggest an edit"
+class="bi bi-pencil-square">
+</a>
+
+
+    </span>
+  </div>
+</div>
+
+
+
 
   </div>
 </div>
@@ -441,6 +489,10 @@ $( document ).ready(function() {
   hljs.highlightElement(el);                              // then highlight each
   });
 
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
   var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
   var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
     return new bootstrap.Popover(popoverTriggerEl)

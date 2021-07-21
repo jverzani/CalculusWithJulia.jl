@@ -28,7 +28,7 @@ Though not all of our problems lend themselves to a description of a
 continuous function on a closed interval, if they do, we have an
 algorithmic prescription to find the absolute extrema of a function:
 
-1) Find the critical points. For this we will can use a root-finding function like `find_zero`.
+1) Find the critical points. For this we can use a root-finding algorithm like `find_zero`.
 
 2) Evaluate the function values at the critical points and at the end points.
 
@@ -42,7 +42,7 @@ graph our function to see where the extreme values will be.
 The simplest way to investigate the maximum or minimum value of a
 function over a closed interval is to just graph it and look.
 
-We begin with the question of which rectangles of perimeter 20 have
+We began with the question of which rectangles of perimeter 20 have
 the largest area? The figure shows a few different rectangles with
 this perimeter and their respective areas.
 
@@ -109,6 +109,8 @@ simply graph to find the value:
 ```julia;
 using CalculusWithJulia   #  `ForwardDiff`, `Roots`, `SymPy`
 using Plots
+plotly()
+
 A(b) = b * (10 - b)
 plot(A, 0, 10)
 ```
@@ -154,6 +156,7 @@ From this we can solve graphically as before, or numerically.
 We search for zeros of the derivative:
 
 ```julia;
+using Roots
 find_zeros(A', 0, 10)   # find_zeros in `Roots`,
 ```
 
@@ -219,7 +222,7 @@ $$~
 P = 2y + x + \pi(x/2) = 20
 ~$$
 
-We solve for $y$ in the first with $y = (20 - x - \pi(x/2))/2$ so that in `julia` we have:
+We solve for $y$ in the first with $y = (20 - x - \pi(x/2))/2$ so that in `Julia` we have:
 
 ```julia;
 y(x) = (20 - x - pi * x/2) / 2
@@ -261,7 +264,7 @@ plot(A', 5.5, 5.7)
 
 We confirm that the critical point is around $5.6$.
 
-(As a reminder, the notation `A'` is defined in `CalculusWithJulia` through `Base.adjoint(f::Function)=x->ForwardDiff.derivative(f, float(x))`.)
+(As a reminder, the notation `A'` is defined in `CalculusWithJulia` using the `derivative` function from the `ForwardDiff` package.)
 
 #### Using `find_zero` to locate critical points.
 
@@ -280,30 +283,48 @@ x = find_zero(A', (0, 20/(1+pi/2)))
 ```
 
 The value `x` is the critical point, and in this case gives
-the position of the value that will maximize the function. This value is
-sometimes referred to as the *argmax*, or argument which maximizes the
-function. The value and maximum area is then given by:
+the position of the value that will maximize the function.  The value and maximum area is then given by:
 
 ```julia;
 (x, A(x))
 ```
 
-
 (Compare this answer to the previous, is the square the figure of
 greatest area for a fixed perimeter, or just the figure amongst all
 rectangles? See [Isoperimetric inequality](https://en.wikipedia.org/wiki/Isoperimetric_inequality) for an answer.)
+
+
+### Using `argmax` to identify where a function is maximized
+
+This value that maximizes a function is sometimes referred to as the
+*argmax*, or argument which maximizes the function. In `Julia` the
+`argmax(f,domain)` function is defined to "Return a value ``x`` in the
+domain of ``f`` for which ``f(x)`` is maximized. If there are multiple
+maximal values for ``f(x)`` then the first one will be found." The
+domain is some iterable collection. In the mathematical world this
+would be an interval ``[a,b]``, but on the computer it is an
+approximation, such as is returned by `range` below. Without out
+having to take a derivative, as above, but sacrificing some accuracy,
+the task of identifying `x` for where `A` is maximum, could be done
+with
+
+```julia
+x = argmax(A, range(0, 20/(1+pi/2), length=10000))
+```
+
 
 #### A symbolic approach
 
 We could also do the above problem symbolically with the aid of `SymPy`. Here are the steps:
 
 ```julia;
+using SymPy
 @syms width::real height::real
 
 Area  = width * height + pi * (width/2)^2 / 2
 Perim = 2*height + width + pi * width/2
 h0    = solve(Perim - 20, height)[1]
-Area  = Area(height=> h0)
+Area  = Area(height => h0)
 w0    = solve(diff(Area,width), width)[1]
 ```
 
@@ -326,7 +347,34 @@ A(w)    =  A(w, h(w))
 find_zero(A', (0, 20/(1+pi/2)))  # 40 / (pi + 4)
 ```
 
+
+
 They are similar, except we solved for `h0` symbolically, rather than by hand, when we solved for `h(w)`.
+
+##### Example
+
+```julia; echo=false
+caption = """
+The figure shows a trapezoid inscribed in a circle. By adjusting the point ``P_3 = (x,y)`` on the upper-half circle, the area of the trapezoid changes. What value of ``x`` will produce the maximum area for a given ``r`` (from ``P_4``, which can also be adjusted)? By playing around with different values of ``P_3`` and ``P_4`` the answer can be guessed.
+"""
+CalculusWithJulia.WeaveSupport.JSXGraph(joinpath(@__DIR__, "optimization-trapezoid.js"), caption)
+```
+
+The figure show a trapezoid formed by selecting a point, `P3=(x,y)`, in the upper-half circle and connecting as drawn. Here the constraint is simply ``r^2 = x^2 + y^2`` with ``x`` and ``y`` being non-negative. The area is then found through the average of the two lengths times the height. Using `height` for `y`, we have:
+
+```julia
+@syms x::positive, r::positive
+height = sqrt(r^2 - x^2)
+trapezoid_area = (2x + 2r)/2 * height
+possible_sols = solve(diff(trapezoid_area, x) ~ 0, x) # possibly many solutions
+x0 = first(possible_sols)  # only solution is also found from first or [1] indexing
+```
+
+The other values of interest can be found through substitution. For example:
+
+```julia
+height(x => x0)
+```
 
 ## Trigonometry
 
@@ -536,20 +584,21 @@ The structure of `dt` is too complicated for simply calling `solve` to find the 
 We can get these terms - $a$, $b$, $c$, and $d$ - as follows:
 
 ```julia;
-t1, t2 = SymPy.Introspection.args(dt)  # args finds arguments to the outer function (+ in this case)
+t1, t2 = dt.args # the `args` property returns the arguments to the outer function (+ in this case)
 ```
 
-The equivalent of $a^2d^2 - c^2 b^2$ is found using `numer` and
-`denom` to access the numerator and denominator of the fractions:
+The equivalent of $a^2d^2 - c^2 b^2$ is found using the generic functions `numerator` and
+`denominator` to access the numerator and denominator of the fractions:
 
 ```julia;
-ex = numer(t1^2)*denom(t2^2) - denom(t1^2)*numer(t2^2)
+ex = numerator(t1^2)*denominator(t2^2) - denominator(t1^2)*numerator(t2^2)
 ```
 
-This is a polynomial in the `x` variable of degree $4$:
+This is a polynomial in the `x` variable of degree $4$, as seen here where the `sympy.Poly` function is used to identify the symbols of the polynomial from the parameters:
 
 ```julia;
-sympy.Poly(ex, x).coeffs() # a0 + a1⋅x + a2⋅x^2 + a3⋅x^3 + a4⋅x^4
+p = sympy.Poly(ex, x) # a0 + a1⋅x + a2⋅x^2 + a3⋅x^3 + a4⋅x^4
+p.coeffs()
 ```
 
 Fourth degree polynomials can be solved. The critical points of the
@@ -569,7 +618,7 @@ factor(q)
 
 We see two terms: one with $x=L$ and another quadratic. For the simple
 case $r_0=r_1$, a straight line is the best solution, and this
-corresponds to $L=0$, which is clear from the formula above, as we
+corresponds to $x=L$, which is clear from the formula above, as we
 only have one solution to the following:
 
 ```julia;
@@ -583,7 +632,7 @@ ta = t(b=>0, r1=>r0)
 ta(x=>0), ta(x=>L)
 ```
 
-The value at $x=L$ is smaller, as $L^2 + a^2 \leq (L+a)^2$.
+The value at $x=L$ is smaller, as $L^2 + a^2 \leq (L+a)^2$. (Well, that was a bit pedantic. The travel rates being identical means the fastest path will also be the shortest path and that is clearly ``x=L`` and not ``x=0``.)
 
 
 Now, if, say, travel above the line is half as slow as travel along, then $2r_0 = r_1$, and the critical points will be:
@@ -595,22 +644,27 @@ out = solve(q(r1 => 2r0), x)
 It is hard to tell which would minimize time without more work. To check a case ($a=1, L=2, r_0=1$) we might have
 
 ```julia;
-t(r1 =>2r0, b=>0, x=>out[1], a=>1, L=>2, r0 => 1)  # for x=L
+x_straight = t(r1 =>2r0, b=>0, x=>out[1], a=>1, L=>2, r0 => 1)  # for x=L
 ```
 
 Compared to the smaller ($x=\sqrt{3}a/3$):
 
 ```julia;
-t(r1 =>2r0, b=>0, x=>out[2], a=>1, L=>2, r0 => 1)
+x_angle = t(r1 =>2r0, b=>0, x=>out[2], a=>1, L=>2, r0 => 1)
 ```
 
 What about $x=0$?
 
 ```julia;
-t(r1 =>2r0, b=>0, x=>0, a=>1, L=>2, r0 => 1)
+x_bent = t(r1 =>2r0, b=>0, x=>0, a=>1, L=>2, r0 => 1)
 ```
 
-The value of $x=\sqrt{3}a/3$ minimizes time
+The value of $x=\sqrt{3}a/3$ minimizes time:
+
+```julia;
+min(x_straight, x_angle, x_bent)
+```
+
 The traveler in this case is advised to head to the $x$ axis at $x=\sqrt{3}a/3$  and then travel along the $x$ axis.
 
 
@@ -620,8 +674,8 @@ switch the values of $a$ and $L$ so $a > L$:
 
 ```julia;
 pts = [0, out...]
-vals = N.([t(r1 =>2r0, b=>0, x=>u, a=>2, L=>1, r0 => 1) for u in pts])
-[pts vals]
+m,i = findmin([t(r1 =>2r0, b=>0, x=>u, a=>2, L=>1, r0 => 1) for u in pts]) # min, index
+m, pts[i]
 ```
 
 Here traveling directly to the point $(L,0)$ is fastest. Though travel
@@ -727,14 +781,14 @@ is somewhere near a real life answer, or around 3-5 cms in radius:
 plot(SA, 2, 10)
 ```
 
-The minimum looks to be around $4$cm and is clearly between $3$ and
-$5$. We can use `find_zero` to zero in on the value of the critical point:
+The minimum looks to be around $4$cm and is clearly between $2$cm and
+$6$cm. We can use `find_zero` to zero in on the value of the critical point:
 
 ```julia;
-r0 = find_zero(SA', (3, 5))
+r0 = find_zero(SA', (2, 6))
 ```
 
-Okay, $3.837...$ is our computation for $r$. To get $h$, we use:
+Okay, $3.837...$ is our answer for $r$. Use this to get $h$:
 
 ```julia;
 h(r0)
@@ -1052,6 +1106,7 @@ val = d2(xstar)
 numericq(val)
 ```
 
+
 ###### Question
 
 ```julia; echo=false
@@ -1065,7 +1120,7 @@ Image number $40$ from l'Hospital's calculus book (the first calculus book). Amo
 ImageFile(imgfile, caption)
 ```
 
-The figure above poses a problem about cones in spheres, which can be reduced to a two-dimensional problem. Take a sphere of radius $r=1$, and imagine a secant line of length$l$ connecting $(-r, 0)$ to another point $(x,y)$ with $y>0$. Rotating that line around the $x$ axis produces a cone and its lateral surface is given by $SA=\pi \cdot y \cdot l$. Write $SA$ as a function of $x$ and solve.
+The figure above poses a problem about cones in spheres, which can be reduced to a two-dimensional problem. Take a sphere of radius $r=1$, and imagine a secant line of length $l$ connecting $(-r, 0)$ to another point $(x,y)$ with $y>0$. Rotating that line around the $x$ axis produces a cone and its lateral surface is given by $SA=\pi \cdot y \cdot l$. Write $SA$ as a function of $x$ and solve.
 
 The largest lateral surface area is:
 
@@ -1091,8 +1146,19 @@ ans = 1
 radioq(choices, ans)
 ```
 
+###### Question
 
-----
+In the examples the functions `argmax(f, itr)` and `findmin(collection)` were used. These have mathematical analogs. What is `argmax(f,itr)` in terms of math notation, where ``vs`` is the iterable collection of values:
+
+```julia; echo=false
+choices = [L"\{v    \mid v \text{ in } vs,   f(v) = \max(f(vs))\}",
+           L"\{f(v) \mid v \text{ in } vs,   f(v) = \max(f(vs))\}",
+           L"\{i    \mid v_i \text{ in } vs, f(v_i) = \max(f(vs))\}"
+           ]
+radioq(choices, 1)
+```
+
+The functions are related: `findmax` returns the maximum value and an index in the collection for which the value will be largest; `argmax` returns an element of the set for which the function is largest, so `argmax(identify, itr)` should correspond to the index found by `findmax` (through `itr[findmax(itr)[2]`)
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

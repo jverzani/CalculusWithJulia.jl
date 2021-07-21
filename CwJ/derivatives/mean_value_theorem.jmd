@@ -1,4 +1,4 @@
-# The Mean Value Theorem and other facts about differentiable functions.
+# The mean value theorem and other facts about differentiable functions.
 
 ```julia; echo=false; results="hidden"
 using CalculusWithJulia
@@ -35,7 +35,7 @@ function which is continuous but has a point with no tangent line. The
 usual suspect is $f(x) = \lvert x\rvert$ at $0$.
 
 ```julia;
-using CalculusWithJulia  # Loads `SymPy`, `ForwardDiff`, `Roots`
+using CalculusWithJulia
 using Plots
 f(x) = abs(x)
 plot(f, -1,1)
@@ -211,6 +211,7 @@ will be a zero of the derivative. We can check for these with:
 
 
 ```julia;
+using Roots
 f(x) = x^2 * exp(-x)
 cps = find_zeros(f', -1, 6)     # find_zeros in `Roots`
 ```
@@ -243,7 +244,7 @@ this won't be a point where the derivative is zero.
 ```julia; echo=false
 note("""
 
-If you don't like how the output has the values at critical points in a vector, the following, though a bit cryptic, could be done: `f.( (cps..., a, b) )`
+If you don't like how the output has the values at critical points in a vector, the following, though a bit cryptic, could be done to combine things: `f.( vcat(cps, a, b) )`.
 
 """)
 ```
@@ -283,13 +284,13 @@ note(L"""
 """)
 ```
 
-## Rolle's Theorem
+## Rolle's theorem
 
 Let $f(x)$ be differentiable on $(a,b)$ and continuous on
 $[a,b]$. Then the absolute maximum occurs at an endpoint or where the
 derivative is 0. This gives rise to:
 
-> [Rolle's](http://en.wikipedia.org/wiki/Rolle%27s_theorem) Theorem: For such $f$, if $f(a)=f(b)$, then there exists some $c$ in $(a,b)$ with $f'(c) = 0$.
+> [Rolle's](http://en.wikipedia.org/wiki/Rolle%27s_theorem) theorem: For such $f$, if $f(a)=f(b)$, then there exists some $c$ in $(a,b)$ with $f'(c) = 0$.
 
 We assume that $f(a)=0$, otherwise consider $g(x)=f(x)-f(a)$. By the
 extreme value theorem, there must be an absolute maximum and
@@ -324,7 +325,7 @@ plot([f, x->f(x0) + 0*(x-x0)], 0, 1)
 ```
 
 
-## The Mean Value Theorem
+## The mean value theorem
 
 We are driving south and in one hour cover 70 miles. If the speed
 limit is 65 miles per hour, were we ever speeding? We'll we averaged
@@ -337,7 +338,7 @@ instantaneous speed is equal to our average speed.
 
 The mean value theorem is related to Rolle's theorem, but sounds more general:
 
-> Mean Value Theorem. Let $f(x)$ be differentiable on $(a,b)$ and
+> Mean value theorem. Let $f(x)$ be differentiable on $(a,b)$ and
 > continuous on $[a,b]$. Then there exists a value $c$ in $(a,b)$
 > where $f'(c) = (f(b) - f(a)) / (b - a)$.
 
@@ -379,6 +380,15 @@ g(x) = f(x) - (f(a) + (f(b) - f(a)) / (b-a) \cdot (x-a))
 
 That is the function $f(x)$, minus the secant line between $(a,f(a))$ and $(b, f(b))$.
 
+```julia; echo=false
+caption = """
+Illustration of the mean value theorem from https://jsxgraph.uni-bayreuth.de/.
+The polynomial function interpolates  the points ``A``,``B``,``C``, and ``D``. Adjusting these creates different functions. Regardless of the function -- which as a polynomial will always be continuous and differentiable -- the slope of the secant line between ``A`` and ``B`` is always matched by some tangent line betweent the points ``A`` and ``B``.
+"""
+CalculusWithJulia.WeaveSupport.JSXGraph(joinpath(@__DIR__, "mean-value.js"), caption)
+```
+
+
 ##### Example
 
 The mean value is an extremely useful tool for some proofs.
@@ -393,7 +403,7 @@ $b$. Since $f'(x)$ always exists, $f(x)$ is always differentiable, and
 hence always continuous. So on $[a,b]$ the conditions of the mean
 value theorem apply. So there is a $c$ with $(f(b) - f(a)) / (b-a) =
 f'(c) = 0$. But this would imply $f(b) - f(a)=0$. That is $f(x)$ is a
-constant, as for any $a$ and $b$, as $f(a)=f(b)$.
+constant, as for any $a$ and $b$, we see $f(a)=f(b)$.
 
 ### The Cauchy mean value theorem
 
@@ -517,6 +527,16 @@ p
 
 ###### Question
 
+Rolle's theorem is a guarantee of a value, but does not provide a recipe to find it. For the function $1 - x^2$ over the interval $[-5,5]$, find a value $c$ that satisfies the result.
+
+```julia; echo=false
+c = 0
+numericq(c)
+```
+
+
+###### Question
+
 The extreme value theorem is a guarantee of a value, but does not provide a recipe to find it. For the function $f(x) = \sin(x)$ on $I=[0, \pi]$ find a value $c$ satisfying the theorem for an absolute maximum.
 
 ```julia; echo=false
@@ -532,15 +552,6 @@ The extreme value theorem is a guarantee of a value, but does not provide a reci
 c = pi
 numericq(c)
 ```
-###### Question
-
-Rolle's theorem is a guarantee of a value, but does not provide a recipe to find it. For the function $1 - x^2$ over the interval $[-5,5]$, find a value $c$ that satisfies the result.
-
-```julia; echo=false
-c = 0
-numericq(c)
-```
-
 ###### Question
 
 The mean value theorem is a guarantee of a value, but does not provide a recipe to find it. For $f(x) = x^2$ on $[0,2]$ find a value of $c$ satisfying the theorem.
@@ -661,8 +672,6 @@ radioq(choices, ans)
 ```
 
 
-
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

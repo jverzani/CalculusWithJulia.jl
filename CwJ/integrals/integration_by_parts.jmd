@@ -45,7 +45,7 @@ annotate!(p, [(u(a),v(a) + .08, "(u(a),v(a))"), (u(b),v(b)+.08, "(u(b),v(b))")])
 
 The figure is a parametric plot of $(u,v)$ with the points $(u(a),
 v(a))$ and $(u(b), v(b))$ marked. The difference $u(b)v(b) - u(a)v(a)
-= u(x)v(x) \big|_a^b$ is shaded.  This area breaks into two pieces,
+= u(x)v(x) \mid_a^b$ is shaded.  This area breaks into two pieces,
 $A$ and $B$, partitioned by the curve. If $u$ is increasing and the
 curve is parameterized by $t \rightarrow u^{-1}(t)$, then
 $A=\int_{u^{-1}(a)}^{u^{-1}(b)} v(u^{-1}(t))dt$. A $u$-substitution
@@ -60,13 +60,13 @@ $u v'$, the integral of $u' v$ and the value $u(b)v(b) - u(a)v(a)$.
 In terms of formulas:
 
 $$~
-u(x)\cdot v(x)\big|_a^b = \int_a^b [u(x) v(x)]' dx = \int_a^b u'(x) \cdot v(x) dx + \int_a^b u(x) \cdot v'(x) dx.
+u(x)\cdot v(x)\mid_a^b = \int_a^b [u(x) v(x)]' dx = \int_a^b u'(x) \cdot v(x) dx + \int_a^b u(x) \cdot v'(x) dx.
 ~$$
 
 This is re-expressed as
 
 $$~
-\int_a^b u(x) \cdot v'(x) dx = u(x) \cdot v(x)\big|_a^b -  \int_a^b v(x) \cdot u'(x) dx,
+\int_a^b u(x) \cdot v'(x) dx = u(x) \cdot v(x)\mid_a^b -  \int_a^b v(x) \cdot u'(x) dx,
 ~$$
 
 Or, more informally, as $\int udv = uv - \int v du$.
@@ -88,14 +88,14 @@ An illustration can clarify.
 Consider the integral $\int_0^\pi x\sin(x) dx$. If we let $u=x$ and $dv=\sin(x) dx$, the $du = 1dx$ and $v=-\cos(x)$. The above then says:
 
 $$~
-\begin{align}
+\begin{align*}
 \int_0^\pi x\sin(x) dx &= \int_0^\pi u dv\\
-&= uv\big|_0^\pi - \int_0^\pi v du\\
-&= x \cdot (-\cos(x)) \big|_0^\pi - \int_0^\pi (-\cos(x)) dx\\
+&= uv\mid_0^\pi - \int_0^\pi v du\\
+&= x \cdot (-\cos(x)) \mid_0^\pi - \int_0^\pi (-\cos(x)) dx\\
 &= \pi (-\cos(\pi)) - 0(-\cos(0)) + \int_0^\pi \cos(x) dx\\
-&= \pi + \sin(x)\big|_0^\pi\\
+&= \pi + \sin(x)\mid_0^\pi\\
 &= \pi.
-\end{align}
+\end{align*}
 ~$$
 
 The technique means one part is differentiated and one part
@@ -105,37 +105,56 @@ harder through integration.
 
 ## Examples
 
-Consider $\int_1^2 x \log(x) dx$. We might try differentiating the $\log(x)$ term, so we set $u=\log(x)$ and $dv=xdx$. Then we get $du = 1/x dx$ and $v = x^2/2$. Putting together gives:
+Consider $\int_1^2 x \log(x) dx$. We might try differentiating the $\log(x)$ term, so we set
+```math
+u=\log(x) \text{ and  } dv=xdx
+```
+
+Then we get
+
+```math
+du = \frac{1}{x} dx \text{ and } v = \frac{x^2}{2}.
+```
+
+Putting together gives:
 
 $$~
-\begin{align}
+\begin{align*}
 \int_1^2 x \log(x) dx
-&= (\log(x) \cdot \frac{x^2}{2}) \big|_1^2 - \int_1^2 \frac{x^2}{2} \frac{1}{x} dx\\
-&= (2\log(2) - 0) - (\frac{x^2}{4})\big|_1^2\\
+&= (\log(x) \cdot \frac{x^2}{2}) \mid_1^2 - \int_1^2 \frac{x^2}{2} \frac{1}{x} dx\\
+&= (2\log(2) - 0) - (\frac{x^2}{4})\mid_1^2\\
 &= 2\log(2) - (1 - \frac{1}{4}) \\
 &= 2\log(2) - \frac{3}{4}.
-\end{align}
+\end{align*}
 ~$$
 
 ##### Example
 
-This related problem uses the same idea, though perhaps harder to see at first glance, as $dv=dx$ seems too trivial.
+This related problem uses the same idea, though perhaps harder to see at first glance, as setting `dv=dx` is almost too simple to try:
+
+```math
+\begin{align*}
+u &= \log(x) & dv &= dx\\
+du &= \frac{1}{x}dx & v &= x
+\end{align*}
+```
+
 
 $$~
-\begin{align}
+\begin{align*}
 \int \log(x) dx
 &= \int u dv\\
 &= uv - \int v du\\
 &= (\log(x) \cdot x) - \int x \cdot \frac{1}{x} dx\\
 &= x \log(x) - \int dx\\
 &= x \log(x) - x
-\end{align}
+\end{align*}
 ~$$
 
 Were this a definite integral problem, we would have written:
 
 $$~
-\int_a^b \log(x) dx = (x\log(x))\big|_a^b - \int_a^b dx = (x\log(x) - x)\big|_a^b.
+\int_a^b \log(x) dx = (x\log(x))\mid_a^b - \int_a^b dx = (x\log(x) - x)\mid_a^b.
 ~$$
 
 ##### Example
@@ -144,29 +163,30 @@ Sometimes integration by parts is used two or more times. Here we let $u=x^2$ an
 
 
 $$~
-\int_a^b x^2 e^x dx = (x^2 \cdot e^x)\big|_a^b - \int_a^b 2x e^x dx.
+\int_a^b x^2 e^x dx = (x^2 \cdot e^x)\mid_a^b - \int_a^b 2x e^x dx.
 ~$$
 
 
 But we can do $\int_a^b x e^xdx$ the same way:
 
 $$~
-\int_a^b x e^x = (x\cdot e^x)\big|_a^b - \int_a^b 1 \cdot e^xdx = (xe^x - e^x)\big|_a^b.
+\int_a^b x e^x = (x\cdot e^x)\mid_a^b - \int_a^b 1 \cdot e^xdx = (xe^x - e^x)\mid_a^b.
 ~$$
 
 Combining gives the answer:
 
 $$~
 \int_a^b x^2 e^x dx
-= (x^2 \cdot e^x)\big|_a^b - 2( (xe^x - e^x)\big|_a^b ) =
-e^x(x^2  - 2x - 1) \big|_a^b.
+= (x^2 \cdot e^x)\mid_a^b - 2( (xe^x - e^x)\mid_a^b ) =
+e^x(x^2  - 2x - 1) \mid_a^b.
 ~$$
 
 
 In fact, it isn't hard to see that an integral of $x^m e^x$, $m$ a positive integer, can be handled in this manner. For example, when $m=10$, `SymPy` gives:
 
 ```julia;
-using CalculusWithJulia   # loads `SymPy`
+using CalculusWithJulia
+using SymPy
 @syms x
 integrate(x^10 * exp(x), x)
 ```
@@ -207,12 +227,12 @@ Positive integer powers of trigonometric functions can be addressed by this tech
 $\int \cos(x)^n dx$. We let $u=\cos(x)^{n-1}$ and $dv=\cos(x) dx$. Then $du = (n-1)\cos(x)^{n-2}(-\sin(x))dx$ and $v=\sin(x)$. So,
 
 $$~
-\begin{align}
+\begin{align*}
 \int \cos(x)^n dx &= \cos(x)^{n-1} \cdot (\sin(x)) - \int (\sin(x)) ((n-1)\sin(x) \cos(x)^{n-2}) dx \\
 &= \sin(x) \cos(x)^{n-1} + (n-1)\int \sin^2(x) \cos(x)^{n-1} dx\\
 &= \sin(x) \cos(x)^{n-1} + (n-1)\int (1 - \cos(x)^2) \cos(x)^{n-2} dx\\
 &= \sin(x) \cos(x)^{n-1} + (n-1)\int \cos(x)^{n-2}dx - (n-1)\int \cos(x)^n dx.
-\end{align}
+\end{align*}
 ~$$
 
 We can then solve for the unknown ($\int \cos(x)^{n}dx$) to get this *reduction formula*:
@@ -238,17 +258,19 @@ integrate(cos(x)^10, x)
 
 The visual interpretation of integration by parts breaks area into two pieces, the one labeled "B" looks like it would be labeled "A" for an inverse function for $f$. Indeed, integration by parts gives a means to possibly find antiderivatives for inverse functions.
 
-Let $uv = x f^{-1}(x)$. Then we have $[uv]' = u'v + uv' = f^{-1}(x) + x [f^{-1}(x)]'$. So,
+Let $uv = x f^{-1}(x)$. Then we have $[uv]' = u'v + uv' = f^{-1}(x) + x [f^{-1}(x)]'$.
+So, up to a constant ``uv = \int [uv]'dx = \int f^{-1}(x) + \int  x [f^{-1}(x)]'``. Re-expressing gives:
 
 $$~
-\begin{align}
+\begin{align*}
 \int f^{-1}(x) dx
 &= xf^{-1}(x) - \int x [f^{-1}(x)]' dx\\
 &= xf^{-1}(x) - \int f(u) du.\\
-\end{align}
+\end{align*}
 ~$$
 
-The last line follows from the $u$-substitution $u=f^{-1}(x)$ for then $du = [f^{-1}(x)]' dx$ and $x=f(u)$.
+The last line follows from the $u$-substitution:
+$u=f^{-1}(x)$ for then $du = [f^{-1}(x)]' dx$ and $x=f(u)$.
 
 We use this to find an antiderivative for $\sin^{-1}(x)$:
 
@@ -285,10 +307,13 @@ $dv=dt$. But instead of letting $v=t$, we choose to add - as is our prerogative 
 $A$, so $v=t+A$:
 
 $$~
-\int_0^h f(t + x_i) dt = (t+A)f(t+x_i)\big|_0^h - \int_0^h (t + A) f'(t + x_i) dt.
+\begin{align*}
+\int_0^h f(t + x_i) dt &= uv \mid_0^h - \int_0^h v du\\
+&= f(t+x_i)(t+A)\mid_0^h - \int_0^h (t + A) f'(t + x_i) dt.
+\end{align*}
 ~$$
 
-We choose $A$ to be $-h/2$, for then the term $(t+A)f(t+x_i)\big|_0^h$
+We choose $A$ to be $-h/2$, any constant is possible, for then the term $f(t+x_i)(t+A)\mid_0^h$
 becomes $(1/2)(f(x_i+h) + f(x_i)) \cdot h$, or the trapezoid
 approximation. This means, the error over this interval - actual minus estimate - satisfies:
 
@@ -296,19 +321,27 @@ $$~
 \text{error}_i = \int_{x_i}^{x_i+h}f(x) dx - \frac{f(x_i+h) -f(x_i)}{2} \cdot h  = - \int_0^h (t + A) f'(t + x_i) dt.
 ~$$
 
-For this, we *again* integrate by parts with $u=f'(t+x_i)$ and
-$dv=(t+A)dt$. Again we add a constant of integration to get $v=(t+A)^2/2 + B$, and
-our error becomes:
+For this, we *again* integrate by parts with
+
+```math
+\begin{align*}
+u &= f'(t + x_i) & dv &= (t + A)dt\\
+du &= f''(t + x_i) & v = \frac{(t + A)^2}{2} + B
+\end{align*}
+```
+
+Again we added a constant of integration, ``B``, to  $v$.
+The  error becomes:
 
 $$~
-\text{error}_i = -(\frac{(t+A)^2}{2} + B)f'(t+x_i)\big|_0^h + \int_0^h (\frac{(t+A)^2}{2} + B) \cdot f''(t+x_i) dt.
+\text{error}_i = -(\frac{(t+A)^2}{2} + B)f'(t+x_i)\mid_0^h + \int_0^h (\frac{(t+A)^2}{2} + B) \cdot f''(t+x_i) dt.
 ~$$
 
-With $A=-h/2$, $B$ is chosen to be $-h^2/8$ which causes the first
-term to vanish and the absolute error to simplify to:
+With $A=-h/2$, $B$ is chosen so ``(t+A)^2/2 + B = 0``, or  $B=-h^2/8$.
+The error becomes
 
 $$~
-\lvert \text{error}_i  \rvert = \lvert \int_0^h \left(\frac{(t-h/2)^2}{2} - \frac{h^2}{8}\right) \cdot f''(t + x_i) dt \rvert.
+\text{error}_i = \int_0^h \left(\frac{(t-h/2)^2}{2} - \frac{h^2}{8}\right) \cdot f''(t + x_i) dt.
 ~$$
 
 Now, we assume the $\lvert f''(t)\rvert$ is bounded by $K$ for any $a \leq t \leq b$. This
@@ -325,7 +358,7 @@ But what is the function in the integrand? Clearly it is a quadratic in $t$. Exp
 endpoints, so the integral above is just:
 
 $$~
-\frac{1}{2}\int_0^h (ht - t^2)dt = \frac{1}{2} (\frac{ht^2}{2} - \frac{t^3}{3})\big|_0^h = \frac{h^3}{12}
+\frac{1}{2}\int_0^h (ht - t^2)dt = \frac{1}{2} (\frac{ht^2}{2} - \frac{t^3}{3})\mid_0^h = \frac{h^3}{12}
 ~$$
 
 This gives the bound: $\vert \text{error}_i \rvert \leq K h^3/12$. The
@@ -396,6 +429,7 @@ radioq(choices, ans)
 Find the value of $\int_1^4 x \log(x) dx$. You can integrate by parts.
 
 ```julia; echo=false
+using QuadGK
 f(x) = x*log(x)
 a,b = 1,4
 val,err = quadgk(f, a, b)
@@ -507,7 +541,6 @@ radioq(choices, ans)
 
 
 
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

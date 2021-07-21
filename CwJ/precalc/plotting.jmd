@@ -4,6 +4,7 @@
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
 using Plots
+plotly()
 nothing
 ```
 
@@ -139,6 +140,20 @@ through composition.
 
 """)
 ```
+
+Anonymous functions are also created by `Julia's` `do` notation, which is useful when the first argument to  function (like `plot`) accepts a function:
+
+```julia
+plot(0, pi/2) do x
+    cos(x) - x
+end
+```
+
+The `do` notation can be a bit confusing to read when unfamiliar, though its convenience makes it appealing.
+
+----
+
+
 
 Making a graph with `Plots` is easy, but producing a graph that is
 informative can be a challenge, as the choice of a viewing window can

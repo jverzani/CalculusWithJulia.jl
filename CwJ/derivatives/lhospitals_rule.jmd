@@ -20,6 +20,7 @@
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
 using Plots
+using Roots
 nothing
 ```
 
@@ -329,7 +330,7 @@ rules for limits of compositions and the fact that $e^x$ is
 continuous, we see $\lim_{x \rightarrow 0+} x^x = e^0 = 1$.
 
 
-- L'Hospital himself was interested in this limit for $a > 0$
+- L'Hospital himself was interested in this limit for $a > 0$ ([math overflow](http://mathoverflow.net/questions/51685/how-did-bernoulli-prove-lh%C3%B4pitals-rule))L
 
 $$~
 \lim_{x \rightarrow a} \frac{\sqrt{2a^3\cdot x-x^4} - a\cdot(a^2\cdot x)^{1/3}}{ a - (a\cdot x^3)^{1/4}}.
@@ -342,8 +343,7 @@ fractional powers, so as not to lose precision through floating point
 roundoff:
 
 ```julia;
-using CalculusWithJulia    # loads `SymPy`
-using Plots
+using SymPy
 @syms a::positive x::positive
 f(x) = sqrt(2a^3*x - x^4) - a * (a^2*x)^(1//3)
 g(x) = a - (a*x^3)^(1//4)
@@ -358,13 +358,14 @@ f(a), g(a)
 What about the derivatives?
 
 ```julia;
-fp, gp = subs(diff(f(x),x), x=>a), subs(diff(g(x),x), x=>a)
+fp, gp = diff(f(x),x), diff(g(x),x)
+fp(x=>a), gp(x=>a)
 ```
 
 Their ratio will not be indeterminate, so the limit in question is just the ratio:
 
 ```julia;
-fp/gp
+fp(x=>a) / gp(x=>a)
 ```
 
 Of course, we could have just relied on `limit`, which knows about L'Hospital's rule:
@@ -622,35 +623,6 @@ ans =1
 radioq(choices, ans)
 ```
 
-###### Question
-
-At [math overflow](http://mathoverflow.net/questions/51685/how-did-bernoulli-prove-lh%C3%B4pitals-rule) we learn that L'Hopital was motivated by the following limit:
-
-$$~
-\lim_{x \rightarrow a} \frac{(2a^3x-x^4)^{1/2} - a (a^2x)^{1/3}}{a - (ax^3)^{1/4}}
-~$$
-
-What did he find (with the help of a Bernoulli)?
-
-You need to inform `SymPy` that $a > 0$. The following is a good start:
-
-```
-@syms x, a::positive
-top = (2a^3*x-x^4)^(1//2) - a *(a^2*x)^(1//3) # rationals are converted exactly to SymPy
-bottom =  a - (a*x^3)^(1//4)
-ex = top/bottom
-```
-
-Now find the limit.
-
-```
-choices = [L"16a/9", L"0", L"9\sqrt{a}", "Does not exist"]
-ans = 1
-radioq(choices, ans)
-```
-
-
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

@@ -5,6 +5,7 @@
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
 using Plots
+using LaTeXStrings
 nothing
 ```
 
@@ -31,7 +32,7 @@ ss = vcat(xs, reverse(xs))
 ts = vcat(f1.(xs), g1.(reverse(xs)))
 
 plot(f1, 0, 1, legend=false)
-plot!(g1, 0, 1)
+plot!(g1)
 plot!(ss, ts, fill=(0, :red))
 plot!(xs, f1.(xs), linewidth=5, color=:green)
 plot!(xs, g1.(xs), linewidth=5, color=:green)
@@ -58,23 +59,25 @@ Find the area bounded by the line $y=2x$ and the curve $y=2 - x^2$.
 We can plot to see the area in question:
 
 ```julia;
-using CalculusWithJulia  # loads  `Roots`, `QuadGK`, `SymPy`
+using CalculusWithJulia
 using Plots
 f(x) = 2 - x^2
 g(x) = 2x
 plot(f, -3,3)
-plot!(g, -3,3)
+plot!(g)
 ```
 
 For this problem we need to identify $a$ and $b$. These are found numerically through:
 
 ```julia;
+using Roots
 a,b = find_zeros(x -> f(x) - g(x), -3, 3)
 ```
 
 The answer then can be found numerically:
 
 ```julia;
+using QuadGK
 quadgk(x -> f(x) - g(x), a, b)[1]
 ```
 
@@ -87,7 +90,8 @@ A plot shows the areas:
 ```julia;
 f(x) = sin(x)
 g(x) = cos(x)
-plot([f,g], 0, 2pi)
+plot(f, 0, 2pi)
+plot!(g)
 ```
 
 There is a single interval when $f \geq g$ and this can be found
@@ -105,6 +109,7 @@ Find the area between $x^n$ and $x^{n+1}$ over $[0,1]$ for $n=1,2,\dots$.
 We have on this interval $x^n \geq x^{n+1}$, so the integral can be found symbolically through:
 
 ```julia;
+using SymPy
 @syms x::positive n::positive
 ex = integrate(x^n - x^(n+1), (x, 0, 1))
 together(ex)
@@ -116,7 +121,18 @@ $$~
 \frac{1}{2\cdot 3} + \frac{1}{3\cdot 4} + \frac{1}{4\cdot 5} + \cdots?
 ~$$
 
-This should should be no surprise, given how the areas computed carve up the area under the line $y=x^1$ over $[0,1]$:
+This should should be no surprise, given how the areas computed carve up the area under the line $y=x^1$ over $[0,1]$, so the answer should be ``1/2``.
+
+
+```julia
+p = plot(x, 0, 1, legend=false)
+[plot!(p, x^n, 0, 1) for n in 2:20]
+p
+```
+
+
+
+We can check using the `summation` function of `SymPy` which is similar in usage to `integrate`:
 
 ```julia;
 summation(1/(n+1)/(n+2), (n, 1, oo))
@@ -130,7 +146,7 @@ Verify [Archimedes'](http://en.wikipedia.org/wiki/The_Quadrature_of_the_Parabola
 ```julia; echo=false
 f(x) = 2 - x^2
 a,b = -1, 1/2
-c = (a+b)/2
+c = (a + b)/2
 xs = range(-sqrt(2), stop=sqrt(2), length=50)
 rxs = range(a, stop=b, length=50)
 rys = map(f, rxs)
@@ -147,34 +163,29 @@ the figure. Then the area of the triangle can be computed through:
 ```julia;
 f(x) = 2 - x^2
 a,b = -1, 1/2
-c = (a +b)/2
-function secant(f, x1, x2)
-   m = (f(x2) - f(x1)) / (x2 - x1)
-   x -> f(x1) + m * (x-x1)
-end
+c = (a + b)/2
 
 sac, sab, scb = secant(f, a,c), secant(f, a,b), secant(f, c,b)
 f1(x) = min(sac(x), scb(x))
 f2(x) = sab(x)
 
-val1 = quadgk(x -> f1(x) - f2(x), a, b)[1]
+A1 = quadgk(x -> f1(x) - f2(x), a, b)[1]
 ```
 
-As we needed three secant lines, we created a function to generate
-them. Once that was done, we used the `max` function to facilitate
+As we needed three secant lines, we used the `secant` function from `CalculusWithJulia` to create functions representing each. Once that was done, we used the `max` function to facilitate
 integrating over the top bounding curve, alternatively, we could break
 the integral over $[a,c]$ and $[c,b]$.
 
 The area of the parabolic segment is more straightforward.
 
 ```julia;
-val2 = quadgk(x -> f(x) - f2(x), a, b)[1]
+A2 = quadgk(x -> f(x) - f2(x), a, b)[1]
 ```
 
 Finally, if Archimedes was right, this relationship should bring about $0$ (or something within round-off error):
 
 ```julia;
-val1 * 4/3 - val2
+A1 * 4/3 - A2
 ```
 
 ##### Example
@@ -188,7 +199,8 @@ the exponential dominates the power.
 ```julia;
 f(x) = x^4
 g(x) = exp(x)
-plot([f, g], 0, 10)
+plot(f, 0, 10)
+plot!(g)
 ```
 
 There must be another zero, though it is hard to see from the graph over $[0,10]$,
@@ -213,24 +225,24 @@ values of $m$? The picture for $m=1/2$ is:
 ```julia;
 m = 1/2
 plot(sin, 0, pi)
-plot!(x -> m*x, 0, pi)
+plot!(x -> m*x)
 ```
 
 For a given $m$, the area is found after computing $b$, the
 intersection point. We express this as a function of $m$ for later reuse:
 
 ```julia;
-B(m) = maximum(find_zeros(x -> sin(x) - m*x, 0, pi))
+intersection_point(m) = maximum(find_zeros(x -> sin(x) - m*x, 0, pi))
 a = 0
-b = B(m)
+b = intersection_point(m)
 quadgk(x -> sin(x) - m*x, a, b)[1]
 ```
 
 
-In general, the area then as a function of `m` is found by substitution `B(m)` for `b`:
+In general, the area then as a function of `m` is found by substitution `intersection_point(m)` for `b`:
 
 ```julia;
-area(m) = quadgk(x -> sin(x) - m*x, 0, B(m))[1]
+area(m) = quadgk(x -> sin(x) - m*x, 0, intersection_point(m))[1]
 ```
 
 A plot shows the relationship:
@@ -257,7 +269,9 @@ A plot shows us the basic area:
 ```julia;
 f(x) = log(x+1)
 g(x) = x - 1
-plot([f,g,zero],0, 3)
+plot(f, 0, 3)
+plot!(g)
+plot!(zero)
 ```
 
 The value for "$b$" is found from the intersection point of  $\log(x+1)$ and $x-1$, which is near $2$:
@@ -350,7 +364,7 @@ xs = [y^2 for y in ys]
 plot(xs, ys)
 xs = [2-y for y in ys]
 plot!(xs, ys)
-plot!(zero, 0, 2)
+plot!(zero)
 ```
 
 We see the bounded area could be described in the "$x$" variable in
@@ -522,6 +536,13 @@ ans = 2
 radioq(choices, ans, keep_order=true)
 ```
 
+```julia; echo=false
+note("""
+We used area to estimate weight in this example, but Galileo used weight to estimate area. It is [mentioned](https://www.maa.org/sites/default/files/pdf/cmj_ftp/CMJ/January%202010/3%20Articles/3%20Martin/08-170.pdf) by Martin that in order to estimate the area enclosed by one arch of a cycloid, Galileo cut the arch from from some material and compared the weight to the weight of the generating circle. He concluded the area is close to ``3`` times that of the circle, a conjecture proved by Roberval in 1634.
+""")
+```
+
+
 
 ###### Question
 
@@ -542,8 +563,82 @@ val, _ = quadgk(x -> mr(x) - mc(x), 0, 100)
 numericq(val)
 ```
 
+###### Question
 
-----
+Can `SymPy` do what Archimedes did?
+
+Consider the following code which sets up the area of an inscribed triangle, `A1`, and the area of a parabolic segment, `A2` for a general parabola:
+
+
+
+```julia
+@syms x::real A::real B::real C::real a::real b::real
+c = (a + b) / 2
+f(x) = A*x^2 + B*x + C
+Secant(f, a, b) = f(a) + (f(b)-f(a))/(b-a) * (x - a)
+A1 = integrate(Secant(f, a, c) - Secant(f,a,b), (x,a,c)) + integrate(Secant(f,c,b)-Secant(f,a,b), (x, c, b))
+A2 = integrate(f(x) - Secant(f,a,b), (x, a, b))
+out = 4//3 * A1 - A2
+```
+
+Does `SymPy` get the correct output, ``0``, after calling `simplify`?
+
+```julia; echo=false
+yesnoq(iszero(simplify(out)))
+```
+
+###### Question
+
+In [Martin](https://www.maa.org/sites/default/files/pdf/cmj_ftp/CMJ/January%202010/3%20Articles/3%20Martin/08-170.pdf) a fascinating history of the cycloid can be read.
+
+```julia;echo=false
+imgfile="figures/cycloid-companion-curve.png"
+caption = """
+Figure from Martin  showing the companion curve to the cycloid. As the generating circle rolls, from ``A`` to ``C``, the original point of contact, ``D``, traces out an arch of the cycloid. The companion curve is that found by congruent line segments. In the figure, when ``D`` was at point ``P`` the line segment ``PQ`` is congruent to ``EF`` (on the original position of the generating circle).
+"""
+ImageFile(imgfile, caption)
+```
+
+In particular, it can be read that Roberval proved that the area between the cycloid and its companion curve is half the are of the generating circle. Roberval didn't know integration, so finding the area between two curves required other tricks. One is called "Cavalieri's principle." From the figure above, which of the following would you guess this principle to be:
+
+```julia; echo=false
+choices = ["""
+If two regions bounded by parallel lines are such that any parallel between them cuts each region in segments of equal length, then the regions have equal area.
+""",
+           """
+The area of the cycloid is nearly the area of a semi-ellipse with known values, so one can approximate the area of the cycloid with formula for the area of an ellipse
+"""]
+radioq(choices, 1)
+```
+
+Suppose the generating circle has radius ``1``, so the area shown is ``\pi/2``. The companion curve is then  ``1-\cos(\theta)`` (a fact not used by Roberval). The area *under* this curve is then
+
+```julia
+@syms theta
+integrate(1 - cos(theta), (theta, 0, SymPy.PI))
+```
+
+That means the area under **one-half** arch of the cycloid is
+
+```julia; echo=false
+choices = [L"\pi",
+           L"(3/2)\cdot \pi",
+           L"2\pi"
+           ]
+radioq(choices, 2, keep_order=true)
+```
+
+
+Doubling the answer above gives a value that Galileo had struggled with for many years.
+
+```julia; echo=false
+imgfile="figures/companion-curve-bisects-rectangle.png"
+caption = """
+Roberval, avoiding a trignometric integral, instead used symmetry to show that the area under the companion curve was half the area of the rectangle, which in this figure is ``2\pi``.
+"""
+ImageFile(imgfile, caption)
+```
+
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

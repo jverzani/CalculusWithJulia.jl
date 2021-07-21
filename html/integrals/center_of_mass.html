@@ -20,9 +20,12 @@
 .output, .julia-error {
     border-left: thick solid #ff0000;
     padding: 5px;
+    padding-left: 10px;
+    margin-bottom: 15px;
     background-color: #f5f5f5;
 }
-body { padding-top: 60px; }
+body { padding-top: 60px;
+}
 .output {color:#0033CC;}
 h5:before {content:"\2746\ ";}
 h6:before {content:"\2742\ ";}
@@ -37,10 +40,20 @@ tr:hover {background-color: #f5f5f5;}
 .admonition-title:before {content:"\2746\ ";}
 .admonition-title { color:#0033CC}
 
+main > .container {
+  padding: 60px 15px 0;
+}
 
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
 </style>
 
-<!-- .julia:before {content: "julia> "} -->
+<!--   padding: 0.5em 10px; .julia:before {content: "julia> "} -->
 
 <style></style>
 
@@ -123,7 +136,7 @@ $( document ).ready(function() {
     </button>
 
     <ul class="nav navbar-nav navbar-right">
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown dropstart">
 	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 	   role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Jump to...
@@ -152,12 +165,19 @@ $( document ).ready(function() {
 
 
 
-<div class="card" style="width: 18rem;">
-  <img src="data:image/gif;base64,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" class="card-img-top" alt="A figure">
-  <div class="card-body">
-    <p class="card-footer"><div class="markdown"><p>A silhouette of two children on a seesaw. The seesaw can be balanced only if the distance from the central point for each child reflects their relative weights, or masses, through the formula &#36;d_1m_1 &#61; d_2 m_2&#36;. This means if the two children weigh the same the balance will tip in favor of the child farther away, and if both are the same distance, the balance will tip in favor of the heavier.</p>
-</div></p>
+<div class="d-flex justify-content-center">
+<div class="card border-light mx-3 px-3 my-3 py-3" style=" max-width: 560px;">
+    <img src="data:image/gif;base64,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" class="card-img-top" alt="A Figure">
+
+  <div class="card-footer text-muted">
+    <span class="card-text">
+      <small class="text-muted">
+      A silhouette of two children on a seesaw. The seesaw can be balanced only if the distance from the central point for each child reflects their relative weights, or masses, through the formula $d_1m_1 = d_2 m_2$. This means if the two children weigh the same the balance will tip in favor of the child farther away, and if both are the same distance, the balance will tip in favor of the heavier.
+
+      </small>
+    </span>
   </div>
+</div>
 </div>
 
 
@@ -200,7 +220,7 @@ w_1 \cdot (x_1 - \bar{\text{cm}}) + w_2 \cdot (x_2 - \bar{\text{cm}}) + \cdots +
 
 
 <pre class='hljl'>
-<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>CalculusWithJulia</span><span class='hljl-t'>  </span><span class='hljl-cs'># loads `Plots`, `Roots`, `QuadGK`, `SymPy`</span><span class='hljl-t'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>CalculusWithJulia</span><span class='hljl-t'>
 </span><span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>Plots</span><span class='hljl-t'>
 </span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-nf'>abs</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'>
 </span><span class='hljl-n'>a</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-nfB'>1.5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nfB'>1.5</span><span class='hljl-t'>
@@ -210,10 +230,10 @@ w_1 \cdot (x_1 - \bar{\text{cm}}) + w_2 \cdot (x_2 - \bar{\text{cm}}) + \cdots +
 
 
 
-    <div id="6815fd47-3704-475d-a1b5-858393c20869" style="width:576px;height:384px;"></div>
+    <div id="b45cd463-3bb1-4d84-b0db-9844c0d05eab" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('6815fd47-3704-475d-a1b5-858393c20869');
+        var PLOT = document.getElementById('b45cd463-3bb1-4d84-b0db-9844c0d05eab');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -523,10 +543,10 @@ w_1 \cdot (x_1 - \bar{\text{cm}}) + w_2 \cdot (x_2 - \bar{\text{cm}}) + \cdots +
 <p>As with many formulas that will end up involving a derived integral, we start with a sum approximation. If the region is described as the area under the graph of <span class="math">$f(x)$</span> between <span class="math">$a$</span> and <span class="math">$b$</span>, then we can form a Riemann sum approximation, that is a choice of <span class="math">$a = x_0 < x_1 < x_2 \cdots < x_n = b$</span> and points <span class="math">$c_1$</span>, <span class="math">$\dots$</span>, <span class="math">$c_n$</span>. If all the rectangles are made up of a material of uniform density, say <span class="math">$\rho$</span>, then the mass of each rectangle will be the area times <span class="math">$\rho$</span>, or <span class="math">$\rho f(c_i) \cdot (x_i - x_{i-1})$</span>, for <span class="math">$i = 1, \dots , n$</span>.</p>
 
 
-    <div id="3eb32bf7-cb54-4625-a2ab-6dad6f095fb0" style="width:576px;height:384px;"></div>
+    <div id="600a1bcf-ee3a-437e-b329-a282ca722c5f" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('3eb32bf7-cb54-4625-a2ab-6dad6f095fb0');
+        var PLOT = document.getElementById('600a1bcf-ee3a-437e-b329-a282ca722c5f');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x1",
@@ -1910,10 +1930,10 @@ w_1 \cdot (x_1 - \bar{\text{cm}}) + w_2 \cdot (x_2 - \bar{\text{cm}}) + \cdots +
 
 
 
-    <div id="1f8c6c83-3e1d-4504-9c90-be1bd0c72156" style="width:576px;height:384px;"></div>
+    <div id="b17957ac-64ac-4e7b-96c8-fa5a14f9a4af" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('1f8c6c83-3e1d-4504-9c90-be1bd0c72156');
+        var PLOT = document.getElementById('b17957ac-64ac-4e7b-96c8-fa5a14f9a4af');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -2215,10 +2235,10 @@ w_1 \cdot (x_1 - \bar{\text{cm}}) + w_2 \cdot (x_2 - \bar{\text{cm}}) + \cdots +
 
 
 
-    <div id="a3aac76a-1a73-41c7-9a13-4bf1aa35c597" style="width:576px;height:384px;"></div>
+    <div id="3a922510-34f9-4c98-a28d-14fcc80e1f5b" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('a3aac76a-1a73-41c7-9a13-4bf1aa35c597');
+        var PLOT = document.getElementById('3a922510-34f9-4c98-a28d-14fcc80e1f5b');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -2561,7 +2581,8 @@ w_1 \cdot (x_1 - \bar{\text{cm}}) + w_2 \cdot (x_2 - \bar{\text{cm}}) + \cdots +
 
 
 <pre class='hljl'>
-<span class='hljl-nf'>h</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-nf'>g</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>Roots</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>QuadGK</span><span class='hljl-t'>
+</span><span class='hljl-nf'>h</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-nf'>g</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'>
 </span><span class='hljl-n'>a</span><span class='hljl-p'>,</span><span class='hljl-n'>b</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>find_zeros</span><span class='hljl-p'>(</span><span class='hljl-n'>h</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>3</span><span class='hljl-p'>)</span><span class='hljl-t'>
 </span><span class='hljl-n'>top</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>err</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>quadgk</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>-&gt;</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>*</span><span class='hljl-nf'>h</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>a</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-p'>)</span><span class='hljl-t'>
 </span><span class='hljl-n'>bottom</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>err</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>quadgk</span><span class='hljl-p'>(</span><span class='hljl-n'>h</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>a</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-p'>)</span><span class='hljl-t'>
@@ -2569,8 +2590,8 @@ w_1 \cdot (x_1 - \bar{\text{cm}}) + w_2 \cdot (x_2 - \bar{\text{cm}}) + \cdots +
 </pre>
 
 
-<pre class="julia-error">
-ERROR: UndefVarError: find_zeros not defined
+<pre class="output">
+0.5000000000000001
 </pre>
 
 
@@ -2618,10 +2639,10 @@ ERROR: UndefVarError: find_zeros not defined
 
 
 
-    <div id="3746e1df-265f-47d3-b650-9f1fcee8a143" style="width:576px;height:384px;"></div>
+    <div id="9628ddfe-6cdd-45e0-ad8d-dfdf4abbd856" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('3746e1df-265f-47d3-b650-9f1fcee8a143');
+        var PLOT = document.getElementById('9628ddfe-6cdd-45e0-ad8d-dfdf4abbd856');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -3040,18 +3061,18 @@ ERROR: UndefVarError: find_zeros not defined
 </pre>
 
 
-<pre class="julia-error">
-ERROR: UndefVarError: quadgk not defined
+<pre class="output">
+0.9626852772498595
 </pre>
 
 
 <p>This figure has constant slices of length <span class="math">$1$</span> for fixed values of <span class="math">$y$</span>. If we were to approximate the values with blocks of height <span class="math">$1$</span>, then the center of mass would be to the left of <span class="math">$1$</span> - for any <span class="math">$k$</span>, but the top most block would have an overhang to the right of <span class="math">$1$</span> - out to a value of <span class="math">$k$</span>. That is, this figure should balance:</p>
 
 
-    <div id="6e4152a8-ff55-4e22-9511-99b463356017" style="width:576px;height:384px;"></div>
+    <div id="08885d52-7ed4-4635-980b-e54e50020293" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('6e4152a8-ff55-4e22-9511-99b463356017');
+        var PLOT = document.getElementById('08885d52-7ed4-4635-980b-e54e50020293');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x1",
@@ -5063,18 +5084,17 @@ ERROR: UndefVarError: quadgk not defined
 
 
 <pre class='hljl'>
-<span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>a</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-t'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>SymPy</span><span class='hljl-t'>
+</span><span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>a</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-t'>
 </span><span class='hljl-n'>eqn</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>/</span><span class='hljl-n'>b</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-oB'>/</span><span class='hljl-n'>a</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-t'>
 </span><span class='hljl-n'>fy</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>solve</span><span class='hljl-p'>(</span><span class='hljl-n'>eqn</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-p'>)[</span><span class='hljl-ni'>1</span><span class='hljl-p'>]</span><span class='hljl-t'>
 </span><span class='hljl-nf'>integrate</span><span class='hljl-p'>(</span><span class='hljl-n'>y</span><span class='hljl-oB'>*</span><span class='hljl-n'>fy</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>y</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>a</span><span class='hljl-p'>))</span><span class='hljl-t'> </span><span class='hljl-oB'>/</span><span class='hljl-t'> </span><span class='hljl-nf'>integrate</span><span class='hljl-p'>(</span><span class='hljl-n'>fy</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>y</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>a</span><span class='hljl-p'>))</span>
 </pre>
 
 
-<pre class="julia-error">
-ERROR: LoadError: UndefVarError: @syms not defined
-in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/integrals/center_of_mass.jmd:2
-</pre>
 
+<div class="output">$\frac{a}{3}$
+</div>
 
 <p>The answer involves <span class="math">$a$</span> linearly, but not <span class="math">$b$</span>. If we find the center of mass in <span class="math">$x$</span>, we <em>could</em> do something similar:</p>
 
@@ -5085,10 +5105,9 @@ in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/integrals/c
 </pre>
 
 
-<pre class="julia-error">
-ERROR: UndefVarError: solve not defined
-</pre>
 
+<div class="output">$\frac{b}{3}$
+</div>
 
 <p>But really, we should have just noted that simply by switching the labels <span class="math">$a$</span> and <span class="math">$b$</span> in the diagram we could have discovered this formula.</p>
 
@@ -5108,10 +5127,10 @@ ERROR: UndefVarError: solve not defined
 
 
 
-    <div id="19216613-57c1-40eb-b5b4-d2a6df572f75" style="width:576px;height:384px;"></div>
+    <div id="bcf82390-6c3d-4f8b-ad8a-f650fb8afc36" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('19216613-57c1-40eb-b5b4-d2a6df572f75');
+        var PLOT = document.getElementById('bcf82390-6c3d-4f8b-ad8a-f650fb8afc36');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -5424,10 +5443,10 @@ ERROR: UndefVarError: solve not defined
 <p>A picture shows that this could be complicated, especially for <span class="math">$y > 0$</span>, as we need to describe the length of the red lines below for <span class="math">$-2 < y < 2$</span>:</p>
 
 
-    <div id="c4505e22-f85f-44bd-800d-b1c4ea195bbb" style="width:576px;height:384px;"></div>
+    <div id="7328b870-92fb-4440-a528-ed975bd29299" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('c4505e22-f85f-44bd-800d-b1c4ea195bbb');
+        var PLOT = document.getElementById('7328b870-92fb-4440-a528-ed975bd29299');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -6199,8 +6218,8 @@ ERROR: UndefVarError: solve not defined
 </pre>
 
 
-<pre class="julia-error">
-ERROR: UndefVarError: quadgk not defined
+<pre class="output">
+-0.3333333333594305
 </pre>
 
 
@@ -6209,25 +6228,97 @@ ERROR: UndefVarError: quadgk not defined
 <h6>Question</h6>
 <p>Find the center of mass in the <span class="math">$x$</span> variable for the region bounded by parabola <span class="math">$x=4 - y^2$</span>  and the <span class="math">$y$</span> axis.</p>
 
-<pre class="julia-error">
-ERROR: UndefVarError: quadgk not defined
-</pre>
+
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='qZMG3Cs3' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="form-floating input-group">
+<input id="qZMG3Cs3" type="number" class="form-control" placeholder="Numeric answer">
+<label for="qZMG3Cs3">Numeric answer</label>
+
+</div>
+
+<div id='qZMG3Cs3_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#qZMG3Cs3').on('change', function() {
+  correct = Math.abs(this.value - 1.5999999998855376) <= 0.001;
+
+  if(correct) {
+     $('#qZMG3Cs3_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#qZMG3Cs3_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
 
 
 <h6>Question</h6>
 <p>Find the center of mass in the <span class="math">$x$</span> variable of the region in the first and fourth quadrants bounded by the ellipse <span class="math">$(x/2)^2 + (y/3)^2 = 1$</span>.</p>
 
-<pre class="julia-error">
-ERROR: UndefVarError: quadgk not defined
-</pre>
+
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='3dyc7Phc' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="form-floating input-group">
+<input id="3dyc7Phc" type="number" class="form-control" placeholder="Numeric answer">
+<label for="3dyc7Phc">Numeric answer</label>
+
+</div>
+
+<div id='3dyc7Phc_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#3dyc7Phc').on('change', function() {
+  correct = Math.abs(this.value - 0.8488263630519628) <= 0.001;
+
+  if(correct) {
+     $('#3dyc7Phc_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#3dyc7Phc_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
 
 
 <h6>Question</h6>
 <p>Find the center of mass of the region in the first quadrant bounded by the function <span class="math">$f(x) = x^3(1-x)^4$</span>.</p>
 
-<pre class="julia-error">
-ERROR: UndefVarError: quadgk not defined
-</pre>
+
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='BJfJztYy' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="form-floating input-group">
+<input id="BJfJztYy" type="number" class="form-control" placeholder="Numeric answer">
+<label for="BJfJztYy">Numeric answer</label>
+
+</div>
+
+<div id='BJfJztYy_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#BJfJztYy').on('change', function() {
+  correct = Math.abs(this.value - 0.4444444444444445) <= 0.001;
+
+  if(correct) {
+     $('#BJfJztYy_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#BJfJztYy_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
 
 
 <h6>Question</h6>
@@ -6239,9 +6330,33 @@ f(x) = \frac{k}{\lambda}(\frac{x}{\lambda})^{k-1} e^{-(x/\lambda)^k}
 \]</p>
 <p>For <span class="math">$k=2$</span> and <span class="math">$\lambda = 2$</span>, compute the mean. &#40;The center of mass, assuming the total area is <span class="math">$1$</span>.&#41;</p>
 
-<pre class="julia-error">
-ERROR: UndefVarError: quadgk not defined
-</pre>
+
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='15seUdmj' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="form-floating input-group">
+<input id="15seUdmj" type="number" class="form-control" placeholder="Numeric answer">
+<label for="15seUdmj">Numeric answer</label>
+
+</div>
+
+<div id='15seUdmj_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#15seUdmj').on('change', function() {
+  correct = Math.abs(this.value - 1.7724538509055145) <= 0.001;
+
+  if(correct) {
+     $('#15seUdmj_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#15seUdmj_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
 
 
 <h6>Question</h6>
@@ -6254,35 +6369,107 @@ f(x) = \frac{1}{4s} \text{sech}(\frac{x-\mu}{2s})^2, \quad -\infty < x < \infty.
 <p>&#40;Where <span class="math">$\text{sech}$</span> is the hyperbolic secant, implemented in <code>julia</code> through <code>sech</code>.&#41;</p>
 <p>For <span class="math">$m=2$</span> and <span class="math">$s=4$</span> compute the mean, or center of mass, of this density.</p>
 
-<pre class="julia-error">
-ERROR: UndefVarError: quadgk not defined
-</pre>
+
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='Cxw0s8G3' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="form-floating input-group">
+<input id="Cxw0s8G3" type="number" class="form-control" placeholder="Numeric answer">
+<label for="Cxw0s8G3">Numeric answer</label>
+
+</div>
+
+<div id='Cxw0s8G3_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#Cxw0s8G3').on('change', function() {
+  correct = Math.abs(this.value - 2.0000000000002287) <= 0.001;
+
+  if(correct) {
+     $('#Cxw0s8G3_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#Cxw0s8G3_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
 
 
 <h6>Question</h6>
 <p>A region is formed by intersecting the area bounded by the circle <span class="math">$x^2 + y^2 = 1$</span> that lies above the line <span class="math">$y=3/4$</span>. Find the center of mass in the <span class="math">$y$</span> direction &#40;that of the <span class="math">$x$</span> direction is <span class="math">$0$</span> by symmetry&#41;.</p>
 
-<pre class="julia-error">
-ERROR: UndefVarError: quadgk not defined
-</pre>
+
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='wINjfKfm' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="form-floating input-group">
+<input id="wINjfKfm" type="number" class="form-control" placeholder="Numeric answer">
+<label for="wINjfKfm">Numeric answer</label>
+
+</div>
+
+<div id='wINjfKfm_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#wINjfKfm').on('change', function() {
+  correct = Math.abs(this.value - 0.8511553682895965) <= 0.001;
+
+  if(correct) {
+     $('#wINjfKfm_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#wINjfKfm_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
 
 
 <h6>Question</h6>
 <p>Find the center of mass in the <span class="math">$y$</span> direction of the area bounded by the cosine curve and the <span class="math">$x$</span> axis between <span class="math">$-\pi/2$</span> and <span class="math">$\pi/2$</span>.</p>
 
-<pre class="julia-error">
-ERROR: UndefVarError: quadgk not defined
-</pre>
+
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='7WECHzBQ' data-controltype='numeric'>
+<div class='form-group '>
+<div class='controls'>
+
+
+<div class="form-floating input-group">
+<input id="7WECHzBQ" type="number" class="form-control" placeholder="Numeric answer">
+<label for="7WECHzBQ">Numeric answer</label>
+
+</div>
+
+<div id='7WECHzBQ_message'></div>
+</div>
+</div>
+</form>
+<script text='text/javascript'>
+$('#7WECHzBQ').on('change', function() {
+  correct = Math.abs(this.value - 0.392699081675986) <= 0.001;
+
+  if(correct) {
+     $('#7WECHzBQ_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#7WECHzBQ_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+  }
+});
+</script>
 
 
 <h6>Question</h6>
 <p>A penny, nickel, dime and quarter are stacked so that their right most edges align and are centered so that the center of mass in the <span class="math">$y$</span> direction is <span class="math">$0$</span>. Find the center of mass in the <span class="math">$x$</span> direction.</p>
 
 
-    <div id="0b8cf83e-9836-495d-bffa-23fc90b67bb1" style="width:576px;height:384px;"></div>
+    <div id="8cf5763e-7793-4e44-b386-48d96367bdce" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('0b8cf83e-9836-495d-bffa-23fc90b67bb1');
+        var PLOT = document.getElementById('8cf5763e-7793-4e44-b386-48d96367bdce');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -6913,38 +7100,80 @@ quarter   0.955           5.670
 <p>&#40;Hint: Though this could be done with integration, it is easier to treat each coin as a single point &#40;its centroid&#41; with the given mass and then apply the formula for sums.&#41;</p>
 
 
-<form name='WeaveQuestion' data-id='Ifhl4OXk' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='UjpBmxlc' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
-<div class="input-group">
-<input id="Ifhl4OXk" type="number" class="form-control">
+<div class="form-floating input-group">
+<input id="UjpBmxlc" type="number" class="form-control" placeholder="Numeric answer">
+<label for="UjpBmxlc">Numeric answer</label>
 
 </div>
 
-<div id='Ifhl4OXk_message'></div>
+<div id='UjpBmxlc_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#Ifhl4OXk').on('change', function() {
+$('#UjpBmxlc').on('change', function() {
   correct = Math.abs(this.value - 0.05439499935224769) <= 0.001;
 
   if(correct) {
-     $('#Ifhl4OXk_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#UjpBmxlc_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#Ifhl4OXk_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#UjpBmxlc_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
 
 
-<hr />
 
-<pre class="julia-error">
-ERROR: &#91;:integrals, :center_of_mass&#93;
-</pre>
+<div class="card" style="">
+  <div class="card-header float-end text-muted">
+    <span class="text-muted  float-end align-middle">
+
+<a href="../integrals/area_between_curves.html"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Previous section"
+aria-label="Previous section"
+class="bi bi-arrow-left-circle-fill">
+</a>
+
+&nbsp;
+
+<a href="../integrals/volumes_slice.html"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Next section"
+aria-label="Next section"
+class="bi bi-arrow-right-circle-fill">
+</a>
+
+&nbsp;
+
+<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/integrals/center_of_mass.jmd"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Suggest an edit"
+aria-label="Suggest an edit"
+class="bi bi-pencil-square">
+</a>
+
+&nbsp;
+
+<a href="../misc/toc.html"
+data-bs-toggle="tooltip"
+data-bs-placement="top"
+title="Table of contents"
+aria-label="Table of contents"
+class="bi bi-card-list">
+</a>
+
+    </span>
+  </div>
+</div>
 
 
   </div>
@@ -6955,6 +7184,10 @@ ERROR: &#91;:integrals, :center_of_mass&#93;
   hljs.highlightElement(el);                              // then highlight each
   });
 
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
   var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
   var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
     return new bootstrap.Popover(popoverTriggerEl)

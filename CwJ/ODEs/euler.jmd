@@ -24,8 +24,9 @@ y'(x) = y(x) \cdot  x, \quad y(1)=1,
 which can be solved with `SymPy`:
 
 ```julia;
-using CalculusWithJulia   # loads `SymPy`, `Roots`
+using CalculusWithJulia
 using Plots
+using SymPy
 @syms x, y, u()
 x0, y0 = 1, 1
 F(y,x) = y*x
@@ -536,6 +537,7 @@ use below need not be widely applicable.
 
 
 ```julia;
+using Roots
 function back_euler(F, x0, xn, y0, n)
     h = (xn - x0)/n
     xs = zeros(n+1)

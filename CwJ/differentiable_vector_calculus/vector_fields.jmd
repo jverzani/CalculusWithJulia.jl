@@ -180,12 +180,6 @@ Phi(theta, phi) = [X(theta, phi), Y(theta, phi), Z(theta, phi)]
 surface(unzip(Phi.(thetas, phis'))...)
 ```
 
-This combination is performed by the `parametric_grid` function, used as follows
-
-```julia
-xs, ys, zs = parametric_grid(thetas, phis, Phi)
-surface(xs, ys, zs)
-```
 
 The partial derivatives of each component, $\partial{\Phi}/\partial{\theta}$ and $\partial{\Phi}/\partial{\phi}$, can be computed directly:
 
@@ -226,7 +220,7 @@ What this function computes exactly will be described next, but here we visualiz
 
 ```julia; eval=false
 us, vs = range(0, pi/2, length=25); range(0, pi, length=25)
-xs, ys, zs = parametric_grid(us, vs, Phi)
+xs, ys, zs = unzip(Phi.(us, vs'))
 surface(xs, ys, zs, legend=false)
 arrow!(Phi(pt), out[:,1], linewidth=3)
 arrow!(Phi(pt), out[:,2], linewidth=3)
@@ -793,7 +787,7 @@ plotly()
 
 ```julia;
 us, vs = range(0, 1, length=25), range(0, 2pi, length=25)
-xs, ys, zs = parametric_grid(us, vs, F)
+xs, ys, zs = unzip(F.(us, vs'))
 surface(xs, ys, zs)
 ```
 
@@ -814,7 +808,7 @@ F(u, v) = [rad(u)*cos(v), rad(u)*sin(v), u]
 
 ```julia;
 us, vs = range(-1, 1, length=25), range(0, 2pi, length=25)
-xs, ys, zs = parametric_grid(us, vs, F)
+xs, ys, zs = unzip(F.(us, vs'))
 surface(xs, ys, zs)
 ```
 
@@ -999,7 +993,7 @@ radioq(choices, ans)
 
 (The latter is of interest, as only when the expression is $0$ will the vector field be the gradient of a scalar function.)
 
-----
+
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

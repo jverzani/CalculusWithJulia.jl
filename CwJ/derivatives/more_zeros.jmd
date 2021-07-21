@@ -7,27 +7,64 @@ using Plots
 nothing
 ```
 
+Newton's method is not the only algorithm of its kind for identifying zeros of a function. In this section we discuss some alternatives.
 
-One way to view Newton's method is through the inverse of ``f``. If ``f`` has a simple zero at ``\alpha`` and is locally invertible (that is some ``f^{-1}`` exists) then the update step for Newton's method can be identified with: fitting a polynomial to the local inverse function of ``f`` going through through the point ``(f(x_0),x_0)``,  and matching the slope of `f` at the same point.
+The  function `find_zero` from the `Roots` packages provides several different algorithms for finding a zero of a function, including some a derivative-free
+algorithms for finding roots  when started with an initial
+guess. The default method is similar to Newton's method in that only a good initial
+guess is needed. However, the algorithm, while slower in terms of
+function evaluations and steps,  is engineered to be a bit more
+robust to the choice of initial estimate than Newton's method. (If it
+finds a bracket, it will use a bisection algorithm which is guaranteed to
+converge, but can be slower to do so.) Here we see how to call the
+function:
 
-That is, we can write ``g(y) = h_0 + h1 (y-f(x_0))``. Then ``g(f(x0)) = x0 = h_0``, so ``h_0 = x_0``, and from ``g'(f(x_0)) = 1/f'(x_0)``, we get ``h_1 = 1/f'(x_0)``, so ``g(y) = x_0 + (y-f(x_0))/f'(x_0)``. At ``y=0``, we get the update step ``x_1 = g(0) = x_0 - f(x_0)/f'(x_0)``.
+```julia;
+using Roots
+f(x) = cos(x) - x
+x0 = 1
+find_zero(f, x0)
+```
+
+Compare to this related call which uses the bisection method:
+
+```julia;
+find_zero(f, (0, 1))           ## [0,1] must be a bracketing interval
+```
+
+For this example both give the same answer, but the bisection method
+is a bit less convenient as a bracketing interval must be pre-specified.
+
+## The secant method
+
+The default `find_zero` method above uses a secant-like method unless a bracketing method is found. Here we place the secant method into a more general framework.
+
+One way to view Newton's method is through the inverse of ``f``, as if ``f(\alpha) = 0`` then -- when ``f^{-1}(x)`` exists -- ``\alpha = f^{-1}(0)``.
+If ``f`` has a simple zero at ``\alpha`` and is locally invertible (that is some ``f^{-1}`` exists) then the update step for Newton's method can be identified with: fitting a polynomial to the local inverse function of ``f`` going through through the point ``(f(x_0),x_0)``,  and matching the slope of `f` at the same point.
+
+That is, we can write ``g(y) = h_0 + h_1 (y-f(x_0))``. Then ``g(f(x0)) = x0 = h_0``, so ``h_0 = x_0``, and from ``g'(f(x_0)) = 1/f'(x_0)``, we get ``h_1 = 1/f'(x_0)``, so ``g(y) = x_0 + (y-f(x_0))/f'(x_0)``. At ``y=0``, we get the update step ``x_1 = g(0) = x_0 - f(x_0)/f'(x_0)``.
 
 
 The same viewpoint can be used  to create derivative-free methods.
-
-## The secant method
 
 
 For example, the  [secant method](https://en.wikipedia.org/wiki/Secant_method) can be seen as the result of fitting a polynomial approximation for  ``f^{-1}`` through two points ``(f(x_0),x_0)`` and ``(f(x_1), x_1)``.
 
 
 Again, expressing this as ``g(y) = h_0 + h_1(y-f(x_1))`` leads to ``g(f(x_1)) = x_1 = h_0``.
-Substituting ``f(x_0)`` gives ``g(f(x_0)) = x_0 = x_1 + h_1(f(x_0)-f(x_1))``.  Solving for ``h_1`` leads to ``h_1=(x_1-x_0)/(f(x_1)-f(x_0))``. Then ``x_2 = g(0) = x_1 + (x_1-x_0)/(f(x_1)-f(x_0)) \cdot f(x_1)``.
+Substituting ``f(x_0)`` gives ``g(f(x_0)) = x_0 = x_1 + h_1(f(x_0)-f(x_1))``.  Solving for ``h_1`` leads to ``h_1=(x_1-x_0)/(f(x_1)-f(x_0))``. Then ``x_2 = g(0) = x_1 + (x_1-x_0)/(f(x_1)-f(x_0)) \cdot f(x_1)``. This is the first step of the secant method:
+
+```math
+x_{n+1} = x_n - f(x_n) \frac{x_n - x_{n-1}}{f(x_n) - f(x_{n-1})}.
+```
+
+The secant method simply replaces ``f'(x_n)`` with the slope of the secant line between ``x_n`` and ``x_{n-1}``. The method is historic, dating back over ``3000`` years.
+
 
 We code the update step as `λ2`:
 
 ```julia;
-λ2(f0,f1,x0,x1) = x1 - (x1-x0)/(f1-f0) * f1
+λ2(f0,f1,x0,x1) = x1 - f1 * (x1-x0)/(f1-f0)
 ```
 
 Then we can run a few steps to identify the zero of sine starting at ``3`` and ``4``
@@ -58,10 +95,9 @@ x1,f1
 Like Newton's method, the secant method coverges quickly for this problem (though its rate is less than the quadratic rate of Newton's method.)
 
 
-This method is included in `Roots` as `Order1()`:
+This method is included in `Roots` as `Order1()` (or `Roots.Secant()`):
 
 ```julia;
-using Roots
 find_zero(sin, (4,3), Order1(), verbose=true)
 ```
 
@@ -102,7 +138,7 @@ Steffensen's method is a secant-like method that converges with ``|\epsilon_{n+1
 Inverse quadratic interpolation fits a quadratic polynomial through three points, not just two like the Secant method. The third being ``(f(x_2), x_2)``.
 
 
-For example, here is the inverse quadratic function, ``g(y)``, going three points marked with red dots. The blue dot is found from ``(g(0), 0)``.
+For example, here is the inverse quadratic function, ``g(y)``, going through three points marked with red dots. The blue dot is found from ``(g(0), 0)``.
 
 ```julia; echo=false
 using Plots
@@ -123,10 +159,10 @@ Here we use `SymPy` to identify the polynomial as a function of ``y``, then eval
 ```julia;
 using SymPy
 
-@syms y h[0:2] x[0:2] f[0:2]
-H(y) = sum(hᵢ*(y-f[end])^i for (hᵢ,i) ∈ zip(h, 0:2))
+@syms y h[0:2] x[0:2] fn[0:2]
+H(y) = sum(hᵢ*(y-fn[end])^i for (hᵢ,i) ∈ zip(h, 0:2))
 
-eqs = [Eq(H(fᵢ), xᵢ) for (xᵢ, fᵢ) ∈ zip(x,f)]
+eqs = [Eq(H(fᵢ), xᵢ) for (xᵢ, fᵢ) ∈ zip(x,fn)]
 ϕ = solve(eqs, h)
 hy = subs(H(y), ϕ)
 ```
@@ -144,9 +180,9 @@ Though the above can be simplified quite a bit when computed by hand, here we si
 λ3 = lambdify(q⁻¹) # fs, then xs
 ```
 
-(The `\lambdify` function, by default, picks the order of its argument lexicographically, in this case they will be the `f` values then the `x` values.)
+(The `lambdify` function, by default, picks the order of its argument lexicographically, in this case they will be the `f` values then the `x` values.)
 
-An inverse quadratic step is utilized by Brent's method, as possible, to yield a rapidly convergent bracketing algorithm implemented as a default zero finder in many software languages.  `Julia`'s `Roots` package implements the method in `Roots.Brent()`. An inverse cubic interpolation is utilized by [Alefeld, Potra, and Shi](https://dl.acm.org/doi/10.1145/210089.210111) which gives an asymptotically even more rapidly convergent algorithm then Brent's (implemented in `Roots.AlefeldPotraShi()` and also `Roots.A42()`). This used as a finishing step in many cases by the default hybrid `Order0()` method of `find_zero`.
+An inverse quadratic step is utilized by Brent's method, as possible, to yield a rapidly convergent bracketing algorithm implemented as a default zero finder in many software languages.  `Julia`'s `Roots` package implements the method in `Roots.Brent()`. An inverse cubic interpolation is utilized by [Alefeld, Potra, and Shi](https://dl.acm.org/doi/10.1145/210089.210111) which gives an asymptotically even more rapidly convergent algorithm then Brent's (implemented in `Roots.AlefeldPotraShi()` and also `Roots.A42()`). This is used as a finishing step in many cases by the default hybrid `Order0()` method of `find_zero`.
 
 In a bracketing algorithm, the next step should reduce the size of the bracket, so the next iterate should be inside the current bracket. However, quadratic convergence does not guarantee this to happen. As such, sometimes a subsitute method must be chosen.
 
@@ -273,8 +309,8 @@ For the specific example, `abs(b-a) <= 2eps(max(abs(a),abs(b)))` which in turn i
 
 
 For bisection methods that is about as good as you can get. However, once floating values are understood, the best you can get for a bracketing interval would be
-* one of the endpoints `f(c)` is *exactly* `0.0`
-* the enpoints of the bracketing interval are *adjacent* floating point values, meaning the interval can not be bisected and `f` changes sign between the two values.
+* along the way, a value `f(c)` is found which is *exactly* `0.0`
+* the endpoints of the bracketing interval are *adjacent* floating point values, meaning the interval can not be bisected and `f` changes sign between the two values.
 
 (This is the stopping criteria for `Roots.BisectionExact()` when `find_zero` from `Roots` is used.)
 
@@ -320,7 +356,7 @@ Assuming ``f`` has a derivative, the linear approximation gives:
 So we should consider `f(x_n)` an *approximate zero* when it is on the scale of
 ``f'(\alpha) \cdot \alpha \delta``.
 
-That `x_n` means we consider a *relative* tolerance for `f`.
+That ``\alpha`` means we consider a *relative* tolerance for `f`.
 Also important -- when `x_n` is close to  `0`,
 is the need for an *absolute* tolerance, one not dependent on the size of `x`.
 So a good condition to check if `f(x_n)` is small is
@@ -330,7 +366,9 @@ So a good condition to check if `f(x_n)` is small is
 where the relative tolerance, `rtol`, would absorb an estimate for ``f'(\alpha)``.
 
 
-One thing to keep in mind is that the right hand side, as a function of `x_n`, as `x_n` goes to `Inf` will be a line with positive slope, so if `f` has `0` as an asymptote (like `e^(-x)`) it will eventually duck under this line, and if `x_n` is past this crossing point, then `x_n` will be counted as an approximate zero.
+Now, in Newton's method the update step is ``f(x_n)/f'(x_n)``. Naturally when ``f(x_n)`` is close to ``0``, the update step is small and ``\Delta`` will be close to ``0``. *However*, should ``f'(x_n)`` be large, then ``\Delta`` can also be small and the algorithm will possibly stop, as ``x_{n+1} \approx x_n`` -- but not necessarily ``x_{n+1} \approx \alpha``. So termination on ``\Delta`` alone can be off. Checking if ``f(x_{n+1})`` is an approximate zero is  also useful to include in a stopping criteria.
+
+One thing to keep in mind is that the right-hand side of the rule `abs(f(x_n)) <= abs(x_n) * rtol + atol`, as a function of `x_n`, goes to `Inf` as `x_n` increases. So if `f` has `0` as an asymptote (like `e^(-x)`) for large enough `x_n`, the rule will be `true` and `x_n` could be counted as an approximate zero, despite it not being one.
 
 So a modified criteria for convergence might look like:
 
@@ -348,19 +386,19 @@ Let `f(x) = tanh(x)` (the hyperbolic tangent) and `fp(x) = sech(x)^2`, its deriv
 
 Does *Newton's* method (using `Roots.Newton()`) converge starting at `1.0`?
 
-```julia; math
+```julia; echo=false
 yesnoq("yes")
 ```
 
 Does *Newton's* method (using `Roots.Newton()`) converge starting at `1.3`?
 
-```julia; math
+```julia; echo=false
 yesnoq("no")
 ```
 
 Does the secant method (using `Roots.Secant()`) converge starting at `1.3`? (a second starting value will automatically be chosen, if not directly passed in.)
 
-```julia; math
+```julia; echo=false
 yesnoq("yes")
 ```
 
@@ -368,13 +406,13 @@ yesnoq("yes")
 
 For the function `f(x) = x^5 - x - 1` both Newton's method and the secant method will converge to the one root when started from `1.0`. Using `verbose=true` as an argument to `find_zero`, (e.g., `find_zero(f, x0, Roots.Secant(), verbose=true)`) how many *more* steps does the secant method need to converge?
 
-```
-numericqq(2)
+```julia; echo=false
+numericq(2)
 ```
 
 Do the two methods converge to the exact same value?
 
-```
+```julia; echo=false
 yesnoq("yes")
 ```
 
@@ -382,7 +420,7 @@ yesnoq("yes")
 
 Let `f(x) = exp(x) - x^4` and `x0=8.0`. How many steps (iterations) does it take for the secant method to converge using the default tolerances?
 
-```
+```julia; echo=false
 numericq(10, 1)
 ```
 
@@ -392,21 +430,88 @@ Let `f(x) = exp(x) - x^4` and a starting bracket be `x0 = [8.9]`. Then calling `
 
 It takes how many steps?
 
-```
+```julia; echo=false
 numericq(36, 1)
 ```
 
 The `Roots.A42()` method uses inverse cubic interpolation, as possible, how many steps does this method take to converge?
 
-```
+```julia; echo=false
 numericq(3, 1)
 ```
 
 The large difference is due to how the tolerances are set within `Roots`. The `Brent method gets pretty close in a few steps, but takes a much longer time to get close enough for the default tolerances
 
 
+###### Question
 
-----
+Consider this crazy function defined by:
+
+```julia;
+import SpecialFunctions: erf
+f(x) = cos(100*x)-4*erf(30*x-10)
+```
+
+(The `erf` function is the error function.)
+
+Make a plot over the interval $[-3,3]$ to see why it is called "crazy".
+
+Does `find_zero` find a zero to this function starting from $0$?
+
+
+```julia; echo=false
+yesnoq("yes")
+```
+
+If so, what is the value?
+
+```julia; echo=false
+val = find_zero(f, 0)
+numericq(val)
+```
+
+If not, what is the reason?
+
+```julia; echo=false
+choices = [
+"The zero is a simple zero",
+"The zero is not a simple zero",
+"The function oscillates too much to rely on the tangent line approximation far from the zero",
+"We can find an answer"
+]
+ans = 4
+radioq(choices, ans, keep_order=true)
+```
+
+
+Does `find_zero` find a zero to this function starting from $1$?
+
+
+```julia; echo=false
+yesnoq(false)
+```
+
+If so, what is the value?
+
+```julia; echo=false
+numericq(-999.999)
+```
+
+If not, what is the reason?
+
+```julia; echo=false
+choices = [
+"The zero is a simple zero",
+"The zero is not a simple zero",
+"The function oscillates too much to rely on the tangent line approximations far from the zero",
+"We can find an answer"
+]
+ans = 3
+radioq(choices, ans, keep_order=true)
+```
+
+
+
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

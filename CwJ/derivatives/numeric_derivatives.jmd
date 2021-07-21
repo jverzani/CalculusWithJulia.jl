@@ -50,6 +50,7 @@ We can compare to the actual with:
 
 ```julia;
 using CalculusWithJulia
+using SymPy
 @syms x
 df = diff(f(x), x)
 actual = N(df(c))
@@ -84,7 +85,7 @@ c = 1
 ForwardDiff.derivative(f, c)   # derivative is qualified by a module name
 ```
 
-The `CalculusWithJulia` package defines an operator `D` which goes from finding a derivative at a point with `ForwardDiff.derivative` to definin a function which evaluates the derivative at each point. It is defined along the lines of `D(f) = x -> ForwardDiff.derivative(f,x)` in parallel to how the derivative operation for a function is defined mathematically from the definition for its value at a point.
+The `CalculusWithJulia` package defines an operator `D` which goes from finding a derivative at a point with `ForwardDiff.derivative` to defining a function which evaluates the derivative at each point. It is defined along the lines of `D(f) = x -> ForwardDiff.derivative(f,x)` in parallel to how the derivative operation for a function is defined mathematically from the definition for its value at a point.
 
 
 Here we see the error in estimating $f'(1)$ for the $f(x) = e^{-x^2/2}$.
@@ -153,6 +154,7 @@ e^{-x^2/2}$ in $[0, 10]$, a known bracket. The `D` function takes a second argum
 
 
 ```julia;
+using Roots
 f(x) = exp(-x^2/2)
 fzero(f'', 0, 10)
 ```
@@ -233,7 +235,7 @@ val = abs(cos(0)  - approx)
 numericq(val)
 ```
 
-Repeat for $x=pi/4$:
+Repeat for $x=\pi/4$:
 
 
 ```julia; echo=false
@@ -320,7 +322,6 @@ numericq(fp_(2))
 ```
 
 
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

@@ -86,8 +86,8 @@ plot!(unzip([[pt..., tplane(pt)] for pt in pts])...)
 γ_x(t) = pt + t*[1,0]
 γ_y(t) = pt + t*[0,1]
 
-plot_parametric_curve!(t -> [γ_x(t)..., (f∘γ_x)(t)], -xr-a, xr-a, linewidth=3)
-plot_parametric_curve!(t -> [γ_y(t)..., (f∘γ_y)(t)], -xr-b, xr-b, linewidth=3)
+plot_parametric!((-xr-a)..(xr-a), t -> [γ_x(t)..., (f∘γ_x)(t)],  linewidth=3)
+plot_parametric!((-xr-b)..(xr-b), t -> [γ_y(t)..., (f∘γ_y)(t)],  linewidth=3)
 
 # draw directional derivatives in 3d and normal
 pt = [a, b, f(a,b)]
@@ -202,61 +202,11 @@ t = 1/2
 
 #### Plotting level curves of $F(x,y,z) = c$
 
-The `wireframe` plot can be used to a surface of the type `z=f(x,y)`, as previously illustrated. However we have no way of plotting $3$-dimensional implicit surfaces (of the type $F(x,y,z)=c$) as we do for $2$-dimensional implicit surfaces. (However, within the `Makie` plotting framework one is provided in `CalculusWithJulia`.) The following function, which is **not** part of `CalculusWithJulia` can be used for this task to make a surface akin to the wireframe plot. The basic idea is to slice an axis, by default the $z$ axis up and for each level plot the contours of $(x,y) \rightarrow f(x,y,z)-c$, which becomes a $2$-dimensional problem. The function allows any of 3 different axes to be chosen to slice over, the default being just the $z$ axis.
+The `wireframe` plot can be used to a surface of the type `z=f(x,y)`, as previously illustrated. However we have no way of plotting $3$-dimensional implicit surfaces (of the type $F(x,y,z)=c$) as we do for $2$-dimensional implicit surfaces with `Plots`. (The `MDBM` or  `IntervalConstraintProgramming` packages can be used along with `Makie` plotting package to produce one.)
 
-```julia;
-import Contour # installed with the Plots package, so should be available
-               # import -- not using -- to avoid name collision
-function plot_implicit_surface(F, c=0;
-                       xlim=(-5,5), ylim=xlim, zlim=xlim,
-                       nlevels=25,         # number of levels in a direction
-                       slices=Dict(:z => :blue), # Dict(:x => :color, :y=>:color, :z=>:color)
-                       kwargs...          # passed to initial `plot` call
-                       )
+The `CalculusWithJulia` package provides a stop-gap function, `plot_implicit_surface` for this task.
+The basic idea is to slice an axis, by default the $z$ axis up and for each level plot the contours of $(x,y) \rightarrow f(x,y,z)-c$, which becomes a $2$-dimensional problem. The function allows any of 3 different axes to be chosen to slice over, the default being just the $z$ axis.
 
-    _linspace(rng, n=150) = range(rng[1], stop=rng[2], length=n)
-
-    X1, Y1, Z1 = _linspace(xlim), _linspace(ylim), _linspace(zlim)
-
-    p = Plots.plot(;legend=false,kwargs...)
-
-    if :x ∈ keys(slices)
-        for x in _linspace(xlim, nlevels)
-            local X1 = [F(x,y,z) for y in Y1, z in Z1]
-            cnt = Contour.contours(Y1,Z1,X1, [c])
-            for line in Contour.lines(Contour.levels(cnt)[1])
-                ys, zs = Contour.coordinates(line) # coordinates of this line segment
-                plot!(p, x .+ 0 * ys, ys, zs, color=slices[:x])
-          end
-        end
-    end
-
-    if :y ∈ keys(slices)
-        for y in _linspace(ylim, nlevels)
-            local Y1 = [F(x,y,z) for x in X1, z in Z1]
-            cnt = Contour.contours(Z1,X1,Y1, [c])
-            for line in Contour.lines(Contour.levels(cnt)[1])
-                xs, zs = Contour.coordinates(line) # coordinates of this line segment
-                plot!(p, xs, y .+ 0 * xs, zs, color=slices[:y])
-            end
-        end
-    end
-
-    if :z ∈ keys(slices)
-        for z in _linspace(zlim, nlevels)
-            local Z1 = [F(x, y, z) for x in X1, y in Y1]
-            cnt = Contour.contours(X1, Y1, Z1, [c])
-            for line in Contour.lines(Contour.levels(cnt)[1])
-                xs, ys = Contour.coordinates(line) # coordinates of this line segment
-                plot!(p, xs, ys, z .+ 0 * xs, color=slices[:z])
-            end
-        end
-    end
-
-
-    p
-end
-```
 
 We demonstrate with an example from a February 14, 2019 article in the [New York Times](https://www.nytimes.com/2019/02/14/science/math-algorithm-valentine.html). It shows an equation for a "heart," as the graphic will illustrate:
 
@@ -264,8 +214,10 @@ We demonstrate with an example from a February 14, 2019 article in the [New York
 a,b = 1,3
 f(x,y,z) = (x^2+((1+b)*y)^2+z^2-1)^3-x^2*z^3-a*y^2*z^3
 
-plot_implicit_surface(f, xlim=(-2,2), ylim=(-1,1), zlim=(-1,2))
+CalculusWithJulia.plot_implicit_surface(f, xlim=-2..2, ylim=-1..1, zlim=-1..2)
 ```
+
+
 
 
 ## Linearization
@@ -659,8 +611,8 @@ f(x,y) = x*y
 xs = ys = range(-3, 3, length=100)
 surface(xs, ys, f, legend=false)
 
-plot_parametric_curve!(t -> [t, 0, f(t, 0)], -4, 4, linewidth=5)
-plot_parametric_curve!(t -> [0, t, f(0, t)], -4, 4, linewidth=5)
+plot_parametric!(-4..4, t -> [t, 0, f(t, 0)], linewidth=5)
+plot_parametric!(-4..4, t -> [0, t, f(0, t)], linewidth=5)
 ```
 
 The extrema happen at the edges of the region. The gradient is $\nabla{f} = \langle y, x \rangle$. This is $\vec{0}$ only at the origin. At the origin, were we to imagine a tangent plane, the surface falls off in one direction but falls *above* in the other direction. Such a point is referred to as a *saddle point*. A saddle point for a continuous $f:R^n \rightarrow R$ would be a critical point, $\vec{a}$ where for any ball with non-zero radius about $\vec{a}$, there are values where the function is greater than $f(\vec{a})$ and values where the function is less.
@@ -1235,7 +1187,7 @@ Now consider $f(x,y)$, a function we wish to maximize. The gradient points in th
 
 ```julia; echo=false
 r(t) = [cos(t), sin(t)/2]
-plot_parametric_curve(r, pi/12, pi/3, legend=false, aspect_ratio=true, linewidth=3)
+plot_parametric(pi/12..pi/3, r, legend=false, aspect_ratio=true, linewidth=3)
 T(t) = -r'(t) / norm(r'(t))
 No(t) = T'(t) / norm(T'(t))
 t = pi/4
@@ -1266,7 +1218,7 @@ Now consider this figure at a different point of the figure:
 
 ```julia; echo=false
 r(t) = [cos(t), sin(t)/2]
-plot_parametric_curve(r, -pi/6, pi/6, legend=false, aspect_ratio=true, linewidth=3)
+plot_parametric(-pi/6..pi/6,r, legend=false, aspect_ratio=true, linewidth=3)
 T(t) = -r'(t) / norm(r'(t))
 No(t) = T'(t) / norm(T'(t))
 t = 0
@@ -2088,7 +2040,7 @@ val = maximum((f∘r).(ts))
 numericq(val)
 ```
 
-----
+
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)

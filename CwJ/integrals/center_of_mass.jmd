@@ -71,7 +71,7 @@ Consider now a more general problem, the center of mass of a solid figure. We wi
 This graph shows that the figure is symmetric:
 
 ```julia;
-using CalculusWithJulia  # loads `Plots`, `Roots`, `QuadGK`, `SymPy`
+using CalculusWithJulia
 using Plots
 f(x) = 1 - abs(x)
 a, b = -1.5, 1.5
@@ -163,6 +163,7 @@ plot!(g, -3, 3)
 To find it, we need to find the intersection points, then integrate. We do so numerically.
 
 ```julia;
+using Roots, QuadGK
 h(x) = f(x) - g(x)
 a,b = find_zeros(h, -3, 3)
 top, err = quadgk(x -> x*h(x), a, b)
@@ -271,9 +272,11 @@ As seen, the computation of the center of mass in the $y$ direction has an ident
 
 ##### Example
 
+
 More generally, consider a right triangle with vertices $(0,0)$, $(0,a)$, and $(b,0)$. The center of mass of this can be computed with the help of the equation for the line that forms the hypotenuse: $x/b + y/a = 1$. We find the center of mass symbolically in the $y$ variable by solving for $x$ in terms of $y$, then integrating from $0$ to $a$:
 
 ```julia;
+using SymPy
 @syms a b x y
 eqn = x/b + y/a - 1
 fy = solve(eqn, x)[1]
@@ -513,7 +516,6 @@ numericq(val)
 ```
 
 
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
