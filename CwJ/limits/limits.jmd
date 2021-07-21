@@ -744,7 +744,6 @@ The left limit can be found by passing the argument `dir="-"`. Passing `dir="+-"
 limit(ceil(x), x=>0), limit(ceil(x), x=>0, dir="-")
 ```
 
-
 This accurately shows the limit does not exist mathematically, but `limit(ceil(x), x=>0)` does exist (as it finds a right limit).
 
 

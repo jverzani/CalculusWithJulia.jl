@@ -167,6 +167,7 @@ $( document ).ready(function() {
 <p>A function <span class="math">$f(x)$</span> is Riemann integrable over an interval <span class="math">$[a,b]$</span> if some limit involving Riemann sums exists. This limit will fail to exist if <span class="math">$f(x) = \infty$</span> in <span class="math">$[a,b]$</span>. As well, the Riemann sum idea is undefined if either <span class="math">$a$</span> or <span class="math">$b$</span> &#40;or both&#41; are infinite, so the limit won&#39;t exist in this case.</p>
 <p>To define integrals  with either functions having singularities or infinite domains, the idea of an improper integral is introduced with definitions to handle the two cases above.</p>
 
+<<<<<<< HEAD
 
 <div class="d-flex justify-content-center">
 <div class="card border-light mx-3 px-3 my-3 py-3" style=" max-width: 560px;">
@@ -182,6 +183,11 @@ $( document ).ready(function() {
   </div>
 </div>
 </div>
+=======
+<pre class="julia-error">
+ERROR: UndefVarError: integrate not defined
+</pre>
+>>>>>>> master
 
 
 <h2>Infinite domains</h2>
@@ -284,9 +290,16 @@ $( document ).ready(function() {
 </pre>
 
 
+<pre class="julia-error">
+ERROR: LoadError: UndefVarError: @syms not defined
+in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/integrals/improper_integrals.jmd:4
+</pre>
 
+<<<<<<< HEAD
 <div class="output">$\frac{\pi}{2}$
 </div>
+=======
+>>>>>>> master
 
 <h3>Numeric integrals</h3>
 <p>The <code>quadgk</code> function &#40;available through <code>QuadGK</code>&#41; is able to accept <code>Inf</code> and <code>-Inf</code> as endpoints of the interval. For example, this will integrate <span class="math">$e^{-x^2/2}$</span> over the real line:</p>
@@ -299,8 +312,8 @@ $( document ).ready(function() {
 </pre>
 
 
-<pre class="output">
-&#40;2.506628274639168, 3.608438072243189e-8&#41;
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
 </pre>
 
 
@@ -323,7 +336,11 @@ $( document ).ready(function() {
 \]</p>
 
 
+<<<<<<< HEAD
 <div class="alert alert-info" role="alert"><div class="markdown"><p>The cases &#36;f&#40;x&#41; &#61; x^&#123;-n&#125;&#36; for &#36;n &gt; 0&#36; are tricky to keep straight. For &#36;n &gt; 1&#36;, the functions can be integrated over &#36;&#91;1,\infty&#41;&#36;, but not &#36;&#40;0,1&#93;&#36;. For &#36;0 &lt; n &lt; 1&#36;, the functions can be integrated over &#36;&#40;0,1&#93;&#36; but not &#36;&#91;1, \infty&#41;&#36;.</p>
+=======
+<div class="alert alert-info" role="alert"><div class="markdown"><p>The cases &#36;f&#40;x&#41; &#61; x^&#123;-n&#125;&#36; for &#36;n &gt; 0&#36; are tricky. For &#36;n &gt; 1&#36;, the functions can be integrated over &#36;&#91;1,\infty&#41;&#36;, but not &#36;&#40;0,1&#93;&#36;. For &#36;0 &lt; n &lt; 1&#36;, the functions can be integrated over &#36;&#40;0,1&#93;&#36; but not &#36;&#91;1, \infty&#41;&#36;.</p>
+>>>>>>> master
 </div></div>
 
 <ul>
@@ -351,8 +368,14 @@ $( document ).ready(function() {
 </pre>
 
 
+<<<<<<< HEAD
 <pre class="output">
 &#40;oo, nan&#41;
+=======
+<pre class="julia-error">
+ERROR: LoadError: UndefVarError: @syms not defined
+in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/integrals/improper_integrals.jmd:2
+>>>>>>> master
 </pre>
 
 
@@ -377,8 +400,8 @@ $( document ).ready(function() {
 </pre>
 
 
-<pre class="output">
-&#40;3.999999962817228, 5.736423067171012e-8&#41;
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
 </pre>
 
 
@@ -438,21 +461,35 @@ $( document ).ready(function() {
 <p>Is <span class="math">$f(x) = 1/x^{100}$</span> integrable around <span class="math">$0$</span>?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="OQB5NSUK" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_OQB5NSUK" id="radio_OQB5NSUK_1" value="1">
   <label class="form-check-label" for="radio_OQB5NSUK_1">
+=======
+<form name="WeaveQuestion" data-id="kb7dyCKP" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_kb7dyCKP" id="radio_kb7dyCKP_1" value="1">
+  <label class="form-check-label" for="radio_kb7dyCKP_1">
+>>>>>>> master
     Yes
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_OQB5NSUK" id="radio_OQB5NSUK_2" value="2">
   <label class="form-check-label" for="radio_OQB5NSUK_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_kb7dyCKP" id="radio_kb7dyCKP_2" value="2">
+  <label class="form-check-label" for="radio_kb7dyCKP_2">
+>>>>>>> master
     No
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="OQB5NSUK_message"></div>
 </div>
 </form>
@@ -464,6 +501,19 @@ $("input:radio[name='radio_OQB5NSUK']").on("change", function() {
      $("#OQB5NSUK_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#OQB5NSUK_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="kb7dyCKP_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_kb7dyCKP']").on("change", function() {
+  correct = this.value == 2;
+
+  if(correct) {
+     $("#kb7dyCKP_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#kb7dyCKP_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -474,21 +524,35 @@ $("input:radio[name='radio_OQB5NSUK']").on("change", function() {
 <p>Is <span class="math">$f(x) = 1/x^{1/3}$</span> integrable around <span class="math">$0$</span>?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="cmWdaV3E" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_cmWdaV3E" id="radio_cmWdaV3E_1" value="1">
   <label class="form-check-label" for="radio_cmWdaV3E_1">
+=======
+<form name="WeaveQuestion" data-id="L3JIunPx" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_L3JIunPx" id="radio_L3JIunPx_1" value="1">
+  <label class="form-check-label" for="radio_L3JIunPx_1">
+>>>>>>> master
     Yes
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_cmWdaV3E" id="radio_cmWdaV3E_2" value="2">
   <label class="form-check-label" for="radio_cmWdaV3E_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_L3JIunPx" id="radio_L3JIunPx_2" value="2">
+  <label class="form-check-label" for="radio_L3JIunPx_2">
+>>>>>>> master
     No
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="cmWdaV3E_message"></div>
 </div>
 </form>
@@ -500,6 +564,19 @@ $("input:radio[name='radio_cmWdaV3E']").on("change", function() {
      $("#cmWdaV3E_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#cmWdaV3E_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="L3JIunPx_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_L3JIunPx']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#L3JIunPx_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#L3JIunPx_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -510,21 +587,35 @@ $("input:radio[name='radio_cmWdaV3E']").on("change", function() {
 <p>Is <span class="math">$f(x) = x\cdot\log(x)$</span> integrable on <span class="math">$[1,\infty)$</span>?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="MChyNXAA" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_MChyNXAA" id="radio_MChyNXAA_1" value="1">
   <label class="form-check-label" for="radio_MChyNXAA_1">
+=======
+<form name="WeaveQuestion" data-id="xkyJop9R" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_xkyJop9R" id="radio_xkyJop9R_1" value="1">
+  <label class="form-check-label" for="radio_xkyJop9R_1">
+>>>>>>> master
     Yes
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_MChyNXAA" id="radio_MChyNXAA_2" value="2">
   <label class="form-check-label" for="radio_MChyNXAA_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_xkyJop9R" id="radio_xkyJop9R_2" value="2">
+  <label class="form-check-label" for="radio_xkyJop9R_2">
+>>>>>>> master
     No
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="MChyNXAA_message"></div>
 </div>
 </form>
@@ -536,6 +627,19 @@ $("input:radio[name='radio_MChyNXAA']").on("change", function() {
      $("#MChyNXAA_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#MChyNXAA_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="xkyJop9R_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_xkyJop9R']").on("change", function() {
+  correct = this.value == 2;
+
+  if(correct) {
+     $("#xkyJop9R_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#xkyJop9R_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -546,21 +650,35 @@ $("input:radio[name='radio_MChyNXAA']").on("change", function() {
 <p>Is <span class="math">$f(x) = \log(x)/ x$</span> integrable on <span class="math">$[1,\infty)$</span>?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="bqMUALrq" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_bqMUALrq" id="radio_bqMUALrq_1" value="1">
   <label class="form-check-label" for="radio_bqMUALrq_1">
+=======
+<form name="WeaveQuestion" data-id="mai9FtDT" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_mai9FtDT" id="radio_mai9FtDT_1" value="1">
+  <label class="form-check-label" for="radio_mai9FtDT_1">
+>>>>>>> master
     Yes
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_bqMUALrq" id="radio_bqMUALrq_2" value="2">
   <label class="form-check-label" for="radio_bqMUALrq_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_mai9FtDT" id="radio_mai9FtDT_2" value="2">
+  <label class="form-check-label" for="radio_mai9FtDT_2">
+>>>>>>> master
     No
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="bqMUALrq_message"></div>
 </div>
 </form>
@@ -572,6 +690,19 @@ $("input:radio[name='radio_bqMUALrq']").on("change", function() {
      $("#bqMUALrq_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#bqMUALrq_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="mai9FtDT_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_mai9FtDT']").on("change", function() {
+  correct = this.value == 2;
+
+  if(correct) {
+     $("#mai9FtDT_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#mai9FtDT_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -582,21 +713,35 @@ $("input:radio[name='radio_bqMUALrq']").on("change", function() {
 <p>Is <span class="math">$f(x) = \log(x)$</span> integrable on <span class="math">$[1,\infty)$</span>?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="lAl539Of" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_lAl539Of" id="radio_lAl539Of_1" value="1">
   <label class="form-check-label" for="radio_lAl539Of_1">
+=======
+<form name="WeaveQuestion" data-id="gIDrkLfS" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_gIDrkLfS" id="radio_gIDrkLfS_1" value="1">
+  <label class="form-check-label" for="radio_gIDrkLfS_1">
+>>>>>>> master
     Yes
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_lAl539Of" id="radio_lAl539Of_2" value="2">
   <label class="form-check-label" for="radio_lAl539Of_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_gIDrkLfS" id="radio_gIDrkLfS_2" value="2">
+  <label class="form-check-label" for="radio_gIDrkLfS_2">
+>>>>>>> master
     No
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="lAl539Of_message"></div>
 </div>
 </form>
@@ -608,6 +753,19 @@ $("input:radio[name='radio_lAl539Of']").on("change", function() {
      $("#lAl539Of_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#lAl539Of_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="gIDrkLfS_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_gIDrkLfS']").on("change", function() {
+  correct = this.value == 2;
+
+  if(correct) {
+     $("#gIDrkLfS_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#gIDrkLfS_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -617,6 +775,7 @@ $("input:radio[name='radio_lAl539Of']").on("change", function() {
 <h6>Question</h6>
 <p>Compute the integral <span class="math">$\int_0^\infty 1/(1+x^2) dx$</span>.</p>
 
+<<<<<<< HEAD
 
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='egXAGXxO' data-controltype='numeric'>
 <div class='form-group '>
@@ -644,11 +803,17 @@ $('#egXAGXxO').on('change', function() {
   }
 });
 </script>
+=======
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
+</pre>
+>>>>>>> master
 
 
 <h6>Question</h6>
 <p>Compute the the integral <span class="math">$\int_1^\infty \log(x)/x^2 dx$</span>.</p>
 
+<<<<<<< HEAD
 
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='jIdb7ejX' data-controltype='numeric'>
 <div class='form-group '>
@@ -676,11 +841,17 @@ $('#jIdb7ejX').on('change', function() {
   }
 });
 </script>
+=======
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
+</pre>
+>>>>>>> master
 
 
 <h6>Question</h6>
 <p>Compute the integral <span class="math">$\int_0^2 (x-1)^{2/3} dx$</span>.</p>
 
+<<<<<<< HEAD
 
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='J4IKqx13' data-controltype='numeric'>
 <div class='form-group '>
@@ -708,6 +879,11 @@ $('#J4IKqx13').on('change', function() {
   }
 });
 </script>
+=======
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
+</pre>
+>>>>>>> master
 
 
 <h6>Question</h6>
@@ -722,27 +898,46 @@ $('#J4IKqx13').on('change', function() {
 <p>What can you say about <span class="math">$\int_1^\infty f(x) dx$</span>, as <span class="math">$f(x) \leq 1/x^2$</span> on <span class="math">$[1, \infty)$</span>?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="KKhmOhHA" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_KKhmOhHA" id="radio_KKhmOhHA_1" value="1">
   <label class="form-check-label" for="radio_KKhmOhHA_1">
+=======
+<form name="WeaveQuestion" data-id="Un74QsJR" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_Un74QsJR" id="radio_Un74QsJR_1" value="1">
+  <label class="form-check-label" for="radio_Un74QsJR_1">
+>>>>>>> master
     It is convergent
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_KKhmOhHA" id="radio_KKhmOhHA_2" value="2">
   <label class="form-check-label" for="radio_KKhmOhHA_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_Un74QsJR" id="radio_Un74QsJR_2" value="2">
+  <label class="form-check-label" for="radio_Un74QsJR_2">
+>>>>>>> master
     It is divergent
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_KKhmOhHA" id="radio_KKhmOhHA_3" value="3">
   <label class="form-check-label" for="radio_KKhmOhHA_3">
+=======
+  <input class="form-check-input" type="radio" name="radio_Un74QsJR" id="radio_Un74QsJR_3" value="3">
+  <label class="form-check-label" for="radio_Un74QsJR_3">
+>>>>>>> master
     Can&#39;t say
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="KKhmOhHA_message"></div>
 </div>
 </form>
@@ -754,6 +949,19 @@ $("input:radio[name='radio_KKhmOhHA']").on("change", function() {
      $("#KKhmOhHA_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#KKhmOhHA_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="Un74QsJR_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_Un74QsJR']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#Un74QsJR_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#Un74QsJR_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -765,27 +973,46 @@ $("input:radio[name='radio_KKhmOhHA']").on("change", function() {
 <p>What can you say about <span class="math">$\int_1^\infty f(x) dx$</span>, as <span class="math">$f(x) \leq 1/x$</span> on <span class="math">$[1, \infty)$</span>?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="V2EBOprT" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_V2EBOprT" id="radio_V2EBOprT_1" value="1">
   <label class="form-check-label" for="radio_V2EBOprT_1">
+=======
+<form name="WeaveQuestion" data-id="72OViGq1" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_72OViGq1" id="radio_72OViGq1_1" value="1">
+  <label class="form-check-label" for="radio_72OViGq1_1">
+>>>>>>> master
     It is convergent
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_V2EBOprT" id="radio_V2EBOprT_2" value="2">
   <label class="form-check-label" for="radio_V2EBOprT_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_72OViGq1" id="radio_72OViGq1_2" value="2">
+  <label class="form-check-label" for="radio_72OViGq1_2">
+>>>>>>> master
     It is divergent
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_V2EBOprT" id="radio_V2EBOprT_3" value="3">
   <label class="form-check-label" for="radio_V2EBOprT_3">
+=======
+  <input class="form-check-input" type="radio" name="radio_72OViGq1" id="radio_72OViGq1_3" value="3">
+  <label class="form-check-label" for="radio_72OViGq1_3">
+>>>>>>> master
     Can&#39;t say
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="V2EBOprT_message"></div>
 </div>
 </form>
@@ -797,6 +1024,19 @@ $("input:radio[name='radio_V2EBOprT']").on("change", function() {
      $("#V2EBOprT_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#V2EBOprT_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="72OViGq1_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_72OViGq1']").on("change", function() {
+  correct = this.value == 3;
+
+  if(correct) {
+     $("#72OViGq1_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#72OViGq1_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -807,27 +1047,46 @@ $("input:radio[name='radio_V2EBOprT']").on("change", function() {
 <p>Let <span class="math">$f(x) = 1/\sqrt{x^2 - 1}$</span>. What can you say about <span class="math">$\int_1^\infty f(x) dx$</span>, as <span class="math">$f(x) \geq 1/x$</span> on <span class="math">$[1, \infty)$</span>?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="O0EqpgAF" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_O0EqpgAF" id="radio_O0EqpgAF_1" value="1">
   <label class="form-check-label" for="radio_O0EqpgAF_1">
+=======
+<form name="WeaveQuestion" data-id="mbpDrZMs" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_mbpDrZMs" id="radio_mbpDrZMs_1" value="1">
+  <label class="form-check-label" for="radio_mbpDrZMs_1">
+>>>>>>> master
     It is convergent
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_O0EqpgAF" id="radio_O0EqpgAF_2" value="2">
   <label class="form-check-label" for="radio_O0EqpgAF_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_mbpDrZMs" id="radio_mbpDrZMs_2" value="2">
+  <label class="form-check-label" for="radio_mbpDrZMs_2">
+>>>>>>> master
     It is divergent
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_O0EqpgAF" id="radio_O0EqpgAF_3" value="3">
   <label class="form-check-label" for="radio_O0EqpgAF_3">
+=======
+  <input class="form-check-input" type="radio" name="radio_mbpDrZMs" id="radio_mbpDrZMs_3" value="3">
+  <label class="form-check-label" for="radio_mbpDrZMs_3">
+>>>>>>> master
     Can&#39;t say
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="O0EqpgAF_message"></div>
 </div>
 </form>
@@ -839,6 +1098,19 @@ $("input:radio[name='radio_O0EqpgAF']").on("change", function() {
      $("#O0EqpgAF_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#O0EqpgAF_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="mbpDrZMs_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_mbpDrZMs']").on("change", function() {
+  correct = this.value == 2;
+
+  if(correct) {
+     $("#mbpDrZMs_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#mbpDrZMs_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -849,27 +1121,46 @@ $("input:radio[name='radio_O0EqpgAF']").on("change", function() {
 <p>Let <span class="math">$f(x) = 1 + 4x^2$</span>. What can you say about <span class="math">$\int_1^\infty f(x) dx$</span>, as <span class="math">$f(x) \leq 1/x^2$</span> on <span class="math">$[1, \infty)$</span>?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="xbBx66dD" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_xbBx66dD" id="radio_xbBx66dD_1" value="1">
   <label class="form-check-label" for="radio_xbBx66dD_1">
+=======
+<form name="WeaveQuestion" data-id="T8raiQnr" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_T8raiQnr" id="radio_T8raiQnr_1" value="1">
+  <label class="form-check-label" for="radio_T8raiQnr_1">
+>>>>>>> master
     It is convergent
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_xbBx66dD" id="radio_xbBx66dD_2" value="2">
   <label class="form-check-label" for="radio_xbBx66dD_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_T8raiQnr" id="radio_T8raiQnr_2" value="2">
+  <label class="form-check-label" for="radio_T8raiQnr_2">
+>>>>>>> master
     It is divergent
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_xbBx66dD" id="radio_xbBx66dD_3" value="3">
   <label class="form-check-label" for="radio_xbBx66dD_3">
+=======
+  <input class="form-check-input" type="radio" name="radio_T8raiQnr" id="radio_T8raiQnr_3" value="3">
+  <label class="form-check-label" for="radio_T8raiQnr_3">
+>>>>>>> master
     Can&#39;t say
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="xbBx66dD_message"></div>
 </div>
 </form>
@@ -881,6 +1172,19 @@ $("input:radio[name='radio_xbBx66dD']").on("change", function() {
      $("#xbBx66dD_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#xbBx66dD_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="T8raiQnr_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_T8raiQnr']").on("change", function() {
+  correct = this.value == 2;
+
+  if(correct) {
+     $("#T8raiQnr_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#T8raiQnr_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -891,27 +1195,46 @@ $("input:radio[name='radio_xbBx66dD']").on("change", function() {
 <p>Let <span class="math">$f(x) = \lvert \sin(x)^{10}\rvert/e^x$</span>. What can you say about <span class="math">$\int_1^\infty f(x) dx$</span>, as <span class="math">$f(x) \leq e^{-x}$</span> on <span class="math">$[1, \infty)$</span>?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="foX7jpPl" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_foX7jpPl" id="radio_foX7jpPl_1" value="1">
   <label class="form-check-label" for="radio_foX7jpPl_1">
+=======
+<form name="WeaveQuestion" data-id="i1eAKE6r" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_i1eAKE6r" id="radio_i1eAKE6r_1" value="1">
+  <label class="form-check-label" for="radio_i1eAKE6r_1">
+>>>>>>> master
     It is convergent
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_foX7jpPl" id="radio_foX7jpPl_2" value="2">
   <label class="form-check-label" for="radio_foX7jpPl_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_i1eAKE6r" id="radio_i1eAKE6r_2" value="2">
+  <label class="form-check-label" for="radio_i1eAKE6r_2">
+>>>>>>> master
     It is divergent
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_foX7jpPl" id="radio_foX7jpPl_3" value="3">
   <label class="form-check-label" for="radio_foX7jpPl_3">
+=======
+  <input class="form-check-input" type="radio" name="radio_i1eAKE6r" id="radio_i1eAKE6r_3" value="3">
+  <label class="form-check-label" for="radio_i1eAKE6r_3">
+>>>>>>> master
     Can&#39;t say
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="foX7jpPl_message"></div>
 </div>
 </form>
@@ -923,6 +1246,19 @@ $("input:radio[name='radio_foX7jpPl']").on("change", function() {
      $("#foX7jpPl_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#foX7jpPl_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="i1eAKE6r_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_i1eAKE6r']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#i1eAKE6r_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#i1eAKE6r_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -933,30 +1269,51 @@ $("input:radio[name='radio_foX7jpPl']").on("change", function() {
 <p>The difference between &quot;blowing up&quot; at <span class="math">$0$</span> versus being integrable at <span class="math">$\infty$</span> can be seen to be related through the <span class="math">$u$</span>-substitution <span class="math">$u=1/x$</span>. With this <span class="math">$u$</span>-substitution, what becomes of <span class="math">$\int_0^1 x^{-2/3} dx$</span>?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="WgqMY3Sl" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_WgqMY3Sl" id="radio_WgqMY3Sl_1" value="1">
   <label class="form-check-label" for="radio_WgqMY3Sl_1">
+=======
+<form name="WeaveQuestion" data-id="qydmu3Kt" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_qydmu3Kt" id="radio_qydmu3Kt_1" value="1">
+  <label class="form-check-label" for="radio_qydmu3Kt_1">
+>>>>>>> master
     &#36;\int_0^1 u^&#123;2/3&#125; \cdot du&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_WgqMY3Sl" id="radio_WgqMY3Sl_2" value="2">
   <label class="form-check-label" for="radio_WgqMY3Sl_2">
     &#36;\int_1^\infty u^&#123;2/3&#125;/u^2 \cdot du&#36;
+=======
+  <input class="form-check-input" type="radio" name="radio_qydmu3Kt" id="radio_qydmu3Kt_2" value="2">
+  <label class="form-check-label" for="radio_qydmu3Kt_2">
+    &#36;\int_0^\infty 1/u \cdot du&#36;
+>>>>>>> master
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_WgqMY3Sl" id="radio_WgqMY3Sl_3" value="3">
   <label class="form-check-label" for="radio_WgqMY3Sl_3">
     &#36;\int_0^\infty 1/u \cdot du&#36;
+=======
+  <input class="form-check-input" type="radio" name="radio_qydmu3Kt" id="radio_qydmu3Kt_3" value="3">
+  <label class="form-check-label" for="radio_qydmu3Kt_3">
+    &#36;\int_1^\infty u^&#123;2/3&#125;/u^2 \cdot du&#36;
+>>>>>>> master
 
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="WgqMY3Sl_message"></div>
 </div>
 </form>
@@ -968,6 +1325,19 @@ $("input:radio[name='radio_WgqMY3Sl']").on("change", function() {
      $("#WgqMY3Sl_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#WgqMY3Sl_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="qydmu3Kt_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_qydmu3Kt']").on("change", function() {
+  correct = this.value == 3;
+
+  if(correct) {
+     $("#qydmu3Kt_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#qydmu3Kt_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -978,7 +1348,11 @@ $("input:radio[name='radio_WgqMY3Sl']").on("change", function() {
 <p>The antiderivative of <span class="math">$f(x) = 1/\pi \cdot 1/\sqrt{x(1-x)}$</span> is <span class="math">$F(x)=(2/\pi)\cdot \sin^{-1}(\sqrt{x})$</span>.</p>
 <p>Find <span class="math">$\int_0^1 f(x) dx$</span>.</p>
 
+<pre class="julia-error">
+ERROR: UndefVarError: quadgk not defined
+</pre>
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='e8fVgjkH' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
@@ -1005,6 +1379,14 @@ $('#e8fVgjkH').on('change', function() {
   }
 });
 </script>
+=======
+
+<hr />
+
+<pre class="julia-error">
+ERROR: &#91;:integrals, :improper_integrals&#93;
+</pre>
+>>>>>>> master
 
 
 

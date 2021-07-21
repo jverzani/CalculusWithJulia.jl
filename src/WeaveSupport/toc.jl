@@ -37,6 +37,7 @@ table_of_contents = [
     :derivatives		:related_rates;
     :derivatives		:taylor_series_polynomials;
 
+
     :integrals		:area;
     :integrals		:ftc;
     :integrals		:substitution;

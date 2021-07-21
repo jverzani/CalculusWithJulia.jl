@@ -321,6 +321,7 @@ f''(c) = \lim_{h \rightarrow 0} \frac{f(c + h) - 2f(c) + f(c-h)}{h^2}.
 <p>The proof of L&#39;Hospital&#39;s rule takes advantage of Cauchy&#39;s <a href="http://en.wikipedia.org/wiki/Mean_value_theorem#Cauchy.27s_mean_value_theorem">generalization</a> of the mean value theorem to two functions. Let <span class="math">$f(x)$</span> and <span class="math">$g(x)$</span> be continuous on <span class="math">$[a,b]$</span> and differentiable on <span class="math">$(a,b)$</span> so that on <span class="math">$[c,c+x]$</span> there exists a <span class="math">$\xi$</span> with <span class="math">$f'(\xi) \cdot (f(x) - f(c)) = g'(\xi) \cdot (g(x) - g(c))$</span>. In our formulation, both <span class="math">$f(c)$</span> and <span class="math">$g(c)$</span> are zero, so we have, provided we know that <span class="math">$g(x)$</span> is non zero, that <span class="math">$f(x)/g(x) = f'(\xi)/g'(\xi)$</span> for some <span class="math">$\xi$</span>, <span class="math">$c < \xi < c + x$</span>. That the right-hand side has a limit as <span class="math">$x \rightarrow c+$</span> is true by the assumption that the limit of the derivative&#39;s ratio exists. &#40;The <span class="math">$\xi$</span> part can be removed by considering it as a composition of a function going to <span class="math">$c$</span>.&#41; Thus the right limit of the left hand side is known. Similarly, working with <span class="math">$[c-x, c]$</span> we can get the left limit is known and is equal to the right.</p>
 <h3>L&#39;Hospital&#39;s picture</h3>
 
+<<<<<<< HEAD
 
 <div class="d-flex justify-content-center">
 <div class="card border-light mx-3 px-3 my-3 py-3" style=" max-width: 560px;">
@@ -336,6 +337,11 @@ f''(c) = \lim_{h \rightarrow 0} \frac{f(c + h) - 2f(c) + f(c-h)}{h^2}.
   </div>
 </div>
 </div>
+=======
+<pre class="julia-error">
+ERROR: UndefVarError: fzero not defined
+</pre>
+>>>>>>> master
 
 
 <h2>Generalizations</h2>
@@ -407,8 +413,9 @@ x^x = \exp(\log(x^x)) = \exp(x \log(x)) = \exp(\log(x)/(1/x)).
 </pre>
 
 
-<pre class="output">
-g &#40;generic function with 1 method&#41;
+<pre class="julia-error">
+ERROR: LoadError: UndefVarError: @syms not defined
+in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/derivatives/lhospitals_rule.jmd:4
 </pre>
 
 
@@ -420,8 +427,8 @@ g &#40;generic function with 1 method&#41;
 </pre>
 
 
-<pre class="output">
-&#40;0, 0&#41;
+<pre class="julia-error">
+ERROR: UndefVarError: f not defined
 </pre>
 
 
@@ -434,8 +441,8 @@ g &#40;generic function with 1 method&#41;
 </pre>
 
 
-<pre class="output">
-&#40;-4*a/3, -3/4&#41;
+<pre class="julia-error">
+ERROR: UndefVarError: f not defined
 </pre>
 
 
@@ -447,9 +454,15 @@ g &#40;generic function with 1 method&#41;
 </pre>
 
 
+<pre class="julia-error">
+ERROR: UndefVarError: fp not defined
+</pre>
 
+<<<<<<< HEAD
 <div class="output">$\frac{16 a}{9}$
 </div>
+=======
+>>>>>>> master
 
 <p>Of course, we could have just relied on <code>limit</code>, which knows about L&#39;Hospital&#39;s rule:</p>
 
@@ -459,53 +472,88 @@ g &#40;generic function with 1 method&#41;
 </pre>
 
 
+<pre class="julia-error">
+ERROR: UndefVarError: f not defined
+</pre>
 
+<<<<<<< HEAD
 <div class="output">$\frac{16 a}{9}$
 </div>
+=======
+>>>>>>> master
 
 <h2>Questions</h2>
 <h6>Question</h6>
 <p>This function <span class="math">$f(x) = \sin(5x)/x$</span> is <em>indeterminate</em> at <span class="math">$x=0$</span>. What type?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="yCE9S14A" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_yCE9S14A" id="radio_yCE9S14A_1" value="1">
   <label class="form-check-label" for="radio_yCE9S14A_1">
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="qnkBtbiR" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_qnkBtbiR" id="radio_qnkBtbiR_1" value="1">
+  <label class="form-check-label" for="radio_qnkBtbiR_1">
+>>>>>>> master
     &#36;0/0&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_yCE9S14A" id="radio_yCE9S14A_2" value="2">
   <label class="form-check-label" for="radio_yCE9S14A_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_qnkBtbiR" id="radio_qnkBtbiR_2" value="2">
+  <label class="form-check-label" for="radio_qnkBtbiR_2">
+>>>>>>> master
     &#36;\infty/\infty&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_yCE9S14A" id="radio_yCE9S14A_3" value="3">
   <label class="form-check-label" for="radio_yCE9S14A_3">
+=======
+  <input class="form-check-input" type="radio" name="radio_qnkBtbiR" id="radio_qnkBtbiR_3" value="3">
+  <label class="form-check-label" for="radio_qnkBtbiR_3">
+>>>>>>> master
     &#36;0^0&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_yCE9S14A" id="radio_yCE9S14A_4" value="4">
   <label class="form-check-label" for="radio_yCE9S14A_4">
+=======
+  <input class="form-check-input" type="radio" name="radio_qnkBtbiR" id="radio_qnkBtbiR_4" value="4">
+  <label class="form-check-label" for="radio_qnkBtbiR_4">
+>>>>>>> master
     &#36;\infty - \infty&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_yCE9S14A" id="radio_yCE9S14A_5" value="5">
   <label class="form-check-label" for="radio_yCE9S14A_5">
+=======
+  <input class="form-check-input" type="radio" name="radio_qnkBtbiR" id="radio_qnkBtbiR_5" value="5">
+  <label class="form-check-label" for="radio_qnkBtbiR_5">
+>>>>>>> master
     &#36;0 \cdot \infty&#36;
 
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="yCE9S14A_message"></div>
 </div>
 </form>
@@ -517,6 +565,19 @@ $("input:radio[name='radio_yCE9S14A']").on("change", function() {
      $("#yCE9S14A_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#yCE9S14A_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="qnkBtbiR_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_qnkBtbiR']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#qnkBtbiR_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#qnkBtbiR_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -527,44 +588,73 @@ $("input:radio[name='radio_yCE9S14A']").on("change", function() {
 <p>This function <span class="math">$f(x) = \sin(x)^{\sin(x)}$</span> is <em>indeterminate</em> at <span class="math">$x=0$</span>. What type?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="ynpKEEWY" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_ynpKEEWY" id="radio_ynpKEEWY_1" value="1">
   <label class="form-check-label" for="radio_ynpKEEWY_1">
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="zQYdEx3v" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_zQYdEx3v" id="radio_zQYdEx3v_1" value="1">
+  <label class="form-check-label" for="radio_zQYdEx3v_1">
+>>>>>>> master
     &#36;0/0&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_ynpKEEWY" id="radio_ynpKEEWY_2" value="2">
   <label class="form-check-label" for="radio_ynpKEEWY_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_zQYdEx3v" id="radio_zQYdEx3v_2" value="2">
+  <label class="form-check-label" for="radio_zQYdEx3v_2">
+>>>>>>> master
     &#36;\infty/\infty&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_ynpKEEWY" id="radio_ynpKEEWY_3" value="3">
   <label class="form-check-label" for="radio_ynpKEEWY_3">
+=======
+  <input class="form-check-input" type="radio" name="radio_zQYdEx3v" id="radio_zQYdEx3v_3" value="3">
+  <label class="form-check-label" for="radio_zQYdEx3v_3">
+>>>>>>> master
     &#36;0^0&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_ynpKEEWY" id="radio_ynpKEEWY_4" value="4">
   <label class="form-check-label" for="radio_ynpKEEWY_4">
+=======
+  <input class="form-check-input" type="radio" name="radio_zQYdEx3v" id="radio_zQYdEx3v_4" value="4">
+  <label class="form-check-label" for="radio_zQYdEx3v_4">
+>>>>>>> master
     &#36;\infty - \infty&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_ynpKEEWY" id="radio_ynpKEEWY_5" value="5">
   <label class="form-check-label" for="radio_ynpKEEWY_5">
+=======
+  <input class="form-check-input" type="radio" name="radio_zQYdEx3v" id="radio_zQYdEx3v_5" value="5">
+  <label class="form-check-label" for="radio_zQYdEx3v_5">
+>>>>>>> master
     &#36;0 \cdot \infty&#36;
 
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="ynpKEEWY_message"></div>
 </div>
 </form>
@@ -576,6 +666,19 @@ $("input:radio[name='radio_ynpKEEWY']").on("change", function() {
      $("#ynpKEEWY_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#ynpKEEWY_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="zQYdEx3v_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_zQYdEx3v']").on("change", function() {
+  correct = this.value == 3;
+
+  if(correct) {
+     $("#zQYdEx3v_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#zQYdEx3v_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -586,44 +689,73 @@ $("input:radio[name='radio_ynpKEEWY']").on("change", function() {
 <p>This function <span class="math">$f(x) = (x-2)/(x^2 - 4)$</span> is <em>indeterminate</em> at <span class="math">$x=2$</span>. What type?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="CBHRpW8e" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_CBHRpW8e" id="radio_CBHRpW8e_1" value="1">
   <label class="form-check-label" for="radio_CBHRpW8e_1">
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Z1x8u0de" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_Z1x8u0de" id="radio_Z1x8u0de_1" value="1">
+  <label class="form-check-label" for="radio_Z1x8u0de_1">
+>>>>>>> master
     &#36;0/0&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_CBHRpW8e" id="radio_CBHRpW8e_2" value="2">
   <label class="form-check-label" for="radio_CBHRpW8e_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_Z1x8u0de" id="radio_Z1x8u0de_2" value="2">
+  <label class="form-check-label" for="radio_Z1x8u0de_2">
+>>>>>>> master
     &#36;\infty/\infty&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_CBHRpW8e" id="radio_CBHRpW8e_3" value="3">
   <label class="form-check-label" for="radio_CBHRpW8e_3">
+=======
+  <input class="form-check-input" type="radio" name="radio_Z1x8u0de" id="radio_Z1x8u0de_3" value="3">
+  <label class="form-check-label" for="radio_Z1x8u0de_3">
+>>>>>>> master
     &#36;0^0&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_CBHRpW8e" id="radio_CBHRpW8e_4" value="4">
   <label class="form-check-label" for="radio_CBHRpW8e_4">
+=======
+  <input class="form-check-input" type="radio" name="radio_Z1x8u0de" id="radio_Z1x8u0de_4" value="4">
+  <label class="form-check-label" for="radio_Z1x8u0de_4">
+>>>>>>> master
     &#36;\infty - \infty&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_CBHRpW8e" id="radio_CBHRpW8e_5" value="5">
   <label class="form-check-label" for="radio_CBHRpW8e_5">
+=======
+  <input class="form-check-input" type="radio" name="radio_Z1x8u0de" id="radio_Z1x8u0de_5" value="5">
+  <label class="form-check-label" for="radio_Z1x8u0de_5">
+>>>>>>> master
     &#36;0 \cdot \infty&#36;
 
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="CBHRpW8e_message"></div>
 </div>
 </form>
@@ -635,6 +767,19 @@ $("input:radio[name='radio_CBHRpW8e']").on("change", function() {
      $("#CBHRpW8e_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#CBHRpW8e_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="Z1x8u0de_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_Z1x8u0de']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#Z1x8u0de_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#Z1x8u0de_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -645,44 +790,73 @@ $("input:radio[name='radio_CBHRpW8e']").on("change", function() {
 <p>This function <span class="math">$f(x) = (g(x+h) - g(x-h)) / (2h)$</span> &#40;<span class="math">$g$</span> is continuous&#41; is <em>indeterminate</em> at <span class="math">$h=0$</span>. What type?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="C06QdUw3" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_C06QdUw3" id="radio_C06QdUw3_1" value="1">
   <label class="form-check-label" for="radio_C06QdUw3_1">
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="1JKqLYuo" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_1JKqLYuo" id="radio_1JKqLYuo_1" value="1">
+  <label class="form-check-label" for="radio_1JKqLYuo_1">
+>>>>>>> master
     &#36;0/0&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_C06QdUw3" id="radio_C06QdUw3_2" value="2">
   <label class="form-check-label" for="radio_C06QdUw3_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_1JKqLYuo" id="radio_1JKqLYuo_2" value="2">
+  <label class="form-check-label" for="radio_1JKqLYuo_2">
+>>>>>>> master
     &#36;\infty/\infty&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_C06QdUw3" id="radio_C06QdUw3_3" value="3">
   <label class="form-check-label" for="radio_C06QdUw3_3">
+=======
+  <input class="form-check-input" type="radio" name="radio_1JKqLYuo" id="radio_1JKqLYuo_3" value="3">
+  <label class="form-check-label" for="radio_1JKqLYuo_3">
+>>>>>>> master
     &#36;0^0&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_C06QdUw3" id="radio_C06QdUw3_4" value="4">
   <label class="form-check-label" for="radio_C06QdUw3_4">
+=======
+  <input class="form-check-input" type="radio" name="radio_1JKqLYuo" id="radio_1JKqLYuo_4" value="4">
+  <label class="form-check-label" for="radio_1JKqLYuo_4">
+>>>>>>> master
     &#36;\infty - \infty&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_C06QdUw3" id="radio_C06QdUw3_5" value="5">
   <label class="form-check-label" for="radio_C06QdUw3_5">
+=======
+  <input class="form-check-input" type="radio" name="radio_1JKqLYuo" id="radio_1JKqLYuo_5" value="5">
+  <label class="form-check-label" for="radio_1JKqLYuo_5">
+>>>>>>> master
     &#36;0 \cdot \infty&#36;
 
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="C06QdUw3_message"></div>
 </div>
 </form>
@@ -694,6 +868,19 @@ $("input:radio[name='radio_C06QdUw3']").on("change", function() {
      $("#C06QdUw3_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#C06QdUw3_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="1JKqLYuo_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_1JKqLYuo']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#1JKqLYuo_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#1JKqLYuo_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -704,44 +891,73 @@ $("input:radio[name='radio_C06QdUw3']").on("change", function() {
 <p>This function <span class="math">$f(x) = x \log(x)$</span> is <em>indeterminate</em> at <span class="math">$x=0$</span>. What type?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="IAmqk6Fe" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_IAmqk6Fe" id="radio_IAmqk6Fe_1" value="1">
   <label class="form-check-label" for="radio_IAmqk6Fe_1">
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Jbbhm31t" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_Jbbhm31t" id="radio_Jbbhm31t_1" value="1">
+  <label class="form-check-label" for="radio_Jbbhm31t_1">
+>>>>>>> master
     &#36;0/0&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_IAmqk6Fe" id="radio_IAmqk6Fe_2" value="2">
   <label class="form-check-label" for="radio_IAmqk6Fe_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_Jbbhm31t" id="radio_Jbbhm31t_2" value="2">
+  <label class="form-check-label" for="radio_Jbbhm31t_2">
+>>>>>>> master
     &#36;\infty/\infty&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_IAmqk6Fe" id="radio_IAmqk6Fe_3" value="3">
   <label class="form-check-label" for="radio_IAmqk6Fe_3">
+=======
+  <input class="form-check-input" type="radio" name="radio_Jbbhm31t" id="radio_Jbbhm31t_3" value="3">
+  <label class="form-check-label" for="radio_Jbbhm31t_3">
+>>>>>>> master
     &#36;0^0&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_IAmqk6Fe" id="radio_IAmqk6Fe_4" value="4">
   <label class="form-check-label" for="radio_IAmqk6Fe_4">
+=======
+  <input class="form-check-input" type="radio" name="radio_Jbbhm31t" id="radio_Jbbhm31t_4" value="4">
+  <label class="form-check-label" for="radio_Jbbhm31t_4">
+>>>>>>> master
     &#36;\infty - \infty&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_IAmqk6Fe" id="radio_IAmqk6Fe_5" value="5">
   <label class="form-check-label" for="radio_IAmqk6Fe_5">
+=======
+  <input class="form-check-input" type="radio" name="radio_Jbbhm31t" id="radio_Jbbhm31t_5" value="5">
+  <label class="form-check-label" for="radio_Jbbhm31t_5">
+>>>>>>> master
     &#36;0 \cdot \infty&#36;
 
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="IAmqk6Fe_message"></div>
 </div>
 </form>
@@ -753,6 +969,19 @@ $("input:radio[name='radio_IAmqk6Fe']").on("change", function() {
      $("#IAmqk6Fe_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#IAmqk6Fe_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="Jbbhm31t_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_Jbbhm31t']").on("change", function() {
+  correct = this.value == 5;
+
+  if(correct) {
+     $("#Jbbhm31t_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#Jbbhm31t_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -768,6 +997,7 @@ $("input:radio[name='radio_IAmqk6Fe']").on("change", function() {
 \]</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="KX6yoMWK" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
@@ -794,6 +1024,34 @@ $("input:radio[name='radio_KX6yoMWK']").on("change", function() {
      $("#KX6yoMWK_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#KX6yoMWK_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Hwn13ivI" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_Hwn13ivI" id="radio_Hwn13ivI_1" value="1">
+  <label class="form-check-label" for="radio_Hwn13ivI_1">
+    No. It is not indeterminate
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_Hwn13ivI" id="radio_Hwn13ivI_2" value="2">
+  <label class="form-check-label" for="radio_Hwn13ivI_2">
+    Yes. It is of the form &#36;0/0&#36;
+  </label>
+</div>
+
+<div id="Hwn13ivI_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_Hwn13ivI']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#Hwn13ivI_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#Hwn13ivI_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -810,22 +1068,36 @@ L = \lim_{x \rightarrow 0} \frac{4x - \sin(x)}{x}.
 <p>What is <span class="math">$L$</span>?</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='zbakFRP8' data-controltype='numeric'>
+=======
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='IvDO3lha' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
+<<<<<<< HEAD
 <input id="zbakFRP8" type="number" class="form-control" placeholder="Numeric answer">
 <label for="zbakFRP8">Numeric answer</label>
 
 </div>
 
 <div id='zbakFRP8_message'></div>
+=======
+<input id="IvDO3lha" type="number" class="form-control" placeholder="Numeric answer">
+<label for="IvDO3lha">Numeric answer</label>
+
+</div>
+
+<div id='IvDO3lha_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#zbakFRP8').on('change', function() {
   correct = Math.abs(this.value - 3.0) <= 0.001;
 
@@ -833,6 +1105,15 @@ $('#zbakFRP8').on('change', function() {
      $('#zbakFRP8_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#zbakFRP8_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#IvDO3lha').on('change', function() {
+  correct = Math.abs(this.value - 3.0) <= 0.001;
+
+  if(correct) {
+     $('#IvDO3lha_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#IvDO3lha_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -848,22 +1129,36 @@ L = \lim_{x \rightarrow 0} \frac{\sqrt{1+x} - 1}{x}.
 <p>What is <span class="math">$L$</span>?</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='dqRpiuqU' data-controltype='numeric'>
+=======
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='yk4pZi18' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
+<<<<<<< HEAD
 <input id="dqRpiuqU" type="number" class="form-control" placeholder="Numeric answer">
 <label for="dqRpiuqU">Numeric answer</label>
 
 </div>
 
 <div id='dqRpiuqU_message'></div>
+=======
+<input id="yk4pZi18" type="number" class="form-control" placeholder="Numeric answer">
+<label for="yk4pZi18">Numeric answer</label>
+
+</div>
+
+<div id='yk4pZi18_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#dqRpiuqU').on('change', function() {
   correct = Math.abs(this.value - 0.5) <= 0.001;
 
@@ -871,6 +1166,15 @@ $('#dqRpiuqU').on('change', function() {
      $('#dqRpiuqU_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#dqRpiuqU_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#yk4pZi18').on('change', function() {
+  correct = Math.abs(this.value - 0.5) <= 0.001;
+
+  if(correct) {
+     $('#yk4pZi18_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#yk4pZi18_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -886,22 +1190,36 @@ L = \lim_{x \rightarrow 0} \frac{x - \sin(x)}{x^3}.
 <p>What is <span class="math">$L$</span>?</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='V0FKAsBV' data-controltype='numeric'>
+=======
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='riQbmYB3' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
+<<<<<<< HEAD
 <input id="V0FKAsBV" type="number" class="form-control" placeholder="Numeric answer">
 <label for="V0FKAsBV">Numeric answer</label>
 
 </div>
 
 <div id='V0FKAsBV_message'></div>
+=======
+<input id="riQbmYB3" type="number" class="form-control" placeholder="Numeric answer">
+<label for="riQbmYB3">Numeric answer</label>
+
+</div>
+
+<div id='riQbmYB3_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#V0FKAsBV').on('change', function() {
   correct = Math.abs(this.value - 0.16666666666666666) <= 0.001;
 
@@ -909,6 +1227,15 @@ $('#V0FKAsBV').on('change', function() {
      $('#V0FKAsBV_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#V0FKAsBV_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#riQbmYB3').on('change', function() {
+  correct = Math.abs(this.value - 0.16666666666666666) <= 0.001;
+
+  if(correct) {
+     $('#riQbmYB3_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#riQbmYB3_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -924,22 +1251,36 @@ L = \lim_{x \rightarrow 0} \frac{1 - x^2/2 - \cos(x)}{x^3}.
 <p>What is <span class="math">$L$</span>?</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='Qno1txs3' data-controltype='numeric'>
+=======
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='2KRcyj0z' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
+<<<<<<< HEAD
 <input id="Qno1txs3" type="number" class="form-control" placeholder="Numeric answer">
 <label for="Qno1txs3">Numeric answer</label>
 
 </div>
 
 <div id='Qno1txs3_message'></div>
+=======
+<input id="2KRcyj0z" type="number" class="form-control" placeholder="Numeric answer">
+<label for="2KRcyj0z">Numeric answer</label>
+
+</div>
+
+<div id='2KRcyj0z_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#Qno1txs3').on('change', function() {
   correct = Math.abs(this.value - 0.0) <= 0.001;
 
@@ -947,6 +1288,15 @@ $('#Qno1txs3').on('change', function() {
      $('#Qno1txs3_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#Qno1txs3_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#2KRcyj0z').on('change', function() {
+  correct = Math.abs(this.value - 0.0) <= 0.001;
+
+  if(correct) {
+     $('#2KRcyj0z_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#2KRcyj0z_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -962,22 +1312,36 @@ L = \lim_{x \rightarrow 0} \frac{1}{x} - \frac{1}{\sin(x)}.
 <p>What is <span class="math">$L$</span>?</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='aInpmHw2' data-controltype='numeric'>
+=======
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='FC0BzlQh' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
+<<<<<<< HEAD
 <input id="aInpmHw2" type="number" class="form-control" placeholder="Numeric answer">
 <label for="aInpmHw2">Numeric answer</label>
 
 </div>
 
 <div id='aInpmHw2_message'></div>
+=======
+<input id="FC0BzlQh" type="number" class="form-control" placeholder="Numeric answer">
+<label for="FC0BzlQh">Numeric answer</label>
+
+</div>
+
+<div id='FC0BzlQh_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#aInpmHw2').on('change', function() {
   correct = Math.abs(this.value - 0.0) <= 0.001;
 
@@ -985,6 +1349,15 @@ $('#aInpmHw2').on('change', function() {
      $('#aInpmHw2_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#aInpmHw2_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#FC0BzlQh').on('change', function() {
+  correct = Math.abs(this.value - 0.0) <= 0.001;
+
+  if(correct) {
+     $('#FC0BzlQh_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#FC0BzlQh_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -1000,22 +1373,36 @@ L = \lim_{x \rightarrow \infty} \log(x)/x
 <p>What is <span class="math">$L$</span>?</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='tdV1VZuO' data-controltype='numeric'>
+=======
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='5WZLtrNs' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
+<<<<<<< HEAD
 <input id="tdV1VZuO" type="number" class="form-control" placeholder="Numeric answer">
 <label for="tdV1VZuO">Numeric answer</label>
 
 </div>
 
 <div id='tdV1VZuO_message'></div>
+=======
+<input id="5WZLtrNs" type="number" class="form-control" placeholder="Numeric answer">
+<label for="5WZLtrNs">Numeric answer</label>
+
+</div>
+
+<div id='5WZLtrNs_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#tdV1VZuO').on('change', function() {
   correct = Math.abs(this.value - 0.0) <= 0.001;
 
@@ -1023,6 +1410,15 @@ $('#tdV1VZuO').on('change', function() {
      $('#tdV1VZuO_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#tdV1VZuO_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#5WZLtrNs').on('change', function() {
+  correct = Math.abs(this.value - 0.0) <= 0.001;
+
+  if(correct) {
+     $('#5WZLtrNs_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#5WZLtrNs_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -1039,21 +1435,35 @@ $('#tdV1VZuO').on('change', function() {
 <p>Consider <span class="math">$x^{\log(x)} = e^{\log(x)\log(x)}$</span>.</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="aHvEQDGh" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_aHvEQDGh" id="radio_aHvEQDGh_1" value="1">
   <label class="form-check-label" for="radio_aHvEQDGh_1">
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="z3t2w4WG" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_z3t2w4WG" id="radio_z3t2w4WG_1" value="1">
+  <label class="form-check-label" for="radio_z3t2w4WG_1">
+>>>>>>> master
     Yes
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_aHvEQDGh" id="radio_aHvEQDGh_2" value="2">
   <label class="form-check-label" for="radio_aHvEQDGh_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_z3t2w4WG" id="radio_z3t2w4WG_2" value="2">
+  <label class="form-check-label" for="radio_z3t2w4WG_2">
+>>>>>>> master
     No
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="aHvEQDGh_message"></div>
 </div>
 </form>
@@ -1065,6 +1475,19 @@ $("input:radio[name='radio_aHvEQDGh']").on("change", function() {
      $("#aHvEQDGh_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#aHvEQDGh_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="z3t2w4WG_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_z3t2w4WG']").on("change", function() {
+  correct = this.value == 2;
+
+  if(correct) {
+     $("#z3t2w4WG_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#z3t2w4WG_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -1081,43 +1504,72 @@ $("input:radio[name='radio_aHvEQDGh']").on("change", function() {
 <p>&#40;Hint, express as <span class="math">$\exp^{\tan(\pi/2 \cdot x) \cdot \log(2-x)}$</span> and take the limit of the resulting exponent.&#41;</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="KGVjIO18" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_KGVjIO18" id="radio_KGVjIO18_1" value="1">
   <label class="form-check-label" for="radio_KGVjIO18_1">
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="20bKvWtC" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_20bKvWtC" id="radio_20bKvWtC_1" value="1">
+  <label class="form-check-label" for="radio_20bKvWtC_1">
+>>>>>>> master
     &#36;1&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_KGVjIO18" id="radio_KGVjIO18_2" value="2">
   <label class="form-check-label" for="radio_KGVjIO18_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_20bKvWtC" id="radio_20bKvWtC_2" value="2">
+  <label class="form-check-label" for="radio_20bKvWtC_2">
+>>>>>>> master
     &#36;&#123;2\pi&#125;&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_KGVjIO18" id="radio_KGVjIO18_3" value="3">
   <label class="form-check-label" for="radio_KGVjIO18_3">
+=======
+  <input class="form-check-input" type="radio" name="radio_20bKvWtC" id="radio_20bKvWtC_3" value="3">
+  <label class="form-check-label" for="radio_20bKvWtC_3">
+>>>>>>> master
     &#36;e^&#123;2/\pi&#125;&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_KGVjIO18" id="radio_KGVjIO18_4" value="4">
   <label class="form-check-label" for="radio_KGVjIO18_4">
+=======
+  <input class="form-check-input" type="radio" name="radio_20bKvWtC" id="radio_20bKvWtC_4" value="4">
+  <label class="form-check-label" for="radio_20bKvWtC_4">
+>>>>>>> master
     &#36;0&#36;
 
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_KGVjIO18" id="radio_KGVjIO18_5" value="5">
   <label class="form-check-label" for="radio_KGVjIO18_5">
+=======
+  <input class="form-check-input" type="radio" name="radio_20bKvWtC" id="radio_20bKvWtC_5" value="5">
+  <label class="form-check-label" for="radio_20bKvWtC_5">
+>>>>>>> master
     It does not exist
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="KGVjIO18_message"></div>
 </div>
 </form>
@@ -1129,53 +1581,108 @@ $("input:radio[name='radio_KGVjIO18']").on("change", function() {
      $("#KGVjIO18_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#KGVjIO18_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="20bKvWtC_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_20bKvWtC']").on("change", function() {
+  correct = this.value == 3;
+
+  if(correct) {
+     $("#20bKvWtC_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#20bKvWtC_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
 </script>
 
 
+<<<<<<< HEAD
+=======
+<h6>Question</h6>
+<p>At <a href="http://mathoverflow.net/questions/51685/how-did-bernoulli-prove-lh&#37;C3&#37;B4pitals-rule">math overflow</a> we learn that L&#39;Hopital was motivated by the following limit:</p>
+<p class="math">\[
+~
+\lim_{x \rightarrow a} \frac{(2a^3x-x^4)^{1/2} - a (a^2x)^{1/3}}{a - (ax^3)^{1/4}}
+~
+\]</p>
+<p>What did he find &#40;with the help of a Bernoulli&#41;?</p>
+<p>You need to inform <code>SymPy</code> that <span class="math">$a > 0$</span>. The following is a good start:</p>
+<pre><code>@syms x, a::positive
+top &#61; &#40;2a^3*x-x^4&#41;^&#40;1//2&#41; - a *&#40;a^2*x&#41;^&#40;1//3&#41; # rationals are converted exactly to SymPy
+bottom &#61;  a - &#40;a*x^3&#41;^&#40;1//4&#41;
+ex &#61; top/bottom</code></pre>
+<p>Now find the limit.</p>
+<pre><code>choices &#61; &#91;L&quot;16a/9&quot;, L&quot;0&quot;, L&quot;9\sqrt&#123;a&#125;&quot;, &quot;Does not exist&quot;&#93;
+ans &#61; 1
+radioq&#40;choices, ans&#41;</code></pre>
+<hr />
+
+>>>>>>> master
 
 <div class="card" style="">
   <div class="card-header float-end text-muted">
     <span class="text-muted  float-end align-middle">
 
+<<<<<<< HEAD
 <a href="../derivatives/more_zeros.html"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
 title="Previous section"
 aria-label="Previous section"
 class="bi bi-arrow-left-circle-fill">
+=======
+<a href="../derivatives/more_zeros.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Previous section" aria-label="Previous section">
+<i class="bi bi-arrow-left-circle-fill"></i>
+>>>>>>> master
 </a>
 
 &nbsp;
 
+<<<<<<< HEAD
 <a href="../derivatives/implicit_differentiation.html"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
 title="Next section"
 aria-label="Next section"
 class="bi bi-arrow-right-circle-fill">
+=======
+<a href="../derivatives/implicit_differentiation.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Next section" aria-label="Next section">
+<i class="bi bi-arrow-right-circle-fill"></i>
+>>>>>>> master
 </a>
 
 &nbsp;
 
+<<<<<<< HEAD
 <a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/derivatives/lhospitals_rule.jmd"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
 title="Suggest an edit"
 aria-label="Suggest an edit"
 class="bi bi-pencil-square">
+=======
+<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/derivatives/lhospitals_rule.jmd" data-bs-toggle="tooltip" data-bs-placement="top" title="Suggest an edit" aria-label="Suggest an edit">
+<i class="bi bi-pencil-square"></i>
+>>>>>>> master
 </a>
 
 &nbsp;
 
+<<<<<<< HEAD
 <a href="../misc/toc.html"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
 title="Table of contents"
 aria-label="Table of contents"
 class="bi bi-card-list">
+=======
+<a href="../misc/toc.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Table of contents" aria-label="Table of contents">
+<i class="bi bi-card-list"></i>
+>>>>>>> master
 </a>
 
     </span>

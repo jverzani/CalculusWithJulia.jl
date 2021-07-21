@@ -209,8 +209,14 @@ f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}.
 </pre>
 
 
+<<<<<<< HEAD
 <pre class="output">
 1.178403974334123392219821170344191813548718695568289215873505651941374433299215e-08
+=======
+<pre class="julia-error">
+ERROR: LoadError: UndefVarError: @syms not defined
+in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/derivatives/numeric_derivatives.jmd:3
+>>>>>>> master
 </pre>
 
 
@@ -225,8 +231,13 @@ f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}.
 </pre>
 
 
+<<<<<<< HEAD
 <pre class="output">
 1.567568231457459370771602167922282298718695568289215873505651941374433299214873e-11
+=======
+<pre class="julia-error">
+ERROR: UndefVarError: actual not defined
+>>>>>>> master
 </pre>
 
 
@@ -257,8 +268,13 @@ f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}.
 </pre>
 
 
+<<<<<<< HEAD
 <pre class="output">
 6.593178415491414032952187053331255443171078412649434805862556670078512733295529e-19
+=======
+<pre class="julia-error">
+ERROR: UndefVarError: actual not defined
+>>>>>>> master
 </pre>
 
 
@@ -305,8 +321,14 @@ f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}.
 </pre>
 
 
+<<<<<<< HEAD
 <pre class="output">
 &#40;-5.2941373495493281085179064170722727004081123938542546154188381086149403149753e-17, 1.509374627855664131196135271205690010185476120918876061457453845811618913850597e-09&#41;
+=======
+<pre class="julia-error">
+ERROR: LoadError: UndefVarError: @syms not defined
+in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/derivatives/numeric_derivatives.jmd:2
+>>>>>>> master
 </pre>
 
 
@@ -337,8 +359,8 @@ f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}.
 </pre>
 
 
-<pre class="output">
-1.0
+<pre class="julia-error">
+ERROR: UndefVarError: fzero not defined
 </pre>
 
 
@@ -367,8 +389,9 @@ f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}.
 </pre>
 
 
-<pre class="output">
-&#40;-exp&#40;-x&#41;*sin&#40;x&#41; &#43; exp&#40;-x&#41;*cos&#40;x&#41;, -exp&#40;-pi&#41;&#41;
+<pre class="julia-error">
+ERROR: LoadError: UndefVarError: @syms not defined
+in expression starting at /Users/verzani/julia/CalculusWithJulia/CwJ/derivatives/numeric_derivatives.jmd:5
 </pre>
 
 
@@ -390,11 +413,16 @@ f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}.
 <p>Find the derivative using a forward difference approximation of <span class="math">$f(x) = x^x$</span> at the point <span class="math">$x=2$</span> using <code>h&#61;0.1</code>:</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='CNRDS0if' data-controltype='numeric'>
+=======
+<form name='WeaveQuestion' data-id='EXAj8wG9' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
+<<<<<<< HEAD
 <div class="form-floating input-group">
 <input id="CNRDS0if" type="number" class="form-control" placeholder="Numeric answer">
 <label for="CNRDS0if">Numeric answer</label>
@@ -402,10 +430,19 @@ f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}.
 </div>
 
 <div id='CNRDS0if_message'></div>
+=======
+<div class="input-group">
+<input id="EXAj8wG9" type="number" class="form-control">
+
+</div>
+
+<div id='EXAj8wG9_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#CNRDS0if').on('change', function() {
   correct = Math.abs(this.value - 7.496380917422423) <= 0.001;
 
@@ -413,6 +450,15 @@ $('#CNRDS0if').on('change', function() {
      $('#CNRDS0if_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#CNRDS0if_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#EXAj8wG9').on('change', function() {
+  correct = Math.abs(this.value - 7.496380917422423) <= 0.001;
+
+  if(correct) {
+     $('#EXAj8wG9_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#EXAj8wG9_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -421,11 +467,16 @@ $('#CNRDS0if').on('change', function() {
 <p>Using <code>D</code> or <code>f&#39;</code> find the value using automatic differentiation</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='gingbTLi' data-controltype='numeric'>
+=======
+<form name='WeaveQuestion' data-id='5i85j4DA' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
+<<<<<<< HEAD
 <div class="form-floating input-group">
 <input id="gingbTLi" type="number" class="form-control" placeholder="Numeric answer">
 <label for="gingbTLi">Numeric answer</label>
@@ -433,10 +484,19 @@ $('#CNRDS0if').on('change', function() {
 </div>
 
 <div id='gingbTLi_message'></div>
+=======
+<div class="input-group">
+<input id="5i85j4DA" type="number" class="form-control">
+
+</div>
+
+<div id='5i85j4DA_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#gingbTLi').on('change', function() {
   correct = Math.abs(this.value - 6.772588722239782) <= 0.001;
 
@@ -444,6 +504,15 @@ $('#gingbTLi').on('change', function() {
      $('#gingbTLi_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#gingbTLi_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#5i85j4DA').on('change', function() {
+  correct = Math.abs(this.value - 6.772588722239782) <= 0.001;
+
+  if(correct) {
+     $('#5i85j4DA_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#5i85j4DA_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -454,11 +523,16 @@ $('#gingbTLi').on('change', function() {
 <p>For <code>1e-16</code> what is the error &#40;in absolute value&#41; in finding the forward difference approximation for the derivative of <span class="math">$\sin(x)$</span> at <span class="math">$x=0$</span>?</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='l2Y91ooF' data-controltype='numeric'>
+=======
+<form name='WeaveQuestion' data-id='zTzlYXGs' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
+<<<<<<< HEAD
 <div class="form-floating input-group">
 <input id="l2Y91ooF" type="number" class="form-control" placeholder="Numeric answer">
 <label for="l2Y91ooF">Numeric answer</label>
@@ -466,10 +540,19 @@ $('#gingbTLi').on('change', function() {
 </div>
 
 <div id='l2Y91ooF_message'></div>
+=======
+<div class="input-group">
+<input id="zTzlYXGs" type="number" class="form-control">
+
+</div>
+
+<div id='zTzlYXGs_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#l2Y91ooF').on('change', function() {
   correct = Math.abs(this.value - 37.637359812630166) <= 0.001;
 
@@ -477,6 +560,15 @@ $('#l2Y91ooF').on('change', function() {
      $('#l2Y91ooF_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#l2Y91ooF_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#zTzlYXGs').on('change', function() {
+  correct = Math.abs(this.value - 37.637359812630166) <= 0.001;
+
+  if(correct) {
+     $('#zTzlYXGs_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#zTzlYXGs_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -485,11 +577,16 @@ $('#l2Y91ooF').on('change', function() {
 <p>Repeat for <span class="math">$x=\pi/4$</span>:</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='x2NmeoOD' data-controltype='numeric'>
+=======
+<form name='WeaveQuestion' data-id='YPYTTzeQ' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
+<<<<<<< HEAD
 <div class="form-floating input-group">
 <input id="x2NmeoOD" type="number" class="form-control" placeholder="Numeric answer">
 <label for="x2NmeoOD">Numeric answer</label>
@@ -497,10 +594,19 @@ $('#l2Y91ooF').on('change', function() {
 </div>
 
 <div id='x2NmeoOD_message'></div>
+=======
+<div class="input-group">
+<input id="YPYTTzeQ" type="number" class="form-control">
+
+</div>
+
+<div id='YPYTTzeQ_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#x2NmeoOD').on('change', function() {
   correct = Math.abs(this.value - 1.0) <= 0.001;
 
@@ -508,6 +614,15 @@ $('#x2NmeoOD').on('change', function() {
      $('#x2NmeoOD_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#x2NmeoOD_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#YPYTTzeQ').on('change', function() {
+  correct = Math.abs(this.value - 1.0) <= 0.001;
+
+  if(correct) {
+     $('#YPYTTzeQ_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#YPYTTzeQ_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -517,11 +632,16 @@ $('#x2NmeoOD').on('change', function() {
 <p>Let <span class="math">$f(x) = x^x$</span>. Using <code>D</code>, find <span class="math">$f'(3)$</span>.</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='Z89Quw9h' data-controltype='numeric'>
+=======
+<form name='WeaveQuestion' data-id='6aMZVKLy' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
+<<<<<<< HEAD
 <div class="form-floating input-group">
 <input id="Z89Quw9h" type="number" class="form-control" placeholder="Numeric answer">
 <label for="Z89Quw9h">Numeric answer</label>
@@ -529,10 +649,19 @@ $('#x2NmeoOD').on('change', function() {
 </div>
 
 <div id='Z89Quw9h_message'></div>
+=======
+<div class="input-group">
+<input id="6aMZVKLy" type="number" class="form-control">
+
+</div>
+
+<div id='6aMZVKLy_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#Z89Quw9h').on('change', function() {
   correct = Math.abs(this.value - 56.66253179403897) <= 0.001;
 
@@ -540,6 +669,15 @@ $('#Z89Quw9h').on('change', function() {
      $('#Z89Quw9h_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#Z89Quw9h_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#6aMZVKLy').on('change', function() {
+  correct = Math.abs(this.value - 56.66253179403897) <= 0.001;
+
+  if(correct) {
+     $('#6aMZVKLy_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#6aMZVKLy_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -549,11 +687,16 @@ $('#Z89Quw9h').on('change', function() {
 <p>Let <span class="math">$f(x) = \lvert 1 - \sqrt{1 + x}\rvert$</span>. Using <code>D</code>, find <span class="math">$f'(3)$</span>.</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='Scdw6KBH' data-controltype='numeric'>
+=======
+<form name='WeaveQuestion' data-id='wQSPFBXR' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
+<<<<<<< HEAD
 <div class="form-floating input-group">
 <input id="Scdw6KBH" type="number" class="form-control" placeholder="Numeric answer">
 <label for="Scdw6KBH">Numeric answer</label>
@@ -561,10 +704,19 @@ $('#Z89Quw9h').on('change', function() {
 </div>
 
 <div id='Scdw6KBH_message'></div>
+=======
+<div class="input-group">
+<input id="wQSPFBXR" type="number" class="form-control">
+
+</div>
+
+<div id='wQSPFBXR_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#Scdw6KBH').on('change', function() {
   correct = Math.abs(this.value - 0.25) <= 0.001;
 
@@ -572,6 +724,15 @@ $('#Scdw6KBH').on('change', function() {
      $('#Scdw6KBH_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#Scdw6KBH_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#wQSPFBXR').on('change', function() {
+  correct = Math.abs(this.value - 0.25) <= 0.001;
+
+  if(correct) {
+     $('#wQSPFBXR_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#wQSPFBXR_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -581,11 +742,16 @@ $('#Scdw6KBH').on('change', function() {
 <p>Let <span class="math">$f(x) = e^{\sin(x)}$</span>. Using <code>D</code>, find <span class="math">$f'(3)$</span>.</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='VmUJQ8M9' data-controltype='numeric'>
+=======
+<form name='WeaveQuestion' data-id='inGXaDty' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
+<<<<<<< HEAD
 <div class="form-floating input-group">
 <input id="VmUJQ8M9" type="number" class="form-control" placeholder="Numeric answer">
 <label for="VmUJQ8M9">Numeric answer</label>
@@ -593,10 +759,19 @@ $('#Scdw6KBH').on('change', function() {
 </div>
 
 <div id='VmUJQ8M9_message'></div>
+=======
+<div class="input-group">
+<input id="inGXaDty" type="number" class="form-control">
+
+</div>
+
+<div id='inGXaDty_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#VmUJQ8M9').on('change', function() {
   correct = Math.abs(this.value - -1.1400385675133151) <= 0.001;
 
@@ -604,6 +779,15 @@ $('#VmUJQ8M9').on('change', function() {
      $('#VmUJQ8M9_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#VmUJQ8M9_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#inGXaDty').on('change', function() {
+  correct = Math.abs(this.value - -1.1400385675133151) <= 0.001;
+
+  if(correct) {
+     $('#inGXaDty_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#inGXaDty_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -613,11 +797,16 @@ $('#VmUJQ8M9').on('change', function() {
 <p>For <code>Julia</code>&#39;s <code>airyai</code> function find a numeric derivative using the forward difference. For <span class="math">$c=3$</span> and <span class="math">$h=10^{-8}$</span> find the forward difference approximation to <span class="math">$f'(3)$</span> for the <code>airyai</code> function.</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='kZgr5eVh' data-controltype='numeric'>
+=======
+<form name='WeaveQuestion' data-id='1SElSnNl' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
+<<<<<<< HEAD
 <div class="form-floating input-group">
 <input id="kZgr5eVh" type="number" class="form-control" placeholder="Numeric answer">
 <label for="kZgr5eVh">Numeric answer</label>
@@ -625,10 +814,19 @@ $('#VmUJQ8M9').on('change', function() {
 </div>
 
 <div id='kZgr5eVh_message'></div>
+=======
+<div class="input-group">
+<input id="1SElSnNl" type="number" class="form-control">
+
+</div>
+
+<div id='1SElSnNl_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#kZgr5eVh').on('change', function() {
   correct = Math.abs(this.value - -0.011912976768252426) <= 0.001;
 
@@ -636,6 +834,15 @@ $('#kZgr5eVh').on('change', function() {
      $('#kZgr5eVh_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#kZgr5eVh_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#1SElSnNl').on('change', function() {
+  correct = Math.abs(this.value - -0.011912976768252426) <= 0.001;
+
+  if(correct) {
+     $('#1SElSnNl_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#1SElSnNl_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -645,11 +852,16 @@ $('#kZgr5eVh').on('change', function() {
 <p>Find the rate of change with respect to time of the function <span class="math">$f(t)= 64 - 16t^2$</span> at <span class="math">$t=1$</span>.</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='iJfGkrPQ' data-controltype='numeric'>
+=======
+<form name='WeaveQuestion' data-id='xBCSUX5f' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
+<<<<<<< HEAD
 <div class="form-floating input-group">
 <input id="iJfGkrPQ" type="number" class="form-control" placeholder="Numeric answer">
 <label for="iJfGkrPQ">Numeric answer</label>
@@ -657,10 +869,19 @@ $('#kZgr5eVh').on('change', function() {
 </div>
 
 <div id='iJfGkrPQ_message'></div>
+=======
+<div class="input-group">
+<input id="xBCSUX5f" type="number" class="form-control">
+
+</div>
+
+<div id='xBCSUX5f_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#iJfGkrPQ').on('change', function() {
   correct = Math.abs(this.value - -32) <= 0;
 
@@ -668,6 +889,15 @@ $('#iJfGkrPQ').on('change', function() {
      $('#iJfGkrPQ_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#iJfGkrPQ_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#xBCSUX5f').on('change', function() {
+  correct = Math.abs(this.value - -32) <= 0;
+
+  if(correct) {
+     $('#xBCSUX5f_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#xBCSUX5f_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -677,11 +907,16 @@ $('#iJfGkrPQ').on('change', function() {
 <p>Find the rate of change with respect to height, <span class="math">$h$</span>, of <span class="math">$f(h) = 32h^3 - 62 h + 12$</span> at <span class="math">$h=2$</span>.</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='lblTSQrw' data-controltype='numeric'>
+=======
+<form name='WeaveQuestion' data-id='2UXMO4F8' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
+<<<<<<< HEAD
 <div class="form-floating input-group">
 <input id="lblTSQrw" type="number" class="form-control" placeholder="Numeric answer">
 <label for="lblTSQrw">Numeric answer</label>
@@ -689,10 +924,19 @@ $('#iJfGkrPQ').on('change', function() {
 </div>
 
 <div id='lblTSQrw_message'></div>
+=======
+<div class="input-group">
+<input id="2UXMO4F8" type="number" class="form-control">
+
+</div>
+
+<div id='2UXMO4F8_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#lblTSQrw').on('change', function() {
   correct = Math.abs(this.value - 322) <= 0;
 
@@ -700,11 +944,21 @@ $('#lblTSQrw').on('change', function() {
      $('#lblTSQrw_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#lblTSQrw_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#2UXMO4F8').on('change', function() {
+  correct = Math.abs(this.value - 322) <= 0;
+
+  if(correct) {
+     $('#2UXMO4F8_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#2UXMO4F8_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
 
 
+<<<<<<< HEAD
 
 <div class="card" style="">
   <div class="card-header float-end text-muted">
@@ -716,30 +970,51 @@ data-bs-placement="top"
 title="Previous section"
 aria-label="Previous section"
 class="bi bi-arrow-left-circle-fill">
+=======
+<hr />
+
+
+<footer class="footer">
+<div class="span10 offset1 d-flex justify-content-end">
+
+<a href="../derivatives/derivatives.html" aria-label="Previous section">
+  <i class="bi bi-arrow-left-circle-fill"></i>
+>>>>>>> master
 </a>
 
 &nbsp;
 
+<<<<<<< HEAD
 <a href="../derivatives/mean_value_theorem.html"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
 title="Next section"
 aria-label="Next section"
 class="bi bi-arrow-right-circle-fill">
+=======
+<a href="../derivatives/mean_value_theorem.html" aria-label="Next section">
+  <i class="bi bi-arrow-right-circle-fill"></i>
+>>>>>>> master
 </a>
 
 &nbsp;
 
+<<<<<<< HEAD
 <a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/derivatives/numeric_derivatives.jmd"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
 title="Suggest an edit"
 aria-label="Suggest an edit"
 class="bi bi-pencil-square">
+=======
+<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/derivatives/numeric_derivatives.jmd" aria-label="Suggest edt">
+  <i class="bi bi-pencil-square"></i>
+>>>>>>> master
 </a>
 
 &nbsp;
 
+<<<<<<< HEAD
 <a href="../misc/toc.html"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
@@ -751,6 +1026,12 @@ class="bi bi-card-list">
     </span>
   </div>
 </div>
+=======
+<a href="../misc/toc.html">Calculus with Julia</a>
+
+</div>
+</footer>
+>>>>>>> master
 
 
   </div>

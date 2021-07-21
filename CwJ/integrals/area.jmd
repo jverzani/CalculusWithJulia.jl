@@ -1431,6 +1431,12 @@ val = sum([f(wi)*ni for (wi, ni) in zip(wts, ns)])
 numericq(val)
 ```
 
+<<<<<<< HEAD
+=======
+
+----
+
+>>>>>>> master
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

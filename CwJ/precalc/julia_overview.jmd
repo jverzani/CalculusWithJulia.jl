@@ -190,6 +190,13 @@ Random sequences are formed by `rand`, among others:
 rand(3)
 ```
 
+
+Random sequences are formed by `rand`, among others:
+
+```julia
+rand(3)
+```
+
 ## Variables
 
 Values can be assigned variable names, with `=`. There are some variants

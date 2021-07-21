@@ -43,6 +43,10 @@ tr:hover {background-color: #f5f5f5;}
 main > .container {
   padding: 60px 15px 0;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 
 blockquote {
   background: #f9f9f9;
@@ -809,7 +813,11 @@ evenly_spaced &#40;generic function with 1 method&#41;
 
 
 <pre class="output">
+<<<<<<< HEAD
 0.4286929813372944
+=======
+0.3424723552544662
+>>>>>>> master
 </pre>
 
 
@@ -822,7 +830,11 @@ evenly_spaced &#40;generic function with 1 method&#41;
 
 
 <pre class="output">
+<<<<<<< HEAD
 0.39788428221110883
+=======
+0.7739647493356143
+>>>>>>> master
 </pre>
 
 
@@ -836,6 +848,7 @@ evenly_spaced &#40;generic function with 1 method&#41;
 
 <pre class="output">
 10-element Vector&#123;Float64&#125;:
+<<<<<<< HEAD
  0.45381329465927744
  0.585627639323548
  0.9368368753955292
@@ -846,6 +859,18 @@ evenly_spaced &#40;generic function with 1 method&#41;
  0.707399036903958
  0.08793515477363267
  0.5476901494045687
+=======
+ 0.43745298117121045
+ 0.7524990498890953
+ 0.013058007652790637
+ 0.6841994154184057
+ 0.3320489065837382
+ 0.3812672874543712
+ 0.3972239175786787
+ 0.6572292981078973
+ 0.8594000816697467
+ 0.8085797970416062
+>>>>>>> master
 </pre>
 
 
@@ -855,6 +880,7 @@ evenly_spaced &#40;generic function with 1 method&#41;
 <p>Which of these will produce the odd numbers between 1 and 99?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="qoNJezLB" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
@@ -872,10 +898,30 @@ evenly_spaced &#40;generic function with 1 method&#41;
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_qoNJezLB" id="radio_qoNJezLB_3" value="3">
   <label class="form-check-label" for="radio_qoNJezLB_3">
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="BKcyOTLX" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_BKcyOTLX" id="radio_BKcyOTLX_1" value="1">
+  <label class="form-check-label" for="radio_BKcyOTLX_1">
+    <code>1:3:99</code>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_BKcyOTLX" id="radio_BKcyOTLX_2" value="2">
+  <label class="form-check-label" for="radio_BKcyOTLX_2">
+    <code>1:99</code>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_BKcyOTLX" id="radio_BKcyOTLX_3" value="3">
+  <label class="form-check-label" for="radio_BKcyOTLX_3">
+>>>>>>> master
     <code>1:2:99</code>
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="qoNJezLB_message"></div>
 </div>
 </form>
@@ -887,6 +933,19 @@ $("input:radio[name='radio_qoNJezLB']").on("change", function() {
      $("#qoNJezLB_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#qoNJezLB_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="BKcyOTLX_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_BKcyOTLX']").on("change", function() {
+  correct = this.value == 3;
+
+  if(correct) {
+     $("#BKcyOTLX_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#BKcyOTLX_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -897,15 +956,24 @@ $("input:radio[name='radio_qoNJezLB']").on("change", function() {
 <p>Which of these will create the sequence <span class="math">$2, 9, 16, 23, \dots, 72$</span>?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="8cIIUu44" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_8cIIUu44" id="radio_8cIIUu44_1" value="1">
   <label class="form-check-label" for="radio_8cIIUu44_1">
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="osnWb9Ts" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_osnWb9Ts" id="radio_osnWb9Ts_1" value="1">
+  <label class="form-check-label" for="radio_osnWb9Ts_1">
+>>>>>>> master
     <code>72:-7:2</code>
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_8cIIUu44" id="radio_8cIIUu44_2" value="2">
   <label class="form-check-label" for="radio_8cIIUu44_2">
     <code>2:7:72</code>
@@ -935,6 +1003,37 @@ $("input:radio[name='radio_8cIIUu44']").on("change", function() {
      $("#8cIIUu44_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#8cIIUu44_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+  <input class="form-check-input" type="radio" name="radio_osnWb9Ts" id="radio_osnWb9Ts_2" value="2">
+  <label class="form-check-label" for="radio_osnWb9Ts_2">
+    <code>2:72</code>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_osnWb9Ts" id="radio_osnWb9Ts_3" value="3">
+  <label class="form-check-label" for="radio_osnWb9Ts_3">
+    <code>2:7:72</code>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_osnWb9Ts" id="radio_osnWb9Ts_4" value="4">
+  <label class="form-check-label" for="radio_osnWb9Ts_4">
+    <code>2:9:72</code>
+  </label>
+</div>
+
+<div id="osnWb9Ts_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_osnWb9Ts']").on("change", function() {
+  correct = this.value == 3;
+
+  if(correct) {
+     $("#osnWb9Ts_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#osnWb9Ts_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -945,22 +1044,36 @@ $("input:radio[name='radio_8cIIUu44']").on("change", function() {
 <p>How many numbers are in the sequence produced by <code>0:19:1000</code>?</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='CtLzRW1d' data-controltype='numeric'>
+=======
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='Ujjrdimk' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
+<<<<<<< HEAD
 <input id="CtLzRW1d" type="number" class="form-control" placeholder="Numeric answer">
 <label for="CtLzRW1d">Numeric answer</label>
 
 </div>
 
 <div id='CtLzRW1d_message'></div>
+=======
+<input id="Ujjrdimk" type="number" class="form-control" placeholder="Numeric answer">
+<label for="Ujjrdimk">Numeric answer</label>
+
+</div>
+
+<div id='Ujjrdimk_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#CtLzRW1d').on('change', function() {
   correct = Math.abs(this.value - 53) <= 0;
 
@@ -968,6 +1081,15 @@ $('#CtLzRW1d').on('change', function() {
      $('#CtLzRW1d_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#CtLzRW1d_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#Ujjrdimk').on('change', function() {
+  correct = Math.abs(this.value - 53) <= 0;
+
+  if(correct) {
+     $('#Ujjrdimk_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#Ujjrdimk_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -977,6 +1099,7 @@ $('#CtLzRW1d').on('change', function() {
 <p>The range operation &#40;<code>a:h:b</code>&#41; can also be used to countdown. Which of these will do so, counting down from <code>10</code> to <code>1</code>? &#40;You can call <code>collect</code> to visualize the generated numbers.&#41;</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="BchfWNs0" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
@@ -1015,6 +1138,46 @@ $("input:radio[name='radio_BchfWNs0']").on("change", function() {
      $("#BchfWNs0_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#BchfWNs0_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="1YtxqGLq" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_1YtxqGLq" id="radio_1YtxqGLq_1" value="1">
+  <label class="form-check-label" for="radio_1YtxqGLq_1">
+    <code>1:10</code>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_1YtxqGLq" id="radio_1YtxqGLq_2" value="2">
+  <label class="form-check-label" for="radio_1YtxqGLq_2">
+    <code>10:-1:1</code>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_1YtxqGLq" id="radio_1YtxqGLq_3" value="3">
+  <label class="form-check-label" for="radio_1YtxqGLq_3">
+    <code>10:1</code>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_1YtxqGLq" id="radio_1YtxqGLq_4" value="4">
+  <label class="form-check-label" for="radio_1YtxqGLq_4">
+    <code>1:-1:10</code>
+  </label>
+</div>
+
+<div id="1YtxqGLq_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_1YtxqGLq']").on("change", function() {
+  correct = this.value == 2;
+
+  if(correct) {
+     $("#1YtxqGLq_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#1YtxqGLq_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -1025,22 +1188,36 @@ $("input:radio[name='radio_BchfWNs0']").on("change", function() {
 <p>What is the last number generated by <code>1:4:7</code>?</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='dBggzLAD' data-controltype='numeric'>
+=======
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='Q5ls4q0v' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
+<<<<<<< HEAD
 <input id="dBggzLAD" type="number" class="form-control" placeholder="Numeric answer">
 <label for="dBggzLAD">Numeric answer</label>
 
 </div>
 
 <div id='dBggzLAD_message'></div>
+=======
+<input id="Q5ls4q0v" type="number" class="form-control" placeholder="Numeric answer">
+<label for="Q5ls4q0v">Numeric answer</label>
+
+</div>
+
+<div id='Q5ls4q0v_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#dBggzLAD').on('change', function() {
   correct = Math.abs(this.value - 5) <= 0;
 
@@ -1048,6 +1225,15 @@ $('#dBggzLAD').on('change', function() {
      $('#dBggzLAD_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#dBggzLAD_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#Q5ls4q0v').on('change', function() {
+  correct = Math.abs(this.value - 5) <= 0;
+
+  if(correct) {
+     $('#Q5ls4q0v_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#Q5ls4q0v_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -1058,21 +1244,35 @@ $('#dBggzLAD').on('change', function() {
 <p>Does scalar multiplication work as expected? In particular, is the result of <code>2*&#40;1:5&#41;</code> <em>basically</em> the same as <code>2 * &#91;1,2,3,4,5&#93;</code>?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="WKPfVs0i" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_WKPfVs0i" id="radio_WKPfVs0i_1" value="1">
   <label class="form-check-label" for="radio_WKPfVs0i_1">
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="tTHTGAEl" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_tTHTGAEl" id="radio_tTHTGAEl_1" value="1">
+  <label class="form-check-label" for="radio_tTHTGAEl_1">
+>>>>>>> master
     Yes
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_WKPfVs0i" id="radio_WKPfVs0i_2" value="2">
   <label class="form-check-label" for="radio_WKPfVs0i_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_tTHTGAEl" id="radio_tTHTGAEl_2" value="2">
+  <label class="form-check-label" for="radio_tTHTGAEl_2">
+>>>>>>> master
     No
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="WKPfVs0i_message"></div>
 </div>
 </form>
@@ -1084,6 +1284,19 @@ $("input:radio[name='radio_WKPfVs0i']").on("change", function() {
      $("#WKPfVs0i_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#WKPfVs0i_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="tTHTGAEl_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_tTHTGAEl']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#tTHTGAEl_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#tTHTGAEl_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -1093,21 +1306,35 @@ $("input:radio[name='radio_WKPfVs0i']").on("change", function() {
 <p>Does vector addition work? as expected? In particular, is the result of <code>&#40;1:4&#41; &#43; &#40;2:5&#41;</code> <em>basically</em> the same as <code>&#91;1,2,3,4&#93;</code> &#43; <code>&#91;2,3,4,5&#93;</code>?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="N2npi0wF" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_N2npi0wF" id="radio_N2npi0wF_1" value="1">
   <label class="form-check-label" for="radio_N2npi0wF_1">
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="2q5he8FB" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_2q5he8FB" id="radio_2q5he8FB_1" value="1">
+  <label class="form-check-label" for="radio_2q5he8FB_1">
+>>>>>>> master
     Yes
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_N2npi0wF" id="radio_N2npi0wF_2" value="2">
   <label class="form-check-label" for="radio_N2npi0wF_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_2q5he8FB" id="radio_2q5he8FB_2" value="2">
+  <label class="form-check-label" for="radio_2q5he8FB_2">
+>>>>>>> master
     No
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="N2npi0wF_message"></div>
 </div>
 </form>
@@ -1119,6 +1346,19 @@ $("input:radio[name='radio_N2npi0wF']").on("change", function() {
      $("#N2npi0wF_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#N2npi0wF_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="2q5he8FB_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_2q5he8FB']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#2q5he8FB_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#2q5he8FB_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -1128,27 +1368,46 @@ $("input:radio[name='radio_N2npi0wF']").on("change", function() {
 <p>What if parenthese are left off? Explain the output of <code>1:4 &#43; 2:5</code>?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="Lll2KxTz" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_Lll2KxTz" id="radio_Lll2KxTz_1" value="1">
   <label class="form-check-label" for="radio_Lll2KxTz_1">
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="3ByLbxYs" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_3ByLbxYs" id="radio_3ByLbxYs_1" value="1">
+  <label class="form-check-label" for="radio_3ByLbxYs_1">
+>>>>>>> master
     Addition happens prior to the use of <code>:</code> so this is like <code>1:&#40;4&#43;2&#41;:5</code>
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_Lll2KxTz" id="radio_Lll2KxTz_2" value="2">
   <label class="form-check-label" for="radio_Lll2KxTz_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_3ByLbxYs" id="radio_3ByLbxYs_2" value="2">
+  <label class="form-check-label" for="radio_3ByLbxYs_2">
+>>>>>>> master
     It is just random
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_Lll2KxTz" id="radio_Lll2KxTz_3" value="3">
   <label class="form-check-label" for="radio_Lll2KxTz_3">
+=======
+  <input class="form-check-input" type="radio" name="radio_3ByLbxYs" id="radio_3ByLbxYs_3" value="3">
+  <label class="form-check-label" for="radio_3ByLbxYs_3">
+>>>>>>> master
     It gives the correct answer, a generator for the vector <code>&#91;3,5,7,9&#93;</code>
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="Lll2KxTz_message"></div>
 </div>
 </form>
@@ -1160,6 +1419,19 @@ $("input:radio[name='radio_Lll2KxTz']").on("change", function() {
      $("#Lll2KxTz_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#Lll2KxTz_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="3ByLbxYs_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_3ByLbxYs']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#3ByLbxYs_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#3ByLbxYs_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -1170,6 +1442,7 @@ $("input:radio[name='radio_Lll2KxTz']").on("change", function() {
 <p>How is <code>a:b-1</code> interpreted:</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="oVlZTZGh" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
@@ -1196,6 +1469,34 @@ $("input:radio[name='radio_oVlZTZGh']").on("change", function() {
      $("#oVlZTZGh_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#oVlZTZGh_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="PVGB105a" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_PVGB105a" id="radio_PVGB105a_1" value="1">
+  <label class="form-check-label" for="radio_PVGB105a_1">
+    as <code>&#40;a:b&#41; - 1</code>, which is <code>&#40;a-1&#41;:&#40;b-1&#41;</code>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_PVGB105a" id="radio_PVGB105a_2" value="2">
+  <label class="form-check-label" for="radio_PVGB105a_2">
+    as <code>a:&#40;b-1&#41;</code>
+  </label>
+</div>
+
+<div id="PVGB105a_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_PVGB105a']").on("change", function() {
+  correct = this.value == 2;
+
+  if(correct) {
+     $("#PVGB105a_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#PVGB105a_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -1206,6 +1507,7 @@ $("input:radio[name='radio_oVlZTZGh']").on("change", function() {
 <p>Create the sequence <span class="math">$10, 100, 1000, \dots, 1,000,000$</span> using a list comprehension. Which of these works?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="skOpcDxk" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
@@ -1223,10 +1525,30 @@ $("input:radio[name='radio_oVlZTZGh']").on("change", function() {
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_skOpcDxk" id="radio_skOpcDxk_3" value="3">
   <label class="form-check-label" for="radio_skOpcDxk_3">
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="4KYuTZyH" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_4KYuTZyH" id="radio_4KYuTZyH_1" value="1">
+  <label class="form-check-label" for="radio_4KYuTZyH_1">
+    <code>&#91;10^i for i in 1:6&#93;</code>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_4KYuTZyH" id="radio_4KYuTZyH_2" value="2">
+  <label class="form-check-label" for="radio_4KYuTZyH_2">
+    <code>&#91;10^i for i in &#91;10, 100, 1000&#93;&#93;</code>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_4KYuTZyH" id="radio_4KYuTZyH_3" value="3">
+  <label class="form-check-label" for="radio_4KYuTZyH_3">
+>>>>>>> master
     <code>&#91;i^10 for i in &#91;1:6&#93;&#93;</code>
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="skOpcDxk_message"></div>
 </div>
 </form>
@@ -1238,6 +1560,19 @@ $("input:radio[name='radio_skOpcDxk']").on("change", function() {
      $("#skOpcDxk_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#skOpcDxk_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="4KYuTZyH_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_4KYuTZyH']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#4KYuTZyH_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#4KYuTZyH_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -1248,6 +1583,7 @@ $("input:radio[name='radio_skOpcDxk']").on("change", function() {
 <p>Create the sequence <span class="math">$0.1, 0.01, 0.001, \dots, 0.0000001$</span> using a list comprehension. Which of these will work:</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="kSI7KkUz" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
@@ -1259,10 +1595,24 @@ $("input:radio[name='radio_skOpcDxk']").on("change", function() {
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_kSI7KkUz" id="radio_kSI7KkUz_2" value="2">
   <label class="form-check-label" for="radio_kSI7KkUz_2">
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="lxetSNOP" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_lxetSNOP" id="radio_lxetSNOP_1" value="1">
+  <label class="form-check-label" for="radio_lxetSNOP_1">
+    <code>&#91;i^&#40;1/10&#41; for i in 1:7&#93;</code>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_lxetSNOP" id="radio_lxetSNOP_2" value="2">
+  <label class="form-check-label" for="radio_lxetSNOP_2">
+>>>>>>> master
     <code>&#91;&#40;1/10&#41;^i for i in 1:7&#93;</code>
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_kSI7KkUz" id="radio_kSI7KkUz_3" value="3">
   <label class="form-check-label" for="radio_kSI7KkUz_3">
     <code>&#91;i^&#40;1/10&#41; for i in 1:7&#93;</code>
@@ -1280,6 +1630,25 @@ $("input:radio[name='radio_kSI7KkUz']").on("change", function() {
      $("#kSI7KkUz_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#kSI7KkUz_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+  <input class="form-check-input" type="radio" name="radio_lxetSNOP" id="radio_lxetSNOP_3" value="3">
+  <label class="form-check-label" for="radio_lxetSNOP_3">
+    <code>&#91;10^-i for i in 1:7&#93;</code>
+  </label>
+</div>
+
+<div id="lxetSNOP_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_lxetSNOP']").on("change", function() {
+  correct = this.value == 2;
+
+  if(correct) {
+     $("#lxetSNOP_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#lxetSNOP_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -1290,27 +1659,46 @@ $("input:radio[name='radio_kSI7KkUz']").on("change", function() {
 <p>Evaluate the expression <span class="math">$x^3 - 2x + 3$</span> for each of the values <span class="math">$-5, -4, \dots, 4, 5$</span> using a comprehension. Which of these will work?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="oXXZXRKS" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_oXXZXRKS" id="radio_oXXZXRKS_1" value="1">
   <label class="form-check-label" for="radio_oXXZXRKS_1">
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="fYLTdPHJ" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_fYLTdPHJ" id="radio_fYLTdPHJ_1" value="1">
+  <label class="form-check-label" for="radio_fYLTdPHJ_1">
+>>>>>>> master
     <code>&#91;x^3 - 2x &#43; 3 for x in -&#40;5:5&#41;&#93;</code>
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_oXXZXRKS" id="radio_oXXZXRKS_2" value="2">
   <label class="form-check-label" for="radio_oXXZXRKS_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_fYLTdPHJ" id="radio_fYLTdPHJ_2" value="2">
+  <label class="form-check-label" for="radio_fYLTdPHJ_2">
+>>>>>>> master
     <code>&#91;x^3 - 2x &#43; 3 for x in -5:5&#93;</code>
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_oXXZXRKS" id="radio_oXXZXRKS_3" value="3">
   <label class="form-check-label" for="radio_oXXZXRKS_3">
+=======
+  <input class="form-check-input" type="radio" name="radio_fYLTdPHJ" id="radio_fYLTdPHJ_3" value="3">
+  <label class="form-check-label" for="radio_fYLTdPHJ_3">
+>>>>>>> master
     <code>&#91;x^3 - 2x &#43; 3 for i in -5:5&#93;</code>
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="oXXZXRKS_message"></div>
 </div>
 </form>
@@ -1322,6 +1710,19 @@ $("input:radio[name='radio_oXXZXRKS']").on("change", function() {
      $("#oXXZXRKS_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#oXXZXRKS_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="fYLTdPHJ_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_fYLTdPHJ']").on("change", function() {
+  correct = this.value == 2;
+
+  if(correct) {
+     $("#fYLTdPHJ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#fYLTdPHJ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -1332,22 +1733,36 @@ $("input:radio[name='radio_oXXZXRKS']").on("change", function() {
 <p>How many prime numbers are there between <span class="math">$1100$</span> and <span class="math">$1200$</span>? &#40;Use <code>filter</code> and <code>isprime</code>&#41;</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='UqLPbfhF' data-controltype='numeric'>
+=======
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='eBYUpuFl' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
+<<<<<<< HEAD
 <input id="UqLPbfhF" type="number" class="form-control" placeholder="Numeric answer">
 <label for="UqLPbfhF">Numeric answer</label>
 
 </div>
 
 <div id='UqLPbfhF_message'></div>
+=======
+<input id="eBYUpuFl" type="number" class="form-control" placeholder="Numeric answer">
+<label for="eBYUpuFl">Numeric answer</label>
+
+</div>
+
+<div id='eBYUpuFl_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#UqLPbfhF').on('change', function() {
   correct = Math.abs(this.value - 12) <= 0;
 
@@ -1355,6 +1770,15 @@ $('#UqLPbfhF').on('change', function() {
      $('#UqLPbfhF_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#UqLPbfhF_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#eBYUpuFl').on('change', function() {
+  correct = Math.abs(this.value - 12) <= 0;
+
+  if(correct) {
+     $('#eBYUpuFl_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#eBYUpuFl_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -1364,21 +1788,35 @@ $('#UqLPbfhF').on('change', function() {
 <p>Which has more prime numbers  the range <code>1000:2000</code> or the range <code>11000:12000</code>?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="i6d3V624" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_i6d3V624" id="radio_i6d3V624_1" value="1">
   <label class="form-check-label" for="radio_i6d3V624_1">
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="8a3qyUn8" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_8a3qyUn8" id="radio_8a3qyUn8_1" value="1">
+  <label class="form-check-label" for="radio_8a3qyUn8_1">
+>>>>>>> master
     <code>1000:2000</code>
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_i6d3V624" id="radio_i6d3V624_2" value="2">
   <label class="form-check-label" for="radio_i6d3V624_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_8a3qyUn8" id="radio_8a3qyUn8_2" value="2">
+  <label class="form-check-label" for="radio_8a3qyUn8_2">
+>>>>>>> master
     <code>11000:12000</code>
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="i6d3V624_message"></div>
 </div>
 </form>
@@ -1390,6 +1828,19 @@ $("input:radio[name='radio_i6d3V624']").on("change", function() {
      $("#i6d3V624_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#i6d3V624_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="8a3qyUn8_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_8a3qyUn8']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#8a3qyUn8_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#8a3qyUn8_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -1401,22 +1852,36 @@ $("input:radio[name='radio_i6d3V624']").on("change", function() {
 <p>What is the sum of the odd numbers between <span class="math">$0$</span> and <span class="math">$100$</span>?</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='Khw3nQIs' data-controltype='numeric'>
+=======
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='jjKNd72Z' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
+<<<<<<< HEAD
 <input id="Khw3nQIs" type="number" class="form-control" placeholder="Numeric answer">
 <label for="Khw3nQIs">Numeric answer</label>
 
 </div>
 
 <div id='Khw3nQIs_message'></div>
+=======
+<input id="jjKNd72Z" type="number" class="form-control" placeholder="Numeric answer">
+<label for="jjKNd72Z">Numeric answer</label>
+
+</div>
+
+<div id='jjKNd72Z_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#Khw3nQIs').on('change', function() {
   correct = Math.abs(this.value - 2500) <= 0;
 
@@ -1424,6 +1889,15 @@ $('#Khw3nQIs').on('change', function() {
      $('#Khw3nQIs_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#Khw3nQIs_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#jjKNd72Z').on('change', function() {
+  correct = Math.abs(this.value - 2500) <= 0;
+
+  if(correct) {
+     $('#jjKNd72Z_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#jjKNd72Z_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -1438,21 +1912,35 @@ $('#Khw3nQIs').on('change', function() {
 \]</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="A9uvfH5g" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_A9uvfH5g" id="radio_A9uvfH5g_1" value="1">
   <label class="form-check-label" for="radio_A9uvfH5g_1">
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="QlIPNSNF" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_QlIPNSNF" id="radio_QlIPNSNF_1" value="1">
+  <label class="form-check-label" for="radio_QlIPNSNF_1">
+>>>>>>> master
     Yes, this is true
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_A9uvfH5g" id="radio_A9uvfH5g_2" value="2">
   <label class="form-check-label" for="radio_A9uvfH5g_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_QlIPNSNF" id="radio_QlIPNSNF_2" value="2">
+  <label class="form-check-label" for="radio_QlIPNSNF_2">
+>>>>>>> master
     No, this is false
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="A9uvfH5g_message"></div>
 </div>
 </form>
@@ -1464,6 +1952,19 @@ $("input:radio[name='radio_A9uvfH5g']").on("change", function() {
      $("#A9uvfH5g_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#A9uvfH5g_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="QlIPNSNF_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_QlIPNSNF']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#QlIPNSNF_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#QlIPNSNF_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -1474,22 +1975,36 @@ $("input:radio[name='radio_A9uvfH5g']").on("change", function() {
 <p>A <em>geometric progression</em> is of the form <span class="math">$a^0, a^1, a^2, \dots, a^n$</span>. These are easily generated by comprehensions of the form <code>&#91;a^i for i in 0:n&#93;</code>. Find the sum of the geometric progression <span class="math">$1, 2^1, 2^2, \dots, 2^{10}$</span>.</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='ERdlWmO2' data-controltype='numeric'>
+=======
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='otqGV6p8' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
+<<<<<<< HEAD
 <input id="ERdlWmO2" type="number" class="form-control" placeholder="Numeric answer">
 <label for="ERdlWmO2">Numeric answer</label>
 
 </div>
 
 <div id='ERdlWmO2_message'></div>
+=======
+<input id="otqGV6p8" type="number" class="form-control" placeholder="Numeric answer">
+<label for="otqGV6p8">Numeric answer</label>
+
+</div>
+
+<div id='otqGV6p8_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#ERdlWmO2').on('change', function() {
   correct = Math.abs(this.value - 2047) <= 0;
 
@@ -1497,6 +2012,15 @@ $('#ERdlWmO2').on('change', function() {
      $('#ERdlWmO2_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#ERdlWmO2_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#otqGV6p8').on('change', function() {
+  correct = Math.abs(this.value - 2047) <= 0;
+
+  if(correct) {
+     $('#otqGV6p8_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#otqGV6p8_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -1505,21 +2029,35 @@ $('#ERdlWmO2').on('change', function() {
 <p>Is your answer of the form <span class="math">$(1 - a^{n+1}) / (1-a)$</span>?</p>
 
 
+<<<<<<< HEAD
 <form  class="mx-2 my-3" name="WeaveQuestion" data-id="XqXIG4SS" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
   <input class="form-check-input" type="radio" name="radio_XqXIG4SS" id="radio_XqXIG4SS_1" value="1">
   <label class="form-check-label" for="radio_XqXIG4SS_1">
+=======
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="8SQFIgtr" data-controltype="radio">
+<div class="form-group ">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_8SQFIgtr" id="radio_8SQFIgtr_1" value="1">
+  <label class="form-check-label" for="radio_8SQFIgtr_1">
+>>>>>>> master
     Yes
   </label>
 </div>
 <div class="form-check">
+<<<<<<< HEAD
   <input class="form-check-input" type="radio" name="radio_XqXIG4SS" id="radio_XqXIG4SS_2" value="2">
   <label class="form-check-label" for="radio_XqXIG4SS_2">
+=======
+  <input class="form-check-input" type="radio" name="radio_8SQFIgtr" id="radio_8SQFIgtr_2" value="2">
+  <label class="form-check-label" for="radio_8SQFIgtr_2">
+>>>>>>> master
     No
   </label>
 </div>
 
+<<<<<<< HEAD
 <div id="XqXIG4SS_message"></div>
 </div>
 </form>
@@ -1531,6 +2069,19 @@ $("input:radio[name='radio_XqXIG4SS']").on("change", function() {
      $("#XqXIG4SS_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
      $("#XqXIG4SS_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+=======
+<div id="8SQFIgtr_message"></div>
+</div>
+</form>
+<script text="text/javascript">
+$("input:radio[name='radio_8SQFIgtr']").on("change", function() {
+  correct = this.value == 1;
+
+  if(correct) {
+     $("#8SQFIgtr_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+  } else {
+     $("#8SQFIgtr_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
+>>>>>>> master
   }
 });
 
@@ -1541,22 +2092,36 @@ $("input:radio[name='radio_XqXIG4SS']").on("change", function() {
 <p>The <a href="http://en.wikipedia.org/wiki/Arithmetic_progression">product</a> of the terms in an arithmetic progression has a known formula.  The product can be found by an expression of the form <code>prod&#40;a:h:b&#41;</code>.  Find the product of the terms in the sequence <span class="math">$1,3,5,\dots,19$</span>.</p>
 
 
+<<<<<<< HEAD
 <form class="mx-2 my-3" name='WeaveQuestion' data-id='doYMT1Ol' data-controltype='numeric'>
+=======
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='wT1eTppc' data-controltype='numeric'>
+>>>>>>> master
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
+<<<<<<< HEAD
 <input id="doYMT1Ol" type="number" class="form-control" placeholder="Numeric answer">
 <label for="doYMT1Ol">Numeric answer</label>
 
 </div>
 
 <div id='doYMT1Ol_message'></div>
+=======
+<input id="wT1eTppc" type="number" class="form-control" placeholder="Numeric answer">
+<label for="wT1eTppc">Numeric answer</label>
+
+</div>
+
+<div id='wT1eTppc_message'></div>
+>>>>>>> master
 </div>
 </div>
 </form>
 <script text='text/javascript'>
+<<<<<<< HEAD
 $('#doYMT1Ol').on('change', function() {
   correct = Math.abs(this.value - 654729075) <= 0;
 
@@ -1564,6 +2129,15 @@ $('#doYMT1Ol').on('change', function() {
      $('#doYMT1Ol_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
      $('#doYMT1Ol_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+=======
+$('#wT1eTppc').on('change', function() {
+  correct = Math.abs(this.value - 654729075) <= 0;
+
+  if(correct) {
+     $('#wT1eTppc_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+  } else {
+     $('#wT1eTppc_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+>>>>>>> master
   }
 });
 </script>
@@ -1574,42 +2148,62 @@ $('#doYMT1Ol').on('change', function() {
   <div class="card-header float-end text-muted">
     <span class="text-muted  float-end align-middle">
 
+<<<<<<< HEAD
 <a href="../precalc/vectors.html"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
 title="Previous section"
 aria-label="Previous section"
 class="bi bi-arrow-left-circle-fill">
+=======
+<a href="../precalc/vectors.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Previous section" aria-label="Previous section">
+<i class="bi bi-arrow-left-circle-fill"></i>
+>>>>>>> master
 </a>
 
 &nbsp;
 
+<<<<<<< HEAD
 <a href="../precalc/functions.html"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
 title="Next section"
 aria-label="Next section"
 class="bi bi-arrow-right-circle-fill">
+=======
+<a href="../precalc/functions.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Next section" aria-label="Next section">
+<i class="bi bi-arrow-right-circle-fill"></i>
+>>>>>>> master
 </a>
 
 &nbsp;
 
+<<<<<<< HEAD
 <a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/precalc/ranges.jmd"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
 title="Suggest an edit"
 aria-label="Suggest an edit"
 class="bi bi-pencil-square">
+=======
+<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/precalc/ranges.jmd" data-bs-toggle="tooltip" data-bs-placement="top" title="Suggest an edit" aria-label="Suggest an edit">
+<i class="bi bi-pencil-square"></i>
+>>>>>>> master
 </a>
 
 &nbsp;
 
+<<<<<<< HEAD
 <a href="../misc/toc.html"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
 title="Table of contents"
 aria-label="Table of contents"
 class="bi bi-card-list">
+=======
+<a href="../misc/toc.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Table of contents" aria-label="Table of contents">
+<i class="bi bi-card-list"></i>
+>>>>>>> master
 </a>
 
     </span>
