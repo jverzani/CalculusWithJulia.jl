@@ -1142,15 +1142,15 @@ They all contain all real numbers between the endpoints, the distinction is whet
 
 A domain is some set, but typically that set is an interval such as *all real numbers* (``(-\infty,\infty)``), *all non-negative numbers* (``[0,\infty)``), or, say, *all positive numbers* (``(0,\infty)``).
 
-The `IntervalArithmetic` package provides an easy  means to define closed intervals using the symbol `..`:
+The `IntervalArithmetic` package provides an easy  means to define closed intervals using the symbol `..`, but this is also used by the `CalculusWithJulia` package in different manner, so we use the fully qualified named constructor in the following to construct intervals:
 
 ```julia
-using IntervalArithmetic
-I1 = -Inf..Inf
+import IntervalArithmetic
+I1 = IntervalArithmetic.Interval(-Inf, Inf)
 ```
 
 ```julia
-I2 = 0..Inf
+I2 = IntervalArithmetic.Interval(0, Inf)
 ```
 
 The main feature of the package is not to construct intervals, but rather to *rigorously* bound with an interval the output of the image of a closed interval under a function. That is, for a function ``f`` and *closed* interval ``[a,b]``, a bound for the set ``\{f(x) \text{ for } x \text{ in } [a,b]\}``. When `[a,b]` is the domain of ``f``, then this is a bound for the range of ``f``.
@@ -1159,7 +1159,7 @@ The main feature of the package is not to construct intervals, but rather to *ri
 For example the function ``f(x) = x^2 + 2`` had a domain of all real ``x``, the range can be found with:
 
 ```julia
-ab = -Inf..Inf
+ab = IntervalArithmetic.Interval(-Inf, Inf)
 f(x) = x^2 + 2
 f(ab)
 ```
@@ -1189,7 +1189,8 @@ Now consider the evaluation
 
 ```julia;
 f(x) = x^x
-f(0..Inf)
+I = IntervalArithmetic.Interval(0, Inf)
+f(I)
 ```
 
 Make a graph of `f`. Does the interval found above provide a nearly exact estimate of the true range (as the previous two questions have)?

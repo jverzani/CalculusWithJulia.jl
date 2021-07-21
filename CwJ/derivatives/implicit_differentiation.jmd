@@ -125,21 +125,25 @@ allows expressions to involve free symbols, so the problem is
 specified in an equation-like manner:
 
 ```julia;
-using IntervalArithmetic, IntervalConstraintProgramming
+import IntervalArithmetic
+using IntervalConstraintProgramming
 S = @constraint x^2 + y^2 <= 2
 ```
 
+
 The right hand side must be a number.
 
-The area to plot over must be specified as an `IntervalBox`, basically a pair of intervals. The interval ``[a,b]`` is expressed through `a..b`.
+The area to plot over must be specified as an `IntervalBox`, basically a pair of intervals. The interval ``[a,b]`` is expressed through `a..b`, though, as `CalculusWithJulia` co-opts that notation, the following workaround is needed:
 
 ```julia;
-X = IntervalBox(-3..3, -3..3)
+J = IntervalArithmetic.Interval(-3, 3)  # can use -3..3 as it conflicts
+X = IntervalArithmetic.IntervalBox(J, J)
 ```
 
 
+
 ```julia;
-r = pave(S, X)
+r = IntervalConstraintProgramming.pave(S, X)
 ```
 
 We can plot either the boundary, the interior, or both.

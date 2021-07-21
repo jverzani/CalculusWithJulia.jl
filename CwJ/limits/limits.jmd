@@ -76,6 +76,7 @@ plotly()
 ImageFile(imgfile, caption)
 ```
 
+
 The figure illustrates a means to compute the area bounded by the
 parabola, the line ``y=1`` and the line ``x=0`` using triangles. It
 suggests that this area can be found by adding the following sum
@@ -743,6 +744,7 @@ The left limit can be found by passing the argument `dir="-"`. Passing `dir="+-"
 @syms x
 limit(ceil(x), x=>0), limit(ceil(x), x=>0, dir="-")
 ```
+
 
 This accurately shows the limit does not exist mathematically, but `limit(ceil(x), x=>0)` does exist (as it finds a right limit).
 

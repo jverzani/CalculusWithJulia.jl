@@ -229,7 +229,7 @@ p = surface(xs, ys, zs, legend=false, fillalpha=0.5)
 
 ## we add to the graphic p, then plot
 for cl in levels(contours(xs, ys, zs))
-    lvl = level(cl) # the z-value of this contour level
+    lvl = Contour.level(cl) # the z-value of this contour level
     for line in lines(cl)
         _xs, _ys = coordinates(line) # coordinates of this line segment
         _zs = 0 * _xs

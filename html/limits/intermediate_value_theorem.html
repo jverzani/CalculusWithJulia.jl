@@ -294,11 +294,7 @@ bisection &#40;generic function with 1 method&#41;
 <span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>CalculusWithJulia</span><span class='hljl-t'>
 </span><span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>Roots</span><span class='hljl-t'>
 </span><span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>Plots</span><span class='hljl-t'>
-<<<<<<< HEAD
 </span><span class='hljl-n'>xstar</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>find_zero</span><span class='hljl-p'>(</span><span class='hljl-n'>sin</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nfB'>3..4</span><span class='hljl-p'>)</span><span class='hljl-t'>   </span><span class='hljl-cs'># using interval notation a..b to specify the bracketing interval. Could use (a,b) as well</span>
-=======
-</span><span class='hljl-n'>xstar</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>find_zero</span><span class='hljl-p'>(</span><span class='hljl-n'>sin</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>4</span><span class='hljl-p'>))</span><span class='hljl-t'>   </span><span class='hljl-cs'># use a tuple, (a, b), to specify the bracketing interval</span>
->>>>>>> master
 </pre>
 
 
@@ -308,11 +304,7 @@ bisection &#40;generic function with 1 method&#41;
 
 
 
-<<<<<<< HEAD
 <div class="alert alert-success" role="alert"><div class="markdown"><p>Notice, the call <code>find_zero&#40;sin, 3..4&#41;</code> again fits the template <code>action&#40;function, args...&#41;</code> that we see repeatedly. The <code>find_zero</code> function can also be called through <code>fzero</code>.</p>
-=======
-<div class="alert alert-success" role="alert"><div class="markdown"><p>Notice, the call <code>find_zero&#40;sin, &#40;3,4&#41;&#41;</code> again fits the template <code>action&#40;function, args...&#41;</code> that we see repeatedly. The <code>find_zero</code> function can also be called through <code>fzero</code>.</p>
->>>>>>> master
 </div></div>
 
 <p>This function utilizes some facts about floating point values to guarantee that the answer will be an <em>exact</em> zero or a value where there is a sign change between the next bigger floating point or the next smaller, which means the sign at the next and previous floating point values is different:</p>
@@ -334,31 +326,16 @@ bisection &#40;generic function with 1 method&#41;
 
 <pre class='hljl'>
 <span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>5</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-t'>
-</span><span class='hljl-n'>c</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>find_zero</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-nfB'>2.</span><span class='hljl-oB'>.-</span><span class='hljl-ni'>1</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>c</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>find_zero</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>..</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-p'>)</span><span class='hljl-t'>  </span><span class='hljl-cs'># avoiding ..-1 which errors</span><span class='hljl-t'>
 </span><span class='hljl-p'>(</span><span class='hljl-n'>c</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>c</span><span class='hljl-p'>))</span>
 </pre>
 
 
-<pre class="julia-error">
-ERROR: syntax: invalid operator &quot;..-&quot; near column 21
-</pre>
-
-
-<p>We see, as before, that <span class="math">$f(c)$</span> is not quite <span class="math">$0$</span>. But you can check that <code>f&#40;prevfloat&#40;c&#41;&#41;</code> is negative, while <code>f&#40;c&#41;</code> is seen to be positive:</p>
-
-
-<pre class='hljl'>
-<span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>c</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-nf'>sign</span><span class='hljl-p'>(</span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-nf'>prevfloat</span><span class='hljl-p'>(</span><span class='hljl-n'>c</span><span class='hljl-p'>))),</span><span class='hljl-t'> </span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-nf'>nextfloat</span><span class='hljl-p'>(</span><span class='hljl-n'>c</span><span class='hljl-p'>)))</span>
-</pre>
-
-
 <pre class="output">
-&#40;303.87809213169163, 1.0, 1.0000000000000002&#41;
+&#40;-1.1673039782614185, 1.3322676295501878e-15&#41;
 </pre>
 
 
-<<<<<<< HEAD
-=======
 <p>We see, as before, that <span class="math">$f(c)$</span> is not quite <span class="math">$0$</span>. But you can check that <code>f&#40;prevfloat&#40;c&#41;&#41;</code> is negative, while <code>f&#40;c&#41;</code> is seen to be positive:</p>
 
 
@@ -372,7 +349,6 @@ ERROR: syntax: invalid operator &quot;..-&quot; near column 21
 </pre>
 
 
->>>>>>> master
 <h5>Example</h5>
 <p>The function <span class="math">$f(x) = e^x - x^4$</span> has a zero between <span class="math">$5$</span> and <span class="math">$10$</span>, as this graph shows:</p>
 
@@ -384,17 +360,10 @@ ERROR: syntax: invalid operator &quot;..-&quot; near column 21
 
 
 
-<<<<<<< HEAD
-    <div id="63ff73a5-6c26-4343-ad95-de156cb49039" style="width:576px;height:384px;"></div>
+    <div id="7bf920a0-c235-4fe0-9d2c-fc89a2265ad7" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('63ff73a5-6c26-4343-ad95-de156cb49039');
-=======
-    <div id="e85a25f7-4ba1-493b-b70f-96cbfdd606f4" style="width:576px;height:384px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('e85a25f7-4ba1-493b-b70f-96cbfdd606f4');
->>>>>>> master
+        var PLOT = document.getElementById('7bf920a0-c235-4fe0-9d2c-fc89a2265ad7');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -666,17 +635,10 @@ ERROR: syntax: invalid operator &quot;..-&quot; near column 21
 
 
 
-<<<<<<< HEAD
-    <div id="b5428564-5ea1-4938-98aa-c98c65cc1de9" style="width:576px;height:384px;"></div>
+    <div id="70bb32b6-1ba1-497c-abd3-632c191c6642" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('b5428564-5ea1-4938-98aa-c98c65cc1de9');
-=======
-    <div id="cfb51a84-e4b8-4c93-99b1-ada5ba960715" style="width:576px;height:384px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('cfb51a84-e4b8-4c93-99b1-ada5ba960715');
->>>>>>> master
+        var PLOT = document.getElementById('70bb32b6-1ba1-497c-abd3-632c191c6642');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -939,16 +901,12 @@ ERROR: syntax: invalid operator &quot;..-&quot; near column 21
 
 
 <pre class='hljl'>
-<<<<<<< HEAD
-<span class='hljl-nf'>find_zero</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>3</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-nfB'>2.</span><span class='hljl-oB'>.-</span><span class='hljl-ni'>1</span><span class='hljl-p'>)</span>
-=======
-<span class='hljl-nf'>find_zero</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>3</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-p'>))</span>
->>>>>>> master
+<span class='hljl-nf'>find_zero</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>3</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>..</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-p'>)</span>
 </pre>
 
 
-<pre class="julia-error">
-ERROR: syntax: invalid operator &quot;..-&quot; near column 27
+<pre class="output">
+-1.3247179572447458
 </pre>
 
 
@@ -965,17 +923,10 @@ ERROR: syntax: invalid operator &quot;..-&quot; near column 27
 
 
 
-<<<<<<< HEAD
-    <div id="6cc8d1c6-fa3b-42bc-ab2a-b6764b6d1f58" style="width:576px;height:384px;"></div>
+    <div id="524d0d7d-0637-462d-b55c-23347a754359" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('6cc8d1c6-fa3b-42bc-ab2a-b6764b6d1f58');
-=======
-    <div id="17c51a04-1e04-411b-a81f-3dd2cb72ced7" style="width:576px;height:384px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('17c51a04-1e04-411b-a81f-3dd2cb72ced7');
->>>>>>> master
+        var PLOT = document.getElementById('524d0d7d-0637-462d-b55c-23347a754359');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -1368,17 +1319,10 @@ plan2 &#40;generic function with 1 method&#41;
 
 
 
-<<<<<<< HEAD
-    <div id="1455066a-cd69-4094-ad85-0a30a1a883d9" style="width:576px;height:384px;"></div>
+    <div id="1cce47fb-506a-4989-a227-de74c5691de3" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('1455066a-cd69-4094-ad85-0a30a1a883d9');
-=======
-    <div id="2165e0ec-ad36-48b8-b48f-c86a2d4a4abe" style="width:576px;height:384px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('2165e0ec-ad36-48b8-b48f-c86a2d4a4abe');
->>>>>>> master
+        var PLOT = document.getElementById('1cce47fb-506a-4989-a227-de74c5691de3');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -1726,17 +1670,10 @@ y &#40;generic function with 1 method&#41;
 
 
 
-<<<<<<< HEAD
-    <div id="8cff498e-7b3d-48ce-9b06-a59a980f6517" style="width:576px;height:384px;"></div>
+    <div id="37aab042-23e1-4e02-9957-cd6be6a8b82f" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('8cff498e-7b3d-48ce-9b06-a59a980f6517');
-=======
-    <div id="705a79e0-5f46-4d49-bbcc-00ab6bb7e41f" style="width:576px;height:384px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('705a79e0-5f46-4d49-bbcc-00ab6bb7e41f');
->>>>>>> master
+        var PLOT = document.getElementById('37aab042-23e1-4e02-9957-cd6be6a8b82f');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -1963,8 +1900,8 @@ y &#40;generic function with 1 method&#41;
 
 <pre class="output">
 Dict&#123;Any, Any&#125; with 2 entries:
-  0                &#61;&gt; 1
   1250.00000000000 &#61;&gt; 1
+  0                &#61;&gt; 1
 </pre>
 
 
@@ -1977,17 +1914,10 @@ Dict&#123;Any, Any&#125; with 2 entries:
 
 
 
-<<<<<<< HEAD
-    <div id="78c274ea-8453-4a65-93d4-4d473f072219" style="width:576px;height:384px;"></div>
+    <div id="664baea3-0269-40fc-bef2-ec0e6153d53a" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('78c274ea-8453-4a65-93d4-4d473f072219');
-=======
-    <div id="62834d72-5138-4441-ab47-72f39c7d9b6d" style="width:576px;height:384px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('62834d72-5138-4441-ab47-72f39c7d9b6d');
->>>>>>> master
+        var PLOT = document.getElementById('664baea3-0269-40fc-bef2-ec0e6153d53a');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -2253,17 +2183,10 @@ Dict&#123;Any, Any&#125; with 2 entries:
 
 
 
-<<<<<<< HEAD
-    <div id="fb1401d0-0f1e-4b98-b84d-eb2f35a0ea17" style="width:576px;height:384px;"></div>
+    <div id="5d20a92c-e7b4-487e-9034-2fd228305501" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('fb1401d0-0f1e-4b98-b84d-eb2f35a0ea17');
-=======
-    <div id="9de82e76-1e6e-4ba1-a1e1-010482307263" style="width:576px;height:384px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('9de82e76-1e6e-4ba1-a1e1-010482307263');
->>>>>>> master
+        var PLOT = document.getElementById('5d20a92c-e7b4-487e-9034-2fd228305501');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -2534,7 +2457,6 @@ Dict&#123;Any, Any&#125; with 2 entries:
 
 
 <p>Note that the function is infinite at <code>b</code>:</p>
-<<<<<<< HEAD
 
 
 <pre class='hljl'>
@@ -2552,32 +2474,10 @@ Dict&#123;Any, Any&#125; with 2 entries:
 
 <pre class='hljl'>
 <span class='hljl-n'>x1</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>find_zero</span><span class='hljl-p'>(</span><span class='hljl-n'>y</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>b</span><span class='hljl-oB'>/</span><span class='hljl-ni'>2</span><span class='hljl-p'>)</span><span class='hljl-oB'>..</span><span class='hljl-n'>b</span><span class='hljl-p'>)</span>
-=======
-
-
-<pre class='hljl'>
-<span class='hljl-nf'>y</span><span class='hljl-p'>(</span><span class='hljl-n'>b</span><span class='hljl-p'>)</span>
->>>>>>> master
 </pre>
 
 
 <pre class="output">
-<<<<<<< HEAD
-=======
--Inf
-</pre>
-
-
-<p>From the graph,  we can see the zero is around <code>b</code>. As <code>y&#40;b&#41;</code> is <code>-Inf</code> we can use the bracket <code>&#40;b/2,b&#41;</code></p>
-
-
-<pre class='hljl'>
-<span class='hljl-n'>x1</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>find_zero</span><span class='hljl-p'>(</span><span class='hljl-n'>y</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>b</span><span class='hljl-oB'>/</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-p'>))</span>
-</pre>
-
-
-<pre class="output">
->>>>>>> master
 140.7792933802306
 </pre>
 
@@ -2594,17 +2494,10 @@ Dict&#123;Any, Any&#125; with 2 entries:
 
 
 
-<<<<<<< HEAD
-    <div id="1fc7222d-4f33-4650-a7a0-ba0c89b0f356" style="width:576px;height:384px;"></div>
+    <div id="edcf1f17-c928-4c87-89d5-a41ccea2b56b" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('1fc7222d-4f33-4650-a7a0-ba0c89b0f356');
-=======
-    <div id="2ed18605-b783-4357-8f81-25bfa93d2b57" style="width:576px;height:384px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('2ed18605-b783-4357-8f81-25bfa93d2b57');
->>>>>>> master
+        var PLOT = document.getElementById('edcf1f17-c928-4c87-89d5-a41ccea2b56b');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -3018,11 +2911,7 @@ Dict&#123;Any, Any&#125; with 2 entries:
 <p>So, the &quot;bisection method&quot; applied here finds a point where the function crosses <span class="math">$0$</span>, either by continuity or by jumping over the <span class="math">$0$</span>.  &#40;A <code>jump</code> discontinuity at <span class="math">$x=c$</span> is defined by the left and right limits of <span class="math">$f$</span> at <span class="math">$c$</span> existing but being unequal. The algorithm can find <span class="math">$c$</span> when this type of function jumps over <span class="math">$0$</span>.&#41;</p>
 <h3>The <code>find_zeros</code> function</h3>
 <p>The bisection method suggests a naive means to search for all zeros within an interval <span class="math">$(a, b)$</span>: split the interval into many small intervals and for each that is a bracketing interval find a zero. This simple description has three flaws: it might miss values where the function doesn&#39;t actually cross the <span class="math">$x$</span> axis; it might miss values where the function just dips to the other side; and it might miss multiple values in the same small interval.</p>
-<<<<<<< HEAD
 <p>Still, with some engineering, this can be a useful approach, save the caveats. This idea is implemented in the <code>find_zeros</code> function of the <code>Roots</code> package. The function is called via <code>find_zeros&#40;f, a.. b&#41;</code> but here the interval <span class="math">$[a,b]$</span> is not necessarily a bracketing interval.</p>
-=======
-<p>Still, with some engineering, this can be a useful approach, save the caveats. This idea is implemented in the <code>find_zeros</code> function of the <code>Roots</code> package. The function is called via <code>find_zeros&#40;f, a, b&#41;</code> but here the interval <span class="math">$[a,b]$</span> is not necessarily a bracketing interval.</p>
->>>>>>> master
 <p>To see, we have:</p>
 
 
@@ -3115,11 +3004,7 @@ Dict&#123;Any, Any&#125; with 2 entries:
 
 
 <pre class="output">
-<<<<<<< HEAD
-Roots.ZeroProblem&#123;typeof&#40;Main.##WeaveSandBox#841.f&#41;, Tuple&#123;Int64, Int64&#125;&#125;&#40;Main.##WeaveSandBox#841.f, &#40;1, 2&#41;&#41;
-=======
-ZeroProblem&#123;typeof&#40;Main.##WeaveSandBox#628.f&#41;, Tuple&#123;Int64, Int64&#125;&#125;&#40;Main.##WeaveSandBox#628.f, &#40;1, 2&#41;&#41;
->>>>>>> master
+Roots.ZeroProblem&#123;typeof&#40;Main.##WeaveSandBox#384.f&#41;, Tuple&#123;Int64, Int64&#125;&#125;&#40;Main.##WeaveSandBox#384.f, &#40;1, 2&#41;&#41;
 </pre>
 
 
@@ -3160,11 +3045,7 @@ i &#61; 1.1673039782614187
 </pre>
 
 
-<<<<<<< HEAD
 <p>The command <code>find_zero&#40;f, 1..2, FalsePosition&#40;&#41;, verbose&#61;true&#41;</code> would give more detail on the algorithm in a standard format, but this method may be of interest, as it allows the combination of different models.</p>
-=======
-<p>The command <code>find_zero&#40;f, &#40;1,2&#41;, FalsePosition&#40;&#41;, verbose&#61;true&#41;</code> would give more detail on the algorithm in a standard format, but this method may be of interest, as it allows the combination of different models.</p>
->>>>>>> master
 <h2>Extreme value theorem</h2>
 <p>The Extreme Value Theorem is another consequence of continuity.</p>
 <p>To discuss the extreme value theorem, we define an <em>absolute maximum</em> of <span class="math">$f(x)$</span> over an interval <span class="math">$I$</span> to be a value <span class="math">$f(c)$</span>, <span class="math">$c$</span> in <span class="math">$I$</span>, where <span class="math">$f(x) \leq f(c)$</span> for any <span class="math">$x$</span> in <span class="math">$I$</span>. Similarly, an <em>absolute minimum</em> of <span class="math">$f(x)$</span> over an interval <span class="math">$I$</span> can be defined.</p>
@@ -3207,17 +3088,10 @@ i &#61; 1.1673039782614187
 
 
 
-<<<<<<< HEAD
-    <div id="c9557418-4ee3-40f9-96c4-84fa0a9acb0d" style="width:576px;height:384px;"></div>
+    <div id="bf4f7c69-1054-4b2b-affb-d46d4905ad40" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('c9557418-4ee3-40f9-96c4-84fa0a9acb0d');
-=======
-    <div id="139a97ab-2d17-4187-8cb6-e9406b2af06e" style="width:576px;height:384px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('139a97ab-2d17-4187-8cb6-e9406b2af06e');
->>>>>>> master
+        var PLOT = document.getElementById('bf4f7c69-1054-4b2b-affb-d46d4905ad40');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -3485,17 +3359,10 @@ i &#61; 1.1673039782614187
 
 
 
-<<<<<<< HEAD
-    <div id="9cd4647b-b57f-4430-8005-fe559574a846" style="width:576px;height:384px;"></div>
+    <div id="65070798-6a72-4c9b-acfb-0cfa2cd1e9e3" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('9cd4647b-b57f-4430-8005-fe559574a846');
-=======
-    <div id="cecc0655-0972-4c6a-b43d-12e8ccf66b23" style="width:576px;height:384px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('cecc0655-0972-4c6a-b43d-12e8ccf66b23');
->>>>>>> master
+        var PLOT = document.getElementById('65070798-6a72-4c9b-acfb-0cfa2cd1e9e3');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -3775,20 +3642,12 @@ i &#61; 1.1673039782614187
 
 
 <div class="d-flex justify-content-center">
-<<<<<<< HEAD
 <div class="card border-light mx-3 px-3 my-3 py-3" style="width:600px">
-=======
-<div class="card border-light mx-3 px-3 my-3 py-3" style=" max-width: 560px;">
->>>>>>> master
    <div id="jsxgraph" class='jsxgraph' style='width:600px; height:400px'></div>
   <div class="card-footer text-muted">
     <span class="card-text">
       <small class="text-muted">
-<<<<<<< HEAD
       Illustration of the bisection method applied to a function with a single zero. Adjust the slider labled &quot;n&quot; to move to a new step.
-=======
-      Illustration of the bisection method applied to a function with a single zero.
->>>>>>> master
       </small>
     </span>
   </div>
@@ -3877,52 +3736,29 @@ b.create("point", [function() {
 
 
 
-<<<<<<< HEAD
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='Z8eBeaV6' data-controltype='numeric'>
-=======
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='yIIqAoh7' data-controltype='numeric'>
->>>>>>> master
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='ARzFdR0n' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<<<<<<< HEAD
-<input id="Z8eBeaV6" type="number" class="form-control" placeholder="Numeric answer">
-<label for="Z8eBeaV6">Numeric answer</label>
+<input id="ARzFdR0n" type="number" class="form-control" placeholder="Numeric answer">
+<label for="ARzFdR0n">Numeric answer</label>
 
 </div>
 
-<div id='Z8eBeaV6_message'></div>
-=======
-<input id="yIIqAoh7" type="number" class="form-control" placeholder="Numeric answer">
-<label for="yIIqAoh7">Numeric answer</label>
-
-</div>
-
-<div id='yIIqAoh7_message'></div>
->>>>>>> master
+<div id='ARzFdR0n_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-<<<<<<< HEAD
-$('#Z8eBeaV6').on('change', function() {
+$('#ARzFdR0n').on('change', function() {
   correct = Math.abs(this.value - 1.1673039782614187) <= 0.1;
 
   if(correct) {
-     $('#Z8eBeaV6_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#ARzFdR0n_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#Z8eBeaV6_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-=======
-$('#yIIqAoh7').on('change', function() {
-  correct = Math.abs(this.value - 1.1673039782614187) <= 0.1;
-
-  if(correct) {
-     $('#yIIqAoh7_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#yIIqAoh7_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
->>>>>>> master
+     $('#ARzFdR0n_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -3932,52 +3768,29 @@ $('#yIIqAoh7').on('change', function() {
 <p>There is negative zero in the interval <span class="math">$[-10, 0]$</span> for the function <span class="math">$f(x) = e^x - x^4$</span>. Find its value numerically:</p>
 
 
-<<<<<<< HEAD
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='Mdc6eiP5' data-controltype='numeric'>
-=======
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='vj8LLpmn' data-controltype='numeric'>
->>>>>>> master
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='WMydrsvj' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<<<<<<< HEAD
-<input id="Mdc6eiP5" type="number" class="form-control" placeholder="Numeric answer">
-<label for="Mdc6eiP5">Numeric answer</label>
+<input id="WMydrsvj" type="number" class="form-control" placeholder="Numeric answer">
+<label for="WMydrsvj">Numeric answer</label>
 
 </div>
 
-<div id='Mdc6eiP5_message'></div>
-=======
-<input id="vj8LLpmn" type="number" class="form-control" placeholder="Numeric answer">
-<label for="vj8LLpmn">Numeric answer</label>
-
-</div>
-
-<div id='vj8LLpmn_message'></div>
->>>>>>> master
+<div id='WMydrsvj_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-<<<<<<< HEAD
-$('#Mdc6eiP5').on('change', function() {
+$('#WMydrsvj').on('change', function() {
   correct = Math.abs(this.value - -0.8155534188089606) <= 0.001;
 
   if(correct) {
-     $('#Mdc6eiP5_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#WMydrsvj_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#Mdc6eiP5_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-=======
-$('#vj8LLpmn').on('change', function() {
-  correct = Math.abs(this.value - -0.8155534188089606) <= 0.001;
-
-  if(correct) {
-     $('#vj8LLpmn_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#vj8LLpmn_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
->>>>>>> master
+     $('#WMydrsvj_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -3987,52 +3800,29 @@ $('#vj8LLpmn').on('change', function() {
 <p>There is  zero in the interval <span class="math">$[0, 5]$</span> for the function <span class="math">$f(x) = e^x - x^4$</span>. Find its value numerically:</p>
 
 
-<<<<<<< HEAD
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='2CibbwQv' data-controltype='numeric'>
-=======
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='QYziY77j' data-controltype='numeric'>
->>>>>>> master
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='z6hyhf93' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<<<<<<< HEAD
-<input id="2CibbwQv" type="number" class="form-control" placeholder="Numeric answer">
-<label for="2CibbwQv">Numeric answer</label>
+<input id="z6hyhf93" type="number" class="form-control" placeholder="Numeric answer">
+<label for="z6hyhf93">Numeric answer</label>
 
 </div>
 
-<div id='2CibbwQv_message'></div>
-=======
-<input id="QYziY77j" type="number" class="form-control" placeholder="Numeric answer">
-<label for="QYziY77j">Numeric answer</label>
-
-</div>
-
-<div id='QYziY77j_message'></div>
->>>>>>> master
+<div id='z6hyhf93_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-<<<<<<< HEAD
-$('#2CibbwQv').on('change', function() {
+$('#z6hyhf93').on('change', function() {
   correct = Math.abs(this.value - 1.4296118247255556) <= 0.001;
 
   if(correct) {
-     $('#2CibbwQv_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#z6hyhf93_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#2CibbwQv_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-=======
-$('#QYziY77j').on('change', function() {
-  correct = Math.abs(this.value - 1.4296118247255556) <= 0.001;
-
-  if(correct) {
-     $('#QYziY77j_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#QYziY77j_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
->>>>>>> master
+     $('#z6hyhf93_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -4042,52 +3832,29 @@ $('#QYziY77j').on('change', function() {
 <p>Let <span class="math">$f(x) = x^2 - 10 \cdot x \cdot \log(x)$</span>. This function has two zeros on the positive <span class="math">$x$</span> axis. You are asked to find the largest &#40;graph and bracket...&#41;.</p>
 
 
-<<<<<<< HEAD
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='1JWWPUSM' data-controltype='numeric'>
-=======
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='2my5oHst' data-controltype='numeric'>
->>>>>>> master
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='mhOjX1Xf' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<<<<<<< HEAD
-<input id="1JWWPUSM" type="number" class="form-control" placeholder="Numeric answer">
-<label for="1JWWPUSM">Numeric answer</label>
+<input id="mhOjX1Xf" type="number" class="form-control" placeholder="Numeric answer">
+<label for="mhOjX1Xf">Numeric answer</label>
 
 </div>
 
-<div id='1JWWPUSM_message'></div>
-=======
-<input id="2my5oHst" type="number" class="form-control" placeholder="Numeric answer">
-<label for="2my5oHst">Numeric answer</label>
-
-</div>
-
-<div id='2my5oHst_message'></div>
->>>>>>> master
+<div id='mhOjX1Xf_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-<<<<<<< HEAD
-$('#1JWWPUSM').on('change', function() {
+$('#mhOjX1Xf').on('change', function() {
   correct = Math.abs(this.value - 35.77152063957298) <= 0.001;
 
   if(correct) {
-     $('#1JWWPUSM_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#mhOjX1Xf_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#1JWWPUSM_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-=======
-$('#2my5oHst').on('change', function() {
-  correct = Math.abs(this.value - 35.77152063957298) <= 0.001;
-
-  if(correct) {
-     $('#2my5oHst_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#2my5oHst_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
->>>>>>> master
+     $('#mhOjX1Xf_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -4103,17 +3870,10 @@ $('#2my5oHst').on('change', function() {
 
 
 
-<<<<<<< HEAD
-    <div id="f5889db2-3b0a-4e24-a1d7-3e3ffc18f4a1" style="width:576px;height:384px;"></div>
+    <div id="5c1f4f5a-a468-4624-848d-61c7d73a64fa" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('f5889db2-3b0a-4e24-a1d7-3e3ffc18f4a1');
-=======
-    <div id="fcefffa2-030d-4eb2-b9e2-5fe6dc175056" style="width:576px;height:384px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('fcefffa2-030d-4eb2-b9e2-5fe6dc175056');
->>>>>>> master
+        var PLOT = document.getElementById('5c1f4f5a-a468-4624-848d-61c7d73a64fa');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -4586,39 +4346,33 @@ $('#2my5oHst').on('change', function() {
 
 <p>The second largest root is:</p>
 
-<<<<<<< HEAD
-<pre class="julia-error">
-ERROR: syntax: invalid operator &quot;..-&quot; near column 28
-</pre>
-=======
 
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='KhXg2aSY' data-controltype='numeric'>
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='ibCiKY7v' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<input id="KhXg2aSY" type="number" class="form-control" placeholder="Numeric answer">
-<label for="KhXg2aSY">Numeric answer</label>
+<input id="ibCiKY7v" type="number" class="form-control" placeholder="Numeric answer">
+<label for="ibCiKY7v">Numeric answer</label>
 
 </div>
 
-<div id='KhXg2aSY_message'></div>
+<div id='ibCiKY7v_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-$('#KhXg2aSY').on('change', function() {
+$('#ibCiKY7v').on('change', function() {
   correct = Math.abs(this.value - -4.087949444130973) <= 1.0e-8;
 
   if(correct) {
-     $('#KhXg2aSY_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#ibCiKY7v_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#KhXg2aSY_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+     $('#ibCiKY7v_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
->>>>>>> master
 
 
 <h6>Question</h6>
@@ -4626,52 +4380,29 @@ $('#KhXg2aSY').on('change', function() {
 <p>Certainly <span class="math">$x^3$</span> equals <span class="math">$3^x$</span> at <span class="math">$x=3$</span>. Find the largest value for which <span class="math">$x^3 = 3x$</span>.</p>
 
 
-<<<<<<< HEAD
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='5cQdn99t' data-controltype='numeric'>
-=======
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='1umuHJrG' data-controltype='numeric'>
->>>>>>> master
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='zu6oCWvm' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<<<<<<< HEAD
-<input id="5cQdn99t" type="number" class="form-control" placeholder="Numeric answer">
-<label for="5cQdn99t">Numeric answer</label>
+<input id="zu6oCWvm" type="number" class="form-control" placeholder="Numeric answer">
+<label for="zu6oCWvm">Numeric answer</label>
 
 </div>
 
-<div id='5cQdn99t_message'></div>
-=======
-<input id="1umuHJrG" type="number" class="form-control" placeholder="Numeric answer">
-<label for="1umuHJrG">Numeric answer</label>
-
-</div>
-
-<div id='1umuHJrG_message'></div>
->>>>>>> master
+<div id='zu6oCWvm_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-<<<<<<< HEAD
-$('#5cQdn99t').on('change', function() {
+$('#zu6oCWvm').on('change', function() {
   correct = Math.abs(this.value - 3.0000000000000013) <= 0.001;
 
   if(correct) {
-     $('#5cQdn99t_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#zu6oCWvm_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#5cQdn99t_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-=======
-$('#1umuHJrG').on('change', function() {
-  correct = Math.abs(this.value - 3.0000000000000013) <= 0.001;
-
-  if(correct) {
-     $('#1umuHJrG_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#1umuHJrG_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
->>>>>>> master
+     $('#zu6oCWvm_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -4680,73 +4411,38 @@ $('#1umuHJrG').on('change', function() {
 <p>Compare <span class="math">$x^2$</span> and <span class="math">$2^x$</span>. They meet at <span class="math">$2$</span>, where do the meet again?</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="ofHrkHGJ" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="fKe0F1pf" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ofHrkHGJ" id="radio_ofHrkHGJ_1" value="1">
-  <label class="form-check-label" for="radio_ofHrkHGJ_1">
-    Before and after 2
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ofHrkHGJ" id="radio_ofHrkHGJ_2" value="2">
-  <label class="form-check-label" for="radio_ofHrkHGJ_2">
-    Only after 2
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ofHrkHGJ" id="radio_ofHrkHGJ_3" value="3">
-  <label class="form-check-label" for="radio_ofHrkHGJ_3">
-    Only before 2
-  </label>
-</div>
-
-<div id="ofHrkHGJ_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_ofHrkHGJ']").on("change", function() {
-  correct = this.value == 1;
-
-  if(correct) {
-     $("#ofHrkHGJ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#ofHrkHGJ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Voj4A4bW" data-controltype="radio">
-<div class="form-group ">
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Voj4A4bW" id="radio_Voj4A4bW_1" value="1">
-  <label class="form-check-label" for="radio_Voj4A4bW_1">
+  <input class="form-check-input" type="radio" name="radio_fKe0F1pf" id="radio_fKe0F1pf_1" value="1">
+  <label class="form-check-label" for="radio_fKe0F1pf_1">
     Only before 2
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Voj4A4bW" id="radio_Voj4A4bW_2" value="2">
-  <label class="form-check-label" for="radio_Voj4A4bW_2">
+  <input class="form-check-input" type="radio" name="radio_fKe0F1pf" id="radio_fKe0F1pf_2" value="2">
+  <label class="form-check-label" for="radio_fKe0F1pf_2">
     Before and after 2
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Voj4A4bW" id="radio_Voj4A4bW_3" value="3">
-  <label class="form-check-label" for="radio_Voj4A4bW_3">
+  <input class="form-check-input" type="radio" name="radio_fKe0F1pf" id="radio_fKe0F1pf_3" value="3">
+  <label class="form-check-label" for="radio_fKe0F1pf_3">
     Only after 2
   </label>
 </div>
 
-<div id="Voj4A4bW_message"></div>
+<div id="fKe0F1pf_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Voj4A4bW']").on("change", function() {
+$("input:radio[name='radio_fKe0F1pf']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#Voj4A4bW_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#fKe0F1pf_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Voj4A4bW_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#fKe0F1pf_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -4756,87 +4452,48 @@ $("input:radio[name='radio_Voj4A4bW']").on("change", function() {
 <p>Just by graphing, find a number in <span class="math">$b$</span> with <span class="math">$2 < b < 3$</span> where for values less than <span class="math">$b$</span> there is a zero beyond <span class="math">$b$</span> of <span class="math">$b^x - x^b$</span> and for values more than <span class="math">$b$</span> there isn&#39;t.</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="4YNyvNxL" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="vxrk37N0" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_4YNyvNxL" id="radio_4YNyvNxL_1" value="1">
-  <label class="form-check-label" for="radio_4YNyvNxL_1">
-    &#36;b \approx 2.9&#36;
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Rxh0yle1" data-controltype="radio">
-<div class="form-group ">
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Rxh0yle1" id="radio_Rxh0yle1_1" value="1">
-  <label class="form-check-label" for="radio_Rxh0yle1_1">
+  <input class="form-check-input" type="radio" name="radio_vxrk37N0" id="radio_vxrk37N0_1" value="1">
+  <label class="form-check-label" for="radio_vxrk37N0_1">
     &#36;b \approx 2.5&#36;
->>>>>>> master
 
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_4YNyvNxL" id="radio_4YNyvNxL_2" value="2">
-  <label class="form-check-label" for="radio_4YNyvNxL_2">
-    &#36;b \approx 2.5&#36;
-=======
-  <input class="form-check-input" type="radio" name="radio_Rxh0yle1" id="radio_Rxh0yle1_2" value="2">
-  <label class="form-check-label" for="radio_Rxh0yle1_2">
-    &#36;b \approx 2.9&#36;
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_vxrk37N0" id="radio_vxrk37N0_2" value="2">
+  <label class="form-check-label" for="radio_vxrk37N0_2">
+    &#36;b \approx 2.7&#36;
 
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_4YNyvNxL" id="radio_4YNyvNxL_3" value="3">
-  <label class="form-check-label" for="radio_4YNyvNxL_3">
-=======
-  <input class="form-check-input" type="radio" name="radio_Rxh0yle1" id="radio_Rxh0yle1_3" value="3">
-  <label class="form-check-label" for="radio_Rxh0yle1_3">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_vxrk37N0" id="radio_vxrk37N0_3" value="3">
+  <label class="form-check-label" for="radio_vxrk37N0_3">
     &#36;b \approx 2.2&#36;
 
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_4YNyvNxL" id="radio_4YNyvNxL_4" value="4">
-  <label class="form-check-label" for="radio_4YNyvNxL_4">
-=======
-  <input class="form-check-input" type="radio" name="radio_Rxh0yle1" id="radio_Rxh0yle1_4" value="4">
-  <label class="form-check-label" for="radio_Rxh0yle1_4">
->>>>>>> master
-    &#36;b \approx 2.7&#36;
+  <input class="form-check-input" type="radio" name="radio_vxrk37N0" id="radio_vxrk37N0_4" value="4">
+  <label class="form-check-label" for="radio_vxrk37N0_4">
+    &#36;b \approx 2.9&#36;
 
   </label>
 </div>
 
-<<<<<<< HEAD
-<div id="4YNyvNxL_message"></div>
+<div id="vxrk37N0_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_4YNyvNxL']").on("change", function() {
-  correct = this.value == 4;
+$("input:radio[name='radio_vxrk37N0']").on("change", function() {
+  correct = this.value == 2;
 
   if(correct) {
-     $("#4YNyvNxL_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#vxrk37N0_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#4YNyvNxL_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-<div id="Rxh0yle1_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_Rxh0yle1']").on("change", function() {
-  correct = this.value == 4;
-
-  if(correct) {
-     $("#Rxh0yle1_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#Rxh0yle1_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#vxrk37N0_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -4873,75 +4530,41 @@ f(t) = -\frac{1}{2} \cdot 32 t^2 + v_0t.
 <p>Let <span class="math">$v_0= 390$</span>. The three times in question can be found from the zeros of <code>f</code> and <code>f&#39;</code>. What are they?</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="66TVUGkX" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="OUYpwzdg" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_66TVUGkX" id="radio_66TVUGkX_1" value="1">
-  <label class="form-check-label" for="radio_66TVUGkX_1">
-    &#36;&#40;-4.9731, 0.0, 4.9731&#41;&#36;
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Htz0LPuv" data-controltype="radio">
-<div class="form-group ">
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Htz0LPuv" id="radio_Htz0LPuv_1" value="1">
-  <label class="form-check-label" for="radio_Htz0LPuv_1">
-    &#36;&#40;0.0, 625.0, 1250.0&#41;&#36;
->>>>>>> master
-
-  </label>
-</div>
-<div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_66TVUGkX" id="radio_66TVUGkX_2" value="2">
-  <label class="form-check-label" for="radio_66TVUGkX_2">
-=======
-  <input class="form-check-input" type="radio" name="radio_Htz0LPuv" id="radio_Htz0LPuv_2" value="2">
-  <label class="form-check-label" for="radio_Htz0LPuv_2">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_OUYpwzdg" id="radio_OUYpwzdg_1" value="1">
+  <label class="form-check-label" for="radio_OUYpwzdg_1">
     &#36;&#40;0.0, 12.1875, 24.375&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_66TVUGkX" id="radio_66TVUGkX_3" value="3">
-  <label class="form-check-label" for="radio_66TVUGkX_3">
-    &#36;&#40;0.0, 625.0, 1250.0&#41;&#36;
-=======
-  <input class="form-check-input" type="radio" name="radio_Htz0LPuv" id="radio_Htz0LPuv_3" value="3">
-  <label class="form-check-label" for="radio_Htz0LPuv_3">
+  <input class="form-check-input" type="radio" name="radio_OUYpwzdg" id="radio_OUYpwzdg_2" value="2">
+  <label class="form-check-label" for="radio_OUYpwzdg_2">
     &#36;&#40;-4.9731, 0.0, 4.9731&#41;&#36;
->>>>>>> master
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_OUYpwzdg" id="radio_OUYpwzdg_3" value="3">
+  <label class="form-check-label" for="radio_OUYpwzdg_3">
+    &#36;&#40;0.0, 625.0, 1250.0&#41;&#36;
 
   </label>
 </div>
 
-<<<<<<< HEAD
-<div id="66TVUGkX_message"></div>
+<div id="OUYpwzdg_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_66TVUGkX']").on("change", function() {
-  correct = this.value == 2;
+$("input:radio[name='radio_OUYpwzdg']").on("change", function() {
+  correct = this.value == 1;
 
   if(correct) {
-     $("#66TVUGkX_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#OUYpwzdg_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#66TVUGkX_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-<div id="Htz0LPuv_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_Htz0LPuv']").on("change", function() {
-  correct = this.value == 2;
-
-  if(correct) {
-     $("#Htz0LPuv_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#Htz0LPuv_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#OUYpwzdg_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -4972,75 +4595,41 @@ h &#40;generic function with 1 method&#41;
 <p>Now find the three times: <span class="math">$t_0$</span>, the starting time; <span class="math">$t_a$</span>, the time at the apex of the flight; and <span class="math">$t_f$</span>, the time the object returns to the ground.</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="7pU0tl3k" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="D7CvE9Dl" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_7pU0tl3k" id="radio_7pU0tl3k_1" value="1">
-  <label class="form-check-label" for="radio_7pU0tl3k_1">
-    &#36;&#40;0, 2.579, 13.187&#41;&#36;
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="9dcVqyR5" data-controltype="radio">
-<div class="form-group ">
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_9dcVqyR5" id="radio_9dcVqyR5_1" value="1">
-  <label class="form-check-label" for="radio_9dcVqyR5_1">
+  <input class="form-check-input" type="radio" name="radio_D7CvE9Dl" id="radio_D7CvE9Dl_1" value="1">
+  <label class="form-check-label" for="radio_D7CvE9Dl_1">
     &#36;&#40;0, 32.0, 390.0&#41;&#36;
->>>>>>> master
 
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_7pU0tl3k" id="radio_7pU0tl3k_2" value="2">
-  <label class="form-check-label" for="radio_7pU0tl3k_2">
-=======
-  <input class="form-check-input" type="radio" name="radio_9dcVqyR5" id="radio_9dcVqyR5_2" value="2">
-  <label class="form-check-label" for="radio_9dcVqyR5_2">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_D7CvE9Dl" id="radio_D7CvE9Dl_2" value="2">
+  <label class="form-check-label" for="radio_D7CvE9Dl_2">
+    &#36;&#40;0, 2.579, 13.187&#41;&#36;
+
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_D7CvE9Dl" id="radio_D7CvE9Dl_3" value="3">
+  <label class="form-check-label" for="radio_D7CvE9Dl_3">
     &#36;&#40;0, 13.187, 30.0&#41;&#36;
 
   </label>
 </div>
-<div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_7pU0tl3k" id="radio_7pU0tl3k_3" value="3">
-  <label class="form-check-label" for="radio_7pU0tl3k_3">
-    &#36;&#40;0, 32.0, 390.0&#41;&#36;
-=======
-  <input class="form-check-input" type="radio" name="radio_9dcVqyR5" id="radio_9dcVqyR5_3" value="3">
-  <label class="form-check-label" for="radio_9dcVqyR5_3">
-    &#36;&#40;0, 2.579, 13.187&#41;&#36;
->>>>>>> master
 
-  </label>
-</div>
-
-<<<<<<< HEAD
-<div id="7pU0tl3k_message"></div>
+<div id="D7CvE9Dl_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_7pU0tl3k']").on("change", function() {
-  correct = this.value == 1;
+$("input:radio[name='radio_D7CvE9Dl']").on("change", function() {
+  correct = this.value == 2;
 
   if(correct) {
-     $("#7pU0tl3k_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#D7CvE9Dl_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#7pU0tl3k_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-<div id="9dcVqyR5_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_9dcVqyR5']").on("change", function() {
-  correct = this.value == 3;
-
-  if(correct) {
-     $("#9dcVqyR5_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#9dcVqyR5_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#D7CvE9Dl_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -5051,70 +4640,38 @@ $("input:radio[name='radio_9dcVqyR5']").on("change", function() {
 <p>Part of the proof of the intermediate value theorem rests on knowing what the limit is of <span class="math">$f(x)$</span> when <span class="math">$f(x) > y$</span> for all <span class="math">$x$</span>. What can we say about <span class="math">$L$</span> supposing <span class="math">$L = \lim_{x \rightarrow c+}f(x)$</span> under  this assumption on <span class="math">$f$</span>?</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Xb9cKlYb" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="n6Q8T6uu" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Xb9cKlYb" id="radio_Xb9cKlYb_1" value="1">
-  <label class="form-check-label" for="radio_Xb9cKlYb_1">
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="hGmaqNSi" data-controltype="radio">
-<div class="form-group ">
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_hGmaqNSi" id="radio_hGmaqNSi_1" value="1">
-  <label class="form-check-label" for="radio_hGmaqNSi_1">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_n6Q8T6uu" id="radio_n6Q8T6uu_1" value="1">
+  <label class="form-check-label" for="radio_n6Q8T6uu_1">
     It must be that &#36;L &gt; y&#36; as each &#36;f&#40;x&#41;&#36; is.
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_Xb9cKlYb" id="radio_Xb9cKlYb_2" value="2">
-  <label class="form-check-label" for="radio_Xb9cKlYb_2">
-=======
-  <input class="form-check-input" type="radio" name="radio_hGmaqNSi" id="radio_hGmaqNSi_2" value="2">
-  <label class="form-check-label" for="radio_hGmaqNSi_2">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_n6Q8T6uu" id="radio_n6Q8T6uu_2" value="2">
+  <label class="form-check-label" for="radio_n6Q8T6uu_2">
     It must be that &#36;L \geq y&#36;
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_Xb9cKlYb" id="radio_Xb9cKlYb_3" value="3">
-  <label class="form-check-label" for="radio_Xb9cKlYb_3">
-=======
-  <input class="form-check-input" type="radio" name="radio_hGmaqNSi" id="radio_hGmaqNSi_3" value="3">
-  <label class="form-check-label" for="radio_hGmaqNSi_3">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_n6Q8T6uu" id="radio_n6Q8T6uu_3" value="3">
+  <label class="form-check-label" for="radio_n6Q8T6uu_3">
     It can happen that &#36;L &lt; y&#36;, &#36;L&#61;y&#36;, or &#36;L&gt;y&#36;
   </label>
 </div>
 
-<<<<<<< HEAD
-<div id="Xb9cKlYb_message"></div>
+<div id="n6Q8T6uu_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Xb9cKlYb']").on("change", function() {
+$("input:radio[name='radio_n6Q8T6uu']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#Xb9cKlYb_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#n6Q8T6uu_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Xb9cKlYb_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-<div id="hGmaqNSi_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_hGmaqNSi']").on("change", function() {
-  correct = this.value == 2;
-
-  if(correct) {
-     $("#hGmaqNSi_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#hGmaqNSi_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#n6Q8T6uu_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -5125,84 +4682,47 @@ $("input:radio[name='radio_hGmaqNSi']").on("change", function() {
 <p>The extreme value theorem has two assumptions: a continuous function and a <em>closed</em> interval. Which of the following examples fails to satisfy the consequence of the  extreme value theorem because the interval is not closed? &#40;The consequence - the existence of an absolute maximum and minimum - can happen even if the theorem does not apply.&#41;</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="EH1nfMdq" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="0AL0Px4f" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_EH1nfMdq" id="radio_EH1nfMdq_1" value="1">
-  <label class="form-check-label" for="radio_EH1nfMdq_1">
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Vs90xv49" data-controltype="radio">
-<div class="form-group ">
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Vs90xv49" id="radio_Vs90xv49_1" value="1">
-  <label class="form-check-label" for="radio_Vs90xv49_1">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_0AL0Px4f" id="radio_0AL0Px4f_1" value="1">
+  <label class="form-check-label" for="radio_0AL0Px4f_1">
     &#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,~ I&#61;&#40;-2\pi, 2\pi&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_EH1nfMdq" id="radio_EH1nfMdq_2" value="2">
-  <label class="form-check-label" for="radio_EH1nfMdq_2">
-=======
-  <input class="form-check-input" type="radio" name="radio_Vs90xv49" id="radio_Vs90xv49_2" value="2">
-  <label class="form-check-label" for="radio_Vs90xv49_2">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_0AL0Px4f" id="radio_0AL0Px4f_2" value="2">
+  <label class="form-check-label" for="radio_0AL0Px4f_2">
     &#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,~ I&#61;&#40;-\pi, \pi&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_EH1nfMdq" id="radio_EH1nfMdq_3" value="3">
-  <label class="form-check-label" for="radio_EH1nfMdq_3">
-=======
-  <input class="form-check-input" type="radio" name="radio_Vs90xv49" id="radio_Vs90xv49_3" value="3">
-  <label class="form-check-label" for="radio_Vs90xv49_3">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_0AL0Px4f" id="radio_0AL0Px4f_3" value="3">
+  <label class="form-check-label" for="radio_0AL0Px4f_3">
     &#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,~ I&#61;&#40;-\pi/2, \pi/2&#41;&#36;
 
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_EH1nfMdq" id="radio_EH1nfMdq_4" value="4">
-  <label class="form-check-label" for="radio_EH1nfMdq_4">
-=======
-  <input class="form-check-input" type="radio" name="radio_Vs90xv49" id="radio_Vs90xv49_4" value="4">
-  <label class="form-check-label" for="radio_Vs90xv49_4">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_0AL0Px4f" id="radio_0AL0Px4f_4" value="4">
+  <label class="form-check-label" for="radio_0AL0Px4f_4">
     None of the above
   </label>
 </div>
 
-<<<<<<< HEAD
-<div id="EH1nfMdq_message"></div>
+<div id="0AL0Px4f_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_EH1nfMdq']").on("change", function() {
+$("input:radio[name='radio_0AL0Px4f']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#EH1nfMdq_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#0AL0Px4f_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#EH1nfMdq_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-<div id="Vs90xv49_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_Vs90xv49']").on("change", function() {
-  correct = this.value == 3;
-
-  if(correct) {
-     $("#Vs90xv49_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#Vs90xv49_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#0AL0Px4f_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -5213,84 +4733,47 @@ $("input:radio[name='radio_Vs90xv49']").on("change", function() {
 <p>The extreme value theorem has two assumptions: a continuous function and a <em>closed</em> interval. Which of the following examples fails to satisfy the consequence of the  extreme value theorem because the function is not continuous?</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="46FjNgFA" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="7ruvIZdH" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_46FjNgFA" id="radio_46FjNgFA_1" value="1">
-  <label class="form-check-label" for="radio_46FjNgFA_1">
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="J0rfEm9u" data-controltype="radio">
-<div class="form-group ">
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_J0rfEm9u" id="radio_J0rfEm9u_1" value="1">
-  <label class="form-check-label" for="radio_J0rfEm9u_1">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_7ruvIZdH" id="radio_7ruvIZdH_1" value="1">
+  <label class="form-check-label" for="radio_7ruvIZdH_1">
     &#36;f&#40;x&#41; &#61; 1/x,~ I&#61;&#91;1,2&#93;&#36;
 
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_46FjNgFA" id="radio_46FjNgFA_2" value="2">
-  <label class="form-check-label" for="radio_46FjNgFA_2">
-=======
-  <input class="form-check-input" type="radio" name="radio_J0rfEm9u" id="radio_J0rfEm9u_2" value="2">
-  <label class="form-check-label" for="radio_J0rfEm9u_2">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_7ruvIZdH" id="radio_7ruvIZdH_2" value="2">
+  <label class="form-check-label" for="radio_7ruvIZdH_2">
     &#36;f&#40;x&#41; &#61; 1/x,~ I&#61;&#91;-2, -1&#93;&#36;
 
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_46FjNgFA" id="radio_46FjNgFA_3" value="3">
-  <label class="form-check-label" for="radio_46FjNgFA_3">
-=======
-  <input class="form-check-input" type="radio" name="radio_J0rfEm9u" id="radio_J0rfEm9u_3" value="3">
-  <label class="form-check-label" for="radio_J0rfEm9u_3">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_7ruvIZdH" id="radio_7ruvIZdH_3" value="3">
+  <label class="form-check-label" for="radio_7ruvIZdH_3">
     &#36;f&#40;x&#41; &#61; 1/x,~ I&#61;&#91;-1, 1&#93;&#36;
 
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_46FjNgFA" id="radio_46FjNgFA_4" value="4">
-  <label class="form-check-label" for="radio_46FjNgFA_4">
-=======
-  <input class="form-check-input" type="radio" name="radio_J0rfEm9u" id="radio_J0rfEm9u_4" value="4">
-  <label class="form-check-label" for="radio_J0rfEm9u_4">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_7ruvIZdH" id="radio_7ruvIZdH_4" value="4">
+  <label class="form-check-label" for="radio_7ruvIZdH_4">
     none of the above
   </label>
 </div>
 
-<<<<<<< HEAD
-<div id="46FjNgFA_message"></div>
+<div id="7ruvIZdH_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_46FjNgFA']").on("change", function() {
+$("input:radio[name='radio_7ruvIZdH']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#46FjNgFA_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#7ruvIZdH_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#46FjNgFA_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-<div id="J0rfEm9u_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_J0rfEm9u']").on("change", function() {
-  correct = this.value == 3;
-
-  if(correct) {
-     $("#J0rfEm9u_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#J0rfEm9u_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#7ruvIZdH_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -5301,84 +4784,47 @@ $("input:radio[name='radio_J0rfEm9u']").on("change", function() {
 <p>The extreme value theorem has two assumptions: a continuous function and a <em>closed</em> interval. Which of the following examples fails to satisfy the consequence of the  extreme value theorem because the function is not continuous?</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="8FNvRyc0" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="f5VaKeWJ" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_8FNvRyc0" id="radio_8FNvRyc0_1" value="1">
-  <label class="form-check-label" for="radio_8FNvRyc0_1">
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="wdJqC1ea" data-controltype="radio">
-<div class="form-group ">
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_wdJqC1ea" id="radio_wdJqC1ea_1" value="1">
-  <label class="form-check-label" for="radio_wdJqC1ea_1">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_f5VaKeWJ" id="radio_f5VaKeWJ_1" value="1">
+  <label class="form-check-label" for="radio_f5VaKeWJ_1">
     &#36;f&#40;x&#41; &#61; \text&#123;sign&#125;&#40;x&#41;,~  I&#61;&#91;-1, 1&#93;&#36;
 
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_8FNvRyc0" id="radio_8FNvRyc0_2" value="2">
-  <label class="form-check-label" for="radio_8FNvRyc0_2">
-=======
-  <input class="form-check-input" type="radio" name="radio_wdJqC1ea" id="radio_wdJqC1ea_2" value="2">
-  <label class="form-check-label" for="radio_wdJqC1ea_2">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_f5VaKeWJ" id="radio_f5VaKeWJ_2" value="2">
+  <label class="form-check-label" for="radio_f5VaKeWJ_2">
     &#36;f&#40;x&#41; &#61; 1/x,~      I&#61;&#91;-4, -1&#93;&#36;
 
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_8FNvRyc0" id="radio_8FNvRyc0_3" value="3">
-  <label class="form-check-label" for="radio_8FNvRyc0_3">
-=======
-  <input class="form-check-input" type="radio" name="radio_wdJqC1ea" id="radio_wdJqC1ea_3" value="3">
-  <label class="form-check-label" for="radio_wdJqC1ea_3">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_f5VaKeWJ" id="radio_f5VaKeWJ_3" value="3">
+  <label class="form-check-label" for="radio_f5VaKeWJ_3">
     &#36;f&#40;x&#41; &#61; \text&#123;floor&#125;&#40;x&#41;,~ I&#61;&#91;-1/2, 1/2&#93;&#36;
 
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_8FNvRyc0" id="radio_8FNvRyc0_4" value="4">
-  <label class="form-check-label" for="radio_8FNvRyc0_4">
-=======
-  <input class="form-check-input" type="radio" name="radio_wdJqC1ea" id="radio_wdJqC1ea_4" value="4">
-  <label class="form-check-label" for="radio_wdJqC1ea_4">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_f5VaKeWJ" id="radio_f5VaKeWJ_4" value="4">
+  <label class="form-check-label" for="radio_f5VaKeWJ_4">
     none of the above
   </label>
 </div>
 
-<<<<<<< HEAD
-<div id="8FNvRyc0_message"></div>
+<div id="f5VaKeWJ_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_8FNvRyc0']").on("change", function() {
+$("input:radio[name='radio_f5VaKeWJ']").on("change", function() {
   correct = this.value == 4;
 
   if(correct) {
-     $("#8FNvRyc0_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#f5VaKeWJ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#8FNvRyc0_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-<div id="wdJqC1ea_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_wdJqC1ea']").on("change", function() {
-  correct = this.value == 4;
-
-  if(correct) {
-     $("#wdJqC1ea_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#wdJqC1ea_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#f5VaKeWJ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -5389,52 +4835,29 @@ $("input:radio[name='radio_wdJqC1ea']").on("change", function() {
 <p>The function <span class="math">$f(x) = x^3 - x$</span> is continuous over the interval <span class="math">$I=[-2,2]$</span>. Find a value <span class="math">$c$</span> for which <span class="math">$M=f(c)$</span> is an absolute maximum over <span class="math">$I$</span>.</p>
 
 
-<<<<<<< HEAD
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='EgTbcH8e' data-controltype='numeric'>
-=======
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='ahmqBdiY' data-controltype='numeric'>
->>>>>>> master
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='NlSjU6uF' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<<<<<<< HEAD
-<input id="EgTbcH8e" type="number" class="form-control" placeholder="Numeric answer">
-<label for="EgTbcH8e">Numeric answer</label>
+<input id="NlSjU6uF" type="number" class="form-control" placeholder="Numeric answer">
+<label for="NlSjU6uF">Numeric answer</label>
 
 </div>
 
-<div id='EgTbcH8e_message'></div>
-=======
-<input id="ahmqBdiY" type="number" class="form-control" placeholder="Numeric answer">
-<label for="ahmqBdiY">Numeric answer</label>
-
-</div>
-
-<div id='ahmqBdiY_message'></div>
->>>>>>> master
+<div id='NlSjU6uF_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-<<<<<<< HEAD
-$('#EgTbcH8e').on('change', function() {
+$('#NlSjU6uF').on('change', function() {
   correct = Math.abs(this.value - 2) <= 0;
 
   if(correct) {
-     $('#EgTbcH8e_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#NlSjU6uF_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#EgTbcH8e_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-=======
-$('#ahmqBdiY').on('change', function() {
-  correct = Math.abs(this.value - 2) <= 0;
-
-  if(correct) {
-     $('#ahmqBdiY_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#ahmqBdiY_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
->>>>>>> master
+     $('#NlSjU6uF_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -5444,52 +4867,29 @@ $('#ahmqBdiY').on('change', function() {
 <p>The function <span class="math">$f(x) = x^3 - x$</span> is continuous over the interval <span class="math">$I=[-1,1]$</span>. Find a value <span class="math">$c$</span> for which <span class="math">$M=f(c)$</span> is an absolute maximum over <span class="math">$I$</span>.</p>
 
 
-<<<<<<< HEAD
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='HHGmvXQe' data-controltype='numeric'>
-=======
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='Jj9UObMo' data-controltype='numeric'>
->>>>>>> master
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='diBmciRk' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<<<<<<< HEAD
-<input id="HHGmvXQe" type="number" class="form-control" placeholder="Numeric answer">
-<label for="HHGmvXQe">Numeric answer</label>
+<input id="diBmciRk" type="number" class="form-control" placeholder="Numeric answer">
+<label for="diBmciRk">Numeric answer</label>
 
 </div>
 
-<div id='HHGmvXQe_message'></div>
-=======
-<input id="Jj9UObMo" type="number" class="form-control" placeholder="Numeric answer">
-<label for="Jj9UObMo">Numeric answer</label>
-
-</div>
-
-<div id='Jj9UObMo_message'></div>
->>>>>>> master
+<div id='diBmciRk_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-<<<<<<< HEAD
-$('#HHGmvXQe').on('change', function() {
+$('#diBmciRk').on('change', function() {
   correct = Math.abs(this.value - -0.5773502691896257) <= 0.001;
 
   if(correct) {
-     $('#HHGmvXQe_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#diBmciRk_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#HHGmvXQe_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-=======
-$('#Jj9UObMo').on('change', function() {
-  correct = Math.abs(this.value - -0.5773502691896257) <= 0.001;
-
-  if(correct) {
-     $('#Jj9UObMo_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#Jj9UObMo_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
->>>>>>> master
+     $('#diBmciRk_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -5499,70 +4899,38 @@ $('#Jj9UObMo').on('change', function() {
 <p>Consider the continuous function <span class="math">$f(x) = \sin(x)$</span> over the closed interval <span class="math">$I=[0, 10\pi]$</span>. Which of these is true?</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="EyK5sdko" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="OQ2MJCUX" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_EyK5sdko" id="radio_EyK5sdko_1" value="1">
-  <label class="form-check-label" for="radio_EyK5sdko_1">
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="ZxrpyHKz" data-controltype="radio">
-<div class="form-group ">
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ZxrpyHKz" id="radio_ZxrpyHKz_1" value="1">
-  <label class="form-check-label" for="radio_ZxrpyHKz_1">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_OQ2MJCUX" id="radio_OQ2MJCUX_1" value="1">
+  <label class="form-check-label" for="radio_OQ2MJCUX_1">
     There is no value &#36;c&#36; for which &#36;f&#40;c&#41;&#36; is an absolute maximum over &#36;I&#36;.
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_EyK5sdko" id="radio_EyK5sdko_2" value="2">
-  <label class="form-check-label" for="radio_EyK5sdko_2">
-=======
-  <input class="form-check-input" type="radio" name="radio_ZxrpyHKz" id="radio_ZxrpyHKz_2" value="2">
-  <label class="form-check-label" for="radio_ZxrpyHKz_2">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_OQ2MJCUX" id="radio_OQ2MJCUX_2" value="2">
+  <label class="form-check-label" for="radio_OQ2MJCUX_2">
     There is just one value of &#36;c&#36; for which &#36;f&#40;c&#41;&#36; is an absolute maximum over &#36;I&#36;.
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_EyK5sdko" id="radio_EyK5sdko_3" value="3">
-  <label class="form-check-label" for="radio_EyK5sdko_3">
-=======
-  <input class="form-check-input" type="radio" name="radio_ZxrpyHKz" id="radio_ZxrpyHKz_3" value="3">
-  <label class="form-check-label" for="radio_ZxrpyHKz_3">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_OQ2MJCUX" id="radio_OQ2MJCUX_3" value="3">
+  <label class="form-check-label" for="radio_OQ2MJCUX_3">
     There are many values of &#36;c&#36; for which &#36;f&#40;c&#41;&#36; is an absolute maximum over &#36;I&#36;.
   </label>
 </div>
 
-<<<<<<< HEAD
-<div id="EyK5sdko_message"></div>
+<div id="OQ2MJCUX_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_EyK5sdko']").on("change", function() {
+$("input:radio[name='radio_OQ2MJCUX']").on("change", function() {
   correct = this.value == 3;
 
   if(correct) {
-     $("#EyK5sdko_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#OQ2MJCUX_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#EyK5sdko_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-<div id="ZxrpyHKz_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_ZxrpyHKz']").on("change", function() {
-  correct = this.value == 3;
-
-  if(correct) {
-     $("#ZxrpyHKz_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#ZxrpyHKz_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#OQ2MJCUX_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -5573,70 +4941,38 @@ $("input:radio[name='radio_ZxrpyHKz']").on("change", function() {
 <p>Consider the continuous function <span class="math">$f(x) = \sin(x)$</span> over the closed interval <span class="math">$I=[0, 10\pi]$</span>. Which of these is true?</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="0APGnn9t" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="8WowH9b7" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_0APGnn9t" id="radio_0APGnn9t_1" value="1">
-  <label class="form-check-label" for="radio_0APGnn9t_1">
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="ecUUVJAT" data-controltype="radio">
-<div class="form-group ">
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ecUUVJAT" id="radio_ecUUVJAT_1" value="1">
-  <label class="form-check-label" for="radio_ecUUVJAT_1">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_8WowH9b7" id="radio_8WowH9b7_1" value="1">
+  <label class="form-check-label" for="radio_8WowH9b7_1">
     There is no value &#36;M&#36; for which &#36;M&#61;f&#40;c&#41;&#36;, &#36;c&#36; in &#36;I&#36; for which &#36;M&#36; is an absolute maximum over &#36;I&#36;.
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_0APGnn9t" id="radio_0APGnn9t_2" value="2">
-  <label class="form-check-label" for="radio_0APGnn9t_2">
-=======
-  <input class="form-check-input" type="radio" name="radio_ecUUVJAT" id="radio_ecUUVJAT_2" value="2">
-  <label class="form-check-label" for="radio_ecUUVJAT_2">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_8WowH9b7" id="radio_8WowH9b7_2" value="2">
+  <label class="form-check-label" for="radio_8WowH9b7_2">
     There is just one value &#36;M&#36; for which &#36;M&#61;f&#40;c&#41;&#36;, &#36;c&#36; in &#36;I&#36; for which &#36;M&#36; is an absolute maximum over &#36;I&#36;.
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_0APGnn9t" id="radio_0APGnn9t_3" value="3">
-  <label class="form-check-label" for="radio_0APGnn9t_3">
-=======
-  <input class="form-check-input" type="radio" name="radio_ecUUVJAT" id="radio_ecUUVJAT_3" value="3">
-  <label class="form-check-label" for="radio_ecUUVJAT_3">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_8WowH9b7" id="radio_8WowH9b7_3" value="3">
+  <label class="form-check-label" for="radio_8WowH9b7_3">
     There are many values &#36;M&#36; for which &#36;M&#61;f&#40;c&#41;&#36;, &#36;c&#36; in &#36;I&#36; for which &#36;M&#36; is an absolute maximum over &#36;I&#36;.
   </label>
 </div>
 
-<<<<<<< HEAD
-<div id="0APGnn9t_message"></div>
+<div id="8WowH9b7_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_0APGnn9t']").on("change", function() {
+$("input:radio[name='radio_8WowH9b7']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#0APGnn9t_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#8WowH9b7_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#0APGnn9t_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-<div id="ecUUVJAT_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_ecUUVJAT']").on("change", function() {
-  correct = this.value == 2;
-
-  if(correct) {
-     $("#ecUUVJAT_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#ecUUVJAT_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#8WowH9b7_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -5647,75 +4983,41 @@ $("input:radio[name='radio_ecUUVJAT']").on("change", function() {
 <p>The extreme value theorem says that on a closed interval a continuous function has an extreme value <span class="math">$M=f(c)$</span> for some <span class="math">$c$</span>. Does it also say that <span class="math">$c$</span> is unique? Which of these examples might help you answer this?</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="T9sASBcQ" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="XKV9MbSI" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_T9sASBcQ" id="radio_T9sASBcQ_1" value="1">
-  <label class="form-check-label" for="radio_T9sASBcQ_1">
-    &#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,\quad I&#61;&#91;-\pi/2, \pi/2&#93;&#36;
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="NmUQ2gsE" data-controltype="radio">
-<div class="form-group ">
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_NmUQ2gsE" id="radio_NmUQ2gsE_1" value="1">
-  <label class="form-check-label" for="radio_NmUQ2gsE_1">
-    &#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,\quad I&#61;&#91;-2\pi, 2\pi&#93;&#36;
->>>>>>> master
-
-  </label>
-</div>
-<div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_T9sASBcQ" id="radio_T9sASBcQ_2" value="2">
-  <label class="form-check-label" for="radio_T9sASBcQ_2">
-    &#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,\quad I&#61;&#91;-2\pi, 2\pi&#93;&#36;
-=======
-  <input class="form-check-input" type="radio" name="radio_NmUQ2gsE" id="radio_NmUQ2gsE_2" value="2">
-  <label class="form-check-label" for="radio_NmUQ2gsE_2">
-    &#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,\quad I&#61;&#91;-\pi/2, \pi/2&#93;&#36;
->>>>>>> master
-
-  </label>
-</div>
-<div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_T9sASBcQ" id="radio_T9sASBcQ_3" value="3">
-  <label class="form-check-label" for="radio_T9sASBcQ_3">
-=======
-  <input class="form-check-input" type="radio" name="radio_NmUQ2gsE" id="radio_NmUQ2gsE_3" value="3">
-  <label class="form-check-label" for="radio_NmUQ2gsE_3">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_XKV9MbSI" id="radio_XKV9MbSI_1" value="1">
+  <label class="form-check-label" for="radio_XKV9MbSI_1">
     &#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,\quad I&#61;&#91;0, 2\pi&#93;&#36;
 
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_XKV9MbSI" id="radio_XKV9MbSI_2" value="2">
+  <label class="form-check-label" for="radio_XKV9MbSI_2">
+    &#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,\quad I&#61;&#91;-\pi/2, \pi/2&#93;&#36;
 
-<<<<<<< HEAD
-<div id="T9sASBcQ_message"></div>
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_XKV9MbSI" id="radio_XKV9MbSI_3" value="3">
+  <label class="form-check-label" for="radio_XKV9MbSI_3">
+    &#36;f&#40;x&#41; &#61; \sin&#40;x&#41;,\quad I&#61;&#91;-2\pi, 2\pi&#93;&#36;
+
+  </label>
+</div>
+
+<div id="XKV9MbSI_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_T9sASBcQ']").on("change", function() {
-  correct = this.value == 2;
+$("input:radio[name='radio_XKV9MbSI']").on("change", function() {
+  correct = this.value == 3;
 
   if(correct) {
-     $("#T9sASBcQ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#XKV9MbSI_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#T9sASBcQ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-<div id="NmUQ2gsE_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_NmUQ2gsE']").on("change", function() {
-  correct = this.value == 1;
-
-  if(correct) {
-     $("#NmUQ2gsE_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#NmUQ2gsE_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#XKV9MbSI_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -5726,52 +5028,29 @@ $("input:radio[name='radio_NmUQ2gsE']").on("change", function() {
 <p>The zeros of the equation <span class="math">$\cos(x) \cdot \cosh(x) = 1$</span> are related to vibrations of rods. Using <code>find_zeros</code>, what is the largest zero in the interval <span class="math">$[0, 6\pi]$</span>?</p>
 
 
-<<<<<<< HEAD
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='wPboIzpP' data-controltype='numeric'>
-=======
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='y1jX042o' data-controltype='numeric'>
->>>>>>> master
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='Db5wJN0g' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<<<<<<< HEAD
-<input id="wPboIzpP" type="number" class="form-control" placeholder="Numeric answer">
-<label for="wPboIzpP">Numeric answer</label>
+<input id="Db5wJN0g" type="number" class="form-control" placeholder="Numeric answer">
+<label for="Db5wJN0g">Numeric answer</label>
 
 </div>
 
-<div id='wPboIzpP_message'></div>
-=======
-<input id="y1jX042o" type="number" class="form-control" placeholder="Numeric answer">
-<label for="y1jX042o">Numeric answer</label>
-
-</div>
-
-<div id='y1jX042o_message'></div>
->>>>>>> master
+<div id='Db5wJN0g_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-<<<<<<< HEAD
-$('#wPboIzpP').on('change', function() {
+$('#Db5wJN0g').on('change', function() {
   correct = Math.abs(this.value - 17.27875965739948) <= 0.001;
 
   if(correct) {
-     $('#wPboIzpP_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#Db5wJN0g_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#wPboIzpP_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-=======
-$('#y1jX042o').on('change', function() {
-  correct = Math.abs(this.value - 17.27875965739948) <= 0.001;
-
-  if(correct) {
-     $('#y1jX042o_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#y1jX042o_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
->>>>>>> master
+     $('#Db5wJN0g_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -5782,59 +5061,32 @@ $('#y1jX042o').on('change', function() {
 <p>Suppose <span class="math">$k_x$</span> and <span class="math">$k_y$</span> are positive integers and <span class="math">$a, b$</span> are positive numbers, will the <a href="https://en.wikipedia.org/wiki/Parametric_equation#Lissajous_Curve">Lissajous</a> curve given by <span class="math">$(a\cos(k_x t), b\sin(k_y t))$</span> be continuous?</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="MnxxdwZC" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="GiyjNElg" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_MnxxdwZC" id="radio_MnxxdwZC_1" value="1">
-  <label class="form-check-label" for="radio_MnxxdwZC_1">
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="1X9xKgZM" data-controltype="radio">
-<div class="form-group ">
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_1X9xKgZM" id="radio_1X9xKgZM_1" value="1">
-  <label class="form-check-label" for="radio_1X9xKgZM_1">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_GiyjNElg" id="radio_GiyjNElg_1" value="1">
+  <label class="form-check-label" for="radio_GiyjNElg_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_MnxxdwZC" id="radio_MnxxdwZC_2" value="2">
-  <label class="form-check-label" for="radio_MnxxdwZC_2">
-=======
-  <input class="form-check-input" type="radio" name="radio_1X9xKgZM" id="radio_1X9xKgZM_2" value="2">
-  <label class="form-check-label" for="radio_1X9xKgZM_2">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_GiyjNElg" id="radio_GiyjNElg_2" value="2">
+  <label class="form-check-label" for="radio_GiyjNElg_2">
     No
   </label>
 </div>
 
-<<<<<<< HEAD
-<div id="MnxxdwZC_message"></div>
+<div id="GiyjNElg_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_MnxxdwZC']").on("change", function() {
+$("input:radio[name='radio_GiyjNElg']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#MnxxdwZC_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#GiyjNElg_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#MnxxdwZC_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-<div id="1X9xKgZM_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_1X9xKgZM']").on("change", function() {
-  correct = this.value == 1;
-
-  if(correct) {
-     $("#1X9xKgZM_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#1X9xKgZM_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#GiyjNElg_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -5852,17 +5104,10 @@ $("input:radio[name='radio_1X9xKgZM']").on("change", function() {
 
 
 
-<<<<<<< HEAD
-    <div id="9c05433a-ac94-4ec8-8fc1-0ed894e223c6" style="width:576px;height:384px;"></div>
+    <div id="7de48b2a-3b2d-477b-91e1-16db06d79dae" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('9c05433a-ac94-4ec8-8fc1-0ed894e223c6');
-=======
-    <div id="2ea8b5d2-19d2-4af4-b5e4-c19021697455" style="width:576px;height:384px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('2ea8b5d2-19d2-4af4-b5e4-c19021697455');
->>>>>>> master
+        var PLOT = document.getElementById('7de48b2a-3b2d-477b-91e1-16db06d79dae');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -6435,40 +5680,26 @@ $("input:radio[name='radio_1X9xKgZM']").on("change", function() {
     </script>
 
 
-<<<<<<< HEAD
 <hr />
 <h2>Using <code>IntervalRootFinding</code> to identify all zeros in an interval</h2>
 <p>The <code>IntervalRootFinding</code> package provides a more <em>rigorous</em> alternative to <code>find_zeros</code>. This packages leverages the interval arithmetic features of <code>IntervalArithmetic</code>. The <code>IntervalRootFinding</code> package provides a function <code>roots</code>, with usage similar to <code>find_zeros</code>. Intervals are specified with the notation <code>a..b</code>. In the following, we <em>qualify</em> <code>roots</code> to not conflict with the <code>roots</code> function from <code>SymPy</code>, which has already been loaded:</p>
-=======
-<h2>Using <code>IntervalRootFinding</code> to identify all zeros in an interval</h2>
-<p>The <code>IntervalRootFinding</code> package provides a more <em>rigorous</em> alternative to <code>find_zeros</code>. This packages leverages the interval arithmetic features of <code>IntervalArithmetic</code>. The <code>IntervalRootFinding</code> package provides a function <code>roots</code>, with usage similar to <code>find_zeros</code> only intervals are specified with the notation <code>a..b</code>. In the following, we <em>qualify</em> <code>roots</code> to not conflict with the <code>roots</code> function from <code>SymPy</code>, which has already been loaded:</p>
->>>>>>> master
 
 
 <pre class='hljl'>
-<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>IntervalArithmetic</span><span class='hljl-t'>
+<span class='hljl-k'>import</span><span class='hljl-t'> </span><span class='hljl-n'>IntervalArithmetic</span><span class='hljl-t'>
 </span><span class='hljl-k'>import</span><span class='hljl-t'> </span><span class='hljl-n'>IntervalRootFinding</span><span class='hljl-t'>
 </span><span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>sin</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-t'> </span><span class='hljl-nfB'>0.1</span><span class='hljl-oB'>*</span><span class='hljl-n'>x</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-ni'>1</span><span class='hljl-t'>
-</span><span class='hljl-n'>rts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>IntervalRootFinding</span><span class='hljl-oB'>.</span><span class='hljl-nf'>roots</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-nfB'>10..10</span><span class='hljl-p'>)</span>
+</span><span class='hljl-n'>J</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>IntervalArithmetic</span><span class='hljl-oB'>.</span><span class='hljl-nf'>Interval</span><span class='hljl-p'>(</span><span class='hljl-oB'>-</span><span class='hljl-ni'>10</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>10</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-cs'># cumbersome -10..10; needed here: .. means something in CalculusWithJulia</span><span class='hljl-t'>
+</span><span class='hljl-n'>rts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>IntervalRootFinding</span><span class='hljl-oB'>.</span><span class='hljl-nf'>roots</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>J</span><span class='hljl-p'>)</span>
 </pre>
 
 
-<<<<<<< HEAD
-<pre class="julia-error">
-ERROR: MethodError: no method matching _roots&#40;::typeof&#40;Main.##WeaveSandBox#841.f&#41;, ::IntervalSets.ClosedInterval&#123;Int64&#125;, ::Type&#123;IntervalRootFinding.Newton&#125;, ::Type&#123;IntervalRootFinding.DepthFirstSearch&#125;, ::Float64&#41;
-Closest candidates are:
-  _roots&#40;::Any, &#33;Matched::IntervalRootFinding.Root&#123;IntervalArithmetic.Interval&#123;T&#125;&#125;, ::Union&#123;Type&#123;IntervalRootFinding.Krawczyk&#125;, Type&#123;IntervalRootFinding.Newton&#125;&#125;, ::Type&#123;S&#125;, ::Float64&#41; where &#123;T, S&lt;:IntervalRootFinding.BBSearch&#125; at /Users/verzani/.julia/packages/IntervalRootFinding/8d8pn/src/roots.jl:159
-  _roots&#40;::Any, &#33;Matched::IntervalRootFinding.Root&#123;IntervalArithmetic.IntervalBox&#123;N, T&#125;&#125;, ::Union&#123;Type&#123;IntervalRootFinding.Krawczyk&#125;, Type&#123;IntervalRootFinding.Newton&#125;&#125;, ::Type&#123;S&#125;, ::Float64&#41; where &#123;N, T, S&lt;:IntervalRootFinding.BBSearch&#125; at /Users/verzani/.julia/packages/IntervalRootFinding/8d8pn/src/roots.jl:174
-  _roots&#40;::Any, &#33;Matched::IntervalArithmetic.Region&#123;T&#125; where T, ::Type&#123;C&#125;, ::Type&#123;S&#125;, ::Float64&#41; where &#123;C&lt;:IntervalRootFinding.Contractor, S&lt;:IntervalRootFinding.BBSearch&#125; at /Users/verzani/.julia/packages/IntervalRootFinding/8d8pn/src/roots.jl:189
-  ...
-=======
 <pre class="output">
 4-element Vector&#123;IntervalRootFinding.Root&#123;IntervalArithmetic.Interval&#123;Float64&#125;&#125;&#125;:
  Root&#40;&#91;3.14959, 3.1496&#93;, :unique&#41;
  Root&#40;&#91;-4.42654, -4.42653&#93;, :unique&#41;
  Root&#40;&#91;-3.10682, -3.10681&#93;, :unique&#41;
  Root&#40;&#91;-1.08205, -1.08204&#93;, :unique&#41;
->>>>>>> master
 </pre>
 
 
@@ -6477,13 +5708,16 @@ Closest candidates are:
 
 
 <pre class='hljl'>
-<span class='hljl-p'>[</span><span class='hljl-nf'>find_zero</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-nf'>interval</span><span class='hljl-p'>(</span><span class='hljl-n'>I</span><span class='hljl-p'>)</span><span class='hljl-oB'>.</span><span class='hljl-n'>lo</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>interval</span><span class='hljl-p'>(</span><span class='hljl-n'>I</span><span class='hljl-p'>)</span><span class='hljl-oB'>.</span><span class='hljl-n'>hi</span><span class='hljl-p'>))</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-n'>I</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-n'>rts</span><span class='hljl-t'> </span><span class='hljl-k'>if</span><span class='hljl-t'> </span><span class='hljl-n'>I</span><span class='hljl-oB'>.</span><span class='hljl-n'>status</span><span class='hljl-t'> </span><span class='hljl-oB'>==</span><span class='hljl-t'> </span><span class='hljl-sc'>:unique</span><span class='hljl-p'>]</span>
+<span class='hljl-p'>[</span><span class='hljl-nf'>find_zero</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>IntervalArithmetic</span><span class='hljl-oB'>.</span><span class='hljl-nf'>interval</span><span class='hljl-p'>(</span><span class='hljl-n'>I</span><span class='hljl-p'>)</span><span class='hljl-oB'>.</span><span class='hljl-n'>lo</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>IntervalArithmetic</span><span class='hljl-oB'>.</span><span class='hljl-nf'>interval</span><span class='hljl-p'>(</span><span class='hljl-n'>I</span><span class='hljl-p'>)</span><span class='hljl-oB'>.</span><span class='hljl-n'>hi</span><span class='hljl-p'>))</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-n'>I</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-n'>rts</span><span class='hljl-t'> </span><span class='hljl-k'>if</span><span class='hljl-t'> </span><span class='hljl-n'>I</span><span class='hljl-oB'>.</span><span class='hljl-n'>status</span><span class='hljl-t'> </span><span class='hljl-oB'>==</span><span class='hljl-t'> </span><span class='hljl-sc'>:unique</span><span class='hljl-p'>]</span>
 </pre>
 
 
-<<<<<<< HEAD
-<pre class="julia-error">
-ERROR: UndefVarError: rts not defined
+<pre class="output">
+4-element Vector&#123;Float64&#125;:
+  3.1495967624505226
+ -4.426534982071949
+ -3.1068165552293254
+ -1.082042132760718
 </pre>
 
 
@@ -6491,20 +5725,16 @@ ERROR: UndefVarError: rts not defined
 
 
 <pre class='hljl'>
-<span class='hljl-p'>[(</span><span class='hljl-n'>mid</span><span class='hljl-t'> </span><span class='hljl-oB'>∘</span><span class='hljl-t'> </span><span class='hljl-n'>interval</span><span class='hljl-p'>)(</span><span class='hljl-n'>I</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-n'>I</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-n'>rts</span><span class='hljl-t'> </span><span class='hljl-k'>if</span><span class='hljl-t'> </span><span class='hljl-n'>I</span><span class='hljl-oB'>.</span><span class='hljl-n'>status</span><span class='hljl-t'> </span><span class='hljl-oB'>==</span><span class='hljl-t'> </span><span class='hljl-sc'>:unique</span><span class='hljl-p'>]</span>
+<span class='hljl-p'>[(</span><span class='hljl-n'>IntervalArithmetic</span><span class='hljl-oB'>.</span><span class='hljl-n'>mid</span><span class='hljl-t'> </span><span class='hljl-oB'>∘</span><span class='hljl-t'> </span><span class='hljl-n'>IntervalArithmetic</span><span class='hljl-oB'>.</span><span class='hljl-n'>interval</span><span class='hljl-p'>)(</span><span class='hljl-n'>I</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-n'>I</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-n'>rts</span><span class='hljl-t'> </span><span class='hljl-k'>if</span><span class='hljl-t'> </span><span class='hljl-n'>I</span><span class='hljl-oB'>.</span><span class='hljl-n'>status</span><span class='hljl-t'> </span><span class='hljl-oB'>==</span><span class='hljl-t'> </span><span class='hljl-sc'>:unique</span><span class='hljl-p'>]</span>
 </pre>
 
 
-<pre class="julia-error">
-ERROR: UndefVarError: rts not defined
-=======
 <pre class="output">
 4-element Vector&#123;Float64&#125;:
-  3.1495967624505226
- -4.426534982071949
- -3.1068165552293254
- -1.082042132760718
->>>>>>> master
+  3.149596762458518
+ -4.426534982087748
+ -3.106816555229298
+ -1.0820421327607175
 </pre>
 
 
@@ -6512,11 +5742,7 @@ ERROR: UndefVarError: rts not defined
 
 
 <pre class='hljl'>
-<<<<<<< HEAD
 <span class='hljl-nf'>find_zeros</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-nfB'>10..10</span><span class='hljl-p'>)</span>
-=======
-<span class='hljl-nf'>find_zeros</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-ni'>10</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>10</span><span class='hljl-p'>)</span>
->>>>>>> master
 </pre>
 
 
@@ -6535,33 +5761,19 @@ ERROR: UndefVarError: rts not defined
 
 <pre class='hljl'>
 <span class='hljl-nf'>f</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-oB'>*</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-oB'>-</span><span class='hljl-ni'>1</span><span class='hljl-p'>)</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-t'>
-</span><span class='hljl-n'>rts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>IntervalRootFinding</span><span class='hljl-oB'>.</span><span class='hljl-nf'>roots</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-nfB'>10..10</span><span class='hljl-p'>)</span>
+</span><span class='hljl-n'>rts</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>IntervalRootFinding</span><span class='hljl-oB'>.</span><span class='hljl-nf'>roots</span><span class='hljl-p'>(</span><span class='hljl-n'>f</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>J</span><span class='hljl-p'>)</span>
 </pre>
 
 
-<<<<<<< HEAD
-<pre class="julia-error">
-ERROR: MethodError: no method matching _roots&#40;::typeof&#40;Main.##WeaveSandBox#841.f&#41;, ::IntervalSets.ClosedInterval&#123;Int64&#125;, ::Type&#123;IntervalRootFinding.Newton&#125;, ::Type&#123;IntervalRootFinding.DepthFirstSearch&#125;, ::Float64&#41;
-Closest candidates are:
-  _roots&#40;::Any, &#33;Matched::IntervalRootFinding.Root&#123;IntervalArithmetic.Interval&#123;T&#125;&#125;, ::Union&#123;Type&#123;IntervalRootFinding.Krawczyk&#125;, Type&#123;IntervalRootFinding.Newton&#125;&#125;, ::Type&#123;S&#125;, ::Float64&#41; where &#123;T, S&lt;:IntervalRootFinding.BBSearch&#125; at /Users/verzani/.julia/packages/IntervalRootFinding/8d8pn/src/roots.jl:159
-  _roots&#40;::Any, &#33;Matched::IntervalRootFinding.Root&#123;IntervalArithmetic.IntervalBox&#123;N, T&#125;&#125;, ::Union&#123;Type&#123;IntervalRootFinding.Krawczyk&#125;, Type&#123;IntervalRootFinding.Newton&#125;&#125;, ::Type&#123;S&#125;, ::Float64&#41; where &#123;N, T, S&lt;:IntervalRootFinding.BBSearch&#125; at /Users/verzani/.julia/packages/IntervalRootFinding/8d8pn/src/roots.jl:174
-  _roots&#40;::Any, &#33;Matched::IntervalArithmetic.Region&#123;T&#125; where T, ::Type&#123;C&#125;, ::Type&#123;S&#125;, ::Float64&#41; where &#123;C&lt;:IntervalRootFinding.Contractor, S&lt;:IntervalRootFinding.BBSearch&#125; at /Users/verzani/.julia/packages/IntervalRootFinding/8d8pn/src/roots.jl:189
-  ...
-=======
 <pre class="output">
 2-element Vector&#123;IntervalRootFinding.Root&#123;IntervalArithmetic.Interval&#123;Float64&#125;&#125;&#125;:
  Root&#40;&#91;0.999999, 1.00001&#93;, :unknown&#41;
  Root&#40;&#91;-1.59608e-12, 1.38991e-12&#93;, :unique&#41;
->>>>>>> master
 </pre>
 
 
 <p>The interval labeled <code>:unknown</code> contains a <code>0</code>, but it can&#39;t be proved by <code>roots</code>.</p>
-<<<<<<< HEAD
 <p>Interval arithmetic finds <strong>rigorous</strong> <strong>bounds</strong> on the range of <code>f</code> values over a closed interval <code>a..b</code> &#40;the range is <code>f&#40;a..b&#41;</code>&#41;.  &quot;Rigorous&quot; means the bounds are truthful and account for possible floating point issues. &quot;Bounds&quot; means the answer lies within, but the bound need not be the answer.</p>
-=======
-<p>Interval arithmetic finds <strong>rigorous</strong> <strong>bounds</strong> on the range of <code>f</code> values over a closed interval <code>a..b</code> &#40;<code>f&#40;a..b&#41;</code>&#41;.  &quot;Rigorous&quot; means the bounds are truthful and account for possible floating point issues. &quot;Bounds&quot; means the answer lies within, but the bound need not be the answer.</p>
->>>>>>> master
 <p>This allows one – for some functions – to answer affirmatively questions like:</p>
 <ul>
 <li><p>Is the function <em>always</em> positive on <code>a..b</code>? Negative? This can be done by checking if <code>0</code> is in the bound given by <code>f&#40;a..b&#41;</code>. If it isn&#39;t then one of the two characterizations is true.</p>
@@ -6573,7 +5785,6 @@ Closest candidates are:
 <ul>
 <li><p>the interval does not contain a zero &#40;<code>0 &#33;in f&#40;a..b&#41;</code>&#41;</p>
 </li>
-<<<<<<< HEAD
 <li><p>over the interval, the function crosses the <code>x</code> axis <em>once</em> &#40;<code>f&#40;a..a&#41;</code> and <code>f&#40;b..b&#41;</code> are one positive and one negative <em>and</em> <code>f</code> is strictly monotone, or <code>0 &#33;in f&#39;&#40;a..b&#41;</code>&#41;</p>
 </li>
 </ul>
@@ -6586,20 +5797,6 @@ Closest candidates are:
 <li><p>if the function crosses the <code>x</code> axis <em>once</em> over this interval <strong>then</strong> there is a &quot;unique&quot; zero in the interval and the interval can be marked so and set aside</p>
 </li>
 <li><p>if neither of the above  <em>and</em> <code>a..b</code> is not too small already, then <em>sub-divide</em> the interval and repeat the above with <em>both</em> smaller intervals</p>
-=======
-<li><p>over the interval, the function crosses the <code>x</code> axis <em>once</em> &#40;<code>f&#40;a..a&#41;</code> and <code>f&#40;b..b&#41;</code> are one positive and one negative <em>and</em> <code>f</code> is strictly monotone <code>0 &#33;in f&#39;&#40;a..b&#41;</code>&#41;</p>
-</li>
-</ul>
-<p>This allows the following &#40;very simplified&#41; algorithm to be used:</p>
-<ul>
-<li><p>consider the interval <code>a..b</code></p>
-</li>
-<li><p>if the function is <em>always</em> positive or negative, it can be discarded</p>
-</li>
-<li><p>if the interval crosses the <code>x</code> axis <em>once</em> <strong>then</strong> there is a &quot;unique&quot; zero in the interval and the interval can be marked so and set aside</p>
-</li>
-<li><p>if neither  <em>and</em> <code>a..b</code> is not too small already, then <em>sub-divide</em> the interval and repeat the above with both smaller intervals</p>
->>>>>>> master
 </li>
 <li><p>if <code>a..b</code> is too small, stop and mark it as &quot;unknown&quot;</p>
 </li>
@@ -6623,93 +5820,60 @@ g &#40;generic function with 1 method&#41;
 
 
 <pre class='hljl'>
-<span class='hljl-n'>IntervalRootFinding</span><span class='hljl-oB'>.</span><span class='hljl-nf'>roots</span><span class='hljl-p'>(</span><span class='hljl-n'>g</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-oB'>-</span><span class='hljl-nfB'>10..10</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>IntervalRootFinding</span><span class='hljl-oB'>.</span><span class='hljl-n'>Bisection</span><span class='hljl-p'>)</span>
+<span class='hljl-n'>J</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'>
+</span><span class='hljl-n'>IntervalRootFinding</span><span class='hljl-oB'>.</span><span class='hljl-nf'>roots</span><span class='hljl-p'>(</span><span class='hljl-n'>g</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>J</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>IntervalRootFinding</span><span class='hljl-oB'>.</span><span class='hljl-n'>Bisection</span><span class='hljl-p'>)</span>
 </pre>
 
 
-<<<<<<< HEAD
-<pre class="julia-error">
-ERROR: MethodError: no method matching _roots&#40;::typeof&#40;Main.##WeaveSandBox#841.g&#41;, ::IntervalSets.ClosedInterval&#123;Int64&#125;, ::Type&#123;IntervalRootFinding.Bisection&#125;, ::Type&#123;IntervalRootFinding.DepthFirstSearch&#125;, ::Float64&#41;
-Closest candidates are:
-  _roots&#40;::Any, &#33;Matched::IntervalRootFinding.Root&#123;T&#125;, ::Type&#123;IntervalRootFinding.Bisection&#125;, ::Type&#123;S&#125;, ::Float64&#41; where &#123;T, S&lt;:IntervalRootFinding.BBSearch&#125; at /Users/verzani/.julia/packages/IntervalRootFinding/8d8pn/src/roots.jl:151
-  _roots&#40;::Any, &#33;Matched::IntervalArithmetic.Region&#123;T&#125; where T, ::Type&#123;C&#125;, ::Type&#123;S&#125;, ::Float64&#41; where &#123;C&lt;:IntervalRootFinding.Contractor, S&lt;:IntervalRootFinding.BBSearch&#125; at /Users/verzani/.julia/packages/IntervalRootFinding/8d8pn/src/roots.jl:189
-  _roots&#40;::Any, &#33;Matched::Array&#123;IntervalRootFinding.Root&#123;T&#125;, 1&#125;, ::Type&#123;C&#125;, ::Type&#123;S&#125;, ::Float64&#41; where &#123;T, C&lt;:IntervalRootFinding.Contractor, S&lt;:IntervalRootFinding.BBSearch&#125; at /Users/verzani/.julia/packages/IntervalRootFinding/8d8pn/src/roots.jl:203
-  ...
-</pre>
-
-
-<p>&#40;The basic algorithm above can be sped up using a variant of <a href="../derivatives/newton_method.html">Newton&#39;s</a> method, this variant assumes some &quot;smoothness&quot; in the function <code>f</code>, whereas this <code>f</code> is not continuous at the point <span class="math">$x=15/11$</span>.&#41;</p>
-=======
 <pre class="output">
 1-element Vector&#123;IntervalRootFinding.Root&#123;IntervalArithmetic.Interval&#123;Float64&#125;&#125;&#125;:
  Root&#40;&#91;1.36363, 1.36364&#93;, :unknown&#41;
 </pre>
 
 
-<p>&#40;The basic algorithm above can be sped up using a variant of <a href="../derivatives/newton_method.html">Newton&#39;s</a> method, this variant assumes some &quot;smoothness&quot; in the function <code>f</code>.&#41;</p>
->>>>>>> master
+<p>&#40;The basic algorithm above can be sped up using a variant of <a href="../derivatives/newton_method.html">Newton&#39;s</a> method, this variant assumes some &quot;smoothness&quot; in the function <code>f</code>, whereas this <code>f</code> is not continuous at the point <span class="math">$x=15/11$</span>.&#41;</p>
 
 
 <div class="card" style="">
   <div class="card-header float-end text-muted">
     <span class="text-muted  float-end align-middle">
 
-<<<<<<< HEAD
 <a href="../limits/continuity.html"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
 title="Previous section"
 aria-label="Previous section"
 class="bi bi-arrow-left-circle-fill">
-=======
-<a href="../limits/continuity.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Previous section" aria-label="Previous section">
-<i class="bi bi-arrow-left-circle-fill"></i>
->>>>>>> master
 </a>
 
 &nbsp;
 
-<<<<<<< HEAD
 <a href="../derivatives/derivatives.html"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
 title="Next section"
 aria-label="Next section"
 class="bi bi-arrow-right-circle-fill">
-=======
-<a href="../derivatives/derivatives.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Next section" aria-label="Next section">
-<i class="bi bi-arrow-right-circle-fill"></i>
->>>>>>> master
 </a>
 
 &nbsp;
 
-<<<<<<< HEAD
 <a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/limits/intermediate_value_theorem.jmd"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
 title="Suggest an edit"
 aria-label="Suggest an edit"
 class="bi bi-pencil-square">
-=======
-<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/limits/intermediate_value_theorem.jmd" data-bs-toggle="tooltip" data-bs-placement="top" title="Suggest an edit" aria-label="Suggest an edit">
-<i class="bi bi-pencil-square"></i>
->>>>>>> master
 </a>
 
 &nbsp;
 
-<<<<<<< HEAD
 <a href="../misc/toc.html"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
 title="Table of contents"
 aria-label="Table of contents"
 class="bi bi-card-list">
-=======
-<a href="../misc/toc.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Table of contents" aria-label="Table of contents">
-<i class="bi bi-card-list"></i>
->>>>>>> master
 </a>
 
     </span>

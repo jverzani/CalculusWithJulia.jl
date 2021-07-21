@@ -43,10 +43,6 @@ tr:hover {background-color: #f5f5f5;}
 main > .container {
   padding: 60px 15px 0;
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 
 blockquote {
   background: #f9f9f9;
@@ -373,17 +369,10 @@ ERROR: ArgumentError: Polynomials have different indeterminates
 
 
 
-<<<<<<< HEAD
-    <div id="ce40b7c3-ca6a-4cdd-b489-aa4d75f6b565" style="width:576px;height:384px;"></div>
+    <div id="58609ef7-ff99-416c-9682-1914ec2a79eb" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('ce40b7c3-ca6a-4cdd-b489-aa4d75f6b565');
-=======
-    <div id="ac0b61c0-2756-4a36-a304-758fcea45ca6" style="width:576px;height:384px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('ac0b61c0-2756-4a36-a304-758fcea45ca6');
->>>>>>> master
+        var PLOT = document.getElementById('58609ef7-ff99-416c-9682-1914ec2a79eb');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -639,17 +628,10 @@ ERROR: ArgumentError: Polynomials have different indeterminates
 
 
 
-<<<<<<< HEAD
-    <div id="c81d6d49-c734-4d5a-92f7-78568bb182ea" style="width:576px;height:384px;"></div>
+    <div id="2befee4a-1a6b-4f71-9ca8-91b653d9a625" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('c81d6d49-c734-4d5a-92f7-78568bb182ea');
-=======
-    <div id="97eca23d-4827-468b-84d1-e5fd76ad1961" style="width:576px;height:384px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('97eca23d-4827-468b-84d1-e5fd76ad1961');
->>>>>>> master
+        var PLOT = document.getElementById('2befee4a-1a6b-4f71-9ca8-91b653d9a625');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -1097,71 +1079,9 @@ ERROR: ArgumentError: Polynomials have different indeterminates
 
 <pre class="output">
 3-element Vector&#123;BigFloat&#125;:
-<<<<<<< HEAD
- 3.988793826425306473641515359942845558836988860229249475573746236462844497070276
- 0.007874015750717332779095844401371605591573080129346653763851016150385993665980425
- 0.007874015745345657733969681215321806870210688659442339277082427363634250883765502
-</pre>
-
-
-<h2>Fitting a polynomial to data</h2>
-<p>The fact that two distinct points determine a line is well known. Deriving the line is easy. Say we have two points <span class="math">$(x_0, y_0)$</span> and <span class="math">$(x_1, y_1)$</span>. The <em>slope</em> is then</p>
-<p class="math">\[
-m = \frac{y_1 - y_0}{x_1 - x_0}, \quad x_1 \neq x_0
-\]</p>
-<p>The line is then given from the <em>point-slope</em> form by, say, <span class="math">$y= y_0 + m\cdot (x-x_0)$</span>. This all assumes, <span class="math">$x_1 \neq x_0$</span>, as were that the case the slope would be infinite &#40;though the vertical line <code>x&#61;x_0</code> would still be determined&#41;.</p>
-<p>A line, <code>y&#61;mx&#43;b</code> can be a linear polynomial or a constant depending on <span class="math">$m$</span>, so we could say <span class="math">$2$</span> points determine a polynomial of degree <span class="math">$1$</span> or less. Similarly, <span class="math">$3$</span> distinct points determine a degree <span class="math">$2$</span> polynomial or less, <span class="math">$\dots$</span>, <span class="math">$n+1$</span> distinct points determine a degree <span class="math">$n$</span> or less polynomial. Finding a polynomial, <span class="math">$p$</span>  that goes through <span class="math">$n+1$</span> points &#40;i.e., <span class="math">$p(x_i)=y_i$</span> for each <span class="math">$i$</span>&#41; is called  <a href="https://en.wikipedia.org/wiki/Polynomial_interpolation">polynomial interpolation</a>. The main theorem says if the <span class="math">$x_i$</span> are distinct, there is a unique polynomial of degree <span class="math">$n$</span> <em>or</em> less that will interpolate each of the points.</p>
-<p>Knowing we can succeed, we approach the problem of <span class="math">$3$</span> points, say <span class="math">$(x_0, y_0)$</span>, <span class="math">$(x_1,y_1)$</span>, and <span class="math">$(x_2, y_2)$</span>. There is a polynomial <span class="math">$p = a\cdot x^2 + b\cdot x + c$</span> with <span class="math">$p(x_i) = y_i$</span>. This gives 3 equations for the 3 unknown values <span class="math">$a$</span>, <span class="math">$b$</span>, and <span class="math">$c$</span>:</p>
-<p class="math">\[
-\begin{align*}
-a\cdot x_0^2 + b\cdot x_0 + c &= y_0\\
-a\cdot x_1^2 + b\cdot x_1 + c &= y_1\\
-a\cdot x_2^2 + b\cdot x_2 + c &= y_2\\
-\end{align*}
-\]</p>
-<p>Solving this with <code>SymPy</code> is tractable. A comprehension is used below to create the <span class="math">$3$</span> equations; the <code>zip</code> function is a simple means to iterate over 2 or more iterables simultaneously:</p>
-
-
-<pre class='hljl'>
-<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>SymPy</span><span class='hljl-t'> </span><span class='hljl-cs'># mindful now that some functions, e.g. degree, need qualification</span><span class='hljl-t'>
-</span><span class='hljl-nd'>@syms</span><span class='hljl-t'> </span><span class='hljl-n'>a</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-t'> </span><span class='hljl-n'>c</span><span class='hljl-t'> </span><span class='hljl-n'>x</span><span class='hljl-p'>[</span><span class='hljl-ni'>0</span><span class='hljl-oB'>:</span><span class='hljl-ni'>2</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-n'>y</span><span class='hljl-p'>[</span><span class='hljl-ni'>0</span><span class='hljl-oB'>:</span><span class='hljl-ni'>2</span><span class='hljl-p'>]</span><span class='hljl-t'>
-</span><span class='hljl-n'>eqs</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-n'>a</span><span class='hljl-oB'>*</span><span class='hljl-n'>xi</span><span class='hljl-oB'>^</span><span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>b</span><span class='hljl-oB'>*</span><span class='hljl-n'>xi</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-n'>c</span><span class='hljl-t'> </span><span class='hljl-oB'>~</span><span class='hljl-t'> </span><span class='hljl-n'>yi</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>xi</span><span class='hljl-p'>,</span><span class='hljl-n'>yi</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-kp'>in</span><span class='hljl-t'> </span><span class='hljl-nf'>zip</span><span class='hljl-p'>(</span><span class='hljl-n'>x</span><span class='hljl-p'>,</span><span class='hljl-n'>y</span><span class='hljl-p'>)]</span><span class='hljl-t'>
-</span><span class='hljl-n'>abc</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>solve</span><span class='hljl-p'>(</span><span class='hljl-n'>eqs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-n'>a</span><span class='hljl-p'>,</span><span class='hljl-n'>b</span><span class='hljl-p'>,</span><span class='hljl-n'>c</span><span class='hljl-p'>])</span>
-</pre>
-
-
-<pre class="output">
-Dict&#123;Any, Any&#125; with 3 entries:
-  a &#61;&gt; &#40;-x₀*y₁ &#43; x₀*y₂ &#43; x₁*y₀ - x₁*y₂ - x₂*y₀ &#43; x₂*y₁&#41;/&#40;x₀^2*x₁ - x₀^2*x₂ - x₀…
-  b &#61;&gt; &#40;x₀^2*y₁ - x₀^2*y₂ - x₁^2*y₀ &#43; x₁^2*y₂ &#43; x₂^2*y₀ - x₂^2*y₁&#41;/&#40;x₀^2*x₁ - x…
-  c &#61;&gt; &#40;x₀^2*x₁*y₂ - x₀^2*x₂*y₁ - x₀*x₁^2*y₂ &#43; x₀*x₂^2*y₁ &#43; x₁^2*x₂*y₀ - x₁*x₂^…
-</pre>
-
-
-<p>As can be seen, the terms do get quite unwieldy when treated symbolically. Numerically, the <code>fit</code> function from the <code>Polynomials</code> package will return the interpolating polynomial. To compare,</p>
-
-
-<pre class='hljl'>
-<span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>ys</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-ni'>3</span><span class='hljl-p'>],</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-ni'>2</span><span class='hljl-p'>]</span><span class='hljl-t'>
-</span><span class='hljl-n'>p</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-nf'>fit</span><span class='hljl-p'>(</span><span class='hljl-n'>Polynomial</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>,</span><span class='hljl-t'>  </span><span class='hljl-n'>ys</span><span class='hljl-p'>)</span>
-</pre>
-
-
-
-<div class="output">$8.0 - 6.5\cdot x + 1.5\cdot x^{2}$</div>
-
-<p>and we can compare that the two give the same answer with, for example:</p>
-
-
-<pre class='hljl'>
-<span class='hljl-n'>abc</span><span class='hljl-p'>[</span><span class='hljl-n'>b</span><span class='hljl-p'>]((</span><span class='hljl-n'>x</span><span class='hljl-t'> </span><span class='hljl-oB'>.=&gt;</span><span class='hljl-t'> </span><span class='hljl-n'>xs</span><span class='hljl-p'>)</span><span class='hljl-oB'>...</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>y</span><span class='hljl-oB'>.=&gt;</span><span class='hljl-n'>ys</span><span class='hljl-p'>)</span><span class='hljl-oB'>...</span><span class='hljl-p'>)</span>
-</pre>
-
-
-=======
- 3.988793826425306473643875560929317665379156190252215138025357332729470272170147
- 0.007874015750717328401106983873669632654401652035080718271925018891368422962498625
- 0.007874015745345654712263876402223840995480839564507482552960537026071484343484943
+ 3.988793826425306473643790484933801859875288555568385542486563879323281417412147
+ 0.007874015750717340668847314648628283182949847726267062608494008857409538635850702
+ 0.007874015745345637573602027308374751619867568726724421960632362520430774201060196
 </pre>
 
 
@@ -1219,7 +1139,6 @@ Dict&#123;Any, Any&#125; with 3 entries:
 </pre>
 
 
->>>>>>> master
 
 <div class="output">$- \frac{13}{2}$
 </div>
@@ -1259,17 +1178,10 @@ Dict&#123;Any, Any&#125; with 3 entries:
 
 
 
-<<<<<<< HEAD
-    <div id="4ea1d0bc-ed83-4132-a082-6804e419dbc0" style="width:576px;height:384px;"></div>
+    <div id="6f69d94b-ec9a-45ac-8e3c-b3f045b99a18" style="width:576px;height:384px;"></div>
     <script>
     
-        var PLOT = document.getElementById('4ea1d0bc-ed83-4132-a082-6804e419dbc0');
-=======
-    <div id="a7a20c98-0237-4c39-a4f1-ce636ddb7785" style="width:576px;height:384px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('a7a20c98-0237-4c39-a4f1-ce636ddb7785');
->>>>>>> master
+        var PLOT = document.getElementById('6f69d94b-ec9a-45ac-8e3c-b3f045b99a18');
     Plotly.plot(PLOT, [
     {
         "xaxis": "x",
@@ -1535,7 +1447,6 @@ Dict&#123;Any, Any&#125; with 3 entries:
         },
         "yaxis": "y",
         "x": [
-<<<<<<< HEAD
             -4.0,
             -3.9312383361984806,
             -3.295437466256894,
@@ -1557,29 +1468,6 @@ Dict&#123;Any, Any&#125; with 3 entries:
             2.370098335312809,
             2.951568765325812,
             3.0410544842363025
-=======
-            -4.211231634527089,
-            -4.138344270897479,
-            -3.464395348759397,
-            -3.059380138116067,
-            -2.7169449320680705,
-            -2.3449643169401506,
-            -2.002031092060604,
-            -1.634370431504379,
-            -1.2083995005667543,
-            -0.8298468068485779,
-            -0.4978902079230629,
-            -0.1359684085493237,
-            0.22810439143654054,
-            0.6306334276983225,
-            1.0136296487241356,
-            1.411856854375454,
-            1.7470793373566595,
-            2.156347993200914,
-            2.5410726009044886,
-            3.1574312567182723,
-            3.252286118763392
->>>>>>> master
         ],
         "showlegend": true,
         "mode": "lines",
@@ -1660,13 +1548,8 @@ Dict&#123;Any, Any&#125; with 3 entries:
             2.0
         ],
         "range": [
-<<<<<<< HEAD
             -4.211231634527089,
             3.252286118763392
-=======
-            -4.435137167125804,
-            3.476191651362106
->>>>>>> master
         ],
         "domain": [
             0.022267181880042772,
@@ -1778,59 +1661,32 @@ Dict&#123;Any, Any&#125; with 3 entries:
 <p>Do the polynomials <span class="math">$p = x^4$</span> and <span class="math">$q = x^2 - 2$</span> intersect?</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="mSc4cm2d" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="YLbCnp1w" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_mSc4cm2d" id="radio_mSc4cm2d_1" value="1">
-  <label class="form-check-label" for="radio_mSc4cm2d_1">
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="kmDtdbhc" data-controltype="radio">
-<div class="form-group ">
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_kmDtdbhc" id="radio_kmDtdbhc_1" value="1">
-  <label class="form-check-label" for="radio_kmDtdbhc_1">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_YLbCnp1w" id="radio_YLbCnp1w_1" value="1">
+  <label class="form-check-label" for="radio_YLbCnp1w_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_mSc4cm2d" id="radio_mSc4cm2d_2" value="2">
-  <label class="form-check-label" for="radio_mSc4cm2d_2">
-=======
-  <input class="form-check-input" type="radio" name="radio_kmDtdbhc" id="radio_kmDtdbhc_2" value="2">
-  <label class="form-check-label" for="radio_kmDtdbhc_2">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_YLbCnp1w" id="radio_YLbCnp1w_2" value="2">
+  <label class="form-check-label" for="radio_YLbCnp1w_2">
     No
   </label>
 </div>
 
-<<<<<<< HEAD
-<div id="mSc4cm2d_message"></div>
+<div id="YLbCnp1w_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_mSc4cm2d']").on("change", function() {
+$("input:radio[name='radio_YLbCnp1w']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#mSc4cm2d_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#YLbCnp1w_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#mSc4cm2d_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-<div id="kmDtdbhc_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_kmDtdbhc']").on("change", function() {
-  correct = this.value == 2;
-
-  if(correct) {
-     $("#kmDtdbhc_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#kmDtdbhc_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#YLbCnp1w_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1841,59 +1697,32 @@ $("input:radio[name='radio_kmDtdbhc']").on("change", function() {
 <p>Do the polynomials <span class="math">$p = x^4-4$</span> and <span class="math">$q = x^2 - 2$</span> intersect?</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="YuznFcRk" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="QuY8jb96" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_YuznFcRk" id="radio_YuznFcRk_1" value="1">
-  <label class="form-check-label" for="radio_YuznFcRk_1">
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="rPqfYN1z" data-controltype="radio">
-<div class="form-group ">
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_rPqfYN1z" id="radio_rPqfYN1z_1" value="1">
-  <label class="form-check-label" for="radio_rPqfYN1z_1">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_QuY8jb96" id="radio_QuY8jb96_1" value="1">
+  <label class="form-check-label" for="radio_QuY8jb96_1">
     Yes
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_YuznFcRk" id="radio_YuznFcRk_2" value="2">
-  <label class="form-check-label" for="radio_YuznFcRk_2">
-=======
-  <input class="form-check-input" type="radio" name="radio_rPqfYN1z" id="radio_rPqfYN1z_2" value="2">
-  <label class="form-check-label" for="radio_rPqfYN1z_2">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_QuY8jb96" id="radio_QuY8jb96_2" value="2">
+  <label class="form-check-label" for="radio_QuY8jb96_2">
     No
   </label>
 </div>
 
-<<<<<<< HEAD
-<div id="YuznFcRk_message"></div>
+<div id="QuY8jb96_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_YuznFcRk']").on("change", function() {
+$("input:radio[name='radio_QuY8jb96']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#YuznFcRk_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#QuY8jb96_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#YuznFcRk_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-<div id="rPqfYN1z_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_rPqfYN1z']").on("change", function() {
-  correct = this.value == 1;
-
-  if(correct) {
-     $("#rPqfYN1z_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#rPqfYN1z_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#QuY8jb96_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -1904,52 +1733,29 @@ $("input:radio[name='radio_rPqfYN1z']").on("change", function() {
 <p>How many real roots does <span class="math">$p = 1 + x + x^2 + x^3 + x^4 + x^5$</span> have?</p>
 
 
-<<<<<<< HEAD
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='KxJlylNp' data-controltype='numeric'>
-=======
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='DPFBWl4C' data-controltype='numeric'>
->>>>>>> master
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='RLAZWWR3' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<<<<<<< HEAD
-<input id="KxJlylNp" type="number" class="form-control" placeholder="Numeric answer">
-<label for="KxJlylNp">Numeric answer</label>
+<input id="RLAZWWR3" type="number" class="form-control" placeholder="Numeric answer">
+<label for="RLAZWWR3">Numeric answer</label>
 
 </div>
 
-<div id='KxJlylNp_message'></div>
-=======
-<input id="DPFBWl4C" type="number" class="form-control" placeholder="Numeric answer">
-<label for="DPFBWl4C">Numeric answer</label>
-
-</div>
-
-<div id='DPFBWl4C_message'></div>
->>>>>>> master
+<div id='RLAZWWR3_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-<<<<<<< HEAD
-$('#KxJlylNp').on('change', function() {
+$('#RLAZWWR3').on('change', function() {
   correct = Math.abs(this.value - 1) <= 0;
 
   if(correct) {
-     $('#KxJlylNp_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#RLAZWWR3_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#KxJlylNp_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-=======
-$('#DPFBWl4C').on('change', function() {
-  correct = Math.abs(this.value - 1) <= 0;
-
-  if(correct) {
-     $('#DPFBWl4C_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#DPFBWl4C_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
->>>>>>> master
+     $('#RLAZWWR3_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -1959,92 +1765,50 @@ $('#DPFBWl4C').on('change', function() {
 <p>Mathematically we say the <span class="math">$0$</span> polynomial has ano degree. What convention does <code>Polynomials</code> use? &#40;Look at <code>degree&#40;zero&#40;Polynomial&#41;&#41;</code>.&#41;</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="HJJ8haSw" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="y4Cbu70t" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_HJJ8haSw" id="radio_HJJ8haSw_1" value="1">
-  <label class="form-check-label" for="radio_HJJ8haSw_1">
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="ZNnSA65f" data-controltype="radio">
-<div class="form-group ">
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_ZNnSA65f" id="radio_ZNnSA65f_1" value="1">
-  <label class="form-check-label" for="radio_ZNnSA65f_1">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_y4Cbu70t" id="radio_y4Cbu70t_1" value="1">
+  <label class="form-check-label" for="radio_y4Cbu70t_1">
     <code>nothing</code>
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_HJJ8haSw" id="radio_HJJ8haSw_2" value="2">
-  <label class="form-check-label" for="radio_HJJ8haSw_2">
-=======
-  <input class="form-check-input" type="radio" name="radio_ZNnSA65f" id="radio_ZNnSA65f_2" value="2">
-  <label class="form-check-label" for="radio_ZNnSA65f_2">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_y4Cbu70t" id="radio_y4Cbu70t_2" value="2">
+  <label class="form-check-label" for="radio_y4Cbu70t_2">
     -1
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_HJJ8haSw" id="radio_HJJ8haSw_3" value="3">
-  <label class="form-check-label" for="radio_HJJ8haSw_3">
-=======
-  <input class="form-check-input" type="radio" name="radio_ZNnSA65f" id="radio_ZNnSA65f_3" value="3">
-  <label class="form-check-label" for="radio_ZNnSA65f_3">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_y4Cbu70t" id="radio_y4Cbu70t_3" value="3">
+  <label class="form-check-label" for="radio_y4Cbu70t_3">
     0
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_HJJ8haSw" id="radio_HJJ8haSw_4" value="4">
-  <label class="form-check-label" for="radio_HJJ8haSw_4">
-=======
-  <input class="form-check-input" type="radio" name="radio_ZNnSA65f" id="radio_ZNnSA65f_4" value="4">
-  <label class="form-check-label" for="radio_ZNnSA65f_4">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_y4Cbu70t" id="radio_y4Cbu70t_4" value="4">
+  <label class="form-check-label" for="radio_y4Cbu70t_4">
     Inf
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_HJJ8haSw" id="radio_HJJ8haSw_5" value="5">
-  <label class="form-check-label" for="radio_HJJ8haSw_5">
-=======
-  <input class="form-check-input" type="radio" name="radio_ZNnSA65f" id="radio_ZNnSA65f_5" value="5">
-  <label class="form-check-label" for="radio_ZNnSA65f_5">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_y4Cbu70t" id="radio_y4Cbu70t_5" value="5">
+  <label class="form-check-label" for="radio_y4Cbu70t_5">
     -Inf
   </label>
 </div>
 
-<<<<<<< HEAD
-<div id="HJJ8haSw_message"></div>
+<div id="y4Cbu70t_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_HJJ8haSw']").on("change", function() {
+$("input:radio[name='radio_y4Cbu70t']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#HJJ8haSw_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#y4Cbu70t_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#HJJ8haSw_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-<div id="ZNnSA65f_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_ZNnSA65f']").on("change", function() {
-  correct = this.value == 2;
-
-  if(correct) {
-     $("#ZNnSA65f_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#ZNnSA65f_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#y4Cbu70t_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -2070,70 +1834,38 @@ a_5 &= a_1 - \frac{3}{2}.
 <p>Make graphs of both <code>q</code> and <code>sin</code>. Over which interval is the approximation &#40;visually&#41; a good one?</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="fXOw4JFy" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="7ne2Gkde" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_fXOw4JFy" id="radio_fXOw4JFy_1" value="1">
-  <label class="form-check-label" for="radio_fXOw4JFy_1">
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="aJ58vnLU" data-controltype="radio">
-<div class="form-group ">
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_aJ58vnLU" id="radio_aJ58vnLU_1" value="1">
-  <label class="form-check-label" for="radio_aJ58vnLU_1">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_7ne2Gkde" id="radio_7ne2Gkde_1" value="1">
+  <label class="form-check-label" for="radio_7ne2Gkde_1">
     &#36;&#91;0,1&#93;&#36;
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_fXOw4JFy" id="radio_fXOw4JFy_2" value="2">
-  <label class="form-check-label" for="radio_fXOw4JFy_2">
-=======
-  <input class="form-check-input" type="radio" name="radio_aJ58vnLU" id="radio_aJ58vnLU_2" value="2">
-  <label class="form-check-label" for="radio_aJ58vnLU_2">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_7ne2Gkde" id="radio_7ne2Gkde_2" value="2">
+  <label class="form-check-label" for="radio_7ne2Gkde_2">
     &#36;&#91;0,\pi&#93;&#36;
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_fXOw4JFy" id="radio_fXOw4JFy_3" value="3">
-  <label class="form-check-label" for="radio_fXOw4JFy_3">
-=======
-  <input class="form-check-input" type="radio" name="radio_aJ58vnLU" id="radio_aJ58vnLU_3" value="3">
-  <label class="form-check-label" for="radio_aJ58vnLU_3">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_7ne2Gkde" id="radio_7ne2Gkde_3" value="3">
+  <label class="form-check-label" for="radio_7ne2Gkde_3">
     &#36;&#91;0,2\pi&#93;&#36;
   </label>
 </div>
 
-<<<<<<< HEAD
-<div id="fXOw4JFy_message"></div>
+<div id="7ne2Gkde_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_fXOw4JFy']").on("change", function() {
+$("input:radio[name='radio_7ne2Gkde']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#fXOw4JFy_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#7ne2Gkde_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#fXOw4JFy_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-<div id="aJ58vnLU_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_aJ58vnLU']").on("change", function() {
-  correct = this.value == 1;
-
-  if(correct) {
-     $("#aJ58vnLU_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#aJ58vnLU_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#7ne2Gkde_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -2156,52 +1888,29 @@ $("input:radio[name='radio_aJ58vnLU']").on("change", function() {
 <p>has <span class="math">$5$</span> sign changes and <span class="math">$5$</span> real roots. For <code>x &#61; variable&#40;&#41;</code> use <code>div&#40;p, x-3&#41;</code> to find the result of dividing <span class="math">$p$</span> by <span class="math">$x-3$</span>. How many sign changes are there in the new polynomial?</p>
 
 
-<<<<<<< HEAD
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='eiq6SOcZ' data-controltype='numeric'>
-=======
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='BO6rGywG' data-controltype='numeric'>
->>>>>>> master
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='C2j4keUf' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<<<<<<< HEAD
-<input id="eiq6SOcZ" type="number" class="form-control" placeholder="Numeric answer">
-<label for="eiq6SOcZ">Numeric answer</label>
+<input id="C2j4keUf" type="number" class="form-control" placeholder="Numeric answer">
+<label for="C2j4keUf">Numeric answer</label>
 
 </div>
 
-<div id='eiq6SOcZ_message'></div>
-=======
-<input id="BO6rGywG" type="number" class="form-control" placeholder="Numeric answer">
-<label for="BO6rGywG">Numeric answer</label>
-
-</div>
-
-<div id='BO6rGywG_message'></div>
->>>>>>> master
+<div id='C2j4keUf_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-<<<<<<< HEAD
-$('#eiq6SOcZ').on('change', function() {
+$('#C2j4keUf').on('change', function() {
   correct = Math.abs(this.value - 4) <= 0;
 
   if(correct) {
-     $('#eiq6SOcZ_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#C2j4keUf_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#eiq6SOcZ_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-=======
-$('#BO6rGywG').on('change', function() {
-  correct = Math.abs(this.value - 4) <= 0;
-
-  if(correct) {
-     $('#BO6rGywG_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#BO6rGywG_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
->>>>>>> master
+     $('#C2j4keUf_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -2218,52 +1927,29 @@ l_i(x) = \prod_{0 \leq j \leq n; j \ne i} \frac{x-x_j}{x_i - x_j} =
 <p>What is is the value of <span class="math">$l_0(x_0)$</span>?</p>
 
 
-<<<<<<< HEAD
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='wG3ggWIG' data-controltype='numeric'>
-=======
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='zOaJvfFv' data-controltype='numeric'>
->>>>>>> master
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='nCF4FHXQ' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<<<<<<< HEAD
-<input id="wG3ggWIG" type="number" class="form-control" placeholder="Numeric answer">
-<label for="wG3ggWIG">Numeric answer</label>
+<input id="nCF4FHXQ" type="number" class="form-control" placeholder="Numeric answer">
+<label for="nCF4FHXQ">Numeric answer</label>
 
 </div>
 
-<div id='wG3ggWIG_message'></div>
-=======
-<input id="zOaJvfFv" type="number" class="form-control" placeholder="Numeric answer">
-<label for="zOaJvfFv">Numeric answer</label>
-
-</div>
-
-<div id='zOaJvfFv_message'></div>
->>>>>>> master
+<div id='nCF4FHXQ_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-<<<<<<< HEAD
-$('#wG3ggWIG').on('change', function() {
+$('#nCF4FHXQ').on('change', function() {
   correct = Math.abs(this.value - 1) <= 0;
 
   if(correct) {
-     $('#wG3ggWIG_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#nCF4FHXQ_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#wG3ggWIG_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-=======
-$('#zOaJvfFv').on('change', function() {
-  correct = Math.abs(this.value - 1) <= 0;
-
-  if(correct) {
-     $('#zOaJvfFv_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#zOaJvfFv_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
->>>>>>> master
+     $('#nCF4FHXQ_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -2272,61 +1958,32 @@ $('#zOaJvfFv').on('change', function() {
 <p>Why?</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="pgOkybnx" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="NAszbiRA" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_pgOkybnx" id="radio_pgOkybnx_1" value="1">
-  <label class="form-check-label" for="radio_pgOkybnx_1">
+  <input class="form-check-input" type="radio" name="radio_NAszbiRA" id="radio_NAszbiRA_1" value="1">
+  <label class="form-check-label" for="radio_NAszbiRA_1">
     All terms like &#36;&#40;x-x_j&#41;/&#40;x_0 - x_j&#41;&#36; will be &#36;1&#36; when &#36;x&#61;x_0&#36; and these are all the terms in the product defining &#36;l_0&#36;.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_pgOkybnx" id="radio_pgOkybnx_2" value="2">
-  <label class="form-check-label" for="radio_pgOkybnx_2">
+  <input class="form-check-input" type="radio" name="radio_NAszbiRA" id="radio_NAszbiRA_2" value="2">
+  <label class="form-check-label" for="radio_NAszbiRA_2">
     The term &#36;&#40;x_0-x_0&#41;&#36; will be &#36;0&#36;, so the product will be zero
   </label>
 </div>
 
-<div id="pgOkybnx_message"></div>
+<div id="NAszbiRA_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_pgOkybnx']").on("change", function() {
+$("input:radio[name='radio_NAszbiRA']").on("change", function() {
   correct = this.value == 1;
 
   if(correct) {
-     $("#pgOkybnx_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#NAszbiRA_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#pgOkybnx_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="MEqKGvCO" data-controltype="radio">
-<div class="form-group ">
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_MEqKGvCO" id="radio_MEqKGvCO_1" value="1">
-  <label class="form-check-label" for="radio_MEqKGvCO_1">
-    The term &#36;&#40;x_0-x_0&#41;&#36; will be &#36;0&#36;, so the product will be zero
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_MEqKGvCO" id="radio_MEqKGvCO_2" value="2">
-  <label class="form-check-label" for="radio_MEqKGvCO_2">
-    All terms like &#36;&#40;x-x_j&#41;/&#40;x_0 - x_j&#41;&#36; will be &#36;1&#36; when &#36;x&#61;x_0&#36; and these are all the terms in the product defining &#36;l_0&#36;.
-  </label>
-</div>
-
-<div id="MEqKGvCO_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_MEqKGvCO']").on("change", function() {
-  correct = this.value == 2;
-
-  if(correct) {
-     $("#MEqKGvCO_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#MEqKGvCO_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#NAszbiRA_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -2336,52 +1993,29 @@ $("input:radio[name='radio_MEqKGvCO']").on("change", function() {
 <p>What is the value of <span class="math">$l_i(x_i)$</span>?</p>
 
 
-<<<<<<< HEAD
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='qgesJL47' data-controltype='numeric'>
-=======
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='JAsWKMPZ' data-controltype='numeric'>
->>>>>>> master
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='aqT7kksw' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<<<<<<< HEAD
-<input id="qgesJL47" type="number" class="form-control" placeholder="Numeric answer">
-<label for="qgesJL47">Numeric answer</label>
+<input id="aqT7kksw" type="number" class="form-control" placeholder="Numeric answer">
+<label for="aqT7kksw">Numeric answer</label>
 
 </div>
 
-<div id='qgesJL47_message'></div>
-=======
-<input id="JAsWKMPZ" type="number" class="form-control" placeholder="Numeric answer">
-<label for="JAsWKMPZ">Numeric answer</label>
-
-</div>
-
-<div id='JAsWKMPZ_message'></div>
->>>>>>> master
+<div id='aqT7kksw_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-<<<<<<< HEAD
-$('#qgesJL47').on('change', function() {
+$('#aqT7kksw').on('change', function() {
   correct = Math.abs(this.value - 1) <= 0;
 
   if(correct) {
-     $('#qgesJL47_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#aqT7kksw_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#qgesJL47_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-=======
-$('#JAsWKMPZ').on('change', function() {
-  correct = Math.abs(this.value - 1) <= 0;
-
-  if(correct) {
-     $('#JAsWKMPZ_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#JAsWKMPZ_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
->>>>>>> master
+     $('#aqT7kksw_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -2390,52 +2024,29 @@ $('#JAsWKMPZ').on('change', function() {
 <p>What is the value of <span class="math">$l_0(x_1)$</span>?</p>
 
 
-<<<<<<< HEAD
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='0xKHqHTN' data-controltype='numeric'>
-=======
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='2EYs1j4N' data-controltype='numeric'>
->>>>>>> master
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='3JO7trpF' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<<<<<<< HEAD
-<input id="0xKHqHTN" type="number" class="form-control" placeholder="Numeric answer">
-<label for="0xKHqHTN">Numeric answer</label>
+<input id="3JO7trpF" type="number" class="form-control" placeholder="Numeric answer">
+<label for="3JO7trpF">Numeric answer</label>
 
 </div>
 
-<div id='0xKHqHTN_message'></div>
-=======
-<input id="2EYs1j4N" type="number" class="form-control" placeholder="Numeric answer">
-<label for="2EYs1j4N">Numeric answer</label>
-
-</div>
-
-<div id='2EYs1j4N_message'></div>
->>>>>>> master
+<div id='3JO7trpF_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-<<<<<<< HEAD
-$('#0xKHqHTN').on('change', function() {
+$('#3JO7trpF').on('change', function() {
   correct = Math.abs(this.value - 0) <= 0;
 
   if(correct) {
-     $('#0xKHqHTN_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#3JO7trpF_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#0xKHqHTN_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-=======
-$('#2EYs1j4N').on('change', function() {
-  correct = Math.abs(this.value - 0) <= 0;
-
-  if(correct) {
-     $('#2EYs1j4N_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#2EYs1j4N_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
->>>>>>> master
+     $('#3JO7trpF_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -2444,61 +2055,32 @@ $('#2EYs1j4N').on('change', function() {
 <p>Why?</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="1uBCGunb" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="sepIxVh2" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_1uBCGunb" id="radio_1uBCGunb_1" value="1">
-  <label class="form-check-label" for="radio_1uBCGunb_1">
+  <input class="form-check-input" type="radio" name="radio_sepIxVh2" id="radio_sepIxVh2_1" value="1">
+  <label class="form-check-label" for="radio_sepIxVh2_1">
     The term &#36;&#40;x-x_1&#41;/&#40;x_0-x_1&#41;&#36; is omitted from the product, so the answer is non-zero.
   </label>
 </div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_1uBCGunb" id="radio_1uBCGunb_2" value="2">
-  <label class="form-check-label" for="radio_1uBCGunb_2">
+  <input class="form-check-input" type="radio" name="radio_sepIxVh2" id="radio_sepIxVh2_2" value="2">
+  <label class="form-check-label" for="radio_sepIxVh2_2">
     The term like &#36;&#40;x-x_1&#41;/&#40;x_0 - x_1&#41;&#36; will be &#36;0&#36; when &#36;x&#61;x_1&#36; and so the product will be &#36;0&#36;.
   </label>
 </div>
 
-<div id="1uBCGunb_message"></div>
+<div id="sepIxVh2_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_1uBCGunb']").on("change", function() {
+$("input:radio[name='radio_sepIxVh2']").on("change", function() {
   correct = this.value == 2;
 
   if(correct) {
-     $("#1uBCGunb_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#sepIxVh2_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#1uBCGunb_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="rV8Iso15" data-controltype="radio">
-<div class="form-group ">
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_rV8Iso15" id="radio_rV8Iso15_1" value="1">
-  <label class="form-check-label" for="radio_rV8Iso15_1">
-    The term like &#36;&#40;x-x_1&#41;/&#40;x_0 - x_1&#41;&#36; will be &#36;0&#36; when &#36;x&#61;x_1&#36; and so the product will be &#36;0&#36;.
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_rV8Iso15" id="radio_rV8Iso15_2" value="2">
-  <label class="form-check-label" for="radio_rV8Iso15_2">
-    The term &#36;&#40;x-x_1&#41;/&#40;x_0-x_1&#41;&#36; is omitted from the product, so the answer is non-zero.
-  </label>
-</div>
-
-<div id="rV8Iso15_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_rV8Iso15']").on("change", function() {
-  correct = this.value == 1;
-
-  if(correct) {
-     $("#rV8Iso15_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#rV8Iso15_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#sepIxVh2_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -2508,52 +2090,29 @@ $("input:radio[name='radio_rV8Iso15']").on("change", function() {
 <p>What is the value of <span class="math">$l_i(x_j)$</span> <em>if</em> <span class="math">$i \ne j$</span>?</p>
 
 
-<<<<<<< HEAD
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='Za9JWnma' data-controltype='numeric'>
-=======
-<form class="mx-2 my-3" name='WeaveQuestion' data-id='kIWTfNiG' data-controltype='numeric'>
->>>>>>> master
+<form class="mx-2 my-3" name='WeaveQuestion' data-id='NmaVnGGj' data-controltype='numeric'>
 <div class='form-group '>
 <div class='controls'>
 
 
 <div class="form-floating input-group">
-<<<<<<< HEAD
-<input id="Za9JWnma" type="number" class="form-control" placeholder="Numeric answer">
-<label for="Za9JWnma">Numeric answer</label>
+<input id="NmaVnGGj" type="number" class="form-control" placeholder="Numeric answer">
+<label for="NmaVnGGj">Numeric answer</label>
 
 </div>
 
-<div id='Za9JWnma_message'></div>
-=======
-<input id="kIWTfNiG" type="number" class="form-control" placeholder="Numeric answer">
-<label for="kIWTfNiG">Numeric answer</label>
-
-</div>
-
-<div id='kIWTfNiG_message'></div>
->>>>>>> master
+<div id='NmaVnGGj_message'></div>
 </div>
 </div>
 </form>
 <script text='text/javascript'>
-<<<<<<< HEAD
-$('#Za9JWnma').on('change', function() {
+$('#NmaVnGGj').on('change', function() {
   correct = Math.abs(this.value - 0) <= 0;
 
   if(correct) {
-     $('#Za9JWnma_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+     $('#NmaVnGGj_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
   } else {
-     $('#Za9JWnma_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
-=======
-$('#kIWTfNiG').on('change', function() {
-  correct = Math.abs(this.value - 0) <= 0;
-
-  if(correct) {
-     $('#kIWTfNiG_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
-  } else {
-     $('#kIWTfNiG_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
->>>>>>> master
+     $('#NmaVnGGj_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
   }
 });
 </script>
@@ -2566,72 +2125,38 @@ p(x) = \sum_{i=0}^n y_i l_i(x) = y_0l_0(x) + y_1l_1(x) + \dots + y_nl_n(x)
 <p>What is the value of <span class="math">$p(x_j)$</span>?</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="jZucuiLI" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="dPDpLz5v" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_jZucuiLI" id="radio_jZucuiLI_1" value="1">
-  <label class="form-check-label" for="radio_jZucuiLI_1">
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="NuT8YXuy" data-controltype="radio">
-<div class="form-group ">
+  <input class="form-check-input" type="radio" name="radio_dPDpLz5v" id="radio_dPDpLz5v_1" value="1">
+  <label class="form-check-label" for="radio_dPDpLz5v_1">
+    &#36;1&#36;
+  </label>
+</div>
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_NuT8YXuy" id="radio_NuT8YXuy_1" value="1">
-  <label class="form-check-label" for="radio_NuT8YXuy_1">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_dPDpLz5v" id="radio_dPDpLz5v_2" value="2">
+  <label class="form-check-label" for="radio_dPDpLz5v_2">
+    &#36;0&#36;
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_dPDpLz5v" id="radio_dPDpLz5v_3" value="3">
+  <label class="form-check-label" for="radio_dPDpLz5v_3">
     &#36;y_j&#36;
   </label>
 </div>
-<div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_jZucuiLI" id="radio_jZucuiLI_2" value="2">
-  <label class="form-check-label" for="radio_jZucuiLI_2">
-    &#36;0&#36;
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_jZucuiLI" id="radio_jZucuiLI_3" value="3">
-  <label class="form-check-label" for="radio_jZucuiLI_3">
-    &#36;1&#36;
-  </label>
-</div>
 
-<div id="jZucuiLI_message"></div>
+<div id="dPDpLz5v_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_jZucuiLI']").on("change", function() {
-  correct = this.value == 1;
+$("input:radio[name='radio_dPDpLz5v']").on("change", function() {
+  correct = this.value == 3;
 
   if(correct) {
-     $("#jZucuiLI_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#dPDpLz5v_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#jZucuiLI_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-  <input class="form-check-input" type="radio" name="radio_NuT8YXuy" id="radio_NuT8YXuy_2" value="2">
-  <label class="form-check-label" for="radio_NuT8YXuy_2">
-    &#36;1&#36;
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_NuT8YXuy" id="radio_NuT8YXuy_3" value="3">
-  <label class="form-check-label" for="radio_NuT8YXuy_3">
-    &#36;0&#36;
-  </label>
-</div>
-
-<div id="NuT8YXuy_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_NuT8YXuy']").on("change", function() {
-  correct = this.value == 1;
-
-  if(correct) {
-     $("#NuT8YXuy_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#NuT8YXuy_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#dPDpLz5v_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -2651,72 +2176,38 @@ T_4(x) &= 2xT_3(x) - T_2(x) = 2x(4x^3-3x) - (2x^2-1) = 8x^4 - 8x^2 + 1
 <p>With these definitions what is the polynomial associated to the coefficients <span class="math">$[0,1,2,3]$</span> with this basis?</p>
 
 
-<<<<<<< HEAD
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="bB8QyYZZ" data-controltype="radio">
+<form  class="mx-2 my-3" name="WeaveQuestion" data-id="JqUNVZrc" data-controltype="radio">
 <div class="form-group ">
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_bB8QyYZZ" id="radio_bB8QyYZZ_1" value="1">
-  <label class="form-check-label" for="radio_bB8QyYZZ_1">
-    It is &#36;0\cdot 1 &#43; 1 \cdot x &#43; 2 \cdots x^2 &#43; 3\cdot x^3 &#61; x &#43; 2x^2 &#43; 3x^3&#36;
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_bB8QyYZZ" id="radio_bB8QyYZZ_2" value="2">
-  <label class="form-check-label" for="radio_bB8QyYZZ_2">
-=======
-<form  class="mx-2 my-3" name="WeaveQuestion" data-id="Z4SC2RIJ" data-controltype="radio">
-<div class="form-group ">
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Z4SC2RIJ" id="radio_Z4SC2RIJ_1" value="1">
-  <label class="form-check-label" for="radio_Z4SC2RIJ_1">
-    It is &#36;0\cdot T_1&#40;x&#41; &#43;	1\cdot T_1&#40;x&#41; &#43; 2\cdot T_2&#40;x&#41; &#43; 3\cdot T_3&#40;x&#41; &#61; 0&#36;
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="radio_Z4SC2RIJ" id="radio_Z4SC2RIJ_2" value="2">
-  <label class="form-check-label" for="radio_Z4SC2RIJ_2">
->>>>>>> master
+  <input class="form-check-input" type="radio" name="radio_JqUNVZrc" id="radio_JqUNVZrc_1" value="1">
+  <label class="form-check-label" for="radio_JqUNVZrc_1">
     It is &#36;0\cdot T_1&#40;x&#41; &#43;	1\cdot T_1&#40;x&#41; &#43; 2\cdot T_2&#40;x&#41; &#43; 3\cdot T_3&#40;x&#41; &#61; -2 - 8\cdot x &#43; 4\cdot x^2 &#43; 12\cdot x^3&#36;&#96;
   </label>
 </div>
 <div class="form-check">
-<<<<<<< HEAD
-  <input class="form-check-input" type="radio" name="radio_bB8QyYZZ" id="radio_bB8QyYZZ_3" value="3">
-  <label class="form-check-label" for="radio_bB8QyYZZ_3">
+  <input class="form-check-input" type="radio" name="radio_JqUNVZrc" id="radio_JqUNVZrc_2" value="2">
+  <label class="form-check-label" for="radio_JqUNVZrc_2">
     It is &#36;0\cdot T_1&#40;x&#41; &#43;	1\cdot T_1&#40;x&#41; &#43; 2\cdot T_2&#40;x&#41; &#43; 3\cdot T_3&#40;x&#41; &#61; 0&#36;
   </label>
 </div>
-
-<div id="bB8QyYZZ_message"></div>
-</div>
-</form>
-<script text="text/javascript">
-$("input:radio[name='radio_bB8QyYZZ']").on("change", function() {
-  correct = this.value == 2;
-
-  if(correct) {
-     $("#bB8QyYZZ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
-  } else {
-     $("#bB8QyYZZ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
-=======
-  <input class="form-check-input" type="radio" name="radio_Z4SC2RIJ" id="radio_Z4SC2RIJ_3" value="3">
-  <label class="form-check-label" for="radio_Z4SC2RIJ_3">
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="radio_JqUNVZrc" id="radio_JqUNVZrc_3" value="3">
+  <label class="form-check-label" for="radio_JqUNVZrc_3">
     It is &#36;0\cdot 1 &#43; 1 \cdot x &#43; 2 \cdots x^2 &#43; 3\cdot x^3 &#61; x &#43; 2x^2 &#43; 3x^3&#36;
   </label>
 </div>
 
-<div id="Z4SC2RIJ_message"></div>
+<div id="JqUNVZrc_message"></div>
 </div>
 </form>
 <script text="text/javascript">
-$("input:radio[name='radio_Z4SC2RIJ']").on("change", function() {
-  correct = this.value == 2;
+$("input:radio[name='radio_JqUNVZrc']").on("change", function() {
+  correct = this.value == 1;
 
   if(correct) {
-     $("#Z4SC2RIJ_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
+     $("#JqUNVZrc_message").html("<div class='alert alert-success'><i class='bi bi-hand-thumbs-up-fill'></i>&nbsp;Correct</span></div>");
   } else {
-     $("#Z4SC2RIJ_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
->>>>>>> master
+     $("#JqUNVZrc_message").html("<div class='alert alert-warning'><i class='bi bi-hand-thumbs-down-fill'></i>&nbsp;Incorrect</span></div>");
   }
 });
 
@@ -2733,62 +2224,42 @@ $("input:radio[name='radio_Z4SC2RIJ']").on("change", function() {
   <div class="card-header float-end text-muted">
     <span class="text-muted  float-end align-middle">
 
-<<<<<<< HEAD
 <a href="../precalc/polynomial_roots.html"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
 title="Previous section"
 aria-label="Previous section"
 class="bi bi-arrow-left-circle-fill">
-=======
-<a href="../precalc/polynomial_roots.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Previous section" aria-label="Previous section">
-<i class="bi bi-arrow-left-circle-fill"></i>
->>>>>>> master
 </a>
 
 &nbsp;
 
-<<<<<<< HEAD
 <a href="../precalc/rational_functions.html"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
 title="Next section"
 aria-label="Next section"
 class="bi bi-arrow-right-circle-fill">
-=======
-<a href="../precalc/rational_functions.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Next section" aria-label="Next section">
-<i class="bi bi-arrow-right-circle-fill"></i>
->>>>>>> master
 </a>
 
 &nbsp;
 
-<<<<<<< HEAD
 <a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/precalc/polynomials_package.jmd"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
 title="Suggest an edit"
 aria-label="Suggest an edit"
 class="bi bi-pencil-square">
-=======
-<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/precalc/polynomials_package.jmd" data-bs-toggle="tooltip" data-bs-placement="top" title="Suggest an edit" aria-label="Suggest an edit">
-<i class="bi bi-pencil-square"></i>
->>>>>>> master
 </a>
 
 &nbsp;
 
-<<<<<<< HEAD
 <a href="../misc/toc.html"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
 title="Table of contents"
 aria-label="Table of contents"
 class="bi bi-card-list">
-=======
-<a href="../misc/toc.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Table of contents" aria-label="Table of contents">
-<i class="bi bi-card-list"></i>
->>>>>>> master
 </a>
 
     </span>

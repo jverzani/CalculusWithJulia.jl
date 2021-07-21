@@ -452,16 +452,7 @@ Can this second-order equation be solved by `SymPy`?
 eqn = theta''(x) + g/l*sin(theta(x))
 ```
 
-```julia;
-try
-  dsolve(eqn)
-catch err
-  "Unable to solve equation"
-end
-```
-
-
-We suppressed a long error message using a `try-catch` block, but the message can be quickly summarized: no easy answer is forthcoming for this equation.
+Trying to do so, can cause `SymPy` to hang; no easy answer is forthcoming for this equation.
 
 In general, for the first-order initial value problem characterized by
 $y'(x) = F(y,x)$, there are conditions
