@@ -8,7 +8,7 @@ nothing
 ```
 
 
-The following section takes up the task of numerically approximating solutions to differential equations. `Julia` has a huge set of state-of-the-art tools for this task starting with the [DifferentialEquations](https://github.com/SciML/DifferentialEquations.jl) package. We don't use that package here, focusing on  simpler methods and implementations for pedagogical purposes, but any further exploration should utilize the tools provided therein.
+The following section takes up the task of numerically approximating solutions to differential equations. `Julia` has a huge set of state-of-the-art tools for this task starting with the [DifferentialEquations](https://github.com/SciML/DifferentialEquations.jl) package. We don't use that package in this section, focusing on  simpler methods and implementations for pedagogical purposes, but any further exploration should utilize the tools provided therein. A brief introduction to the package follows in the next [section](./differential_equations.html).
 
 
 ----
@@ -812,8 +812,6 @@ ans = 4
 radioq(choices, ans, keep_order=true)
 ```
 
-
-----
 
 ```julia; echo=false
 CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
