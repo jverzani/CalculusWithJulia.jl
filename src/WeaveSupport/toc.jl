@@ -54,6 +54,7 @@ table_of_contents = [
     :ODEs		:odes;
     :ODEs		:euler;
     :ODEs		:solve;
+    :ODEs		:differential_equations;
 
     :differentiable_vector_calculus		:polar_coordinates;
     :differentiable_vector_calculus		:vectors;
