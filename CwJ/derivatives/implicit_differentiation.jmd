@@ -4,7 +4,7 @@
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
 using Plots
-using LaTeXString
+using LaTeXStrings
 nothing
 ```
 
@@ -36,7 +36,7 @@ To plot such an equation in `Julia`, we can use the
 using CalculusWithJulia
 using Plots
 using ImplicitEquations
-gr()   # better graphics than plotly() here
+pyplot()   # better graphics than plotly() here
 ```
 
 To plot the circle of radius ``2``, we would first define a function of *two* variables:
@@ -55,7 +55,7 @@ This is a function of *two* variables, used here to express one side of an equat
 ```
 
 
-Then we use one of the logical operations - `Lt`, `Le`, `Eq`, `Ge`, or `Gt` - to construct a predicate to plot. This one describes ``x^2 + y^2 = 2^2``:
+Then we use one of the logical operations - `Lt`, `Le`, `Eq`, `Ne`, `Ge`, or `Gt` - to construct a predicate to plot. This one describes ``x^2 + y^2 = 2^2``:
 
 ```julia;
 r = Eq(f, 2^2)
@@ -110,7 +110,7 @@ subdivided and each subregion is similarly tested. This continues
 until the remaining undecided regions are smaller than some
 threshold. Such regions comprise a boundary, and here are also colored
 black. Only regions are plotted - not ``(x,y)`` pairs - so the results
-are blocky. Pass larger values of ``N=M`` (with defaults of ``8``) to
+are blocky. Pass larger values of ``N=M`` (with defaults of ``10``) to
 `plot` to lower the threshold at the cost of longer computation times.
 
 """)
@@ -456,7 +456,7 @@ Let ``a = b = c = d = 1``, then ``(1,4)`` is a point on the curve. We can draw a
 H = ex(a=>1, b=>1, c=>1, d=>1)
 x0, y0 = 1, 4
 m = dydx(x=>1, y=>4, a=>1, b=>1, c=>1, d=>1)
-plot(ImplicitEquations.Eq(lambdify(H), 0), xlims=(-5,5), ylims=(-5,5))
+plot(Eq(lambdify(H), 0), xlims=(-5,5), ylims=(-5,5))
 plot!(y0 + m * (x-x0))
 ```
 
@@ -467,15 +467,6 @@ shows their dependence in the derivative.
 ```julia; echo=false
 alert("The use of `lambdify` is needed to turn the symbolic expression, `H`, into a function, as `ImplicitEquations` expects functions in its predicates.")
 ```
-
-```julia; echo=false
-note("""
-
-When *both* `SymPy` and `ImplicitEquations` are loaded, the predicate functions need qualification, as both packages use `Eq` to mean equality, etc., but in a different way.
-
-""")
-```
-
 
 ```julia; echo=false
 note("""
@@ -741,6 +732,57 @@ atan((b0 - ystar)/(a0 - xstar)) + atan((b1 - ystar)/(a1 - xstar)) # 0
 Now, were we lucky and just happened to take ``a=3``, ``b = 3`` in such a way to
 make this work? Well, no. But convince yourself by doing the above for
 different values of ``b``.
+
+
+### Numeric approach
+
+In the above, we started with ``F(x,y) = L`` and solved symbolically for ``y=f(x)`` so that ``F(x,f(x)) = L``. Then we took a derivative of ``f(x)`` and set this equal to ``0`` to solve for the minimum ``y`` values.
+
+Here we try the same problem numerically, using a zero-finding approach to identify ``f(x))``.
+
+Starting with ``F(x,y) = sqrt(x^2 + y^2) + sqrt((x-1)^2 + (b-2)^2)`` and ``L=3``, we have:
+
+```julia
+a,b,L = 1,2,3
+F(x,y) = sqrt(x^2 + y^2) + sqrt((a-x)^2 + (b-y)^2)
+plot(Eq(F, L))
+```
+
+Trying to find the lowest ``y`` value we have from the graph it is near ``x=0.1``. We can do better.
+
+First, we could try so solve for the ``f`` using `find_zero`. Here is one way:
+
+```julia
+f(x) = find_zero(y -> F(x, y) - L, 0)
+```
+
+We use ``0`` as an initial guess, as the ``y`` value is near ``0``. More on this later. We could then just sample many ``x`` values between ``-0.5`` and ``1.5`` and find the one corresponding to the smallest ``t`` value:
+
+```julia
+findmin([f(x) for x ∈ range(-0.5, 1.5, length=100)])
+```
+
+This shows the smallest value is around ``-0.414`` and occurs in the ``33``rd position of the sampled ``x`` values. Pretty good, but we can do better. We just need to differentiate ``f``, solve for ``f'(x) = 0`` and then put that value back into ``f`` to find the smallest ``y``.
+
+**However** there is one subtle point. Using automatic differentiation, as implemented in `ForwardDiff`, with `find_zero` requires the `x0` initial value to have a certain type. In this case, the same type as the "`x`" passed into ``f(x)``. So rather than use an initial value of ``0``, we must use an initial value ``zero(x)``! (Otherwise, there will be an error "`no method matching Float64(::ForwardDiff.Dual{...`".)
+
+With this slight modification, we have:
+
+```julia
+f(x) = find_zero(y -> F(x, y) - L, zero(x))
+plot(f', -0.5, 1.5)
+```
+
+The zero of `f'` is a bit to the right of ``0``, say ``0.2``; we use `find_zero` again to find it:
+
+```julia
+xstar = find_zero(f', 0.2)
+xstar, f(xstar)
+```
+
+It is important to note that the above uses of `find_zero` required *good* initial guesses, which we were fortunate enough to identify.
+
+
 
 ## Questions
 

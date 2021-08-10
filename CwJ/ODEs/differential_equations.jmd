@@ -24,7 +24,7 @@ This implies the rate of change in time of ``S(t)`` depends on the current numbe
 ```
 
 It is negative, as no one is added, only taken off. After dividing by
-``N``, this can also be expressed as ``s'(t) = -k s(t) i(t)``.
+``N``, this can also be expressed as ``s'(t) = -b s(t) i(t)``.
 
 > assume that a fixed fraction  ``k``  of the infected group will recover during any given day.
 

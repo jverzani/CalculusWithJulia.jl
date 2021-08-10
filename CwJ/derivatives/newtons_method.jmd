@@ -3,7 +3,7 @@
 ```julia; echo=false; results="hidden"
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
-using Plots
+using Plots; plotly()
 nothing
 ```
 
@@ -1214,9 +1214,9 @@ The equation $x^2 + x\cdot y + y^2 = 1$ is a rotated ellipse.
 
 ```julia; echo=false
 using ImplicitEquations
-gr()
+plotly()
 f(x,y) = x^2 + x * y + y^2 - 1
-plot(ImplicitEquations.Eq(f, 0), xlims=(-2,2), ylims=(-2,2))
+plot(Eq(f, 0), xlims=(-2,2), ylims=(-2,2), legend=false)
 ```
 
 Can we find which point on its graph has the largest $y$ value?
