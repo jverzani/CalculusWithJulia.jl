@@ -3,7 +3,7 @@
 ```julia; echo=false; results="hidden"
 import CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
-using Plots
+using Plots; plotly()
 nothing
 ```
 
@@ -259,7 +259,7 @@ using Plots
 Φr(c,fc) = 1 - (1-Φ(c,fc))^2
 a,b = 0,1
 fa,fb = -1/2, 1
-r = ImplicitEquations.Lt(Φl, ξ) & ImplicitEquations.Lt(ξ,Φr)
+r = Lt(Φl, ξ) & Lt(ξ,Φr)
 plot(r, xlims=(-2,a), ylims=(-3,0))
 ```
 
