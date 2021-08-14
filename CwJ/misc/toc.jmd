@@ -328,7 +328,7 @@ txt = """
   <div class="card-header float-end text-muted">
     <span class="text-muted  float-end align-middle">
 
-<a href="../precalc/calculator.html"
+<a href="./precalc/calculator.html"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
 title="Next section"

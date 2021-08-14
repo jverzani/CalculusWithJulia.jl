@@ -1675,7 +1675,7 @@ The expression `ex` is secretly `[t + sin(t), 3 + cos(t)]`, another cycloid.
 
 This last example comes from a collection of several [examples](https://github.com/empet/3D-Viz-with-PlotlyJS.jl/blob/main/5-Tubular-surface.ipynb) provided by Discourse user `@empet` to illustrate `plotlyjs`. We adopt it to `Plots` with some minor changes below.
 
-The task is to illustrate a space curve, ``c(t)``, using a tubular surface. At each time point ``t``, the curve has tangent, ``e_1``; normal, ``e_2``; and binormal, ``e_3``. The tubular surface is a circle of radius ``\epsilon`` in the plane determined by the normal and binormal. This curve would be parameterized by
+The task is to illustrate a space curve, ``c(t)``, using a tubular surface. At each time point ``t``, assume the curve has tangent, ``e_1``; normal, ``e_2``; and binormal, ``e_3``. (This assumes the defining derivatives exist and are non-zero and the cross product in the torsion is non zero.) The tubular surface is a circle of radius ``\epsilon`` in the plane determined by the normal and binormal. This curve would be parameterized by
 ``r(t,u) = c(t) + \epsilon (e_2(t) \cdot \cos(u) + e_3(t) \cdot \sin(u))`` for varying ``u``.
 
 The Frenet-Serret equations setup a system of differential equations driven by the curvature and torsion. We use the `DifferentialEquations` package to solve this equation for two specific functions and a given initial condition. The equations when expanded into coordinates become ``12`` different equations:
@@ -1701,7 +1701,7 @@ function Frenet_eq!(du, u, p, s)  #system of ODEs
 end
 ```
 
-The last set of equations describe the motion of the spine parameterized by arc length, as ``\mid c'(t) \mid = 1``.
+The last set of equations describe the motion of the spine. It follows from specifying the tangent to the curve is ``e_1``, as desired; it is parameterized by arc length, as ``\mid c'(t) \mid = 1``.
 
 Following the example of `@empet`, we define a curvature function and torsion function, the latter a constant:
 
