@@ -181,6 +181,28 @@ end
 
 ## ----
 
+## 3D Arrow function by Rafael Guerra https://discourse.julialang.org/t/plot-with-sticks-or-arrows/68422/14; modified for
+## See comment here about possible issue: https://discourse.julialang.org/t/tube-plots/65999/9
+# as: arrow head size 0-1 (fraction of arrow length)
+# la: arrow alpha transparency 0-1
+function arrow3d!(p, x, y, z,  u, v, w; as=0.1, lc=:black, la=1, lw=0.4, scale=:identity)
+    (as < 0) && (nv0 = -maximum(norm.(eachrow([u v w]))))
+    for (x,y,z, u,v,w) in zip(x,y,z, u,v,w)
+        nv = sqrt(u^2 + v^2 + w^2)
+        v1, v2 = -[u,v,w]/nv, nullspace([u v w])[:,1]
+        v4 = (3*v1 + v2)/3.1623  # sqrt(10) to get unit vector
+        v5 = v4 - 2*(v4'*v2)*v2
+        (as < 0) && (nv = nv0)
+        v4, v5 = -as*nv*v4, -as*nv*v5
+        Plots.plot!(p, [x,x+u], [y,y+v], [z,z+w], lc=lc, la=la, lw=lw, scale=scale, label=false)
+        Plots.plot!(p, [x+u,x+u-v5[1]], [y+v,y+v-v5[2]], [z+w,z+w-v5[3]], lc=lc, la=la, lw=lw, label=false)
+        Plots.plot!(p, [x+u,x+u-v4[1]], [y+v,y+v-v4[2]], [z+w,z+w-v4[3]], lc=lc, la=la, lw=lw, label=false)
+    end
+    p
+end
+
+
+
 """
    `arrow!(p, v)`
 
@@ -194,20 +216,22 @@ r(t) = [sin(t), cos(t), t]
 rp(t) = [cos(t), -sin(t), 1]
 plot(unzip(r, 0, 2pi)...)
 t0 = 1
-arrow!(r(t0), r'(t0))
+arrow!(r(t0), rp(t0))
 ```
 """
 function arrow!(plt, p, v; kwargs...)
   if length(p) == 2
       Plots.quiver!(plt, unzip([p])..., quiver=Tuple(unzip([v])); kwargs...)
   elseif length(p) == 3
-    # 3d quiver needs support
-    # https://github.com/JuliaPlots/Plots.jl/issues/319#issue-159652535
-    # headless arrow instead
-      Plots.plot!(plt, unzip(p, p+v)...; kwargs...)
-	end
+      # 3d quiver needs support
+      # https://github.com/JuliaPlots/Plots.jl/issues/319#issue-159652535
+      # headless arrow instead
+      #Plots.plot!(plt, unzip(p, p+v)...; kwargs...)
+      ## use the above instead
+      arrow3d!(plt, unzip(p,p+v)...; kwargs...)
+  end
 end
-arrow!(p,v;kwargs...) = arrow!(Plots.current(), p, v; kwargs...)
+arrow!(p,v; kwargs...) = arrow!(Plots.current(), p, v; kwargs...)
 
 
 

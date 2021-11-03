@@ -1,7 +1,7 @@
 using SymPy
-function Base.show(io::IO, ::MIME"text/latex", x::SymPy.SymbolicObject)
-    print(io, SymPy.as_markdown(sympy.latex(x)))
-end
+# function Base.show(io::IO, ::MIME"text/latex", x::SymPy.SymbolicObject)
+#     print(io, SymPy.as_markdown(sympy.latex(x)))
+# end
 
 # Show SymPy
 ## Type piracy

@@ -25,6 +25,7 @@ include("bootstrap.jl")
 include("questions.jl")
 include("show-methods.jl")
 include("toc.jl")
+include("markdown-to-pluto.jl")
 
 #import Plots
 # just show body, not standalone
@@ -41,7 +42,7 @@ const cssfile = joinpath(@__DIR__, "..", "..", "templates", "skeleton_css.css")
 const htmlfile = joinpath(@__DIR__,"..", "..", "templates", "bootstrap.tpl")
 const latexfile = joinpath(@__DIR__, "..", "..", "templates", "julia_tex.tpl")
 
-function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebook), force=false, kwargs...)
+function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebook,:pluto), force=false, kwargs...)
 
 
     jmddir = joinpath(repo_directory,"CwJ",folder)
@@ -159,6 +160,14 @@ function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebo
         args[:doctype] = "notebook"
         Weave.convert_doc(tmp,joinpath(dir,file[1:end-4]*".ipynb"))
     end
+
+    if :pluto ∈ build_list
+        println("Building Pluto notebook")
+        dir = joinpath(repo_directory,"pluto",folder)
+        isdir(dir) || mkpath(dir)
+        markdownToPluto(tmp, joinpath(joinpath(dir,file[1:end-4]*".jl")))
+    end
+
 end
 
 """
