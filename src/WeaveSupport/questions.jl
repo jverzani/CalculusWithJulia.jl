@@ -306,14 +306,14 @@ $("{{{selector}}}").on("change", function() {
 """
 
 html_templates["radio_script_tpl"] = """
-_.forEach(document.querySelectorAll('input[name="radio_{{ID}}"]'), function(rb) {
+document.querySelectorAll('input[name="radio_{{ID}}"]').forEach(function(rb) {
 rb.addEventListener("change", function() {
     var correct = rb.value == {{correct_answer}};
     var msgBox = document.getElementById('{{ID}}_message');
     if (correct) {
-    msgBox.innerHTML = "<div class='pluto-output admonition note'><span class='glyphicon glyphicon-thumbs-up'>👍&nbsp;Correct</span></div>";
+    msgBox.innerHTML = "<div class='pluto-output admonition note alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>👍&nbsp;Correct</span></div>";
   } else {
-    msgBox.innerHTML = "<div class='pluto-output admonition'><span class='glyphicon glyphicon-thumbs-down'>👎&nbsp; Incorrect</span></div>";
+    msgBox.innerHTML = "<div class='pluto-output admonition alert alert-danger'><span class='glyphicon glyphicon-thumbs-down'>👎&nbsp; Incorrect</span></div>";
   }
 })});
 """
@@ -340,6 +340,8 @@ function markdown(x)
     x
 end
 
+_latexstring_strip(x::LaTeXString) =  x.s
+_latexstring_strip(x) = x
 
 function show(io::IO, m::MIME"text/html", x::Radioq)
     ID = randstring()
@@ -353,8 +355,16 @@ choices = string.(x.choices)
     items = Dict[]
     ## make items
     for (i,choice) ∈ enumerate(choices)
+        choice = _latexstring_strip(choice)
+        choice′ = sprint(io -> Markdown.html(io, Markdown.parse(choice)))
+        # strip <p> tag
+        choice′ = chomp(choice′)
+        choice′ = replace(choice′, r"^<p>" => "")
+        choice′ = replace(choice′, r"</p>$" => "")
+
+
         item = Dict("no"=>i,
-                "label"=> sprint(io -> Markdown.html(io, choice)), # markdown(choices[i])[26:end-11],
+                "label"=> choice′, # markdown(choices[i])[26:end-11],
                 "value"=>i
                 )
         push!(items, item)
