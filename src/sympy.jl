@@ -1,23 +1,20 @@
 using SymPy
-function Base.show(io::IO, ::MIME"text/latex", x::SymPy.SymbolicObject)
-    print(io, SymPy.as_markdown(sympy.latex(x)))
-end
 
 # Show SymPy
-## Type piracy
-function Base.show(io::IO, ::MIME"text/html", x::T) where {T <: SymPy.SymbolicObject}
-    #write(io, "<div class=\"well well-sm\">")
-    write(io, "<div class=\"output\">")
-    show(io, "text/latex", x)
-    write(io, "</div>")
-end
+## Type piracy; messes with Pluto!
+# function Base.show(io::IO, ::MIME"text/html", x::T) where {T <: SymPy.SymbolicObject}
+#     #write(io, "<div class=\"well well-sm\">")
+#     write(io, "<div class=\"output\">")
+#     show(io, "text/latex", x)
+#     write(io, "</div>")
+# end
 
-function Base.show(io::IO, ::MIME"text/html", x::Array{T}) where {T <: SymPy.SymbolicObject}
-    #write(io, "<div class=\"well well-sm\">")
-    write(io, "<div class=\"output\">")
-    show(io, "text/latex", x)
-    write(io, "</div>")
-end
+# function Base.show(io::IO, ::MIME"text/html", x::Array{T}) where {T <: SymPy.SymbolicObject}
+#     #write(io, "<div class=\"well well-sm\">")
+#     write(io, "<div class=\"output\">")
+#     show(io, "text/latex", x)
+#     write(io, "</div>")
+#end
 
 ## --------
 

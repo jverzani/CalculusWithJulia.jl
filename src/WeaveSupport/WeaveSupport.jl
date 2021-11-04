@@ -25,6 +25,7 @@ include("bootstrap.jl")
 include("questions.jl")
 include("show-methods.jl")
 include("toc.jl")
+include("markdown-to-pluto.jl")
 
 #import Plots
 # just show body, not standalone
@@ -41,10 +42,10 @@ const cssfile = joinpath(@__DIR__, "..", "..", "templates", "skeleton_css.css")
 const htmlfile = joinpath(@__DIR__,"..", "..", "templates", "bootstrap.tpl")
 const latexfile = joinpath(@__DIR__, "..", "..", "templates", "julia_tex.tpl")
 
-function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebook), force=false, kwargs...)
+function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebook,:pluto), force=false, kwargs...)
 
 
-    jmddir = joinpath(repo_directory,"CwJ",folder)
+    jmddir = isdir(folder) ? folder : joinpath(repo_directory,"CwJ",folder)
     tmp = joinpath(jmddir, file)
     bnm = replace(basename(tmp), r".jmd$" => "")
 
@@ -83,8 +84,42 @@ function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebo
 
         Weave.set_chunk_defaults!(:wrap=>false)
         args[:doctype] = "html"
+
+        # override printing for Polynomials, SymPy
+        𝐦 = Core.eval(@__MODULE__, :(module $(gensym(:WeaveHTMLTestModule)) end))
+        Core.eval(𝐦, quote
+using SymPy, Polynomials
+function Base.show(io::IO, ::MIME"text/html", x::T) where {T <: SymPy.SymbolicObject}
+    #write(io, "<div class=\"well well-sm\">")
+    write(io, "<div class=\"output\">")
+    show(io, "text/latex", x)
+    write(io, "</div>")
+end
+
+function Base.show(io::IO, ::MIME"text/html", x::Array{T}) where {T <: SymPy.SymbolicObject}
+    #write(io, "<div class=\"well well-sm\">")
+    write(io, "<div class=\"output\">")
+    show(io, "text/latex", x)
+    write(io, "</div>")
+end
+
+function Base.show(io::IO, ::MIME"text/html", x::T) where {T <: Polynomials.AbstractPolynomial}
+#     #write(io, "<div class=\"well well-sm\">")
+     write(io, "<div class=\"output\">")
+     show(io, "text/latex", x)
+     write(io, "</div>")
+end
+
+                  end)
+
+
         #weave(tmp,doctype = "md2html",out_path=dir,args=args; fig_ext=".svg", css=cssfile, kwargs...)
-        weave(tmp,doctype = "md2html", out_path=dir,args=args; fig_ext=".svg",
+        weave(tmp;
+              doctype = "md2html",
+              out_path=dir,
+              mod = 𝐦,
+              args=args,
+              fig_ext=".svg",
               template=htmlfile,
               fig_path=tempdir(),
               kwargs...)
@@ -159,6 +194,14 @@ function weave_file(folder, file; build_list=(:script,:html,:pdf,:github,:notebo
         args[:doctype] = "notebook"
         Weave.convert_doc(tmp,joinpath(dir,file[1:end-4]*".ipynb"))
     end
+
+    if :pluto ∈ build_list
+        println("Building Pluto notebook")
+        dir = joinpath(repo_directory,"pluto",folder)
+        isdir(dir) || mkpath(dir)
+        markdownToPluto(dir, joinpath(joinpath(dir,file[1:end-4]*".jl")))
+    end
+
 end
 
 """

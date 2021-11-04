@@ -223,13 +223,13 @@ html_templates["Numericq"] = mt"""
 </div>
 </form>
 <script text='text/javascript'>
-$('{{{selector}}}').on('change', function() {
-  correct = {{{correct}}};
-
+document.getElementById("{{ID}}").addEventListener("change", function() {
+  var correct = {{{correct}}};
+  var msgBox = document.getElementById('{{ID}}_message');
   if(correct) {
-     $('#{{ID}}_message').html('<div class="alert alert-success"><i class="bi bi-hand-thumbs-up-fill"></i>&nbsp;Correct</span></div>');
+    msgBox.innerHTML = "<div class='pluto-output admonition note alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>👍&nbsp;Correct</span></div>";
   } else {
-     $('#{{ID}}_message').html('<div class="alert alert-danger"><i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;Incorrect</span></div>');
+    msgBox.innerHTML = "<div class='pluto-output admonition alert alert-danger'><span class='glyphicon glyphicon-thumbs-down'>👎&nbsp; Incorrect</span></div>";
   }
 });
 </script>
@@ -305,6 +305,20 @@ $("{{{selector}}}").on("change", function() {
 });
 """
 
+html_templates["radio_script_tpl"] = """
+document.querySelectorAll('input[name="radio_{{ID}}"]').forEach(function(rb) {
+rb.addEventListener("change", function() {
+    var correct = rb.value == {{correct_answer}};
+    var msgBox = document.getElementById('{{ID}}_message');
+    if (correct) {
+    msgBox.innerHTML = "<div class='pluto-output admonition note alert alert-success'><span class='glyphicon glyphicon-thumbs-up'>👍&nbsp;Correct</span></div>";
+  } else {
+    msgBox.innerHTML = "<div class='pluto-output admonition alert alert-danger'><span class='glyphicon glyphicon-thumbs-down'>👎&nbsp; Incorrect</span></div>";
+  }
+})});
+"""
+
+
 function bestmime(val)
   for mime in ("text/html",  "text/latex", "application/x-latex", "image/svg+xml", "image/png", "text/plain")
     showable(mime, val) && return MIME(Symbol(mime))
@@ -326,6 +340,8 @@ function markdown(x)
     x
 end
 
+_latexstring_strip(x::LaTeXString) =  x.s
+_latexstring_strip(x) = x
 
 function show(io::IO, m::MIME"text/html", x::Radioq)
     ID = randstring()
@@ -338,18 +354,33 @@ choices = string.(x.choices)
 
     items = Dict[]
     ## make items
-    for i in 1:length(choices)
+    for (i,choice) ∈ enumerate(choices)
+        choice = _latexstring_strip(choice)
+        choice′ = sprint(io -> Markdown.html(io, Markdown.parse(choice)))
+        # strip <p> tag
+        choice′ = chomp(choice′)
+        choice′ = replace(choice′, r"^<p>" => "")
+        choice′ = replace(choice′, r"</p>$" => "")
+
+
         item = Dict("no"=>i,
-                "label"=>markdown(choices[i]),#[vcat(1:22,26:end-4)],
+                "label"=> choice′, # markdown(choices[i])[26:end-11],
                 "value"=>i
                 )
         push!(items, item)
     end
 
-    script = Mustache.render(html_templates["script_tpl"],
+
+    script = Mustache.render(html_templates["radio_script_tpl"],
                              Dict("ID"=>ID,
-                              "selector"=>"input:radio[name='radio_$ID']",
-                              "correct"=>"this.value == $(x.answer)"))
+                                  "correct_answer" => x.answer,
+                                  "selector"=>"input:radio[name='radio_$ID']",
+                                  "correct"=>"this.value == $(x.answer)"))
+
+    # script = Mustache.render(html_templates["script_tpl"],
+    #                          Dict("ID"=>ID,
+    #                           "selector"=>"input:radio[name='radio_$ID']",
+    #                           "correct"=>"this.value == $(x.answer)"))
 
     form = Mustache.render(tpl, Dict("ID"=>ID, "items"=>items,
                                  "inline" => x.inline ? " inline" : ""
