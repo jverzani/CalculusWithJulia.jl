@@ -19,9 +19,9 @@ to be useful abstractions.
 
 We can talk about the algebra of functions. For example, the sum of functions $f$ and $g$ would be a function whose value at $x$ was just $f(x) + g(x)$. More formally, we would have:
 
-$$
+```math
 (f + g)(x) = f(x) + g(x),
-$$
+```
 
 We have given meaning to a new function $f+g$ by defining what is does
 to $x$ with the rule on the right hand side. Similarly, we can define
@@ -65,9 +65,9 @@ Mathematically, a composition of univariate functions $f$ and $g$ is
 written $f \circ g$ and defined by what it does to a value in the
 domain of $g$ by:
 
-$$
+```math
 (f \circ g)(x) = f(g(x)).
-$$
+```
 
 The output of $g$ becomes the input of $f$.
 
@@ -77,9 +77,9 @@ shoes is quite different from putting on shoes then socks.) Mathematically, we c
 this quite clearly with the functions $f(x) = x^2$ and $g(x) =
 \sin(x)$. Algebraically we have:
 
-$$
+```math
 (f \circ g)(x) = \sin(x)^2, \quad (g \circ f)(x) = \sin(x^2).
-$$
+```
 
 Though they may be *typographically* similar don't be fooled, the following
 graph shows that the two functions aren't even close except for $x$
@@ -117,9 +117,9 @@ replaces each $x$ in the rule with a $g(x)$.
 
 So if $f(x) = x^2 + 2x - 1$ and $g(x) = e^x - x$ then $f \circ g$ would be (before any simplification)
 
-$$
+```math
 (f \circ g)(x) = (e^x - x)^2 + 2(e^x - x) - 1.
-$$
+```
 
 
 Here we look at a few compositions:
@@ -253,9 +253,9 @@ This graph first scales the symmetric graph, stretching from $-3$ to $3$, then s
 
 As a last example, following up on the last example, a common transformation mathematically is
 
-$$
+```math
 h(x) = \frac{1}{a}f(\frac{x - b}{a}).
-$$
+```
 
 We can view this as a composition of "scale" by $1/a$, then  "over" by $b$,  and finally "stretch" by $1/a$:
 
@@ -286,9 +286,9 @@ of sunlight.
 
 A model for a transformed sine curve is
 
-$$
+```math
 a + b\sin(d(x - c))
-$$
+```
 
 Where $b$ is related to the amplitude, $c$ the shift and the period is $T=2\pi/d$. We can find some of these easily from the above:
 
@@ -568,11 +568,11 @@ radioq(choices, ans)
 
 Consider this expression
 
-$$
+```math
 \left(f(1) - f(0)\right) + \left(f(2) - f(1)\right) + \cdots + \left(f(n) - f(n-1)\right) =
 -f(0) + f(1) - f(1) + f(2) - f(2) + \cdots + f(n-1) - f(n-1) + f(n) =
 f(n) - f(0).
-$$
+```
 
 Referring to the definitions of `D` and `S` in the example on operators, which relationship does this support:
 
@@ -589,9 +589,9 @@ radioq(choices, ans, keep_order=true)
 
 Consider this expression:
 
-$$
+```math
 \left(f(1) + f(2) + \cdots + f(n-1) + f(n)\right) - \left(f(1) + f(2) + \cdots + f(n-1)\right) = f(n).
-$$
+```
 
 Referring to the definitions of `D` and `S` in the example on operators, which relationship does this support:
 
