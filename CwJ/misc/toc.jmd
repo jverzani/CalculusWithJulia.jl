@@ -135,7 +135,7 @@ Continuous functions are at the center of any discussion of calculus concepts. T
 
 - [Continuity](limits/continuity.html)
 
-- [The Intermediate Value Theorem](limits/intermediate_value_theorem.html), the extreme value theorem and the bisection  method.
+- [Implications of continuity](limits/intermediate_value_theorem.html) includes the intermediate value theorem, the extreme value theorem and the bisection  method.
 
 ## Derivatives
 

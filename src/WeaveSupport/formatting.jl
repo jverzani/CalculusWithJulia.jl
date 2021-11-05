@@ -1,4 +1,5 @@
 ## formatting conveniences
+abstract type OutputOnlyType end
 
 "markdown can leave wrapping p's"
 function strip_p(txt)
@@ -24,7 +25,7 @@ Examples
 Invisible()
 ```
 """
-mutable struct Invisible
+mutable struct Invisible <: OutputOnlyType
 end
 
 """
@@ -36,7 +37,7 @@ HTMLoutput("<em>em</em>")
 ```
 
 """
-mutable struct HTMLoutput
+mutable struct HTMLoutput <: OutputOnlyType
     x
 end
 Base.show(io::IO, ::MIME"text/plain", x::HTMLoutput) = print(io, """<div>$(x.x)</div>""")
@@ -52,7 +53,7 @@ Examples:
 Verbatim("This will print, but not be executed")
 ```
 """
-mutable struct Verbatim
+mutable struct Verbatim <: OutputOnlyType
     x
 end
 Base.show(io::IO, ::MIME"text/plain", x::Verbatim) = print(io, """<pre class="sourceCode julia">$(x.x)</pre>""")
@@ -85,7 +86,7 @@ function JSXGraph(f, caption="JSXGraph Demo"; ID="jsxgraph", CLASS="jsxgraph", W
              ID, CLASS, WIDTH, HEIGHT)
 end
 
-mutable struct JSXGRAPH
+mutable struct JSXGRAPH  <: OutputOnlyType
     FILE_CONTENTS
     CAPTION
     ID
@@ -134,7 +135,7 @@ Base.show(io::IO, ::MIME"text/html", x::JSXGRAPH) = Mustache.render(io, jsxgraph
 Base.show(io::IO, x::JSXGRAPH) = print(io, "JSXGraph unavailable")
 
 ## Bootstrap things
-abstract type Bootstrap end
+abstract type Bootstrap <: OutputOnlyType end
 Base.show(io::IO, ::MIME"text/html", x::Bootstrap) = print(io, """$(x.x)""")
 Base.show(io::IO, ::MIME"text/latex", x::Bootstrap) = print(io, """XXX BOOTSTRAP $(markdown_to_latex(x.x))""")
 

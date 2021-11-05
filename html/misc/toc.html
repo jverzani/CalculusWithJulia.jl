@@ -161,10 +161,11 @@ $( document ).ready(function() {
 
 <div class="container-fluid">
   <div class="span10 offset1">
-    
-<div class="card" style="width: 18rem; mx-auto;">
-  <img class="card-img-top" src="https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/misc/logo.png" alt="Card image cap">
-</div>
+    <pre class="julia-error">
+ERROR: ArgumentError: Package CalculusWithJulia not found in current path:
+- Run &#96;import Pkg; Pkg.add&#40;&quot;CalculusWithJulia&quot;&#41;&#96; to install the CalculusWithJulia package.
+
+</pre>
 
 
 <h1>Calculus with Julia</h1>
@@ -269,7 +270,7 @@ $( document ).ready(function() {
 <ul>
 <li><p><a href="limits/continuity.html">Continuity</a></p>
 </li>
-<li><p><a href="limits/intermediate_value_theorem.html">The Intermediate Value Theorem</a>, the extreme value theorem and the bisection  method.</p>
+<li><p><a href="limits/intermediate_value_theorem.html">Implications of continuity</a> includes the intermediate value theorem, the extreme value theorem and the bisection  method.</p>
 </li>
 </ul>
 <h2>Derivatives</h2>
@@ -452,35 +453,9 @@ $( document ).ready(function() {
 <p>This is a work in progress. To report an issue, make a comment, or suggest something new, please file an <a href="https://github.com/jverzani/CalculusWithJulia.jl/issues/">issue</a>. In your message add the tag <code>@jverzani</code> to ensure it is not overlooked. Otherwise, an email to <code>verzani</code> at <code>math.csi.cuny.edu</code> will also work.</p>
 <p>To make edits to the documents directly, a pull request with the modified <code>*.jmd</code> files in the <code>CwJ</code> directory should be made. Minor edits to the <code>*.jmd</code> files should be possible through the GitHub web interface. In the footer of each page a pencil icon &#40;like the one below&#41; when clicked should cause the opening of the corresponding <code>*.jmd</code> file on GitHub for suggesting modifications. The <code>*.html</code> files are generated using <code>Julia&#39;s</code> <code>Weave</code> package. This need not be done.</p>
 
-
-<div class="card" style="">
-  <div class="card-header float-end text-muted">
-    <span class="text-muted  float-end align-middle">
-
-<a href="./precalc/calculator.html"
-data-bs-toggle="tooltip"
-data-bs-placement="top"
-title="Next section"
-aria-label="Next section"
-class="bi bi-arrow-right-circle-fill">
-</a>
-
-&nbsp;
-
-<a href="https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/misc/toc.jmd"
-data-bs-toggle="tooltip"
-data-bs-placement="top"
-title="Suggest an edit"
-aria-label="Suggest an edit"
-class="bi bi-pencil-square">
-</a>
-
-
-    </span>
-  </div>
-</div>
-
-
+<pre class="julia-error">
+ERROR: UndefVarError: CalculusWithJulia not defined
+</pre>
 
 
   </div>

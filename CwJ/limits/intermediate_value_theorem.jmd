@@ -634,10 +634,23 @@ models.
 
 The Extreme Value Theorem is another consequence of continuity.
 
-To discuss the extreme value theorem, we define an *absolute maximum*
-of $f(x)$ over an interval $I$ to be a value $f(c)$, $c$ in $I$, where
-$f(x) \leq f(c)$ for any $x$ in $I$. Similarly, an *absolute minimum* of
-$f(x)$ over an interval $I$ can be defined.
+To discuss the extreme value theorem, we define an *absolute maximum*.
+
+> The absolute maximum of $f(x)$ over an interval $I$ is the value $f(c)$, $c$ in $I$,
+> where $f(x) \leq f(c)$ for any $x$ in $I$.
+>
+> Similarly, an *absolute minimum* of
+> $f(x)$ over an interval $I$ can be defined by a value ``f(c)`` where ``c`` is in ``I`` *and*
+> ``f(c) \leq f(x)`` for any ``x`` in ``I``.
+
+
+Related but different is the concept of a relative of *local extrema*:
+
+> A local maxima for ``f`` is a value ``f(c)`` where ``c`` is in **some** *open* interval ``I=(a,b)``, ``I`` in the domain of ``f``, and ``f(c)`` is an absolute maxima for ``f`` over ``I``. Similarly, an local minima for ``f`` is a value ``f(c)`` where ``c`` is in **some** *open* interval ``I=(a,b)``, ``I`` in the domain of ``f``, and ``f(x)`` is an absolute minima for ``f`` over ``I``.
+
+The term *local extrema* is used to describe either a local maximum or local minimum.
+
+The key point, is the extrema are values in the *range* that are realized by some value in the domain (possibly more than one.)
 
 This chart of the [Hardrock 100](http://hardrock100.com/) illustrates the two concepts.
 
