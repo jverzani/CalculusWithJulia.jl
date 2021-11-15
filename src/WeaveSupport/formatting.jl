@@ -384,9 +384,15 @@ struct Footer
 end
 
 # compute from URL
+file_dir(f::Symbol,d::Symbol) = (f,d)
+function file_dir(f, d)
+    f = Symbol(last(split(foot.f, "/"))[1:end-4])
+    d = Symbol(split(foot.d, "/")[end])
+    f,d
+end
+
 function previous_current_next(foot::Footer)
-    f₀ = Symbol(last(split(foot.f, "/"))[1:end-4])
-    d₀ = Symbol(split(foot.d, "/")[end])
+    f₀, d₀ = file_dir(foot.f, foot.d)
 
     toc_url = "../misc/toc.html"
     suggest_url = "https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/$(d₀)/$(f₀).jmd"
@@ -414,8 +420,14 @@ function previous_current_next(foot::Footer)
      )
 end
 
+## Bring this back!!!
 function Base.show(io::IO, ::MIME"text/html", x::Footer)
-    Mustache.render(io, footer_html_tpl, previous_current_next(x))
+    #Mustache.render(io, footer_html_tpl, previous_current_next(x))
+
+    home, toc, prev, next, suggest = previous_current_next(x)
+    show(io, "text/html", Markdown.parse("""
+> [⏪ (previous)]($prev) [(next) ⏩]($next) [⌂ table of contents]($toc) [✏ suggest an edit]($suggest)
+"""))
 end
 
 # add suggest edit
@@ -423,16 +435,16 @@ end
 #==
 ==#
 footer_html_tpl = """
-<div class="card" style="">
+<div class="card admonition info" style="">
   <div class="card-header float-end text-muted">
     <span class="text-muted  float-end align-middle">
 
 <a href="{{{:prev_url}}}"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
-title="Previous section"
 aria-label="Previous section"
 class="bi bi-arrow-left-circle-fill">
+Previous section
 </a>
 
 &nbsp;
@@ -440,9 +452,9 @@ class="bi bi-arrow-left-circle-fill">
 <a href="{{{:next_url}}}"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
-title="Next section"
 aria-label="Next section"
 class="bi bi-arrow-right-circle-fill">
+Next section
 </a>
 
 &nbsp;
@@ -450,9 +462,9 @@ class="bi bi-arrow-right-circle-fill">
 <a href="{{{:suggest_edit_url}}}"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
-title="Suggest an edit"
 aria-label="Suggest an edit"
 class="bi bi-pencil-square">
+Suggest an edit
 </a>
 
 &nbsp;
@@ -460,9 +472,9 @@ class="bi bi-pencil-square">
 <a href="{{{:toc_url}}}"
 data-bs-toggle="tooltip"
 data-bs-placement="top"
-title="Table of contents"
 aria-label="Table of contents"
 class="bi bi-card-list">
+Table of contents
 </a>
 
     </span>

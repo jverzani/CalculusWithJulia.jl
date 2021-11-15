@@ -1,13 +1,22 @@
 # The Polynomials package
 
+This section will use the following add-on packages:
+
+```julia
+using Plots
+using Polynomials
+using RealPolynomialRoots
+```
+
 ```julia; echo=false; results="hidden"
 import CalculusWithJulia
 import CalculusWithJulia.WeaveSupport
 import CalculusWithJulia.WeaveSupport: note, radioq, yesnoq, numericq
-using Plots
-
+__DIR__, __FILE__ = :precalc, :polynomials_package
 nothing
 ```
+
+----
 
 While `SymPy` can be used to represent polynomials, there are also native
 `Julia` packages available for this and related tasks. These packages include
@@ -19,13 +28,6 @@ are looking at for univariate polynomials.
 
 
 
-We load the package as others:
-
-```julia;
-using Polynomials
-using Plots
-```
-
 ## Construction
 
 The polynomial expression ``p = a_0 + a_1\cdot x + a_2\cdot x^2 +
@@ -35,7 +37,7 @@ as above, is just the set of monomials, ``1, x, x^2, \dots,
 x^n``. With this viewpoint, the polynomial ``p`` can be identified
 with the vector `[a0, a1, a2, ..., an]`. The `Polynomials` package
 provides a wrapper for such an identification through the `Polynomial`
-constructor.
+constructor. We have previously loaded this add-on package.
 
 To illustrate, the polynomial ``p = 3 + 4x + 5x^2`` is constructed with
 
@@ -97,9 +99,9 @@ r = (x-2)^3 * (x-1) * (x+1)
 The product is expanded for storage by `Polynomials`, which may not be desirable for some uses.
 A new variable can produced by calling `variable()`; so we could have constructed `p` by:
 
-```julia;
+```julia; hold=true;
 x = variable()
-p = 3 + 4x + 5x^2
+3 + 4x + 5x^2
 ```
 
 
@@ -111,7 +113,7 @@ fromroots([2,2,1,-1])
 
 The `fromroots` function is basically the [factor thereom](https://en.wikipedia.org/wiki/Factor_theorem) which links the factored form of the polynomial with the roots of the polynomial: ``(x-k)`` is a factor of ``p`` if and only if ``k`` is a root of ``p``. By combining a factor of the type ``(x-k)`` for each specified root, the polynomial can be constructed by multiplying its factors. For example, using `prod` and a generarator, we would have:
 
-```julia;
+```julia; hold=true;
 x = variable()
 prod(x - k for k in [2,2,1,-1])
 ```
@@ -163,7 +165,7 @@ plot(r, 1.5, 2.5, legend=false)
 
 The default `plot` recipe checks to ensure the real roots of the polynomial are included in the domain of the plot. To do this, it must identify the roots. This is done *numerically* by the `roots` function, as in this example:
 
-```julia;
+```julia; hold=true;
 x = variable()
 p = x^5 - x - 1
 roots(p)
@@ -187,7 +189,7 @@ note("""
 
 The `roots` function numerically identifies roots. As such, it is susceptible to floating point issues. For example, the following polynomial has one root with multiplicity ``5``, but ``5`` distinct roots are numerically identified:
 
-```julia;
+```julia; hold=true;
 x = variable()
 p = (x-1)^5
 roots(p)
@@ -195,7 +197,7 @@ roots(p)
 
 The `Polynomials` package has the `multroot` function to identify roots of polynomials when there are multiplicities expected. This function is not exported, so is called through:
 
-```julia
+```julia; hold=true;
 x = variable()
 p = (x-1)^5
 Polynomials.Multroot.multroot(p)
@@ -204,16 +206,15 @@ Polynomials.Multroot.multroot(p)
 
 Floating point error can also prevent the finding of real roots. For example, this polynomial has 3 real roots, but `roots` finds but 1, as the two nearby ones are identified as complex:
 
-```julia
+```julia; hold=true;
 x = variable()
 p = -1 + 254x - 16129x^2 + x^9
 roots(p)
 ```
 
-The `RealPolynomialRoots` package can assist in the case of identifying real roots of square-free polynomials (no multiple roots). For example:
+The `RealPolynomialRoots` package, loaded at the top, can assist in the case of identifying real roots of square-free polynomials (no multiple roots). For example:
 
-```julia
-using RealPolynomialRoots
+```julia; hold=true;
 ps = coeffs(-1 + 254x - 16129x^2 + x^9)
 st = ANewDsc(ps)
 refine_roots(st)
@@ -245,23 +246,25 @@ a\cdot x_2^2 + b\cdot x_2 + c &= y_2\\
 Solving this with `SymPy` is tractable. A comprehension is used below to create the ``3`` equations; the `zip` function is a simple means to iterate over 2 or more iterables simultaneously:
 
 ```julia
-using SymPy # mindful now that some functions, e.g. degree, need qualification
-@syms a b c x[0:2] y[0:2]
-eqs = [a*xi^2 + b*xi + c ~ yi for (xi,yi) in zip(x,y)]
-abc = solve(eqs, [a,b,c])
+import SymPy # imported only so some functions, e.g. degree, need qualification
+```
+
+```julia
+SymPy.@syms a b c xs[0:2] ys[0:2]
+eqs = [a*xi^2 + b*xi + c ~ yi for (xi,yi) in zip(xs, ys)]
+abc = SymPy.solve(eqs, [a,b,c])
 ```
 
 As can be seen, the terms do get quite unwieldy when treated symbolically. Numerically, the `fit` function from the `Polynomials` package will return the interpolating polynomial. To compare,
 
 ```julia
-xs, ys = [1,2,3], [3,1,2]
-p = fit(Polynomial, xs,  ys)
+fit(Polynomial, [1,2,3], [3,1,2])
 ```
 
 and we can compare that the two give the same answer with, for example:
 
 ```julia
-abc[b]((x .=> xs)..., (y.=>ys)...)
+abc[b]((xs .=> [1,2,3])..., (ys .=>[3,1,2])...)
 ```
 
 (Ignore the tricky way of substituting in each value of `xs` and `ys` for the symbolic values in `x` and `y`.)
@@ -271,26 +274,31 @@ abc[b]((x .=> xs)..., (y.=>ys)...)
 A related problem, that will arise when finding iterative means to solve for zeros of functions, is *inverse* quadratic interpolation. That is finding ``q`` that goes through the points ``(x_0,y_0), (x_1, y_1), \dots, (x_n, y_n)`` satisfying ``q(y_i) = x_i``. (That is ``x``
 and ``y`` are reversed, as with inverse functions.) For the envisioned task, where the inverse quadratic function  intersects the ``x`` axis is of interest, which is at the constant term of the polynomial (as it is like the ``y`` intercept of  typical polynomial). Let's see what that is in general by replicating the above steps (though now the assumption is the ``y`` values are distinct):
 
-```julia
-@syms a b c x[0:2] y[0:2]
-eqs = [a*yi^2 + b*yi + c ~ xi for (xi, yi) in zip(x,y)]
-abc = solve(eqs, [a,b,c])
+```julia; hold=true;
+SymPy.@syms a b c xs[0:2] ys[0:2]
+eqs = [a*yi^2 + b*yi + c ~ xi for (xi, yi) in zip(xs,ys)]
+abc = SymPy.solve(eqs, [a,b,c])
 abc[c]
 ```
 
 We can graphically see the result for the specific values of `xs` and `ys` as follows:
 
-```julia
-xs, ys = [1,2,3], [3,1,2]
-q = fit(Polynomial, ys,  xs)  # reverse
+```julia; hold=true;
+SymPy.@syms a b c xs[0:2] ys[0:2]
+eqs = [a*yi^2 + b*yi + c ~ xi for (xi, yi) in zip(xs,ys)]
+abc = SymPy.solve(eqs, [a,b,c])
+abc[c]
+
+𝒙s, 𝒚s = [1,2,3], [3,1,2]
+q = fit(Polynomial, 𝒚s,  𝒙s)  # reverse
 # plot
 us = range(-1/4, 4, length=100)
 vs = q.(us)
 plot(vs, us, legend=false)
-scatter!(xs, ys)
+scatter!(𝒙s, 𝒚s)
 plot!(zero)
-x0 = abc[c]((x .=> xs)..., (y .=> ys)...)
-scatter!([N(x0)], [0], markershape=:star)
+x0 = abc[c]((xs .=> 𝒙s)..., (ys .=> 𝒚s)...)
+scatter!([SymPy.N(x0)], [0], markershape=:star)
 ```
 
 ## Questions
@@ -299,8 +307,7 @@ scatter!([N(x0)], [0], markershape=:star)
 
 Do the polynomials ``p = x^4`` and ``q = x^2 - 2`` intersect?
 
-```julia; echo=false;
-using RealPolynomialRoots
+```julia; hold=true; echo=false;
 x = variable()
 p,q = x^4, x^2 - 2
 st = ANewDsc(coeffs(p-q))
@@ -312,8 +319,7 @@ yesnoq(length(st) > 0)
 
 Do the polynomials ``p = x^4-4`` and ``q = x^2 - 2`` intersect?
 
-```julia; echo=false;
-using RealPolynomialRoots
+```julia; hold=true; echo=false;
 x = variable()
 p,q = x^4-4, x^2 - 2
 st = ANewDsc(coeffs(p-q))
@@ -324,7 +330,7 @@ yesnoq(length(st) > 0)
 
 How many real roots does ``p = 1 + x + x^2 + x^3 + x^4 + x^5`` have?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 x = variable()
 p = 1 + x + x^2 + x^3 + x^4 + x^5
 st = (ANewDsc∘coeffs)(p)
@@ -335,7 +341,7 @@ numericq(length(st))
 
 Mathematically we say the ``0`` polynomial has ano degree. What convention does `Polynomials` use? (Look at `degree(zero(Polynomial))`.)
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = ["`nothing`", "-1", "0", "Inf", "-Inf"]
 ans = 2
 radioq(choices, ans, keep_order=true)
@@ -361,7 +367,7 @@ The polynomial `q`, a ``5``th-degree polynomial, is a good approximation of for 
 
 Make graphs of both `q` and `sin`. Over which interval is the approximation (visually) a good one?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["``[0,1]``",
 "``[0,\\pi]``",
 "``[0,2\\pi]``"]
@@ -375,12 +381,12 @@ radioq(choices, 1, keep_order=true)
 The polynomial
 
 ```julia
-p = fromroots([1,2,3,3,5])
+fromroots([1,2,3,3,5])
 ```
 
 has ``5`` sign changes and ``5`` real roots. For `x = variable()` use `div(p, x-3)` to find the result of dividing ``p`` by ``x-3``. How many sign changes are there in the new polynomial?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 numericq(4)
 ```
 
@@ -401,14 +407,14 @@ That is ``l_i(x)`` is a product of terms like ``(x-x_j)/(x_i-x_j)`` *except* whe
 
 What is is the value of ``l_0(x_0)``?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(1)
 ```
 
 
 Why?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["""
 All terms like ``(x-x_j)/(x_0 - x_j)`` will be ``1`` when ``x=x_0`` and these are all the terms in the product defining ``l_0``.
 """,
@@ -420,21 +426,21 @@ radioq(choices, 1)
 
 What is the value of ``l_i(x_i)``?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(1)
 ```
 
 
 What is the value of ``l_0(x_1)``?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(0)
 ```
 
 
 Why?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["""
 The term like ``(x-x_1)/(x_0 - x_1)`` will be ``0`` when ``x=x_1`` and so the product will be ``0``.
 """,
@@ -446,7 +452,7 @@ radioq(choices, 1)
 
 What is the value of ``l_i(x_j)`` *if* ``i \ne j``?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(0)
 ```
 
@@ -459,7 +465,7 @@ p(x) = \sum_{i=0}^n y_i l_i(x) = y_0l_0(x) + y_1l_1(x) + \dots + y_nl_n(x)
 
 What is the value of ``p(x_j)``?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["``0``", "``1``", "``y_j``"]
 radioq(choices, 3)
 ```
@@ -482,7 +488,7 @@ T_4(x) &= 2xT_3(x) - T_2(x) = 2x(4x^3-3x) - (2x^2-1) = 8x^4 - 8x^2 + 1
 With these definitions what is the polynomial associated to the coefficients ``[0,1,2,3]`` with this basis?
 
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 		raw"""
 		It is ``0\cdot 1 + 1 \cdot x + 2 \cdots x^2 + 3\cdot x^3 = x + 2x^2 + 3x^3``
@@ -496,7 +502,7 @@ It is ``0\cdot T_1(x) +	1\cdot T_1(x) + 2\cdot T_2(x) + 3\cdot T_3(x) = -2 - 8\c
 radioq(choices, 3)
 ```
 
-```julia; echo=false
+```julia; hold=true; echo=false
 note("""
 The `Polynomials` package has an implementation, so you can check your answer through `convert(Polynomial, ChebyshevT([0,1,2,3]))`. Similarly, the `SpecialPolynomials` package has these and many other polynomial bases represented.
 
@@ -506,6 +512,6 @@ The `ApproxFun` package is built on top of polynomials expressed in this basis, 
 
 
 
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```julia; hold=true; echo=false
+#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
 ```

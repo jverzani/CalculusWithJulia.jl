@@ -1,8 +1,11 @@
 # Replacing the calculator with a computer
 
+
 ```julia; echo=false;
-import CalculusWithJulia
+using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
+__DIR__, __FILE__ = :precalc, :calculator
+nothing
 ```
 
 Let us consider a basic calculator with buttons to add, subtract,
@@ -14,9 +17,13 @@ way. In this section we describe how.
 
 The following image is the calculator that Google presents upon searching for "calculator."
 
-```julia; echo=false;
-ImageFile("figures/calculator.png", "Screenshot of a calculator provided by the Google search engine.")
+![Screenshot of a calculator provided by the Google search engine.](https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/precalc/figures/calculator.png)
 
+```julia; echo=false;
+imgfile = "figures/calculator.png"
+caption = "Screenshot of a calculator provided by the Google search engine."
+#ImageFile(imgfile, caption)
+nothing
 ```
 
 
@@ -280,9 +287,9 @@ The expression $a + b / c + d$ is equivalent to $a + (b/c) + d$ due to the order
 
 How would the following be expressed, were it written inline:
 
-$$~
+```math
 \frac{1 + 2}{3 + 4}?
-~$$
+```
 
 It would have to be computed through $(1 + 2) / (3 + 4)$.  This is
 because unlike `/`, the implied order of operation in the mathematical
@@ -293,9 +300,9 @@ like parentheses, only implicitly so. Thus the above expression really
 represents the more verbose:
 
 
-$$~
+```math
 \frac{(1 + 2)}{(3 + 4)}.
-~$$
+```
 
 Which  lends itself readily to the translation:
 
@@ -367,11 +374,10 @@ Whereas, `e` is is not simply the character `e`, but *rather* a [unicode](../uni
 ℯ
 ```
 
+```julia; echo=false
+note("""
 However, when the accompanying package, `CalculusWithJulia`, is loaded, the character `e` will refer to a floating point approximation to the Euler constant .
-
-```julia;
-using CalculusWithJulia
-e
+""")
 ```
 
 In the sequel, we will just use `e` for this constant (though more commonly the `exp` function), with the reminder that base `Julia` alone does not reserve this symbol.
@@ -632,9 +638,9 @@ Did Homer Simpson disprove [Fermat's Theorem](http://www.npr.org/sections/krulwi
 
 Fermat's theorem states there are no solutions over the integers to $a^n + b^n = c^n$ when $n > 2$. In the photo accompanying the linked article, we see:
 
-$$~
+```math
 3987^{12} + 4365^{12} - 4472^{12}.
-~$$
+```
 
 If you were to do this on most calculators, the answer would be
 $0$. Were this true, it would show that there is at least one solution
@@ -677,7 +683,7 @@ Moral: with `Julia` and with calculators, we still have to be mindful not to bli
 
 Compute $22/7$ with `Julia`.
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 val = 22/7
 numericq(val)
 ```
@@ -687,7 +693,7 @@ numericq(val)
 
 Compute $\sqrt{220}$ with `Julia`.
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 val = sqrt(220)
 numericq(val)
 ```
@@ -697,7 +703,7 @@ numericq(val)
 
 Compute $2^8$ with `Julia`.
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 val = 2^8
 numericq(val)
 ```
@@ -706,11 +712,11 @@ numericq(val)
 
 Compute the value of
 
-$$~
+```math
 \frac{9 - 5 \cdot (3-4)}{6 - 2}.
-~$$
+```
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 val = (9-5*(3-4)) / (6-2)
 numericq(val)
 ```
@@ -720,11 +726,11 @@ numericq(val)
 
 Compute the following using `Julia`:
 
-$$~
+```math
 \frac{(.25 - .2)^2}{(1/4)^2 + (1/3)^2}
-~$$
+```
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 val = (.25 - .2)^2/((1/4)^2 + (1/3)^2);
 numericq(val)
 ```
@@ -734,11 +740,11 @@ numericq(val)
 
 Compute the decimal representation of the following using `Julia`:
 
-$$~
+```math
 1 + \frac{1}{2} + \frac{1}{2^2} + \frac{1}{2^3} + \frac{1}{2^4}
-~$$
+```
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 val = sum((1/2).^(0:4));
 numericq(val)
 ```
@@ -748,11 +754,11 @@ numericq(val)
 
 Compute the following using `Julia`:
 
-$$~
+```math
 \frac{3 - 2^2}{4 - 2\cdot3}
-~$$
+```
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 val = (3 - 2^2)/(4 - 2*3);
 numericq(val)
 ```
@@ -761,11 +767,11 @@ numericq(val)
 
 Compute the following using `Julia`:
 
-$$~
+```math
 (1/2) \cdot 32 \cdot 3^2 + 100 \cdot 3 - 20
-~$$
+```
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 val = (1/2)*32*3^2 + 100*3 - 20;
 numericq(val)
 ```
@@ -776,13 +782,13 @@ numericq(val)
 
 Wich of the following is a valid `Julia` expression for
 
-$$~
+```math
 \frac{3 - 2}{4 - 1}
-~$$
+```
 
 that uses the least number of parentheses?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = [
 q"(3 - 2)/ 4 - 1",
 q"3 - 2 / (4 - 1)",
@@ -796,13 +802,13 @@ radioq(choices, ans)
 
 Wich of the following is a valid `Julia` expression for
 
-$$~
+```math
 \frac{3\cdot2}{4}
-~$$
+```
 
 that uses the least number of parentheses?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = [
 q"3 * 2 / 4",
 q"(3 * 2) / 4"
@@ -816,13 +822,13 @@ radioq(choices, ans)
 
 Which of the following is a valid `Julia` expression for
 
-$$~
+```math
 2^{4 - 2}
-~$$
+```
 
 that uses the least number of parentheses?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = [
 q"2 ^ 4 - 2",
 q"(2 ^ 4) - 2",
@@ -835,7 +841,7 @@ radioq(choices, ans)
 
 In the U.S. version of the Office, the opening credits include a calculator calculation. The key sequence shown is `9653 +` which produces `11532`.  What value was added to?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 val = 11532 - 9653
 numericq(val)
 ```
@@ -847,7 +853,7 @@ We saw that `1 / 2 / 3 / 4 / 5 / 6` is about $14$ divided by $10,000$. But what 
 
 
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = [
 q"1 / (2 / 3 / 4 / 5 / 6)",
 q"1 / 2 * 3 / 4  * 5 / 6",
@@ -862,7 +868,7 @@ radioq(choices, ans)
 One of these three expressions will produce a different answer, select
 that one:
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = [
 q"2 - 3 - 4",
 q"(2 - 3) - 4",
@@ -878,7 +884,7 @@ radioq(choices, ans)
 One of these three expressions will produce a different answer, select
 that one:
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = [
 q"2 - 3 * 4",
 q"(2 - 3) * 4",
@@ -895,7 +901,7 @@ One of these three expressions will produce a different answer, select
 that one:
 
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = [
 q"-1^2",
 q"(-1)^2",
@@ -910,7 +916,7 @@ radioq(choices, ans)
 
 What is the value of $\sin(\pi/10)$?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 val = sin(pi/10)
 numericq(val)
 ```
@@ -919,7 +925,7 @@ numericq(val)
 
 What is the value of $\sin(52^\circ)$?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 val = sind(52)
 numericq(val)
 ```
@@ -930,7 +936,7 @@ numericq(val)
 Is $\sin^{-1}(\sin(3\pi/2))$ equal to $3\pi/2$? (The "arc" functions
 do no use power notation, but instead a prefix of `a`.)
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 yesnoq(false)
 ```
 
@@ -939,7 +945,7 @@ yesnoq(false)
 
 What is the value of `round(3.5000)`
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 numericq(round(3.5))
 ```
 
@@ -948,7 +954,7 @@ numericq(round(3.5))
 
 What is the value of `sqrt(32 - 12)`
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 numericq(sqrt(32-12))
 ```
 
@@ -958,10 +964,10 @@ numericq(sqrt(32-12))
 Which is greater $e^\pi$ or $\pi^e$?
 
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = [
-L"e^{\pi}",
-L"\pi^{e}"
+raw"``e^{\pi}``",
+raw"``\pi^{e}``"
 ];
 ans = exp(pi) - pi^exp(1) > 0 ? 1 : 2;
 radioq(choices, ans)
@@ -974,7 +980,7 @@ What is the value of $\pi - (x - \sin(x)/\cos(x))$ when $x=3$?
 
 
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 x = 3;
 ans = x - sin(x)/cos(x);
 numericq(pi - ans)
@@ -985,7 +991,7 @@ numericq(pi - ans)
 
 Factorials in `Julia` are computed with the function `factorial`, not the postfix operator `!`, as with math notation. What is $10!$?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 val = factorial(10)
 numericq(val)
 ```
@@ -994,7 +1000,7 @@ numericq(val)
 
 Will `-2^2` produce `4` (which is a unary `-` evaluated *before* `^`) or `-4` (which is a unary `-` evaluated *after* `^`)?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = [q"4", q"-4"]
 ans = 2
 radioq(choices, ans)
@@ -1004,13 +1010,12 @@ radioq(choices, ans)
 
 A twitter post from popular mechanics generated some attention.
 
-```julia; echo=false;
-ImageFile("figures/order_operations_pop_mech.png")
-```
+
+![](https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/precalc/figures/order_operations_pop_mech.png)
 
 What is the answer?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 val = 8/2*(2+2)
 numericq(val)
 ```
@@ -1021,13 +1026,13 @@ Does this expression return the *correct* answer using proper order of operation
 8÷2(2+2)
 ```
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 yesnoq(false)
 ```
 
 Why or why not:
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = [
 "The precedence of numeric literal coefficients used for implicit multiplication is higher than other binary operators such as multiplication (`*`), and division (`/`, `\\`, and `//`)",
 "Of course it is correct."
@@ -1038,5 +1043,5 @@ radioq(choices, ans)
 
 
 ```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
 ```

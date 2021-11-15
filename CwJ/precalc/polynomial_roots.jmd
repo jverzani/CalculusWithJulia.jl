@@ -1,13 +1,22 @@
 # Roots of a polynomial
 
-```julia; echo=false; results="hidden"
+In this section we use the following add on packages:
+
+```juila
 using CalculusWithJulia
-using CalculusWithJulia.WeaveSupport
 using Plots
-plotly()
+using SymPy
+```
+
+```julia; echo=false; results="hidden"
+using CalculusWithJulia.WeaveSupport
+using Roots
+import LinearAlgebra: norm
+__DIR__, __FILE__ = :precalc, :polynomial_roots
 nothing
 ```
 
+----
 
 The
 [roots](http://en.wikipedia.org/wiki/Properties_of_polynomial_roots)
@@ -15,9 +24,7 @@ of a polynomial are the values of $x$ that when substituted into
 the expression yield $0$. For example, the polynomial $x^2 - x$ has
 two roots, $0$ and $1$. A simple graph verifies this:
 
-```julia;
-using CalculusWithJulia
-using Plots
+```julia; hold=true;
 f(x) = x^2 - x
 plot(f, -2, 2)
 plot!(zero, -2, 2)
@@ -56,9 +63,9 @@ $0 \leq r < |b|$. The quotient is $q$ and the remainder $r$. There is
 an analogy for polynomial division, where for two polynomial functions $f(x)$
 and $g(x)$ it is possible to write
 
-$$~
+```math
 f(x) = g(x) \cdot q(x) + r(x)
-~$$
+```
 
 where the degree of $r$ is less than the degree of $g(x)$. The
 [long-division algorithm](http://en.wikipedia.org/wiki/Long_division)
@@ -67,9 +74,9 @@ can be used to find both $q(x)$ and $r(x)$.
 For the special case of a linear factor where $g(x) = x - c$,  the
 remainder must be of degree $0$ (a constant) or the $0$ polynomial. The above simplifies to
 
-$$~
+```math
 f(x) = (x-c) \cdot q(x) + r
-~$$
+```
 
 From this, we see that $f(c) = r$. Hence, when $c$ is a root of $f(x)$, then it
 must be that $r=0$ and so, $(x-c)$ is a factor.
@@ -83,7 +90,7 @@ Wikipedia page describes the algorithm well.
 
 The following is an example where $f(x) = x^4 + 2x^2 + 5$ and $g(x) = x-2$:
 
-```
+```verbatim
 2 | 1 0 2  0  5
   |   2 4 12 24
   -------------
@@ -99,40 +106,29 @@ sequence produced above is `1 2 6 12 29`. The last value (`29`) is
 $r=f(c)$, the others encode the coefficients of `q(x)`, which for this problem
 is $q(x)=x^3 + 2x + 6 + 12$.  That is, we have written:
 
-$$~
+```math
 x^4 + 2x^2 + 5 = (x-2) \cdot (x^3 + 2x + 6 + 12) + 29.
-~$$
+```
 
 As $r$ is not $0$, we can say that $2$ is not a root of $f(x)$.
 
 
 If we were to track down the computation that produced $f(2) = 29$, we would have
 
-$$~
+```math
 5 + 2 \cdot (0 + 2 \cdot (2 + 2 \cdot (0 + (2 \cdot 1))))
-~$$
+```
 
 In terms of $c$ and the coefficients $x_0, x_1, x_2, x_3$, and $x_4$ this is
 
-$$~
+```math
 x_0 + c\cdot(x_1 + c\cdot(x_2 + c\cdot(x_3 + c\cdot x_4))),
-~$$
+```
 
 The above pattern provides a means to compute $f(c)$ and could easily be generalized for higher degree
 polynomials.  This generalization is called [Horner's](http://en.wikipedia.org/wiki/Horner%27s_method) method.
 Horner's method has the advantage of also being faster and more
-accurate when floating point issues are accounted for. `Julia` has a
-built-in method, `evalpoly`, to compute polynomial evaluations this
-way. To illustrate:
-
-```julia
-using SymPy
-@syms x
-p = (1, 2, 3, 4, 5) # 1 + 2x + 3x^2 + 4x^3 + 5x^4
-evalpoly(x, p)
-```
-
-
+accurate when floating point issues are accounted for.
 
 A simple implementation of Horner's algorithm would look like this, if
 indexing were `0`-based:
@@ -148,16 +144,28 @@ function horner(p, x)
 end
 ```
 
-Recording the different values of `Σ` would recover the polynomial `q`.
 
-The `SymPy` package can carry out polynomial long division.
-Let `x` be symbolic value assumed to be real by `SymPy`:
+`Julia` has a
+built-in method, `evalpoly`, to compute polynomial evaluations this
+way. To illustrate:
 
-```julia;
-@syms x::real
+```julia
+@syms x::real       # assumes x is real
 ```
 
-This nieve attempt to divide won't "just work" though:
+```julia; hold=true;
+p = (1, 2, 3, 4, 5) # 1 + 2x + 3x^2 + 4x^3 + 5x^4
+evalpoly(x, p)
+```
+
+
+Recording the different values of `Σ` would recover the polynomial `q`.
+
+----
+
+The `SymPy` package can carry out polynomial long division.
+
+This naive attempt to divide won't "just work" though:
 
 ```julia;
 (x^4 + 2x^2 + 5) / (x-2)
@@ -170,7 +178,7 @@ though in our example we want it done.
 For this task, `divrem` is available:
 
 ```julia;
-q, r = divrem(x^4 + 2x^2 + 5, x - 2)
+quotient, remainder = divrem(x^4 + 2x^2 + 5, x - 2)
 ```
 
 The answer is a tuple containing the quotient and remainder. The quotient itself could be found with `div` or `÷` and the remainder with `rem`.
@@ -237,7 +245,7 @@ For example, factoring $p = 2x^4 + x^3 -19x^2 -9x +9$. This has
 $3$, or $9$ - $12$ possible answers for this modest question. By hand
 that can be a bit of work, but `factor` does it without fuss:
 
-```julia;
+```julia; hold=true
 p = 2x^4 + x^3 - 19x^2 - 9x + 9
 factor(p)
 ```
@@ -252,7 +260,7 @@ that a polynomial of degree $n$ for large values of $x$ has a graph
 that looks like the leading term. However, except at $0$, monomials do
 not cross the $x$ axis, the roots must be the result of the interaction of
 lower order terms. Intuitively, since each term can contribute only
-one basic shape up or down, there can't be arbitrarily many roots. In
+one basic shape up or down, there can not be arbitrarily many roots. In
 fact, a consequence of the
 [Fundamental Theorem of Algebra](http://en.wikipedia.org/wiki/Fundamental_theorem_of_algebra)
 (Gauss) is:
@@ -288,9 +296,9 @@ For the quadratic case, there is the famous
 [quadratic formula](http://en.wikipedia.org/wiki/Quadratic_formula) (known since
 2000 BC) to find the two roots guaranteed by the formula:
 
-$$~
+```math
 \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}.
-~$$
+```
 
 The discriminant is defined as $b^2 - 4ac$. When this is negative, the
 square root requires the concept of complex numbers to be defined, and
@@ -349,7 +357,7 @@ argument. For example, here we show that `solve` is aware of the
 quadratic formula:
 
 ```julia;
-@syms a b c
+@syms a b::real c::positive
 solve(a*x^2 + b*x + c, x)
 ```
 
@@ -358,9 +366,6 @@ The `solve` function will respect assumptions made when a variable is
 defined through `symbols` or `@syms`:
 
 ```julia;
-@syms a
-@syms b::real
-c = symbols("c", positive=true)
 solve(a^2 + 1)     # works, as a can be complex
 ```
 
@@ -377,26 +382,25 @@ with integer coefficients over rational roots. However, `solve` can be
 used to factor. Here is an example:
 
 ```julia;
-p = x^2 - 2
-factor(p)
+factor(x^2 - 2)
 ```
 
 Nothing is found, as the roots are $\pm \sqrt{2}$, irrational numbers.
 
 ```julia;
-rts = solve(p)
+rts = solve(x^2 - 2)
 prod(x-r for r in rts)
 ```
 
 Solving cubics and quartics can be done exactly using radicals. For
 example, here we see the solutions to a quartic equation can be quite
-involved, yet still explicit. (We redefine `x` so that complex-valued
+involved, yet still explicit. (We use `y` so that complex-valued
 solutions, if any, will be found.)
 
 
 ```julia;
-@syms x
-solve(x^4 - 2x - 1)
+@syms y # possibly complex
+solve(y^4 - 2y - 1)
 ```
 
 
@@ -405,9 +409,10 @@ increasingly more complicated answers. The following finds one of the answers
 for a general third-degre polynomial:
 
 
-```julia
-@syms a b c d x
-rts = solve(a*x^3 + b*x^2 + c*x + d, x)
+```julia; hold=true;
+@syms a[0:3]
+p = sum(a*x^(i-1) for (i,a) in enumerate(a))
+rts = solve(p, x)
 rts[1]   # there are three roots
 ```
 
@@ -436,8 +441,8 @@ roots((x-1)^2 * (x-2)^2)  # solve doesn't identify multiplicities
 
 For a polynomial with symbolic coefficients, the different between the symbol and the coefficients must be identified. `SymPy` has a `Poly` type to do so. The following call illustrates:
 
-```julia
-@syms a b c x
+```julia; hold=true
+@syms a b c
 p = a*x^2 + b*x + c
 q = sympy.Poly(p, x)  # identify `x` as indeterminate; alternatively p.as_poly(x)
 roots(q)
@@ -450,7 +455,7 @@ The sympy `Poly` function must be found within the underlying `sympy` module, a 
 The `solve` function can be used to get numeric approximations to the
 roots. It is as easy as calling `N` on the solutions:
 
-```julia;
+```julia; hold=true;
 rts = solve(x^5 - x + 1)
 N.(rts)     # note the `.(` to broadcast over all values in rts
 ```
@@ -478,20 +483,20 @@ set. For tasks like this, which return a finite set, we use the
 `elements` function to access the individual answers. To illustrate:
 
 ```julia;
-p = 8x^4 - 8x^2  + 1
-rts = solveset(p)
+𝒑 = 8x^4 - 8x^2  + 1
+𝒑_rts = solveset(𝒑)
 ```
 
 The `rts` object does not allow immediate access to its elements. For that `elements` will work to return a vector:
 
 ```julia;
-elements(rts)
+elements(𝒑_rts)
 ```
 
 So to get the numeric approximation we compose these function calls:
 
 ```julia;
-N.(elements(solveset(p)))
+N.(elements(solveset(𝒑)))
 ```
 
 ## Do numeric methods matter when you can just graph?
@@ -512,8 +517,8 @@ this polynomial in expanded form: $x^5 - 100x^4 + 4000x^3 - 80000x^2 +
 roots.  A naive graph might be to plot over $[-10, 10]$:
 
 ```julia;
-p =   x^5 - 100x^4 + 4000x^3 - 80000x^2 + 799999x - 3199979
-plot(p, -10, 10)
+𝐩 =   x^5 - 100x^4 + 4000x^3 - 80000x^2 + 799999x - 3199979
+plot(𝐩, -10, 10)
 ```
 
 This seems to indicate a root near 10. But look at the scale of the
@@ -524,7 +529,7 @@ large.
 A graph over $[10,20]$ is still unclear:
 
 ```julia;
-plot(p, 10,20)
+plot(𝐩, 10,20)
 ```
 
 We see that what looked like a zero near 10, was actually a number around $-100,000$.
@@ -538,7 +543,7 @@ $0$, and might make us think where the function dips back down there
 is a second or third zero, when only 1 is the case. (We know that, as this is the same $x^5 - x + 1$ shifted to the right by 20 units.)
 
 ```julia;
-plot(p, 18, 22)
+plot(𝐩, 18, 22)
 ```
 
 
@@ -551,14 +556,14 @@ fact not be a root. Something like $(x-100)^2 + 0.1$ will demonstrate.
 For another example, the following polynomial when plotted over ``[-5,7]`` appears to have two real roots:
 
 ```julia
-p = x^7 - 16129x^2 + 254x - 1
-plot(p, -5, 7)
+h = x^7 - 16129x^2 + 254x - 1
+plot(h, -5, 7)
 ```
 
 in fact there are three, two are *very* close together:
 
 ```julia
-N.(solve(p))
+N.(solve(h))
 ```
 
 ```julia; echo=false
@@ -630,8 +635,8 @@ leaves all "-" signs, so there are $0$ negative roots. From the graph,
 we saw just 1 real root, not 3 or 5. We can verify numerically with:
 
 ```julia;
-p =  x^5 - 100x^4 + 4000x^3 - 80000x^2 + 799999x - 3199979
-N.(solve(p))
+j =  x^5 - 100x^4 + 4000x^3 - 80000x^2 + 799999x - 3199979
+N.(solve(j))
 ```
 
 
@@ -649,22 +654,22 @@ To see precisely
 this bound works, suppose $x$ is a root with $|x| > 1$ and let $h$ be
 the bound. Then since $x$ is a root, we can solve for $x^n$ as:
 
-$$~
+```math
 x_n = -(a_0 + a_1 x + \cdots a_{n-1}x^{n-1})
-~$$
+```
 
 Which after taking absolute values of both sides, yields:
 
-$$~
+```math
 |x_n| \leq |a_0| + |a_1||x| + |a_2||x^2| + \cdots |a_{n-1}| |x^{n-1}| \leq (h-1) (1 + |x| + |x^2| + \cdots |x^{n-1}|).
-~$$
+```
 
 The last sum can be computed using a formula for geometric sums,
 $(|x^n| - 1)/(|x|-1)$. Rearranging, gives the inequality:
 
-$$~
+```math
 |x| - 1 \leq (h-1) \cdot (1 - \frac{1}{|x^n|} ) \leq (h-1)
-~$$
+```
 
 from which it follows that $|x| \leq h$, as desired.
 
@@ -680,11 +685,13 @@ real root is approximately $-1.1673$ which satisfies $|-1.1673| \leq
 
 What is the remainder of dividing $x^4 - x^3 - x^2 + 2$ by $x-2$?
 
-```julia; echo=false
-choices = [L"x^3 + x^2 + x + 2",
-L"x-2",
-L"6",
-L"0"]
+```julia; hold=true; echo=false
+choices = [
+    "``x^3 + x^2 + x + 2``",
+    "``x-2``",
+    "``6``",
+    "``0``"
+]
 ans = 3
 radioq(choices, ans)
 ```
@@ -694,10 +701,11 @@ radioq(choices, ans)
 
 What is the remainder of dividing $x^4 - x^3 - x^2 + 2$ by $x^3 - 2x$?
 
-```julia; echo=false
-choices = [L"x - 1",
-L"x^2 - 2x + 2",
-"2"
+```julia; hold=true; echo=false
+choices = [
+    "``x - 1``",
+    "``x^2 - 2x + 2``",
+    "``2``"
 ]
 ans = 2
 radioq(choices, ans)
@@ -709,11 +717,11 @@ We have that $x^5 - x + 1 = (x^3 + x^2 - 1) \cdot (x^2 - x + 1) + (-2x + 2)$.
 
 What is the remainder of dividing $x^5 - x + 1$ by $x^2 - x + 1$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"x^2 - x + 1",
-L"x^3 + x^2 - 1",
-L"-2x + 2"
+"``x^2 - x + 1``",
+"``x^3 + x^2 - 1``",
+"``-2x + 2``"
 ]
 ans = 3
 radioq(choices, ans)
@@ -723,7 +731,7 @@ radioq(choices, ans)
 
 Consider this output from synthetic division
 
-```
+```verbatim
 2 | 1 0 0 0 -1  1
   |   2 4 8 16 30
   ---------------
@@ -734,13 +742,13 @@ representing $p(x) = q(x)\cdot(x-c) + r$.
 
 What is $p(x)$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"x^5 - x + 1",
-L"2x^4 + 4x^3 + 8x^2 + 16x + 30",
-L"x^5 + 2x^4 + 4x^3 + 8x^2 + 15x + 31",
-L"x^4 +2x^3 + 4x^2 + 8x + 15",
-L"31"]
+"``x^5 - x + 1``",
+"``2x^4 + 4x^3 + 8x^2 + 16x + 30``",
+"``x^5 + 2x^4 + 4x^3 + 8x^2 + 15x + 31``",
+"``x^4 +2x^3 + 4x^2 + 8x + 15``",
+"``31``"]
 ans = 1
 radioq(choices, ans)
 ```
@@ -748,26 +756,26 @@ radioq(choices, ans)
 
 What is $q(x)$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"x^5 - x + 1",
-L"2x^4 + 4x^3 + 8x^2 + 16x + 30",
-L"x^5 + 2x^4 + 4x^3 + 8x^2 + 15x + 31",
-L"x^4 +2x^3 + 4x^2 + 8x + 15",
-L"31"]
+"``x^5 - x + 1``",
+"``2x^4 + 4x^3 + 8x^2 + 16x + 30``",
+"``x^5 + 2x^4 + 4x^3 + 8x^2 + 15x + 31``",
+"``x^4 +2x^3 + 4x^2 + 8x + 15``",
+"``31``"]
 ans = 4
 radioq(choices, ans)
 ```
 
 What is $r$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"x^5 - x + 1",
-L"2x^4 + 4x^3 + 8x^2 + 16x + 30",
-L"x^5 + 2x^4 + 4x^3 + 8x^2 + 15x + 31",
-L"x^4 +2x^3 + 4x^2 + 8x + 15",
-L"31"]
+"``x^5 - x + 1``",
+"``2x^4 + 4x^3 + 8x^2 + 16x + 30``",
+"``x^5 + 2x^4 + 4x^3 + 8x^2 + 15x + 31``",
+"``x^4 +2x^3 + 4x^2 + 8x + 15``",
+"``31``"]
 ans = 5
 radioq(choices, ans)
 ```
@@ -779,7 +787,7 @@ Let $p=x^4 -9x^3 +30x^2 -44x + 24$
 
 Factor $p$. What are the factors?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 L" $2$ and  $3$",
 L" $(x-2)$ and $(x-3)$",
@@ -793,13 +801,13 @@ radioq(choices, ans)
 
 Does the expression $x^4 - 5$ factor over the rational numbers?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq(false)
 ```
 
 Using `solve`, how many real roots does $x^4 - 5$ have:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(2)
 ```
 
@@ -814,7 +822,7 @@ don't face such consequences.
 
 Find the largest real root of ``x^4 - 10x^3 + 32x^2 - 38x + 15``.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 @syms x
 p = x^4 - 10x^3 + 32x^2 - 38x + 15
 rts = sympy.real_roots(p)
@@ -825,7 +833,7 @@ numericq(N(maximum(rts)))
 
 What are the numeric values of the real roots of $f(x) = x^6 - 5x^5 + x^4 - 3x^3 + x^2 - x + 1$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 q"[-0.434235, -0.434235,  0.188049, 0.188049, 0.578696, 4.91368]",
 q"[-0.434235, -0.434235,  0.188049, 0.188049]",
@@ -842,8 +850,7 @@ Odd polynomials must have at least one real root.
 
 Consider the polynomial $x^5 - 3x + 1$. Does it have more than one real root?
 
-```julia; echo=false
-using Roots
+```julia; hold=true; echo=false
 xs = find_zeros(x -> x^5 - 3x + 1, -10..10)
 yesnoq(length(xs) > 1)
 ```
@@ -851,8 +858,7 @@ yesnoq(length(xs) > 1)
 
 Consider the polynomial $x^5 - 1.5x + 1$. Does it have more than one real root?
 
-```julia;echo=false
-using Roots
+```julia; hold=true;echo=false
 xs = find_zeros(x -> x^5 - 1.5x + 1, -10..10)
 yesnoq(length(xs) > 1)
 ```
@@ -862,25 +868,25 @@ yesnoq(length(xs) > 1)
 
 What is the maximum number of positive, real roots that Descarte's bound says $p=x^5 + x^4 - x^3 + x^2 + x + 1$ can have?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(2)
 ```
 
 How many positive, real roots does it actually have?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(0)
 ```
 
 What is the maximum number of negative, real roots  that Descarte's bound says $p=x^5 + x^4 - x^3 + x^2 + x + 1$ can have?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(3)
 ```
 
 How many negative, real roots does it actually have?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(1)
 ```
 
@@ -888,14 +894,14 @@ numericq(1)
 
 Let $f(x) = x^5 - 4x^4 + x^3 - 2x^2 + x$. What does Cauchy's bound say is the largest possible magnitude of a root?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 ans = 1 + 4 + 1 + 2 + 1
 numericq(ans)
 ```
 
 What is the largest magnitude of a real root?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = x^5 - 4x^4 + x^3 - 2x^2 + x
 rts = find_zeros(f, -5..5)
 ans = maximum(abs.(rts))
@@ -911,18 +917,21 @@ is one of $2,3,4$. By considering all 6 such possible polynomials
 (such as $x^3 - 3x^2 + 2x - 4$) what is the largest magnitude or a root?
 
 
-```julia; echo=false
-p = Permutation(0,2)
-q = Permutation(1,2)
-m = 0
-for perm in (p, q, q*p, p*q, p*q*p, p^2)
-    global a,b,c =  perm([2,3,4])
-     fn = x -> x^3 - a*x^2 + b*x - c
-    rts_ = find_zeros(fn, -10..10)
-	global a1 = maximum(abs.(rts_))
-	global m = a1 > m ? a1 : m
+```julia; hold=true; echo=false
+function mag()
+    p = Permutation(0,2)
+    q = Permutation(1,2)
+    m = 0
+    for perm in (p, q, q*p, p*q, p*q*p, p^2)
+        as =  perm([2,3,4])
+        fn = x -> x^3 - as[1]*x^2 + as[2]*x - as[3]
+        rts_ = find_zeros(fn, -10..10)
+	    a1 = maximum(abs.(rts_))
+	    m = a1 > m ? a1 : m
+    end
+    m
 end
-numericq(m)
+numericq(mag())
 ```
 
 
@@ -934,15 +943,19 @@ The roots of the [Chebyshev](https://en.wikipedia.org/wiki/Chebyshev_polynomials
 
 * Based on the relation, figure out $T_2(x)$. It is
 
-```julia; echo=false
-choices = [L"4x^2 - 1", L"2x^2", L"x", L"2x"]
+```julia; hold=true; echo=false
+choices = [
+    "``4x^2 - 1``",
+    "``2x^2``",
+    "``x``",
+    "``2x``"]
 ans = 1
 radioq(choices, ans)
 ```
 
 * True or false, the $degree$ of $T_n(x)$ is $n$: (Look at the defining relation and reason this out).
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq(true)
 ```
 
@@ -954,8 +967,7 @@ yesnoq(true)
 
 The Chebyshev polynomials have the property that in fact all $n$ roots are real, distinct, and in $[-1, 1]$. Using `SymPy`, find the magnitude of the largest root:
 
-```julia; echo=false
-import LinearAlgebra: norm
+```julia; hold=true; echo=false
 @syms x
 p = 16x^5 - 20x^3 + 5x
 rts = N.(solve(p))
@@ -965,23 +977,22 @@ numericq(ans)
 
 * Plotting `p` over the interval $[-2,2]$ does not help graphically identify the roots:
 
-```julia;
-plot(p, -2, 2)
+```julia; hold=true;
+plot(16x^5 - 20x^3 + 5x, -2, 2)
 ```
 
 
 Does graphing over $[-1,1]$ show clearly the $5$ roots?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq(true)
 ```
 
 
 
 
-#### Proof of Descartes' rule of signs
+## Appendix: Proof of Descartes' rule of signs
 
-----
 
 [Proof modified from this post](http://www.cut-the-knot.org/fta/ROS2.shtml).
 
@@ -1001,7 +1012,9 @@ This is clearly true for **monic** degree ``1`` polynomials: if ``c``
 is positive ``p = x - c`` has one real root (an odd number) and ``p =
 x + c`` has ``0`` real roots (an even number). Now, suppose ``p`` has
 degree ``n`` and is monic. Then as ``x`` goes to ``\infty``, it must
-be ``p`` goes to ``infty``. If ``p_0 < 0`` then there must be a
+be ``p`` goes to ``\infty``.
+
+If ``p_0 < 0`` then there must be a
 positive real root, say ``r``, (Bolzano). Dividing ``p`` by ``(x-r)``
 to produce ``q`` requires ``q_0`` to be *positive* and of lower
 degree. By *induction* ``q`` will have an even number of roots. Add in
@@ -1018,11 +1031,11 @@ meaning ``p`` must have an even numbers
 
 So there is parity between `var(p)` and `pos(p)`: if ``p`` is monic and ``p_0 < 0`` then both `var(p)` and `pos(p)` are both odd; and if ``p_0 > 0`` both `var(p)` and `pos(p)` are both even.
 
-Descartes' rule of signs will be established if it can be shown that `var(p)` is atleast as big as `pos(p)`. Supppose ``r`` is a positive real root of ``p`` with ``p = (x-r)q``. We show that `var(p) > var(q)` which can be repeatedly applied to show that if ``p=(x-r_1)\cdot(x-r_2)\cdot \cdots \cdot (x-r_l) q``, where the ``r_i``s are the postive real roots, then `var(p) >= l + var(q) >= l = pos(p)`.
+Descartes' rule of signs will be established if it can be shown that `var(p)` is at least as big as `pos(p)`. Supppose ``r`` is a positive real root of ``p`` with ``p = (x-r)q``. We show that `var(p) > var(q)` which can be repeatedly applied to show that if ``p=(x-r_1)\cdot(x-r_2)\cdot \cdots \cdot (x-r_l) q``, where the ``r_i``s are the postive real roots, then `var(p) >= l + var(q) >= l = pos(p)`.
 
 As ``p = (x-c)q`` we must have the leading term is ``p_nx^n = x \cdot q_{n-1} x^{n-1}`` so ``q_{n_1}`` will also be `+` under our monic assumption. Looking at a possible pattern for the signs of ``q``, we might see the following unfinished synthetic division table for a specific ``q``:
 
-```
+```verbatim
   + ? ? ? ? ? ? ? ?
 +   ? ? ? ? ? ? ? ?
   -----------------
@@ -1032,7 +1045,7 @@ As ``p = (x-c)q`` we must have the leading term is ``p_nx^n = x \cdot q_{n-1} x^
 But actually, we can fill in more, as the second row is formed by multiplying a postive ``c``:
 
 
-```
+```verbatim
   + ? ? ? ? ? ? ? ?
 +   + - - - + - + +
   -----------------
@@ -1042,7 +1055,7 @@ But actually, we can fill in more, as the second row is formed by multiplying a 
 What's more, using the fact that to get `0` the two summands must differ in sign and to have a `?` plus `+` yield a `-`, the `?` must be `-` (and reverse), the following must be the case for the signs of `p`:
 
 
-```
+```verbatim
   + - ? ? + - + ? -
 +   + - - - + - + +
   -----------------
@@ -1051,10 +1064,10 @@ What's more, using the fact that to get `0` the two summands must differ in sign
 
 If the bottom row represents ``q_7, q_6, \dots, q_0``  and the top row ``p_8, p_7, \dots, p_0``, then the sign changes in ``q`` from `+` to `-` are matched by sign changes in ``p``. The ones in ``q`` from ``-`` to ``+`` are also matched regardless of the sign of the first two question marks (though ``p`` could possibly have more). The last sign change in ``p`` between ``p_2`` and ``p_0`` has no counterpart in ``q``, so there is at least one more sign change in ``p`` than ``q``.
 
-As such, the ``var(p) \geq 1 + var(q)``
+As such, the `var(p)` ``\geq 1 +`` `var(q)`.
 
 
 
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```julia; hold=true; echo=false
+#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
 ```

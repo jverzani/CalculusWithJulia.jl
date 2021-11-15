@@ -81,7 +81,7 @@ table_of_contents = [
 ]
 # return :d,:f for previous and next
 function prev_next(d,f)
-    vals = [df for df ∈ eachrow(table_of_contents)]
+    vals = [table_of_contents[i,:] for i ∈ 1:size(table_of_contents,1)]
     val = [d,f]
     i = findfirst(Ref(val,) .== vals)
     i == nothing && error(val)

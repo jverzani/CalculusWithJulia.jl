@@ -3,7 +3,7 @@
 ```julia; echo=false; results="hidden"
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
-using Plots
+__DIR__, __FILE__ = :precalc, :julia_overview
 nothing
 ```
 
@@ -21,7 +21,9 @@ nothing
 
 ## Interacting with `Julia`
 
-The Calculus With Julia notes are formatted as though the commands were run in the notebook interface of `Jupyter` (below), though there are many other interfaces for interacting with `Julia`.
+The html version of the **Calculus With Julia** notes are formatted as
+Pluto notebooks. `Pluto` is one of many different means for a user to
+interact with a `Julia` process.
 
 At a basic level, `Julia` provides a means to read commands or instructions, evaluate those commands, and then print or return those commands. At a user level, there are many different ways to interact with the reading and printing. For example:
 
@@ -29,7 +31,7 @@ At a basic level, `Julia` provides a means to read commands or instructions, eva
 
 ----
 
-```
+```verbatim
 $ julia
                _
    _       _ _(_)_     |  Documentation: https://docs.julialang.org
@@ -50,14 +52,30 @@ julia> 2 + 2
 
 * A notebook. The [Project Juptyer](https://jupyter.org/) provides a notebook interface for interacting with `Julia` and a more `IDE` style `jupyterlab` interface. These notes are formatted as though a notebook was used. That is, there are cells where commands are typed and immediately following is the printed output returned by `Julia`. The `Juypter` notebook is used by `binder` and can be used locally through the `IJulia` package. This notebook has the ability to display many different types of outputs in addition to plain text, such as images, marked up math text, etc.
 
-* The [Pluto](https://github.com/fonsp/Pluto.jl) package provides a *reactive* notebook interface. Reactive means when one "cell" is modified and executed, the new values cascade to all other dependent cells which in turn are updated. This is very useful for exploring a parameter space, say.
+* The [Pluto](https://github.com/fonsp/Pluto.jl) package provides a *reactive* notebook interface. Reactive means when one "cell" is modified and executed, the new values cascade to all other dependent cells which in turn are updated. This is very useful for exploring a parameter space, say. The html pages are formatted as `Pluto` notebooks, which makes them able to be easily run on the readers desktop.
 
 
-Each interface has some means to send commands to `Julia`'s interpreter. For `Jupyter` the commands in a cell are sent to be executed by the keyboard command `shift-enter` or through the "play" icon (➡) in the toolbar.
+The `Pluto` interface has some idiosyncracies that need explanation:
+
+* Cells can only have one command within them. Multiple command cells must be contained in a `begin` block or a `let` block.
+
+* By default, the cells are reactive. This means when a variable in one cell is changed, then any references to that variable are also updated. This is fantastic for updating several computations at once. However it means variable names can not be repeated within a page. Pedagogically, it is convenient to use variable names and function names (e.g., `x` and `f`) repeatedly, but this is only possible *if* they are within a `let` block or a function body.
+
+* To not repeat names, but to be able to reference a value from cell-to-cell,  some unicode variants are used within a page. Visually these look familiar, but typing the names requires some understanding of unicode input. The primary usages is *bold italic* (e.g., `\bix[tab]` or `\bif[tab]`) or *bold face* (e.g. `\bfx[tab]` or `bff[tab]`).
+
+
+* The notebooks snapshot the packages they depend on, which is great for reproducability, but may mean older versions are silently used.
+
+
+
 
 ## Augmenting base `Julia`
 
 The base `Julia` installation has many features, but leaves many others to `Julia`'s package ecosystem. These notes use packages to provide plotting, symbolic math, access to special functions, numeric routines, and more.
+
+Within `Pluto`, using add-on packages is very simple, as `Pluto` downloads and installs packages when they are request through a `using` or `import` directive.
+
+For other interfaces to `Julia` some more detail is needed.
 
 The `Julia` package manager makes add-on packages very easy to install.
 
@@ -104,9 +122,10 @@ In `Jupyter`, commands are typed into a notebook cell:
 2 + 2   # use shift-enter to evaluate
 ```
 
-Commands are executed by using `shift-enter` or the play button in `Jupyter`.
+Commands are executed by using `shift-enter` or the run button at the bottom right of a cell.
 
-Commands may be separated by new lines or semicolons, allowing multiple commands per `Jupyter` cell.
+Multiple commands per cell are possible if a `begin` or `let` block is used.
+Commands may be separated by new lines or semicolons.
 
 On a given line, anything **after** a `#` is a *comment* and is not processed.
 
@@ -114,7 +133,7 @@ The results of the last command executed will be displayed in an
 output area. Separating values by commas allows more than one value to be
 displayed. Explicit printing can be done to output intermediate values. Plots are displayed when the plot object is returned by the  last executed command.
 
-The state of the notebook follows the execution order, not the order with the notebook. (That is there is no reason to assume the state comes by just looking at the cells above the current one. This is not the case with `Pluto` notebooks due to their reactive nature.)
+The state of a Pluto notebook is a result of all the cells in the notebook being executed. The cell order does not impact this and can be rearranged by the user.
 
 ## Numbers, variable types
 
@@ -202,9 +221,9 @@ rand(3)
 Values can be assigned variable names, with `=`. There are some variants
 
 ```julia;
-x = 2
+u = 2
 a_really_long_name = 3
-a, b = 1, 2    # multiple assignment
+a0, b0 = 1, 2    # multiple assignment
 a1 = a2 = 0    # chained assignment, sets a2 and a1 to 0
 ```
 
@@ -218,12 +237,18 @@ with a number, but can include numbers. Variables can also include
 We can then use the variables to reference the values:
 
 ```julia;
-x + a_really_long_name + a - b + α
+u + a_really_long_name + a0 - b0 + α
 ```
 
-Names may be repurposed, even with values of different types (`Julia` is a
-dynamic language), save for function names, which have some special
-rules and can only be redefined as another function. Generic functions are central to `Julia`'s design. Generic functions use a method table to dispatch on, so once a name is assigned to a generic function, it can not be used as a variable name; the reverse is also true.
+Within `Pluto`, names are idiosyncratic: within the global scope, only a single usage is possible per notebook; functions and variables can be freely renamed; structures can be redefined or renamed; ...
+
+Outside of `Pluto`, names may be repurposed, even with values of
+different types (`Julia` is a dynamic language), save for function
+names, which have some special rules and can only be redefined as
+another function. Generic functions are central to `Julia`'s
+design. Generic functions use a method table to dispatch on, so once a
+name is assigned to a generic function, it can not be used as a
+variable name; the reverse is also true.
 
 ## Functions
 
@@ -251,7 +276,7 @@ log
 
 Besides `^`, there are `sqrt` and `cbrt` for powers. In addition basic functions for exponential and  logarithmic functions:
 
-```
+```verbatim
 sqrt, cbrt
 exp
 log          # base e
@@ -262,7 +287,7 @@ log10, log2, # also log(b, x)
 
 The ```6``` standard trig functions are implemented; their implementation for degree arguments; their inverse functions; and the hyperbolic analogs.
 
-```
+```verbatim
 sin, cos, tan, csc, sec, cot
 asin, acos, atan, acsc, asec, acot
 sinh, cosh, tanh, csch, sech, coth
@@ -271,7 +296,7 @@ asinh, acosh, atanh, acsch, asech, acoth
 
 If degrees are preferred, the following are defined to work with arguments in degrees:
 
-```
+```verbatim
 sind, cosd, tand, cscd, secd, cotd
 ```
 
@@ -292,7 +317,10 @@ Other useful and familiar functions are defined:
 
 ----
 
-The built-in documentation for an object is accessible through, say, `?sign`. There is also the `@doc` macro:
+In a Pluto session, the "Live docs" area shows inline documentation for the current object.
+
+For other uses of `Julia`, the built-in documentation for an object is
+accessible through, say, `?sign`. There is also the `@doc` macro:
 
 ```julia
 @doc sign
@@ -312,7 +340,7 @@ The argument `x` is passed into the body of function.
 
 Other values are found from  the environment where defined:
 
-```julia;
+```julia; hold=true;
 a = 1
 f(x) = 2*a + x
 f(3)   # 2 * 1 + 3
@@ -330,7 +358,7 @@ Julia makes different *methods* for *generic* function names, so function defini
 
 Functions can be defined with *keyword* arguments that may have defaults specified:
 
-```julia;
+```julia; hold=true;
 f(x; m=1, b=0) = m*x + b     # note ";"
 f(1)                         # uses m=1, b=0   -> 1 * 1 + 0
 f(1, m=10)                   # uses m=10, b=0  -> 10 * 1 + 0
@@ -340,7 +368,7 @@ f(1, m=10, b=5)              # uses m=10, b=5  -> 10 * 1 + 5
 
 Longer functions can be defined using the `function` keyword, the last command executed is returned:
 
-```julia;
+```julia; hold=true;
 function f(x)
   y = x^2
   z = y - 3
@@ -455,7 +483,7 @@ plot( x -> exp(-x/pi) * sin(x), 0, 2pi)
 
 The `scatter!` function used above takes two vectors of values to describe the points to plot, one for the ``x`` values and one for the matching ``y`` values. The `plot` function can also produce plots with this interface. For example, here we use a comprehension to produce `y` values from the specified `x` values:
 
-```julia
+```julia; hold=true;
 xs = range(0, 2pi, length=251)
 ys = [sin(2x) + sin(3x) + sin(4x) for x in xs]
 plot(xs, ys)
@@ -478,8 +506,11 @@ In `Julia` the equals sign is **only** for *assignment*. The *left-hand* side of
 
 Symbolic math is available through an add-on package `SymPy`.  Once loaded, symbolic variables are created with the macro `@syms`:
 
-```julia;
+```julia
 using SymPy
+```
+
+```julia;
 @syms x a b c
 ```
 
@@ -507,14 +538,14 @@ plot(64 - (1/2)*32 * x^2, 0, 2)
 ```
 
 
-SymPy has functions for manipulating expressions: `simplify`, `expand`, `together`, `factor`, `cancel`, `apart`,  ``...``
+* SymPy has functions for manipulating expressions: `simplify`, `expand`, `together`, `factor`, `cancel`, `apart`,  ``...``
 
-SymPy has functions for basic math: `factor`, `roots`, `solve`, `solveset`, ``\dots``
+* SymPy has functions for basic math: `factor`, `roots`, `solve`, `solveset`, ``\dots``
 
-SymPy has functions for calculus: `limit`, `diff`, `integrate`, ``\dots``
+* SymPy has functions for calculus: `limit`, `diff`, `integrate`, ``\dots``
 
 
 
 ```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
 ```

@@ -55,3 +55,49 @@ end
 ## warning, this would be odd for [sin, cos]' as
 ## is it [sin', cos'] or the transpose...
 Base.adjoint(r::Function) = D(r)
+
+"""
+   sign_chart(f, a, b; atol=1e-4)
+
+Create a sign chart for `f` over `(a,b)`. Returns a tuple with an identified zero or vertical asymptote and the corresponding sign change. The tolerance is used to disambiguate numerically found values.
+
+# Example
+
+```
+julia> sign_chart(x -> x/(x-1)^2, -5, 5)
+2-element Vector{NamedTuple{(:∞0, :sign_change), Tuple{Float64, String}}}:
+ (∞0 = 0.0, sign_change = "- → +")
+ (∞0 = 1.0000000000000002, sign_change = "+ → +")
+```
+
+"""
+function sign_chart(f, a, b; atol=1e-6)
+    pm(x) = x < 0 ? "-" : x > 0 ? "+" : "0"
+    summarize(f,cp,d) = (∞0=cp, sign_change=pm(f(cp-d)) * " → " * pm(f(cp+d)))
+
+    zs = find_zeros(f, a, b)
+    pts = vcat(a, zs, b)
+    for (u,v) ∈ zip(pts[1:end-1], pts[2:end])
+        zs′ = find_zeros(x -> 1/f(x), u, v)
+        for z′ ∈ zs′
+            flag = false
+            for z ∈ zs
+                if isapprox(z′, z, atol=atol)
+                    flag = true
+                    break
+                end
+            end
+            !flag && push!(zs, z′)
+        end
+    end
+    sort!(zs)
+
+    length(zs) == 0 && return []
+    m,M = extrema(zs)
+    d = min((m-a)/2, (b-M)/2)
+    if length(zs) > 0
+        d′ = minimum(diff(zs))/2
+        d = min(d, d′ )
+    end
+    summarize.(f, zs, d)
+end

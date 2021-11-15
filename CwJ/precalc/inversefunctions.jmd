@@ -1,9 +1,15 @@
 # The Inverse of a Function
 
-```julia; echo=false; results="hidden"
+In this section we will use these add-on packages:
+
+```julia
 using CalculusWithJulia
-using CalculusWithJulia.WeaveSupport
 using Plots
+```
+
+```julia; echo=false; results="hidden"
+using CalculusWithJulia.WeaveSupport
+__DIR__, __FILE__ = :precalc, :inversefunctions
 nothing
 ```
 
@@ -30,8 +36,7 @@ Let's explore when we can "solve" for an inverse function.
 
 Consider the graph of the function $f(x) = 2^x$:
 
-```julia;
-using CalculusWithJulia   # to load the `Plots` package
+```julia;hold=true
 f(x) = 2^x
 plot(f, 0, 4)
 plot!([2,2,0], [0,f(2),f(2)])
@@ -94,13 +99,13 @@ undress we take off the shoes and then take off the socks.
 
 When we solve algebraically for $x$ in $y=9/5 \cdot x + 32$ we do the same thing as we do verbally: we subtract $32$ from each side, and then divide by $9/5$ to isolate $x$:
 
-$$~
+```math
 \begin{align}
 y &= 9/5 \cdot x + 32\\
 y - 32 &= 9/5 \cdot x\\
 (y-32) / (9/5) &= x.
 \end{align}
-~$$
+```
 
 From this, we have the function $g(y) = (y-32) / (9/5)$ is the inverse function of $f(x) =  9/5\cdot x + 32$.
 
@@ -120,7 +125,7 @@ Suppose a transformation of $x$ is given by $y = f(x) = (ax + b)/(cx+d)$. This f
 
 From the expression $y=f(x)$ we *algebraically* solve for $x$:
 
-$$~
+```math
 \begin{align*}
 y &= \frac{ax +b}{cx+d}\\
 y \cdot (cx + d) &= ax + b\\
@@ -128,14 +133,14 @@ ycx - ax &= b - yd\\
 (cy-a) \cdot x &= b - dy\\
 x &= -\frac{dy - b}{cy-a}.
 \end{align*}
-~$$
+```
 
 We see that to solve for $x$ we need to divide by $cy-a$, so this expression can not be zero.
 So, using $x$ as the dummy variable, we have
 
-$$~
+```math
 f^{-1}(x) = -\frac{dx - b}{cx-a},\quad  cx-a \neq 0.
-~$$
+```
 
 
 
@@ -146,14 +151,14 @@ The function $f(x) = (x-1)^5 + 2$ is strictly increasing and so will have an inv
 
 Again, we solve algebraically starting with $y=(x-1)^5 + 2$ and solving for $x$:
 
-$$~
+```math
 \begin{align*}
 y &= (x-1)^5 + 2\\
 y - 2 &= (x-1)^5\\
 (y-2)^{1/5} &= x - 1\\
-(y-2)^{1/5} + 1 = x.
+(y-2)^{1/5} + 1 &= x.
 \end{align*}
-~$$
+```
 
 We see that $f^{-1}(x) = 1 + (x - 2)^{1/5}$. The fact that the power $5$ is an odd power is important, as this ensures a unique (real) solution to the fifth root of a value, in the above $y-2$.
 
@@ -179,14 +184,14 @@ The [inverse function theorem](https://en.wikipedia.org/wiki/Inverse_function_th
 Consider the function $f(x) = (1+x^2)^{-1}$. This bell-shaped function is even (symmetric about $0$), so can not possibly be one-to-one. However, if the domain is restricted to $[0,\infty)$ it is. The restricted function is strictly decreasing and its inverse is found, as follows:
 
 
-$$~
+```math
 \begin{align*}
 y &= \frac{1}{1 + x^2}\\
 1+x^2 &= \frac{1}{y}\\
 x^2 &= \frac{1}{y} - 1\\
 x &= \sqrt{(1-y)/y}, \quad 0 \leq y \leq 1.
 \end{align*}
-~$$
+```
 
 Then $f^{-1}(x) = \sqrt{(1-x)/x}$ where $0 < x \leq 1$. The somewhat
 complicated restriction for the the domain coincides with the range of
@@ -196,7 +201,7 @@ $f(x)$. We shall see next that this is no coincidence.
 
 Consider again the graph of a monotonic function, in this case $f(x) = x^2 + 2, x \geq 0$:
 
-```julia;
+```julia;hold=true
 f(x) = x^2 + 2
 plot(f, 0, 4)
 plot!([2,2,0], [0,f(2),f(2)])
@@ -227,7 +232,7 @@ The graph of $f(x)$ is a representation of all values $(x,y)$ where $y=f(x)$. As
 
 Let's see this in action. Take the function $2^x$. We can plot it by generating points to plot as follows:
 
-```julia;
+```julia; hold=true;
 f(x) = 2^x
 xs = range(0, 2, length=50)
 ys = f.(xs)
@@ -245,7 +250,7 @@ the function. Flipping the graph for $f(x)$ around the line $y=x$ will
 produce the graph of the inverse function: Here we see for the graph
 of $f(x) = x^{1/3}$ and its inverse function:
 
-```julia;
+```julia; hold=true;
 f(x) = cbrt(x)
 xs = range(-2, 2, length=150)
 ys = f.(xs)
@@ -279,7 +284,7 @@ Now consider the graph of the *tangent line* to a function. This concept will be
 
 For concreteness, we consider $f(x) = \sqrt{x}$ at $c=2$. The tangent line will have slope $1/(2\sqrt{2})$ and will go through the point $(2, f(2)$. We graph the function, its tangent line, and their inverses:
 
-```julia;
+```julia; hold=true;
 f(x) = sqrt(x)
 c = 2
 tl(x) = f(c) + 1/(2 * sqrt(2)) * (x - c)
@@ -308,7 +313,7 @@ The key here is that the shape of $f(x)$ near $x=c$ is somewhat related to the s
 
 Is it possible that a function have two different inverses?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [L"No, for all $x$ in the domain an an inverse, the value of any inverse will be the same, hence all inverse functions would be identical.",
 L"Yes, the function $f(x) = x^2, x \geq 0$ will have a different inverse than the same function $f(x) = x^2,  x \leq 0$"]
 ans = 1
@@ -319,7 +324,7 @@ radioq(choices, ans)
 
 A function takes a value $x$ adds $1$, divides by $2$, and then subtracts $1$. Is the function "one-to-one"?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [L"Yes, the function is the linear function $f(x)=(x+1)/2 + 1$ and so is monotonic.",
 L"No, the function is $1$ then $2$ then $1$, but not \"one-to-one\""
 ]
@@ -331,7 +336,7 @@ radioq(choices, ans)
 
 Is the function $f(x) = x^5 - x - 1$ one-to-one?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices=[L"Yes, a graph over $(-100, 100)$ will show this.",
 L"No, a graph over $(-2,2)$ will show this."
 ]
@@ -343,7 +348,7 @@ radioq(choices, ans)
 
 A function is given by the table
 
-```
+```verbatim
 x  |   y
 --------
 1  |   3
@@ -356,7 +361,7 @@ x  |   y
 
 Is the function one-to-one?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq(false)
 ```
 
@@ -364,14 +369,14 @@ yesnoq(false)
 
 A function is defined by its graph.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = x - sin(x)
 plot(f, 0, 6pi)
 ```
 
 Over the domain shown, is the function one-to-one?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq(true)
 ```
 
@@ -382,53 +387,53 @@ Suppose $f(x) = x^{-1}$.
 
 What is $g(x) = (f(x))^{-1}$?
 
-```julia; echo=false
-choices = [L"g(x) = x", L"g(x) = x^{-1}"]
+```julia; hold=true; echo=false
+choices = ["``g(x) = x``", "``g(x) = x^{-1}``"]
 ans = 1
 radioq(choices, ans)
 ```
 
 What is $g(x) = f^{-1}(x)$?
 
-```julia; echo=false
-choices = [L"g(x) = x", L"g(x) = x^{-1}"]
+```julia; hold=true; echo=false
+choices = ["``g(x) = x``", "``g(x) = x^{-1}``"]
 ans = 2
 radioq(choices, ans)
 ```
 
 ###### Question
 
-A function is given by its graph:
+A function, $f$, is given by its graph:
 
 ```julia; echo=false;
-f(x) = sin(pi/4 * x)
-plot(f, -2, 2)
+k(x) = sin(pi/4 * x)
+plot(k, -2, 2)
 ```
 
 What is the value of $f(1)$?
 
-```julia; echo=false
-val = f(1)
+```julia; hold=true; echo=false
+val = k(1)
 numericq(val, 0.2)
 ```
 
 What is the value of $f^{-1}(1)$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 val = 2
 numericq(val, 0.2)
 ```
 
 What is the value of $(f(1))^{-1}$?
 
-```julia; echo=false
-val = 1/f(1)
+```julia; hold=true; echo=false
+val = 1/k(1)
 numericq(val, 0.2)
 ```
 
 What is the value of $f^{-1}(1/2)$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 val = 2/3
 numericq(val, 0.2)
 ```
@@ -439,7 +444,7 @@ A function is described as follows: for $x > 0$ it takes the square root, adds $
 
 What is the inverse of this function?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices=[
 L"The function that multiplies by $2$, subtracts $1$ and then squares the value.",
 L"The function that divides by $2$, adds $1$, and then takes the square root of the value.",
@@ -453,7 +458,7 @@ radioq(choices, ans)
 
 A function, $f$, is specified by a table:
 
-```
+```verbatim
 x  |  y
 -------
 1  |  2
@@ -465,25 +470,25 @@ x  |  y
 
 What is $f(3)$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(5)
 ```
 
 What is $f^{-1}(3)$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(2)
 ```
 
 What is $f(5)^{-1}$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(1/13)
 ```
 
 What is $f^{-1}(5)$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(3)
 ```
 
@@ -491,11 +496,11 @@ numericq(3)
 
 Find the inverse function of $f(x) = (x^3 + 4)/5$.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"f^{-1}(x) = (5y-4)^{1/3}",
-L"f^{-1}(x) = (5y-4)^3",
-L"f^{-1}(x) = 5/(x^3 + 4)"
+"``f^{-1}(x) = (5y-4)^{1/3}``",
+"``f^{-1}(x) = (5y-4)^3``",
+"``f^{-1}(x) = 5/(x^3 + 4)``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -506,11 +511,11 @@ radioq(choices, ans)
 
 Find the inverse function of $f(x) = x^\pi + e,  x \geq 0$.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"f^{-1}(x) = (x-e)^{1/\pi}",
-L"f^{-1}(x) = (x-\pi)^{e}",
-L"f^{-1}(x) = (x-e)^{\pi}"
+raw"``f^{-1}(x) = (x-e)^{1/\pi}``",
+raw"``f^{-1}(x) = (x-\pi)^{e}``",
+raw"``f^{-1}(x) = (x-e)^{\pi}``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -519,11 +524,11 @@ radioq(choices, ans)
 ###### Question
 What is the *domain* of the inverse function for $f(x) = x^2 + 7,  x \geq 0$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"[7, \infty)",
-L"(-\infty, \infty)",
-L"[0, \infty)"]
+raw"``[7, \infty)``",
+raw"``(-\infty, \infty)``",
+raw"``[0, \infty)``"]
 ans = 1
 radioq(choices, ans)
 ```
@@ -533,11 +538,11 @@ radioq(choices, ans)
 What is the *range* of the inverse function for $f(x) =  x^2 + 7,  x \geq 0$?
 
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"[7, \infty)",
-L"(-\infty, \infty)",
-L"[0, \infty)"]
+raw"``[7, \infty)``",
+raw"``(-\infty, \infty)``",
+raw"``[0, \infty)``"]
 ans = 3
 radioq(choices, ans)
 ```
@@ -546,7 +551,7 @@ radioq(choices, ans)
 
 From the plot, are blue and red inverse functions?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = x^3
 xs = range(0, 2, length=100)
 ys = f.(xs)
@@ -555,14 +560,14 @@ plot!(ys, xs, color=:red)
 plot!(x->x, linestyle=:dash)
 ```
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq(true)
 ```
 
 
 From the plot, are blue and red inverse functions?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = x^3 - x - 1
 xs = range(-2,2, length=100)
 ys = f.(xs)
@@ -571,7 +576,7 @@ plot!(-xs, -ys, color=:red)
 plot!(x->x, linestyle=:dash)
 ```
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq(false)
 ```
 
@@ -584,21 +589,21 @@ the translation $f1(x) = x + d/c$; the inversion and reflection $f2(x) = x^{-1}$
 For $x=10$, what is $f(10)$?
 
 ```julia; echo=false
-a,b,c,d = 1,2,3,5
-f1(x) = x + d/c; f2(x) = 1/x; f3(x) = (b*c-a*d)/c^2 * x; f4(x)= x + a/c
-f(x) = (a*x+b) / (c*x + d)
-numericq(f(10))
+𝒂,𝒃,𝒄,𝒅 = 1,2,3,5
+f1(x) = x + 𝒅/𝒄; f2(x) = 1/x; f3(x) = (𝒃*𝒄-𝒂*𝒅)/𝒄^2 * x; f4(x)= x + 𝒂/𝒄
+𝒇(x;a=𝒂,b=𝒃,c=𝒄,d=𝒅) = (a*x+b) / (c*x + d)
+numericq(𝒇(10))
 ```
 
 For $x=10$, what is $f4(f3(f2(f1(10))))$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(f4(f3(f2(f1(10)))))
 ```
 
 The last two answers should be the same, why?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [L"As $f4(f3(f2(f1(x))))=(f4 \circ f3 \circ f2 \circ f1)(x)$",
 L"As $f4(f3(f2(f1(x))))=(f1 \circ f2 \circ f3 \circ f4)(x)$",
 "As the latter is more complicated than the former."
@@ -612,16 +617,19 @@ Let $g1$, $g2$, $g3$, and $g4$ denote the inverse functions. Clearly, $g1(x) = x
 
 What is $g2(x)=f2^{-1}(x)$?
 
-```julia; echo=false
-choices = [L"g2(x) = x^{-1}", L"g2(x) = x", L"g2(x) = x -1"]
+```julia; hold=true; echo=false
+choices = ["``g2(x) = x^{-1}``", "``g2(x) = x``", "``g2(x) = x -1``"]
 ans = 1
 radioq(choices, ans)
 ```
 
 What is $g3(x)=f3^{-1}(x)$?
 
-```julia; echo=false
-choices = [L"c^2/(b\cdot c - a\cdot d) \cdot  x", L"(b\cdot c-a\cdot d)/c^2 \cdot  x", L"c^2 x"]
+```julia; hold=true; echo=false
+choices = [
+    raw"``c^2/(b\cdot c - a\cdot d) \cdot  x``",
+    raw"``(b\cdot c-a\cdot d)/c^2 \cdot  x``",
+    raw"``c^2 x``"]
 ans = 1
 radioq(choices, ans)
 ```
@@ -629,19 +637,19 @@ radioq(choices, ans)
 Given these, what is the value of $g4(g3(g2(g1(f4(f3(f2(f1(10))))))))$?
 
 ```julia; echo=false
-g1(x) = x - d/c; g2(x) = 1/x; g3(x) = 1/((b*c-a*d)/c^2) *x; g4(x)= x - a/c
-val = g4(g3(g2(g1(f4(f3(f2(f1(10))))))))
-numericq(val)
+g1(x) = x - 𝒅/𝒄; g2(x) = 1/x; g3(x) = 1/((𝒃*𝒄-𝒂*𝒅)/𝒄^2) *x; g4(x)= x - 𝒂/𝒄
+val1 = g4(g3(g2(g1(f4(f3(f2(f1(10))))))))
+numericq(val1)
 ```
 
 What about the value of $g1(g2(g3(g4(f4(f3(f2(f1(10))))))))$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 val = g1(g2(g3(g4(f4(f3(f2(f1(10))))))))
 numericq(val)
 ```
 
 
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```julia; hold=true; echo=false
+#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
 ```

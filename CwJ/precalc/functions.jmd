@@ -1,9 +1,15 @@
 # Functions
 
-```julia; echo=false; results="hidden"
+This section will use the following add-on packages:
+
+```julia
 using CalculusWithJulia
-using CalculusWithJulia.WeaveSupport
 using Plots
+```
+
+```julia; echo=false; results="hidden"
+using CalculusWithJulia.WeaveSupport
+__DIR__, __FILE__ = :precalc, :functions
 nothing
 ```
 
@@ -25,10 +31,10 @@ $f(x)$ for each $x$ in the domain ($\{f(x): x \in \text{ domain}\}$).
 
 Some examples of mathematical functions are:
 
-$$~
+```math
 f(x) = \cos(x), \quad g(x) = x^2 - x, \quad h(x) = \sqrt{x}, \quad
 s(x) = \begin{cases} -1 & x < 0\\1&x>0\end{cases}.
-~$$
+```
 
 For these examples, the domain of both $f(x)$ and $g(x)$ is all real
 values of $x$, where as for $h(x)$ it is implicitly just the set of
@@ -102,15 +108,15 @@ The `DomainError` is one of many different error types `Julia` has, in this case
 
 Mathematically we tend to blur the distinction between the equation
 
-$$~
+```math
 y = 5/9 \cdot (x - 32)
-~$$
+```
 
 and the function
 
-$$~
+```math
 f(x) = 5/9 \cdot (x - 32)
-~$$
+```
 
 In fact, the graph of a function $f(x)$ is simply defined as the graph of the
 equation $y=f(x)$. There is a distinction in `Julia` as a command such as
@@ -123,7 +129,7 @@ y = 5/9 * (x - 32)
 will evaluate the righthand side with the value of `x` bound at the
 time of assignment to `y`, whereas assignment to a function
 
-```julia;
+```julia;hold=true
 f(x) = 5/9 * (x - 32)
 f(72)				## room temperature
 ```
@@ -149,9 +155,9 @@ Distinguishing these three related but different concepts (equations, function o
 
 The definition of $s(x)$ above has two cases:
 
-$$~
+```math
 s(x) = \begin{cases} -1 & s < 0\\ 1 & s > 0. \end{cases}
-~$$
+```
 
 We learn to read this as "If $s$ is less than $0$, then the answer is
 $-1$. If $s$ is greater than $0$ the answer is $1$." Often - but not
@@ -193,7 +199,7 @@ If familiar with `if` conditions, they are natural to use. However, for simpler 
 For example, here is one way to define an absolute value function:
 
 ```julia;
-f(x) = x >= 0 ? x : -x
+abs_val(x) = x >= 0 ? x : -x
 ```
 
 The condition is `x >= 0` - or is `x` non-negative? If so, the value `x` is used, otherwise `-x` is used.
@@ -202,7 +208,7 @@ The condition is `x >= 0` - or is `x` non-negative? If so, the value `x` is used
 Here is a means to implement a function which takes the larger of `x` or `10`:
 
 ```julia;
-f(x) = x > 10 ? x : 10.0
+bigger_10(x) = x > 10 ? x : 10.0
 ```
 
 (This could also utilize the `max` function: `f(x) = max(x, 10.0)`.)
@@ -229,7 +235,7 @@ ensure the output is always the same type.
 
 The `ternary` operator can be used to define an explicit domain. For example, a falling body might have height given by $h(t) = 10 - 16t^2$. This model only applies for non-negative $t$ and non-negative $h$ values. So, in particular $0 \leq t \leq \sqrt{10/16}$. To implement this function we might have:
 
-```julia;
+```julia;hold=true
 h(t) = 0 <= t <= sqrt(10/16) ? 10.0 - 16t^2 : error("t is not in the domain")
 ```
 
@@ -253,7 +259,7 @@ For more complicated functions, say one with a few
 steps to compute, an alternate form for defining a function can be
 used:
 
-```
+```verbatim
 function function_name(function_arguments)
   ...function_body...
 end
@@ -264,7 +270,7 @@ contains an explicit `return` statement.
 
 For example, the following is a more verbose way to define $f(x) = x^2$:
 
-```julia;
+```julia;hold=true
 function f(x)
   return x^2
 end
@@ -284,20 +290,23 @@ The `return` keyword is not a function, so is not called with parentheses. An em
 
 Imagine we have the following complicated function related to the trajectory of a [projectile](http://www.researchgate.net/publication/230963032_On_the_trajectories_of_projectiles_depicted_in_early_ballistic_woodcuts) with wind resistance:
 
-$$~
+```math
 	f(x) = \left(\frac{g}{k v_0\cos(\theta)} + \tan(\theta) \right) x + \frac{g}{k^2}\ln\left(1 - \frac{k}{v_0\cos(\theta)} x \right)
-~$$
+```
 
 Here $g$ is the gravitational constant $9.8$ and $v_0$, $\theta$ and $k$ parameters, which we take to be $200$, $45$ degrees and $1/2$ respectively. With these values, the above function can be computed when $x=100$ with:
 
 ```julia;
-function f(x)
+function trajectory(x)
   g, v0, theta, k = 9.8, 200, 45*pi/180, 1/2
   a = v0 * cos(theta)
 
   (g/(k*a) + tan(theta))* x + (g/k^2) * log(1 - k/a*x)
 end
-f(100)
+```
+
+```julia
+trajectory(100)
 ```
 
 By using a multi-line function our work is much easier to look over for errors.
@@ -306,9 +315,9 @@ By using a multi-line function our work is much easier to look over for errors.
 
 Consider two functions implementing the slope-intercept form and point-slope form of a line:
 
-$$~
+```math
 f(x) = m \cdot x + b, \quad g(x) = y_0 + m \cdot (x - x_0).
-~$$
+```
 
 Both functions use the variable $x$, but there is no confusion, as we learn that this is just a dummy variable to be substituted for and so could have any name. Both also share a variable $m$ for a slope. Where does that value come from? In practice, there is a context that gives an answer. Despite the same name, there is no expectation that the slope will be the same for each function if the context is different. So when parameters are involved, a function involves a rule and a context to give specific values to the parameters. Euler had said initially that functions a composed of "the variable quantity and numbers or constant quantities." The "term"variable, we still use, but instead of "constant quantities," we choose the name "parameters."
 
@@ -318,20 +327,17 @@ Something similar is also true with `Julia`.  Consider the example of writing a 
 
 ```julia;
 m, b = 2, 3
-f(x) = m*x + b
+mxplusb(x) = m*x + b
 ```
 
 This will work as expected. For example, $f(0)$ will be $b$  and $f(2)$ will be $7$:
 
 ```julia;
-f(0), f(2)
+mxplusb(0), mxplusb(2)
 ```
 
-All fine, but what if somewhere later the values for $m$ and $b$ were *redefined*:
+All fine, but what if somewhere later the values for $m$ and $b$ were *redefined*, say with ``m,b = 3,2``?
 
-```julia;
-m, b = 3, 2
-```
 
 Now what happens with $f(0)$? When $f$ was defined `b` was $3$, but
 now if we were to call `f`, `b` is 2. Which value will we get? More
@@ -344,8 +350,9 @@ called. If the latter, what context will be used?
 
 Before discussing this, let's just see in this case:
 
-```julia;
-f(0)
+```julia;hold=true
+m, b = 3, 2
+mxplusb(0)
 ```
 
 So the `b` is found from the currently stored value. This fact can be exploited. we can write template-like functions, such as `f(x)=m*x+b` and reuse them just by updating the parameters separately.
@@ -380,7 +387,7 @@ convenient. For example, here is an alternate way of defining a line
 with parameters `m` and `b`:
 
 ```julia;
-f(x; m=1, b=0) = m*x + b
+mxb(x; m=1, b=0) = m*x + b
 ```
 
 The right-hand side is identical to before, but the left hand side is
@@ -392,7 +399,7 @@ value not be specified when the function is called.
 Calling a function with keyword arguments can be identical to before:
 
 ```julia;
-f(0)
+mxb(0)
 ```
 
 During this call, values for `m` and `b` are found from how the
@@ -401,7 +408,7 @@ specified so the defaults of $m=1$ and $b=0$ are used. Whereas, this
 call will use the user-specified values for `m` and `b`:
 
 ```julia;
-f(0, m=3, b=2)
+mxb(0, m=3, b=2)
 ```
 
 Keywords are used to mark the parameters whose values are to be changed from the default. Though one can use *positional arguments* for parameters - and there are good reasons to do so - using keyword arguments is a good practice if performance isn't paramount, as their usage is more explicit yet the defaults mean that a minimum amount of typing needs to be done.
@@ -410,11 +417,12 @@ Keywords are used to mark the parameters whose values are to be changed from the
 
 In the example for multi-line functions we hard coded many variables inside the body of the function. In practice it can be better to pass these in as parameters along the lines of:
 
-```julia;
-function f(x; g = 9.8, v0 = 200, theta = 45*pi/180, k = 1/2)
+```julia;hold=true
+function trajectory(x; g = 9.8, v0 = 200, theta = 45*pi/180, k = 1/2)
   a = v0 * cos(theta)
   (g/(k*a) + tan(theta))* x + (g/k^2) * log(1 - k/a*x)
 end
+trajectory(100)
 ```
 
 
@@ -424,8 +432,8 @@ An alternative to keyword arguments is to bundle the parameters into a container
 
 For example, here we use a *named tuple* to pass parameters to `f`:
 
-```julia;
-function f(x,p)
+```julia;hold=true
+function trajectory(x,p)
     g,v0, theta, k = p.g, p.v0, p.theta, p.k # unpack parameters
 
     a = v0 * cos(theta)
@@ -433,10 +441,10 @@ function f(x,p)
 end
 
 p = (g=9.8, v0=200, theta = 45*pi/180, k=1/2)
-f(2, p)
+trajectory(100, p)
 ```
 
-The style isn't so different from using keyword arguments, save the extra step of unpacking the parameters. The advantage is the function is always called in an identical manner regardless of the number of parameters (or variables).
+The style isn't so different from using keyword arguments, save the extra step of unpacking the parameters. The *big* advantage is consistency -- the function is always called in an identical manner regardless of the number of parameters (or variables).
 
 
 ## Multiple dispatch
@@ -447,7 +455,7 @@ natural application comes from describing basic properties of
 geometric objects. The following function definitions likely will
 cause no great concern when skimmed over:
 
-```julia;
+```julia;hold=true
 Area(w, h) = w * h		                   # of a rectangle
 Volume(r, h) = pi * r^2 * h	                   # of a cylinder
 SurfaceArea(r, h) = pi * r * (r + sqrt(h^2 + r^2)) # of a right circular cone, including the base
@@ -500,17 +508,17 @@ Representing the area of a rectangle in terms of two variables is easy, as the f
 Area(w, h) = w * h
 ```
 
-But the other fact about this problem - that the perimeter is $20$ - means that height depends on width. For this question, we can see that $P=2w + 2h$ so that - as a function - `h` depends on `w` as follows:
+But the other fact about this problem - that the perimeter is $20$ - means that height depends on width. For this question, we can see that $P=2w + 2h$ so that - as a function - `height` depends on `w` as follows:
 
 ```julia;
-h(w) = (20  - 2*w)/2
+height(w) = (20  - 2*w)/2
 ```
 
 By hand we would substitute this last expression into that for the area and simplify (to get $A=w\cdot (20-2 \cdot w)/2 = -w^2 + 10$). However, within `Julia` we can let *composition* do the substitution and leave the algebraic simplification for `Julia` to do:
 
 
 ```julia;
-Area(w) = Area(w, h(w))
+Area(w) = Area(w, height(w))
 ```
 
 This might seem odd, just like with `log`, we now  have two *different* but related
@@ -526,8 +534,6 @@ For example, jumping ahead a bit, the `plot` function of `Plots`  expects functi
 variable. Behind the scenes, then the function `A(w)` will be used in this graph:
 
 ```julia;
-using CalculusWithJulia
-using Plots
 plot(Area, 0, 10)
 ```
 
@@ -543,20 +549,20 @@ Simple mathematical functions have a domain and range which are a subset of the 
 
 Take for example, the idea of the shift of a function. The following mathematical definition of a new function $g$ related to a function $f$:
 
-$$~
+```math
 g(x) = f(x-c)
-~$$
+```
 
 has an interpretation - the graph of $g$ will be the same as the graph of $f$ shifted to the right by $c$ units. That is $g$ is a transformation of $f$. From one perspective, the act of replacing $x$ with $x-c$ transforms a function into a new function. Mathematically, when we focus on transforming functions, the word [operator](http://en.wikipedia.org/wiki/Operator_%28mathematics%29) is sometimes used. This concept of transforming a function can be viewed as a certain type of function, in an abstract enough way. The relation would be just pairs of functions $(f,g)$ where $g(x) = f(x-c)$.
 
 With `Julia` we can represent such operations. The simplest thing would be to do something like:
 
-```julia;
+```julia;hold=true
 f(x) = x^2 - 2x
 g(x) = f(x -3)
 ```
 
-Then $g$ has the graph of $f$ shifted by 3 units to the right. Now `f` above refers to something in the main workspace, in this example a specific function. Better would be to allow `f` to be an argument of a function. So we need to do something like:
+Then $g$ has the graph of $f$ shifted by 3 units to the right. Now `f` above refers to something in the main workspace, in this example a specific function. Better would be to allow `f` to be an argument of a function, like this:
 
 ```julia;
 function shift_right(f; c=0)
@@ -575,11 +581,11 @@ creates a function, this function is returned by `shift_right`.
 So we could have done something more complicated like:
 
 ```julia;
-f(x) = x^2 - 2x
-l = shift_right(f, c=3)
+p(x) = x^2 - 2x
+l = shift_right(p, c=3)
 ```
 
-Then `l` is a function that is derived from `f`.
+Then `l` is a function that is derived from `p`.
 
 ```julia;echo=false
 note("""
@@ -589,8 +595,8 @@ The value of `c` used when `l` is called is the one passed to `shift_right`. Fun
 
 Anonymous functions can be created with the `function` keyword, but we will use the "arrow" notation, `arg->body` to create them, The above, could have been defined as:
 
-```julia;
-shift_right(f; c=0) = x -> f(x-c)
+```julia
+shift_right_alt(f; c=0) = x -> f(x-c)
 ```
 
 When the `->` is seen a function is being created.
@@ -622,13 +628,14 @@ functions for consistency.
 """)
 ```
 
+
 ##### Example: the secant line
 
 A secant line is a line through two points on the graph of a function. If we have a function $f(x)$, and two $x$-values $x=a$ and $x=b$, then we can find the slope between the points $(a,f(a))$ and $(b, f(b))$ with:
 
-$$~
+```math
 m = \frac{f(b) - f(a)}{b - a}.
-~$$
+```
 
 The point-slope form a line then gives the equation of the tangent line as $y = f(a) + m \cdot (x - a)$.
 
@@ -645,7 +652,7 @@ The body of the function nearly mirrors the mathematical treatment. The main dif
 
 To illustrate the use, suppose $f(x) = x^2 - 2$ and we have the secant line between $a=1$ and $b=2$. The value at $x=3/2$ is given by:
 
-```julia;
+```julia;hold=true
 f(x) = x^2 - 2
 a,b = 1, 2
 secant(f,a,b)(3/2)
@@ -676,14 +683,14 @@ end
 
 We utilize this as follows. Suppose we wish to solve $f(x) = 0$ and we
 have two "rough" guesses for the answer. In our example, we wish to
-solve $f(x) = x^2 - 2$ and our "rough" guesses are $1$ and $2$. Call
+solve $q(x) = x^2 - 2$ and our "rough" guesses are $1$ and $2$. Call
 these values $a$ and $b$. We *improve* our rough guesses by finding a
 value $c$ which is the intersection point of the secant line.
 
 ```julia;
-f(x) = x^2 - 2
-a, b = 1, 2
-c = secant_intersection(f, a, b)
+q(x) = x^2 - 2
+𝒂, 𝒃 = 1, 2
+𝒄 = secant_intersection(q, 𝒂, 𝒃)
 ```
 
 In our example, we see that in trying to find an answer to $f(x) = 0$
@@ -691,41 +698,36 @@ In our example, we see that in trying to find an answer to $f(x) = 0$
 point is a better guess than either $a=1$ or $b=2$:
 
 ```julia;echo=false;
-plot(f, a, b, linewidth=5, legend=false)
-plot!(zero, a, b)
-plot!([a, b], f.([a,b]))
-scatter!([c], [f(c)])
+plot(q, 𝒂, 𝒃, linewidth=5, legend=false)
+plot!(zero, 𝒂, 𝒃)
+plot!([𝒂, 𝒃], q.([𝒂, 𝒃]))
+scatter!([𝒄], [q(𝒄)])
 ```
 
-Still,  `f(c)` is not really close to $0$:
+Still,  `q(𝒄)` is not really close to $0$:
 
 ```julia;
-f(c)
+q(𝒄)
 ```
 
-*But* it is much closer than either $f(a)$ or $f(b)$, so it is an improvement. This suggests renaming $a$ and $b$ with the old $b$ and $c$ values and trying again we might do better still:
+*But* it is much closer than either $q(a)$ or $q(b)$, so it is an improvement. This suggests renaming $a$ and $b$ with the old $b$ and $c$ values and trying again we might do better still:
 
-```julia;
-a, b = b, c
-c = secant_intersection(f, a, b)
-f(c)
+```julia;hold=true
+𝒂, 𝒃 = 𝒃, 𝒄
+𝒄 = secant_intersection(q, 𝒂, 𝒃)
+q(𝒄)
 ```
 
-Yes, now the function value at this new $c$ is even closer to $0$. Trying a few more times we see we just get closer and closer:
+Yes, now the function value at this new $c$ is even closer to $0$. Trying a few more times we see we just get closer and closer. He we start again to see the progress
 
-```julia;
-a, b = b, c
-c = secant_intersection(f, a, b)
-f(c)                 # like 1e-3
-a, b = b, c
-c = secant_intersection(f, a, b)
-f(c)                 # like -6e-6
-a, b = b, c
-c = secant_intersection(f, a, b)
-f(c)                 # like -8e-10
-a, b = b, c
-c = secant_intersection(f, a, b)
-f(c)                 # pretty close now
+```julia;hold=true;term=true
+𝒂,𝒃 = 1, 2
+for step in 1:6
+    𝒄 = secant_intersection(q, 𝒂, 𝒃)
+    state = (a=𝒂, b=𝒃, qc = q(𝒄))
+    @show state
+    𝒂, 𝒃 = 𝒃, 𝒄
+end
 ```
 
 Now our guess $c$ is basically the same as `sqrt(2)`. Repeating the above leads to only a slight improvement in the guess, as we are about as close as floating point values will allow.
@@ -734,7 +736,8 @@ Here we see a visualization with all these points. As can be seen, it
 quickly converges at the scale of the visualization, as we can't see
 much closer than `1e-2`.
 
-```julia;echo=false;
+```julia;hold=true;echo=false;
+f(x) = x^2 - 2
 a, b = 1, 2
 c = secant_intersection(f, a, b)
 
@@ -790,7 +793,7 @@ The name of the file to open appears, how the file is to be opened (`w` means wr
 
 State the domain and range of $f(x) = |x + 2|$.
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 choices = [
 "Domain is all real numbers, range is all real numbers",
 "Domain is all real numbers, range is all non-negative numbers",
@@ -806,7 +809,7 @@ radioq(choices, ans)
 State the domain and range of $f(x) = 1/(x-2)$.
 
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 choices = [
 "Domain is all real numbers, range is all real numbers",
 L"Domain is all real numbers except $2$, range is all real numbers except $0$",
@@ -821,12 +824,12 @@ radioq(choices, ans)
 
 Which of these functions has a domain of all real $x$, but a range of $x > 0$?
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 choices = [
-L"f(x) = 2^x",
-L"f(x) = 1/x^2",
-L"f(x) = |x|",
-L"f(x) = \sqrt{x}"]
+raw"``f(x) = 2^x``",
+raw"``f(x) = 1/x^2``",
+raw"``f(x) = |x|``",
+raw"``f(x) = \sqrt{x}``"]
 ans = 1
 radioq(choices, ans)
 ```
@@ -836,7 +839,7 @@ radioq(choices, ans)
 
 Which of these commands will make a function for $f(x) = \sin(x + \pi/3)$?
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 choices = [q"f = sin(x + pi/3)",
 q"function f(x) = sin(x + pi/3)",
 q"f(x)  = sin(x + pi/3)",
@@ -850,7 +853,7 @@ radioq(choices, ans)
 
 Which of these commands will create a function for $f(x) = (1 + x^2)^{-1}$?
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 choices = [q"f(x) = (1 + x^2)^(-1)",
 q"function f(x) = (1 + x^2)^(-1)",
 q"f(x) := (1 + x^2)^(-1)",
@@ -866,18 +869,18 @@ radioq(choices, ans)
 
 Will the following `Julia` commands create a function for
 
-$$~
+```math
 f(x) = \begin{cases}
 30 & x < 500\\
 30 + 0.10 \cdot (x-500) & \text{otherwise.}
 \end{cases}
-~$$
-
-```julia;
-f(x) = x < 500 ? 30.0 : 30 + 0.10 * (x-500)
 ```
 
-```julia;echo=false;
+```julia
+phone_plan(x) = x < 500 ? 30.0 : 30 + 0.10 * (x-500);
+```
+
+```julia; hold=true;echo=false;
 booleanq(true, labels=["Yes", "No"])
 ```
 
@@ -886,12 +889,12 @@ booleanq(true, labels=["Yes", "No"])
 
 The expression `max(0, x)` will be `0` if `x` is negative, but otherwise will take the value of `x`. Is this the same?
 
-```julia;
-f(x) = x < 0 ? x : 0.0
+```julia
+a_max(x) = x < 0 ? x : 0.0;
 ```
 
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 yesnoq(false)
 ```
 
@@ -900,37 +903,37 @@ yesnoq(false)
 
 In statistics, the normal distribution has two parameters $\mu$ and $\sigma$ appearing as:
 
-$$~
+```math
 f(x; \mu, \sigma) = \frac{1}{\sqrt{2\pi\sigma}} e^{-\frac{1}{2}\frac{(x-\mu)^2}{\sigma}}.
-~$$
+```
 
 Does this function implement this with the default values of $\mu=0$ and $\sigma=1$?
 
-```julia;
-f(x; mu=0, sigma=1) = 1/sqrt(2pi*sigma) * exp(-(1/2)*(x-mu)^2/sigma)
+```julia
+a_normal(x; mu=0, sigma=1) = 1/sqrt(2pi*sigma) * exp(-(1/2)*(x-mu)^2/sigma)
 ```
 
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 booleanq(true, labels=["Yes", "No"])
 ```
 
 What value of $\mu$ is used if the function is called as `f(x, sigma=2.7)`?
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 numericq(0)
 ```
 
 
 What value of $\mu$ is used if the function is called as `f(x, mu=70)`?
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 numericq(70)
 ```
 
 What value of $\mu$ is used if the function is called as `f(x, mu=70, sigma=2.7)`?
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 numericq(70)
 ```
 
@@ -970,25 +973,25 @@ instead of a semicolon after the `x`.
 
 What value of `mu` is used by the call `C(1, 70, 2.7)`?
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 numericq(70)
 ```
 
 What value of `mu` is used by the call `C(1, 70)`?
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 numericq(70)
 ```
 
 What value of `mu` is used by the call `C(1)`?
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 numericq(0)
 ```
 
 Will the call `C(1, mu=70)` use a value of `70` for `mu`?
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 choices = ["Yes, this will work just as it does for keyword arguments",
 "No, there will be an error that the function does not accept keyword arguments"]
 ans = 2
@@ -999,13 +1002,13 @@ radioq(choices, ans)
 
 This function mirrors that of the built-in `clamp` function:
 
-```julia;
+```julia
 klamp(x, a, b) = x < a ? a : (x > b ? b : x)
 ```
 
 Can you tell what it does?
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 choices = [
 "If `x` is in `[a,b]` it returns `x`, otherwise it returns `a` when `x` is less than `a` and `b` when  `x` is greater than `b`.",
 "If `x` is in `[a,b]` it returns `x`, otherwise it returns `NaN`",
@@ -1022,9 +1025,9 @@ radioq(choices, ans)
 
 The notation to call a composition follows the math notation, where parentheses are necessary to separate the act of composition from the act of calling the function:
 
-$$~
+```math
 (f \circ g)(x)
-~$$
+```
 
 
 For example
@@ -1036,7 +1039,7 @@ For example
 What happens if you forget the extra parentheses and were to call `sin ∘ cos(pi/4)`?
 
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 choices = [
 L"You still get $0.649...$",
 "You get a `MethodError`, as `cos(pi/4)` is evaluated as a number and `∘` is not defined for functions and numbers",
@@ -1050,7 +1053,7 @@ radioq(choices, ans, keep_order=true)
 
 The [pipe](http://julia.readthedocs.org/en/latest/stdlib/base/#Base.|>) notation `ex |> f` takes the output of `ex` and uses it as the input to the function `f`. That is composition. What is the value of this expression `1 |> sin |> cos`?
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 choices = [
 "It is `0.6663667453928805`, the same as `cos(sin(1))`",
 "It is `0.5143952585235492`, the same as `sin(cos(1))`",
@@ -1063,12 +1066,12 @@ radioq(choices, ans, keep_order=true)
 
 `Julia` has implemented this *limited* set of algebraic operations on functions: `∘` for *composition* and `!` for *negation*. (Read `!` as "not.") The latter is useful for "predicate" functions (ones that return either `true` or `false`. What is output by this command?
 
-```julia;results="hidden";
+```julia;eval=false
 fn = !iseven
 fn(3)
 ```
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 choices = ["`true`","`false`"]
 ans = 1
 radioq(choices, ans)
@@ -1079,7 +1082,7 @@ radioq(choices, ans)
 Generic functions in `Julia` allow many algorithms to work without change for different number types. For example, [3000](https://pdfs.semanticscholar.org/1ef4/ee58a159dc7e437e190ec2839fb9a654596c.pdf) years ago, floating point numbers wouldn't have been used to carry out the secant method computations, rather rational numbers would have been. We can see the results of using rational numbers with no change to our key function, just by starting with rational numbers for `a` and `b`:
 
 
-```julia;
+```julia; hold=true;
 secant_intersection(f, a, b) = b - f(b) * (b - a) / (f(b) - f(a))  # rewritten
 f(x) = x^2 - 2
 a, b = 1//1, 2//1
@@ -1092,7 +1095,7 @@ implementations for rational numbers that preserve this type.
 
 Repeat the secant method two more times to find a better approximation for $\sqrt{2}$. What is the value of `c` found?
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 choices = [q"4//3", q"7//5", q"58//41", q"816//577"]
 ans = 3
 radioq(choices, ans, keep_order=true)
@@ -1100,14 +1103,14 @@ radioq(choices, ans, keep_order=true)
 
 How small is the value of $f(c)$ for this value?
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 val = f(58/41)
 numericq(val)
 ```
 
 How close is this answer to the true value of $\sqrt{2}$?
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 choices = [L"about $8$ parts in $100$", L"about $1$ parts in $100$", L"about $4$ parts in $10,000$", L"about $2$ parts in $1,000,000$"]
 ans = 3
 radioq(choices, ans, keep_order=true)
@@ -1119,7 +1122,7 @@ radioq(choices, ans, keep_order=true)
 
 `Julia` does not have surface syntax for the *difference* of functions. This is a common thing to want when solving equations. The tools available solve $f(x)=0$, but problems may present as solving for $h(x) = g(x)$ or even $h(x) = c$, for some constant. Which of these solutions is **not** helpful if $h$ and $g$ are already defined?
 
-```julia;echo=false;
+```julia; hold=true;echo=false;
 choices = ["Just use `f = h - g`",
 "Define `f(x) = h(x) - g(x)`",
 "Use `x -> h(x) - g(x)` when the difference is needed"
@@ -1142,10 +1145,13 @@ They all contain all real numbers between the endpoints, the distinction is whet
 
 A domain is some set, but typically that set is an interval such as *all real numbers* (``(-\infty,\infty)``), *all non-negative numbers* (``[0,\infty)``), or, say, *all positive numbers* (``(0,\infty)``).
 
-The `IntervalArithmetic` package provides an easy  means to define closed intervals using the symbol `..`, but this is also used by the `CalculusWithJulia` package in different manner, so we use the fully qualified named constructor in the following to construct intervals:
+The `IntervalArithmetic` package provides an easy  means to define closed intervals using the symbol `..`, but this is also used by the already loaded `CalculusWithJulia` package in different manner, so we use the fully qualified named constructor in the following to construct intervals:
 
 ```julia
 import IntervalArithmetic
+```
+
+```julia
 I1 = IntervalArithmetic.Interval(-Inf, Inf)
 ```
 
@@ -1160,25 +1166,25 @@ For example the function ``f(x) = x^2 + 2`` had a domain of all real ``x``, the 
 
 ```julia
 ab = IntervalArithmetic.Interval(-Inf, Inf)
-f(x) = x^2 + 2
-f(ab)
+u(x) = x^2 + 2
+u(ab)
 ```
 
 For this problem, the actual range can easily be identified. Does the bound computed match exactly?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq("yes")
 ```
 
 Does `sin(0..pi)` **exactly** match the interval of ``[-1,1]``?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq("no")
 ```
 
 Guess why or why not?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["Well it does, because ``[-1,1]`` is the range",
            """It does not. The bound found is a provably known bound. The small deviation is due to the possible errors in evalution of the `sin` function near the floating point approximation of `pi`,
 """]
@@ -1187,7 +1193,7 @@ radioq(choices, 2)
 
 Now consider the evaluation
 
-```julia;
+```julia; hold=true;
 f(x) = x^x
 I = IntervalArithmetic.Interval(0, Inf)
 f(I)
@@ -1195,13 +1201,13 @@ f(I)
 
 Make a graph of `f`. Does the interval found above provide a nearly exact estimate of the true range (as the previous two questions have)?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq("no")
 ```
 
 Any thoughts on why?
 
-```julia;echo=false
+```julia; hold=true;echo=false
 choices = ["""
 The guarantee of `IntervalArithmetic` is a *bound* on the interval, not the *exact* interval. In the case where the variable `x` appears more than once, it is treated formulaically as an *independent* quantity (meaning it has it full set of values considered in each instance) which is not the actual case mathemitcally. This is the "dependence problem" in interval arithmetic.""",
            """
@@ -1211,6 +1217,6 @@ radioq(choices, 1)
 ```
 
 
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```julia; hold=true; echo=false
+#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
 ```

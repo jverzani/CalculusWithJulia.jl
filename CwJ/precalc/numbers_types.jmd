@@ -4,6 +4,7 @@
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
 using Plots
+__DIR__, __FILE__ = :precalc, :numbers_types
 nothing
 ```
 
@@ -223,7 +224,7 @@ used to represent the number $a \cdot 10^b$ ($1 \leq a < 10$). This
 notation can be used directly to specify a floating point value:
 
 ```julia;
-x = 6.23e23
+avagadro = 6.23e23
 ```
 
 The first way of representing this number required using `10.0` and not `10` as the integer power will return an integer and even for 64-bit systems is only valid up to `10^18`. Using scientific notation avoids having to concentrate on such limitations.
@@ -245,7 +246,7 @@ common. These values may be specified with an `f` in place of the `e`
 in scientific notation:
 
 ```julia
-a = 1.23f0
+1.23f0
 ```
 
 As with the use of `e`, some exponent is needed after the `f`, even if it is `0`.
@@ -457,9 +458,9 @@ numbers must be introduced. So aside from division by $0$, the rationals are clo
 
 Powers are defined for positive integers in a simple enough manner
 
-$$~
-a^n=a\cdot a \cdot a \cdots a \text{ (n times); }  a, n \text{ are integers, $n$ is positive}.
-~$$
+```math
+a^n=a \cdot a \cdot a \cdots a \text{ (n times); }  a, n \text{ are integers } n \text{ is positive}.
+```
 
 We can define $a^0$ to be $1$, except for the special case of $0^0$,
 which is left undefined mathematically (though it is also defined as
@@ -532,12 +533,17 @@ be a domain error, but rather a complex value will be returned.
 
 ## Questions
 
+```julia; echo=false
+choices = ["Integer", "Rational", "Floating point", "Complex", "None, an error occurs"]
+nothing
+```
+
 ###### Question
 
 The number created by `pi/2` is?
 
-```julia; echo=false;
-choices = ["Integer", "Rational", "Floating point", "Complex", "None, an error occurs"]
+
+```julia; hold=true; echo=false;
 ans = 3
 radioq(choices, ans, keep_order=true)
 ```
@@ -546,7 +552,7 @@ radioq(choices, ans, keep_order=true)
 
 The number created by `2/2` is?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 ans = 3
 radioq(choices, ans, keep_order=true)
 ```
@@ -555,7 +561,7 @@ radioq(choices, ans, keep_order=true)
 
 The number created by `2//2` is?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 ans = 2
 radioq(choices, ans, keep_order=true)
 ```
@@ -564,7 +570,7 @@ radioq(choices, ans, keep_order=true)
 
 The number created by `1 + 1//2 + 1/3` is?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 ans = 3
 radioq(choices, ans, keep_order=true)
 ```
@@ -574,7 +580,7 @@ radioq(choices, ans, keep_order=true)
 
 The number created by `2^3` is?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 ans = 1
 radioq(choices, ans, keep_order=true)
 ```
@@ -584,7 +590,7 @@ radioq(choices, ans, keep_order=true)
 
 The number created by `sqrt(im)` is?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 ans = 4
 radioq(choices, ans, keep_order=true)
 ```
@@ -594,7 +600,7 @@ radioq(choices, ans, keep_order=true)
 
 The number created by `2^(-1)` is?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 ans = 3
 radioq(choices, ans, keep_order=true)
 ```
@@ -605,7 +611,7 @@ radioq(choices, ans, keep_order=true)
 
 The "number" created by `1/0` is?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 ans = 3
 radioq(choices, ans, keep_order=true)
 ```
@@ -614,7 +620,7 @@ radioq(choices, ans, keep_order=true)
 
 Is `(2 + 6) + 7` equal to  `2 + (6 + 7)`?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 yesnoq(true)
 ```
 
@@ -623,7 +629,7 @@ yesnoq(true)
 
 Is `(2/10 + 6/10) + 7/10` equal to `2/10 + (6/10 + 7/10)`?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 yesnoq(false)
 ```
 
@@ -636,13 +642,13 @@ a, b = 2, -1
 a^b
 ```
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 yesnoq(false)
 ```
 
 (This shows the special casing that is done when powers use literal numbers.)
 
 
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```julia; hold=true; echo=false
+#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
 ```

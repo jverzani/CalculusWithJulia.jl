@@ -1,9 +1,15 @@
 # Inequalities, Logical expressions
 
+In the following we use the following package:
+
+```julia
+using CalculusWithJulia    # loads the `SpecialFunctions` package
+```
+
 ```julia; echo=false; results="hidden"
-using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
 using Plots
+__DIR__, __FILE__ = :precalc, :logical_expressions
 nothing
 ```
 
@@ -19,7 +25,7 @@ relationship is true or false. In this case, we end up with a comparison of $5 \
 
 `Julia` provides numeric comparisons that allow this notation to be exactly mirrored:
 
-```julia;
+```julia;hold=true
 x, y = 1, 2
 x^2 + y^2 <= 1
 ```
@@ -55,14 +61,14 @@ For example, if $a < b$ then for any $c$ it is also true that $a + c < b + c$.
 We can't "prove" this through examples, but we can investigate it by
 the choice of various values of $a$, $b$, and $c$. For example:
 
-```julia;
+```julia;hold=true
 a,b,c = 1,2,3
 a < b, a + c < b + c
 ```
 
 Or in reverse:
 
-```julia;
+```julia;hold=true
 a,b,c = 3,2,1
 a < b, a + c < b + c
 ```
@@ -80,7 +86,7 @@ What about addition and multiplication?
 
 Consider the case $a < b$ and $c > 0$. Then $ca < cb$. Here we investigate using 3 random values (which will be positive):
 
-```julia;
+```julia;hold=true
 a,b,c = rand(3)   # 3 random numbers in [0,1)
 a < b, c*a < c*b
 ```
@@ -90,7 +96,7 @@ Whenever these two commands are run, the two logical values should be identical,
 
 The restriction that $c > 0$ is needed. For example, if $c = -1$, then we have $a < b$ if and only if $-a > -b$. That is the inequality is "flipped."
 
-```julia;
+```julia;hold=true
 a,b = rand(2)
 a < b, -a > -b
 ```
@@ -105,7 +111,7 @@ to this fact for $a,b > 0$: $a < b$ if and only if $1/a > 1/b$.
 
 We can check with random values again:
 
-```julia;
+```julia;hold=true
 a,b = rand(2)
 a < b, 1/a > 1/b
 ```
@@ -127,7 +133,7 @@ We now show some inequalities highlighted on this  [Wikipedia](http://en.wikiped
 Numerically investigate the fact $e^x \geq 1 + x$ by showing it is
 true for three different values of $x$. We pick $x=-1$, $0$, and $1$:
 
-```julia;
+```julia;hold=true;
 x = -1; exp(x) >= 1 + x
 x =  0; exp(x) >= 1 + x
 x =  1; exp(x) >= 1 + x
@@ -135,13 +141,13 @@ x =  1; exp(x) >= 1 + x
 
 Now, let's investigate that for any distinct real numbers, $a$ and $b$, that
 
-$$~
+```math
 \frac{e^b - e^a}{b - a} > e^{(a+b)/2}
-~$$
+```
 
 For this, we use `rand(2)` to generate two random numbers in $[0,1)$:
 
-```julia;
+```julia;hold=true
 a, b = rand(2)
 (exp(b) - exp(a)) / (b-a) > exp((a+b)/2)
 ```
@@ -154,7 +160,7 @@ Finally, let's investigate the fact that the harmonic mean, $2/(1/a +
 is less than or equal to the quadratic mean, $\sqrt{a^2 +
 b^2}/\sqrt{2}$, using two randomly chosen values:
 
-```julia;
+```julia;hold=true
 a, b = rand(2)
 h = 2 / (1/a + 1/b)
 g = (a * b) ^ (1 / 2)
@@ -170,12 +176,12 @@ h <= g, g <= q
 
 The absolute value notation can be defined through cases:
 
-$$~
+```math
 \lvert x\rvert = \begin{cases}
 x & x \geq 0\\
 -x & \text{otherwise}.
 \end{cases}
-~$$
+```
 
 The interpretation of $\lvert x\rvert$, as the distance on the number line of $x$
 from $0$, means that many relationships are naturally expressed in
@@ -320,7 +326,7 @@ The `clamp(x, a, b)` performs this task more generally, and is used as in `clamp
 
 Is `e^pi` or `pi^e` greater?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = [
 "`e^pi` is greater than `pi^e`",
 "`e^pi` is equal to `pi^e`",
@@ -334,7 +340,7 @@ radioq(choices, ans)
 
 Is $\sin(1000)$ positive?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 ans = (sin(1000) > 0)
 yesnoq(ans)
 ```
@@ -343,19 +349,21 @@ yesnoq(ans)
 
 Suppose you know $0 < a < b$. What can you say about the relationship between $-1/a$ and $-1/b$?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = [
-L"-1/a < -1/b",
-L"-1/a > -1/b",
-L"-1/a \geq -1/b"]
+"``-1/a < -1/b``",
+"``-1/a > -1/b``",
+raw"``-1/a \geq -1/b``"]
 ans = 3
 radioq(choices, ans)
 ```
 
 
-###### Suppose you know $a < 0 < b$, is it true that $1/a > 1/b$?
+###### Question
 
-```julia; echo=false;
+Suppose you know $a < 0 < b$, is it true that $1/a > 1/b$?
+
+```julia; hold=true; echo=false;
 choices = ["Yes, it is always true.",
            "It can sometimes be true, though not always.",
 	   L"It is never true, as $1/a$ is negative and $1/b$ is positive"]
@@ -368,10 +376,9 @@ radioq(choices, ans)
 The `airyai` [function](http://en.wikipedia.org/wiki/Airy_function) is
 a special function named after a British Astronomer who realized the
 function's value in his studies of the rainbow. The `SpecialFunctions`
-package must be loaded to include this function, which is done with the accompanying package `CalculusWithJulia`:
+package must be loaded to include this function, which is done with the accompanying package `CalculusWithJulia`.
 
 ```julia;
-using CalculusWithJulia    # loads the `SpecialFunctions` package
 airyai(0)
 ```
 
@@ -380,7 +387,7 @@ is always positive for $x > 0$, though not so for negative values of
 $x$. Which of these indicates the first negative value : `airyai(-1) <0`,
 `airyai(-2) < 0`, ..., or `airyai(-5) < 0`?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = ["`airyai($i) < 0`" for i in -1:-1:-5]
 ans = 3
 radioq(choices, ans, keep_order=true)
@@ -390,7 +397,7 @@ radioq(choices, ans, keep_order=true)
 
 By trying three different values of $x > 0$ which of these could possibly be always true:
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = ["`x^x <= (1/e)^(1/e)`",
            "`x^x == (1/e)^(1/e)`",
            "`x^x >= (1/e)^(1/e)`"]
@@ -404,7 +411,7 @@ Student logic says $(x+y)^p = x^p + y^p$. Of course, this isn't
 correct for all $p$ and $x$. By trying a few points, which is true
 when $x,y > 0$ and $0 < p < 1$:
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = ["`(x+y)^p < x^p + y^p`",
            "`(x+y)^p == x^p + y^p`",
            "`(x+y)^p > x^p + y^p`"]
@@ -420,7 +427,7 @@ true for $a, b > 0$ (as proved by I. Ilani in
 JSTOR, AMM, Vol.97, No.1, 1990). Which one?
 
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = ["`a^a + b^b <= a^b + b^a`",
            "`a^a + b^b >= a^b + b^a`",
 	   "`a^b + b^a <= 1`"]
@@ -432,7 +439,7 @@ radioq(choices, ans)
 ###### Question
 Is $3$ in the set $\lvert x - 2\rvert < 1/2$?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 val = abs(3-2) < 1/2
 yesnoq(val)
 ```
@@ -441,10 +448,10 @@ yesnoq(val)
 
 Which of the following is equivalent to $\lvert x - a\rvert > b$:
 
-```julia; echo=false;
-choices = [L"-b < x - a < b",
-         L" -b < x-a \text{ and } x - a < b",
-         L" x - a < -b \text{ or } x - a > b"]
+```julia; hold=true; echo=false;
+choices = [raw"``-b < x - a < b``",
+           raw"`` -b < x-a \text{ and } x - a < b``",
+           raw"``x - a < -b \text{ or } x - a > b``"]
 ans = 3
 radioq(choices, ans)
 ```
@@ -455,12 +462,12 @@ If $\lvert x - \pi\rvert < 1/10$ is $\lvert \sin(x) - \sin(\pi)\rvert < 1/10$?
 
 Guess an answer based on a few runs of
 
-```julia; eval=false;
+```julia; hold=true; eval=false;
 x = pi + 1/10 * (2rand()-1)
 abs(x - pi) < 1/10, abs(sin(x) - sin(pi)) < 1/10
 ```
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 booleanq(true)
 ```
 
@@ -468,7 +475,7 @@ booleanq(true)
 
 Does `12` satisfy $\lvert x - 3\rvert + \lvert x-9\rvert > 12$?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 x = 12
 val = (abs(x -3) + abs(x-9) > 12)
 yesnoq(val)
@@ -478,7 +485,7 @@ yesnoq(val)
 
 Which of these will show DeMorgan's law holds when both values are `false`:
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = ["`!(false && false) == (!false && !false)`",
            "`!(false && false) == (false || false)`",
 	   "`!(false && false) == (!false || !false)`"]
@@ -490,7 +497,7 @@ radioq(choices, ans)
 
 For floating point numbers there are two special values `Inf` and `NaN`. For which of these is the answer always `false`:
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = ["`Inf < 3.0` and `3.0 <= Inf`",
            "`NaN < 3.0` and `3.0 <= NaN`"]
 ans = 2
@@ -511,7 +518,7 @@ The IEEE 754 standard  is about floating point numbers, for which there are the 
 
 Do all four seem to be the case within `Julia`? Find your answer by trial and error.
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 yesnoq(true)
 ```
 
@@ -525,7 +532,7 @@ true && missing, true || missing
 
 We see the value of `true || missing` is `true`. Why?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = ["""
 In the manual we can read that "In the expression `a || b`, the subexpression `b` is only evaluated if `a` evaluates to false." In this case `a` is `true` and so `a` is returned.
 """,
@@ -536,7 +543,7 @@ radioq(choices, ans)
 
 The value for `true && missing` is `missing`, not a boolean value. What happens?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = ["""
 In the manual we can read that "In the expression `a && b`, the subexpression `b` is only evaluated if `a` evaluates to true." In this case, `a` is `false` so `b` is evaluated and returned. As `b` is just `missing` that is the return value.
 """,
@@ -546,6 +553,6 @@ radioq(choices, ans)
 ```
 
 
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+```julia; hold=true; echo=false
+#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
 ```

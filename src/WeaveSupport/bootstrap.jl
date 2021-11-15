@@ -47,7 +47,7 @@ function ImageFile(f::AbstractString, caption, alt, width)
 end
 
 " template for an base64 encoded image"
-gif_to_img_tpl = """
+gif_to_img_tpl = mt"""
   <img src="data:image/gif;base64,{{{:data}}}" class="card-img-top" alt="{{{:alt}}}">
 """
 

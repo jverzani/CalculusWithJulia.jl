@@ -3,9 +3,22 @@
 
 ## WeaveTpl
 function Base.show(io::IO, m::MIME"text/html", x::ImageFile)
-    Mustache.render(io, centered_content_tpl, x)
-    #write(io, gif_to_data(x.f, x.caption))
+    data = (read(x.f, String))
+    content = gif_to_imge(data=data, alt="figure")
+    caption = sprint(io -> show(io, "text/html", x.caption))
+
+    print(io, """<div class="d-flex justify-content-center">""")
+    print(io, "<figure>")
+    print(io, content)
+    print(io, "<figcaption>")
+    print(io, caption)
+    print(io, """
+</figcaption>
+</figure>
+</div>
+""")
 end
+#Mustache.render(io, centered_content_tpl; content=content, caption=caption)
 
 function Base.show(io::IO, ::MIME"text/latex", x::ImageFile)
     fname = x.f
