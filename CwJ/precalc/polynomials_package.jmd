@@ -509,9 +509,3 @@ The `Polynomials` package has an implementation, so you can check your answer th
 The `ApproxFun` package is built on top of polynomials expressed in this basis, as the Chebyshev polynomials have special properties which make them very suitable when approximating functions with polynomials. The `ApproxFun` package uses  easier-to-manipulate polynomials to approximate functions very accurately, thereby being useful for investigating properties of non-linear functions leveraging properties for polynomials.
 """)
 ```
-
-
-
-```julia; hold=true; echo=false
-#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
-```

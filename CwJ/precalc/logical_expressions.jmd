@@ -551,8 +551,3 @@ In the manual we can read that "In the expression `a && b`, the subexpression `b
 ans = 1
 radioq(choices, ans)
 ```
-
-
-```julia; hold=true; echo=false
-#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
-```

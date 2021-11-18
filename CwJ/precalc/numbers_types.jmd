@@ -67,9 +67,9 @@ The key distinction is between integers and floating points. While
 floating point values include integers, and so can be used exclusively
 on the calculator, the difference is that an integer is guaranteed to
 be an exact value, whereas a floating point value, while often an
-exact representation of a number is also is often just an
-*approximate* value - is used to advantage; floating point values can
-model a much wider set of numbers.
+exact representation of a number is also often just an
+*approximate* value. This can be an advantage -- floating point values can
+model a much wider range of numbers.
 
 
 Now in nearly all cases, the differences are not noticed. Take for instance this simple calculation involving mixed types.
@@ -83,7 +83,7 @@ The sum of an integer, a floating point number and rational number returns a flo
 
 This is  because behind the scenes, `Julia` will often "promote" a type to match, so for example to compute `1 + 1.25` the integer `1` will be promoted to a floating point value and the two values are then added. Similarly, with `2.25 + 3//2`, where the fraction is promoted to the floating point value `1.5` and addition is carried out.
 
-As floating point numbers are approximations, some values are not quite what they would be mathematically:
+As floating point numbers may be  approximations, some values are not quite what they would be mathematically:
 
 ```julia;
 sqrt(2) * sqrt(2) - 2, sin(pi), 1/10 + 1/5 - 3/10
@@ -106,11 +106,14 @@ Rather than give an error though, `Julia` gives seemingly arbitrary answers, as 
 2^62, 2^63
 ```
 
-This could be worked around, but it isn't, as it
-would slow down this basic computation. So, it is up to the user to be
-aware of cases where their integer values can grow to big. Again, use
-floating point numbers in this domain, as they have more room, at
-the cost of sometimes being approximate values.
+(They aren't arbitrary, rather integer arithmetic is implemented as modular arithmetic.)
+
+This could be worked around, as it is with some programming languages,
+but it isn't, as it would slow down this basic computation. So, it is
+up to the user to be aware of cases where their integer values can
+grow to big. The suggestion is to use floating point numbers in this
+domain, as they have more room, at the cost of sometimes being
+approximate values.
 
 
 * the `sqrt` function will give a domain error for negative values:
@@ -128,13 +131,15 @@ roots of negative numbers, start with complex numbers:
 sqrt(-1.0 + 0im)
 ```
 
-```julia; echo=false;
-note("""
-At one point, `Julia` had an issue with a third type of power:
-integer bases and negative integer exponents. For example `2^(-1)`. This is now special cased. Historically, the desire to keep a predictable type for the output (integer) led to defining this case as a domain error.
-""")
 
-```
+* At one point, `Julia` had an issue with a third type of power:
+integer bases and negative integer exponents. For example
+`2^(-1)`. This is now special cased, though only for numeric
+literals. If `z=-1`, `2^z` will throw a `DomainError`.  Historically,
+the desire to keep a predictable type for the output (integer) led to
+defining this case as a domain error, but its usefulness led to
+special casing.
+
 
 ## Some more details.
 
@@ -174,7 +179,7 @@ Integers are often used casually, as they come about from parsing. As with a cal
 [Floating point](http://en.wikipedia.org/wiki/Floating_point) numbers
 are a computational model for the real numbers.  For floating point
 numbers, $64$ bits are used by default for both $32$- and $64$-bit systems, though other storage sizes can be requested. This gives
-a large - but still finite - set of real numbers that can be
+a large ranging - but still finite - set of real numbers that can be
 represented. However, there are infinitely many real numbers just
 between $0$ and $1$, so there is no chance that all can be represented
 exactly on the computer with a floating point value. Floating point
@@ -227,6 +232,8 @@ notation can be used directly to specify a floating point value:
 avagadro = 6.23e23
 ```
 
+Here `e` is decidedly *not* the Euler number, rather syntax to separate the exponent from the mantissa.
+
 The first way of representing this number required using `10.0` and not `10` as the integer power will return an integer and even for 64-bit systems is only valid up to `10^18`. Using scientific notation avoids having to concentrate on such limitations.
 
 ##### Example
@@ -234,7 +241,11 @@ The first way of representing this number required using `10.0` and not `10` as 
 Floating point values in scientific notation will always be normalized. This is easy for the computer to do, but tedious to do by hand. Here we see:
 
 ```julia;
-4e30 * 3e40, 3e40 / 4e30
+4e30 * 3e40
+```
+
+```julia;
+3e40 / 4e30
 ```
 
 The power in the first is 71, not 70 = 30+40, as the product of 3 and 4 as 12 or `1.2e^1`. (We also see the artifact of `1.2` not being exactly representable in floating point.)
@@ -428,16 +439,17 @@ value can be. When `Julia` can reason about the type of value involved
 without having to reason about the values themselves, it can work with
 the compiler to produce shorter lists of instructions.
 
-So knowing the type of the output of a function can be a big
-advantage. In `Julia` this is known as *type stability*. In the
-standard `Julia` library, this is a primary design consideration.
+So knowing the type of the output of a function based only on the type
+of the inputs can be a big advantage. In `Julia` this is known as
+*type stability*. In the standard `Julia` library, this is a primary
+design consideration.
 
 
 ##### Example: closure
 
 To motivate this a bit, we discuss how mathematics can be shaped by a
 desire to stick to simple ideas.  A desirable algebraic property of a
-set of numbers and an operation - *closure*.  That is, if one takes an
+set of numbers and an operation is *closure*.  That is, if one takes an
 operation like `+` and then uses it to add two numbers in a set, will
 that result also be in the set? If this is so for any pair of numbers,
 then the set is closed with respect to the operation addition.
@@ -647,8 +659,3 @@ yesnoq(false)
 ```
 
 (This shows the special casing that is done when powers use literal numbers.)
-
-
-```julia; hold=true; echo=false
-#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
-```

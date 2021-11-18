@@ -50,19 +50,18 @@ julia> 2 + 2
 
 * An IDE. For programmers, an integrated development environment is often used to manage bigger projects. `Julia` has `Juno` and `VSCode`.
 
-* A notebook. The [Project Juptyer](https://jupyter.org/) provides a notebook interface for interacting with `Julia` and a more `IDE` style `jupyterlab` interface. These notes are formatted as though a notebook was used. That is, there are cells where commands are typed and immediately following is the printed output returned by `Julia`. The `Juypter` notebook is used by `binder` and can be used locally through the `IJulia` package. This notebook has the ability to display many different types of outputs in addition to plain text, such as images, marked up math text, etc.
+* A notebook. The [Project Juptyer](https://jupyter.org/) provides a notebook interface for interacting with `Julia` and a more `IDE` style `jupyterlab` interface. A jupyter notebook has cells where commands are typed and immediately following is the printed output returned by `Julia`. The output of a cell depends on the state of the kernel when the cell is computed, not the order of the cells in the notebook. Cells have a number attached, showing the execution order. The `Juypter` notebook is used by `binder` and can be used locally through the `IJulia` package. This notebook has the ability to display many different types of outputs in addition to plain text, such as images, marked up math text, etc.
 
-* The [Pluto](https://github.com/fonsp/Pluto.jl) package provides a *reactive* notebook interface. Reactive means when one "cell" is modified and executed, the new values cascade to all other dependent cells which in turn are updated. This is very useful for exploring a parameter space, say. The html pages are formatted as `Pluto` notebooks, which makes them able to be easily run on the readers desktop.
+* The [Pluto](https://github.com/fonsp/Pluto.jl) package provides a *reactive* notebook interface. Reactive means when one "cell" is modified and executed, the new values cascade to all other dependent cells which in turn are updated. This is very useful for exploring a parameter space, say. These html pages are formatted as `Pluto` notebooks, which makes them able to be easily run on the readers desktop.
 
 
 The `Pluto` interface has some idiosyncracies that need explanation:
 
 * Cells can only have one command within them. Multiple command cells must be contained in a `begin` block or a `let` block.
 
-* By default, the cells are reactive. This means when a variable in one cell is changed, then any references to that variable are also updated. This is fantastic for updating several computations at once. However it means variable names can not be repeated within a page. Pedagogically, it is convenient to use variable names and function names (e.g., `x` and `f`) repeatedly, but this is only possible *if* they are within a `let` block or a function body.
+* By default, the cells are *reactive*. This means when a variable in one cell is changed, then any references to that variable are also updated -- like a spreadsheet. This is fantastic for updating several computations at once. However it means variable names can not be repeated within a page. Pedagogically, it is convenient to use variable names and function names (e.g., `x` and `f`) repeatedly, but this is only possible *if* they are within a `let` block or a function body.
 
 * To not repeat names, but to be able to reference a value from cell-to-cell,  some unicode variants are used within a page. Visually these look familiar, but typing the names requires some understanding of unicode input. The primary usages is *bold italic* (e.g., `\bix[tab]` or `\bif[tab]`) or *bold face* (e.g. `\bfx[tab]` or `bff[tab]`).
-
 
 * The notebooks snapshot the packages they depend on, which is great for reproducability, but may mean older versions are silently used.
 
@@ -116,7 +115,7 @@ Pkg.add("HQuadrature") # for higher-dimensional integration
 
 ## `Julia` commands
 
-In `Jupyter`, commands are typed into a notebook cell:
+In `Pluto`, commands are typed into a notebook cell:
 
 ```julia;
 2 + 2   # use shift-enter to evaluate
@@ -131,7 +130,7 @@ On a given line, anything **after** a `#` is a *comment* and is not processed.
 
 The results of the last command executed will be displayed in an
 output area. Separating values by commas allows more than one value to be
-displayed. Explicit printing can be done to output intermediate values. Plots are displayed when the plot object is returned by the  last executed command.
+displayed.  Plots are displayed when the plot object is returned by the  last executed command.
 
 The state of a Pluto notebook is a result of all the cells in the notebook being executed. The cell order does not impact this and can be rearranged by the user.
 
@@ -209,12 +208,7 @@ Random sequences are formed by `rand`, among others:
 rand(3)
 ```
 
-
-Random sequences are formed by `rand`, among others:
-
-```julia
-rand(3)
-```
+The call `rand()` returns a single random number (in ``[0,1)``.)
 
 ## Variables
 
@@ -224,7 +218,7 @@ Values can be assigned variable names, with `=`. There are some variants
 u = 2
 a_really_long_name = 3
 a0, b0 = 1, 2    # multiple assignment
-a1 = a2 = 0    # chained assignment, sets a2 and a1 to 0
+a1 = a2 = 0      # chained assignment, sets a2 and a1 to 0
 ```
 
 The names can be short, as above, or more verbose. Variable names can't start
@@ -500,7 +494,7 @@ Notation for `Julia` and math is *similar* for functions - but not for equations
 x^2 + y^2 = 3
 ```
 
-In `Julia` the equals sign is **only** for *assignment*. The *left-hand* side of an equals sign in `Julia` is reserved for a) variable assignment; b) function definition (via `f(x) = ...`); and c) indexed assignment to a vector or array. (Vectors are indexed by a number allow retrieval and setting of the stored value in the container. The notation mentioned here would be `xs[2] = 3` to assign to the 2nd element of `xs` a value `3`.
+In `Julia` the equals sign is **only** for *assignment*. The *left-hand* side of an equals sign in `Julia` is reserved for a) variable assignment; b) function definition (via `f(x) = ...`); and c) indexed assignment to a vector or array. (Vectors are indexed by a number allowing retrieval and setting of the stored value in the container. The notation mentioned here would be `xs[2] = 3` to assign to the 2nd element of `xs` a value `3`.
 
 ## Symbolic math
 
@@ -543,9 +537,3 @@ plot(64 - (1/2)*32 * x^2, 0, 2)
 * SymPy has functions for basic math: `factor`, `roots`, `solve`, `solveset`, ``\dots``
 
 * SymPy has functions for calculus: `limit`, `diff`, `integrate`, ``\dots``
-
-
-
-```julia; echo=false
-#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
-```

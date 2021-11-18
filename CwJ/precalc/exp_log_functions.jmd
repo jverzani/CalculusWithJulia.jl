@@ -13,6 +13,8 @@ __DIR__, __FILE__ = :precalc, :exp_log_functions
 nothing
 ```
 
+----
+
 The family of exponential functions is used to model growth and
 decay. The family of logarithmic functions is defined here as the
 inverse of the exponential functions, but have reach far outside of that.
@@ -26,9 +28,9 @@ For $0 < a < 1$ these functions decay or decrease, for $a > 1$ the
 functions grow or increase, and if $a=1$ the function is constantly $1$.
 
 For a given $a$, defining $a^n$ for positive integers is
-straightforward, as it means multiplying $n$ copies of $a$. From this,
+straightforward, as it means multiplying $n$ copies of $a.$ From this,
 the key properties of exponents: $a^x \cdot a^y = a^{x+y}$, and
-$(a^x)^y = a^{x \cdot y}$ are immediate consequences. For $a \neq 0$,
+$(a^x)^y = a^{x \cdot y}$ are immediate consequences, for integer powers. For $a \neq 0$,
 $a^0$ is defined to be $1$. For positive, integer values of $n$, we
 have by definition that $a^{-n} = 1/a^n$. For $n$ a positive integer, we can
 define $a^{1/n}$ to be the unique positive solution to $x^n=a$. And
@@ -75,7 +77,7 @@ We see examples of some general properties:
   (provided $a \neq 1$).
 * For $0 < a < 1$ the functions are monotonically decreasing.
 * For $a > 1$ the functions are monotonically increasing.
-* If $1 < a < b$ the and $x > 0$ we have $a^x < b^x$.
+* If $1 < a < b$ and $x > 0$ we have $a^x < b^x$.
 
 
 ##### Example
@@ -144,11 +146,10 @@ depleted of nutrients and enriched with wastes."
 The famous [Fibonacci](https://en.wikipedia.org/wiki/Fibonacci_number)
 numbers are $1,1,2,3,5,8,13,\dots$, where $F_{n+1}=F_n+F_{n-1}$. These numbers increase. To see how fast, if we *guess* that
 the growth is evenually exponential and assume $F_n \approx c \cdot a^n$, then
-our equation is approximately $a^{n+1} = a^n + a^{n-1}$ which has solutions $a$
-satisfying $a^2 - a -1 = 0$. The positve solution is
+our equation is approximately $ca^{n+1} = ca^n + ca^{n-1}$. Factoring out common terms gives ``ca^{n-1} \cdot (a^2 - a - 1) = 0``. The term ``a^{n-1}`` is always positive, so any solution would satisfy $a^2 - a -1 = 0$. The positve solution is
 $(1 + \sqrt{5})/2 \approx 1.618$
 
-That is evidence that the $F_n \approx 1.618^n$. (See
+That is evidence that the $F_n \approx c\cdot 1.618^n$. (See
 [Relation to golden ratio](https://en.wikipedia.org/wiki/Fibonacci_number#Relation_to_the_golden_ratio)
 for a related, but more explicit exact formula.
 
@@ -210,7 +211,7 @@ We can see more clearly that ``n=2`` is the largest value for ``f`` and ``a/2`` 
 ## Logarithmic functions: the inverse of exponential functions
 
 As the exponential functions are strictly *decreasing* when $0 < a <
-1$ and strictly *increasing* when $a>1$, in both cases an inverse
+1$ and strictly *increasing* when $a>1,$ in both cases an inverse
 function will exist. (When $a=1$ the function is a constant and is not
 one-to-one.) The domain of an exponential function is all real $x$ and
 the range is all *positive* $x$, so these are switched around for the
@@ -219,7 +220,7 @@ inverse function. Explicitly: the inverse function to ``f(x)=a^x``  will have do
 The inverse function will solve for $x$ in the equation $a^x = y$. The
 answer, formally, is the logarithm base $a$, written $\log_a(x)$.
 
-That is $a^{\log_a(x)} = x$ and $\log_a(a^x) = x$ when defined.
+That is $a^{\log_a(x)} = x$ for ``x > 0`` and $\log_a(a^x) = x$ for all ``x``.
 
 
 To see how a logarithm is mathematically defined will have to wait,
@@ -237,10 +238,10 @@ $2$:
 f(x) = 2^x
 xs = range(-2, stop=2, length=100)
 ys = f.(xs)
-plot(xs, ys,  color=:blue, legend=false)  # plot f
-plot!(ys, xs, color=:red)                 # plot f^(-1)
+plot(xs, ys,  color=:blue, label="2ˣ")           # plot f
+plot!(ys, xs, color=:red, label="f⁻¹")           # plot f^(-1)
 xs = range(1/4, stop=4, length=100)
-plot!(xs, log2.(xs), color=:green)        # plot log2
+plot!(xs, log2.(xs), color=:green, label="log₂") # plot log2
 ```
 
 Though we made three graphs, only two are seen, as the graph of `log2`
@@ -612,8 +613,4 @@ L"as $a^x   < 1$, $a^y < a^x$",
 ]
 ans = 1
 radioq(choices, ans)
-```
-
-```julia; hold=true; echo=false
-#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
 ```

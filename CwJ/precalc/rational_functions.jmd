@@ -1064,12 +1064,3 @@ L"The $\sin(x)$ oscillates, but the rational function has a horizontal asymptote
 ans = 2
 radioq(choices, ans)
 ```
-
-
-
-
-
-
-```julia; hold=true; echo=false
-#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
-```

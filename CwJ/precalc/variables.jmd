@@ -498,9 +498,3 @@ choices = ["Assign all three variables at once to a value of 3",
 ans = 1
 radioq(choices, ans)
 ```
-
-
-
-```julia; hold=true; echo=false
-#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
-```

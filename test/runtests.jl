@@ -8,6 +8,7 @@ Pkg.test("CalculusWithJulia") # basic tests
 test_args = ["plots=true"] # run plot tests
 test_args = ["force=true"] # generate all html pages
 test_args = ["force=true", "target=:pdf"] # generate all as pdf
+test_args = ["folder=:all", "target=:pdf"] # generate all modified ones as pdf
 test_args = ["folder=:precalc"] # make folder as needed
 test_args = ["folder=:precalc", "force=true"] # make all in folder
 test_args = ["folder=:precalc", "file=:functions"]
@@ -44,7 +45,7 @@ function parse_args(ARGS)
 
         m = match(r"^target=:(.*)", arg)
         if m != nothing
-            target = m.captures[1]
+            target = Symbol(m.captures[1])
         end
 
     end

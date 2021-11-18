@@ -3,8 +3,7 @@
 This section will use the following add-on packages:
 
 ```julia
-using CalculusWithJulia
-using Plots
+using CalculusWithJulia, Plots
 ```
 
 ```julia; echo=false; results="hidden"
@@ -12,6 +11,8 @@ using CalculusWithJulia.WeaveSupport
 __DIR__, __FILE__ = :precalc, :functions
 nothing
 ```
+
+---
 
 A mathematical [function](http://en.wikipedia.org/wiki/Function_(mathematics)) is defined abstractly by
 
@@ -134,7 +135,7 @@ f(x) = 5/9 * (x - 32)
 f(72)				## room temperature
 ```
 
-will create a function object which is called with a value of `x` at a later
+will create a function object with a value of `x` determined at a later
 time - the time the function is called. So the value of `x` defined when the function is created is not
 important here (as the value of `x` used by `f` is passed in as an argument).
 
@@ -311,6 +312,109 @@ trajectory(100)
 
 By using a multi-line function our work is much easier to look over for errors.
 
+##### Example: the secant method for finding a solution to $f(x) = 0$.
+
+This next example, shows how using functions to collect a set of computations for simpler reuse can be very helpful.
+
+An old method for finding a zero of an equation is the [secant
+method](https://en.wikipedia.org/wiki/Secant_method). We illustrate
+the method with the function $f(x) = x^2 - 2$. In an upcoming example we
+saw how to create a function to evaluate the secant line between
+$(a,f(a))$ and $(b, f(b))$ at any point. In this example, we define a
+function to compute the $x$ coordinate of where the secant line
+crosses the $x$ axis. This can be defined as follows:
+
+```julia;
+function secant_intersection(f, a, b)
+   # solve 0 = f(b) + m * (x-b) where m is the slope of the secant line
+   # x = b - f(b) / m
+   m = (f(b) - f(a)) / (b - a)
+   b - f(b) / m
+end
+```
+
+We utilize this as follows. Suppose we wish to solve $f(x) = 0$ and we
+have two "rough" guesses for the answer. In our example, we wish to
+solve $q(x) = x^2 - 2$ and our "rough" guesses are $1$ and $2$. Call
+these values $a$ and $b$. We *improve* our rough guesses by finding a
+value $c$ which is the intersection point of the secant line.
+
+```julia;
+q(x) = x^2 - 2
+𝒂, 𝒃 = 1, 2
+𝒄 = secant_intersection(q, 𝒂, 𝒃)
+```
+
+In our example, we see that in trying to find an answer to $f(x) = 0$
+( $\sqrt{2}\approx 1.414\dots$) our value found from the intersection
+point is a better guess than either $a=1$ or $b=2$:
+
+```julia;echo=false;
+plot(q, 𝒂, 𝒃, linewidth=5, legend=false)
+plot!(zero, 𝒂, 𝒃)
+plot!([𝒂, 𝒃], q.([𝒂, 𝒃]))
+scatter!([𝒄], [q(𝒄)])
+```
+
+Still,  `q(𝒄)` is not really close to $0$:
+
+```julia;
+q(𝒄)
+```
+
+*But* it is much closer than either $q(a)$ or $q(b)$, so it is an improvement. This suggests renaming $a$ and $b$ with the old $b$ and $c$ values and trying again we might do better still:
+
+```julia;hold=true
+𝒂, 𝒃 = 𝒃, 𝒄
+𝒄 = secant_intersection(q, 𝒂, 𝒃)
+q(𝒄)
+```
+
+Yes, now the function value at this new $c$ is even closer to $0$. Trying a few more times we see we just get closer and closer. He we start again to see the progress
+
+```julia;hold=true;term=true
+𝒂,𝒃 = 1, 2
+for step in 1:6
+    𝒂, 𝒃 = 𝒃, secant_intersection(q, 𝒂, 𝒃)
+    current = (c=𝒃, qc=q(𝒃))
+    @show current
+end
+```
+
+Now our guess $c$ is basically the same as `sqrt(2)`. Repeating the above leads to only a slight improvement in the guess, as we are about as close as floating point values will allow.
+
+Here we see a visualization with all these points. As can be seen, it
+quickly converges at the scale of the visualization, as we can't see
+much closer than `1e-2`.
+
+```julia;hold=true;echo=false;
+f(x) = x^2 - 2
+a, b = 1, 2
+c = secant_intersection(f, a, b)
+
+p = plot(f, a, b, linewidth=5, legend=false)
+plot!(p, zero, a, b)
+
+plot!(p, [a,b], f.([a,b]));
+scatter!(p, [c], [f(c)])
+
+a, b = b, c
+c = secant_intersection(f, a, b)
+plot!(p, [a,b], f.([a,b]));
+scatter!(p, [c], [f(c)])
+
+
+a, b = b, c
+c = secant_intersection(f, a, b)
+plot!(p, [a,b], f.([a,b]));
+scatter!(p, [c], [f(c)])
+p
+```
+
+
+
+In most cases, this method can fairly quickly find a zero provided two good starting points are used.
+
 ## Parameters, function context (scope), keyword arguments
 
 Consider two functions implementing the slope-intercept form and point-slope form of a line:
@@ -319,7 +423,7 @@ Consider two functions implementing the slope-intercept form and point-slope for
 f(x) = m \cdot x + b, \quad g(x) = y_0 + m \cdot (x - x_0).
 ```
 
-Both functions use the variable $x$, but there is no confusion, as we learn that this is just a dummy variable to be substituted for and so could have any name. Both also share a variable $m$ for a slope. Where does that value come from? In practice, there is a context that gives an answer. Despite the same name, there is no expectation that the slope will be the same for each function if the context is different. So when parameters are involved, a function involves a rule and a context to give specific values to the parameters. Euler had said initially that functions a composed of "the variable quantity and numbers or constant quantities." The "term"variable, we still use, but instead of "constant quantities," we choose the name "parameters."
+Both functions use the variable $x$, but there is no confusion, as we learn that this is just a dummy variable to be substituted for and so could have any name. Both also share a variable $m$ for a slope. Where does that value come from? In practice, there is a context that gives an answer. Despite the same name, there is no expectation that the slope will be the same for each function if the context is different. So when parameters are involved, a function involves a rule and a context to give specific values to the parameters. Euler had said initially that functions a composed of "the variable quantity and numbers or constant quantities." The term "variable," we still use, but instead of "constant quantities," we use the name "parameters."
 
 
 
@@ -611,7 +715,7 @@ same variable name for the two types.  In general, Julia is a dynamic
 language, meaning variable names can be reused with different types
 of variables. But generic functions take more care, as when a new
 method is defined it gets added to a method table. So repurposing the
-name of a generic function for something else is not allowed. Similarly,
+name of a generic function for something else is not allowed (well, in `Pluto` it is.). Similarly,
 repurposing an already defined variable name for a generic function is
 not allowed. This comes up when we use functions that return functions
 as we have different styles that can be used: When we defined `l =
@@ -660,110 +764,6 @@ secant(f,a,b)(3/2)
 
 The last line employs double parentheses. The first pair, `secant(f,a,b)`, returns a function and the second pair, `(3/2)`, are used to call the returned function.
 
-##### Example: the secant method for finding a solution to $f(x) = 0$.
-
-This last example, shows how using functions to collect a set of computations for simpler reuse can be very helpful.
-
-An old method for finding a zero of an equation is the [secant
-method](https://en.wikipedia.org/wiki/Secant_method). We illustrate
-the method with the function $f(x) = x^2 - 2$. In the last example we
-saw how to create a function to evaluate the secant line between
-$(a,f(a))$ and $(b, f(b))$ at any point. In this example, we define a
-function to compute the $x$ coordinate of where the secant line
-crosses the $x$ axis. This can be defined as follows:
-
-```julia;
-function secant_intersection(f, a, b)
-   # solve 0 = f(b) + m * (x-b) where m is the slope of the secant line
-   # x = b - f(b) / m
-   m = (f(b) - f(a)) / (b - a)
-   b - f(b) / m
-end
-```
-
-We utilize this as follows. Suppose we wish to solve $f(x) = 0$ and we
-have two "rough" guesses for the answer. In our example, we wish to
-solve $q(x) = x^2 - 2$ and our "rough" guesses are $1$ and $2$. Call
-these values $a$ and $b$. We *improve* our rough guesses by finding a
-value $c$ which is the intersection point of the secant line.
-
-```julia;
-q(x) = x^2 - 2
-𝒂, 𝒃 = 1, 2
-𝒄 = secant_intersection(q, 𝒂, 𝒃)
-```
-
-In our example, we see that in trying to find an answer to $f(x) = 0$
-( $\sqrt{2}\approx 1.414\dots$) our value found from the intersection
-point is a better guess than either $a=1$ or $b=2$:
-
-```julia;echo=false;
-plot(q, 𝒂, 𝒃, linewidth=5, legend=false)
-plot!(zero, 𝒂, 𝒃)
-plot!([𝒂, 𝒃], q.([𝒂, 𝒃]))
-scatter!([𝒄], [q(𝒄)])
-```
-
-Still,  `q(𝒄)` is not really close to $0$:
-
-```julia;
-q(𝒄)
-```
-
-*But* it is much closer than either $q(a)$ or $q(b)$, so it is an improvement. This suggests renaming $a$ and $b$ with the old $b$ and $c$ values and trying again we might do better still:
-
-```julia;hold=true
-𝒂, 𝒃 = 𝒃, 𝒄
-𝒄 = secant_intersection(q, 𝒂, 𝒃)
-q(𝒄)
-```
-
-Yes, now the function value at this new $c$ is even closer to $0$. Trying a few more times we see we just get closer and closer. He we start again to see the progress
-
-```julia;hold=true;term=true
-𝒂,𝒃 = 1, 2
-for step in 1:6
-    𝒄 = secant_intersection(q, 𝒂, 𝒃)
-    state = (a=𝒂, b=𝒃, qc = q(𝒄))
-    @show state
-    𝒂, 𝒃 = 𝒃, 𝒄
-end
-```
-
-Now our guess $c$ is basically the same as `sqrt(2)`. Repeating the above leads to only a slight improvement in the guess, as we are about as close as floating point values will allow.
-
-Here we see a visualization with all these points. As can be seen, it
-quickly converges at the scale of the visualization, as we can't see
-much closer than `1e-2`.
-
-```julia;hold=true;echo=false;
-f(x) = x^2 - 2
-a, b = 1, 2
-c = secant_intersection(f, a, b)
-
-p = plot(f, a, b, linewidth=5, legend=false)
-plot!(p, zero, a, b)
-
-plot!(p, [a,b], f.([a,b]));
-scatter!(p, [c], [f(c)])
-
-a, b = b, c
-c = secant_intersection(f, a, b)
-plot!(p, [a,b], f.([a,b]));
-scatter!(p, [c], [f(c)])
-
-
-a, b = b, c
-c = secant_intersection(f, a, b)
-plot!(p, [a,b], f.([a,b]));
-scatter!(p, [c], [f(c)])
-p
-```
-
-
-
-In most cases, this method can fairly quickly find a zero provided two good starting points are used.
-
 
 ### The `do` notation
 
@@ -786,6 +786,8 @@ end
 ```
 
 The name of the file to open appears, how the file is to be opened (`w` means write, `r` would mean read), and then a function with argument `io` which writes to lines to `io`.
+
+
 
 ## Questions
 
@@ -1214,9 +1216,4 @@ The guarantee of `IntervalArithmetic` is a *bound* on the interval, not the *exa
 The interval is a nearly exact estimate, as guaranteed by `IntervalArithmetic`.
 """]
 radioq(choices, 1)
-```
-
-
-```julia; hold=true; echo=false
-#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
 ```

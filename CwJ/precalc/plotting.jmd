@@ -14,6 +14,7 @@ __DIR__, __FILE__ = :precalc, :plotting
 nothing
 ```
 
+----
 
 A scalar, univariate function, such as $f(x) = 1 - x^2/2$, can be thought of in many different ways. For example:
 
@@ -67,12 +68,10 @@ using Plots
 
 ```julia;echo=false
 note("""
-`Plots` is a frontend for one of several backends. `Plots` comes with a backend for web-based graphics (call `plotly()` to specify that); a backend for static graphs (call `gr()` for that). If the `PyPlot` package is installed, calling `pyplot()` with set that as a backend. For terminal usage, if the `UnicodePlots` package is installed, calling `unicodeplots()` will enable that usage. There are still other backends.""")
+`Plots` is a frontend for one of several backends. `Plots` comes with a backend for web-based graphics (call `plotly()` to specify that); a backend for static graphs (call `gr()` for that). If the `PyPlot` package is installed, calling `pyplot()` will set that as a backend. For terminal usage, if the `UnicodePlots` package is installed, calling `unicodeplots()` will enable that usage. There are still other backends.""")
 ```
 
-The `plotly` backend is part of the `Plots` package, as is `gr`. Other backends require installation. Some others are `pyplot`, for the `PyPlot` package; and `plotlyjs`, for an enhanced Plotly backend through `PlotlyJS`.
-
-
+The `plotly` backend is part of the `Plots` package, as is `gr`. Other backends require installation, such as `PyPlot` and `PlotlyJS`.
 We use a mix of `gr` and `pyplot` in these notes. (The `plotly` backend is also quite nice for interactive usage, but doesn't work as well with the static HTML pages.)
 
 
@@ -162,7 +161,7 @@ The `do` notation can be a bit confusing to read when unfamiliar, though its con
 
 ```julia; echo=false
 note("""
-Some type we will encounter, such as the one for symbolic values or the special polynomial one, have their own `plot` recipes that allow them to be plotted similarly as above, even though they are not functions.
+Some types we will encounter, such as the one for symbolic values or the special polynomial one, have their own `plot` recipes that allow them to be plotted similarly as above, even though they are not functions.
 """)
 ```
 
@@ -201,7 +200,7 @@ to curve the lines connecting points based on an analysis of the
 function. As `Julia` doesn't consider this, the points are connected
 with straight lines -- like a dot-to-dot puzzle.
 
-he plotting directive `plot(f, xmin, xmax)` calls an adaptive
+The plotting directive `plot(f, xmin, xmax)` calls an adaptive
 algorithm to use more points where needed, as judged by
 `PlotUtils.adapted_grid(f, (xmin, xmax))`. The is wrapped up into the
 `unzip(f, xmin, xmax)` function from `CalculusWithJulia`.  The
@@ -214,6 +213,27 @@ function when plotted over the same range:
 pts_needed(f, xmin, xmax) = length(unzip(f, xmin, xmax)[1])
 pts_needed(x -> 10x, 0, 10), pts_needed(x -> sin(10x), 0, 10)
 ```
+
+(In fact, the `21` is the minimum number of points used for any function; a linear function only needs two.)
+
+
+##### Example
+
+This demo shows more points are needed as the function becomes more "curvy." There are the minimum of ``21`` for a straight line, ``37`` for a half period, ``45`` for a full period, etc.
+
+```julia; echo=false
+md"""
+n = $(@bind 𝐧 Slider(0:20, default=1))
+"""
+```
+
+```julia; hold=true;
+xs,ys = unzip(x -> sin(𝐧*x*pi), 0, 1)
+plot(xs, ys, title="n=$(length(xs))")
+scatter!(xs, ys)
+```
+
+----
 
 For instances where a *specific* set of ``x`` values is desired to be
 used, the `range` function or colon operator can be used to create the
@@ -403,8 +423,8 @@ For example, to see that the polynomial and the cosine function are
 
 ```julia;hold=true
 f(x) = 1 - x^2/2
-plot(cos, -pi/2, pi/2)
-plot!(f, -pi/2, pi/2)
+plot(cos, -pi/2, pi/2, label="cos")
+plot!(f, -pi/2, pi/2, label="f")
 ```
 
 
@@ -415,15 +435,15 @@ so will the base function `zero`. For example
 
 ```julia;hold=true
 f(x) = x^5 - x + 1
-plot(f, -1.5, 1.4)
-plot!(zero)
+plot(f, -1.5, 1.4, label="f")
+plot!(zero, label="zero")
 ```
 
 (The job of `zero` is to return "``0``" in the appropriate type. There is also a similar `one` function in base `Julia`.)
 
 
 
-The `plot!` call adds a layer. We could still specify the limits for the plot, though as this can be computed from the figure, we let `Plots` do it.
+The `plot!` call adds a layer. We could still specify the limits for the plot, though as this can be computed from the figure, to plot `zero` we let `Plots` do it.
 
 For another example, suppose we wish to plot the function $f(x)=x\cdot(x-1)$
 over the interval $[-1,2]$ and emphasize with points the fact that $0$
@@ -437,7 +457,7 @@ plot!(zero)
 scatter!([0,1], [0,0])
 ```
 
-The 3 main functions for adding layers are:
+The 3 main functions used in these notes for adding layers are:
 
 * `plot!(f, a, b)` to add the graph of the function `f`; also `plot!(xs, ys)`
 * `scatter!(xs, ys)` to add points $(x_1, y_1), (x_2, y_2), \dots$.
@@ -457,7 +477,7 @@ current graph, though it is implicit. Both `plot!`, `scatter!`, and
 
 ### Additional arguments to adjust a graphic
 
-The `Plots` package provides many arguments for adjusting a graphic, here we mention just a few:
+The `Plots` package provides many arguments for adjusting a graphic, here we mention just a few of the [attributes](https://docs.juliaplots.org/latest/attributes/):
 
 * `plot(..., title="main title", xlab="x axis label", ylab="y axis label")`: add title and label information to a graphic
 * `plot(..., color="green")`: this argument can be used to adjust the color of the drawn figure (color can be a string,`"green"`, or a symbol, `:green`, among other specifications)
@@ -919,9 +939,3 @@ radioq(choices, ans, keep_order=true)
 The slow "time to first plot" in `Julia` is a well-known hiccup that is related to how `Julia` can be so fast. Loading Plots and the making the first plot are both somewhat time consuming, though the second and subsequent plots are speedy. Why?
 
 `Julia` is an interactive language that attains its speed by compiling functions on the fly using the [llvm](llvm.org) compiler. When `Julia` encounters a new combination of a function method and argument types it will compile and cache a function for subsequent speedy execution. The first plot is slow, as there are many internal functions that get compiled. This has sped up of late, as excessive recompilations have been trimmed down, but still has a way to go. This is different from "precompilation" which also helps trim down time for initial executions. There are also some more technically challenging means to create `Julia` images for faster start up that can be pursued if needed.
-
-
-
-```julia; hold=true; echo=false
-#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
-```

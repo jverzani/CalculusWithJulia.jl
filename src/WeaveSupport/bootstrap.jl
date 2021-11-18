@@ -46,6 +46,40 @@ function ImageFile(f::AbstractString, caption, alt, width)
     ImageFile(f, caption, alt, width, content)
 end
 
+## WeaveTpl
+function Base.show(io::IO, m::MIME"text/html", x::ImageFile)
+    data = (read(x.f, String))
+    content = gif_to_imge(data=data, alt="figure")
+    caption = sprint(io -> show(io, "text/html", x.caption))
+
+    print(io, """<div class="d-flex justify-content-center">""")
+    print(io, "<figure>")
+    print(io, content)
+    print(io, "<figcaption>")
+    print(io, caption)
+    print(io, """
+</figcaption>
+</figure>
+</div>
+""")
+end
+#Mustache.render(io, centered_content_tpl; content=content, caption=caption)
+
+function Base.show(io::IO, ::MIME"text/latex", x::ImageFile)
+    fname = x.f
+    if occursin(r"gif$", fname)
+        println(io, "XXX can not include `.gif` file here")
+    else
+        print(io, """
+\\begin{figure}
+\\caption{$(x.caption)}
+\\includegraphics[width=0.6\\textwidth]{$(x.f)}
+\\end{figure}
+""")
+    end
+end
+
+
 " template for an base64 encoded image"
 gif_to_img_tpl = mt"""
   <img src="data:image/gif;base64,{{{:data}}}" class="card-img-top" alt="{{{:alt}}}">

@@ -83,17 +83,16 @@ function __init__()
     @require SymPy="24249f21-da20-56a4-8eb1-6a02cf4ae2e6" include("sympy.jl")
     @require Plots="91a5bcdd-55d7-5caf-9e0b-520d859cae80" include("plots.jl")
     @require MDBM="ea0cff06-48de-41e3-bd0e-d3c1feffd247" include("implicit_equation.jl")
-    @require Pluto="c3e4b0f8-55cb-11ea-2926-15256bba5781" include("WeaveSupport/markdown-to-pluto.jl")
 end
 
 e = exp(1)
 export e
 
 export unzip, rangeclamp
-export tangent, secant, D
+export tangent, secant, D, sign_chart
 export riemann
 export divergence, gradient, curl, ∇
-export sign_chart
+
 
 
 end # module

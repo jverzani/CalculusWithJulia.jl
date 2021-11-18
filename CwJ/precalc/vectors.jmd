@@ -995,9 +995,3 @@ q"zs^(1./2)"
 ans = 2
 radioq(choices, ans, keep_order=true)
 ```
-
-
-
-```julia; hold=true; echo=false
-#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
-```

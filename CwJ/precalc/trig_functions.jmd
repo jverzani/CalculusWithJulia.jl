@@ -811,10 +811,3 @@ Is this identical to the pattern for the regular sine function?
 ```julia; hold=true; echo=false
 yesnoq(false)
 ```
-
-
-
-
-```julia; hold=true; echo=false
-#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
-```

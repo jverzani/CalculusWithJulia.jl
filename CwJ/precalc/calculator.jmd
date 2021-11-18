@@ -64,12 +64,12 @@ typed in. So, we would have:
 
 Sending an expression to `Julia`'s interpreter - the equivalent of
 pressing the "`=`" key on a calculator - is done at the command line
-by pressing the `Enter` or `Return` key, and in `IJulia` using the
+by pressing the `Enter` or `Return` key, and in `Pluto`, also using the
 "play" icon, or the keyboard shortcut `Shift-Enter`. If the current
 expression is complete, then `Julia` evaluates it and shows any
 output.  If the expression is not complete, `Julia`'s response depends
-on how it is being called. Within `IJulia`, a message about
-"premature" end of input is given. If the expression raises an error,
+on how it is being called. Within `Pluto`, a message about
+"`premature end of input`" is given. If the expression raises an error,
 this will be noted.
 
 
@@ -355,7 +355,7 @@ texts.
 ```julia; echo=false;
 note("""
 
-In `Julia` many infix operations can be done using a prefix manner. For example `14 + 2` can also be evaluated by `+(14,2)`.
+In `Julia` many infix operations can be done using a prefix manner. For example `14 + 2` can also be evaluated by `+(14,2)`. There are very few *postfix* operations, though in these notes we will overload one, the `'` operation, to indicate a derivative."
 
 """)
 ```
@@ -491,7 +491,7 @@ Using a function is very straightforward. A function is called using parentheses
 sqrt(4), sqrt(5)
 ```
 
-The function is referred to by name (`sqrt`) and called with parentheses. Any arguments are passed into the function using commas to separate values, should there be more than one. When there are numerous values for a function, the arguments may need to be given in a specific order or may possibly be specified with *keywords*.
+The function is referred to by name (`sqrt`) and called with parentheses. Any arguments are passed into the function using commas to separate values, should there be more than one. When there are numerous values for a function, the arguments may need to be given in a specific order or may possibly be specified with *keywords*. (A semicolon can be used instead of a comma to separate keyword arguments.)
 
 Some more examples:
 
@@ -549,11 +549,11 @@ sqrt(11^2 + 12^2)
 
 ##### Example
 
-A formula from statistics to compute the variance of binomial random variable for parameters $p$ and $n$
-is $\sqrt{p (1-p)/n}$. Compute this value for $p=1/4$ and $n=10$.
+A formula from statistics to compute the variance of a binomial random variable for parameters $p$ and $n$
+is $\sqrt{n p (1-p)}$. Compute this value for $p=1/4$ and $n=10$.
 
 ```julia;
-sqrt((1/4 * (1 - 1/4)) / 10)
+sqrt(10 * 1/4 * (1 - 1/4))
 ```
 
 ##### Example
@@ -612,8 +612,9 @@ correct, the second, clearly wrong, as the answer given is
 negative. This is due to overflow. The cost of checking is considered
 too high, so no error is thrown. The user is expected to have a sense
 that they need to be careful when their values are quite large. (Or
-the user can use floating point numbers, which though not exact, can represent much
-bigger values.)
+the user can use floating point numbers, which though not always
+exact, can represent much bigger values and are exact for a reasonably
+wide range of integer values.)
 
 
 ```julia; echo=false;
@@ -667,7 +668,7 @@ use floating point, but rather the difference between the two numbers:
 (3987.0^12 + 4365.0^12)^(1/12) - 4472
 ```
 
-is less than $10^{-8}$ so on display with $8$ digits may be rounded to $0$.
+is less than $10^{-8}$ so on a display with $8$ digits may be rounded to $0$.
 
 Moral: with `Julia` and with calculators, we still have to be mindful not to blindly accept an answer.
 
@@ -1039,9 +1040,4 @@ choices = [
 ]
 ans=1
 radioq(choices, ans)
-```
-
-
-```julia; echo=false
-#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
 ```

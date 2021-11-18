@@ -70,18 +70,22 @@ function process_content(content)
     return chunk_to_cell(T, content)
 end
 
-function md2notebook(fname)
+function md2notebook(fname; header_cmds=(), footer_cmds=())
     out = Markdown.parse_file(fname,  flavor=Markdown.julia)
     cells = process_content.(out.content)
 
-    # add Table of contents -- no PlutoUI in file
-    for cmd ∈ ("using PlutoUI",
-               "PlutoUI.TableOfContents()"
-               )
+    for cmd ∈ reverse(header_cmds)
+        cell = Pluto.Cell(cmd)
+        cell.code_folded = true
+        pushfirst!(cells, cell)
+    end
+
+    for cmd ∈ footer_cmds
         cell = Pluto.Cell(cmd)
         cell.code_folded = true
         push!(cells, cell)
     end
+
     notebook = Pluto.Notebook(cells)
 end
 
@@ -95,5 +99,11 @@ function nb2jl(notebook, path)
     Pluto.save_notebook(notebook, path);
 end
 
-md2html(fname) = (nb2html∘md2notebook)(fname)
-md2jl(fname, path) = nb2jl(md2notebook(fname), path)
+
+function md2html(fname; kwargs...)
+    nb2html(md2notebook(fname; kwargs...))
+end
+
+function md2jl(fname, path; kwargs...)
+    nb2jl(md2notebook(fname; kwargs...), path)
+end

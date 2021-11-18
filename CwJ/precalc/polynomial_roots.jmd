@@ -1065,9 +1065,3 @@ What's more, using the fact that to get `0` the two summands must differ in sign
 If the bottom row represents ``q_7, q_6, \dots, q_0``  and the top row ``p_8, p_7, \dots, p_0``, then the sign changes in ``q`` from `+` to `-` are matched by sign changes in ``p``. The ones in ``q`` from ``-`` to ``+`` are also matched regardless of the sign of the first two question marks (though ``p`` could possibly have more). The last sign change in ``p`` between ``p_2`` and ``p_0`` has no counterpart in ``q``, so there is at least one more sign change in ``p`` than ``q``.
 
 As such, the `var(p)` ``\geq 1 +`` `var(q)`.
-
-
-
-```julia; hold=true; echo=false
-#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
-```

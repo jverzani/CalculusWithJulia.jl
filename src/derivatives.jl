@@ -73,7 +73,12 @@ julia> sign_chart(x -> x/(x-1)^2, -5, 5)
 """
 function sign_chart(f, a, b; atol=1e-6)
     pm(x) = x < 0 ? "-" : x > 0 ? "+" : "0"
-    summarize(f,cp,d) = (∞0=cp, sign_change=pm(f(cp-d)) * " → " * pm(f(cp+d)))
+    summarize(f,cp,d) = (DNE_0_∞=cp, sign_change=pm(f(cp-d)) * " → " * pm(f(cp+d)))
+
+    if Roots._is_f_approx_0(f(a),a, eps(), eps()) ||
+        Roots._is_f_approx_0(f(b), b, eps(), eps())
+        return "Sorry, the endpoints must not be zeros for the function"
+    end
 
     zs = find_zeros(f, a, b)
     pts = vcat(a, zs, b)
@@ -90,12 +95,17 @@ function sign_chart(f, a, b; atol=1e-6)
             !flag && push!(zs, z′)
         end
     end
-    sort!(zs)
 
-    length(zs) == 0 && return []
+
+    if isempty(zs)
+	fc = f(a + (b-a)/2)
+	return "No sign change, always " * (fc > 0 ? "positive" : iszero(fc) ? "zero" : "negative")
+    end
+
+    sort!(zs)
     m,M = extrema(zs)
     d = min((m-a)/2, (b-M)/2)
-    if length(zs) > 0
+    if length(zs) > 1
         d′ = minimum(diff(zs))/2
         d = min(d, d′ )
     end

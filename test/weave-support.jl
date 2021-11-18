@@ -1,10 +1,13 @@
+## Modified from
+## https://github.com/SciML/SciMLTutorials.jl/blob/master/src/SciMLTutorials.jl
+
 using Weave
 using Pkg
 
 const repo_directory = joinpath(@__DIR__,"..")
-const cssfile = joinpath(@__DIR__, "..", "..", "templates", "skeleton_css.css")
-const htmlfile = joinpath(@__DIR__,"..", "..", "templates", "bootstrap.tpl")
-const latexfile = joinpath(@__DIR__, "..", "..", "templates", "julia_tex.tpl")
+const cssfile =   joinpath(@__DIR__, "..", "templates", "skeleton_css.css")
+const htmlfile =  joinpath(@__DIR__, "..", "templates", "bootstrap.tpl")
+const latexfile = joinpath(@__DIR__, "..", "templates", "julia_tex.tpl")
 
 # do we build the file?
 function build_file(jmdfile, outfile; force=false)
@@ -57,7 +60,27 @@ function weave_file(folder, file; build_list=(:html,), force=false, kwargs...)
         outfile = joinpath(dir, bnm*ext)
         build_file(file, outfile, force=force) || return nothing
 
-        html_content = md2html(file)
+header_cmd = """
+HTML(\"\"\"
+<div class="admonition info"><a href="https://CalculusWithJulia.github.io">
+<img src="https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/misc/logo.png" alt="Calculus with Julia" width="48" />
+</a>
+<span style="font-size:32px">Calculus With Julia</span>
+</div>
+\"\"\")
+"""
+
+        f = CalculusWithJulia.WeaveSupport.Footer(Symbol(bnm), Symbol(folder))
+        out = sprint(io -> show(io, "text/html", f))
+        footer_cmd = "HTML(\"\"\"$(out)\"\"\")"
+
+
+        html_content = md2html(file,
+                               header_cmds=(header_cmd,),
+                               footer_cmds=("using PlutoUI",
+                                            "PlutoUI.TableOfContents()",
+                                            footer_cmd
+                                            ))
         open(outfile, "w") do io
             write(io, html_content)
         end
@@ -65,7 +88,7 @@ function weave_file(folder, file; build_list=(:html,), force=false, kwargs...)
     end
 
     if :weave_html ∈ build_list
-        println("Building HTML")
+        println("Building HTML for $file")
         dir = joinpath(repo_directory,"html",folder)
         isdir(dir) || mkpath(dir)
 

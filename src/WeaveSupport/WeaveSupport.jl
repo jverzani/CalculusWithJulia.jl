@@ -1,6 +1,4 @@
 module WeaveSupport
-## Modified from
-## https://github.com/SciML/SciMLTutorials.jl/blob/master/src/SciMLTutorials.jl
 
 import Base64: base64encode
 using Random
@@ -19,7 +17,8 @@ using Pkg
 include("formatting.jl")
 include("bootstrap.jl")
 include("questions.jl")
-include("show-methods.jl")
+
+include("logo.jl")
 include("toc.jl")
 
 

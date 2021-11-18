@@ -649,9 +649,3 @@ can be found by an expression of the form `prod(a:h:b)`.  Find the product of th
 val = prod(1:2:19)
 numericq(val)
 ```
-
-
-
-```julia; hold=true; echo=false
-#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
-```

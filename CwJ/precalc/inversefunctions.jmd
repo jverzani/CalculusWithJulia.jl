@@ -13,11 +13,12 @@ __DIR__, __FILE__ = :precalc, :inversefunctions
 nothing
 ```
 
+----
 
 A (univariate) mathematical function relates or associates values of
 $x$ to values $y$ using the notation $y=f(x)$. A key point is a given
 $x$ is associated with just one $y$ value, though a given $y$ value
-may be associated with several different $x$ values.
+may be associated with several different $x$ values. (Graphically, this is the vertical line test.)
 
 We may conceptualize such a relation in many ways: through an algebraic
 rule; through the graph of $f$; through a description of what $f$
@@ -38,7 +39,7 @@ Consider the graph of the function $f(x) = 2^x$:
 
 ```julia;hold=true
 f(x) = 2^x
-plot(f, 0, 4)
+plot(f, 0, 4, legend=false)
 plot!([2,2,0], [0,f(2),f(2)])
 ```
 
@@ -121,7 +122,7 @@ note(L"""The use of a negative exponent on the function name is *easily* confuse
 
 ##### Example
 
-Suppose a transformation of $x$ is given by $y = f(x) = (ax + b)/(cx+d)$. This function is  invertible. Find the inverse and describe it's domain.
+Suppose a transformation of $x$ is given by $y = f(x) = (ax + b)/(cx+d)$. This function is  invertible for most choices of the parameters. Find the inverse and describe it's domain.
 
 From the expression $y=f(x)$ we *algebraically* solve for $x$:
 
@@ -203,7 +204,7 @@ Consider again the graph of a monotonic function, in this case $f(x) = x^2 + 2, 
 
 ```julia;hold=true
 f(x) = x^2 + 2
-plot(f, 0, 4)
+plot(f, 0, 4, legend=false)
 plot!([2,2,0], [0,f(2),f(2)])
 ```
 
@@ -236,8 +237,8 @@ Let's see this in action. Take the function $2^x$. We can plot it by generating 
 f(x) = 2^x
 xs = range(0, 2, length=50)
 ys = f.(xs)
-plot(xs, ys, color=:blue)
-plot!(ys, xs, color=:red) # the inverse
+plot(xs, ys, color=:blue, label="f")
+plot!(ys, xs, color=:red, label="f⁻¹") # the inverse
 ```
 
 By flipping around the $x$ and $y$ values in the `plot!` command, we
@@ -583,8 +584,12 @@ yesnoq(false)
 
 ###### Question
 
-The function $f(x) = (ax + b)/(cx + d)$ is known as a [Mobius](http://tinyurl.com/oemweyj) transformation and can be expressed as a composition of $4$ functions, $f4 \circ f3 \circ f2 \circ f1$, where:
-the translation $f1(x) = x + d/c$; the inversion and reflection $f2(x) = x^{-1}$; the scaling $f3(x) = ((bc-ad)/c^2) \cdot x$; and the translation $f4(x) = x + a/c$.
+The function $f(x) = (ax + b)/(cx + d)$ is known as a [Mobius](http://tinyurl.com/oemweyj) transformation and can be expressed as a composition of $4$ functions, $f_4 \circ f_3 \circ f_2 \circ f_1$:
+
+* where $f_1(x) = x + d/c$ is a translation,
+* where $f_2(x) = x^{-1}$ is inversion and reflection,
+* where $f_3(x) = ((bc-ad)/c^2) \cdot x$ is scaling,
+* and $f_4(x) = x + a/c$ is a translation.
 
 For $x=10$, what is $f(10)$?
 
@@ -595,7 +600,7 @@ f1(x) = x + 𝒅/𝒄; f2(x) = 1/x; f3(x) = (𝒃*𝒄-𝒂*𝒅)/𝒄^2 * x; f4
 numericq(𝒇(10))
 ```
 
-For $x=10$, what is $f4(f3(f2(f1(10))))$?
+For $x=10$, what is $f_4(f_3(f_2(f_1(10))))$?
 
 ```julia; hold=true; echo=false
 numericq(f4(f3(f2(f1(10)))))
@@ -604,26 +609,27 @@ numericq(f4(f3(f2(f1(10)))))
 The last two answers should be the same, why?
 
 ```julia; hold=true; echo=false
-choices = [L"As $f4(f3(f2(f1(x))))=(f4 \circ f3 \circ f2 \circ f1)(x)$",
-L"As $f4(f3(f2(f1(x))))=(f1 \circ f2 \circ f3 \circ f4)(x)$",
-"As the latter is more complicated than the former."
+choices = [
+    L"As $f_4(f_3(f_2(f)_1(x))))=(f_4 \circ f_3 \circ f_2 \circ f_1)(x)$",
+    L"As $f_4(f_3(f_2(f_1(x))))=(f_1 \circ f_2 \circ f_3 \circ f_4)(x)$",
+    "As the latter is more complicated than the former."
 ]
 ans=1
 radioq(choices, ans)
 ```
 
 
-Let $g1$, $g2$, $g3$, and $g4$ denote the inverse functions. Clearly, $g1(x) = x- d/c$ and $g4(x) = x - a/c$, as the inverse of adding a constant is subtracting the constant.
+Let $g_1$, $g_2$, $g_3$, and $g_4$ denote the inverse functions. Clearly, $g_1(x) = x- d/c$ and $g+4(x) = x - a/c$, as the inverse of adding a constant is subtracting the constant.
 
-What is $g2(x)=f2^{-1}(x)$?
+What is $g_2(x)=f_2^{-1}(x)$?
 
 ```julia; hold=true; echo=false
-choices = ["``g2(x) = x^{-1}``", "``g2(x) = x``", "``g2(x) = x -1``"]
+choices = ["``g_2(x) = x^{-1}``", "``g_2(x) = x``", "``g_2(x) = x -1``"]
 ans = 1
 radioq(choices, ans)
 ```
 
-What is $g3(x)=f3^{-1}(x)$?
+What is $g_3(x)=f_3^{-1}(x)$?
 
 ```julia; hold=true; echo=false
 choices = [
@@ -634,7 +640,7 @@ ans = 1
 radioq(choices, ans)
 ```
 
-Given these, what is the value of $g4(g3(g2(g1(f4(f3(f2(f1(10))))))))$?
+Given these, what is the value of $g_4(g_3(g_2(g_1(f_4(f_3(f_2(f_1(10))))))))$?
 
 ```julia; echo=false
 g1(x) = x - 𝒅/𝒄; g2(x) = 1/x; g3(x) = 1/((𝒃*𝒄-𝒂*𝒅)/𝒄^2) *x; g4(x)= x - 𝒂/𝒄
@@ -642,14 +648,9 @@ val1 = g4(g3(g2(g1(f4(f3(f2(f1(10))))))))
 numericq(val1)
 ```
 
-What about the value of $g1(g2(g3(g4(f4(f3(f2(f1(10))))))))$?
+What about the value of $g_1(g_2(g_3(g_4(f_4(f_3(f_2(f_1(10))))))))$?
 
 ```julia; hold=true; echo=false
 val = g1(g2(g3(g4(f4(f3(f2(f1(10))))))))
 numericq(val)
-```
-
-
-```julia; hold=true; echo=false
-#CalculusWithJulia.WeaveSupport.Footer(__FILE__, __DIR__)
 ```
