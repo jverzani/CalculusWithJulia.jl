@@ -1,29 +1,35 @@
 # Limits, issues, extensions of the concept
 
+This section uses the following add-on packages:
+
+```julia
+using CalculusWithJulia
+using Plots
+using SymPy
+```
+
 
 ```julia; echo=false; results="hidden"
-using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
-using Plots
+using DataFrames
+import PyPlot
+pyplot()
 nothing
 ```
+
+----
 
 The limit of a function at $c$ need not exist for one of many
 different reasons. Some of these reasons can be handled with
 extensions to the concept of the limit, others are just problematic in
 terms of limits. This section covers examples of each.
 
-```julia
-using CalculusWithJulia
-using Plots
-```
-
 
 Let's begin with a function that is just problematic. Consider
 
-$$~
+```math
 f(x) = \sin(1/x)
-~$$
+```
 
 As this is a composition of nice functions it will have a limit
 everywhere except possibly when $x=0$, as then $1/x$ may not have a
@@ -33,9 +39,7 @@ question of whether a limit exists at $c=0$.
 
 A graph shows the issue:
 
-```julia; echo=false
-using CalculusWithJulia
-using Plots
+```julia; hold=true; echo=false
 f(x) = sin(1/x)
 plot(f, range(-1, stop=1, length=1000))
 ```
@@ -61,13 +65,13 @@ $f(x) = x \cdot \sin(1/x)$. This function again has a limit everywhere
 save possibly $0$. But in this case, there is a limit at $0$ of
 $0$. This is because, the following is true:
 
-$$~
+```math
 -|x| \leq x \sin(1/x) \leq |x|.
-~$$
+```
 
 The following figure illustrates:
 
-```julia;
+```julia; hold=true;
 f(x) = x * sin(1/x)
 plot(f, -1, 1)
 plot!(abs)
@@ -89,7 +93,7 @@ where division by $0$ is possible.
 
 It's graph is
 
-```julia;
+```julia; hold=true;
 f(x) = abs(x)/x
 plot(f, -2, 2)
 ```
@@ -129,22 +133,21 @@ Now for the defintion:
 Similarly, a limit on the left is defined where $U=(c-\delta, c)$.
 
 The `SymPy` function `limit` has a keyword argument `dir="+"` or
-`dir="-"` to request that a one-sided limit be formed.
-
+`dir="-"` to request that a one-sided limit be formed. The default is `dir="+"`. Passing `dir="+-"` will compute both one side limits, and throw an error if the two are not equal, in agreement with no limit existing.
 
 ```julia;
-using SymPy
 @syms x
+```
+
+```julia;hold=true
 f(x) = abs(x)/x
 limit(f(x), x=>0, dir="+"), limit(f(x), x=>0, dir="-")
 ```
 
-The default for `limit` is `dir="+"`, that is only a one-sided limit is computed.
-
 
 ```julia; echo=false
 alert("""
-That means the mathematical limit need not exist when `SymPy`'s `limit` returns an answer, as `SymPy` is only carrying out a one sided limit. Checking that both `limit(ex, x=>c)` and `limit(ex, x=>c, dir="-")` are equal would be needed to confirm a limit exists mathematically.
+That means the mathematical limit need not exist when `SymPy`'s `limit` returns an answer, as `SymPy` is only carrying out a one sided limit. Explicitly passing `dir="+-"` or checking that both `limit(ex, x=>c)` and `limit(ex, x=>c, dir="-")` are equal would be needed to confirm a limit exists mathematically.
 """)
 ```
 
@@ -180,7 +183,6 @@ $f(x) = x^x$ and consider ``c=0``. This function is not well defined for all $x 
 has a right limit $\lim_{x \rightarrow 0+} x^x = 1$. `SymPy` can verify:
 
 ```julia;
-@syms x::real
 limit(x^x, x, 0, dir="+")
 ```
 
@@ -193,7 +195,7 @@ have a limit of $1$.
 
 Consider this funny graph:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 xs = range(0,stop=1, length=50)
 
 plot(x->x^2, -2, -1, legend=false)
@@ -240,7 +242,7 @@ eventually gets close to a single value.
 `SymPy` gives an odd answer here indicating the range of values:
 
 ```julia;
-limit(sin(x), x=>oo)
+limit(sin(x), x => oo)
 ```
 
 (We used `SymPy`'s `oo` for $\infty$ and not `Inf`.)
@@ -251,7 +253,7 @@ limit(sin(x), x=>oo)
 However, a damped oscillation, such as $f(x) = e^{-x} \sin(x)$ will have a limit:
 
 ```julia;
-limit(exp(-x)*sin(x), x=>oo)
+limit(exp(-x)*sin(x), x => oo)
 ```
 
 
@@ -265,9 +267,9 @@ limit((x^2 - 2x +2)/(4x^2 + 3x - 2), x=>oo)
 ```
 ----
 
-Though rational functions can have only one (at most) horizontal asymptote, this isn't true for all functions. Consider the following $f(x) = x / \sqrt{x^2 + 4}$. It has different limits:
+Though rational functions can have only one (at most) horizontal asymptote, this isn't true for all functions. Consider the following $f(x) = x / \sqrt{x^2 + 4}$. It has different limits depending if ``x`` goes to ``\intfy`` or negative ``\infty``:
 
-```julia;
+```julia;hold=true;
 f(x) = x / sqrt(x^2 + 4)
 limit(f(x), x=>oo), limit(f(x), x=>-oo)
 ```
@@ -321,12 +323,12 @@ $\delta>0$ such that if $0 < |x-c| < \delta$ then $f(x) > M$. Approaching $-\inf
 
 Consider the function $f(x) = 1/x^2$. This will have a limit at every
 point except possibly $0$, where division by $0$ is possible. In this
-case, there is a vertical asymptote. The limit at $0$ is $\infty$, in
+case, there is a vertical asymptote, as seen in the following graph. The limit at $0$ is $\infty$, in
 the extended sense above. For $M>0$, we can take any $0 < \delta <
 1/\sqrt{M}$. The following graph shows $M=25$ where the function
 values are outside of the box, as $f(x) > M$ for those $x$ values with $0 < |x-0| < 1/\sqrt{M}$.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = 1/x^2
 M = 25
 delta = 1/sqrt(M)
@@ -342,7 +344,7 @@ plot!([delta, delta], [0,M], color=colorant"red")
 
 The function $f(x)=1/x$ requires us to talk about left and right limits of infinity, with the natural generalization. We can see that the left limit at $0$ is $-\infty$ and the right limit $\infty$:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = 1/x
 plot(f, 1/50, 1,    color=:blue, legend=false)
 plot!(f, -1, -1/50, color=:blue)
@@ -350,7 +352,7 @@ plot!(f, -1, -1/50, color=:blue)
 
 `SymPy` agrees:
 
-```julia;
+```julia; hold=true;
 f(x) = 1/x
 limit(f(x), x=>0, dir="-"), limit(f(x), x=>0, dir="+")
 ```
@@ -359,19 +361,19 @@ limit(f(x), x=>0, dir="-"), limit(f(x), x=>0, dir="+")
 
 ----
 
-Consider the function $f(x) = x^x(1 + \log(x)), x > 0$. Does this have a *right* limit at $0$?
+Consider the function $g(x) = x^x(1 + \log(x)), x > 0$. Does this have a *right* limit at $0$?
 
 A quick graph shows that a limit may be $-\infty$:
 
 ```julia;
-f(x) = x^x * (1 + log(x))
-plot(f, 1/100, 1)
+g(x) = x^x * (1 + log(x))
+plot(g, 1/100, 1)
 ```
 
 We can check with `SymPy`:
 
 ```julia;
-limit(f(x), x=>0, dir="+")
+limit(g(x), x=>0, dir="+")
 ```
 ## Limits of sequences
 
@@ -385,9 +387,9 @@ a limit at infinity can be used to define a limit.
 > Let $a_0,a_1, a_2, \dots, a_n, \dots$ be a sequence of values indexed by $n$.
 > We have $\lim_{n \rightarrow \infty} a_n = L$ if for every $\epsilon > 0$ there exists an $M>0$ where if $n > M$ then $|a_n - L| < \epsilon$.
 
-Common language is the sequence *converges* when the limit exists and other *diverges*.
+Common language is the sequence *converges* when the limit exists and otherwise *diverges*.
 
-The aboves essentially the same as a limit *at* infinity for a function,
+The above is essentially the same as a limit *at* infinity for a function,
 but in this case the function's domain is only the non-negative
 integers.
 
@@ -398,6 +400,61 @@ integers.
 s(n) = 1//2 * summation((1//4)^i, (i, 0, n))    # rationals make for an exact answer
 limit(s(n), n=>oo)
 ```
+
+##### Example
+
+The limit
+
+```math
+\lim_{x \rightarrow 0} \frac{e^x - 1}{x} = 1,
+```
+
+is an important limit. Using the definition of ``e^x`` by an infinite sequence:
+
+```math
+e^x = \lim_{n \rightarrow \infty} (1 + \frac{x}{n})^n,
+```
+
+we can establish the limit using the squeeze theorem. First,
+
+```math
+A = |(1 + \frac{x}{n})^2 - 1 - x| = |\Sigma_{k=0}^n {n \choose k}(\frac{x}{n})^k - 1 - x| = |\Sigma_{k=2}^n {n \choose k}(\frac{x}{n})^k|,
+```
+
+the first two sums cancelling off. The above comes from the binomial expansion theorem for a polynomial. Now ``{n \choose k} \leq n^k``so we have
+
+```math
+A \leq \Sigma_{k=2}^n |x|^k = |x|^2 \frac{1 - |x|^{n+1}}{1 - |x|} \leq
+\frac{|x|^2}{1 - |x|}.
+```
+
+using the *geometric* sum formula with ``x \approx 0`` (and not ``1``):
+
+```julia; hold=true
+@syms x n i
+summation(x^i, (i,0,n))
+```
+
+
+As this holds for all ``n``, as ``n`` goes to ``\infty`` we have:
+
+```math
+|e^x - 1 - x| \leq \frac{|x|^2}{1 - |x|}
+```
+
+Dividing both sides by ``x`` and noting that as ``x \rightarrow 0``, ``|x|/(1-|x|)`` goes to ``0`` by continuity, the squeeze theorem gives the limit:
+
+```math
+\lim_{x \rightarrow 0} \frac{e^x -1}{x} - 1 = 0.
+```
+
+
+That ``{n \choose k} \leq n^k`` can be viewed as the left side counts the number of combinations of ``k`` choices from ``n`` distinct items, which is less than the number of permutations of ``k`` choices, which is less than the number of choices of ``k`` items from ``n`` distinct ones without replacement -- what ``n^k`` counts.
+
+
+
+
+
 
 ### Some limit theorems for sequences
 
@@ -459,7 +516,6 @@ L"(c - \delta, c+\delta)",
 L"(M, \infty)"
 ]
 
-using DataFrames
 d = DataFrame(Type=limit_type, Notation=Notation, V=Vs, U=Us)
 table(d)
 ```
@@ -483,18 +539,16 @@ Here we consider which families of functions are *comparable*.
 First consider ``f(x) = x^3`` and ``g(x) = x^4``. We can take ``m=2`` and ``n=1`` to verify ``f`` and ``g`` are comparable:
 
 ```julia
-@syms x
 fx, gx = x^3, x^4
 limit(fx^2/gx, x=>oo), limit(gx^1 / fx, x=>oo)
 ```
 
-Similarly for any pairs of powers, so we could conclude ``f(x) = x^n`` and ``g(x) =x^m`` are comparable.
+Similarly for any pairs of powers, so we could conclude ``f(x) = x^n`` and ``g(x) =x^m`` are comparable. (However, as is easily observed, for ``m`` and ``n`` both positive integers ``\lim_{x \rightarrow \infty} x^{m+n}/x^m = \infty`` and ``\lim_{x \rightarrow \infty} x^{m}/x^{m+n} = 0``, consistent with our discussion on rational functions that higher-order polynomials dominate lower-order polynomials.)
 
 
 Now consider ``f(x) = x`` and ``g(x) = \log(x)``. These are not compatible as there will be no ``n`` large enough. We might say ``x`` dominates ``\log(x)``.
 
 ```julia
-@syms n::(positive, integer)
 limit(log(x)^n / x, x => oo)
 ```
 
@@ -523,7 +577,7 @@ which will go to ``\infty`` as ``x \rightarrow \infty`` as ``a^m/b > 1``.
 
 Finally, consider ``f(x) = \exp(x^2)`` and ``g(x) = \exp(x)^2``. Are these comparable? No, as no ``n`` is large enough:
 
-```julia
+```julia; hold=true;
 @syms x n::(positive, integer)
 fx, gx = exp(x^2), exp(x)^2
 limit(gx^n / fx, x => oo)
@@ -563,11 +617,6 @@ As ``f(x) = e^x`` is a suitably nice function (continuous) so that the limit of 
 
 The last equality follows, as the function ``x`` dominates the function ``\ln(x)``. So by the limit rule involving compositions we have: ``\lim_{x\rightarrow 0+} x^x = e^0 = 1``.
 
-----
-
-The above assumes `limit(ex, x=>oo)` actually produces the correct answer for ``\lim_{x\rightarrow \infty} f(x)``, which is *almost* always the case. The above could be independently verified once L'Hospital's [rule](../derivatives/lhospitals_rule.html) is established.
-
-
 ## Questions
 
 
@@ -577,27 +626,27 @@ Consider the function $f(x) = \sqrt{x}$.
 
 Does this function have a limit at every $c > 0$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 booleanq(true, labels=["Yes", "No"])
 ```
 
 Does this function have a limit at $c=0$?
 
 
-```julia; echo=false
+```julia; hold=true; echo=false
 booleanq(false, labels=["Yes", "No"])
 ```
 
 
 Does this function have a right limit at $c=0$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 booleanq(true, labels=["Yes", "No"])
 ```
 
 Does this function have a left limit at $c=0$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 booleanq(false, labels=["Yes", "No"])
 ```
 
@@ -605,7 +654,7 @@ booleanq(false, labels=["Yes", "No"])
 
 Find $\lim_{x \rightarrow \infty} \sin(x)/x$.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(0)
 ```
 
@@ -614,7 +663,7 @@ numericq(0)
 
 Find $\lim_{x \rightarrow \infty} (1-\cos(x))/x^2$.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(0)
 ```
 
@@ -623,7 +672,7 @@ numericq(0)
 
 Find $\lim_{x \rightarrow \infty} \log(x)/x$.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(0)
 ```
 
@@ -635,8 +684,8 @@ numericq(0)
 
 Find $\lim_{x \rightarrow 2+} (x-3)/(x-2)$.
 
-```julia; echo=false
-choices=[L"L=-\infty", L"L=-1", L"L=0", L"L=\infty"]
+```julia; hold=true; echo=false
+choices=["``L=-\\infty``", "``L=-1``", "``L=0``", "``L=\\infty``"]
 ans = 1
 radioq(choices, ans)
 ```
@@ -645,8 +694,8 @@ Find $\lim_{x \rightarrow -3-} (x-3)/(x+3)$.
 
 
 
-```julia; echo=false
-choices=[L"L=-\infty", L"L=-1", L"L=0", L"L=\infty"]
+```julia; hold=true; echo=false
+choices=["``L=-\\infty``", "``L=-1``", "``L=0``", "``L=\\infty``"]
 ans = 4
 radioq(choices, ans)
 ```
@@ -659,7 +708,7 @@ Let ``f(x) = \exp(x + \exp(-x^2))`` and ``g(x) = \exp(-x^2)``. Compute:
 \lim_{x \rightarrow \infty} \frac{\ln(f(x))}{\ln(g(x))}.
 ```
 
-```julia;echo=false
+```julia; hold=true;echo=false
 @syms x
 ex = log(exp(x + exp(-x^2))) / log(exp(-x^2))
 val = N(limit(ex, x => oo))
@@ -671,7 +720,6 @@ numericq(val)
 Consider the following expression:
 
 ```julia;
-@syms x
 ex = 1/(exp(-x + exp(-x))) - exp(x)
 ```
 
@@ -694,7 +742,7 @@ limit(ex1 - (w/2 - 1), w=>0)
 
 ``L`` is:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(-1)
 ```
 
@@ -716,7 +764,7 @@ As an example, `SymPy` has an issue with this limit, whose answer  depends on th
 
 Note, regardless of ``k`` you find:
 
-```julia
+```julia; hold=true;
 @syms x::real k::integer
 limit(sin(sin(x^2))/x^k, x=>0)
 ```
@@ -724,7 +772,7 @@ limit(sin(sin(x^2))/x^k, x=>0)
 For which value(s) of ``k`` in ``1,2,3`` is this actually the correct answer? (Do the above ``3`` times using a specific value of `k`, not a numeric one.
 
 ```julia, echo=false
-choices = [L"1", L"2", L"3", L"1,2", L"1,3", L"2,3", L"1,2,3"]
+choices = ["``1``", "``2``", "``3``", "``1,2``", "``1,3``", "``2,3``", "``1,2,3``"]
 radioq(choices, 1, keep_order=true)
 ```
 
@@ -733,7 +781,7 @@ radioq(choices, 1, keep_order=true)
 
 Some functions do not have a limit. Make a graph of $\sin(1/x)$ from $0.0001$ to $1$ and look at the output. Why does a limit not exist?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices=["The limit does exist - it is any number from -1 to 1",
   "Err, the limit does exists and is 1",
   "The function oscillates too much and its y values do not get close to any one value",
@@ -751,15 +799,15 @@ Is the form $0^0$ really indeterminate? As mentioned `0^0` evaluates to `1`.
 
 Consider this limit:
 
-$$~
+```math
 \lim_{x \rightarrow 0+} x^{k\cdot x} = L.
-~$$
+```
 
 Consider different values of $k$ to see if this limit depends on $k$ or not. What is $L$?
 
 
-```julia; echo=false
-choices = [L"1", L"k", L"\log(k)", "The limit does not exist"]
+```julia; hold=true; echo=false
+choices = ["``1``", "``k``", "``\\log(k)``", "The limit does not exist"]
 ans = 1
 radioq(choices, ans)
 ```
@@ -767,15 +815,15 @@ radioq(choices, ans)
 
 Now, consider this limit:
 
-$$~
+```math
 \lim_{x \rightarrow 0+} x^{1/\log_k(x)} = L.
-~$$
+```
 
-In `julia`, $\log_k(x)$ is found with `log(k,x)`. The default, `log(x)` takes $k=e$ so gives the natural log. So, we would define `f`, for a given `k`, with
+In `julia`, $\log_k(x)$ is found with `log(k,x)`. The default, `log(x)` takes $k=e$ so gives the natural log. So, we would define `h`, for a given `k`, with
 
 ```julia; echo=false
 k = 10				# say. Replace with actual value
-f(x) = x^(1/log(k, x))
+h(x) = x^(1/log(k, x))
 ```
 
 
@@ -783,8 +831,8 @@ f(x) = x^(1/log(k, x))
 Consider different values of $k$ to see if the limit depends on $k$ or not. What is $L$?
 
 
-```julia; echo=false
-choices = [L"1", L"k", L"\log(k)", "The limit does not exist"]
+```julia; hold=true; echo=false
+choices = ["``1``", "``k``", "``\\log(k)``", "The limit does not exist"]
 ans = 2
 radioq(choices, ans)
 ```
@@ -795,11 +843,11 @@ Limits *of* infinity *at* infinity. We could define this concept quite
 easily mashing together the two definitions. Suppose we did. Which of
 these ratios would have a limit of infinity at infinity:
 
-$$~
+```math
 x^4/x^3,\quad x^{100+1}/x^{100}, \quad x/\log(x), \quad 3^x / 2^x, \quad e^x/x^{100}
-~$$
+```
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices=[
 "the first one",
 "the first and second ones",
@@ -817,7 +865,7 @@ A slant asymptote is a line $mx + b$ for which the graph of $f(x)$
 gets close to as $x$ gets large. We can't express this directly as a
 limit, as "$L$" is not a number. How might we?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 L"We can talk about the limit at $\infty$ of $f(x) - (mx + b)$ being $0$",
 L"We can talk about the limit at $\infty$ of $f(x) - mx$ being $b$",
@@ -836,28 +884,23 @@ Consider the function $f(x) = \sin(1/x)$, $a=0$, and the two sequences implicitl
 
 What is $\lim_{x_n \rightarrow 0} f(x_n)$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(1)
 ```
 
 What is $\lim_{y_n \rightarrow 0} f(y_n)$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(-1)
 ```
 
 This shows that
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [L" $f(x)$ has a limit of $1$ as $x \rightarrow 0$",
 L" $f(x)$ has a limit of $-1$ as $x \rightarrow 0$",
 L" $f(x)$ does not have a limit as $x \rightarrow 0$"
 ]
 ans = 3
 radioq(choices, ans)
-```
-
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

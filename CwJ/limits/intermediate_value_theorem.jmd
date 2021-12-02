@@ -1,12 +1,25 @@
 # Implications of continuity
 
-```julia; echo=false; results="hidden"
+This section uses these add-on packages:
+
+```julia
 using CalculusWithJulia
-using CalculusWithJulia.WeaveSupport
 using Plots
+using Roots
+using SymPy
+import IntervalArithmetic
+import IntervalRootFinding
+```
+
+```julia; echo=false; results="hidden"
+using CalculusWithJulia.WeaveSupport
+import PyPlot
+pyplot()
+fig_size=(400, 400)
 nothing
 ```
 
+----
 
 Continuity for functions is a valued property which carries
 implications. In this section we discuss two: the intermediate value
@@ -17,15 +30,11 @@ extrema of a function.
 ## Intermediate Value Theorem
 
 > The *intermediate value theorem*: If $f$ is continuous on $[a,b]$
->  with, say, $f(a) < f(b)$, then for any $y$ with $f(a) < y < f(b)$
+>  with, say, $f(a) < f(b)$, then for any $y$ with $f(a) \leq y \leq f(b)$
 >  there exists a $c$ in $[a,b]$ with $f(c) = y$.
 
-```julia; echo=false; cache=true
+```julia; hold=true; echo=false; cache=true
 ### {{{IVT}}}
-pyplot()
-fig_size=(400, 400)
-
-
 
 function IVT_graph(n)
     f(x) = sin(pi*x) + 9x/10
@@ -63,7 +72,6 @@ with $f(x)=y$.
 
 """
 
-plotly()
 ImageFile(imgfile, caption)
 ```
 
@@ -97,9 +105,8 @@ sign of the function over an entire interval.
 
 Here, we use the Bolzano theorem to give an algorithm - the *bisection method* - to locate the value $c$ under the assumption $f$ is continous on $[a,b]$ and changes sign between $a$ and $b$.
 
-```julia; echo=false; cache=true
+```julia; hold=true; echo=false; cache=true
 ## {{{bisection_graph}}}
-pyplot()
 function bisecting_graph(n)
     f(x) = x^2 - 2
     a,b = [0,2]
@@ -144,7 +151,6 @@ that the intermediate value theorem guaratees a zero.
 
 """
 
-plotly()
 ImageFile(imgfile, caption)
 ```
 
@@ -178,7 +184,7 @@ bracketing interval gets too small to subdivide.
 We can write a relatively simple program to implement this algorithm:
 
 ```julia;
-function bisection(f, a, b)
+function simple_bisection(f, a, b)
   if f(a) == 0 return(a) end
   if f(b) == 0 return(b) end
   if f(a) * f(b) > 0 error("[a,b] is not a bracketing interval") end
@@ -211,7 +217,7 @@ that the gap between floating point values depends on their magnitude.
 The value $c$ returned *need not* be an exact zero. Let's see:
 
 ```julia;
-c = bisection(sin, 3, 4)
+c = simple_bisection(sin, 3, 4)
 ```
 
 This value of $c$ is a floating-point approximation to $\pi$, but is not *quite* a zero:
@@ -227,20 +233,17 @@ sin(c)
 
 The `Roots` package has a function `find_zero` that implements the
 bisection method when called as `find_zero(f, a..b)` where $[a,b]$
-is a bracket. Its use is similar to `bisection` above. This package is loaded when `CalculusWithJulia` is. We illlustrate the usage of `find_zero`
+is a bracket. Its use is similar to `simple_bisection` above. This package is loaded when `CalculusWithJulia` is. We illlustrate the usage of `find_zero`
 in the following:
 
 ```julia;
-using CalculusWithJulia
-using Roots
-using Plots
-xstar = find_zero(sin, 3..4)   # using interval notation a..b to specify the bracketing interval. Could use (a,b) as well
+xstar = find_zero(sin, 3..4)
 ```
 
 ```julia; echo=false
 alert("""
-Notice, the call `find_zero(sin, 3..4)` again fits the template `action(function, args...)` that we see repeatedly. The `find_zero` function can also be called through `fzero`.
-""")
+Notice, the call `find_zero(sin, 3..4)` again fits the template `action(function, args...)` that we see repeatedly. The `find_zero` function can also be called through `fzero`. The use of `3..4` to specify the interval is not necessary. For example `(3,4)` or `[3,4]` would work equally as well. The `..` is an idiom in `Julia` for intervals, so used here, but is not part of the base language. It is imported from `EllipsisNotation` by the `CalculusWithJulia` package.
+ """)
 ```
 
 
@@ -253,35 +256,35 @@ sin(xstar), sign(sin(prevfloat(xstar))), sign(sin(nextfloat(xstar)))
 
 ##### Example
 
-The polynomial $f(x) = x^5 - x + 1$ has a zero between $-2$ and $-1$. Find it.
+The polynomial $p(x) = x^5 - x + 1$ has a zero between $-2$ and $-1$. Find it.
 
 ```julia;
-f(x) = x^5 - x + 1
-c = find_zero(f, -2 .. -1)  # avoiding ..-1 which errors
-(c, f(c))
+p(x) = x^5 - x + 1
+c₀ = find_zero(p, -2 .. -1)  # avoiding ..-1 which errors
+(c₀, p(c₀))
 ```
 
-We see, as before, that $f(c)$ is not quite $0$. But you can check that `f(prevfloat(c))` is negative, while `f(c)` is seen to be positive:
+We see, as before, that $p(c)$ is not quite $0$. But it can be easily checked that `p` is negative at the previous floating point number, while `p` is seen to be positive at the returned value:
 
 ```julia
-f(c), sign(f(prevfloat(c))), f(sin(nextfloat(c)))
+p(c₀), sign(p(prevfloat(c₀))), sign(p(nextfloat(c₀)))
 ```
 
 
 
 ##### Example
 
-The function $f(x) = e^x - x^4$ has a zero between $5$ and $10$, as this graph shows:
+The function $q(x) = e^x - x^4$ has a zero between $5$ and $10$, as this graph shows:
 
 ```julia;
-f(x) = exp(x) - x^4
-plot(f, 5, 10)
+q(x) = exp(x) - x^4
+plot(q, 5, 10)
 ```
 
-Find the zero numerically. The plot shows $f(5) < 0 < f(10)$, so $[5,10]$ is a bracket. We thus have:
+Find the zero numerically. The plot shows $q(5) < 0 < q(10)$, so $[5,10]$ is a bracket. We thus have:
 
 ```julia;
-find_zero(f, 5..10)
+find_zero(q, 5..10)
 ```
 
 
@@ -290,12 +293,11 @@ find_zero(f, 5..10)
 
 Find all real zeros of $f(x) = x^3 -x + 1$ using the bisection method.
 
-We show next the symbolic values can be used with `find_zero`, should that be useful.
+We show next that symbolic values can be used with `find_zero`, should that be useful.
 
 First, we produce a plot to identify a bracketing interval
 
 ```julia;
-using SymPy
 @syms x
 plot(x^3 - x + 1, -3, 3)
 ```
@@ -314,10 +316,10 @@ find_zero(x^3 - x + 1, -2 .. -1)
 The equation $\cos(x) = x$ has just one solution, as can be seen in this plot:
 
 ```julia;
-f(x) = cos(x)
-g(x) = x
-plot(f, -pi, pi)
-plot!(g)
+𝒇(x) = cos(x)
+𝒈(x) = x
+plot(𝒇, -pi, pi)
+plot!(𝒈)
 ```
 
 Find it.
@@ -325,9 +327,22 @@ Find it.
 We see from the graph that it is clearly between $0$ and $2$, so all we need is a function. (We have two.) The trick is to observe that solving $f(x) = g(x)$ is the same problem as solving for $x$ where $f(x) - g(x) = 0$. So we define the difference and use that:
 
 ```julia;
-h(x) = f(x) - g(x)
-find_zero(h, 0..2)
+𝒉(x) = 𝒇(x) - 𝒈(x)
+find_zero(𝒉, 0..2)
 ```
+
+#### Using parameterized function (`f(x,p)`) with `find_zero`
+
+Geometry will tell us that ``\cos(x) = x/p`` for *one* ``x`` in ``[0,pi/2]`` when ever ``p>0``. We could set up finding this value for a given ``p`` by making ``p`` part of the function definition, but as an illustration of passing parameters, we leave `p` as a parameter (in this case, as a second value with default of ``1``):
+
+```julia; hold=true;
+f(x, p=1) = cos(x) - x/p
+I = 0..pi/2
+find_zero(f, I), find_zero(f,I, p=2)
+```
+
+The second number the solution when `p=2`.
+
 
 
 ##### Example
@@ -372,14 +387,14 @@ find_zero(x -> plan1(x) - plan2(x), 10..20)
 
 The flight of an arrow can be modeled using various functions,
 depending on assumptions. Suppose an arrow is launched in the air from
-a height of 0 feet above the ground at an angle of $\theta =
+a height of ``0`` feet above the ground at an angle of $\theta =
 \pi/4$. With a suitable choice for the initial velocity, a model
 without wind resistance for the height of the arrow at a distance $x$
 units away may be:
 
-$$~
+```math
 j(x) = \tan(\theta) x - (1/2) \cdot g(\frac{x}{v_0 \cos\theta})^2.
-~$$
+```
 
 In `julia` we have, taking $v_0=200$:
 
@@ -391,29 +406,29 @@ j(x; theta=pi/4, g=32, v0=200) = tan(theta)*x - (1/2)*g*(x/(v0*cos(theta)))^2
 With a velocity-dependent wind resistance given by $\gamma$, again with some units, a similar
 equation can be constructed. It takes a different form:
 
-$$~
-y(x) = (\frac{g}{\gamma v_0 \cos(\theta)} + \tan(\theta)) \cdot x  +
+```math
+d(x) = (\frac{g}{\gamma v_0 \cos(\theta)} + \tan(\theta)) \cdot x  +
       \frac{g}{\gamma^2}\log(\frac{v_0\cos(\theta) - \gamma x}{v_0\cos(\theta)})
-~$$
+```
 
 Again, $v_0$ is the initial velocity and is taken to be $200$
 and $\gamma$ a resistance, which we take to be $1$. With this, we have
 the following `julia` definition (with a slight reworking of $\gamma$):
 
 ```julia;
-function y(x; theta=pi/4, g=32, v0=200, gamma=1)
+function d(x; theta=pi/4, g=32, v0=200, gamma=1)
 	 a = gamma * v0 * cos(theta)
 	 (g/a + tan(theta)) * x + g/gamma^2 * log((a-gamma^2 * x)/a)
 end
 ```
 
 For each model, we wish to find the value of $x$ after launching where
-the height is modeled to be 0. That is how far will the arrow travel
+the height is modeled to be ``0``. That is how far will the arrow travel
 before touching the ground?
 
 
 For the model without wind resistance, we can graph the function
-easily enough. Let's guess the distance is no more than 500 feet:
+easily enough. Let's guess the distance is no more than ``500`` feet:
 
 ```julia;
 plot(j, 0, 500)
@@ -423,8 +438,6 @@ Well, we haven't even seen the peak yet. Better to do a little spade
 work first. This is a quadratic function, so we can use `roots` from `SymPy` to find the roots:
 
 ```julia;
-using SymPy
-@syms x
 roots(j(x))
 ```
 
@@ -440,7 +453,7 @@ plot(j, 0, 1250)
 As for the model with wind resistance,  a quick plot over the same interval, $[0, 1250]$ yields:
 
 ```julia;
-plot(y, 0, 1250)
+plot(d, 0, 1250)
 ```
 
 This graph eventually goes negative and then stops. This is due to the asymptote in model when `(a - gamma^2*x)/a` is zero. To plot the trajectory until it returns to ``0``, we need to identify the value of the zero.
@@ -455,27 +468,27 @@ b = a/gamma^2
 Note that the function is infinite at `b`:
 
 ```julia;
-y(b)
+d(b)
 ```
 
 
 From the graph,  we can see the zero is around `b`. As `y(b)` is `-Inf` we can use the bracket `(b/2,b)`
 
 ```julia;
-x1 = find_zero(y, (b/2)..b)
+x1 = find_zero(d, (b/2)..b)
 ```
 
 The answer is approximately $140.7$
 
-(The bisection method only needs to know the sign of the function. Other bracketing methods would have issues with an endpoint with an infinite function value. To use them, some value between the zero and `b` would need to be used.)
+(The bisection method only needs to know the sign of the function. Other bracketing methods would have issues with an endpoint with an infinite function value. To use them, some value between the zero and `b` would needed.)
 
 
 Finally, we plot both graphs at once to see that it was a very windy
 day indeed.
 
 ```julia;
-plot(j, 0, 1250)
-plot!(y, 0, x1)
+plot(j, 0, 1250, label="no wind")
+plot!(d, 0, x1, label="windy day")
 ```
 
 ##### Example: bisection and non-continuity
@@ -508,8 +521,8 @@ As an example, let $f(x) = 1/x$. Clearly the interval $[-1,1]$ is a
 does the algorithm yield:
 
 ```julia;
-f(x) = 1/x
-x0 = find_zero(f, -1..1)
+fᵢ(x) = 1/x
+x0 = find_zero(fᵢ, -1..1)
 ```
 
 
@@ -519,7 +532,7 @@ that just to the left of the answer (`prevfloat`) and just to the
 right of the answer (`nextfloat`) the function changes sign:
 
 ```julia;
-sign(f(prevfloat(x0))), sign(f(nextfloat(x0)))
+sign(fᵢ(prevfloat(x0))), sign(fᵢ(nextfloat(x0)))
 ```
 
 So, the "bisection method" applied here finds a point where the function crosses
@@ -541,19 +554,19 @@ interval.
 
 Still, with some engineering, this can be a useful approach, save the
 caveats. This idea is implemented in the `find_zeros` function of the `Roots` package. The function is
-called via `find_zeros(f, a.. b)` but here the interval
+called via `find_zeros(f, a..b)` but here the interval
 $[a,b]$ is not necessarily a bracketing interval.
 
 To see, we have:
 
-```julia;
+```julia; hold=true;
 f(x) = cos(10*pi*x)
 find_zeros(f, 0..1)
 ```
 
 Or for a polynomial:
 
-```julia;
+```julia; hold=true;
 f(x) = x^5 - x^4 + x^3 - x^2 + 1
 find_zeros(f, -10..10)
 ```
@@ -574,8 +587,8 @@ To proceed with `find_zeros`, we define $f(x) = e^x - x^5$, as $f(x) = 0$ precis
 The zeros are then found with:
 
 ```julia;
-f(x) = exp(x) - x^5
-zs = find_zeros(f, -20..20)
+f₁(x) = exp(x) - x^5
+zs = find_zeros(f₁, -20..20)
 ```
 
 
@@ -584,7 +597,7 @@ is an approximate zero can be done with the "." (broadcast) syntax:
 
 
 ```julia;
-f.(zs)
+f₁.(zs)
 ```
 
 (For a continuous function this should be the case that the values
@@ -600,32 +613,17 @@ Alternatively, `Roots` implements the `CommonSolve` interface popularized by its
 To set up a problem, we call `ZeroProblem` with the function and an initial interval, as in:
 
 ```julia
-f(x) = x^5 - x - 1
-prob = ZeroProblem(f, (1,2))
+f₅(x) = x^5 - x - 1
+prob = ZeroProblem(f₅, (1,2))
 ```
 
 Then we can "solve" this problem with `solve`. For example:
 
 ```julia
-solve(prob, Roots.Bisection()), solve(prob, Roots.Brent()), solve(prob, Roots.A42())
+solve(prob), solve(prob, Roots.Brent()), solve(prob, Roots.A42())
 ```
 
-Though the answers are identical, the methods employed were not.
-
-Behind the scenes, `solve` *initializes* a iterator and then iterates it to completion. This can be accessed through the `init` method. For example, we can see the steps along the way  of the `FalsePosition` method for this problem:
-
-```julia
-o = init(prob, FalsePosition())
-for i in o
-  @show i
-end
-```
-
-The command `find_zero(f, 1..2, FalsePosition(), verbose=true)` would
-give more detail on the algorithm in a standard format, but this
-method may be of interest, as it allows the combination of different
-models.
-
+Though the answers are identical, the methods employed were not. The first call, with an unspecified method, defaults to bisection.
 
 
 
@@ -658,14 +656,17 @@ This chart of the [Hardrock 100](http://hardrock100.com/) illustrates the two co
 ###{{{hardrock_profile}}}
 imgfile = "figures/hardrock-100.png"
 caption = """
-Elevation profile of the  Hardrock 100 ultramarathon. Treating the profile as a function, the absolute maximum is just about 14,000 feet and the absolute minimum about 7600 feet. These are of interest to the runner for different reasons. Also of interest would be each local maxima and local minima - the peaks and valleys of the graph - and the total elevation climbed - the latter so important/unforgettable its value makes it into the chart's title.
+Elevation profile of the  Hardrock 100 ultramarathon. Treating the elevation profile as a function, the absolute maximum is just about 14,000 feet and the absolute minimum about 7600 feet. These are of interest to the runner for different reasons. Also of interest would be each local maxima and local minima - the peaks and valleys of the graph - and the total elevation climbed - the latter so important/unforgettable its value makes it into the chart's title.
 """
 
-ImageFile(imgfile, caption)
+#ImageFile(imgfile, caption)
+nothing
 ```
 
+![Elevation profile of the  Hardrock 100 ultramarathon. Treating the elevation profile as a function, the absolute maximum is just about 14,000 feet and the absolute minimum about 7600 feet. These are of interest to the runner for different reasons. Also of interest would be each local maxima and local minima - the peaks and valleys of the graph - and the total elevation climbed - the latter so important/unforgettable its value makes it into the chart's title.](https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/limits/figures/hardrock-100.png)
 
-The extreme value theorem discusses an assumption that ensures such
+
+The extreme value theorem discusses an assumption that ensures
 absolute maximum and absolute minimum values exist.
 
 > The *extreme value theorem*: If $f(x)$ is continuous over a closed
@@ -696,15 +697,14 @@ is $0$, it occurs at each endpoint.
 
 The function $f(x) = x \cdot e^{-x}$ on the closed interval $[0, 5]$ is continuous. Hence it has an absolute maximum, which a graph shows to be $0.4$. It has an absolute minimum, clearly the value $0$ occurring at the endpoint.
 
-```julia;
-f(x) = x * exp(-x)
-plot(f, 0, 5)
+```julia; hold=true;
+plot(x -> x * exp(-x), 0, 5)
 ```
 
 ##### Example
 
 The tangent function does not have a *guarantee* of absolute maximum
-or minimum over $(-\pi/2, \pi/2)$, as it is not *continuous* at the
+or minimum over $(-\pi/2, \pi/2),$ as it is not *continuous* at the
 endpoints. In fact, it doesn't have either extrema - it has vertical asymptotes at each endpoint of this interval.
 
 
@@ -712,12 +712,11 @@ endpoints. In fact, it doesn't have either extrema - it has vertical asymptotes 
 
 The function $f(x) = x^{2/3}$ over the interval $[-2,2]$ has cusp at $0$. However, it is continuous on this closed interval, so must have an absolute maximum and absolute minimum. They can be seen from the graph to occur at the endpoints and the cusp at $x=0$, respectively:
 
-```julia;
-f(x) = (x^2)^(1/3)
-plot(f, -2, 2)
+```julia;hold=true;
+plot(x -> (x^2)^(1/3), -2, 2)
 ```
 
-(The definition `x^(2/3)` fails, can you see why?)
+(The use of just `x^(2/3)` would fail, can you guess why?)
 
 
 ##### Example
@@ -751,29 +750,13 @@ Then as ``f`` is continuous at ``a``, given ``\epsilon`` there is a ``\delta`` s
 
 ## Questions
 
-###### Question
-
-In the following illustration, what is the value of the zero of ``f``?
-
-```julia; echo=false
-caption = """
-Illustration of the bisection method applied to a function with a single zero. Adjust the slider labled "n" to move to a new step.
-"""
-CalculusWithJulia.WeaveSupport.JSXGraph(joinpath(@__DIR__, "bisection.js"), caption)
-```
-
-```julia; echo=false
-using Roots
-val = find_zero(x -> x^5 - x - 1, 1)
-numericq(val, 1e-1)
-```
 
 ###### Question
 
 There is negative zero in the interval $[-10, 0]$ for the function
 $f(x) = e^x - x^4$. Find its value numerically:
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 f(x) = exp(x) - x^4
 val = find_zero(f, -10..0);
 numericq(val, 1e-3)
@@ -785,7 +768,7 @@ numericq(val, 1e-3)
 There is  zero in the interval $[0, 5]$ for the function
 $f(x) = e^x - x^4$. Find its value numerically:
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 f(x) = exp(x) - x^4
 val = find_zero(f, 0..5);
 numericq(val, 1e-3)
@@ -798,7 +781,7 @@ zeros on the positive $x$ axis. You are asked to find the largest
 (graph and bracket...).
 
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 b = 10
 f(x) =  x^2 - b * x * log(x)
 val = find_zero(f, 10..500)
@@ -819,7 +802,7 @@ plot(airyai, -10, 10)   # `airyai` loaded in `SpecialFunctions` by `CalculusWith
 
 The second largest root is:
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 val = find_zero(airyai, -5 .. -4);
 numericq(val, 1e-8)
 ```
@@ -830,14 +813,14 @@ numericq(val, 1e-8)
 
 Certainly $x^3$ equals $3^x$ at $x=3$. Find the largest value for which $x^3 = 3x$.
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 val = maximum(find_zeros(x -> x^3 - 3^x, 0..20))
 numericq(val)
 ```
 
 Compare $x^2$ and $2^x$. They meet at $2$, where do the meet again?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 choices = ["Only before 2", "Only after 2", "Before and after 2"]
 ans = 3
 radioq(choices, ans)
@@ -846,12 +829,12 @@ radioq(choices, ans)
 Just by graphing, find a number in $b$ with $2 < b < 3$ where for
 values less than $b$ there is a zero beyond $b$ of $b^x - x^b$ and for values more than $b$ there isn't.
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 choices=[
-L"$b \approx 2.2$",
-L"$b \approx 2.5$",
-L"$b \approx 2.7$",
-L"$b \approx 2.9$"]
+"``b \\approx 2.2``",
+"``b \\approx 2.5``",
+"``b \\approx 2.7``",
+"``b \\approx 2.9``"]
 ans = 3
 radioq(choices, ans)
 ```
@@ -861,14 +844,18 @@ radioq(choices, ans)
 
 ###### Question: What goes up must come down...
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 ### {{{cannonball_img}}}
-imgfile = "figures/cannonball.jpg"
+figure= "figure/cannonball.j;b"
 caption = """
 Trajectories of potential cannonball fires with air-resistance included. (http://ej.iop.org/images/0143-0807/33/1/149/Full/ejp405251f1_online.jpg)
 """
-ImageFile(imgfile, caption)
+#ImageFile(figure, caption)
+nothing
 ```
+
+![Trajectories of potential cannonball fires with air-resistance included. [Ref.](http://ej.iop.org/images/0143-0807/33/1/149/Full/ejp405251f1_online.jpg)
+](https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/limits/figures/cannonball.jpg)
 
 In 1638, according to Amir D. [Aczel](http://books.google.com/books?id=kvGt2OlUnQ4C&pg=PA28&lpg=PA28&dq=mersenne+cannon+ball+tests&source=bl&ots=wEUd7e0jFk&sig=LpFuPoUvODzJdaoug4CJsIGZZHw&hl=en&sa=X&ei=KUGcU6OAKJCfyASnioCoBA&ved=0CCEQ6AEwAA#v=onepage&q=mersenne%20cannon%20ball%20tests&f=false),
 an experiment was performed in the French Countryside. A monk, Marin
@@ -882,9 +869,9 @@ This isn't the case for simple ballistic motion where the time to go
 up is equal to the time to come down. We can "prove" this numerically. For simple ballistic
 motion:
 
-$$~
+```math
 f(t) = -\frac{1}{2} \cdot 32 t^2 + v_0t.
-~$$
+```
 
 The time to go up and down are found by
 the two zeros of this function. The peak time is related to a zero of
@@ -893,10 +880,10 @@ operation, but later will be known as the derivative. (The notation assumes `Cal
 
 Let $v_0= 390$. The three times in question can be found from the zeros of `f` and `f'`. What are they?
 
-```julia; echo=false
-choices = [L"(0.0, 12.1875, 24.375)",
-	L"(-4.9731, 0.0, 4.9731)",
-	L"(0.0, 625.0, 1250.0)"]
+```julia; hold=true;  echo=false
+choices = ["``(0.0, 12.1875, 24.375)``",
+	"``(-4.9731, 0.0, 4.9731)``",
+	"``(0.0, 625.0, 1250.0)``"]
 ans = 1
 radioq(choices, ans)
 ```
@@ -909,9 +896,9 @@ For simple ballistic motion you find that the time to go up is the
 time to come down. For motion within a resistant medium, such as air,
 this isn't the case. Suppose a model for the height as a function of time is given by
 
-$$~
+```math
 h(t) = (\frac{g}{\gamma^2} + \frac{v_0}{\gamma})(1 - e^{-\gamma t}) - \frac{gt}{\gamma}
-~$$
+```
 
 ([From "On the trajectories of projectiles depicted in early ballistic Woodcuts"](http://www.researchgate.net/publication/230963032_On_the_trajectories_of_projectiles_depicted_in_early_ballistic_woodcuts))
 
@@ -928,13 +915,13 @@ Now find the three times: $t_0$, the starting time; $t_a$, the time at
 the apex of the flight; and $t_f$, the time the object returns to the
 ground.
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 t0 = 0.0
 tf = find_zero(h, 10..20)
 ta = find_zero(D(h), t0..tf)
-choices = [L"(0, 13.187, 30.0)",
-	L"(0, 32.0, 390.0)",
-	L"(0, 2.579, 13.187)"]
+choices = ["``(0, 13.187, 30.0)``",
+	"``(0, 32.0, 390.0)``",
+	"``(0, 2.579, 13.187)``"]
 ans = 3
 radioq(choices, ans)
 ```
@@ -943,7 +930,7 @@ radioq(choices, ans)
 
 Part of the proof of the intermediate value theorem rests on knowing what the limit is of $f(x)$ when $f(x) > y$ for all $x$. What can we say about $L$ supposing $L = \lim_{x \rightarrow c+}f(x)$ under  this assumption on $f$?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 choices = [L"It must be that $L > y$ as each $f(x)$ is.",
 L"It must be that $L \geq y$",
 L"It can happen that $L < y$, $L=y$, or $L>y$"]
@@ -958,11 +945,11 @@ and a *closed* interval. Which of the following examples fails to
 satisfy the consequence of the  extreme value theorem because the interval is not closed?
 (The consequence - the existence of an absolute maximum and minimum - can happen even if the theorem does not apply.)
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 choices = [
-L"f(x) = \sin(x),~ I=(-2\pi, 2\pi)",
-L"f(x) = \sin(x),~ I=(-\pi, \pi)",
-L"f(x) = \sin(x),~ I=(-\pi/2, \pi/2)",
+"``f(x) = \\sin(x),~ I=(-2\\pi, 2\\pi)``",
+"``f(x) = \\sin(x),~ I=(-\\pi, \\pi)``",
+"``f(x) = \\sin(x),~ I=(-\\pi/2, \\pi/2)``",
 "None of the above"]
 ans = 3
 radioq(choices, ans, keep_order=true)
@@ -975,11 +962,11 @@ The extreme value theorem has two assumptions: a continuous function
 and a *closed* interval. Which of the following examples fails to
 satisfy the consequence of the  extreme value theorem because the function is not continuous?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 choices = [
-L"f(x) = 1/x,~ I=[1,2]",
-L"f(x) = 1/x,~ I=[-2, -1]",
-L"f(x) = 1/x,~ I=[-1, 1]",
+"``f(x) = 1/x,~ I=[1,2]``",
+"``f(x) = 1/x,~ I=[-2, -1]``",
+"``f(x) = 1/x,~ I=[-1, 1]``",
 "none of the above"]
 ans = 3
 radioq(choices, ans, keep_order=true)
@@ -993,11 +980,11 @@ The extreme value theorem has two assumptions: a continuous function
 and a *closed* interval. Which of the following examples fails to
 satisfy the consequence of the  extreme value theorem because the function is not continuous?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 choices = [
-L"f(x) = \text{sign}(x),~  I=[-1, 1]",
-L"f(x) = 1/x,~      I=[-4, -1]",
-L"f(x) = \text{floor}(x),~ I=[-1/2, 1/2]",
+"``f(x) = \\text{sign}(x),~  I=[-1, 1]``",
+"``f(x) = 1/x,~      I=[-4, -1]``",
+"``f(x) = \\text{floor}(x),~ I=[-1/2, 1/2]``",
 "none of the above"]
 ans = 4
 radioq(choices, ans, keep_order=true)
@@ -1010,7 +997,7 @@ The function $f(x) = x^3 - x$ is continuous over the interval
 $I=[-2,2]$. Find a value $c$ for which $M=f(c)$ is an absolute maximum
 over $I$.
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 val = 2
 numericq(val)
 ```
@@ -1023,7 +1010,7 @@ The function $f(x) = x^3 - x$ is continuous over the interval
 $I=[-1,1]$. Find a value $c$ for which $M=f(c)$ is an absolute maximum
 over $I$.
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 val = -sqrt(3)/3
 numericq(val)
 ```
@@ -1033,7 +1020,7 @@ numericq(val)
 
 Consider the continuous function $f(x) = \sin(x)$ over the closed interval $I=[0, 10\pi]$. Which of these is true?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 choices = [
 L"There is no value $c$ for which $f(c)$ is an absolute maximum over $I$.",
 L"There is just one value of $c$ for which $f(c)$ is an absolute maximum over $I$.",
@@ -1048,7 +1035,7 @@ radioq(choices, ans, keep_order=true)
 
 Consider the continuous function $f(x) = \sin(x)$ over the closed interval $I=[0, 10\pi]$. Which of these is true?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 choices = [
 L"There is no value $M$ for which $M=f(c)$, $c$ in $I$ for which $M$ is an absolute maximum over $I$.",
 L"There is just one value $M$ for which $M=f(c)$, $c$ in $I$ for which $M$ is an absolute maximum over $I$.",
@@ -1066,11 +1053,11 @@ The extreme value theorem says that on a closed interval a continuous
 function has an extreme value $M=f(c)$ for some $c$. Does it also say
 that $c$ is unique? Which of these examples might help you answer this?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 choices = [
-L"f(x) = \sin(x),\quad I=[-\pi/2, \pi/2]",
-L"f(x) = \sin(x),\quad I=[0, 2\pi]",
-L"f(x) = \sin(x),\quad I=[-2\pi, 2\pi]"]
+"``f(x) = \\sin(x),\\quad I=[-\\pi/2, \\pi/2]``",
+"``f(x) = \\sin(x),\\quad I=[0, 2\\pi]``",
+"``f(x) = \\sin(x),\\quad I=[-2\\pi, 2\\pi]``"]
 ans = 3
 radioq(choices, ans)
 ```
@@ -1079,7 +1066,7 @@ radioq(choices, ans)
 
 The zeros of the equation $\cos(x) \cdot \cosh(x) = 1$ are related to vibrations of rods. Using `find_zeros`, what is the largest zero in the interval $[0, 6\pi]$?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 val = maximum(find_zeros(x -> cos(x) * cosh(x) - 1, 0..6pi))
 numericq(val)
 ```
@@ -1090,13 +1077,13 @@ A parametric equation is specified by a parameterization $(f(t), g(t)), a \leq t
 
 Suppose $k_x$ and $k_y$ are positive integers and $a, b$ are positive numbers, will the [Lissajous](https://en.wikipedia.org/wiki/Parametric_equation#Lissajous_Curve) curve given by $(a\cos(k_x t), b\sin(k_y t))$ be continuous?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 yesnoq(true)
 ```
 
 Here is a sample graph for $a=1, b=2, k_x=3, k_y=4$:
 
-```julia;
+```julia; hold=true;
 a,b = 1, 2
 k_x, k_y = 3, 4
 plot(t -> a * cos(k_x *t), t-> b * sin(k_y * t), 0, 4pi)
@@ -1110,11 +1097,9 @@ The `IntervalRootFinding` package provides a more *rigorous* alternative to `fin
 The `IntervalRootFinding` package provides a function `roots`, with usage similar to `find_zeros`. Intervals are specified with the notation `a..b`. In the following, we *qualify* `roots` to not conflict with the `roots` function from `SymPy`, which has already been loaded:
 
 ```julia
-import IntervalArithmetic
-import IntervalRootFinding
-f(x) = sin(x) - 0.1*x^2 + 1
-J = IntervalArithmetic.Interval(-10, 10) # cumbersome -10..10; needed here: .. means something in CalculusWithJulia
-rts = IntervalRootFinding.roots(f, J)
+u(x) = sin(x) - 0.1*x^2 + 1
+𝑱 = IntervalArithmetic.Interval(-10, 10) # cumbersome -10..10; needed here: .. means something in CalculusWithJulia
+rts = IntervalRootFinding.roots(u, 𝑱)
 ```
 
 The "zeros" are returned with an enclosing interval and a flag, which for the above indicates a unique zero in the interval.
@@ -1122,7 +1107,7 @@ The "zeros" are returned with an enclosing interval and a flag, which for the ab
 The intervals with a unique answer can be filtered and refined with a construct like the following:
 
 ```julia
-[find_zero(f, (IntervalArithmetic.interval(I).lo, IntervalArithmetic.interval(I).hi)) for I in rts if I.status == :unique]
+[find_zero(u, (IntervalArithmetic.interval(I).lo, IntervalArithmetic.interval(I).hi)) for I in rts if I.status == :unique]
 ```
 
 The midpoint of the returned interval can be found by composing the `mid` function with the `interval` function of the package:
@@ -1137,7 +1122,7 @@ For some problems, `find_zeros` is more direct, as with this one:
 
 
 ```julia
-find_zeros(f, -10..10)
+find_zeros(u, -10..10)
 ```
 
 Which can be useful if there is some prior understanding of the zeros expected to be found.
@@ -1147,9 +1132,9 @@ However, `IntervalRootFinding` is more efficient computationally and *offers a g
 
 For functions where roots are not "unique" a different output may appear:
 
-```julia
+```julia; hold=true;
 f(x) = x*(x-1)^2
-rts = IntervalRootFinding.roots(f, J)
+rts = IntervalRootFinding.roots(f, 𝑱)
 ```
 
 The interval labeled `:unknown` contains a `0`, but it can't be proved by `roots`.
@@ -1188,21 +1173,13 @@ Compared to the *bisection* algorithm -- which only knows for some intervals if 
 For a last example of the value of this package, this function, which appeared in our discussion on limits, is *positive* for **every** floating point number, but has two zeros snuck in at values within the floating point neighbors of $15/11$
 
 ```julia
-g(x) = x^2 + 1 +log(abs( 11*x-15 ))/99
+t(x) = x^2 + 1 +log(abs( 11*x-15 ))/99
 ```
 
 The `find_zeros` function will fail on identifying any potential zeros of this function. Even the basic call of `roots` will fail, due to it relying on some smoothness of `f`. However, explicitly asking for `Bisection` shows the *potential* for one or more zeros near $15/11$:
 
 ```julia
-J =
-IntervalRootFinding.roots(g, J, IntervalRootFinding.Bisection)
+IntervalRootFinding.roots(t, 𝑱, IntervalRootFinding.Bisection)
 ```
 
 (The basic algorithm above can be sped up using a variant of [Newton's](../derivatives/newton_method.html) method, this variant assumes some "smoothness" in the function `f`, whereas this `f` is not continuous at the point ``x=15/11``.)
-
-
-
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
-```

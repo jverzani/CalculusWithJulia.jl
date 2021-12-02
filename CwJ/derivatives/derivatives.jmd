@@ -1,12 +1,25 @@
 # Derivatives
 
+This section uses these add-on packages:
+
+```julia
+using CalculusWithJulia
+using Plots
+using SymPy
+```
+
 
 ```julia; echo=false; results="hidden"
-using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
-using Plots
+using DataFrames
+import PyPlot
+pyplot()
+fig_size=(600, 400)
+
 nothing
 ```
+
+----
 
 Before defining the derivative of a function, let's begin with two
 motivating examples.
@@ -18,33 +31,25 @@ New Orleans; though lost in listening to music, still mindful of the
 speedometer and odometer, both prominently placed on the dashboard of
 the car.
 
-The speedometer reads 60 miles per hour, what is the odometer doing?
+The speedometer reads ``60`` miles per hour, what is the odometer doing?
 Besides recording total distance traveled, it is incrementing
-dutifully every hour by 60 miles. Why? Well, the well-known formula relating distance, time and rate of travel is
+dutifully every hour by ``60`` miles. Why? Well, the well-known formula relating distance, time and rate of travel is
 
-$$~
+```math
 \text{distance} = \text{ rate } \times \text{ time.}
-~$$
+```
 
-If the rate is a constant $60$ miles/hour, then in one hour the distance traveled is 60 miles.
+If the rate is a constant ``60`` miles/hour, then in one hour the distance traveled is ``60`` miles.
 
-Of course, the odometer isn't just incrementing once per hour, it is incrementing once every 1/10th of a mile. How much time does that take? Well, we would need to solve $1/10=60 \cdot t$ which means $t=1/600$ hours, better known as once every 6 seconds.
+Of course, the odometer isn't just incrementing once per hour, it is incrementing once every ``1/10``th of a mile. How much time does that take? Well, we would need to solve $1/10=60 \cdot t$ which means $t=1/600$ hours, better known as once every 6 seconds.
 
 Using some mathematical notation, would give $x(t) = v\cdot t$, where
 $x$ is position at time $t$, $v$ is the velocity and $t$ the time
 traveled in hours. A simple graph of the first three hours of travel would show:
 
-```julia
-using CalculusWithJulia
-using Plots
-plotly()
-
+```julia; hold=true;
 position(t) = 60 * t
 plot(position, 0, 3)
-```
-
-```julia
-plot(sin, 0, 2pi)
 ```
 
 Oh no, we hit traffic. In the next 30 minutes we only traveled
@@ -62,19 +67,12 @@ $\Delta x / \Delta t$. That is
 Now suppose that after $6$ hours of travel the GPS in the car gives us a readout of distance traveled
 as a function of time. The graph looks like this:
 
-```julia;echo=false
+```julia; hold=true; echo=false
 function position(t)
-  if t <= 3
-     60*t
-  elseif 3 < t <= 3.5
-     position(3) + 30(t -3)
-  elseif 3.5 < t <= 4
-     position(3.499)  + 75(t-3.5)
-  elseif 4 < t <= 4.5
-     position(4)
-  else
-     position(4) + 60(t-4.5)
-  end
+    t <= 3   ? 60*t :
+    t <= 3.5 ? position(3) + 30*(t-3) :
+    t <= 4   ? position(3.5) + 75 * (t-3.5) :
+    t <= 4.5 ? position(4) : position(4.5) + 60*(t-4.5)
 end
 plot(position, 0, 6)
 ```
@@ -110,17 +108,10 @@ Perhaps a graph of the speed is a bit more clear. We can do this based on the ab
 
 ```julia
 function speed(t)
-  if     0   < t <= 3
-     60
-  elseif 3   < t <= 3.5
-     30
-  elseif 3.5 < t <= 4
-     75
-  elseif 4   < t <= 4.5
-     0
-  else
-     60
-  end
+    0 < t <= 3  ? 60  :
+        t <= 3.5 ? 30 :
+        t <= 4   ? 75 :
+        t <= 4.5 ? 0  : 60
 end
 plot(speed, 0, 6)
 ```
@@ -164,8 +155,7 @@ units of the distance traveled in the first second that the distance
 traveled between subsequent seconds was $3$ times, then $5$ times, then
 $7$ times, ... This table summarizes.
 
-```julia; echo=false
-using DataFrames
+```julia; hold=true; echo=false
 ts = [0,1,2,3,4,5]
 dxs = [0,1,3, 5, 7, 9]
 ds = [0,1,4,9,16,25]
@@ -175,7 +165,7 @@ table(d)
 
 A graph of distance versus time could be found by interpolating between the measured points:
 
-```julia
+```julia;
 ts = [0,1,2,3,4, 5]
 xs = [0,1,4,9,16,25]
 plot(ts, xs)
@@ -233,9 +223,9 @@ a line intersecting two specified points on a curve.
 
 Rather than parameterize this problem using $a$ and $b$, we let $c$ and $c+h$ represent the two values for $x$, then the secant-line-slope formula becomes
 
-$$~
+```math
 m = \frac{f(c+h) - f(c)}{h}.
-~$$
+```
 
 ## The slope of the tangent line
 
@@ -244,10 +234,7 @@ over a given period, $h$. What if this rate is so variable, that it
 makes sense to take smaller and smaller periods $h$? In fact, what if
 $h$ goes to $0$?
 
-```julia;echo=false; cache=true
-pyplot()
-fig_size=(600, 400)
-
+```julia; hold=true; echo=false; cache=true
 function secant_line_tangent_line_graph(n)
     f(x) = sin(x)
     c = pi/3
@@ -281,7 +268,6 @@ end
 imgfile = tempname() * ".gif"
 gif(anim, imgfile, fps = 1)
 
-plotly()
 ImageFile(imgfile, caption)
 ```
 
@@ -291,16 +277,16 @@ The graphic suggests that the slopes of the secant line converge to
 the slope of a "tangent" line. That is, for a given $c$, this
 limit exists:
 
-$$~
+```math
 \lim_{h \rightarrow 0} \frac{f(c+h) - f(c)}{h}.
-~$$
+```
 
-We'll define the tangent line at $(c, f(c))$ to be the line through
+We will define the tangent line at $(c, f(c))$ to be the line through
 the point with the slope from the limit above - provided that limit
 exists. Informally, the tangent line is the line through the point
 that best approximates the function.
 
-```julia; echo=false; cache=true
+```julia; hold=true; echo=false; cache=true
 function line_approx_fn_graph(n)
     f(x) = sin(x)
     c = pi/3
@@ -330,7 +316,6 @@ end
 imgfile = tempname() * ".gif"
 gif(anim, imgfile, fps = 1)
 
-plotly()
 ImageFile(imgfile, caption)
 ```
 
@@ -354,7 +339,7 @@ What is the slope of the tangent line to $f(x) = \sin(x)$ at $c=0$?
 We need to compute the limit $(\sin(c+h) - \sin(c))/h$ which is the
 limit as $h$ goes to $0$ of $\sin(h)/h$. We know this to be 1.
 
-```julia
+```julia; hold=true
 f(x) = sin(x)
 c = 0
 tl(x) = f(c) + 1 * (x - c)
@@ -366,17 +351,20 @@ plot!(tl, -pi/2, pi/2)
 
 The limit of the slope of the secant line gives an operation: for each
 $c$ in the domain of $f$ there is a number (the slope of the tangent
-line) or it does not exist. That is, there is derived function from
+line) or it does not exist. That is, there is a derived function from
 $f$. Call this function the *derivative* of $f$. There are many
-notations for this, here we use the "prime" notation:
+notations for the derivative, here we use the "prime" notation:
 
-$$~
+```math
 f'(x) = \lim_{h \rightarrow 0} \frac{f(x+h) - f(x)}{h}.
-~$$
+```
 
 The limit above is identical, only it uses $x$ instead of $c$ to
-emphasize that we are thinking of function now, and not just a value
+emphasize that we are thinking of a function now, and not just a value
 at a point.
+
+
+The derivative is related to a function, but at times it is more convenient to write only the expression defining the rule of the function. In that case, we use this notation for the derivative ``[\text{expression}]'``.
 
 ### Some basic derivatives
 
@@ -384,7 +372,6 @@ at a point.
   at $(x+h)^n - x^n$ for positive, integer-value $n$. Let's look at a case, $n=5$
 
 ```julia
-using SymPy
 @syms x::real h::real
 n = 5
 ex = expand((x+h)^n - x^n)
@@ -399,7 +386,7 @@ cancel(ex/h, h)
 We see the lone term `5x^4` without an $h$, so as we let $h$ go to $0$, this will be the limit. That is, $f'(x) = 5x^4$.
 
 
-For general integer-value, positive $n$, the binomial theorem gives an
+For  integer-valued, positive, $n$, the binomial theorem gives an
 expansion $(x+h)^n = x^n + nx^{n-1}\cdot h^1 + n\cdot(n-1)x^{n-2}\cdot h^2 + \cdots$. Subtracting $x^n$
 then dividing by $h$ leaves just the term $nx^{n-1}$ without a power
 of $h$, so the limit, in general, is just this term. That is $[x^n]' =
@@ -412,36 +399,37 @@ functions will have a derivative of $0$ at all $x$. We will see that in
 general, the power rule applies for any $n$ where $x^n$ is defined.
 
 - What is the derivative of $f(x) = \sin(x)$? We know that $f'(0)= 1$
-  by an earlier example, here we solve in general.
+  by an earlier example (``(\sin(0+h)-\sin(0))/h = \sin(h)/h``), here we solve in general.
 
 We need to consider the difference $\sin(x+h) - \sin(x)$:
 
 ```julia
-ex = sympy.expand_trig(sin(x+h) - sin(x))  # expand_trig is not exposed in `SymPy`
+sympy.expand_trig(sin(x+h) - sin(x))  # expand_trig is not exposed in `SymPy`
 ```
 
 That used the formula $\sin(x+h) = \sin(x)\cos(h) + \sin(h)\cos(x)$.
 
 We could then rearrange the secant line slope formula to become:
 
-$$~
+```math
 \cos(x) \cdot \frac{\sin(h)}{h} + \sin(x) \cdot \frac{\cos(h) - 1}{h}
-~$$
+```
 
 and take a limit. If the answer isn't clear, we can let `SymPy` do this work:
 
 ```julia
-limit((sin(x+h) - sin(x))/ h, h=>0)
+limit((sin(x+h) - sin(x))/ h, h => 0)
 ```
 
+From the formula ``[\sin(x)]' = \cos(x)`` we can easily get the *slope* of the tangent line to ``f(x) = \sin(x)`` at ``x=0`` by simply evaluation ``\cos(0) = 1``.
 
 - Let's see what the derivative of $\ln(x) = \log(x)$ is (using base ``e`` for ``\log`` unless otherwise indicated). We have
 
-$$~
+```math
 \frac{\log(x+h) - \log(x)}{h} = \frac{1}{h}\log(\frac{x+h}{x}) = \log((1+h/x)^{1/h}).
-~$$
+```
 
-Earlier we saw that the limit as $u$ goes to $0$ of $f(u) = (1 +
+As noted earlier, Cauchy saw the limit as $u$ goes to $0$ of $f(u) = (1 +
 u)^{1/u}$ is $e$. Re-expressing the above we can get $1/x \cdot
 \log(f(h/x))$. The limit as $h$ goes to $0$ of this is found from
 the composition rules for limits: as $\lim_{h \rightarrow 0} f(h/x) =
@@ -450,107 +438,78 @@ e$, and since $\log(e)$ is continuous at $1$ we get this expression has a limit 
 We verify through:
 
 ```julia
-limit((log(x+h) - log(x))/h, h=>0)
+limit((log(x+h) - log(x))/h, h => 0)
 ```
 
+- The derivative of ``f(x) = e^x`` can also be done from a limit. We have
 
-```julia; echo=false
-alert(L"""
+```math
+\frac{e^{x+h} - e^x}{h} = \frac{e^x \cdot(e^h -1)}{h}.
+```
+
+Earlier,  we saw that $\lim_{h \rightarrow 0}(e^h - 1)/h = 1$. With this, we get
+$[e^x]' = e^x$, that is it is a function satisfying $f'=f$.
+
+
+----
 
 There are several different
 [notations](http://en.wikipedia.org/wiki/Notation_for_differentiation)
 for derivatives. Some are historical, some just add
-flexibility. We use the prime notation of Lagrange: $f'(x)$, $u'$ and $[\text{expr}]'$,
+flexibility. We use the prime notation of Lagrange: ``f'(x)``, ``u'`` and ``[\text{expr}]'``,
 where the first emphasizes that the derivative is a function with a
-value at $x$, the second emphasizes the derivative operates on
+value at ``x``, the second emphasizes the derivative operates on
 functions, the last emphasize that we are taking the derivative of
-some expression (the "rule" part of an unnamed function).
+some expression.
+
 
 There are many other notations:
 
-- The Leibniz notation uses the infinitesimals: $dy/dx$ to relate to
-  $\Delta y/\Delta x$. This notation is very common, and especially
+- The Leibniz notation uses the infinitesimals: ``dy/dx`` to relate to
+  ``\Delta y/\Delta x``. This notation is very common, and especially
   useful when more than one variable is involved.  `SymPy` uses
   Leibniz notation in some of its output, expressing somethings such
   as:
 
-$$~
+```math
 f'(x) = \frac{d}{d\xi}(f(\xi)) \big|_{\xi=x}.
-~$$
+```
 
-  The notation - $\big|$ - on the right-hand side separates the tasks of finding the
+  The notation - ``\big|`` - on the right-hand side separates the tasks of finding the
   derivative and evaluating the derivative at a specific value.
 
 - Euler used `D` for the operator `D(f)`. This was initially used by
   [Argobast](http://jeff560.tripod.com/calculus.html).
 
-- Newton used a "dot" above the variable, $\dot{x}(t)$, which is still widely used in physics to indicate  a derivative in time.
+- Newton used a "dot" above the variable, ``\dot{x}(t)``, which is still widely used in physics to indicate  a derivative in time.
 
 
-
-
-""")
-```
-
-
-### Derivative of inverse functions
-
-The graph of an inverse function is related to the graph of the function through the symmetry ``y=x``.
-
-For example, the graph of ``e^x`` and ``\log(x)`` have this symmetry, emphasized below:
-
-```julia;
-f(x) = exp(x)
-f′(x) = exp(x)
-f⁻¹(x) = log(x)  # using Unicode typed with "f^\-^\1"
-xs = range(0, 2, length=25)
-ys = f.(xs)
-plot(f, 0, 2, aspect_ratio=:equal, xlim=(0,8), ylim=(0,8), legend=false)
-scatter!(xs, ys)
-plot!(f⁻¹, extrema(ys)...)
-scatter!(ys, xs, color=:blue)
-plot!(identity, linestyle=:dot) # the line y=x
-x₀, y₀ = xs[13], ys[13]
-plot!([x₀, y₀],[y₀, x₀], linestyle=:dash)
-ys′ = @.  y₀ + f(x₀)*(xs - x₀)
-plot!(xs, ys′, linestyle=:dash)
-g(y) = 1/f′(f⁻¹(y))
-xs′ = @. x₀ + g(y₀) * (ys - y₀)
-plot!(ys, xs′, linestyle=:dash)
-```
-
-The point ``(1, e)`` on the graph of ``e^x`` matches the point ``(e, 1)`` on the graph of the inverse function, ``\log(x)``. The slope of the tangent line at ``x=1`` to ``e^x`` is given by ``e`` as well. What is the slope of the tangent line to ``\log(x)`` at ``x=e``?
-
-As seen, the value can be computed, but how?
-
-Finding the derivative of the inverse function can be achieved from the chain rule using the identify ``f^{-1}(f(x)) = x`` for all ``x`` in the domain of ``f``.
-
-The chain rule applied to both sides, yields:
-
-```math
-1 = [f\^{-1}]'(f(x)) \cdot f'(x)
-```
-
-Solving, we see that ``[f\^{-1}(f(x))]' = 1/f'(x)`` or interms of ``y``
-
-```math
-[f^{-1}]'(y) = \frac{1}{f'(f\^{-1}(y))}.
-```
-
-So the reciprocal of the slope of the tangent line of ``f`` at the mirror image point. In the above, we see if the slope of the tangent line at ``(1,e)`` to ``f`` is ``e``, then the slope of the tangent line to ``f^{-1}(x)`` at ``(e,1)`` would be ``1/e``.
 
 
 ## Rules of derivatives
 
-We could proceed in a similar manner to find other derivatives, but
-let's not. If we have a function $f(x) = x^5 \sin(x)$, it would be
-nice to leverage our previous work on the derivatives of $f(x) =x^5$
-and $g(x) = \sin(x)$, rather than derive an answer from scratch.
+We could proceed in a similar manner -- using limits to find other
+derivatives, but let's not. If we have a function $f(x) = x^5
+\sin(x)$, it would be nice to leverage our previous work on the
+derivatives of $f(x) =x^5$ and $g(x) = \sin(x)$, rather than derive an
+answer from scratch.
 
 
 As with limits and continuity, it proves very useful to consider rules
 that make the process of finding derivatives of combinations of
 functions a matter of combining derivatives of the individual functions in some manner.
+
+We already have one such rule:
+
+### The power rule
+
+We have seen for integer ``n \geq 0`` the formula:
+
+```math
+[x^n]' = n x^{n-1}.
+```
+
+This will be shown true for all real exponents.
 
 ### Sum rule
 
@@ -558,16 +517,16 @@ Let's consider $k(x) = a\cdot f(x) + b\cdot g(x)$, what is its derivative? That 
 
 We can rearrange $(k(x+h) - k(x))$ as follows:
 
-$$~
+```math
 (a\cdot f(x+h) + b\cdot g(x+h)) - (a\cdot f(x) + b \cdot g(x)) =
 a\cdot (f(x+h) - f(x)) + b \cdot (g(x+h) - g(x)).
-~$$
+```
 
 Dividing by $h$, we see that this becomes
 
-$$~
+```math
 a\cdot \frac{f(x+h) - f(x)}{h} + b \cdot \frac{g(x+h) - g(x)}{h} \rightarrow a\cdot f'(x) + b\cdot g'(x).
-~$$
+```
 
 That is ``[a\cdot f(x) + b \cdot g(x)]' = a\cdot f'(x) + b\cdot g'(x)``.
 
@@ -582,10 +541,10 @@ Other rules can be similarly derived. `SymPy` can give us them as
 well. Here we define two symbolic functions `u` and `v` and let `SymPy`
 derive a formula for the derivative of a product of functions:
 
-```julia
+```julia; hold=true;
 @syms u() v()
 f(x) = u(x) * v(x)
-limit((f(x+h) - f(x))/h, h=>0)
+limit((f(x+h) - f(x))/h, h => 0)
 ```
 
 The output uses some new notation to represent that the derivative of
@@ -598,7 +557,87 @@ uv'$.
 ### Quotient rule
 
 The derivative of $f(x) = u(x)/v(x)$ - a ratio of functions - can be
-similarly computed. The result will be $[u/v]' = (u'v - uv')/u^2$.
+similarly computed. The result will be $[u/v]' = (u'v - uv')/u^2$:
+
+```julia; hold=true;
+@syms u() v()
+f(x) = u(x) / v(x)
+limit((f(x+h) - f(x))/h, h => 0)
+```
+
+##### Examples
+
+Compute the derivative of ``f(x) = (1 + \sin(x)) + (1 + x^2)``.
+
+As written we can identify ``f(x) = u(x) + v(x)`` with
+``u=(1 + \sin(x))``, ``v=(1 + x^2)``. The sum rule immediately applies to give:
+
+```math
+f'(x) = (\cos(x)) + (2x).
+```
+
+----
+
+Compute the derivative of ``f(x) = (1 + \sin(x)) \cdot (1 + x^2)``.
+
+The same ``u`` and ``v`` my be identified. The product rule readily applies to yield:
+
+```math
+f'(x) = u'v + uv' = \cos(x) \cdot (1 + x^2) + (1 + \sin(x)) \cdot (2x).
+```
+
+----
+
+Compute the derivative of ``f(x) = (1 + \sin(x)) / (1 + x^2)``.
+
+The same ``u`` and ``v`` my be identified. The quotient rule readily applies to yield:
+
+```math
+f'(x) = u'v - uv' = \frac{\cos(x) \cdot (1 + x^2) - (1 + \sin(x)) \cdot (2x)}{(1+x^2)^2}.
+```
+
+----
+
+Compute the derivative of ``f(x) = (x-1) \cdot (x-2)``.
+
+This can be done using the product rule *or* by expanding the polynomial and using the power and sum rule. As this polynomial is easy to expand, we do both and compare:
+
+```math
+[(x-1)(x-2)]' = [x^2 - 3x + 2]' = 2x -3.
+```
+
+Whereas the product rule gives:
+
+```math
+[(x-1)(x-2)]' = 1\cdot (x-2) + (x-1)\cdot 1 = 2x - 3.
+```
+
+----
+
+Find the derivative of $f(x) = (x-1)(x-2)(x-3)(x-4)(x-5)$.
+
+We could expand this, as above, but without computer assistance the potential for error is high. Instead we will use the product rule on the product of ``5`` terms.
+
+Let's first treat the case of $3$ products:
+
+```math
+[u\cdot v\cdot w]' =[ u \cdot (vw)]' = u' (vw) + u [vw]' = u'(vw) + u[v' w + v w'] =
+u' vw + u v' w + uvw'.
+```
+
+This pattern generalizes, clearly, to:
+```math
+[f_1\cdot f_2 \cdots f_n]' = f_1' f_2 \cdots f_n + f_1 \cdot f_2' \cdot (f_3 \cdots f_n) + \dots +
+f_1 \cdots f_{n-1} \cdot f_n'.
+```
+
+There are $n$ terms, each where one of the $f_i$s have a derivative. Were we to multiply top and bottom by $f_i$, we would get each term looks like: $f \cdot f_i'/f_i$.
+
+With this, we can proceed. Each term $x-i$ has derivative $1$, so the answer to $f'(x)$, with $f$ as above, is $f'(x) = f(x)/(x-1) + f(x)/(x-2) + f(x)/(x-3) + f(x)/(x-4) + f(x)/(x-5)$, that is:
+
+```math
+f'(x) = (x-2)(x-3)(x-4)(x-5) + (x-1)(x-3)(x-4)(x-5) + (x-1)(x-2)(x-4)(x-5) + (x-1)(x-2)(x-3)(x-5) + (x-1)(x-2)(x-3)(x-4).
+```
 
 ### Chain rule
 
@@ -628,9 +667,9 @@ In general, we want to express $\Delta f / \Delta x$ in a form so that we can ta
 
 But what do we know? We know $\Delta g / \Delta x$ and $\Delta f/\Delta y$. Using $y=g(x)$, this suggests that we might have luck with the right side of this equation:
 
-$$~
+```math
 \frac{\Delta f}{\Delta x} = \frac{\Delta f}{\Delta y} \cdot \frac{\Delta y}{\Delta x}.
-~$$
+```
 
 
 Interpreting this, we get the *average* rate of change in the
@@ -643,9 +682,9 @@ $y$, $\Delta f/ \Delta y$.
 Re-expressing using derivative notation with $h$ would be:
 
 
-$$~
+```math
 \frac{f(g(x+h)) - f(g(x))}{h} = \frac{f(g(x+h)) - f(g(x))}{g(x+h) - g(x)} \cdot \frac{g(x+h) - g(x)}{h}.
-~$$
+```
 
 The left hand side will converge to the derivative of $u(x)$ or $[f(g(x))]'$.
 
@@ -666,7 +705,7 @@ proof (one of the two detailed
 Combined, we would end up with:
 
 
-> The chain rule: $[f(g(x))]' = f'(g(x)) \cdot g'(x)$. That is the
+> *The chain rule*: $[f(g(x))]' = f'(g(x)) \cdot g'(x)$. That is the
 > derivative of the outer function evaluated at the inner function
 > times the derivative of the inner function.
 
@@ -675,40 +714,70 @@ To see that this works in our specific case, we assume the general
 power rule that $[x^n]' = n x^{n-1}$ to get: $g'(x) = (1/2)x^{-1/2}$,
 $f'(x)=2x$, and $f'(g(x)) = 2(\sqrt{x})$. Together, the product is:
 
-$$~
+```math
 2\sqrt{x} \cdot (1/2) 1/\sqrt{x} = 1
-~$$
+```
 
 Which is the same as the derivative of $x$ found by first evaluating the composition.
+
+##### Examples
+
+Find the derivative of ``f(x) = \sqrt{1 - x^2}``. We identify the composition of ``\sqrt{x}`` -- with derivative ``(1/2)(x)^{-1/2}``  and ``(1-x^2)`` -- with derivative ``-2x`` and get
+
+```math
+(1/2)(1-x^2)^{-1/2} \cdot (-2x).
+```
+
+----
+
+Find the derivative of ``\log(2 + \sin(x))``. This is a composition ``\log(x)`` -- with derivative ``1/x`` and  ``2 + \sin(x)`` -- with derivative ``\cos(x)``. We get ``(1/\sin(x)) \cos(x)``.
+
+In general,
+
+```math
+[\log(f(x))]' \frac{f'(x)}{f(x)}.
+```
+
+----
+
+Find the derivative of ``e^{f(x)}``. The inner function has derivative ``f'(x)``, the outer function has derivative ``e^x`` (the same as the outer function itself). We get for a derivative
+
+```math
+[e^{f(x)}]' = e^{f(x)} \cdot f'(x).
+```
+
+This is a useful rule to remember for expressions involving exponentials.
+
+
 
 ##### Proof of the Chain Rule
 
 A function is *differentiable* at $a$ if the following limit exists $\lim_{h \rightarrow 0}(f(a+h)-f(a))/h$. Reexpressing this as: $f(a+h) - f(a) - f'(a)h = \epsilon_f(h) h$ where as $h\rightarrow 0$, $\epsilon_f(h) \rightarrow 0$. Then, we have:
 
-$$~
+```math
 g(a+h) = g(a) + g'(a)h + \epsilon_g(h) h = g(a) + h',
-~$$
+```
 
 Where $h' = (g'(a) + \epsilon_g(h))h \rightarrow 0$ as $h \rightarrow 0$ will be used to simplify the following:
 
 
 
-$$~
+```math
 \begin{align}
 f(g(a+h)) - f(g(a)) &=
 f(g(a) + g'(a)h + \epsilon_g(h)h) - f(g(a)) \\
 &= f(g(a)) + f'(g(a)) (g'(a)h + \epsilon_g(h)h) + \epsilon_f(h')(h') - f(g(a))\\
 &= f'(g(a)) g'(a)h  + f'(g(a))(\epsilon_g(h)h) + \epsilon_f(h')(h').
 \end{align}
-~$$
+```
 
 Rearranging:
 
-$$~
+```math
 f(g(a+h)) - f(g(a)) - f'(g(a)) g'(a) h = f'(g(a))\epsilon_g(h))h + \epsilon_f(h')(h') =
 (f'(g(a)) \epsilon_g(h)  + \epsilon_f(h')( (g'(a) + \epsilon_g(h))))h =
 \epsilon(h)h,
-~$$
+```
 
 where $\epsilon(h)$ combines the above terms which go to zero as $h\rightarrow 0$ into one. This is
 the alternative definition of the derivative, showing $(f\circ g)'(a) = f'(g(a)) g'(a)$ when $g$ is differentiable at $a$ and $f$ is differentiable at $g(a)$.
@@ -720,34 +789,34 @@ the alternative definition of the derivative, showing $(f\circ g)'(a) = f'(g(a))
 
 This is a product of functions, using $[u\cdot v]' = u'v + uv'$ we get:
 
-$$~
+```math
 5x^4 \cdot \sin(x) + x^5 \cdot \cos(x)
-~$$
+```
 
 - Find the derivative of $x^5 / \sin(x)$.
 
 This is a quotient of functions. Using $[u/v]' = (u'v - uv')/v^2$ we get
 
-$$~
+```math
 (5x^4 \cdot \sin(x) - x^5 \cdot \cos(x)) / (\sin(x))^2.
-~$$
+```
 
 - Find the derivative of $\sin(x^5)$. This is a composition of
   functions $u(v(x))$ with $v(x) = x^5$. The chain rule says find the
   derivative of $u$ ($\cos(x)$) and evaluate at $v(x)$ ($\cos(x^5)$)
   then multiply by the derivative of $v$:
 
-$$~
+```math
 \cos(x^5) \cdot 5x^4.
-~$$
+```
 
 - Similarly, but differently, find the derivative of $\sin(x)^5$. Now
   $v(x) = \sin(x)$, so the derivative of $u(x)$ ($5x^4$) evaluated at
   $v(x)$ is $5(\sin(x))^4$ so multiplying by $v'$ gives:
 
-$$~
+```math
 5(\sin(x))^4 \cdot \cos(x)
-~$$
+```
 
 
 We can verify these with `SymPy`. Rather than take a limit, we will
@@ -781,45 +850,21 @@ expression.
 ```
 
 
-
-- Let's see that the derivative of $e^x$ is just itself.
-
-$$~
-\frac{e^{x+h} - e^x}{h} = \frac{e^x \cdot(e^h -1)}{h}.
-~$$
-
-If we know that $\lim_{h \rightarrow 0}(e^h - 1)/h = 1$, we get
-$[e^x]' = e^x$, that is it is a function satisfying $f'=f$.
-
-
-
-- Suppose we knew that $\log(x)$ had derivative of $1/x$, but didn't know the derivative of $e^x$. From their inverse relation, we have: $x=\log(e^x)$, so taking derivatives of both sides would yield:
-
-$$~
-1 = (\frac{1}{e^x}) \cdot [e^x]'.
-~$$
-
-Or solving, $[e^x]' = e^x$. This is a general strategy to find the
-derivative of an *inverse* function.
-
-
-
 - The general product rule:  For any $n$ - not just integer values -  we can re-express $x^n$  using $e$: $x^n = e^{n \log(x)}$. Now the chain rule can be applied:
 
-$$~
+```math
 [x^n]' = [e^{n\log(x)}]' = e^{n\log(x)} \cdot (n \frac{1}{x}) = n x^n \cdot \frac{1}{x} = n x^{n-1}.
-~$$
+```
 
 
-##### Examples
 
 * Find the derivative of $f(x) = x^3 (1-x)^2$ using either the power rule or the sum rule.
 
 The power rule expresses $f=u\cdot v$. With $u(x)=x^3$ and $v(x)=(1-x)^2$ we get:
 
-$$~
+```math
 u'(x) = 3x^2, \quad v'(x) = 2 \cdot (1-x)^1 \cdot (-1),
-~$$
+```
 
 the last by the chain rule. Combining with $u' v + u v'$ we get:
 $f'(x) = (3x^2)\cdot (1-x)^2 + x^3 \cdot (-2) \cdot (1-x)$.
@@ -827,30 +872,12 @@ $f'(x) = (3x^2)\cdot (1-x)^2 + x^3 \cdot (-2) \cdot (1-x)$.
 Otherwise, the polynomial can be expanded to give
 $f(x)=x^5-2x^4+x^3$ which has derivative $f'(x) = 5x^4 - 8x^3 + 3x^2$.
 
-* Find the derivative of $f(x) = (x-1)(x-2)(x-3)(x-4)(x-5)$.
-
-We could expand this, as above, but instead will use the product rule. Let's work symbolically first and treat the case of $3$ products:
-
-$$~
-[u\cdot v\cdot w]' =[ u \cdot (vw)]' = u' (vw) + u [vw]' = u'(vw) + u[v' w + v w'] =
-u' vw + u v' w + uvw'.
-~$$
-
-This pattern generalizes, clearly to
-$$~
-[f_1\cdot f_2 \cdots f_n]' = f_1' f_2 \cdots f_n + f_1 \cdot f_2' \cdot (f_3 \cdots f_n) + \dots +
-f_1 \cdots f_{n-1} \cdot f_n'.
-~$$
-
-There are $n$ terms, each where one of the $f_i$s have a derivative. Were we to multiply top and bottom by $f_i$, we would get each term looks like: $f \cdot f_i'/f_i$.
-
-With this, we can proceed. Each term $x-i$ has derivative $1$, so the answer to $f'(x)$, with $f$ as above, is $f'(x) = f(x)/(x-1) + f(x)/(x-2) + f(x)/(x-3) + f(x)/(x-4) + f(x)/(x-5)$.
 
 * Find the derivative of $f(x) = x \cdot e^{-x^2}$.
 
 Using the product rule and then the chain rule, we have:
 
-$$~
+```math
 \begin{align}
 f'(x) &= [x \cdot e^{-x^2}]'\\
 &= [x]' \cdot e^{-x^2} + x \cdot [e^{-x^2}]'\\
@@ -858,13 +885,13 @@ f'(x) &= [x \cdot e^{-x^2}]'\\
 &= e^{-x^2} + x \cdot e^{-x^2} \cdot (-2x)\\
 &= e^{-x^2} (1 - 2x^2).
 \end{align}
-~$$
+```
 
 * Find the derivative of $f(x) = e^{-ax} \cdot \sin(x)$.
 
 Using the  product rule and then the chain rule, we have:
 
-$$~
+```math
 \begin{align}
 f'(x) &= [e^{-ax} \cdot \sin(x)]'\\
 &= [e^{-ax}]' \cdot \sin(x) + e^{-ax} \cdot [\sin(x)]'\\
@@ -872,7 +899,65 @@ f'(x) &= [e^{-ax} \cdot \sin(x)]'\\
 &= e^{-ax} \cdot (-a)   \cdot \sin(x) + e^{-ax} \cos(x)\\
 &= e^{-ax}(\cos(x) - a\sin(x)).
 \end{align}
-~$$
+```
+
+
+##### Example: derivative of inverse functions
+
+
+Suppose we knew that $\log(x)$ had derivative of $1/x$, but didn't know the derivative of $e^x$. From their inverse relation, we have: $x=\log(e^x)$, so taking derivatives of both sides would yield:
+
+```math
+1 = (\frac{1}{e^x}) \cdot [e^x]'.
+```
+
+Or solving, $[e^x]' = e^x$. This is a general strategy to find the
+derivative of an *inverse* function.
+
+
+The graph of an inverse function is related to the graph of the function through the symmetry ``y=x``.
+
+For example, the graph of ``e^x`` and ``\log(x)`` have this symmetry, emphasized below:
+
+```julia;hold=true;echo=false;
+f(x) = exp(x)
+f′(x) = exp(x)
+f⁻¹(x) = log(x)  # using Unicode typed with "f^\-^\1"
+xs = range(0, 2, length=25)
+ys = f.(xs)
+plot(f, 0, 2, aspect_ratio=:equal, xlim=(0,8), ylim=(0,8), legend=false)
+scatter!(xs, ys)
+plot!(f⁻¹, extrema(ys)...)
+scatter!(ys, xs, color=:blue)
+plot!(identity, linestyle=:dot) # the line y=x
+x₀, y₀ = xs[13], ys[13]
+plot!([x₀, y₀],[y₀, x₀], linestyle=:dash)
+ys′ = @.  y₀ + f(x₀)*(xs - x₀)
+plot!(xs, ys′, linestyle=:dash)
+g(y) = 1/f′(f⁻¹(y))
+xs′ = @. x₀ + g(y₀) * (ys - y₀)
+plot!(ys, xs′, linestyle=:dash)
+```
+
+The point ``(1, e)`` on the graph of ``e^x`` matches the point ``(e, 1)`` on the graph of the inverse function, ``\log(x)``. The slope of the tangent line at ``x=1`` to ``e^x`` is given by ``e`` as well. What is the slope of the tangent line to ``\log(x)`` at ``x=e``?
+
+As seen, the value can be computed, but how?
+
+Finding the derivative of the inverse function can be achieved from the chain rule using the identify ``f^{-1}(f(x)) = x`` for all ``x`` in the domain of ``f``.
+
+The chain rule applied to both sides, yields:
+
+```math
+1 = [f^{-1}]'(f(x)) \cdot f'(x)
+```
+
+Solving, we see that ``[f^{-1}]'(f(x)) = 1/f'(x)``. To emphasize the evaluation of the derivative of the inverse function at ``f(x)`` we might write:
+
+```math
+\frac{d}{du} (f^{-1}(u)) \big|_{u=f(x)} = \frac{1}{f'(x)}
+```
+
+So the reciprocal of the slope of the tangent line of ``f`` at the mirror image point. In the above, we see if the slope of the tangent line at ``(1,e)`` to ``f`` is ``e``, then the slope of the tangent line to ``f^{-1}(x)`` at ``(e,1)`` would be ``1/e``.
 
 #### Rules of derivatives and some sample functions
 
@@ -880,8 +965,7 @@ This table summarizes the rules of derivatives that allow derivatives
 of more complicated expressions to be computed with the derivatives of
 their pieces.
 
-```julia; echo=false
-using DataFrames
+```julia; hold=true; echo=false
 nm = ["Power rule", "constant", "sum/difference", "product", "quotient", "chain"]
 rule = [L"[x^n]' = n\cdot x^{n-1}",
  L"[cf(x)]' = c \cdot f'(x)",
@@ -895,8 +979,8 @@ table(d)
 
 This table gives some useful derivatives:
 
-```julia; echo=false
-fn = [L"x^n \text{ all } n",
+```julia; hold=true; echo=false
+fn = [L"x^n (\text{ all } n)",
 L"e^x",
 L"\log(x)",
 L"\sin(x)",
@@ -920,16 +1004,53 @@ $f''(x)$ is the second derivative and $f'''(x)$ the third. For even
 higher orders, sometimes the notation is $f^{(n)}(x)$ to indicate an
 $n$th derivative.
 
+
 ##### Examples
+
+Find the first ``3`` derivatives of ``f(x) = ax^3 + bx^2 + cx + d``.
+
+Differentiating a polynomial is done with the sum rule, here we repeat three times:
+
+```math
+\begin{align}
+f(x)    &= ax^3 + bx^2 + cx + d\\
+f'(x)   &= 3ax^2 + 2bx + c \\
+f''(x)  &= 3\cdot 2 a x + 2b \\
+f'''(x) &= 6a
+\end{align}
+```
+
+We can see, the fourth derivative -- and all higher order ones -- would be identically ``0``. This is part of a general phenomenon: an ``n``th degree polynomial has only ``n`` non-zero derivatives.
+
+
+----
+
+Find the first ``5`` derivatives of ``\sin(x)``.
+
+```math
+\begin{align}
+f(x)    &= \sin(x) \\
+f'(x)   &= \cos(x) \\
+f''(x)  &= -\sin(x) \\
+f'''(x) &= -\cos(x) \\
+f^{(4)} &= \sin(x) \\
+f^{(5)} &= \cos(x)
+\end{align}
+```
+
+We see the derivatives repeat them selves. (We also see alternative notation for higher order derivatives.)
+
+
+----
 
 Find the second derivative of $e^{-x^2}$.
 
 We need the chain rule *and* the product rule:
 
-$$~
-[e^{-x^2}]'' = [e^{-x^2} \cdot (-2x)]' = (e^{-x^2} \cdot (-2x) \cdot(-2x) + e^{-x^2} \cdot (-2)) =
+```math
+[e^{-x^2}]'' = [e^{-x^2} \cdot (-2x)]' = \left(e^{-x^2} \cdot (-2x)\right) \cdot(-2x) + e^{-x^2} \cdot (-2) =
 e^{-x^2}(4x^2 - 2).
-~$$
+```
 
 This can be verified:
 
@@ -944,237 +1065,7 @@ Having to iterate the use of `diff` is cumbersome. An alternate notation is eith
 diff(exp(-x^2), x, x) |> simplify
 ```
 
-
-##### Example: Details on symbolic derivatives
-
-The ability to breakdown an expression into operations and their
-arguments is necessary when trying to apply the differentiation
-rules. Such rules are applied from the outside in. Identifying
-the proper "outside" function is usually most of the battle when finding derivatives.
-
-The `SymPy` program has a function that can identify the outside
-function of a symbolic expression. Basic math expressions can be
-parsed as a function being called with one or more arguments. The
-function `SymPy.Introspection.funcname` will return the function, and
-`SymPy.Introspection.args` will return the arguments.
-
-To illustrate, we define some variables and look at the operations:
-
-```julia
-args, funcname = SymPy.Introspection.args, SymPy.Introspection.funcname # args, funcname are not exported
-@syms x y z
-```
-
-This shows how addition is identified:
-
-```julia
-ex = x + y + z
-funcname(ex)
-```
-
-The arguments are all three variables being added:
-
-```julia
-args(ex)
-```
-
-Similarly, with expressions of a single variable
-
-```julia
-ex = x^2 + sin(x) + sqrt(x^2 + 2)
-funcname(ex)
-```
-
-and now the arguments are the expressions being added:
-
-```julia
-args(ex)
-```
-
-When addition is the "outside" function, the next step would be to apply the sum rule.
-
-What about multiplication?
-
-```julia
-ex = x * y * z
-funcname(ex)
-```
-
-and
-
-```julia
-args(ex)
-```
-
-Like addition, multiplication is not just a binary operation, as it
-is typically viewed mathematically. The output of `args` can be 2 or more expressions.
-
-
-The power rule is an easy to use derivative rule. SymPy recognizes when the "outer" function is a power:
-
-```julia
-ex = x^4
-funcname(ex)
-```
-
-The power rule would be used *if* the variable is not in the exponent, of course, as here.
-
-Exploring the quotient rule offers a surprise:
-
-```julia
-ex = x/y
-funcname(ex)
-```
-
-The surprise? We may have expected division, but see multiplication. SymPy uses a
-different form to represent division, which can be gleaned from
-looking at the resulting arguments:
-
-```julia
-args(ex)
-```
-
-
-And the expression `1/y` is really a power:
-
-```julia
-ex = 1/y
-funcname(ex)
-```
-
-So the quotient rule would be implemented here as a combination of the product rule and the power rule.
-
-To differentiate, we need to recursively apply derivative rules,
-peeling back one level at a time. When would you stop? When a number
-or a free symbol is encountered, as with:
-
-```julia
-funcname(x)
-```
-
-or
-
-```julia
-funcname(Sym(3))
-```
-
-In each of these cases, `args` returns an empty container:
-
-```julia
-args(x), args(Sym(3))
-```
-
-
-
-We can put all this together to create a function to differentiate an
-expression. This function will be called `diffex` (to distinguish
-itself from the more powerful, built-in, `diff` function). The first
-task for `diffex` is to identify the wrapping, outside function, if any, and
-apply the corresponding rule to the arguments. Julia's `Val` types are
-used in the following to specialize based on the type of "outside" function. This is
-technical, but is exactly what is needed as different types of
-functions need different rules of differentiation.
-
-```julia
-function diffex(ex)
-    n = length(free_symbols(ex))
-
-    n == 0 && return Sym(0)
-    n > 1 && error("This is a simple example, use diff")
-
-    _diff(Val{Symbol(funcname(ex))}, args(ex)...)
-end
-```
-
-This function identifies the number of symbols in the expression to
-differentiate. If none, $0$ is returned; if more than one, an error is
-thrown, and if one, the outside function is identified.
-
-For sums, we want the sum rule. This is the sum of the individual derivatives, simply implemented as:
-
-```julia
-_diff(::Type{Val{:Add}}, xs...) = sum(diffex(ex) for ex in xs)
-```
-
-The product rule is a bit more advanced. We use a formula derived above:
-if $f = f_1 \cdot f_2 \cdots f_n$
-then $f' = \sum f'_i/f_i \cdot f$:
-
-```julia
-function _diff(::Type{Val{:Mul}}, fs...)
-    f = prod(fs)
-    sum(diffex(fi)/fi * f for fi in fs)
-end
-```
-
-The power rule has three cases that could be considered depending on
-where the variable exists (in the base, exponent, or both). The
-following avoids this by reexpressing $a^b = \exp(b \ln(a))$ and then
-applying the *chain* rule:
-
-```julia
-_diff(::Type{Val{:Pow}}, a, b) = sympy.powsimp(a^b * diffex(b * log(a)))
-```
-
-The `powsimp` function is used to encourage SymPy to simplify $a^b/b$ into $a^{b-1}$, which may not otherwise occur. (It is not exposed, so must be qualified by the underlying `sympy` Python object.)
-
-Now to catch some special cases. First, when we encounter the symbol, we want to return `1`, as $d/dx[x] = 1$:
-
-```julia
-_diff(::Type{Val{:Symbol}}) = Sym(1)
-```
-
-For numbers the derivative is $0$. As there are quite a few number
-types, we define a catch all distinguishing them by the fact that the
-`args` call is empty.
-
-
-```julia
-_diff(::Any) = Sym(0)
-```
-
-Now for some specific functions. Here is where the chain rule comes
-in. For example, the derivative when the `log` function is encountered
-has an extra product of `diffex(ex)`:
-
-```julia
-_diff(::Type{Val{:log}}, ex) =  1/ex * diffex(ex)
-```
-
-Similarly, here is the rule for `exp`:
-
-```julia
-_diff(::Type{Val{:exp}}, ex) = exp(ex) * diffex(ex)
-```
-
-Finally, we define values for some trigonometric functions. Many more special
-cases, as these, would be needed to fully implement this approach:
-
-```julia
-_diff(::Type{Val{:sin}}, ex) =  cos(ex)   * diffex(ex)
-_diff(::Type{Val{:cos}}, ex) = -sin(ex)   * diffex(ex)
-_diff(::Type{Val{:tan}}, ex) =  sec(ex)^2 * diffex(ex)
-```
-
-(The chain rule uses fall into a pattern that could be exploited to make the code only depend on a mapping of terms like `:sin -> cos`.)
-
-Here we try it out:
-
-```julia
-diffex(x^5 + x^4 + x^3 + x^2 + x + 1)
-```
-
-
-```julia
-diffex(sin(x^2) + cos(1/x))
-```
-
-And
-
-```julia
-diffex(x^x * exp(x))
-```
-
+Higher-order derivatives can become involved when the product or quotient rules becomes involved.
 
 
 ## Questions
@@ -1190,23 +1081,23 @@ plot(fn, 0, 2)
 
 At which of these points $c= 1/2, 1, 3/2$ is the derivative negative?
 
-```julia; echo=false
-choices = [L"1/2", L"1", L"3/2"]
+```julia; hold=true; echo=false
+choices = ["``1/2``", "``1``", "``3/2``"]
 ans = 1
 radioq(choices, ans, keep_order=true)
 ```
 
 Which value looks bigger from reading the graph:
 
-```julia; echo=false
-choices = [L"f(1)", L"f(3/2)"]
+```julia; hold=true; echo=false
+choices = ["``f(1)``", "``f(3/2)``"]
 ans = 2
 radioq(choices, ans, keep_order=true)
 ```
 
 At $0.708 \dots$ and $1.65\dots$ the derivative has a common value. What is it?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(0, 1e-2)
 ```
 
@@ -1214,14 +1105,13 @@ numericq(0, 1e-2)
 
 Consider the graph of the `airyai` function (from `SpecialFunctions`) over $[-5, 5]$.
 
-```julia;echo=false
-import SpecialFunctions: airyai
+```julia; hold=true;echo=false
 plot(airyai, -5, 5)
 ```
 
 At $x = -2.5$  the derivative is postive or negative?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["positive", "negative"]
 ans = 1
 radioq(choices, ans, keep_order=true)
@@ -1230,7 +1120,7 @@ radioq(choices, ans, keep_order=true)
 
 At $x=0$ the derivative is postive or negative?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["positive", "negative"]
 ans = 2
 radioq(choices, ans, keep_order=true)
@@ -1238,7 +1128,7 @@ radioq(choices, ans, keep_order=true)
 
 At $x = 2.5$  the derivative is postive or negative?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["positive", "negative"]
 ans = 2
 radioq(choices, ans, keep_order=true)
@@ -1248,8 +1138,8 @@ radioq(choices, ans, keep_order=true)
 
 Compute the derivative of $e^x$ using `limit`. What do you get?
 
-```julia; echo=false
-choices = [L"e^x", L"x^e", L"(e-1)x^e", L"e x^{(e-1)}", "something else"]
+```julia; hold=true; echo=false
+choices = ["``e^x``", "``x^e``", "``(e-1)x^e``", "``e x^{(e-1)}``", "something else"]
 ans = 1
 radioq(choices, ans, keep_order=true)
 ```
@@ -1258,8 +1148,8 @@ radioq(choices, ans, keep_order=true)
 
 Compute the derivative of $x^e$ using `limit`. What do you get?
 
-```julia; echo=false
-choices = [L"e^x", L"x^e", L"(e-1)x^e", L"e x^{(e-1)}", "something else"]
+```julia; hold=true; echo=false
+choices = ["``e^x``", "``x^e``", "``(e-1)x^e``", "``e x^{(e-1)}``", "something else"]
 ans = 5
 radioq(choices, ans, keep_order=true)
 ```
@@ -1268,8 +1158,8 @@ radioq(choices, ans, keep_order=true)
 
 Compute the derivative of $e^{e\cdot x}$ using `limit`. What do you get?
 
-```julia; echo=false
-choices = [L"e^x", L"x^e", L"(e-1)x^e", L"e x^{(e-1)}", L"e \cdot e^{e\cdot x}", "something else"]
+```julia; hold=true; echo=false
+choices = ["``e^x``", "``x^e``", "``(e-1)x^e``", "``e x^{(e-1)}``", "``e \\cdot e^{e\\cdot x}``", "something else"]
 ans = 5
 radioq(choices, ans, keep_order=true)
 ```
@@ -1278,13 +1168,13 @@ radioq(choices, ans, keep_order=true)
 
 In the derivation of the derivative of $\sin(x)$, the following limit is needed:
 
-$$~
+```math
 L = \lim_{h \rightarrow 0} \frac{\cos(h) - 1}{h}.
-~$$
+```
 
 This is
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 L" $1$, as this is clearly the analog of the limit of $\sin(h)/h$.",
 L"Does not exist. The answer is $0/0$ which is undefined",
@@ -1297,12 +1187,12 @@ radioq(choices, ans)
 
 Let $f(x) = (e^x + e^{-x})/2$ and $g(x) = (e^x - e^{-x})/2$. Which is true?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"f'(x) =  g(x)",
-L"f'(x) = -g(x)",
-L"f'(x) =  f(x)",
-L"f'(x) = -f(x)"
+"``f'(x) =  g(x)``",
+"``f'(x) = -g(x)``",
+"``f'(x) =  f(x)``",
+"``f'(x) = -f(x)``"
 ]
 ans= 1
 radioq(choices, ans)
@@ -1314,12 +1204,12 @@ radioq(choices, ans)
 
 Let $f(x) = (e^x + e^{-x})/2$ and $g(x) = (e^x - e^{-x})/2$. Which is true?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"f''(x) =  g(x)",
-L"f''(x) = -g(x)",
-L"f''(x) =  f(x)",
-L"f''(x) = -f(x)"]
+"``f''(x) =  g(x)``",
+"``f''(x) = -g(x)``",
+"``f''(x) =  f(x)``",
+"``f''(x) = -f(x)``"]
 ans= 3
 radioq(choices, ans)
 ```
@@ -1333,14 +1223,14 @@ radioq(choices, ans)
 Consider the function $f$ and its transformation $g(x) = a + f(x)$
 (shift up by $a$). Do $f$ and $g$ have the same derivative?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq("yes")
 ```
 
 Consider the function $f$ and its transformation $g(x) = f(x - a)$
 (shift right by $a$). Do $f$ and $g$ have the same derivative?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq("no")
 ```
 
@@ -1349,27 +1239,27 @@ yesnoq("no")
 Consider the function $f$ and its transformation $g(x) = f(x - a)$
 (shift right by $a$). Is $f'$ at $x$ equal to $g'$ at $x-a$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq("yes")
 ```
 
 Consider the function $f$ and its transformation $g(x) = c f(x)$, $c >
 1$. Do $f$ and $g$ have the same derivative?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq("no")
 ```
 
 Consider the function $f$ and its transformation $g(x) = f(x/c)$, $c >
 1$. Do $f$ and $g$ have the same derivative?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq("no")
 ```
 
 Which of the following is true?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 L"If the graphs of $f$ and $g$ are translations up and down, the tangent line at corresponding points is unchanged.",
 L"If the graphs of $f$ and $g$ are rescalings of each other through $g(x)=f(x/c)$, $c > 1$. Then the tangent line for corresponding points is the same.",
@@ -1385,7 +1275,7 @@ radioq(choices, ans)
 
 The rate of change of volume with respect to height is $3h$. The rate of change of height with respect to time is $2t$. At at $t=3$ the height is $h=14$ what is the rate of change of volume with respect to time when $t=3$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 ## dv/dt = dv/dh * dh/dt = 3h * 2t
 h = 14; t=3
 val = (3*h) * (2*t)
@@ -1397,12 +1287,12 @@ numericq(val)
 
 Which equation below is $f(x) = \sin(k\cdot x)$ a solution of ($k > 1$)?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"f'(x) = k^2\cdot f(x)",
-L"f'(x) = -k^2\cdot f(x)",
-L"f''(x) = k^2\cdot f(x)",
-L"f''(x) = -k^2\cdot f(x)"]
+"``f'(x) =  k^2  \\cdot f(x)``",
+"``f'(x) = -k^2  \\cdot f(x)``",
+"``f''(x) = k^2  \\cdot f(x)``",
+"``f''(x) = -k^2 \\cdot f(x)``"]
 ans = 4
 radioq(choices, ans)
 ```
@@ -1412,16 +1302,46 @@ radioq(choices, ans)
 Let $f(x) = e^{k\cdot x}$, $k > 1$. Which equation below is $f(x)$ a solution of?
 
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"f'(x) = k^2\cdot f(x)",
-L"f'(x) = -k^2\cdot f(x)",
-L"f''(x) = k^2\cdot f(x)",
-L"f''(x) = -k^2\cdot f(x)"]
+"``f'(x) = k^2   \\cdot f(x)``",
+"``f'(x) = -k^2  \\cdot f(x)``",
+"``f''(x) = k^2  \\cdot f(x)``",
+"``f''(x) = -k^2 \\cdot f(x)``"]
 ans = 3
 radioq(choices, ans)
 ```
 
+##### Question
+
+Their are ``6`` trig functions. The derivatives of ``\sin(x)`` and ``\cos(x)`` should be memorized. The others can be derived if not memorized using the quotient rule or chain rule.
+
+What is ``[\tan(x)]'``? (Use ``\tan(x) =  \sin(x)/\cos(x)``.)
+
 ```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+trig_choices = [
+"``\\sec^2(x)``",
+"``\\sec(x)\\tan(x)``",
+"``-\\csc^2(x)``",
+"``-\\csc(x)\\cot(x)``"
+]
+radioq(trig_choices, 1)
+```
+
+What is ``[\cot(x)]'``? (Use ``\tan(x) = \cos(x)/\sin(x)``.)
+
+```julia; echo=false
+radioq(trig_choices, 3)
+```
+
+What is ``[\sec(x)]'``? (Use ``\sec(x) = 1/\cos(x)``.)
+
+```julia; echo=false
+radioq(trig_choices, 2)
+```
+
+What is ``[\csc(x)]'``? (Use ``\csc(x) = 1/\sin(x)``.)
+
+```julia; echo=false
+radioq(trig_choices, 4)
 ```

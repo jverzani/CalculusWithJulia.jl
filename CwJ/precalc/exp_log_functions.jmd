@@ -1,12 +1,19 @@
 # Exponential and logarithmic functions
 
-```julia; echo=false; results="hidden"
+This section uses the following add-on packages:
+
+```julia
 using CalculusWithJulia
-using CalculusWithJulia.WeaveSupport
 using Plots
-plotly()
+```
+
+```julia; echo=false; results="hidden"
+using CalculusWithJulia.WeaveSupport
+__DIR__, __FILE__ = :precalc, :exp_log_functions
 nothing
 ```
+
+----
 
 The family of exponential functions is used to model growth and
 decay. The family of logarithmic functions is defined here as the
@@ -21,9 +28,9 @@ For $0 < a < 1$ these functions decay or decrease, for $a > 1$ the
 functions grow or increase, and if $a=1$ the function is constantly $1$.
 
 For a given $a$, defining $a^n$ for positive integers is
-straightforward, as it means multiplying $n$ copies of $a$. From this,
+straightforward, as it means multiplying $n$ copies of $a.$ From this,
 the key properties of exponents: $a^x \cdot a^y = a^{x+y}$, and
-$(a^x)^y = a^{x \cdot y}$ are immediate consequences. For $a \neq 0$,
+$(a^x)^y = a^{x \cdot y}$ are immediate consequences, for integer powers. For $a \neq 0$,
 $a^0$ is defined to be $1$. For positive, integer values of $n$, we
 have by definition that $a^{-n} = 1/a^n$. For $n$ a positive integer, we can
 define $a^{1/n}$ to be the unique positive solution to $x^n=a$. And
@@ -44,24 +51,24 @@ $a^x$. Something similar is possible for the $0 < a < 1$ case.
 This definition can be done to ensure the rules of exponents hold for
 $a > 0$:
 
-$$~
+```math
 a^{x + y} = a^x \cdot a^y, \quad (a^x)^y = a^{x \cdot y}.
-~$$
+```
 
 
 In `Julia` these functions are implemented using `^` or for a base of
 $e$ through `exp(x)`. Here are some representative graphs:
 
-```julia;
-using CalculusWithJulia
-using Plots
+```julia;hold=true;
 f1(x) = (1/2)^x
 f2(x) = 1^x
 f3(x) = 2^x
 f4(x) = exp(x)
-a,b = -2, 2
-p = plot(f1, a, b, legend=false)
-plot!(f2, a, b); plot!(f3, a, b); plot!(f4, a, b)
+
+plot(f1, -2, 2, label="1/2")
+plot!(f2, label="1")
+plot!(f3, label="2")
+plot!(f4, label="e")
 ```
 
 We see examples of some general properties:
@@ -70,7 +77,7 @@ We see examples of some general properties:
   (provided $a \neq 1$).
 * For $0 < a < 1$ the functions are monotonically decreasing.
 * For $a > 1$ the functions are monotonically increasing.
-* If $1 < a < b$ the and $x > 0$ we have $a^x < b^x$.
+* If $1 < a < b$ and $x > 0$ we have $a^x < b^x$.
 
 
 ##### Example
@@ -125,7 +132,7 @@ number after $n$ *hours* is $P(n) = P_0 2^{n/6}$ where $6 = 24/4$.
 After two days what multiple of the initial amount is present if
 conditions are appropriate?
 
-```julia;
+```julia;hold=true;
 n = 2 * 24
 2^(n/6)
 ```
@@ -139,11 +146,10 @@ depleted of nutrients and enriched with wastes."
 The famous [Fibonacci](https://en.wikipedia.org/wiki/Fibonacci_number)
 numbers are $1,1,2,3,5,8,13,\dots$, where $F_{n+1}=F_n+F_{n-1}$. These numbers increase. To see how fast, if we *guess* that
 the growth is evenually exponential and assume $F_n \approx c \cdot a^n$, then
-our equation is approximately $a^{n+1} = a^n + a^{n-1}$ which has solutions $a$
-satisfying $a^2 - a -1 = 0$. The positve solution is
+our equation is approximately $ca^{n+1} = ca^n + ca^{n-1}$. Factoring out common terms gives ``ca^{n-1} \cdot (a^2 - a - 1) = 0``. The term ``a^{n-1}`` is always positive, so any solution would satisfy $a^2 - a -1 = 0$. The positve solution is
 $(1 + \sqrt{5})/2 \approx 1.618$
 
-That is evidence that the $F_n \approx 1.618^n$. (See
+That is evidence that the $F_n \approx c\cdot 1.618^n$. (See
 [Relation to golden ratio](https://en.wikipedia.org/wiki/Fibonacci_number#Relation_to_the_golden_ratio)
 for a related, but more explicit exact formula.
 
@@ -178,11 +184,11 @@ available to represent this number. In `CalculusWithJulia`, the value
 advantages.
 
 
-A [cute](https://www.mathsisfun.com/numbers/e-eulers-number.html) appearance of ``e`` is in this problem: Let ``a>0``. Cut ``a`` into ``n`` equal pieces and then multiply them. What ``n`` will produce the largest value? Note that the formula is ``(a/n)^n`` for a given ``a`` and ``nn``.
+A [cute](https://www.mathsisfun.com/numbers/e-eulers-number.html) appearance of ``e`` is in this problem: Let ``a>0``. Cut ``a`` into ``n`` equal pieces and then multiply them. What ``n`` will produce the largest value? Note that the formula is ``(a/n)^n`` for a given ``a`` and ``n``.
 
 Suppose ``a=5`` then for ``n=1,2,3`` we get:
 
-```julia
+```julia; hold=true;
 a = 5
 (a/1)^1, (a/2)^2, (a/3)^3
 ```
@@ -192,7 +198,7 @@ We'd need to compare more, but at this point ``n=2`` is the winner when ``a=5``.
 With calculus, we will be able to see that the function ``f(x) = (a/x)^x`` will be maximized at ``a/e``, but for now we approach this in an exploratory manner. Suppose ``a=5``, then we have:
 
 
-```julia;
+```julia;hold=true;
 a = 5
 n = 1:10
 f(n) = (a/n)^n
@@ -205,7 +211,7 @@ We can see more clearly that ``n=2`` is the largest value for ``f`` and ``a/2`` 
 ## Logarithmic functions: the inverse of exponential functions
 
 As the exponential functions are strictly *decreasing* when $0 < a <
-1$ and strictly *increasing* when $a>1$, in both cases an inverse
+1$ and strictly *increasing* when $a>1,$ in both cases an inverse
 function will exist. (When $a=1$ the function is a constant and is not
 one-to-one.) The domain of an exponential function is all real $x$ and
 the range is all *positive* $x$, so these are switched around for the
@@ -214,7 +220,7 @@ inverse function. Explicitly: the inverse function to ``f(x)=a^x``  will have do
 The inverse function will solve for $x$ in the equation $a^x = y$. The
 answer, formally, is the logarithm base $a$, written $\log_a(x)$.
 
-That is $a^{\log_a(x)} = x$ and $\log_a(a^x) = x$ when defined.
+That is $a^{\log_a(x)} = x$ for ``x > 0`` and $\log_a(a^x) = x$ for all ``x``.
 
 
 To see how a logarithm is mathematically defined will have to wait,
@@ -228,14 +234,14 @@ To see this in an example, we plot for base $2$ the exponential
 function $f(x)=2^x$, its inverse, and the logarithm function with base
 $2$:
 
-```julia;
+```julia;hold=true;
 f(x) = 2^x
 xs = range(-2, stop=2, length=100)
 ys = f.(xs)
-plot(xs, ys,  color=:blue, legend=false)  # plot f
-plot!(ys, xs, color=:red)                 # plot f^(-1)
+plot(xs, ys,  color=:blue, label="2ˣ")           # plot f
+plot!(ys, xs, color=:red, label="f⁻¹")           # plot f^(-1)
 xs = range(1/4, stop=4, length=100)
-plot!(xs, log2.(xs), color=:green)        # plot log2
+plot!(xs, log2.(xs), color=:green, label="log₂") # plot log2
 ```
 
 Though we made three graphs, only two are seen, as the graph of `log2`
@@ -299,9 +305,9 @@ bases lead to slower growing functions, though all satisfy $\log_a(1)
 = 0$:
 
 ```julia;
-plot(log2, 1/2, 10)           # base 2
-plot!(log, 1/2, 10)           # base e
-plot!(log10, 1/2, 10)         # base 10
+plot(log2, 1/2, 10, label="2")           # base 2
+plot!(log, 1/2, 10, label="e")           # base e
+plot!(log10, 1/2, 10, label="10")        # base 10
 ```
 
 
@@ -311,9 +317,9 @@ Consider the sum $\log_a(u) + \log_a(v)$. If we raise $a$ to this
 power, we have using the powers of exponents and the inverse nature of
 $a^x$ and $\log_a(x)$ that:
 
-$$~
+```math
 a^{\log_a(u) + \log_a(v)} = a^{\log_a(u)} \cdot a^{\log_a(v)} = u \cdot v.
-~$$
+```
 
 Taking $\log_a$ of *both* sides yields $\log_a(u) + \log_a(v)=\log_a(u\cdot v)$. That is logarithms turn products into sums (of logs).
 
@@ -323,30 +329,30 @@ same answer.
 
 Due to inverse relationship between $a^x$ and $\log_a(x)$ we have:
 
-$$~
+```math
 a^{\log_a(b^x)} = b^x.
-~$$
+```
 
 Due to the rules of exponents, we have:
 
-$$~
+```math
 a^{x \log_a(b)} = a^{\log_a(b) \cdot x} = (a^{\log_a(b)})^x = b^x.
-~$$
+```
 
 Finally, since $a^x$ is one-to-one (when $a>0$ and $a \neq 1$), if  $a^{\log_a(b^x)}=a^{x \log_a(b)}$ it must be that $\log_a(b^x) = x \log_a(b)$. That is, logarithms turn powers into products.
 
 Finally, we use the inverse property of logarithms and powers to show that logarithms can be defined for any base. Say $a, b > 0$. Then $\log_a(x) = \log_b(x)/\log_b(a)$. Again, to verify this we apply $a^x$ to both sides to see we get the same answer:
 
-$$~
+```math
 a^{\log_a(x)} = x,
-~$$
+```
 
 this by the inverse property. Whereas, by expressing $a=b^{\log_b(a)}$ we have:
 
-$$~
+```math
 a^{(\log_b(x)/\log_b(b))} = (b^{\log_b(a)})^{(\log_b(x)/\log_b(a))} =
 b^{\log_b(a) \cdot \log_b(x)/\log_b(a) } = b^{\log_b(x)} = x.
-~$$
+```
 
 In short, we have these three properties of logarithmic functions:
 
@@ -354,8 +360,8 @@ If $a, b$ are positive bases; $u,v$ are positive numbers; and $x$ is any real nu
 
 ```math
 \begin{align*}
-\log_a(uv) &= \log_a(u) + \log_a(v),
-\log_a(u^x) &= x \log_a(u), \text{ and}
+\log_a(uv) &= \log_a(u) + \log_a(v),    \\
+\log_a(u^x) &= x \log_a(u), \text{ and} \\
 \log_a(u) &= \log_b(u)/\log_b(a).
 \end{align*}
 ```
@@ -383,11 +389,11 @@ on the logarithm in 1614.
 Returning to the Rule of 72, what should the exact number be?
 
 The amount of time to double an investment that grows according to
-$P_0 e^{rt}$ solves $P_0 e^{rt} = 2P_0$ or $rt = \log_2(2)$. So we get
-$t=\log_2(2)/r$. As $\log_2(2)$ is
+$P_0 e^{rt}$ solves $P_0 e^{rt} = 2P_0$ or $rt = \log_e(2)$. So we get
+$t=\log_e(2)/r$. As $\log_e(2)$ is
 
 ```julia;
-log(2, 2)
+log(e, 2)
 ```
 
 We get the actual rule should be the "Rule of $69.314...$."
@@ -399,7 +405,7 @@ We get the actual rule should be the "Rule of $69.314...$."
 Suppose every $4$ days, a population doubles. If the population starts
 with $2$ individuals, what is its size after $4$ weeks?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 n = 4*7/4
 val = 2 * 2^n
 numericq(val)
@@ -411,7 +417,7 @@ A bouncing ball rebounds to a height of $5/6$ of the previous peak
 height. If the ball is droppet at a height of $3$ feet, how high will
 it bounce after $5$ bounces?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 val = 3 * (5/6)^5
 numericq(val)
 ```
@@ -420,8 +426,8 @@ numericq(val)
 
 Which is bigger $e^2$ or $2^e$?
 
-```julia; echo=false
-choices = [L"e^2", L"2^e"]
+```julia; hold=true; echo=false
+choices = ["``e^2``", "``2^e``"]
 ans = e^2 - 2^e > 0 ? 1 : 2
 radioq(choices, ans)
 ```
@@ -431,8 +437,8 @@ radioq(choices, ans)
 
 Which is bigger $\log_8(9)$ or $\log_9(10)$?
 
-```julia; echo=false
-choices = [L"\log_8(9)", L"\log_9(10)"]
+```julia; hold=true; echo=false
+choices = [raw"``\log_8(9)``", raw"``\log_9(10)``"]
 ans = log(8,9) > log(9,10) ? 1 : 2
 radioq(choices, ans)
 ```
@@ -442,11 +448,11 @@ radioq(choices, ans)
 If $x$, $y$, and $z$ satisfy $2^x = 3^y$ and $4^y = 5^z$, what is the
 ratio $x/z$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"\frac{\log(2)\log(3)}{\log(5)\log(4)}",
-L"2/5",
-L"\frac{\log(5)\log(4)}{\log(3)\log(2)}"
+raw"``\frac{\log(2)\log(3)}{\log(5)\log(4)}``",
+raw"``2/5``",
+raw"``\frac{\log(5)\log(4)}{\log(3)\log(2)}``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -456,7 +462,7 @@ radioq(choices, ans)
 
 Does $12$ satisfy $\log_2(x) + \log_3(x) = \log_4(x)$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 ans = log(2,12) + log(3,12) == log(4, 12)
 yesnoq(ans)
 ```
@@ -470,7 +476,7 @@ recorded by seismographs (Wikipedia). The formula is $M=\log(A) -
 \log(A_0)$ where $A_0$ depends on the epicenter distance. Suppose an
 event has $A=100$ and $A_0=1/100$. What is $M$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 A, A0 = 100, 1/100
 val = M = log(A) - log(A0)
 numericq(val)
@@ -480,7 +486,7 @@ If the magnitude of one earthquake is $9$ and the magnitude of another
 earthquake is $7$, how many times stronger is $A$ if $A_0$ is the same
 for each?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["1000 times", "100 times", "10 times", "the same"]
 ans = 2
 radioq(choices, ans, keep_order=true)
@@ -494,7 +500,7 @@ db and in 1986 Motorhead recorded $130$ db. Suppose both measurements
 record power through the formula $db = 10 \log_{10}(P)$. What is the
 ratio of the Motorhead $P$ to the $P$ for the Who?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 db_who, db_motorhead = 126, 130
 db2P(db) = 10^(db/10)
 P_who, P_motorhead = db2P.((db_who, db_motorhead))
@@ -506,7 +512,7 @@ numericq(val)
 
 Based on this graph:
 
-```julia;
+```julia; hold=true;
 plot(log, 1/4, 4)
 f(x) = x - 1
 plot!(f, 1/4, 4)
@@ -514,8 +520,11 @@ plot!(f, 1/4, 4)
 
 Which statement appears to be true?
 
-```julia; echo=false
-choices = [L"x \geq 1 + \log(x)", L"x \leq 1 + \log(x)"]
+```julia; hold=true; echo=false
+choices = [
+    raw"``x \geq 1 + \log(x)``",
+    raw"``x \leq 1 + \log(x)``"
+]
 ans = 1
 radioq(choices, ans)
 ```
@@ -525,7 +534,7 @@ radioq(choices, ans)
 
 Consider this graph:
 
-```julia;
+```julia; hold=true;
 f(x) = log(1-x)
 g(x) = -x - x^2/2
 plot(f, -3, 3/4)
@@ -534,10 +543,10 @@ plot!(g, -3, 3/4)
 
 What statement appears to be true?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"\log(1-x) \geq -x - x^2/2",
-L"\log(1-x) \leq -x - x^2/2"
+raw"``\log(1-x) \geq -x - x^2/2``",
+raw"``\log(1-x) \leq -x - x^2/2``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -548,8 +557,8 @@ radioq(choices, ans)
 Suppose $a > 1$. If $\log_a(x) = y$ what is $\log_{1/a}(x)$? (The
 reciprocal property of exponents, $a^{-x} = (1/a)^x$, is at play here.)
 
-```julia; echo=false
-choices = [L"-y", L"1/y", L"-1/y"]
+```julia; hold=true; echo=false
+choices = ["``-y``", "``1/y``", "``-1/y``"]
 ans = 1
 radioq(choices, ans)
 ```
@@ -557,7 +566,7 @@ radioq(choices, ans)
 Based on this, the graph of $\log_{1/a}(x)$ is the graph of
 $\log_a(x)$ under which transformation?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 L"Flipped over the $x$ axis",
 L"Flipped over the $y$ axis",
@@ -572,21 +581,23 @@ radioq(choices, ans)
 
 Suppose $x < y$. Then for $a > 0$, $a^y - a^x$ is equal to:
 
-```julia; echo=false
-choices = [L"a^x \cdot (a^{y-x} - 1)",
-L"a^{y-x}",
-L"a^{y-x} \cdot (a^x - 1)"]
+```julia; hold=true; echo=false
+choices = [
+    raw"``a^x \cdot (a^{y-x} - 1)``",
+    raw"``a^{y-x}``",
+    raw"``a^{y-x} \cdot (a^x - 1)``"
+]
 ans = 1
 radioq(choices, ans)
 ```
 
 Using $a > 1$ we have:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"as $a^{y-x} > 1$ and $y-x > 0$, $a^y > a^x$",
-L"as $a^x  > 1$, $a^y > a^x$",
-L"a^{y-x} > 0"
+    L"as $a^{y-x} > 1$ and $y-x > 0$, $a^y > a^x$",
+    L"as $a^x  > 1$, $a^y > a^x$",
+    "``a^{y-x} > 0``"
 ]
 ans=1
 radioq(choices, ans)
@@ -594,16 +605,12 @@ radioq(choices, ans)
 
 If $a < 1$ then:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 L"as $a^{y-x} < 1$ as $y-x > 0$, $a^y < a^x$",
 L"as $a^x   < 1$, $a^y < a^x$",
-L"a^{y-x} < 0"
+"``a^{y-x} < 0``"
 ]
 ans = 1
 radioq(choices, ans)
-```
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

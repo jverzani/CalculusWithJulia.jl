@@ -1,13 +1,25 @@
 # Derivative free alternatives to Newton's method
 
+This section uses these add-on packages:
+
+```julia
+using CalculusWithJulia
+using Plots
+using ImplicitEquations
+using Roots
+using SymPy
+```
+
 ```julia; echo=false; results="hidden"
-import CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
-using Plots; plotly()
 nothing
 ```
 
+----
+
 Newton's method is not the only algorithm of its kind for identifying zeros of a function. In this section we discuss some alternatives.
+
+## `find_zero(f, x0)`
 
 The  function `find_zero` from the `Roots` packages provides several different algorithms for finding a zero of a function, including some a derivative-free
 algorithms for finding roots  when started with an initial
@@ -20,10 +32,9 @@ converge, but can be slower to do so.) Here we see how to call the
 function:
 
 ```julia;
-using Roots
 f(x) = cos(x) - x
-x0 = 1
-find_zero(f, x0)
+x₀ = 1
+find_zero(f, x₀)
 ```
 
 Compare to this related call which uses the bisection method:
@@ -69,7 +80,7 @@ We code the update step as `λ2`:
 
 Then we can run a few steps to identify the zero of sine starting at ``3`` and ``4``
 
-```julia;
+```julia; hold=true; term=true
 x0,x1 = 4,3
 f0,f1 = sin.((x0,x1))
 @show x1,f1
@@ -95,15 +106,15 @@ x1,f1
 Like Newton's method, the secant method coverges quickly for this problem (though its rate is less than the quadratic rate of Newton's method.)
 
 
-This method is included in `Roots` as `Order1()` (or `Roots.Secant()`):
+This method is included in `Roots` as `Secant()` (or `Order1()`):
 
 ```julia;
-find_zero(sin, (4,3), Order1(), verbose=true)
+find_zero(sin, (4,3), Secant(), verbose=true)
 ```
 
 
 
-Though the derivative is related to the slope of the secant line, that is in the limit. The convergence of the secant method is not as fast as Newton's method, though at each step of the secant method, only 1 new function evaluation is needed, so it can be more efficient for functions that are expensive to compute or differentiate.
+Though the derivative is related to the slope of the secant line, that is in the limit. The convergence of the secant method is not as fast as Newton's method, though at each step of the secant method, only ``1`` new function evaluation is needed, so it can be more efficient for functions that are expensive to compute or differentiate.
 
 
 Let ``\epsilon_{n+1} = x_{n+1}-\alpha``, where ``\alpha`` is assumed to be a *simple* zero of ``f(x)`` that the secant method converges to. A [calculation](https://math.okstate.edu/people/binegar/4513-F98/4513-l08.pdf) shows that
@@ -140,8 +151,7 @@ Inverse quadratic interpolation fits a quadratic polynomial through three points
 
 For example, here is the inverse quadratic function, ``g(y)``, going through three points marked with red dots. The blue dot is found from ``(g(0), 0)``.
 
-```julia; echo=false
-using Plots
+```julia; hold=true; echo=false
 
 a,b,c = 1,2,3
 fa,fb,fc = -1,1/4,1
@@ -150,27 +160,27 @@ ys = range(-2,2, length=100)
 xs = g.(ys)
 plot(xs, ys, legend=false)
 scatter!([a,b,c],[fa,fb,fc], color=:red, markersize=5)
-scatter!([g(0)],[0], color=:blue, markersize=10)
+scatter!([g(0)],[0], color=:blue, markersize=5)
+plot!(zero, color=:blue)
 ```
 
 
 Here we use `SymPy` to identify the polynomial as a function of ``y``, then evaluate it at ``y=0`` to find the next step:
 
-```julia;
-using SymPy
 
-@syms y h[0:2] x[0:2] fn[0:2]
-H(y) = sum(hᵢ*(y-fn[end])^i for (hᵢ,i) ∈ zip(h, 0:2))
+```julia
+@syms y hs[0:2] xs[0:2] fs[0:2]
+H(y) = sum(hᵢ*(y - fs[end])^i for (hᵢ,i) ∈ zip(hs, 0:2))
 
-eqs = [Eq(H(fᵢ), xᵢ) for (xᵢ, fᵢ) ∈ zip(x,fn)]
-ϕ = solve(eqs, h)
+eqs = [H(fᵢ) ~ xᵢ for (xᵢ, fᵢ) ∈ zip(xs, fs)]
+ϕ = solve(eqs, hs)
 hy = subs(H(y), ϕ)
 ```
 
 The value of `hy` at ``y=0`` yields the next guess based on the past three, and is given by:
 
 ```julia;
-q⁻¹ = hy(y=>0)
+q⁻¹ = hy(y => 0)
 ```
 
 
@@ -180,7 +190,7 @@ Though the above can be simplified quite a bit when computed by hand, here we si
 λ3 = lambdify(q⁻¹) # fs, then xs
 ```
 
-(The `lambdify` function, by default, picks the order of its argument lexicographically, in this case they will be the `f` values then the `x` values.)
+(`SymPy`'s `lambdify` function, by default, picks the order of its argument lexicographically, in this case they will be the `f` values then the `x` values.)
 
 An inverse quadratic step is utilized by Brent's method, as possible, to yield a rapidly convergent bracketing algorithm implemented as a default zero finder in many software languages.  `Julia`'s `Roots` package implements the method in `Roots.Brent()`. An inverse cubic interpolation is utilized by [Alefeld, Potra, and Shi](https://dl.acm.org/doi/10.1145/210089.210111) which gives an asymptotically even more rapidly convergent algorithm then Brent's (implemented in `Roots.AlefeldPotraShi()` and also `Roots.A42()`). This is used as a finishing step in many cases by the default hybrid `Order0()` method of `find_zero`.
 
@@ -189,7 +199,7 @@ In a bracketing algorithm, the next step should reduce the size of the bracket, 
 [Chandrapatlu's](https://www.google.com/books/edition/Computational_Physics/cC-8BAAAQBAJ?hl=en&gbpv=1&pg=PA95&printsec=frontcover) method, is a bracketing method utilizing an inverse quadratic step as the centerpiece. The key insight is the test to choose between this inverse quadratic step and a bisection step. This is done in the following based on values of ``\xi`` and ``\Phi`` defined within:
 
 ```julia;
-function chandrapatlu(f, u, v, λ, verbose=false)
+function chandrapatlu(f, u, v, λ; verbose=false)
     a,b = promote(float(u), float(v))
     fa,fb = f(a),f(b)
     @assert fa * fb < 0
@@ -242,8 +252,8 @@ Like bisection, this method ensures that ``a`` and ``b`` is a bracket, but it mo
 
 We can see it in action on the sine function.   Here we pass in ``\lambda``, but in a real implementation we would have programmed the algorithm to compute the inverse quadratic value.
 
-```julia;
-chandrapatlu(sin, 3, 4,  λ3, true)
+```julia; term=true
+chandrapatlu(sin, 3, 4,  λ3, verbose=true)
 ```
 
 
@@ -251,16 +261,14 @@ chandrapatlu(sin, 3, 4,  λ3, true)
 The condition `Φ^2 < ξ < 1 - (1-Φ)^2` can be visualized. Assume `a,b=0,1`, `fa,fb=-1/2,1`, Then `c < a < b`, and `fc` has the same sign as `fa`, but what values of `fc` will satisfy the inequality?
 
 ```julia;
-using ImplicitEquations
-using Plots
 ξ(c,fc) = (a-b)/(c-b)
 Φ(c,fc) = (fa-fb)/(fc-fb)
 Φl(c,fc) = Φ(c,fc)^2
 Φr(c,fc) = 1 - (1-Φ(c,fc))^2
-a,b = 0,1
+a,b = 0, 1
 fa,fb = -1/2, 1
-r = Lt(Φl, ξ) & Lt(ξ,Φr)
-plot(r, xlims=(-2,a), ylims=(-3,0))
+region = Lt(Φl, ξ) & Lt(ξ,Φr)
+plot(region, xlims=(-2,a), ylims=(-3,0))
 ```
 
 When `(c,fc)` is in the shaded area, the inverse quadratic step is chosen. We can see that `fc < fa` is needed.
@@ -269,15 +277,15 @@ For these values, this area is within the area where a implicit quadratic step w
 
 ```julia;
 l(c,fc) = λ3(fa,fb,fc,a,b,c)
-r = ImplicitEquations.Lt(l,b) & ImplicitEquations.Gt(l,a)
-plot(r, xlims=(-2,0), ylims=(-3,0))
+region₃ = ImplicitEquations.Lt(l,b) & ImplicitEquations.Gt(l,a)
+plot(region₃, xlims=(-2,0), ylims=(-3,0))
 ```
 
 There are values in the parameter space where this does not occur.
 
 ## Tolerances
 
-The `chandrapatlu` alorithm typically waits until `abs(b-a) <= 2max(eps(a),eps(b))` is satisfied. Informally this means the algorithm stops when the two bracketing values are no more than a small amount apart. What is a "small amount?"
+The `chandrapatlu` algorithm typically waits until `abs(b-a) <= 2max(eps(a),eps(b))` is satisfied. Informally this means the algorithm stops when the two bracketing values are no more than a small amount apart. What is a "small amount?"
 
 To understand, we start with the fact that floating point numbers are an approximation to real numbers.
 
@@ -318,7 +326,7 @@ There can be problems when the stopping criteria is `abs(b-a) <= 2eps(max(a,b))`
 
 
 
-```julia;
+```julia; hold=true
 fu(x) = -40*x*exp(-x)
 chandrapatlu(fu, -9, 1, λ3)
 ```
@@ -386,19 +394,19 @@ Let `f(x) = tanh(x)` (the hyperbolic tangent) and `fp(x) = sech(x)^2`, its deriv
 
 Does *Newton's* method (using `Roots.Newton()`) converge starting at `1.0`?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq("yes")
 ```
 
 Does *Newton's* method (using `Roots.Newton()`) converge starting at `1.3`?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq("no")
 ```
 
 Does the secant method (using `Roots.Secant()`) converge starting at `1.3`? (a second starting value will automatically be chosen, if not directly passed in.)
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq("yes")
 ```
 
@@ -406,13 +414,13 @@ yesnoq("yes")
 
 For the function `f(x) = x^5 - x - 1` both Newton's method and the secant method will converge to the one root when started from `1.0`. Using `verbose=true` as an argument to `find_zero`, (e.g., `find_zero(f, x0, Roots.Secant(), verbose=true)`) how many *more* steps does the secant method need to converge?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(2)
 ```
 
 Do the two methods converge to the exact same value?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq("yes")
 ```
 
@@ -420,7 +428,7 @@ yesnoq("yes")
 
 Let `f(x) = exp(x) - x^4` and `x0=8.0`. How many steps (iterations) does it take for the secant method to converge using the default tolerances?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(10, 1)
 ```
 
@@ -430,13 +438,13 @@ Let `f(x) = exp(x) - x^4` and a starting bracket be `x0 = [8.9]`. Then calling `
 
 It takes how many steps?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(36, 1)
 ```
 
 The `Roots.A42()` method uses inverse cubic interpolation, as possible, how many steps does this method take to converge?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(3, 1)
 ```
 
@@ -447,32 +455,32 @@ The large difference is due to how the tolerances are set within `Roots`. The `B
 
 Consider this crazy function defined by:
 
-```julia;
-import SpecialFunctions: erf
+```julia; eval=false
 f(x) = cos(100*x)-4*erf(30*x-10)
 ```
 
-(The `erf` function is the error function.)
+(The `erf` function is the (error function](https://en.wikipedia.org/wiki/Error_function) and is in the `SpecialFunctions` package loaded with `CalculusWithJulia`.)
 
 Make a plot over the interval $[-3,3]$ to see why it is called "crazy".
 
 Does `find_zero` find a zero to this function starting from $0$?
 
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq("yes")
 ```
 
 If so, what is the value?
 
-```julia; echo=false
+```julia; hold=true; echo=false
+f(x) = cos(100*x)-4*erf(30*x-10)
 val = find_zero(f, 0)
 numericq(val)
 ```
 
 If not, what is the reason?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 "The zero is a simple zero",
 "The zero is not a simple zero",
@@ -487,19 +495,19 @@ radioq(choices, ans, keep_order=true)
 Does `find_zero` find a zero to this function starting from $1$?
 
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq(false)
 ```
 
 If so, what is the value?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(-999.999)
 ```
 
 If not, what is the reason?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 "The zero is a simple zero",
 "The zero is not a simple zero",
@@ -508,11 +516,4 @@ choices = [
 ]
 ans = 3
 radioq(choices, ans, keep_order=true)
-```
-
-
-
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

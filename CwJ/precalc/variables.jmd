@@ -5,13 +5,19 @@
 ```julia; echo=false; results="hidden"
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
+__DIR__, __FILE__ = :precalc, :variables
 nothing
 ```
+
+![Screenshot of a calculator provided by the Google search engine.](
+https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/precalc/figures/calculator.png
+)
 
 ```julia; echo=false;
 imgfile = "figures/calculator.png"
 caption = "Screenshot of a calculator provided by the Google search engine."
-ImageFile(imgfile, caption)
+#ImageFile(imgfile, caption)
+nothing
 ```
 
 
@@ -53,8 +59,14 @@ Just typing a variable name (without a trailing semicolon) causes the assigned v
 
 Variable names can be reused, as here, where we redefine `x`:
 
-```julia;
+```julia;hold=true
 x = 2
+```
+
+```julia; echo=false
+note("""
+The `Pluto` interface for `Julia` is idiosyncratic, as variables are *reactive*. This interface allows changes to a variable `x` to propogate to all other cells referring to `x`. Consequently, the variable name can only be assigned *once* per notebook **unless** the name is in some other namespace, which can be arranged by including the assignment inside a function or a `let` block.
+""")
 ```
 
 
@@ -66,12 +78,13 @@ balks at reassigning a variable if the type if different.)
 
 
 
+
 More importantly than displaying a value, is the use of variables to
 build up more complicated expressions. For example, to compute
 
-$$~
+```math
 \frac{1 + 2 \cdot 3^4}{5 - 6/7}
-~$$
+```
 
 we might break it into the grouped pieces implied by the mathematical notation:
 
@@ -87,40 +100,40 @@ top/bottom
 
 Imagine we have the following complicated expression related to the trajectory of a [projectile](http://www.researchgate.net/publication/230963032_On_the_trajectories_of_projectiles_depicted_in_early_ballistic_woodcuts) with wind resistance:
 
-$$~
-	\left(\frac{g}{k v_0\cos(\theta)} + \tan(\theta) \right) x + \frac{g}{k^2}\ln\left(1 - \frac{k}{v_0\cos(\theta)} x \right)
-~$$
+```math
+	\left(\frac{g}{k v_0\cos(\theta)} + \tan(\theta) \right) t + \frac{g}{k^2}\ln\left(1 - \frac{k}{v_0\cos(\theta)} t \right)
+```
 
 Here $g$ is the gravitational constant $9.8$ and $v_0$, $\theta$ and
 $k$ parameters, which we take to be $200$, $45$ degrees, and $1/2$
 respectively. With these values, the above expression can be computed
-when $x=100$:
+when $s=100$:
 
 ```julia;
 g = 9.8
 v0 = 200
 theta = 45
 k = 1/2
-x = 100
+t = 100
 a = v0 * cosd(theta)
-(g/(k*a) + tand(theta))* x + (g/k^2) * log(1 - k/a*x)
+(g/(k*a) + tand(theta))* t + (g/k^2) * log(1 - (k/a)*t)
 ```
 
 By defining a new variable `a` to represent a value that is repeated a few times in the expression, the last command is greatly simplified. Doing so makes it much easier to check for accuracy against the expression to compute.
 
 ##### Example
 
-A common expression in mathematics is a polynomial expression, for example $-16x^2 + 32x - 12$. Translating this to `Julia` at $x =3$ we might have:
+A common expression in mathematics is a polynomial expression, for example $-16s^2 + 32s - 12$. Translating this to `Julia` at $s =3$ we might have:
 
 ```julia;
-x = 3
--16*x^2 + 32*x - 12
+s = 3
+-16*s^2 + 32*s - 12
 ```
 
 This looks nearly identical to the mathematical expression, but we inserted `*` to indicate multiplication between the constant and the variable. In fact, this step is not needed as Julia allows numeric literals to have an implied multiplication:
 
 ```julia;
--16x^2 + 32x - 12
+-16s^2 + 32s - 12
 ```
 
 
@@ -132,13 +145,14 @@ It is important to recognize that `=` to `Julia` is not in analogy to
 how $=$ is used in mathematical notation. The following `Julia` code
 is not an equation:
 
-```julia;
+```julia;hold=true
+x = 3
 x = x^2
 ```
 
 What happens instead? The right hand side is evaluated (`x` is
 squared), the result is stored and bound to the variable `x` (so that
-`x` will end up pointing to the new value `9` and not the old one `3`); finally the value computed on the
+`x` will end up pointing to the new value, `9`, and not the original one, `3`); finally the value computed on the
 right-hand side is returned and in this case displayed, as there is no
 trailing semicolon to suppress the output.
 
@@ -151,9 +165,9 @@ $1$).
 Having `=` as assignment is usefully exploited when modeling sequences. For example, an
 application of Newton's method might end up with this expression:
 
-$$~
+```math
 x_{i+1} = x_i - \frac{x_i^2 - 2}{2x_i}
-~$$
+```
 
 As a mathematical expression, for each $i$ this defines a new value
 for $x_{i+1}$ in terms of a known value $x_i$. This can be used to
@@ -162,8 +176,9 @@ known, such as $x_0 = 2$.
 
 The above might be written instead with:
 
-```julia;
+```julia;hold=true
 x = 2
+x = x - (x^2 - 2) / (2x)
 x = x - (x^2 - 2) / (2x)
 ```
 
@@ -193,11 +208,11 @@ alert("""
 redefine variables that are built in, such as the value for `pi` or
 the function object assigned to `sin`. For example, this is a
 perfectly valid command `sin=3`. However, it will overwrite the
-typical value of `sin` so that `sin(3)` will be an error. The
+typical value of `sin` so that `sin(3)` will be an error. At the terminal, the
 binding to `sin` occurs in the `Main` module. This shadows that
 value of `sin` bound in the `Base` module. Even if redefined in
 `Main`, the value in base can be used by fully qualifying the name,
-as in `Base.sin(pi)`. This uses the convention
+as in `Base.sin(pi)`. This uses the notation
 `module_name.variable_name` to look up a binding in a module.
 """)
 ```
@@ -251,6 +266,8 @@ For example, we could have defined `theta` (`\theta[tab]`) and `v0` (`v\_0[tab]`
 θ = 45; v₀ = 200
 ```
 
+These notes often use Unicode alternatives to avoid the `Pluto` requirement of a single use of assigning to a variable name in a notebook without placing the assignment in a `let` block or a function body.
+
 
 ```julia; echo=false;
 alert("""
@@ -276,7 +293,7 @@ these notes, a value of `exp(1)` is assigned to `e`.
 
 It is a common task to define more than one variable. Multiple definitions can be done in one line, using semicolons to break up the commands, as with:
 
-```julia;
+```julia;hold=true
 a = 1; b = 2; c=3
 ```
 
@@ -284,8 +301,9 @@ a = 1; b = 2; c=3
 
 For convenience, `Julia` allows an alternate means to define more than one variable at a time. The syntax is similar:
 
-```julia;
+```julia;hold=true
 a, b, c = 1, 2, 3
+b
 ```
 
 This sets `a=1`, `b=2`, and `c=3`, as suggested. This construct relies
@@ -297,7 +315,8 @@ the right, the names are assigned one by one.
 
 The value on the right hand side is evaluated, then the assignment occurs. The following exploits this to swap the values assigned to `a` and `b`:
 
-```julia;
+```julia;hold=true
+a, b = 1, 2
 a, b = b, a
 ```
 
@@ -321,7 +340,7 @@ Of course, this could be computed directly with `(6-2) / (4-1)`, but by using fa
 
 Let $a=10$, $b=2.3$, and $c=8$. Find the value of $(a-b)/(a-c)$.
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 a,b,c = 10, 2.3, 8;
 numericq((a-b)/(a-c))
 ```
@@ -331,7 +350,7 @@ numericq((a-b)/(a-c))
 
 Let `x = 4`. Compute $y=100 - 2x - x^2$. What is the value:
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 x = 4
 y =- 100 - 2x - x^2
 numericq(y, 0.1)
@@ -348,7 +367,7 @@ a^b - b^a
 ```
 
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 a = 3.2; b=2.3;
 val = a^b - b^a;
 numericq(val)
@@ -362,9 +381,9 @@ this makes it easier to check for mistakes.
 
 For example, to compute
 
-$$~
+```math
 \frac{p - q}{\sqrt{p(1-p)}}
-~$$
+```
 
 for $p=0.25$ and $q=0.2$ we might do:
 
@@ -379,7 +398,7 @@ ans = top/bottom
 
 What is the result of the above?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 p, q = 0.25, 0.2;
 top = p - q;
 bottom = sqrt(p*(1-p));
@@ -391,11 +410,11 @@ numericq(ans)
 
 Using variables to record the top and the bottom of the expression, compute the following for $x=3$:
 
-$$~
+```math
 y = \frac{x^2 - 2x - 8}{x^2 - 9x - 20}.
-~$$
+```
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 x = 3
 val = (x^2 - 2x - 8)/(x^2 - 9x - 20)
 numericq(val)
@@ -405,7 +424,7 @@ numericq(val)
 
 Which if these is not a valid variable name (identifier) in `Julia`:
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = [
 q"5degreesbelowzero",
 q"some_really_long_name_that_is_no_fun_to_type",
@@ -422,7 +441,7 @@ radioq(choices, ans)
 
 Which of these symbols is  one of `Julia`'s built-in math constants?
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = [q"pi", q"oo", q"E", q"I"]
 ans = 1
 radioq(choices, ans)
@@ -438,7 +457,7 @@ What key sequence will produce this assignment
 δ = 1/10
 ```
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices=[
 q"\delta[tab] = 1/10",
 q"delta[tab] = 1/10",
@@ -452,7 +471,7 @@ radioq(choices, ans)
 
 Which of these three statements will **not** be a valid way to assign three variables at once:
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = [
 q"a=1, b=2, c=3",
 q"a,b,c = 1,2,3",
@@ -471,17 +490,11 @@ x = y = z = 3
 
 Will always:
 
-```julia; echo=false;
+```julia; hold=true; echo=false;
 choices = ["Assign all three variables at once to a value of 3",
 "Create 3 linked values that will stay synced when any value changes",
 "Throw an error"
 ]
 ans = 1
 radioq(choices, ans)
-```
-
-
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

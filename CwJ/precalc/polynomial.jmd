@@ -1,12 +1,21 @@
 # Polynomials
 
+In this section we use the following add-on packages:
+
+```julia
+using SymPy
+using Plots
+```
+
 ```julia; echo=false; results="hidden"
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
-using Plots
+import PyPlot
+__DIR__, __FILE__ = :precalc, :polynomial
 nothing
 ```
 
+----
 
 Polynomials are a particular class of expressions that are simple
 enough to have many properties that can be analyzed. In particular,
@@ -37,17 +46,17 @@ A *polynomial* is a sum of monomials. After
 combining terms with same powers, a non-zero polynomial may be written uniquely
 as:
 
-$$
+```math
 a_n x^n + a_{n-1}x^{n-1} + \cdots a_1 x + a_0, \quad a_n \neq 0
-$$
+```
 
-```julia; echo=false; cache=true
+```julia; hold=true; echo=false; cache=true
 ##{{{ different_poly_graph }}}
 pyplot()
 fig_size = (400, 300)
 anim = @animate for m in  2:2:10
     fn = x -> x^m
-    plot(fn, -1, 1, size = fig_size, legend=false, title="graph of x^$m", xlims=(-1,1), ylims=(-.1,1))
+    plot(fn, -1, 1, size = fig_size, legend=false, title="graph of x^{$m}", xlims=(-1,1), ylims=(-.1,1))
 end
 
 imgfile = tempname() * ".gif"
@@ -85,21 +94,23 @@ linear, a degree $2$ polynomial is quadratic, and  a degree $3$ polynomial is ca
 A special place is reserved for polynomials with degree 1. These are
 linear, as their graphs are straight lines. The general form,
 
-$$
+```math
 a_1 x + a_0, \quad a_1 \neq 0,
-$$
+```
 
 is often written as $mx + b$, which is the **slope-intercept** form. The slope of a line determines how steeply it rises. The value
 of $m$ can be found from two points through the well-known formula:
 
-$$
+```math
 m = \frac{y_1 - y_0}{x_1 - x_0} = \frac{\text{rise}}{\text{run}}
-$$
+```
 
-```julia; echo=false; cache=true
+```julia; hold=true, echo=false; cache=true
 ### {{{ lines_m_graph }}}
 
 pyplot()
+fig_size = (400, 300)
+
 anim = @animate for m in  [-5, -2, -1, 1, 2, 5, 10, 20]
     fn = x -> m * x
     plot(fn, -1, 1, size = fig_size, legend=false, title="m = $m", xlims=(-1,1), ylims=(-20, 20))
@@ -118,9 +129,9 @@ $(0,b)$ as a point on it.
 
 More generally, we have the **point-slope** form of a line, written as a polynomial through
 
-$$
+```math
 y_0 + m \cdot (x - x_0).
-$$
+```
 
 The slope is $m$ and the point $(x_0, y_0)$. Again, the line graphing
 this as a function of $x$ would have the point $(x_0,y_0)$ on it and
@@ -182,9 +193,6 @@ symbols. The `symbols` function does this. However, we will use the more conveni
 
 
 ```julia;
-using CalculusWithJulia
-using SymPy
-using Plots
 @syms a, b, c, x::real, zs[1:10]
 ```
 
@@ -194,11 +202,11 @@ otherwise it assumes it is possibly complex. There are many other
 [assumptions](http://docs.sympy.org/dev/modules/core.html#module-sympy.core.assumptions)
 that can be made. The `@syms` macro documentation lists them. The
 `zs[1:10]` tensor notation creates a container with 10 different
-symbols.  The *macro* `@syms` is does not need assignment, as the
+symbols.  The *macro* `@syms` does not need assignment, as the
 variable(s) are created behind the scenes by the macro.
 
 ```julia;echo=false
-note("""Macros in `Julia` are just transformations of the syntax into other synax. The `@` indicates they behave differently than regular function calls.
+note("""Macros in `Julia` are just transformations of the syntax into other syntax. The `@` indicates they behave differently than regular function calls.
 """)
 ```
 
@@ -214,19 +222,19 @@ The `SymPy` package does three basic things:
 To illustrate, using the just defined `x`, here is how we can create the polynomial $-16x^2 + 100$:
 
 ```julia;
-p = -16x^2 + 100
+𝒑 = -16x^2 + 100
 ```
 
 That is, the expression is created just as you would create it within
 a function body. But here the result is still a symbolic object. We
 have assigned this expression to a variable `p`, and have not defined
-it as a function `p(x)`. Mentally keeping the distinction between
+it as a function `p(x)`. Mentally keeping the distinction between symbolic
 expressions and functions is very important.
 
-The `typeof` function shows that `p` is of a symbolic type (`Sym`):
+The `typeof` function shows that `𝒑` is of a symbolic type (`Sym`):
 
 ```julia;
-typeof(p)
+typeof(𝒑)
 ```
 
 We can mix and match symbolic objects. This command creates an
@@ -277,8 +285,7 @@ To illustrate, to do
 the task above for the polynomial $-16x^2 + 100$ we could have:
 
 ```julia;
-p = -16x^2 + 100
-p(x => (x-1)^2)
+𝒑(x => (x-1)^2)
 ```
 
 This "call" notation takes pairs (designated by `a=>b`) where the left-hand side is the variable to substitute for, and the right-hand side the new value.
@@ -286,21 +293,21 @@ The value to substitute can depend on the variable, as illustrated; be
 a different variable; or be a numeric value, such as $2$:
 
 ```julia;
-y = p(x=>2)
+𝒚 = 𝒑(x=>2)
 ```
 
 The result will always be of a symbolic type, even if the answer is
 just a number:
 
 ```julia;
-typeof(y)
+typeof(𝒚)
 ```
 
 
 If there is just one free variable in an expression, the pair notation can be dropped:
 
 ```julia;
-p(4) # substitutes x=>4
+𝒑(4) # substitutes x=>4
 ```
 
 
@@ -310,15 +317,15 @@ Suppose we have the polynomial $p = ax^2 + bx +c$. What would it look
 like if we shifted right by $E$ units and up by $F$ units?
 
 ```julia;
-@syms a b c E F
-p = a*x^2 + b*x + c
-p(x => x-E) + F
+@syms E F
+p₂ = a*x^2 + b*x + c
+p₂(x => x-E) + F
 ```
 
 And expanded this becomes:
 
 ```julia;
-expand(p(x => x-E) + F)
+expand(p₂(x => x-E) + F)
 ```
 
 
@@ -326,7 +333,7 @@ expand(p(x => x-E) + F)
 
 In the above, we substituted `2` in for `x` to get `y`:
 
-```julia;
+```julia; hold=true
 p = -16x^2 + 100
 y = p(2)
 ```
@@ -341,12 +348,13 @@ different types are handled through various methods of
 `convert`. However, with `SymPy`, the `N` function will attempt to do
 the conversion for you:
 
-```julia;
-N(y)
+```julia;hold=true
+p = -16x^2 + 100
+N(p(2))
 ```
 
-Conversion by `N` also works for other types of data, such as
-`Rational` and `Float64`. For getting more digits of accuracy, a
+Where `convert(T,x)` requires a specification of the type to convert `x` to, `N` attempts to match the data type used by SymPy to store the number. As such, the output type of `N` may very (rational, a BigFloat, a float, etc.)
+For getting more digits of accuracy, a
 precision can be passed to `N`. The following command will take
 the symbolic value for $\pi$, `PI`, and produce about 60 digits worth
 as a `BigFloat` value:
@@ -364,30 +372,30 @@ symbols, as would be expected.
 Evaluating a symbolic expression and returning a numeric value can be done by composing the two just discussed concepts. For example:
 
 ```julia;
-p = 200 - 16x^2
-N(p(2))
+𝐩 = 200 - 16x^2
+N(𝐩(2))
 ```
 
 This approach is direct, but can be slow *if* many such evaluations were needed (such as with a plot). An alternative is to turn the symbolic expression into a `Julia` function and then evaluate that as usual.
 
 The `lambdify` function turns a symbolic expression into a `Julia` function
 
-```julia;
-pp = lambdify(p)
+```julia;hold=true
+pp = lambdify(𝐩)
 pp(2)
 ```
 
 The `lambdify` function uses the name of the similar `SymPy` function which is named after Pythons convention of calling anoynmous function "lambdas." The use above is straightforward. Only slightly more complicated is the use when there are multiple symbolic values. For example:
 
-```julia
+```julia; hold=true
 p = a*x^2 + b
 pp = lambdify(p)
 pp(1,2,3)
 ```
 
-This evaluation matches `a` with `1`, `b` with`2`, and `x` with `3` as that is the order returend by the function call `free_symbols(p)`. To adjust that, a second `vars` argument can be given:
+This evaluation matches `a` with `1`, `b` with`2`, and `x` with `3` as that is the order returned by the function call `free_symbols(p)`. To adjust that, a second `vars` argument can be given:
 
-```
+```julia; hold=true
 pp = lambdify(p, (x,a,b))
 pp(1,2,3) # computes 2*1^2 + 3
 ```
@@ -422,10 +430,12 @@ To investigate this last point, let's consider the case of the
 monomial $x^n$. When $n$ is even, the following animation shows that
 larger values of $n$ have greater growth once outside of $[-1,1]$:
 
-```julia; echo=false; cache=true
+```julia; hold=true; echo=false; cache=true
 ### {{{ poly_growth_graph }}}
 
 pyplot()
+fig_size = (400, 300)
+
 anim = @animate for m in  0:2:12
     fn = x -> x^m
     plot(fn, -1.2, 1.2, size = fig_size, legend=false, xlims=(-1.2, 1.2), ylims=(0, 1.2^12), title="x^{$m} over [-1.2, 1.2]")
@@ -463,10 +473,12 @@ $(x-5)(x-3)(x-2)(x-1)$ illustrates. Subsequent images show a widening
 of the plot window until the graph appears U-shaped.
 
 
-```julia; echo=false; cache=true
+```julia;hold=true; echo=false; cache=true
 ### {{{ leading_term_graph }}}
 
 pyplot()
+fig_size = (400, 300)
+
 anim = @animate for n in 1:6
     m = [1, .5, -1, -5, -20, -25]
     M = [2, 4,    5, 10, 25, 30]
@@ -495,13 +507,25 @@ To illustrate analytically why the leading term dominates, consider
 the polynomial $2x^5 - x + 1$ and then factor out the largest power,
 $x^5$, leaving a product:
 
-$$
+```math
 x^5 \cdot (2 - \frac{1}{x^4} + \frac{1}{x^5}).
-$$
+```
 
 For large $\lvert x\rvert$, the last two terms in the product on the right get
 close to $0$, so this expression is *basically* just $2x^5$ - the
 leading term.
+
+----
+
+The following graphic illustrates the ``4`` basic *overall* shapes that can result when plotting a polynomials as ``x`` grows without bound:
+
+```julia; echo=false;
+plot(; layout=4)
+plot!(x -> x^4,  -3,3, legend=false, xticks=false, yticks=false, subplot=1, title="n > even, aₙ > 0")
+plot!(x -> x^5,  -3,3, legend=false, xticks=false, yticks=false, subplot=2, title="n > odd, aₙ > 0")
+plot!(x -> -x^4, -3,3, legend=false, xticks=false, yticks=false, subplot=3, title="n > even, aₙ < 0")
+plot!(x -> -x^5, -3,3, legend=false, xticks=false, yticks=false, subplot=4, title="n > odd, aₙ < 0")
+```
 
 
 ##### Example
@@ -513,14 +537,14 @@ $x>0$, $p < 0$.
 
 Now consider the related polynomial, $q$, where we multiply $p$ by $x^n$ and substitute in $1/x$ for $x$. This is the "reversed" polynomial, as we see in this illustration for $n=2$:
 
-```julia;
+```julia;hold=true
 p = a*x^2 + b*x + c
 n = 2    # the degree of p
 q = expand(x^n * p(x => 1/x))
 ```
 
 In particular, from the reversal, the behavior of $q$ for large $x$
-depends on the sign of $x_0$. As well, due to the $1/x$, the behaviour
+depends on the sign of $a_0$. As well, due to the $1/x$, the behaviour
 of $q$ for large $x>0$ is the same as the behaviour of $p$ for small
 *positive* $x$. In particular if $a_n > 0$ but $a_0 < 0$, then `p` is
 eventually positive and `q` is eventually negative.
@@ -539,11 +563,11 @@ graph of the polynomial $p$.
 ## Factoring polynomials
 
 Among numerous others, there are two common ways of representing a
-non-zero polynomial: either in an
+non-zero polynomial:
 
 * expanded form, as in $a_n x^n + a_{n-1}x^{n-1} + \cdots a_1 x + a_0, a_n \neq 0$; or
 
-* in factored form, as in $a\cdot(x-r_1)\cdot(x-r_2)\cdots(x-r_n), a \neq 0$.
+* factored form, as in $a\cdot(x-r_1)\cdot(x-r_2)\cdots(x-r_n), a \neq 0$.
 
 The latter writes $p$ as a product of linear factors, though this is
 only possible in general if we consider complex roots. With real roots
@@ -551,12 +575,11 @@ only, then the factors are either linear or quadratic, as will be
 discussed later.
 
 There are values to each representation. One value of the expanded
-form is that doing arithmetic with polynomials is much easier in
+form is that polynomial addition and scalar multiplication is much easier in
 expanded form. For example, adding polynomials just requires matching
-up the monomials of similar powers. As for the factored format, the
-one value is that it is easy to read off *roots* of the polynomial (values of $x$ where $p$ is $0$), as
+up the monomials of similar powers. For the factored format, polynomial multiplication is much easier. For the factored form it is easy to read off *roots* of the polynomial (values of $x$ where $p$ is $0$), as
 a product is $0$ only if a term is $0$, so any zero must be a zero of
-a factor. However, factored form has other advantages. For example,
+a factor. Factored form has other advantages. For example,
 the polynomial $(x-1)^{1000}$ can be compactly represented using the
 factored form, but would require 1001 coefficients to store in expanded
 form. (As well, due to floating point differences, the two would
@@ -567,9 +590,9 @@ Translating from factored form to expanded form can be done by
 carefully following the distributive law of multiplication. For
 example, with some care it can be shown that:
 
-$$
+```math
 (x-1) \cdot (x-2) \cdot (x-3) = x^3  - 6x^2 +11x - 6.
-$$
+```
 
 
 The `SymPy` function `expand` will perform these algebraic
@@ -639,19 +662,18 @@ f(x)
 
 This is easy - but can also be confusing. The function object is `f`,
 the expression is `f(x)` - the function evaluated on a symbolic
-object. `SymPy` provides an interface for a few commonly used
-functions so that either will work. One such is `plot`, either
-`plot(f, a, b)` or `plot(f(x),a, b)` will produce the same plot with
-`Plots`.
-
-Symbolic polynomial expressions can be evaluated using the same syntax as a function call:
+object. Moreover, as seen, the symbolic expression can be evaluated
+using the same syntax as a function call:
 
 ```julia;
-p = -16*x^2 + 100
+p = f(x)
 p(2)
 ```
 
-If desired, such expressions can be `convert`ed into a function using `Julia`s `convert` function.
+ For many uses, the distinction is unnecessary to make, as the many functions will work with any callable expression. One such is `plot` -- either
+`plot(f, a, b)` or `plot(f(x),a, b)` will produce the same plot using the
+`Plots` package.
+
 
 ## Questions
 
@@ -661,7 +683,7 @@ Let $p$ be the polynomial $3x^2 - 2x + 5$.
 
 What is the degree of $p$?
 
-```julia; echo=false
+```julia;hold=true; echo=false
 numericq(2)
 ```
 
@@ -700,8 +722,8 @@ booleanq(true, labels=["Yes", "No"])
 
 What is the leading term of $p$?
 
-```julia; echo=false
-choices = ["3", L"3x^2", L"-2x", L"5"]
+```julia; hold=true; echo=false
+choices = ["``3``", "``3x^2``", "``-2x``", "``5``"]
 ans = 2
 radioq(choices, ans)
 ```
@@ -733,7 +755,7 @@ numericq(-4)
 
 The linear polynomial $p = 2x + 3$ is written in which form:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["point-slope form", "slope-intercept form", "general form"]
 ans = 2
 radioq(choices, ans)
@@ -746,14 +768,14 @@ radioq(choices, ans)
 
 The polynomial `p` is defined in `Julia` as follows:
 
-```julia; echo=false
+```julia; hold=true; eval=false
 @syms x
 p = -16x^2 + 64
 ```
 
 What command will return the value of the polynomial when $x=2$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [q"p*2", q"p[2]", q"p_2", q"p(x=>2)"]
 ans = 4
 radioq(choices, ans)
@@ -764,7 +786,7 @@ radioq(choices, ans)
 
 In the large, the graph of $p=x^{101} - x + 1$ will
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 L"Be $U$-shaped, opening upward",
 L"Be $U$-shaped, opening downward",
@@ -778,7 +800,7 @@ radioq(choices, ans, keep_order=true)
 
 In the large, the graph of $p=x^{102} - x^{101} + x + 1$ will
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 L"Be $U$-shaped, opening upward",
 L"Be $U$-shaped, opening downward",
@@ -792,7 +814,7 @@ radioq(choices, ans, keep_order=true)
 
 In the large, the graph of $p=-x^{10} + x^9 + x^8 + x^7 + x^6$ will
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 L"Be $U$-shaped, opening upward",
 L"Be $U$-shaped, opening downward",
@@ -806,7 +828,7 @@ radioq(choices, ans, keep_order=true)
 
 Use `SymPy` to factor the polynomial $x^{11} - x$. How many factors are found?
 
-```julia; echo=false
+```julia;hold=true; echo=false
 @syms x
 ex = x^11 - x
 nf = length(factor(ex).args)
@@ -817,7 +839,7 @@ numericq(nf)
 
 Use `SymPy` to factor the polynomial $x^{12} - 1$. How many factors are found?
 
-```julia; echo=false
+```julia;hold=true; echo=false
 @syms x
 ex = x^12 - 1
 nf = length(factor(ex).args)
@@ -829,7 +851,7 @@ numericq(nf)
 
 What is the monic polynomial with roots $x=-1$, $x=0$, and $x=2$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [q"x^3 - 3x^2  + 2x",
 q"x^3 - x^2 - 2x",
 q"x^3 + x^2 - 2x",
@@ -842,7 +864,7 @@ radioq(choices, 2)
 
 Use `expand` to expand the expression `((x-h)^3 - x^3) / h` where `x` and `h` are symbolic constants. What is the value:
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 choices = [
 q"-h^2 + 3hx  - 3x^2",
 q"h^3 + 3h^2x + 3hx^2 + x^3 -x^3/h",
@@ -850,9 +872,4 @@ q"x^3 - x^3/h",
 q"0"]
 ans = 1
 radioq(choices, ans)
-```
-
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

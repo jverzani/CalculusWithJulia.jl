@@ -1,13 +1,25 @@
 # Rational functions
 
+This section uses the following add-on packages:
+
+```julia
+using CalculusWithJulia
+using SymPy
+using Plots
+import Polynomials
+using RealPolynomialRoots
+```
+
+The `Polynomials` package is "imported" to avoid naming collisions with `SymPy`; names will need to be qualified.
 
 ```julia; echo=false; results="hidden"
-using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
-using Plots
+using Roots
+__DIR__, __FILE__ = :precalc, :rational_functions
 nothing
 ```
 
+----
 
 A rational expression is the ratio of two polynomial expressions.
 Such expressions arise in many modeling situations. As well, as many
@@ -68,9 +80,6 @@ f(x) = \frac{(x-1)^2 \cdot (x-2)}{(x+3) \cdot (x-3)}.
 
 
 ```julia;
-using CalculusWithJulia
-using SymPy
-using Plots
 f(x) = (x-1)^2 * (x-2) / ((x+3)*(x-3) )
 plot(f, -10, 10)
 ```
@@ -133,8 +142,8 @@ In particular, let's rewrite the expression in terms of its numerator and denomi
 
 ```julia;
 @syms x::real
-a = (x-1)^2 * (x-2)
-b = (x+3) * (x-3)
+num = (x-1)^2 * (x-2)
+den = (x+3) * (x-3)
 ```
 
 Euclid's
@@ -145,9 +154,9 @@ degree of $b(x)$. This is in direct analogy to the division algorithm of
 integers, only there the value of the remainder, $r(x)$, satisfies $0
 \leq r < b$. Given $q(x)$ and $r(x)$ as above, we can reexpress the rational function
 
-$$~
+```math
 \frac{a(x)}{b(x)} = q(x)  + \frac{r(x)}{b(x)}.
-~$$
+```
 
 The rational expression on the right-hand side has larger degree in the denominator.
 
@@ -155,22 +164,22 @@ The rational expression on the right-hand side has larger degree in the denomina
 The division algorithm is implemented in `Julia` generically through the `divrem` method:
 
 ```julia;
-q, r = divrem(a, b)
+q, r = divrem(num, den)
 ```
 
-This yields the decomposition of `a/b`:
+This yields the decomposition of `num/den`:
 
 ```julia;
-q + r/b
+q + r/den
 ```
 
 
 A similar result can be found using the `apart` function, which can be easier to use if the expression is not given in terms of a separate numerator and denominator.
 
 ```julia;
-f(x) = (x-1)^2 * (x-2) / ((x+3)*(x-3))  # as a function
-p = f(x)                                # a symbolic expression
-apart(p)
+g(x) = (x-1)^2 * (x-2) / ((x+3)*(x-3))  # as a function
+h = g(x)                                # a symbolic expression
+apart(h)
 ```
 
 
@@ -181,7 +190,7 @@ $\infty$, the second piece will clearly go towards 0, as this simple
 graph shows:
 
 ```julia;
-plot(apart(p) - (x - 4), 10, 100)
+plot(apart(h) - (x - 4), 10, 100)
 ```
 
 Similarly, a plot over $[-100, -10]$ would show decay towards $0$,
@@ -191,7 +200,7 @@ approach a straight line, in this case $y=x-4$ as $x \rightarrow \pm
 \infty$.
 
 We can easily do most of this analysis without needing a
-computer or algebra. First, we should know that the graph of $y=mx$ is a line with
+computer or algebra. First, we should know the four eventual shapes of a polynomial, that the graph of $y=mx$ is a line with
 slope $m$, the graph of $y = c$ is a constant line at height $c$, and
 the graph of $y=c/x^m$, $m > 0$ will decay towards $0$ as $x
 \rightarrow \pm\infty$. The latter should be clear, as $x^m$ gets big,
@@ -203,16 +212,16 @@ rather we use the expanded form, which we get through the `cancel`
 function
 
 ```julia;
-cancel(p)
+cancel(h)
 ```
 
 We can see that the numerator is of degree 3 and the denominator of degree $2$.
 The leading terms are $x^3$ and $x^2$ respectively. If we were to
 pull those out we would get:
 
-$$~
+```math
 \frac{x^3 \cdot (1 - 4/x + 5/x^2 - 2/x^3)}{x^2 \cdot (1 - 9/x^2)}.
-~$$
+```
 
 The terms $(1 - 4/x + 5/x^2 - 2/x^3)$ and $(1 - 9/x^2)$ go towards $1$
 as $x \rightarrow \pm \infty$, as each term with $x$ goes towards
@@ -248,9 +257,9 @@ expense of the work required to find $q(x)$.
 
 Consider the rational expression
 
-$$~
+```math
 \frac{17x^5 - 300x^4 - 1/2}{x^5 - 2x^4 + 3x^3 - 4x^2 + 5}.
-~$$
+```
 
 The leading term of the numerator is $17x^5$ and the leading term of the denominator is $x^5$. The ratio is $17$ (or $17x^0 = 17x^{5-5}$). As such, we would have a horizontal asymptote $y=17$.
 
@@ -258,13 +267,13 @@ The leading term of the numerator is $17x^5$ and the leading term of the denomin
 
 If we consider instead this rational expression:
 
-$$~
+```math
 \frac{x^5 - 2x^4 + 3x^3 - 4x^2 + 5}{5x^4 + 4x^3 + 3x^2 + 2x + 1}
-~$$
+```
 
 Then we can see that the ratio of the leading terms is $x^5 / (5x^4) = (1/5)x$. We expect a slant asymptote with slope $1/5$, though we would need to divide to see the exact intercept. This is found with, say:
 
-```julia;
+```julia; hold=true;
 p = (x^5 - 2x^4 + 3x^3 - 4x^2 + 5) / (5x^4 + 4x^3 + 3x^2 + 2x + 1)
 divrem(numerator(p), denominator(p))  # or apart(p)
 ```
@@ -273,30 +282,30 @@ divrem(numerator(p), denominator(p))  # or apart(p)
 
 The rational function
 
-$$~
+```math
 \frac{5x^3 + 6x^2 + 2}{x-1}
-~$$
+```
 
 has decomposition $5x^2 + 11x + 11 + 13/(x-1)$:
 
 ```julia;
-a = 5x^3 + 6x^2 +2
-b = x-1
-q, r = divrem(a, b)
+top = 5x^3 + 6x^2 +2
+bottom = x-1
+quo, rem = divrem(top, bottom)
 ```
 
-The graph of $a/b$ has nothing in common with the graph of $g$ for small $x$
+The graph of has nothing in common with the graph of the quotient for small $x$
 
 ```julia;
-plot(a/b, -3, 3)
-plot!(q, -3, 3)
+plot(top/bottom, -3, 3)
+plot!(quo, -3, 3)
 ```
 
 But the graphs do match for large $x$:
 
 ```julia;
-plot(a/b, 5, 10)
-plot!(q, 5, 10)
+plot(top/bottom, 5, 10)
+plot!(quo, 5, 10)
 ```
 
 
@@ -328,8 +337,7 @@ lower degree than the denominator. Hence the horizontal asymptotes of $0$.
 
 To see another example we have:
 
-```julia;
-@syms x
+```julia; hold=true;
 p = (x-1)*(x-2)
 q = (x-3)^3 * (x^2 - x - 1)
 apart(p/q)
@@ -357,7 +365,7 @@ The two points with $x$ components closest to $0$ are connected with a
 line, though that is misleading.  Here we deliberately use far fewer
 points to plot ``1/x`` to show how this happens:
 
-```julia
+```julia; hold=true;
 f(x) = 1/x
 xs = range(-1, 1, length=12)
 ys = f.(xs)
@@ -376,9 +384,9 @@ not lead to vertical asymptotes. For a root $c$ if $p(c)$ is not zero then the l
 $x=c$ will be a vertical asymptote. If $c$ is a root of both $p(x)$
 and $q(x)$, then we can rewrite the expression as:
 
-$$~
+```math
 \frac{p(x)}{q(x)} = \frac{(x-c)^m r(x)}{(x-c)^n s(x)},
-~$$
+```
 
 where both $r(c)$ and $s(c)$ are non zero. Knowing $m$ and $n$ (the multiplicities of the root $c$) allows the following to be said:
 
@@ -401,7 +409,7 @@ For example, the function
 ``f(x) = ((x-1)^2 \cdot (x-2)) / ((x+3) \cdot(x-3))`` has vertical asymptotes at ``-3`` and ``3``, as its graph
 illustrated. Without the graph we could see this as well:
 
-```julia;
+```julia; hold=true;
 f(x) = (x-1)^2 * (x-2) / ((x+3)*(x-3) )
 f(3), f(-3)
 ```
@@ -411,7 +419,7 @@ f(3), f(-3)
 As seen in several graphs, the basic plotting algorithm does a poor
 job with vertical asymptotes. For example, it may erroneously connect
 their values with a steep vertical line, or the $y$-axis scale can get
-so large as to make reading the rest of the graph impossible. There are some trick to work around this.
+so large as to make reading the rest of the graph impossible. There are some tricks to work around this.
 
 Consider again the function $f(x) = ((x-1)^2 \cdot (x-2)) / ((x+3)
 \cdot(x-3))$. Without much work, we can see that $x=3$ and $x=-3$ will
@@ -423,8 +431,8 @@ example we could look at the area between the vertical asymptotes, by
 plotting over $(-2.9, 2.9)$, say:
 
 ```julia;
-f(x) = (x-1)^2 * (x-2) / ((x+3)*(x-3) )
-plot(f, -2.9, 2.9)
+𝒇(x) = (x-1)^2 * (x-2) / ((x+3)*(x-3) )
+plot(𝒇, -2.9, 2.9)
 ```
 
 This backs off by $\delta = 0.1$. As we have that $3 - 2.9$ is
@@ -441,8 +449,8 @@ We can also clip the `y` axis. The `plot` function can be passed an
 argument `ylims=(lo, hi)` to limit which values are plotted. With this,
 we can have:
 
-```julia;
-plot(f, -5, 5, ylims=(-20, 20))
+```julia; hold=true
+plot(𝒇, -5, 5, ylims=(-20, 20))
 ```
 
 This isn't ideal, as the large values are still computed, just the
@@ -459,7 +467,7 @@ This was discussed in an earlier section where the `rangeclamp` function was int
 
 
 ```julia;
-plot(rangeclamp(f, 30), -25, 25)  # rangeclamp is in the CalculusWithJulia package
+plot(rangeclamp(𝒇, 30), -25, 25)  # rangeclamp is in the CalculusWithJulia package
 ```
 
 We can see the general shape of 3 curves broken up by the vertical
@@ -477,7 +485,7 @@ A sign chart of a function indicates when the function is positive,
 negative, $0$, or undefined. It typically is represented along the
 lines of this one for $f(x) = x^3 - x$:
 
-```
+```verbatim
     -    0   +   0   -   0   +
 < ----- -1 ----- 0 ----- 1 ----- >
 ```
@@ -491,24 +499,45 @@ The usual recipe for construction follows these steps:
 - Identify "test points" within each implied interval (these are $(-\infty, -1)$, $(-1,0)$, $(0,1)$, and $(1, \infty)$ in the example) and check for the sign of $f(x)$ at these test points. Write in `-`, `+`, `0`, or `*`, as appropriate. The value comes from the fact that "continuous" functions may only change sign when they cross $0$ or are undefined.
 
 With the computer, where it is convenient to draw a graph, it might be better to emphasize
-the sign on the graph of the function. This helper function will do
-so, plotting the function and then coloring it different colors based on the sign of $f(x)$:
+the sign on the graph of the function. The `sign_chart` function from `CalculusWithJulia` does this by numerically identifying points where the function is ``0`` or ``\infty`` and indicating the sign as ``x`` crosses over these points.
 
-```julia; eval=false
-function signchart(f, a, b)
-   xs = range(a, stop=b, length=200)
-   ys = f.(xs)
-   cols = [fx < 0 ? :red  : :blue for fx in ys]
-   plot(xs, ys, color=cols, linewidth=5, legend=false)
-   plot!(zero, a, b)
-   end
+```julia; echo=false
+# in CalculusWithJuia
+function sign_chart(f, a, b; atol=1e-6)
+    pm(x) = x < 0 ? "-" : x > 0 ? "+" : "0"
+    summarize(f,cp,d) = (∞0=cp, sign_change=pm(f(cp-d)) * " → " * pm(f(cp+d)))
+
+    zs = find_zeros(f, a, b)
+    pts = vcat(a, zs, b)
+    for (u,v) ∈ zip(pts[1:end-1], pts[2:end])
+        zs′ = find_zeros(x -> 1/f(x), u, v)
+        for z′ ∈ zs′
+            flag = false
+            for z ∈ zs
+                if isapprox(z′, z, atol=atol)
+                    flag = true
+                    break
+                end
+            end
+            !flag && push!(zs, z′)
+        end
+    end
+    sort!(zs)
+
+    length(zs) == 0 && return []
+    m,M = extrema(zs)
+    d = min((m-a)/2, (b-M)/2)
+    if length(zs) > 0
+        d′ = minimum(diff(zs))/2
+        d = min(d, d′ )
+    end
+    summarize.(f, zs, d)
+end
 ```
 
-(The function is defined in `CalculusWithJulia`, so need not be typed in.)
-
-```julia;
+```julia; hold=true;
 f(x) = x^3 - x
-signchart(f, -3/2, 3/2)
+sign_chart(f, -3/2, 3/2)
 ```
 
 
@@ -522,15 +551,15 @@ function for the form $p(x)/q(x)$, where $q(0)=1$ is customary.
 
 Some example approximations are
 
-$$~
+```math
 \sin(x) \approx \frac{x - 7/60 \cdot x^3}{1 + 1/20 \cdot x^2}
-~$$
+```
 
 and
 
-$$~
+```math
 \tan(x) \approx \frac{x - 1/15 \cdot x^3}{1 - 2/5 \cdot x^2}
-~$$
+```
 
 
 We can look graphically at these approximations:
@@ -549,26 +578,31 @@ plot!(tan_p, -pi/2 + 0.2, pi/2 - 0.2)
 
 ## The `Polynomials` package for rational functions
 
+In the following, we import some functions from the `Polynomials` package. We avoided loading the entire namespace, as there are conflicts with `SymPy`. Here we import some useful functions and the `Polynomial` constructor:
+
+```julia
+import Polynomials: Polynomial, variable, lowest_terms, fromroots, coeffs
+```
+
 The `Polynomials` package has support for rational functions. The `//` operator can be used to create rational expressions:
 
 ```julia;
-using Polynomials
-x = variable()
-p = (x-1)*(x-2)^2
-q = (x-2)*(x-3)
-pq = p // q
+𝒙 = variable()
+𝒑 = (𝒙-1)*(𝒙-2)^2
+𝒒 = (𝒙-2)*(𝒙-3)
+𝒑𝒒 = 𝒑 // 𝒒
 ```
 
 A rational expression is a formal object; a rational function the viewpoint that this object will be evaluated by substituting  values for the indeterminate. Rational expressions made within `Polynomials` are evaluated just like functions:
 
 ```julia;
-pq(4)  # p(4)/q(4)
+𝒑𝒒(4)  # p(4)/q(4)
 ```
 
 The rational expressions are not in lowest terms unless requested through the `lowest_terms` method:
 
 ```julia;
-lowest_terms(pq)
+lowest_terms(𝒑𝒒)
 ```
 
 For polynomials as simple as these, this computation is not a problem,
@@ -602,7 +636,7 @@ numerator(3//1)
 Similarly, we can divide a polynomial by the polynomial ``1``, which in `Julia` is returned by `one(p)`, to produce a rational expression:
 
 ```julia;
-pp = p // one(p)
+pp = 𝒑 // one(𝒑)
 ```
 
 And as with rational numbers, `p` is recovered by `numerator`:
@@ -627,7 +661,7 @@ For the polynomial `pq` above, we have from observation that ``1`` and
 identify a slant asymptote with slope ``1``. These are hinted at in this graph:
 
 ```julia;
-plot(pq)
+plot(𝒑𝒒)
 ```
 
 To better see the zeros, a plot over a narrower interval, say ``[0,2.5]``,
@@ -637,7 +671,7 @@ a wider interval, say ``[-10,10]``, would be encouraged.
 
 For one more example of the default plot recipe, we redo the graphing of the rational expression we earlier plotted with `rangeclamp`:
 
-```julia
+```julia; hold=true;
 p,q = fromroots([1,1,2]), fromroots([-3,3])
 plot(p//q)
 ```
@@ -648,7 +682,7 @@ plot(p//q)
 
 We have seen some basic transformations of functions such as shifts and scales. For a polynomial expression we can implement these as follows, taking advantage of polynomial evaluation:
 
-```julia;
+```julia; hold=true;
 x = variable()
 p = 3 + 4x + 5x^2
 a = 2
@@ -658,10 +692,10 @@ p(a*x), p(x+a) # scale, shift
 A different polynomial transformation is inversion, or the mapping ``x^d \cdot p(1/x)`` where ``d`` is the degree of ``p``. This will yield a polynomial, as perhaps this example will convince you:
 
 
-```julia;
+```julia; hold=true
 p = Polynomial([1, 2, 3, 4, 5])
 d = Polynomials.degree(p)  # degree is in SymPy and Polynomials, indicate which
-pp = p // one(x)
+pp = p // one(p)
 x = variable(pp)
 q = x^d * pp(1/x)
 lowest_terms(q)
@@ -697,16 +731,18 @@ end
 We can verify this does what we want through example with the previously defined `p`:
 
 ```julia;
-a, b = 4, 6
-q = mobius_transformation(p, 4, 6)
+𝐩 = Polynomial([1, 2, 3, 4, 5])
+𝐪 = mobius_transformation(𝐩, 4, 5)
 ```
 
 As contrasted with
 
-```julia;
-pq = p // one(p)
+```julia; hold=true;
+a, b = 4, 6
+
+pq = 𝐩 // one(𝐩)
 x = variable(pq)
-d = Polynomials.degree(p)
+d = Polynomials.degree(𝐩)
 numerator(lowest_terms( (x + 1)^2 * pq((a*x + b)/(x + 1))))
 ```
 
@@ -714,7 +750,7 @@ numerator(lowest_terms( (x + 1)^2 * pq((a*x + b)/(x + 1))))
 
 Now, why is this of any interest?
 
-Mobius transforms are used to map regions into other regions. In this special case, the transform ``\phi(x) = (ax + b)/(x + 1)`` takes the interval ``[0,\infty]`` and sends it to ``[a,b]`` under this (``0`` goes to ``(a\cdot 0 + b)/(0+1) = b``, whereas ``\infty`` goes to ``ax/x \rightarrow a``). Using this, if ``p(u) = 0``, with ``q(x) = (x-1)^d p(\phi(x))``,  then setting ``u = \phi(x)`` we have ``q(x) = (\phi^{-1}(u)+1)^d p(\phi(\phi^{-1}(u))) =  (\phi^{-1}(u)+1)^d \cdot  p(u) =  (\phi^{-1}(u)+1)^d \cdot 0 = 0``. That is, a zero of ``p`` in ``[a,b]`` will appear as a zero of ``q`` in ``[0,\infty)`` at ``\phi^{-1}(u)``.
+Mobius transforms are used to map regions into other regions. In this special case, the transform ``\phi(x) = (ax + b)/(x + 1)`` takes the interval ``[0,\infty]`` and sends it to ``[a,b]``  (``0`` goes to ``(a\cdot 0 + b)/(0+1) = b``, whereas ``\infty`` goes to ``ax/x \rightarrow a``). Using this, if ``p(u) = 0``, with ``q(x) = (x-1)^d p(\phi(x))``,  then setting ``u = \phi(x)`` we have ``q(x) = (\phi^{-1}(u)+1)^d p(\phi(\phi^{-1}(u))) =  (\phi^{-1}(u)+1)^d \cdot  p(u) =  (\phi^{-1}(u)+1)^d \cdot 0 = 0``. That is, a zero of ``p`` in ``[a,b]`` will appear as a zero of ``q`` in ``[0,\infty)`` at ``\phi^{-1}(u)``.
 
 
 
@@ -723,7 +759,7 @@ The Descartes rule of signs applied to ``q`` then will give a bound on the numbe
 Similarly, we can see there are ``2`` or ``0`` roots for ``p`` in the interval ``[2,6]`` by counting the two sign changes here:
 
 ```julia;
-mobius_transformation(p, 2,6)
+mobius_transformation(𝐩, 2,6)
 ```
 
 This observation, along with a detailed analysis provided by [Kobel, Rouillier, and Sagraloff](https://dl.acm.org/doi/10.1145/2930889.2930937) provides a means to find intervals that enclose the real roots of a polynomial.
@@ -738,7 +774,7 @@ Eventually, **mathematically** this will find isolating intervals for each posit
 
 Applying these steps to ``p`` with an initial interval, say ``[0,9]``, we would have:
 
-```julia;
+```julia; hold=true
 p = fromroots([1,3,5])               #  (x-1)⋅(x-3)⋅(x-5) = -15 + 23*x - 9*x^2 + x^3
 mobius_transformation(p, 0, 9) # 3
 mobius_transformation(p, 0, 9//2)    # 2
@@ -756,9 +792,8 @@ For square-free polynomials, the `RealPolynomialRoots` package implements a basi
 The `ANewDsc` function takes a collection of coefficients representing a polynomial and returns isolating intervals for each real root. For example:
 
 ```julia
-using RealPolynomialRoots, Polynomials
-p = fromroots([1,3,5])
-st = ANewDsc(coeffs(p))
+p₀ = fromroots([1,3,5])
+st = ANewDsc(coeffs(p₀))
 ```
 
 These intervals can be refined to give accurate approximations to the roots:
@@ -772,20 +807,20 @@ More challenging problems can be readily handled by this package. The following 
 
 
 ```julia
-x = Polynomial([0,1]) # also just variable(Polynomial{Int})
-p = -1 + 254*x - 16129*x^2 + x^15
+𝐱 = Polynomial([0,1]) # also just variable(Polynomial{Int})
+𝐩 = -1 + 254*𝐱 - 16129*𝐱^2 + 𝐱^15
 ```
 
 has three real roots, two of which are clustered very close to each other:
 
 ```julia
-st = ANewDsc(coeffs(p))
+𝐬𝐭 = ANewDsc(coeffs(𝐩))
 ```
 
 and
 
 ```julia
-refine_roots(st)
+refine_roots(𝐬𝐭)
 ```
 
 The SymPy package (`sympy.real_roots`) can accurately identify the
@@ -805,7 +840,7 @@ polynomials with degrees as high as 10,000.
 
 The rational expression $(x^3 - 2x + 3) / (x^2 - x + 1)$ would have
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [L"A horizontal asymptote $y=0$",
 L"A horizontal asymptote $y=1$",
 L"A slant asymptote with slope $m=1$"]
@@ -818,7 +853,7 @@ radioq(choices, ans)
 
 The rational expression $(x^2 - x + 1)/ (x^3 - 2x + 3)$ would have
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [L"A horizontal asymptote $y=0$",
 L"A horizontal asymptote $y=1$",
 L"A slant asymptote with slope $m=1$"]
@@ -833,7 +868,7 @@ radioq(choices, ans)
 
 The rational expression $(x^2 - x + 1)/ (x^2 - 3x + 3)$ would have
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [L"A horizontal asymptote $y=0$",
 L"A horizontal asymptote $y=1$",
 L"A slant asymptote with slope $m=1$"]
@@ -854,7 +889,7 @@ The rational expression
 would have
 
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [L"A horizontal asymptote $y=0$",
 L"A horizontal asymptote $y=1$",
 L"A slant asymptote with slope $m=1$"]
@@ -874,7 +909,7 @@ The rational expression
 
 would have
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [L"A vertical asymptote $x=1$",
 L"A slant asymptote with slope $m=1$",
 L"A vertical asymptote $x=5$"
@@ -890,16 +925,17 @@ radioq(choices, ans)
 
 The rational expression
 
-$$~
+```math
 \frac{x^3 - 3x^2 + 2x}{3x^2 - 6x + 2}
-~$$
+```
 
 has a slant asymptote. What is the equation of that line?
 
-```julia; echo=false
-choices = [L"y = 3x",
-L"y = (1/3)x",
-L"y = (1/3)x - (1/3)"
+```julia; hold=true; echo=false
+choices = [
+    "``y = 3x``",
+    "``y = (1/3)x``",
+    "``y = (1/3)x - (1/3)``"
 ]
 ans = 3
 radioq(choices, ans)
@@ -910,7 +946,7 @@ radioq(choices, ans)
 
 Look at the graph of the function ``f(x) = ((x-1)\cdot(x-2)) / ((x-3)\cdot(x-4))``
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = ((x-1) * (x-2)) / ((x-3) *(x-4))
 delta = 1e-1
 col = :blue
@@ -923,7 +959,7 @@ p
 
 Is the following common conception true: "The graph of a function never crosses its asymptotes."
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["No, the graph clearly crosses the drawn asymptote",
 "Yes, this is true"]
 ans = 1
@@ -941,18 +977,18 @@ intersect the given curve. It can sometimes take a while to change perception.)
 
 Consider the two graphs of $f(x) = 1/x$ over $[10,20]$ and $[100, 200]$:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 plot(x -> 1/x, 10, 20)
 ```
 
 
-```julia; echo=false
+```julia; hold=true; echo=false
 plot(x -> 1/x, 100, 200)
 ```
 
 The two shapes are basically identical and do not look like straight lines. How does this reconcile with the fact that $f(x)=1/x$ has a horizontal asymptote $y=0$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["The horizontal asymptote is not a straight line.",
 L"The $y$-axis scale shows that indeed the $y$ values are getting close to $0$.",
 L"The graph is always decreasing, hence it will eventually reach $-\infty$."
@@ -966,28 +1002,31 @@ radioq(choices, ans)
 
 The amount of drug in a bloodstream after $t$ hours is modeled by the rational function
 
-$$~
+```math
 r(t) = \frac{50t^2}{t^3 + 20}, \quad t \geq  0.
-~$$
+```
 
 What is the amount of the drug after $1$ hour?
 
 ```julia; echo=false
 r1(t) = 50t^2 / (t^3 + 20)
+```
+
+```julia; hold=true; echo=false
 val = r1(1)
 numericq(val)
 ```
 
 What is the amount of drug in the bloodstream after 24 hours?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 val = r1(24)
 numericq(val)
 ```
 
 What is more accurate: the peak amount is
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["between 0 and 8 hours", "between 8 and 16 hours", "between 16 and 24 hours", "after one day"]
 ans = 1
 radioq(choices, ans)
@@ -995,7 +1034,7 @@ radioq(choices, ans)
 
 This graph has
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [L"a slant asymptote with slope $50$",
 L"a horizontal asymptote $y=20$",
 L"a horizontal asymptote $y=0$",
@@ -1010,13 +1049,13 @@ radioq(choices, ans)
 The (low-order) Pade approximation for $\sin(x)$ was seen to be $(x - 7/60 \cdot x^3)/(1 + 1/20 \cdot x^2)$. The graph showed that this approximation was fairly close
 over $[-\pi, \pi]$. Without graphing would you expect the behaviour of the function and its approximation to be similar for *large* values of $x$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq(false)
 ```
 
 Why?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 L"The $\sin(x)$ oscillates, but the rational function eventually follows $7/60 \cdot x^3$",
 L"The $\sin(x)$ oscillates, but the rational function has a slant asymptote",
@@ -1024,13 +1063,4 @@ L"The $\sin(x)$ oscillates, but the rational function has a non-zero horizontal 
 L"The $\sin(x)$ oscillates, but the rational function has a horizontal asymptote of $0$"]
 ans = 2
 radioq(choices, ans)
-```
-
-
-
-
-
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

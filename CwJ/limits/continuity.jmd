@@ -1,12 +1,21 @@
 # Continuity
 
-```julia; echo=false; results="hidden"
+This section uses these add-on packages:
+
+```julia
 using CalculusWithJulia
-using CalculusWithJulia.WeaveSupport
 using Plots
+using SymPy
+```
+
+```julia; echo=false; results="hidden"
+using CalculusWithJulia.WeaveSupport
+import PyPlot
+pyplot()
 nothing
 ```
 
+----
 
 The definition Google finds for *continuous* is *forming an unbroken whole; without interruption*.
 
@@ -16,7 +25,7 @@ could be drawn without having to lift (or interrupt) the pencil drawing it.
 
 Consider these two graphs:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 plt = plot([-1,0], [-1,-1],  color=:black, legend=false, linewidth=5)
 plot!(plt, [0, 1], [ 1, 1], color=:black, linewidth=5)
 plt
@@ -24,7 +33,7 @@ plt
 
 and
 
-```julia; echo=false
+```julia; hold=true; echo=false
 plot([-1,-.1, .1, 1], [-1,-1, 1, 1], color=:black, legend=false, linewidth=5)
 ```
 
@@ -37,8 +46,8 @@ break is needed to draw it - where as the second is continuous.
 
 A formal definition of continuity was a bit harder to come about. At
 [first](http://en.wikipedia.org/wiki/Intermediate_value_theorem) the
-concept that for any $y$ between any two values in the range for
-$f(x)$, the function should take the value $y$ was included. Clearly
+concept was that for any $y$ between any two values in the range for
+$f(x)$, the function should take on the value $y$ for some $x$. Clearly
 this could distinguish the two graphs above, as one takes no values in
 $(-1,1)$, whereas the other - the continuous one - takes on all values in that range.
 
@@ -75,8 +84,7 @@ defintion is replaced by a right or left limit, as appropriate.
 ```julia; echo=false
 alert("""
 The limit in the definition of continuity is the basic limit and not an extended sense where
-infinities are accounted for. As with limits, such extensions are qualified in the language,
-as in "*right* continous."
+infinities are accounted for.
 """)
 ```
 ##### Examples of continuity
@@ -93,7 +101,7 @@ Most familiar functions are continuous everywhere.
 
 * The hyperbolic tangent is, as $\cosh(x) > 0$ for all $x$.
 
-Some familiar functions are continuous but not everywhere.
+Some familiar functions are *mostly* continuous but not everywhere.
 
 * For example, $f(x) = \sqrt{x}$ is continuous on $(0,\infty)$ and right continuous at $0$, but it is not defined for negative $x$, so can't possibly be continuous there.
 
@@ -101,9 +109,9 @@ Some familiar functions are continuous but not everywhere.
 
 * The tangent function $\tan(x) = \sin(x)/\cos(x)$ is continuous everywhere *except* the points $x$ with $\cos(x) = 0$ ($\pi/2 + k\pi, k$ an integer).
 
-* The hyperbolic co-tangent is not continuous at $x=0$ when $\sinh$ is $0$,
+* The hyperbolic co-tangent is not continuous at $x=0$ -- when $\sinh$ is $0$,
 
-* The semicircle $f(x) = \sqrt{1 - x^2}$ is *continuous* on $(-1, 1)$. It is not continous at $-1$ and $1$, though it is right continuous at $-1$ and left continous at $1$.
+* The semicircle $f(x) = \sqrt{1 - x^2}$ is *continuous* on $(-1, 1)$. It is not continuous at $-1$ and $1$, though it is right continuous at $-1$ and left continuous at $1$.
 
 ##### Examples of discontinuity
 
@@ -113,26 +121,26 @@ There are various reasons why a function may not be continuous.
 
 * The function $f(x) = 1/x$ is continuous everywhere *except* $x=0$ where *no* limit exists.
 
-* A rational function $f(x) = p(x)/q(x)$ will be continuous everywhere except where $q(x)=0$.
+* A rational function $f(x) = p(x)/q(x)$ will be continuous everywhere except where $q(x)=0$. (The function ``f`` may still have a limit where ``q`` is ``0``, should factors cancel, but ``f`` won't be defined at such values.)
 
 * The function
 
-$$~
+```math
 f(x) = \begin{cases}
          -1 & x < 0 \\
           0 & x = 0 \\
           1 & x > 0
 \end{cases}
-~$$
+```
 
 is implemented by `Julia`'s `sign` function. It has a value at $0$,
 but no limit at $0$, so is not continuous at $0$. Furthermore, the
 left and right limits exist at $0$ but are not equal to $f(0)$ so the
-function is not left or right continuous at $0$. It is continous everywhere except at $x=0$.
+function is not left or right continuous at $0$. It is continuous everywhere except at $x=0$.
 
 * Similarly, the function defined by this graph
 
-```julia; echo=false
+```julia; hold=true; echo=false
 plot([-1,-.01], [-1,-.01], legend=false, color=:black)
 plot!([.01, 1], [.01, 1], color=:black)
 scatter!([0], [1/2], markersize=5, markershape=:circle)
@@ -143,7 +151,7 @@ value $f(0) =1/2$, but the limit and the function value are not equal.
 
 * The `floor` function, which rounds down to the nearest integer, is also not continuous at the integers, but is right continuous at the integers, as, for example, $\lim_{x \rightarrow 0+} f(x) = f(0)$. This graph emphasizes the right continuity by placing a point for the value of the function when there is a jump:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 x = [0,1]; y=[0,0]
 plt = plot(x.-2, y.-2, color=:black, legend=false)
 plot!(plt, x.-1, y.-1, color=:black)
@@ -159,13 +167,13 @@ plt
 
 * On the Wikipedia page for [continuity](https://en.wikipedia.org/wiki/Continuous_function) the example of Dirichlet's function is given:
 
-$$~
+```math
 f(x) =
 \begin{cases}
 0 & \text{if } x \text{ is irrational,}\\
 1 & \text{if } x \text{ is rational.}
 \end{cases}
-~$$
+```
 
 
 The limit for any $c$ is discontinuous, as any interval about $c$ will
@@ -176,21 +184,18 @@ not take values in a small neighborhood around any potential $L$.
 
 Let a function be defined by cases:
 
-$$~
+```math
 f(x) = \begin{cases}
 3x^2 + c & x \geq 0,\\
 2x-3 & x < 0.
 \end{cases}
-~$$
+```
 
 What value of $c$ will make $f(x)$ a continuous function?
 
-To be continuous we note that for $x < 0$ and for $x > 0$ the function is a simple polynomial, so is continous. At $x=0$ to be continuous we need a limit to exists and be equal to $f(0)$, which is $c$. A limit exists if the left and right limits are equal. This means we need to solve for $c$ to make the left and right limits equal.
+We note that for $x < 0$ and for $x > 0$ the function is a simple polynomial, so is continuous. At $x=0$ to be continuous we need a limit to exists and be equal to $f(0)$, which is $c$. A limit exists if the left and right limits are equal. This means we need to solve for $c$ to make the left and right limits equal. We do this next with a bit of overkill in this case:
 
 ```julia;
-using CalculusWithJulia
-using Plots
-using SymPy
 @syms x c
 ex1 = 3x^2 + c
 ex2 = 2x-3
@@ -209,15 +214,15 @@ This gives the value of $c$.
 
 As we've seen, functions can be combined in several ways. How do these relate with continuity?
 
-Suppose $f(x)$ and $g(x)$ are both continuous on $(a,b)$. Then
+Suppose $f(x)$ and $g(x)$ are both continuous on $I$. Then
 
-* The function $h(x) = \alpha f(x) + \beta g(x)$ is continuous on $(a,b)$ for any real numbers $\alpha$ and $\beta$;
+* The function $h(x) = a f(x) + b g(x)$ is continuous on $I$ for any real numbers $a$ and $b$;
 
-* The function $h(x) = f(x) \cdot g(x)$ is continuous on $(a,b)$; and
+* The function $h(x) = f(x) \cdot g(x)$ is continuous on $I$; and
 
-* The function $h(x) = f(x) / g(x)$ is continuous at all points $c$ in $(a,b)$ **where** $g(c) \neq 0$.
+* The function $h(x) = f(x) / g(x)$ is continuous at all points $c$ in $I$ **where** $g(c) \neq 0$.
 
-* The function $h(x) = f(g(x))$ is continuous at $x=c$ *if*  $g(x)$ is continuous at $c$ *and* $f(x)$ is continous at $g(c)$.
+* The function $h(x) = f(g(x))$ is continuous at $x=c$ *if*  $g(x)$ is continuous at $c$ *and* $f(x)$ is continuous at $g(c)$.
 
 So, continuity is preserved for all of the basic operations except when dividing by $0$.
 
@@ -240,12 +245,12 @@ So, continuity is preserved for all of the basic operations except when dividing
 
 Let $f(x) = \sin(x)$ and $g(x) = \cos(x)$. Which of these is not continuous everywhere?
 
-$$~
+```math
 f+g,~ f-g,~ f\cdot g,~ f\circ g,~ f/g
-~$$
+```
 
-```julia; echo=false
-choices = [L"f+g", L"f-g", L"f\cdot g", L"f\circ g", L"f/g"]
+```julia; hold=true;  echo=false
+choices = ["``f+g``", "``f-g``", "``f\\cdot g``", "``f\\circ g``", "``f/g``"]
 ans = length(choices)
 radioq(choices, ans)
 ```
@@ -256,7 +261,7 @@ Let $f(x) = \sin(x)$, $g(x) = \sqrt{x}$.
 
 When will $f\circ g$ be continuous?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 choices = [L"For all $x$", L"For all $x > 0$", L"For all $x$ where $\sin(x) > 0$"]
 ans = 2
 radioq(choices, ans, keep_order=true)
@@ -264,7 +269,7 @@ radioq(choices, ans, keep_order=true)
 
 When will $g \circ f$ be continuous?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 choices = [L"For all $x$", L"For all $x > 0$", L"For all $x$ where $\sin(x) > 0$"]
 ans = 3
 radioq(choices, ans, keep_order=true)
@@ -274,7 +279,7 @@ radioq(choices, ans, keep_order=true)
 
 The composition $f\circ g$ will be continuous everywhere provided:
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 choices = [
 L"The function $g$ is continuous everywhere",
 L"The function $f$ is continuous everywhere",
@@ -288,7 +293,7 @@ radioq(choices, ans, keep_order=true)
 
 At which values is $f(x) = 1/\sqrt{x-2}$ not continuous?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 choices=[
 L"When $x > 2$",
 L"When $x \geq 2$",
@@ -312,7 +317,7 @@ continuous function?
 
 
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 f(x) = (x^2 -4)/(x-2);
 numericq(f(2.00001), .001)
 ```
@@ -325,16 +330,16 @@ numericq(f(2.00001), .001)
 
 The highly oscillatory function
 
-$$~
+```math
 f(x) = x^2 (\cos(1/x) - 1)
-~$$
+```
 
 has a removable singularity at $x=0$. What value would we redefine
 $f(0)$ to be, to make $f$ a continuous function?
 
 
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 numericq(0, .001)
 ```
 
@@ -343,16 +348,16 @@ numericq(0, .001)
 
 Let $f(x)$ be defined by
 
-$$~
+```math
 f(x) = \begin{cases}
 c + \sin(2x - \pi/2) & x > 0\\
 3x - 4 & x \leq 0.
 \end{cases}
-~$$
+```
 
 What value of $c$ will make $f(x)$ continuous?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 val = (3*0 - 4) - (sin(2*0 - pi/2))
 numericq(val)
 ```
@@ -361,9 +366,9 @@ numericq(val)
 
 Suppose $f(x)$, $g(x)$, and $h(x)$ are continuous functions on $(a,b)$. If $a < c < b$, are you sure that $lim_{x \rightarrow c} f(g(x))$ is $f(g(c))$?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 choices = [L"No, as $g(c)$ may not be in the interval $(a,b)$",
-"Yes, composition of continuous functions results in a continous function, so the limit is just the function value."
+"Yes, composition of continuous functions results in a continuous function, so the limit is just the function value."
 ]
 ans=1
 radioq(choices, ans)
@@ -373,7 +378,7 @@ radioq(choices, ans)
 
 Consider the function $f(x)$ given by the following graph
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 xs = range(0, stop=2, length=50)
 plot(xs, [sqrt(1 - (x-1)^2) for x in xs], legend=false, xlims=(0,4))
 plot!([2,3], [1,0])
@@ -382,27 +387,27 @@ plot!([3,4],[1,0])
 scatter!([4],[0], markersize=5)
 ```
 
-The function $f(x)$ is continous at $x=1$?
+The function $f(x)$ is continuous at $x=1$?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 yesnoq(true)
 ```
 
-The function $f(x)$ is continous at $x=2$?
+The function $f(x)$ is continuous at $x=2$?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 yesnoq(false)
 ```
 
-The function $f(x)$ is right continous at $x=3$?
+The function $f(x)$ is right continuous at $x=3$?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 yesnoq(false)
 ```
 
-The function $f(x)$ is left continous at $x=4$?
+The function $f(x)$ is left continuous at $x=4$?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 yesnoq(true)
 ```
 
@@ -410,37 +415,32 @@ yesnoq(true)
 
 Let $f(x)$ and $g(x)$ be continuous functions whose graph of $[0,1]$ is given by:
 
-```julia; echo=false
+```julia; hold=true;  echo=false
+xs = range(0, 1, length=251)
 plot(xs, [sin.(2pi*xs) cos.(2pi*xs)], layout=2, title=["f" "g"], legend=false)
 ```
 
 What is $\lim_{x \rightarrow 0.25} f(g(x))$?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 val = sin(2pi * cos(2pi * 1/4))
 numericq(val)
 ```
 
 What is $\lim{x \rightarrow 0.25} g(f(x))$?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 val = cos(2pi * sin(2pi * 1/4))
 numericq(val)
 ```
 
 What is $\lim_{x \rightarrow 0.5} f(g(x))$?
 
-```julia; echo=false
+```julia; hold=true;  echo=false
 choices = ["Can't tell",
-L"-1.0",
-L"0.0"
+"``-1.0``",
+"``0.0``"
 ]
 ans = 1
 radioq(choices, ans)
-```
-
-
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```
