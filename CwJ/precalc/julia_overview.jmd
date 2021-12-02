@@ -38,7 +38,7 @@ $ julia
   (_)     | (_) (_)    |
    _ _   _| |_  __ _   |  Type "?" for help, "]?" for Pkg help.
   | | | | | | |/ _` |  |
-  | | |_| | | | (_| |  |  Version 1.6.0 (2021-03-24)
+  | | |_| | | | (_| |  |  Version 1.7.0 (2021-11-30)
  _/ |\__'_|_|_|\__'_|  |  Official https://julialang.org/ release
 |__/                   |
 

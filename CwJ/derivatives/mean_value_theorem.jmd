@@ -259,7 +259,7 @@ then this would typically follow this pattern:
 
 ```julia
 a, b = 0, 5
-crictial_pts = find_zeros(f', a, b)
+critical_pts = find_zeros(f', a, b)
 f.(critical_pts), f(a), f(b)
 ```
 

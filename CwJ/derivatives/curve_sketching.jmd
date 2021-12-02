@@ -34,7 +34,8 @@ many of the following values as you can:
 * asymptotic behaviour (as ``x \rightarrow \pm \infty``),
 * periodic behaviour,
 * vertical asymptotes,
-* $y$ intercept, $x$ intercept(s),
+* the $y$ intercept,
+* any $x$ intercept(s),
 * local peaks and valleys (relative extrema).
 * concavity
 
