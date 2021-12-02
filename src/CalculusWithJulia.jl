@@ -70,6 +70,7 @@ import IntervalSets: ClosedInterval
 
 
 
+
 include("multidimensional.jl")
 include("derivatives.jl")
 include("integration.jl")
@@ -92,7 +93,5 @@ export unzip, rangeclamp
 export tangent, secant, D, sign_chart
 export riemann
 export divergence, gradient, curl, ∇
-
-
 
 end # module

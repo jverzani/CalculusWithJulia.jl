@@ -1,33 +1,49 @@
 # Curve Sketching
 
+This section uses the following add-on packages:
 
-```julia; echo=false; results="hidden"
+```julia
 using CalculusWithJulia
-using CalculusWithJulia.WeaveSupport
 using Plots
+using SymPy
+using Roots
+using Polynomials # some name clash with SymPy
+```
+
+
+```julia; echo=false
+# in CalculusWithJulia, but not this version
+rangeclamp(f, c=20) = x -> abs(f(x)) < c ? f(x) : NaN
 nothing
 ```
 
 
+```julia; echo=false; results="hidden"
+using CalculusWithJulia.WeaveSupport
+import PyPlot
+pyplot()
+fig_size=(600, 400)
+nothing
+```
+
+----
+
 The figure illustrates a means to *sketch* a sine curve - identify as
-many of the following values as you can: asymptotic behaviour, periodic
-behaviour, vertical asymptotes, $y$ intercept, $x$ intercepts, local
-peaks and valleys (relative extrema). With these, a sketch fills in between the
+many of the following values as you can:
+
+* asymptotic behaviour (as ``x \rightarrow \pm \infty``),
+* periodic behaviour,
+* vertical asymptotes,
+* $y$ intercept, $x$ intercept(s),
+* local peaks and valleys (relative extrema).
+* concavity
+
+With these, a sketch fills in between the
 points/lines associated with these values.
 
 
-```julia; echo=false; cache=true
+```julia; hold=true; echo=false; cache=true
 ### {{{ sketch_sin_plot }}}
-pyplot()
-fig_size=(600, 400)
-
-
-
-using ForwardDiff
-using Roots
-D(f, n=1) = n > 1 ? D(D(f),n-1) : x -> ForwardDiff.derivative(f, float(x))
-Base.adjoint(f::Function) = D(f)    # for f' instead of D(f)
-
 
 
 function sketch_sin_plot_graph(i)
@@ -75,7 +91,6 @@ end
 imgfile = tempname() * ".gif"
 gif(anim, imgfile, fps = 1)
 
-plotly()
 ImageFile(imgfile, caption)
 ```
 
@@ -92,17 +107,6 @@ horizontal and vertical asymptotes can be seen. These are properties
 of the "large." In this section, we build on this, but concentrate now
 on more local properties of a function.
 
-Before proceeding, we load some packages for subsequent usage:
-
-```julia
-using CalculusWithJulia
-using Plots
-plotly()
-using SymPy
-using Roots
-```
-
-
 ##### Example
 
 Produce a graph of the function $f(x) = x^4 -13x^3 + 56x^2-92x + 48$.
@@ -115,7 +119,6 @@ $f(x)$. To do so, we need to know the extent of the zeros. We can try
 some theory, but instead we just guess and if that fails, will work harder:
 
 ```julia;
-using Roots
 f(x) = x^4 - 13x^3 + 56x^2 -92x + 48
 rts = find_zeros(f, -10, 10)
 ```
@@ -158,9 +161,8 @@ plot(f, 0.5, 6.5)
 This sort of analysis can be automated. The plot "recipe" for polynomials from the `Polynomials` package does similar considerations to choose a viewing window:
 
 ```julia
-using Polynomials
-x = variable(Polynomial)
-plot(f(x))   # f(x) of Polynomial type
+xₚ = variable(Polynomial)
+plot(f(xₚ))   # f(xₚ) of Polynomial type
 ```
 
 
@@ -170,15 +172,15 @@ plot(f(x))   # f(x) of Polynomial type
 
 Graph  the function
 
-$$~
+```math
 f(x) = \frac{(x-1)\cdot(x-3)^2}{x \cdot (x-2)}.
-~$$
+```
 
 Not much to do here if you are satisfied with a graph that only gives insight into the asymptotes of this rational function:
 
 ```julia;
-f(x) = ( (x-1)*(x-3)^2 ) / (x * (x-2) )
-plot(f, -50, 50)
+𝒇(x) = ( (x-1)*(x-3)^2 ) / (x * (x-2) )
+plot(𝒇, -50, 50)
 ```
 
 We can see the slant asymptote and hints of vertical asymptotes, but,
@@ -195,9 +197,9 @@ done changing and we are past all relative extrema, so we should take an interva
 potential inflection points and critical points:
 
 ```julia;
-cps = find_zeros(f', -10, 10)
-poss_ips = find_zero(f'', (-10, 10))
-extrema(union(cps, poss_ips))
+𝒇cps = find_zeros(𝒇', -10, 10)
+poss_ips = find_zero(𝒇'', (-10, 10))
+extrema(union(𝒇cps, poss_ips))
 ```
 
 So a range over $[-5,5]$ should display the key features including the slant asymptote.
@@ -205,7 +207,7 @@ So a range over $[-5,5]$ should display the key features including the slant asy
 Previously we used the `rangeclamp` function defined in `CalculusWithJulia` to avoid the distortion that vertical asymptotes can have:
 
 ```julia;
-plot(rangeclamp(f), -5, 5)
+plot(rangeclamp(𝒇), -5, 5)
 ```
 
 With this graphic, we can now clearly see in the graph the two zeros at $x=1$ and $x=3$, the vertical asymptotes at $x=0$ and $x=2$, and the slant asymptote.
@@ -215,9 +217,8 @@ With this graphic, we can now clearly see in the graph the two zeros at $x=1$ an
 Again, this sort of analysis can be systematized. The rational function type in the `Polynomials` package takes a stab at that, but isn't quite so good at capturing the slant asymptote:
 
 ```julia
-using Polynomials
-x = variable(RationalFunction)
-plot(f(x))  # f(x) of RationalFunction type
+xᵣ = variable(RationalFunction)
+plot(𝒇(xᵣ))  # f(x) of RationalFunction type
 ```
 
 
@@ -232,7 +233,7 @@ V(t) = 170 * sin(2*pi*60*t)
 plot(V, -2pi, 2pi)
 ```
 
-Ahh, this periodic function is *too* rapidly oscillating to be plotted without care. We recognize this as being of the form ``V(t) = a*\sin(c\cdot t)``, so where the sine functin has a period of ``2\pi``, this will have a period of ``2pi/c``, or ``1/60``. So instead of using ``(-2\pi, 2\pi)`` as the interval to plot over, we need something much smaller:
+Ahh, this periodic function is *too* rapidly oscillating to be plotted without care. We recognize this as being of the form ``V(t) = a\cdot\sin(c\cdot t)``, so where the sine functin has a period of ``2\pi``, this will have a period of ``2\pi/c``, or ``1/60``. So instead of using ``(-2\pi, 2\pi)`` as the interval to plot over, we need something much smaller:
 
 
 ```julia
@@ -247,13 +248,12 @@ Plot the function ``f(x) = \ln(x/100)/x``.
 We guess that this function has a *vertical* asymptote at ``x=0+``  and a horizontal asymptote as ``x \rightarrow 0``, we verify through:
 
 ```julia
-using SymPy
 @syms x
-f(x) = log(x/100)/x
-limit(f(x), x=>0, dir="+"), limit(f(x), x=>oo)
+ex = log(x/100)/x
+limit(ex, x=>0, dir="+"), limit(ex, x=>oo)
 ```
 
-The `\ln(x/100` part of ``f`` goes ``-\infty`` as ``x \rightarrow 0+``; yet ``f(x)`` is eventually positive as ``x \rightarrow 0``. So a graph should
+The ``\ln(x/100)`` part of ``f`` goes ``-\infty`` as ``x \rightarrow 0+``; yet ``f(x)`` is eventually positive as ``x \rightarrow 0``. So a graph should
 
 * not show too much of the vertical asymptote
 * capture the point where ``f(x)`` must cross ``0``
@@ -263,29 +263,33 @@ The `\ln(x/100` part of ``f`` goes ``-\infty`` as ``x \rightarrow 0+``; yet ``f(
 For that, we need to get the ``x`` intercepts and the critical points. The ``x/100`` means this graph has some scaling to it, so we first look between ``0`` and ``200`:
 
 ```julia
-fzeros(f, 0, 200)
+find_zeros(ex, 0, 200)  # domain is (0, oo)
 ```
 
 Trying the same for the critical points comes up empty. We know there is one, but it is past ``200``. Scanning wider, we see:
 
 ```julia
-fzeros(f', 0, 500)
+find_zeros(diff(ex,x), 0, 500)
 ```
 
 
 So maybe graphing over ``[50, 300]`` will be a good start:
 
 ```julia
-plot(f, 50, 300)
+plot(ex, 50, 300)
 ```
 
-But it isn't! The function takes its time getting back towards ``0``, as this plot shows:
+But it isn't! The function takes its time getting back towards ``0``. We know that there must be a change of concavity as ``x \rightarrow \infty``, as there is a horizontal asymptote. We looks for the anticipated inflection point to ensure our graph includes that:
 
 ```julia
-plot(f, 75, 15000)
+find_zeros(diff(ex, x, x), 1, 5000)
 ```
 
+So a better plot is found by going well beyond that inflection point:
 
+```julia
+plot(ex, 75, 1500)
+```
 
 
 
@@ -295,7 +299,7 @@ plot(f, 75, 15000)
 
 Consider this graph
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = (x-2)* (x-2.5)*(x-3) / ((x-1)*(x+1))
 p = plot(f, -20, -1-.3, legend=false, xlim=(-15, 15), color=:blue)
 plot!(p, f, -1 + .2, 1 - .02, color=:blue)
@@ -304,7 +308,7 @@ plot!(p, f, 1 + .05, 20, color=:blue)
 
 What kind of *asymptotes* does it appear to have?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 L"Just a horizontal asymptote, $y=0$",
 L"Just vertical asymptotes at $x=-1$ and $x=1$",
@@ -322,7 +326,7 @@ Consider the function ``p(x) = x + 2x^3 + 3x^3 + 4x^4 + 5x^5 +6x^6``. Which inte
 (Find an interval that contains the zeros, critical points, and inflection points.)
 
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["``(-5,5)``, the default bounds of a calculator",
 "``(-3.5, 3.5)``, the bounds given by Cauchy for the real roots of ``p``",
 "``(-1, 1)``, as many special polynomials have their roots in this interval",
@@ -337,7 +341,7 @@ Let ``f(x) = x^3/(9-x^2)``.
 What points are *not* in the domain of ``f``?
 
 ```julia; echo=false
-choices = [
+qchoices = [
     "The values of `find_zeros(f, -10, 10)`: `[-3, 0, 3]`",
     "The values of `find_zeros(f', -10, 10)`: `[-5.19615, 0, 5.19615]`",
     "The values of `find_zeros(f'', -10, 10)`: `[-3, 0, 3]`",
@@ -346,48 +350,48 @@ choices = [
     "The value of `f(0)`: `0`",
     "None of these choices"
 ]
-radioq(choices, 5, keep_order=true)
+radioq(qchoices, 5, keep_order=true)
 ```
 
 The ``x``-intercepts are:
 
-```julia; echo=false
-radioq(choices, 4, keep_order=true)
+```julia; hold=true; echo=false
+radioq(qchoices, 4, keep_order=true)
 ```
 
 The ``y``-intercept is:
-```julia; echo=false
-radioq(choices, 6, keep_order=true)
+```julia; hold=true; echo=false
+radioq(qchoices, 6, keep_order=true)
 ```
 
 There are *vertical asymptotes* at ``x=\dots``?
 
-```julia; echo=false
-radioq(choices, 5)
+```julia; hold=true; echo=false
+radioq(qchoices, 5)
 ```
 
 The *slant* asymptote has slope?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(1)
 ```
 
 The function has critical points at
 
-```julia,echo=false
-radioq(choices, 2, keep_order=true)
+```julia; hold=true,echo=false
+radioq(qchoices, 2, keep_order=true)
 ```
 
 The function has relative extrema at
 
-```julia;echo=false
-radioq(choices, 7, keep_order=true)
+```julia; hold=true;echo=false
+radioq(qchoices, 7, keep_order=true)
 ```
 
 The function has inflection points at
 
-```julia;echo=false
-radioq(choices, 7, keep_order=true)
+```julia; hold=true;echo=false
+radioq(qchoices, 7, keep_order=true)
 ```
 
 
@@ -402,12 +406,12 @@ A function ``f`` has
 
 Is this a possible graph of ``f``?
 
-```julia;echo=false
+```julia; hold=true;echo=false
 f(x) = x^4 - 3x^3 + 2x^2 + x - 2
 plot(f, -1, 2.5, legend=false)
 ```
 
-```julia;echo=false
+```julia; hold=true;echo=false
 yesnoq("yes")
 ```
 
@@ -430,31 +434,30 @@ plot!(logistic_growth)
 
 Does a plot over $[0,50]$ show qualitatively	 similar behaviour?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq(true)
 ```
 
 Exponential growth has $P''(t) = P_0 a^t \log(a)^2 > 0$, so has no inflection point. By plotting over a sufficiently wide interval, can you answer: does the logistic growth model have an inflection point?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq(true)
 ```
 
 If yes, find it numerically:
 
-```julia; echo=false
-using Roots
+```julia; hold=true; echo=false
 val = find_zero(D(logistic_growth,2), (0, 20))
 numericq(val)
 ```
 
 The available resources are quantified by $K$. As $K \rightarrow \infty$ what is the limit of the logistic growth model:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 "The exponential growth model",
 "The limit does not exist",
-L"The limit is $P_0$"]
+"The limit is ``P_0``"]
 ans = 1
 radioq(choices, ans)
 ```
@@ -468,7 +471,7 @@ to be large.
 
 Why are sub-intervals where the second derivative is large different than those where the second derivative is small?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 "The function will increase (or decrease) rapidly when the second derivative is large, so there needs to be more points to capture the shape",
 "The function will have more curvature when the second derivative is large, so there  needs to be more points to capture the shape",
@@ -490,7 +493,7 @@ three features: periodicity, asymptotics, and monotonicity."
 
 Why would periodicity matter?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 "An informative graph only needs to show one or two periods, as others can be inferred.",
 "An informative graph need only show a part of the period, as the rest can be inferred.",
@@ -501,7 +504,7 @@ radioq(choices, ans)
 
 Why should asymptotics matter?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 L"A vertical asymptote can distory the $y$ range, so it is important to avoid too-large values",
 L"A horizontal asymptote must be plotted from $-\infty$ to $\infty$",
@@ -513,7 +516,7 @@ radioq(choices, ans)
 
 Monotonicity means increasing or decreasing. This is important for what reason?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 "For monotonic regions, a large slope or very concave function might require more care to plot",
 "For monotonic regions, a function is basically a straight line",
@@ -521,8 +524,4 @@ choices = [
 ]
 ans = 1
 radioq(choices, ans)
-```
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

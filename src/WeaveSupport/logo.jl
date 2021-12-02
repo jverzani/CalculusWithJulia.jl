@@ -12,6 +12,21 @@ function Base.show(io::IO, ::MIME"text/html", l::Logo)
 """))
 end
 
+
+
+header_cmd =  """
+HTML(\"\"\"
+<div class="admonition info">
+<a href="https://CalculusWithJulia.github.io">
+<img src="$(logo_url)" alt="Calculus with Julia" width="48" />
+</a>
+<span style="font-size:32px">Calculus With Julia</span>
+</div>
+\"\"\")
+"""
+
+
+
 """
     Footer(:file, :directory)
 
@@ -21,6 +36,14 @@ struct Footer
     f
     d
 end
+
+# create footer from basename of file, folder name
+function footer_cmd(bnm, folder)
+    f = Footer(Symbol(bnm), Symbol(folder))
+    out = sprint(io -> show(io, "text/html", f))
+    "HTML(\"\"\"$(out)\"\"\")"
+end
+
 
 # compute from URL
 file_dir(f::Symbol,d::Symbol) = (f,d)

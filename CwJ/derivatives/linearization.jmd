@@ -1,10 +1,19 @@
 # Linearization
 
+This section uses these add-on packages:
+
+```julia
+using CalculusWithJulia
+using Plots
+using SymPy
+using TaylorSeries
+```
 
 ```julia; echo=false; results="hidden"
-using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
-using Plots
+
+import PyPlot
+pyplot()
 nothing
 ```
 
@@ -14,9 +23,9 @@ function at the point.
 
 Using the point-slope form of a line, we see that the tangent line to the graph of $f(x)$ at $(c,f(c))$ is given by:
 
-$$~
+```math
 y = f(c) + f'(c) \cdot (x - c).
-~$$
+```
 
 This is written as an equation, though we prefer to work with
 functions within `Julia`. Here we write such a function as an
@@ -32,14 +41,10 @@ tangent(f, c) = x -> f(c) + f'(c) * (x - c)
 This function along with the `f'` notation for automatic derivatives is defined in the
 `CalculusWithJulia` package:
 
-```julia;
-using CalculusWithJulia
-using Plots
-```
 
 We make some graphs with tangent lines:
 
-```julia;
+```julia;hold=true
 f(x) = x^2
 plot(f, -3, 3)
 plot!(tangent(f, -1))
@@ -49,9 +54,9 @@ plot!(tangent(f, 2))
 The graph shows that near the point, the line and function are close,
 but this need not be the case away from the point. We can express this informally as
 
-$$~
+```math
 f(x) \approx f(c) + f'(c) \cdot (x-c)
-~$$
+```
 
 with the understanding this applies for $x$ "close" to $c$.
 
@@ -64,15 +69,14 @@ There are several approximations that are well known in physics, due to their wi
 
 * That $\sin(x) \approx x$ around $x=0$:
 
-```julia;
-f(x) = sin(x)
-plot(f, -pi/2, pi/2)
-plot!(tangent(f, 0))
+```julia;hold=true
+plot(sin, -pi/2, pi/2)
+plot!(tangent(sin, 0))
 ```
 
 * That $\log(1 + x) \approx x$ around $x=0$:
 
-```julia;
+```julia; hold=true;
 f(x) = log(1 + x)
 plot(f, -1/2, 1/2)
 plot!(tangent(f, 0))
@@ -80,7 +84,7 @@ plot!(tangent(f, 0))
 
 * That $1/(1-x) \approx x$ around $x=0$:
 
-```julia;
+```julia; hold=true;
 f(x) = 1/(1-x)
 plot(f, -1/2, 1/2)
 plot!(tangent(f, 0))
@@ -92,7 +96,7 @@ function.
 
 ## Numeric approximations
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = sin(x)
 a, b = -1/4, pi/2
 
@@ -129,9 +133,9 @@ f(c + deltax) - f(c), f'(c) * deltax
 The values are pretty close. But what is $0.1$ radians? Lets use degrees. Suppose we have $\Delta x = 10^\circ$:
 
 ```julia;
-c, deltax = 0, 10*pi/180
-actual=f(c + deltax) - f(c)
-approx = f'(c) * deltax
+deltax⁰ = 10*pi/180
+actual=f(c + deltax⁰) - f(c)
+approx = f'(c) * deltax⁰
 actual, approx
 ```
 
@@ -150,9 +154,9 @@ We are traveling 60 miles. At 60 miles an hour, we will take 60 minutes (or one 
 Well the answer is $60/70$ hours or $60/70 \cdot 60$ minutes. But we
 can't divide, so we turn this into a multiplication problem via some algebra:
 
-$$~
+```math
 \frac{60}{70} = \frac{60}{60 + 10} = \frac{1}{1 + 10/60} = \frac{1}{1 + 1/6}.
-~$$
+```
 
 Okay, so far no calculator was needed. We wrote $70 = 60 + 10$, as we
 know that $60/60$ is just $1$. This almost gets us there. If we really
@@ -173,36 +177,36 @@ road to use the calculator on our phone for a division.
 
 ##### Example
 
-A 10cm by 10cm by 10cm cube will contain 1 liter (1000cm$^3$). In
-manufacturing such a cube, the side lengths are actually $10.1$
-cm. What will be the volume in liters? Compute this with a linear
-approximation to $(10.1)^3$.
+A ``10``cm by ``10``cm by ``10``cm cube will contain ``1`` liter
+(``1000``cm``^3``). In manufacturing such a cube, the side lengths are
+actually $10.1$ cm. What will be the volume in liters? Compute this
+with a linear approximation to $(10.1)^3$.
 
 Here $f(x) = x^3$ and we are asked to approximate $f(10.1)$. Letting $c=10$, we have:
 
-$$~
+```math
 f(c + \Delta) \approx f(c) + f'(c) \cdot \Delta = 1000 + f'(c) \cdot (0.1)
-~$$
+```
 
 Computing the derivative can be done easily, we get for our answer:
 
 ```julia;
 fp(x) = 3*x^2
-c, Delta = 10, 0.1
-approx = 1000 + fp(c) * Delta
+c₀, Delta = 10, 0.1
+approx₀ = 1000 + fp(c₀) * Delta
 ```
 
 This is a relative error as a percent of:
 
 ```julia;
-actual = 10.1^3
-(actual - approx)/actual * 100
+actual₀ = 10.1^3
+(actual₀ - approx₀)/actual₀ * 100
 ```
 
 The manufacturer may be interested instead in comparing the volume of the actual object to the $1$ liter target. They might use the approximate value for this comparison, which would yield:
 
 ```julia;
-(1000 - approx)/approx * 100
+(1000 - approx₀)/approx₀ * 100
 ```
 
 This is off by about $3$ percent. Not so bad for some applications, devastating for others.
@@ -218,9 +222,9 @@ According to [Wikipedia](http://tinyurl.com/yz5sz7e) - and many
 introductory physics book - while swinging, the angle $\theta$ varies
 with time following this equation:
 
-$$~
+```math
 \theta''(t) + \frac{g}{l} \sin(\theta(t)) = 0.
-~$$
+```
 
 That is, the second derivative of $\theta$ is proportional to the sine
 of $\theta$ where the proportionality constant involves $g$ from
@@ -272,11 +276,11 @@ $\lvert\sin(x) - x\rvert \leq x^2/2$.
 
 Can we verify? Let's do so graphically:
 
-```julia;
+```julia; hold=true
 h(x) = abs(sin(x) - x)
 g(x) = x^2/2
-plot(h, -2, 2)
-plot!(g, -2, 2)
+plot(h, -2, 2, label="h")
+plot!(g, -2, 2, label="f")
 ```
 
 The graph shows a tight bound near ``0`` and then a bound over this viewing window.
@@ -284,36 +288,36 @@ The graph shows a tight bound near ``0`` and then a bound over this viewing wind
 
 Similarly, for $f(x) = \log(1 + x)$ we have the following at $c=0$:
 
-$$~
+```math
 f'(x) = 1/(1+x), \quad f''(x) = -1/(1+x)^2.
-~$$
+```
 
 So, as $f(c)=0$ and $f'(c) = 1$, we have
 
-$$~
+```math
 \lvert f(x) - x\rvert \leq \lvert f''(\xi)\rvert \cdot \frac{x^2}{2}
-~$$
+```
 
 We see that $\lvert f''(x)\rvert$ is decreasing for $x > -1$. So if $-1 < x < c$ we have
 
-$$~
+```math
 \lvert f(x) - x\rvert \leq \lvert f''(x)\rvert \cdot \frac{x^2}{2} = \frac{x^2}{2(1+x)^2}.
-~$$
+```
 
 And for  $c=0 < x$, we have
 
-$$~
+```math
 \lvert f(x) - x\rvert \leq \lvert f''(0)\rvert \cdot \frac{x^2}{2} = x^2/2.
-~$$
+```
 
 
 Plotting we verify the bound on ``|\log(1+x)-x|``:
 
-```julia;
+```julia; hold=true
 h(x) = abs(log(1+x) - x)
 g(x) = x < 0 ? x^2/(2*(1+x)^2) : x^2/2
-plot(h, -0.5, 2)
-plot!(g, -0.5, 2)
+plot(h, -0.5, 2, label="h")
+plot!(g, -0.5, 2, label="g")
 ```
 
 Again, we see the very close bound near ``0``, which widens at the edges of the viewing window.
@@ -325,10 +329,10 @@ theorem in the extended form of Cauchy. Suppose $c=0$, $x > 0$, and let $h(x) = 
 f'(0) x)$ and $g(x) = x^2$. Then we have that there exists a $e$ with
 $0 < e < x$ such that
 
-$$~
+```math
 \text{error} = h(x) - h(0) = (g(x) - g(0)) \frac{h'(e)}{g'(e)} = x^2 \cdot \frac{1}{2} \cdot \frac{f'(e) - f'(0)}{e} =
 x^2 \cdot \frac{1}{2} \cdot f''(\xi).
-~$$
+```
 
 The value of $\xi$, from the mean value theorem applied to $f'(x)$,
 satisfies $0 < \xi < e < x$, so is in $[0,x]$.
@@ -343,7 +347,6 @@ satisfies $0 < \xi < e < x$, so is in $[0,x]$.
 Here we see the answer provided for $e^{\sin(x)}$:
 
 ```julia;
-using SymPy
 @syms x
 series(exp(sin(x)), x, 0, 2)
 ```
@@ -417,29 +420,29 @@ Knowing this can simplify the task of finding tangent line approximations of com
 
 For example, suppose we know that at $c=0$ we have these formula where $a \approx b$ is a shorthand for the more formal $a=b + \mathcal{O}(x^2)$:
 
-$$~
+```math
 \sin(x) \approx x, \quad e^x \approx 1 + x, \quad \text{and}\quad 1/(1+x) \approx 1 - x.
-~$$
+```
 
 Then we can immediately see these tangent line approximations about $x=0$:
 
 
-$$~
+```math
 e^x \cdot \sin(x) \approx (1+x) \cdot x = x + x^2 \approx x,
-~$$
+```
 
 and
 
-$$~
+```math
 \frac{\sin(x)}{e^x} \approx \frac{x}{1 + x} \approx x \cdot(1-x) = x-x^2 \approx x.
-~$$
+```
 
 
 Since $\sin(0) = 0$, we can use these to find the tangent line approximation of
 
-$$~
+```math
 e^{\sin(x)} \approx e^x \approx 1 + x.
-~$$
+```
 
 
 Note that $\sin(\exp(x))$ is approximately $\sin(1+x)$ but not approximately $1+x$, as the expansion for $\sin$ about $1$ is not simply $x$.
@@ -452,7 +455,6 @@ The `TaylorSeries` packages will do these calculations in a  manner similar to h
 For example, we have
 
 ```julia
-using TaylorSeries
 t = Taylor1(Float64, 1)
 ```
 
@@ -477,7 +479,7 @@ So with rules to compute the mathematical functions (`Julia` has these in the [C
 
 * begin with ``(2,0)``
 * the sine would be computed as ``(\sin(2), \cos(2))`` using the rule for derivative of ``\sin``
-* the exponential computed on ``(\sin(2),\cos(2))`` would be ``(\exp(\sin(2)), \exp(\sin(2)) \cdot \cos(2))``. To compute some ``g(x)``, such as ``\exp(x)``, the ability to evaluate both ``g(x)`` and ``(g'(x)`` is needed, the chain rule used above then uses just details of ``(\sin(2), \cos(2))``, ``(\exp(\sin(2)), \exp(\sin(2)))`` -- which are the pieces available.
+* the exponential computed on ``(\sin(2),\cos(2))`` would be ``(\exp(\sin(2)), \exp(\sin(2)) \cdot \cos(2))``. To compute some ``g(x)``, such as ``\exp(x)``, the ability to evaluate both ``g(x)`` and ``g'(x)`` is needed, the chain rule used above then uses just details of ``(\sin(2), \cos(2))``, ``(\exp(\sin(2)), \exp(\sin(2)))`` -- which are the pieces available.
 
 In the end, the computation carries both the function evaluation and the derivative evaluation at ``2``, both built up step by step. As seen, it should be exact as floating point allows and requires *essentially* twice the work, as two steps are needed for each function evaluation.
 
@@ -489,12 +491,12 @@ In the end, the computation carries both the function evaluation and the derivat
 
 What is the right linear approximation for $\sqrt{1 + x}$ near $0$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"1 + 1/2",
-L"1 + x^{1/2}",
-L"1 + (1/2)\cdot x",
-L"1 - (1/2) \cdot x"]
+"``1 + 1/2``",
+"``1 + x^{1/2}``",
+"``1 + (1/2) \\cdot x``",
+"``1 - (1/2) \\cdot x``"]
 ans = 3
 radioq(choices, ans)
 ```
@@ -505,12 +507,12 @@ radioq(choices, ans)
 
 What is the right linear approximation for $(1 + x)^k$ near $0$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"1 + k",
-L"1 + x^k",
-L"1 + k\cdot x",
-L"1 - k \cdot x"]
+"``1 + k``",
+"``1 + x^k``",
+"``1 + k \\cdot x``",
+"``1 - k \\cdot x``"]
 ans = 3
 radioq(choices, ans)
 ```
@@ -519,12 +521,12 @@ radioq(choices, ans)
 
 What is the right linear approximation for $\cos(\sin(x))$ near $0$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"1",
-L"1 + x",
-L"x",
-L"1 - x^2/2"
+"``1``",
+"``1 + x``",
+"``x``",
+"``1 - x^2/2``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -535,12 +537,12 @@ radioq(choices, ans)
 
 What is the  right linear approximation for $\tan(x)$ near $0$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"1",
-L"x",
-L"1 + x",
-L"1 - x"
+"``1``",
+"``x``",
+"``1 + x``",
+"``1 - x``"
 ]
 ans = 2
 radioq(choices, ans)
@@ -552,12 +554,12 @@ radioq(choices, ans)
 
 What is the right linear approximation of $\sqrt{25 + x}$ near $x=0$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"5 \cdot (1 + (1/2) \cdot (x/25))",
-L"1 - (1/2) \cdot x",
-L"1 + x",
-L"25"
+"``5 \\cdot (1 + (1/2) \\cdot (x/25))``",
+"``1 - (1/2) \\cdot x``",
+"``1 + x``",
+"``25``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -571,7 +573,7 @@ radioq(choices, ans)
 Let $f(x) = \sqrt{x}$. Find the actual error in approximating $f(26)$ by the
 value of the tangent line at $(25, f(25))$ at $x=26$.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 tgent(x) = 5 + x/10
 ans = tgent(1) - sqrt(26)
 numericq(ans)
@@ -581,7 +583,7 @@ numericq(ans)
 
 An estimate of some quantity was $12.34$ the actual value was $12$. What was the *percentage error*?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 est = 12.34
 act = 12.0
 ans = (est -act)/act * 100
@@ -593,7 +595,7 @@ numericq(ans)
 
 Find the percentage error in estimating $\sin(5^\circ)$ by $5 \pi/180$.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 tl(x) = x
 x0 = 5 * pi/180
 est = x0
@@ -606,7 +608,7 @@ numericq(ans)
 
 The side length of a square is measured roughly to be $2.0$ cm. The actual length $2.2$ cm. What is the difference in area (in absolute values) as *estimated* by a tangent line approximation.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 tl(x) = 4 + 4x
 ans = tl(.2) - 4
 numericq(abs(ans))
@@ -634,18 +636,18 @@ Taking logarithms, we have ``\log(p)`` is
 
 Now, use the tangent line approximation for ``\log(1 - x)`` and the sum formula for ``0 + 1 + 2 + \dots + (n-1)`` to simplify the value of ``\log(p)``:
 
-```julia; echo=false
-choices = [L"-n(n-1)/2/365",
-           L"-n(n-1)/2\cdot 365",
-           L"-n^2/(2\cdot 365)",
-           L"-n^2 / 2 \cdot 365"]
+```julia; hold=true; echo=false
+choices = ["``-n(n-1)/2/365``",
+           "``-n(n-1)/2\\cdot 365``",
+           "``-n^2/(2\\cdot 365)``",
+           "``-n^2 / 2 \\cdot 365``"]
 radioq(choices, 1, keep_order=true)
 ```
 
 
 If ``n = 10``, what is the approximation for ``p`` (not ``\log(p)``)?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 n=10
 val = exp(-n*(n-1)/2/365)
 numericq(val)
@@ -653,14 +655,8 @@ numericq(val)
 
 If ``n=100``, what is the approximation for ``p`` (not ``\log(p)``?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 n=100
 val = exp(-n*(n-1)/2/365)
 numericq(val, 1e-2)
-```
-
-
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

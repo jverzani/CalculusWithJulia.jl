@@ -48,6 +48,7 @@ function weave_file(folder, file; build_list=(:html,), force=false, kwargs...)
         tangle(tmp;out_path=dir)
     end
 
+    # use Pluto to build html pages
     if :html ∈ build_list
         ## use jmd -> pluto notebook -> generate_html
         println("Building HTML: $file")
@@ -60,33 +61,20 @@ function weave_file(folder, file; build_list=(:html,), force=false, kwargs...)
         outfile = joinpath(dir, bnm*ext)
         build_file(file, outfile, force=force) || return nothing
 
-header_cmd = """
-HTML(\"\"\"
-<div class="admonition info"><a href="https://CalculusWithJulia.github.io">
-<img src="https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/misc/logo.png" alt="Calculus with Julia" width="48" />
-</a>
-<span style="font-size:32px">Calculus With Julia</span>
-</div>
-\"\"\")
-"""
 
-        f = CalculusWithJulia.WeaveSupport.Footer(Symbol(bnm), Symbol(folder))
-        out = sprint(io -> show(io, "text/html", f))
-        footer_cmd = "HTML(\"\"\"$(out)\"\"\")"
-
-
+        header = CalculusWithJulia.WeaveSupport.header_cmd
+        footer = CalculusWithJulia.WeaveSupport.footer_cmd(bnm, folder)
         html_content = md2html(file,
-                               header_cmds=(header_cmd,),
-                               footer_cmds=("using PlutoUI",
-                                            "PlutoUI.TableOfContents()",
-                                            footer_cmd
-                                            ))
+                               header_cmds=(header,),
+                               footer_cmds=(footer,)
+                                            )
         open(outfile, "w") do io
             write(io, html_content)
         end
 
     end
 
+    ## old html generation
     if :weave_html ∈ build_list
         println("Building HTML for $file")
         dir = joinpath(repo_directory,"html",folder)

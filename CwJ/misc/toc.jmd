@@ -145,10 +145,12 @@ The derivative of a function is a derived function that for each $x$ yields the 
 
 - [Numeric derivatives](derivatives/numeric_derivatives.html)
 
+- [Symbolic derivatives](derivatives/symbolic_derivatives.html)
+
+
 The derivative of a function has certain features. These next sections explore one of the first uses of the derivative - using its zeros to characterize the original function.
 
 - [The Mean Value Theorem](derivatives/mean_value_theorem.html)
-
 
 - [Optimization](derivatives/optimization.html)
 

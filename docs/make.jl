@@ -1,7 +1,30 @@
 using CalculusWithJulia
 
 # hacky build script
-CalculusWithJulia.WeaveSupport.weave_all(force=false, build_list=(:html,))
+using Pkg
+Pkg.test("CalculusWithJulia", test_args=["folder=:precalc"])
+Pkg.test("CalculusWithJulia", test_args=["folder=:limits"])
+Pkg.test("CalculusWithJulia", test_args=["folder=:derivatives"]
+
+Pkg.test("CalculusWithJulia", test_args=["folder=:integrals",
+                                         "target=:weave_html"])
+Pkg.test("CalculusWithJulia", test_args=["folder=:ODEs",
+                                         "target=:weave_html"])
+Pkg.test("CalculusWithJulia", test_args=["folder=:differentiable_vector_calculus",
+                                         "target=:weave_html"])
+Pkg.test("CalculusWithJulia", test_args=["folder=:integral_vector_calculus",
+                                         "target=:weave_html"])
+Pkg.test("CalculusWithJulia", test_args=["folder=:alternative",
+                                         "target=:weave_html"])
+Pkg.test("CalculusWithJulia", test_args=["folder=:misc",
+                                         "target=:weave_html"])
+
+#=
+using Pkg
+Pkg.test("CalculusWithJulia", test_args=["folder=:all"])
+=#
+#CalculusWithJulia.WeaveSupport.weave_all(force=false, build_list=(:html,))
+# move files to "/build"
 builddir = joinpath(@__DIR__, "build")
 htmldir = joinpath(@__DIR__, "..", "html")
 isdir(builddir) || mkdir(builddir)

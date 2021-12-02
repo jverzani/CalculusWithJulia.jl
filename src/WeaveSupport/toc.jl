@@ -25,6 +25,7 @@ table_of_contents = [
 
     :derivatives		:derivatives;
     :derivatives		:numeric_derivatives;
+    :derivatives		:symbolic_derivatives;
     :derivatives		:mean_value_theorem;
     :derivatives		:optimization;
     :derivatives		:first_second_derivatives;

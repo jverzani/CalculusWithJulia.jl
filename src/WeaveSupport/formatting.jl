@@ -80,8 +80,9 @@ end
 
 Show jsxgraph commands contained in file `f`.
 """
-function JSXGraph(f, caption="JSXGraph Demo"; ID="jsxgraph", CLASS="jsxgraph", WIDTH=600, HEIGHT=400)
-    JSXGRAPH(read(f, String),
+function JSXGraph(f, caption="JSXGraph Demo"; ID="jsxgraph", CLASS="jsxgraph", WIDTH=500, HEIGHT=300)
+    content = occursin(r"^http", f) ? read(download(f), String) : read(f, String)
+    JSXGRAPH(content,
              markdown(caption),
              ID, CLASS, WIDTH, HEIGHT)
 end
@@ -94,6 +95,8 @@ mutable struct JSXGRAPH  <: OutputOnlyType
     WIDTH
     HEIGHT
 end
+
+
 
 #<div class="card">
 #   <div class="card-header">{{{CAPTION}}}</div>
@@ -131,7 +134,10 @@ jsxgraph_tpl = Mustache.mt"""
 
 """
 
+
+
 Base.show(io::IO, ::MIME"text/html", x::JSXGRAPH) = Mustache.render(io, jsxgraph_tpl, x)
+
 Base.show(io::IO, x::JSXGRAPH) = print(io, "JSXGraph unavailable")
 
 ## Bootstrap things

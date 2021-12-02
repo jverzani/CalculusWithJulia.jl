@@ -1,11 +1,22 @@
 import Markdown, Pluto
 
+# causes issues
 function Markdown.plain(io::IO, l::Markdown.LaTeX)
     println(io, "```math")
     println(io, l.formula)
     println(io, "```")
 end
 
+
+# check if a string represents a single command
+function issinglecommand(ex)
+    try
+        Meta.parse(ex)
+        true
+    catch err
+        false
+    end
+end
 
 """
     chunk_to_cell(::Val{:Code}, chunk)
@@ -40,11 +51,11 @@ function chunk_to_cell(::Val{:Code}, chunk, args...)
 
 
     block_type = ("local" ∈ langs || "hold=true" ∈ langs) ? "let" : "begin"
-    multiline = contains(txt, "\n")
+    #multiline = contains(txt, "\n")
+    multicommand = !issinglecommand(txt)
 
 
-
-    if multiline || block_type == "let"
+    if multicommand || block_type == "let"
         txt = replace(txt, "\n" => "\n\t")
         txt = "$(block_type)\n\t$(txt)\nend"
     end
@@ -80,11 +91,16 @@ function md2notebook(fname; header_cmds=(), footer_cmds=())
         pushfirst!(cells, cell)
     end
 
+    footer_cmds = vcat(footer_cmds...,
+                       "using PlutoUI",
+                       "PlutoUI.TableOfContents()")
     for cmd ∈ footer_cmds
         cell = Pluto.Cell(cmd)
         cell.code_folded = true
         push!(cells, cell)
     end
+
+
 
     notebook = Pluto.Notebook(cells)
 end

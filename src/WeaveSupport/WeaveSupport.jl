@@ -3,7 +3,7 @@ module WeaveSupport
 import Base64: base64encode
 using Random
 
-using Weave
+#using Weave
 
 using Mustache
 import Markdown
