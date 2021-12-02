@@ -28,9 +28,6 @@ function find_colors(F, xs, colors=(:red, :blue, :black))
     cols[end] = cols[end-1]
     cols
 end
-
-
-
 # some plotting utilities
 """
     rangeclamp(f, hi=20, lo=-hi; replacement=NaN)

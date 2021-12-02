@@ -1,10 +1,24 @@
 # Implicit Differentiation
 
-```julia; echo=false; results="hidden"
+This section uses these add-on packages:
+
+```julia
 using CalculusWithJulia
-using CalculusWithJulia.WeaveSupport
 using Plots
+using ImplicitEquations
+import IntervalArithmetic
+using IntervalConstraintProgramming
+using Roots
+using SymPy
+```
+
+
+
+```julia; echo=false; results="hidden"
+using CalculusWithJulia.WeaveSupport
 using LaTeXStrings
+import PyPlot
+pyplot()
 nothing
 ```
 
@@ -21,23 +35,15 @@ points ``(x,y)`` which satisfy the equation.
 The **graph** of an equation is just the set of solutions to the equation represented in the Cartesian plane.
 
 With this definition, the graph of a function ``f(x)`` is just the graph of the equation ``y = f(x)``.
-
 In general, graphing an equation is more complicated than graphing a
 function. For a function, we know for a given value of ``x`` what
 the corresponding value of ``f(x)`` is through evaluation of the function. For
-equations, we may have 0, 1 or more ``y`` values for a given ``x`` and
+equations, we may have ``0``, ``1`` or more ``y`` values for a given ``x`` and
 even more problematic is we may have no rule to find these values.
 
 
 To plot such an equation in `Julia`, we can use the
 `ImplicitEquations` package.
-
-```julia;
-using CalculusWithJulia
-using Plots
-using ImplicitEquations
-pyplot()   # better graphics than plotly() here
-```
 
 To plot the circle of radius ``2``, we would first define a function of *two* variables:
 
@@ -90,10 +96,10 @@ y^4 - x^4 + ay^2 + bx^2 = 0
 Here we draw the curve for a particular choice of ``a`` and ``b``. For illustration purposes, a narrower
 viewing window than the default of ``[-5,5] \times [-5,5]`` is specified below using `xlims` and `ylims`:
 
-```julia;
+```julia; hold=true
 a,b = -1,2
 f(x,y) =  y^4 - x^4 + a*y^2 + b*x^2
-plot(Eq(f, 0), xlims=(-3,3), ylims=(-3,3))
+plot(Eq(f, 0), xlims=(-3,3), ylims=(-3,3), M=8, N=8)
 ```
 
 ```julia; echo=false
@@ -125,8 +131,6 @@ allows expressions to involve free symbols, so the problem is
 specified in an equation-like manner:
 
 ```julia;
-import IntervalArithmetic
-using IntervalConstraintProgramming
 S = @constraint x^2 + y^2 <= 2
 ```
 
@@ -143,13 +147,13 @@ X = IntervalArithmetic.IntervalBox(J, J)
 
 
 ```julia;
-r = IntervalConstraintProgramming.pave(S, X)
+region = IntervalConstraintProgramming.pave(S, X)
 ```
 
 We can plot either the boundary, the interior, or both.
 
 ```julia;
-plot(r.inner)       # plot interior; use r.boundary for boundary
+plot(region.inner)       # plot interior; use r.boundary for boundary
 ```
 
 ## Tangent lines, implicit differentiation
@@ -173,7 +177,7 @@ graph is reduced to just a small, well-behaved, section of its graph.
 
 
 With this assumption, asking what ``dy/dx`` is has an obvious meaning -
-what is the slope of the tangent line to the graph at ``(x,y)``.
+what is the slope of the tangent line to the graph at ``(x,y)``. (The assumption eliminates the question of what a tangent line would  mean when a graph self intersects.)
 
 The method of implicit differentiation allows this question to be
 investigated. It begins by differentiating both sides of the equation
@@ -217,7 +221,7 @@ x^2y + a\cdot b \cdot y - a^2 \cdot x = 0, \quad a\cdot b > 0.
 
 For ``a = 2, b=1`` we have the graph:
 
-```julia;
+```julia;hold=true
 a, b = 2, 1
 f(x,y) = x^2*y + a * b * y - a^2 * x
 plot(Eq(f, 0))
@@ -251,7 +255,7 @@ x^4 = a^2(x^2-y^2), \quad a \neq 0.
 
 A graph for ``a=3`` shows why it has the name it does:
 
-```julia;
+```julia;hold=true
 a = 3
 f(x,y) = x^4 - a^2*(x^2 - y^2)
 plot(Eq(f, 0))
@@ -322,33 +326,31 @@ Returning to the equation for a circle, ``x^2 + y^2 = 1``, let's look at
 at this point is ``1``. The line itself has equation ``y = b + m \cdot
 (x-a)``. The following represents this in `Julia`:
 
-```julia;
+```julia;hold=true
 F(x,y) = x^2 + y^2
 
 a,b = sqrt(2)/2, -sqrt(2)/2
 
 m = -a/b
 tl(x) = b + m * (x-a)
-```
 
-Now we want to plot *both* ``F ⩵ 1`` and the tangent line. This can be done with two layers:
-
-```julia;
-plot(Eq(F, 1), xlims=(-2, 2), ylims=(-2, 2))
+plot(Eq(F, 1), xlims=(-2, 2), ylims=(-2, 2), aspect_ratio=:equal)
 plot!(tl)
 ```
+
+We added *both* ``F ⩵ 1`` and the tangent line to the graph.
 
 
 ##### Example
 
 When we assume ``y`` is a function of ``x``, it may not be feasible to
 actually find the function algebraically. However, in many cases one
-can be found numerically. Suppose ``F(x,y) = c`` describes the
-equation. Then for a fixed ``x``, ``y(x)`` solves ``F(x,y(x))) - c = 0``, so
+can be found numerically. Suppose ``G(x,y) = c`` describes the
+equation. Then for a fixed ``x``, ``y(x)`` solves ``G(x,y(x))) - c = 0``, so
 ``y(x)`` is a zero of a known function. As long as we can piece together
 which ``y`` goes with which, we can find the function.
 
-For example, [folium](http://www-history.mcs.st-and.ac.uk/Curves/Foliumd.html) of Descartes has the equation
+For example, the [folium](http://www-history.mcs.st-and.ac.uk/Curves/Foliumd.html) of Descartes has the equation
 
 ```math
 x^3 + y^3  = 3axy.
@@ -357,16 +359,15 @@ x^3 + y^3  = 3axy.
 Setting ``a=1`` we have the graph:
 
 ```julia;
-a = 1
-F(x,y) = x^3 + y^3 - 3*a*x*y
-plot(Eq(F,0))
+𝒂 = 1
+G(x,y) = x^3 + y^3 - 3*𝒂*x*y
+plot(Eq(G,0))
 ```
 
 We can solve for the lower curve, ``y``, as a function of ``x``, as follows:
 
 ```julia;
-using Roots
-y1(x) = minimum(find_zeros(y->F(x,y), -10, 10))  # find_zeros from `Roots`
+y1(x) = minimum(find_zeros(y->G(x,y), -10, 10))  # find_zeros from `Roots`
 ```
 
 This gives the lower part of the curve, which we can plot with:
@@ -398,7 +399,6 @@ xy = cx^3 + dx^2 + ex + h.
 To approach this task in `SymPy`, we begin by defining our symbolic expression. For now, we keep the parameters as symbolic values:
 
 ```julia;
-using SymPy
 @syms a b c d x y
 ex = x*y - (a*c^3 + b*x^2 + c*x + d)
 ```
@@ -435,13 +435,13 @@ ex3 = solve(ex2, dydx)[1]    # pull out lone answer with [1] indexing
 As this represents an answer in terms of `u(x)`, we replace that term with the original variable:
 
 ```julia;
-dydx = ex3(u(x) => y)
+dydx₁ = ex3(u(x) => y)
 ```
 
 If `x` and `y` are the variable names, this function will combine the steps above:
 
 ```julia;
-function dy_dx(eqn)
+function dy_dx(eqn, x, y)
   @syms u()
   eqn1 = eqn(y => u(x))
   eqn2 = solve(diff(eqn1, x), diff(u(x), x))[1]
@@ -455,9 +455,9 @@ Let ``a = b = c = d = 1``, then ``(1,4)`` is a point on the curve. We can draw a
 ```julia;
 H = ex(a=>1, b=>1, c=>1, d=>1)
 x0, y0 = 1, 4
-m = dydx(x=>1, y=>4, a=>1, b=>1, c=>1, d=>1)
+𝒎 = dydx₁(x=>1, y=>4, a=>1, b=>1, c=>1, d=>1)
 plot(Eq(lambdify(H), 0), xlims=(-5,5), ylims=(-5,5))
-plot!(y0 + m * (x-x0))
+plot!(y0 + 𝒎 * (x-x0))
 ```
 
 Basically all the same steps as if done "by hand." Some effort could have been saved in plotting, had
@@ -526,17 +526,17 @@ To visualize, we plot implicitly and notice that:
   when ``y=0`` and flat when ``x=0``.
 
 ```julia;
-F(x,y) = x^3 - y^3
-plot(Eq(F, 3),  xlims=(-3, 3), ylims=(-3, 3))
+K(x,y) = x^3 - y^3
+plot(Eq(K, 3),  xlims=(-3, 3), ylims=(-3, 3))
 ```
 
 
 The same problem can be done symbolically. The steps are similar, though the last step (replacing ``x^3 - y^3`` with ``3``) isn't done without explicitly asking.
 
-```julia;
+```julia; hold=true
 @syms x y u()
 
-eqn    = F(x,y) - 3
+eqn    = K(x,y) - 3
 eqn1   = eqn(y => u(x))
 dydx   = solve(diff(eqn1,x), diff(u(x), x))[1]        # 1 solution
 d2ydx2 = solve(diff(eqn1, x, 2), diff(u(x),x, 2))[1]  # 1 solution
@@ -611,12 +611,14 @@ Well, suppose you hold the rope in two places, which we can take to be
 the ring that hold the rope taught. Then we have this picture:
 
 
-```julia; echo=false
+```julia; hold=true; echo=false
 imgfile = "figures/extrema-ring-string.png"
 caption = "Ring on string figure."
-ImageFile(imgfile, caption)
+nothing
+#ImageFile(imgfile, caption)
 ```
 
+![Ring on string figure.](https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/derivatives/figures/extrema-ring-string.png)
 
 Since the length of the rope does not change, we must have for any admissible ``(x,y)`` that:
 
@@ -635,45 +637,46 @@ Pythagorean's theorem.
 We create a function to represent the equation:
 
 ```julia;
-F(x, y, a, b) = sqrt(x^2 + y^2) + sqrt((a-x)^2 + (b-y)^2)
+F₀(x, y, a, b) = sqrt(x^2 + y^2) + sqrt((a-x)^2 + (b-y)^2)
 ```
 
 To illustrate, we need specific values of ``a``, ``b``, and ``L``:
 ```julia;
-a, b, L = 3, 3, 10      # L > sqrt{a^2 + b^2}
-F(x, y) = F(x, y, a, b)
+𝐚, 𝐛, 𝐋 = 3, 3, 10      # L > sqrt{a^2 + b^2}
+F₀(x, y) = F₀(x, y, 𝐚, 𝐛)
 ```
 
 Our values ``(x,y)`` must satisfy ``f(x,y) = L``. Let's graph:
 
 ```julia;
-plot(Eq(F, L), xlims=(-5, 7), ylims=(-5, 7))
+plot(Eq(F₀, 𝐋), xlims=(-5, 7), ylims=(-5, 7))
 ```
 
 The graph is an ellipse, though slightly tilted.
 
 Okay, now to find the lowest point. This will be when the derivative
-is ``0``. We solve by assuming ``y`` is a function of ``x`` called `u`:
+is ``0``. We solve by assuming ``y`` is a function of ``x`` called `u`. We have already defined symbolic variables `a`, `b`, `x`, and `y`, here we define `L`:
 
 ```julia;
-@syms a b L x y u()
+@syms L
+```
+
+Then
+
+```julia;
+eqn = F₀(x,y,a,b) - L
 ```
 
 ```julia;
-F(x,y,a,b) = sqrt(x^2 + y^2) + sqrt((a-x)^2 + (b-y)^2)
-eqn = F(x,y,a,b) - L
-```
-
-```julia;
-eqn1 = diff(eqn(y => u(x)), x)
-eqn2 = solve(eqn1, diff(u(x), x))[1]
-dydx  = eqn2(u(x) => y)
+eqn_1 = diff(eqn(y => u(x)), x)
+eqn_2 = solve(eqn_1, diff(u(x), x))[1]
+dydx₂  = eqn_2(u(x) => y)
 ```
 
 We are looking for when the tangent line has 0 slope, or when `dydx` is 0:
 
 ```julia;
-cps = solve(dydx, x)
+cps = solve(dydx₂, x)
 ```
 
 There are two answers, as we could guess from the graph, but we want the one for the smallest value of ``y``, which is the second.
@@ -705,9 +708,8 @@ Our minimum is at `(xstar, ystar)`, as this graphic shows:
 
 ```julia;
 
-F(x,y) = F(x,y, 3, 3)
 tl(x) = ystar + 0 * (x- xstar)
-plot(Eq(F, 10), xlims=(-4, 7), ylims=(-10, 10))
+plot(Eq((x,y) -> F₀(x,y,3,3), 10), xlims=(-4, 7), ylims=(-10, 10))
 plot!(tl)
 ```
 
@@ -743,9 +745,8 @@ Here we try the same problem numerically, using a zero-finding approach to ident
 Starting with ``F(x,y) = sqrt(x^2 + y^2) + sqrt((x-1)^2 + (b-2)^2)`` and ``L=3``, we have:
 
 ```julia
-a,b,L = 1,2,3
-F(x,y) = sqrt(x^2 + y^2) + sqrt((a-x)^2 + (b-y)^2)
-plot(Eq(F, L))
+F₁(x,y) = F₀(x,y, 1, 2) # a,b,L = 1,2,3
+plot(Eq(F₁, 3))
 ```
 
 Trying to find the lowest ``y`` value we have from the graph it is near ``x=0.1``. We can do better.
@@ -753,13 +754,13 @@ Trying to find the lowest ``y`` value we have from the graph it is near ``x=0.1`
 First, we could try so solve for the ``f`` using `find_zero`. Here is one way:
 
 ```julia
-f(x) = find_zero(y -> F(x, y) - L, 0)
+f₀(x) = find_zero(y -> F₁(x, y) - 3, 0)
 ```
 
 We use ``0`` as an initial guess, as the ``y`` value is near ``0``. More on this later. We could then just sample many ``x`` values between ``-0.5`` and ``1.5`` and find the one corresponding to the smallest ``t`` value:
 
 ```julia
-findmin([f(x) for x ∈ range(-0.5, 1.5, length=100)])
+findmin([f₀(x) for x ∈ range(-0.5, 1.5, length=100)])
 ```
 
 This shows the smallest value is around ``-0.414`` and occurs in the ``33``rd position of the sampled ``x`` values. Pretty good, but we can do better. We just need to differentiate ``f``, solve for ``f'(x) = 0`` and then put that value back into ``f`` to find the smallest ``y``.
@@ -769,15 +770,15 @@ This shows the smallest value is around ``-0.414`` and occurs in the ``33``rd po
 With this slight modification, we have:
 
 ```julia
-f(x) = find_zero(y -> F(x, y) - L, zero(x))
-plot(f', -0.5, 1.5)
+f₁(x) = find_zero(y -> F₁(x, y) - 3, zero(x))
+plot(f₁', -0.5, 1.5)
 ```
 
 The zero of `f'` is a bit to the right of ``0``, say ``0.2``; we use `find_zero` again to find it:
 
 ```julia
-xstar = find_zero(f', 0.2)
-xstar, f(xstar)
+xstar₁ = find_zero(f₁', 0.2)
+xstar₁, f₁(xstar₁)
 ```
 
 It is important to note that the above uses of `find_zero` required *good* initial guesses, which we were fortunate enough to identify.
@@ -794,7 +795,7 @@ Is ``(1,1)`` on the graph of
 x^2 - 2xy + y^2 = 1?
 ```
 
-```julia; echo=false
+```julia; hold=true; echo=false
 x,y=1,1
 yesnoq(x^2 - 2x*y + y^2 ==1)
 ```
@@ -809,8 +810,7 @@ x^2y + 2y - 4 x = 0,
 
 if ``x=4``, what is a value for ``y`` such that ``(x,y)`` is a point on the graph of the equation?
 
-```julia; echo=false
-using SymPy
+```julia; hold=true; echo=false
 @syms x y
 eqn = x^2*y + 2y - 4x
 val = float(N(solve(subs(eqn, (x,4)), y)[1]))
@@ -829,7 +829,7 @@ For the equation
 
 is the point ``(5,0)`` a solution?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq(false)
 ```
 
@@ -837,7 +837,7 @@ yesnoq(false)
 
 Let ``(x/3)^2 + (y/2)^2 = 1``. Find the slope of the tangent line at the point ``(3/\sqrt{2}, 2/\sqrt{2})``.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 @syms x y u()
 eqn = (x/3)^2 + (y/2)^2 - 1
 dydx = SymPy.solve(SymPy.diff(SymPy.subs(eqn, y, u(x)), x), SymPy.diff(u(x), x))[1]
@@ -858,7 +858,7 @@ An ellipse is when ``n=1``. Take ``n=3``, ``a=1``, and ``b=2``.
 
 Find a *positive* value of ``y`` when ``x=1/2``.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 a,b,n=1,2,3
 val = b*(1 - ((1/2)/a)^n)^(1/n)
 numericq(val)
@@ -866,11 +866,11 @@ numericq(val)
 
 What expression gives ``dy/dx``?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L" -(y/x) \cdot (x/a)^n \cdot (y/b)^{-n}",
-L"b \cdot (1 - (x/a)^n)^{1/n}",
-L"-(x/a)^n / (y/b)^n"
+"`` -(y/x) \\cdot (x/a)^n \\cdot (y/b)^{-n}``",
+"``b \\cdot (1 - (x/a)^n)^{1/n}``",
+"``-(x/a)^n / (y/b)^n``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -882,13 +882,10 @@ Let ``y - x^2 = -\log(x)``. At the point ``(1/2, 0.9431...)``, the graph has a t
 
 This intersection is:
 
-```julia; echo=false
-using Roots
-using ForwardDiff
-D(f) = x -> ForwardDiff.derivative(f, float(x))
+```julia; hold=true; echo=false
 f(x) = x^2 - log(x)
 x0 = 1/2
-tl(x) = f(x0) + D(f)(x0) * (x - x0)
+tl(x) = f(x0) + f'(x0) * (x - x0)
 numericq(tl(0))
 ```
 
@@ -904,8 +901,7 @@ y(x^2 + a^2) = a^3.
 
 If ``a=1``, numerically find a a value of ``y`` when ``x=2``.
 
-```julia; echo=false
-using Roots
+```julia; hold=true; echo=false
 a = 1
 f(x,y) = y*(x^2 + a^2) - a^3
 val = find_zero(y->f(2,y), 1)
@@ -915,11 +911,11 @@ numericq(val)
 
 What expression yields ``dy/dx`` for this curve:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"-2xy/(x^2 + a^2)",
-L"2xy / (x^2 + a^2)",
-L"a^3/(x^2 + a^2)"
+"``-2xy/(x^2 + a^2)``",
+"``2xy / (x^2 + a^2)``",
+"``a^3/(x^2 + a^2)``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -927,37 +923,37 @@ radioq(choices, ans)
 
 ###### Question
 
-```julia; echo=false
+```julia; hold=true; echo=false
 ### {{{lhopital_35}}}
 imgfile = "figures/fcarc-may2016-fig35-350.gif"
 caption = raw"""
-
-Image number 35 from L'Hospitals calculus book (the first). Given a description of the curve, identify
-the point ``E`` which maximizes the height.
-
+Image number 35 from L'Hospitals calculus book (the first). Given a description of the curve, identify the point ``E`` which maximizes the height.
 """
-ImageFile(imgfile, caption)
+nothing
+#ImageFile(imgfile, caption)
 ```
+
+![Image number 35 from L'Hospitals calculus book (the first). Given a description of the curve, identify the point ``E`` which maximizes the height.](https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/derivatives/figures/fcarc-may2016-fig35-350.gif)
 
 
 The figure above shows a problem appearing in L'Hospital's first calculus book. Given a function defined implicitly by ``x^3 + y^3 = axy``  (with ``AP=x``, ``AM=y`` and ``AB=a``) find the point ``E`` that maximizes the height. In the [AMS feature column](http://www.ams.org/samplings/feature-column/fc-2016-05) this problem is illustrated and solved in the historical manner, with the comment that the concept of implicit differentiation wouldn't have occurred to L'Hospital.
 
 Using Implicit differentiation, find when ``dy/dx = 0``.
 
-```julia; echo=false
-choices = [L"y^2 = 3x/a", L"y=3x^2/a", L"y=a/(3x^2)", L"y^2=a/(3x)"]
+```julia; hold=true; echo=false
+choices = ["``y^2 = 3x/a``", "``y=3x^2/a``", "``y=a/(3x^2)``", "``y^2=a/(3x)``"]
 ans = 2
 radioq(choices, ans)
 ```
 
 Substituting the correct value of ``y``, above, into the defining equation gives what value for ``x``:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices=[
-L"x=(1/2) a 2^{1/2}",
-L"x=(1/3) a 2^{1/3}",
-L"x=(1/2) a^3 3^{1/3}",
-L"x=(1/3) a^2 2^{1/2}"
+"``x=(1/2) a 2^{1/2}``",
+"``x=(1/3) a 2^{1/3}``",
+"``x=(1/2) a^3 3^{1/3}``",
+"``x=(1/3) a^2 2^{1/2}``"
 ]
 ans = 2
 radioq(choices, ans)
@@ -977,13 +973,13 @@ compute ``d^2y/dx^2``. Is this the answer?
 \frac{d^2y}{dx^2} = -\frac{b^2}{a^2\cdot y} - \frac{b^4\cdot x^2}{a^4\cdot y^3} = -\frac{1}{y}\frac{b^2}{a^2}(1 + \frac{b^2 x^2}{a^2 y^2}).
 ```
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq(true)
 ```
 
 If ``y>0`` is the sign positive or negative?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["positive", "negative", "Can be both"]
 ans = 2
 radioq(choices, ans, keep_order=true)
@@ -992,7 +988,7 @@ radioq(choices, ans, keep_order=true)
 If ``x>0`` is the sign positive or negative?
 
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["positive", "negative", "Can be both"]
 ans = 3
 radioq(choices, ans, keep_order=true)
@@ -1000,13 +996,8 @@ radioq(choices, ans, keep_order=true)
 
 When ``x>0``, the graph of the equation is...
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["concave up", "concave down", "both concave up and down"]
 ans = 3
 radioq(choices, ans, keep_order=true)
-```
-
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

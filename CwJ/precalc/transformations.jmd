@@ -1,9 +1,16 @@
 # Function manipulations
 
-```julia; echo=false; results="hidden"
+In this section we will use these add-on packages:
+
+```julia
 using CalculusWithJulia
-using CalculusWithJulia.WeaveSupport
 using Plots
+```
+
+```julia; echo=false; results="hidden"
+using CalculusWithJulia.WeaveSupport
+using DataFrames
+__DIR__, __FILE__ = :precalc, :transformations
 nothing
 ```
 
@@ -26,8 +33,11 @@ We can talk about the algebra of functions. For example, the sum of functions $f
 We have given meaning to a new function $f+g$ by defining what is does
 to $x$ with the rule on the right hand side. Similarly, we can define
 operations for subtraction, multiplication, addition, and
-powers. These aren't defined in base `Julia`, though they could be if
-desired, by a commands such as:
+powers.
+
+
+These mathematical concepts aren't defined for functions in base
+`Julia`, though they could be if desired, by a commands such as:
 
 ```julia;
 import Base: +
@@ -37,7 +47,8 @@ f::Function + g::Function = x -> f(x) + g(x)
 This adds a method to the generic `+` function for functions. The type annotations `::Function` ensure this applies only to functions. To see that it would work, we could do odd-looking things like:
 
 ```julia;
-(sin + sqrt)(4)
+ss = sin + sqrt
+ss(4)
 ```
 
 Doing this works, as Julia treats functions as first class objects,
@@ -86,15 +97,13 @@ graph shows that the two functions aren't even close except for $x$
 near $0$ (for example, one composition is always non-negative, whereas
 the other is not):
 
-```julia;
-using CalculusWithJulia
-using Plots
+```julia;hold=true
 f(x) = x^2
 g(x) = sin(x)
 fg = f ∘ g      # typed as f \circ[tab] g
 gf = g ∘ f      # typed as g \circ[tab] f
-plot(fg, -2, 2)
-plot!(gf)
+plot(fg, -2, 2, label="f∘g")
+plot!(gf, label="g∘f")
 ```
 
 
@@ -150,7 +159,7 @@ families. The difference between $f(x) = \cos(x)$ and $g(x) =
 one is just a simple enough transformation of the other. As such, we
 expect bounded, oscillatory behaviour with the details of how large
 and how fast the oscillations are to depend on the specifics of
-function. Similarly, both these functions $f(x) = 2^x$ and $g(x)=e^x$
+the function. Similarly, both these functions $f(x) = 2^x$ and $g(x)=e^x$
 behave like exponential growth, the difference being only in the rate
 of growth. There are families of functions that are qualitatively
 similar, but quantitatively different, linked together by a few basic transformations.
@@ -160,7 +169,7 @@ change the type of function. Rather, it basically moves and stretches
 how the functions are graphed. We discuss these four main transformations of $f$:
 
 ```julia; echo=false
-using DataFrames
+
 nms = ["*vertical shifts*","*horizontal shifts*","*stretching*","*scaling*"]
 acts = [L"The function $h(x) = k + f(x)$ will have the same graph as $f$ shifted up by $k$ units.",
 L"The function $h(x) = f(x - k)$ will have the same graph as $f$ shifted right by $k$ units.",
@@ -182,37 +191,42 @@ scale(f, k)    = x -> f(k * x)
 To illustrate, let's define a hat-shaped function as follows:
 
 ```julia;
-f(x) = max(0, 1 - abs(x))
-plot(f, -2,2)
+𝒇(x) = max(0, 1 - abs(x))
+```
+
+A plot over the interval ``[-2,2]`` is shown here:
+
+```julia
+plot(𝒇, -2,2)
 ```
 
 The same graph of $f$ and its image shifted up by 2 units would be given by:
 
 ```julia;
-plot(f, -2, 2)
-plot!(up(f, 2))
+plot(𝒇, -2, 2, label="f")
+plot!(up(𝒇, 2), label="up")
 ```
 
 A graph of $f$ and its shift over by $2$ units would be given  by:
 
 ```julia;
-plot(f, -2, 4)
-plot!(over(f, 2))
+plot(𝒇, -2, 4, label="f")
+plot!(over(𝒇, 2), label="over")
 ```
 
 A graph of $f$ and it being stretched by $2$ units would be given by:
 
 ```julia;
-plot(f, -2, 2)
-plot!(stretch(f, 2))
+plot(𝒇, -2, 2, label="f")
+plot!(stretch(𝒇, 2), label="stretch")
 ```
 
 Finally, a graph of $f$ and it being scaled by $2$ would be given by:
 
 
 ```julia;
-plot(f, -2, 2)
-plot!(scale(f, 2))
+plot(𝒇, -2, 2, label="f")
+plot!(scale(𝒇, 2), label="scale")
 ```
 
 Scaling by $2$ shrinks the non-zero domain, scaling by $1/2$ would
@@ -226,16 +240,16 @@ More exciting is what happens if we combine these operations.
 A shift right by 2 and up by 1 is achieved through
 
 ```julia;
-plot(f, -2, 4)
-plot!(up(over(f,2), 1))
+plot(𝒇, -2, 4, label="f")
+plot!(up(over(𝒇,2), 1), label="over and up")
 ```
 
 
-Shifting and scaling can be confusing. Here we graph `scale(over(f,2),1/3)`:
+Shifting and scaling can be confusing. Here we graph `scale(over(𝒇,2),1/3)`:
 
 ```julia;
-plot(f, -1,9)
-plot!(scale(over(f,2), 1/3))
+plot(𝒇, -1,9, label="f")
+plot!(scale(over(𝒇,2), 1/3), label="over and scale")
 ```
 
 This graph is over by $6$ with a width of $3$ on each side of the center. Mathematically, we have $h(x) = f((1/3)\cdot x - 2)$
@@ -244,12 +258,12 @@ This graph is over by $6$ with a width of $3$ on each side of the center. Mathem
 Compare this to the same operations in opposite order:
 
 ```julia;
-plot(f, -1, 5)
-plot!(over(scale(f, 1/3), 2))
+plot(𝒇, -1, 5, label="f")
+plot!(over(scale(𝒇, 1/3), 2), label="scale and over")
 ```
 
 
-This graph first scales the symmetric graph, stretching from $-3$ to $3$, then shifts that right by $2$. The resulting function is $f((1/3)\cdot (x-2))$.
+This graph first scales the symmetric graph, stretching from $-3$ to $3$, then shifts over right by $2$. The resulting function is $f((1/3)\cdot (x-2))$.
 
 As a last example, following up on the last example, a common transformation mathematically is
 
@@ -259,11 +273,11 @@ h(x) = \frac{1}{a}f(\frac{x - b}{a}).
 
 We can view this as a composition of "scale" by $1/a$, then  "over" by $b$,  and finally "stretch" by $1/a$:
 
-```julia;
+```julia;hold=true
 a = 2; b = 5
-h(x) = stretch(over(scale(f, 1/a), b), 1/a)(x)
-plot(f, -1, 8)
-plot!(h)
+𝒉(x) = stretch(over(scale(𝒇, 1/a), b), 1/a)(x)
+plot(𝒇, -1, 8, label="f")
+plot!(𝒉, label="h")
 ```
 
 (This transformation keeps the same amount of area in the triangles, can you tell from the graph?)
@@ -354,7 +368,7 @@ operator for chaining function calls together.
 
 For example, if $g(x) = \sqrt{x}$ and $f(x) =\sin(x)$ we could call $f(g(x))$ through:
 
-```julia;
+```julia; hold=true
 g(x) = sqrt(x)
 f(x) = sin(x)
 pi/2 |> g |> f
@@ -406,11 +420,16 @@ Composition like the above is convenient, but can get confusing if more than one
 D(f::Function) = k -> f(k) - f(k-1)
 ```
 
-To see that it works, we take a typical function and check:
+To see that it works, we take a typical function
 
 ```julia;
-f(k) = 1 + k^2
-D(f)(3), f(3) - f(3-1)
+𝐟(k) = 1 + k^2
+```
+
+and check:
+
+```julia
+D(𝐟)(3), 𝐟(3) - 𝐟(3-1)
 ```
 
 That the two are the same value is no coincidence. (Again, pause for a
@@ -430,7 +449,7 @@ S(f) = k -> sum(f(i) for i in 1:k)
 To check if this works as expected, compare these two values:
 
 ```julia;
-S(f)(4), f(1) + f(2) + f(3) + f(4)
+S(𝐟)(4), 𝐟(1) + 𝐟(2) + 𝐟(3) + 𝐟(4)
 ```
 
 So one function adds, the other subtracts. Addition and subtraction
@@ -440,18 +459,17 @@ after adding leaves the function alone:
 
 ```julia;
 k = 10    # some arbitrary value k >= 1
-D(S(f))(k), f(k)
+D(S(𝐟))(k), 𝐟(k)
 ```
 
 Any positive integer value of `k` will give the same answer (up to
 overflow). This says the difference of the accumulation process is
 just the last value to accumulate.
 
-Adding after subtracting also leaves the function alone, save for a vestige of $f(0)$:
+Adding after subtracting also leaves the function alone, save for a vestige of $f(0)$. For example, `k=15`:
 
 ```julia;
-k=15
-S(D(f))(k),  f(k) - f(0)
+S(D(𝐟))(15),  𝐟(15) - 𝐟(0)
 ```
 
 That is the accumulation of differences is just the difference of the end values.
@@ -466,8 +484,8 @@ be known as the "fundamental theorem of calculus."
 
 If $f(x) = 1/x$ and $g(x) = x-2$, what is $g(f(x))$?
 
-```julia;echo=false
-choices=[L"1/(x-2)", L"1/x - 2", L"x - 2", L"-2"]
+```julia; hold=true;echo=false
+choices=["``1/(x-2)``", "``1/x - 2``", "``x - 2``", "``-2``"]
 ans = 2
 radioq(choices, ans)
 ```
@@ -476,8 +494,9 @@ radioq(choices, ans)
 
 If $f(x) = e^{-x}$ and $g(x) = x^2$ and $h(x) = x-3$, what is $f \circ g \circ h$?
 
-```julia;echo=false
-choices=[L"e^{-x^2 - 3}", L"(e^x -3)^2", L"e^{-(x-3)^2}", L"e^x+x^2+x-3"]
+```julia; hold=true;echo=false
+choices=["``e^{-x^2 - 3}``", "``(e^x -3)^2``",
+         "``e^{-(x-3)^2}``", "``e^x+x^2+x-3``"]
 ans = 3
 radioq(choices, ans)
 ```
@@ -485,10 +504,10 @@ radioq(choices, ans)
 ###### Question
 If $h(x) = (f \circ g)(x) = \sin^2(x)$ which is  a possibility for $f$ and $g$:
 
-```julia;echo=false
-choices = [L"f(x)=x^2; \quad g(x) = \sin^2(x)",
-	   L"f(x)=x^2; \quad g(x) = \sin(x)",
-	   L"f(x)=\sin(x); \quad g(x) = x^2"]
+```julia; hold=true;echo=false
+choices = [raw"``f(x)=x^2; \quad g(x) = \sin^2(x)``",
+	       raw"```f(x)=x^2; \quad g(x) = \sin(x)``",
+	       raw"``f(x)=\sin(x); \quad g(x) = x^2``"]
 ans = 2
 radioq(choices, ans)
 ```
@@ -497,8 +516,12 @@ radioq(choices, ans)
 ###### Question
 Which function would have the same graph as the sine curve shifted over by 4 and up by 6?
 
-```julia;echo=false
-choices = [L"h(x) = 4 + \sin(6x)", L"h(x) = 6 + \sin(x + 4)", L"h(x) = 6 + \sin(x-4)", L"h(x) = 6\sin(x-4)"]
+```julia; hold=true;echo=false
+choices = [
+    raw"``h(x) = 4 + \sin(6x)``",
+    raw"``h(x) = 6 + \sin(x + 4)``",
+    raw"``h(x) = 6 + \sin(x-4)``",
+    raw"``h(x) = 6\sin(x-4)``"]
 ans = 3
 radioq(choices, 3)
 ```
@@ -506,7 +529,7 @@ radioq(choices, 3)
 ###### Question
 Let $h(x) = 4x^2$ and $f(x) = x^2$. Which is **not** true:
 
-```julia;echo=false
+```julia; hold=true;echo=false
 choices = [L"The graph of $h(x)$ is the graph of $f(x)$ stretched by a factor of 4",
 	   L"The graph of $h(x)$ is the graph of $f(x)$ scaled by a factor of 2",
 	   L"The graph of $h(x)$ is the graph of $f(x) shifted up by 4 units"]
@@ -518,7 +541,7 @@ radioq(choices, ans)
 
 The transformation $h(x) = (1/a) \cdot f((x-b)/a)$ can be viewed in one sequence:
 
-```julia;echo=false
+```julia; hold=true;echo=false
 choices = [L"scaling by $1/a$, then shifting by $b$, then stretching by $1/a$",
            L"shifting by $a$, then scaling by $b$, and then scaling by $1/a$",
 	   L"shifting by $a$, then scaling by $a$, and then scaling by $b$" ]
@@ -530,33 +553,33 @@ radioq(choices, ans)
 
 This is the graph of a transformed sine curve.
 
-```julia;echo=false
+```julia;hold=true;echo=false
 f(x) = 2*sin(pi*x)
 p = plot(f, -2,2)
 ```
 
 What is the period of the graph?
 
-```julia;echo=false
+```julia; hold=true;echo=false
 val = 2
 numericq(val)
 ```
 
 What is the amplitude of the graph?
 
-```julia;echo=false
+```julia; hold=true;echo=false
 val = 2
 numericq(val)
 ```
 
 What is the form of the function graphed?
 
-```julia;echo=false
+```julia; hold=true;echo=false
 choices = [
-L"2 \sin(x)",
-L"\sin(2x)",
-L"\sin(\pi x)",
-L"2 \sin(\pi x)"
+raw"``2 \sin(x)``",
+raw"``\sin(2x)``",
+raw"``\sin(\pi x)``",
+raw"``2 \sin(\pi x)``"
 ]
 ans = 4
 radioq(choices, ans)
@@ -576,7 +599,7 @@ f(n) - f(0).
 
 Referring to the definitions of `D` and `S` in the example on operators, which relationship does this support:
 
-```julia;echo=false
+```julia; hold=true;echo=false
 choices = [
 q"D(S(f))(n) = f(n)",
 q"S(D(f))(n) = f(n) - f(0)"
@@ -595,18 +618,11 @@ Consider this expression:
 
 Referring to the definitions of `D` and `S` in the example on operators, which relationship does this support:
 
-```julia;echo=false
+```julia; hold=true;echo=false
 choices = [
 q"D(S(f))(n) = f(n)",
 q"S(D(f))(n) = f(n) - f(0)"
 ]
 ans = 1
 radioq(choices, ans, keep_order=true)
-```
-
-
-
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

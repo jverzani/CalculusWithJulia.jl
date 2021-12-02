@@ -56,6 +56,7 @@ using RecipesBase
 import PlotUtils
 import ForwardDiff
 export ForwardDiff
+using Roots
 
 @reexport using LinearAlgebra
 @reexport using SpecialFunctions
@@ -65,6 +66,7 @@ import EllipsisNotation: Ellipsis
 export ..
 import IntervalSets
 import IntervalSets: ClosedInterval
+
 
 
 
@@ -80,7 +82,6 @@ using Requires
 
 function __init__()
     @require SymPy="24249f21-da20-56a4-8eb1-6a02cf4ae2e6" include("sympy.jl")
-    @require Polynomials="f27b6e38-b328-58d1-80ce-0feddd5e7a45" include("polynomials.jl")
     @require Plots="91a5bcdd-55d7-5caf-9e0b-520d859cae80" include("plots.jl")
     @require MDBM="ea0cff06-48de-41e3-bd0e-d3c1feffd247" include("implicit_equation.jl")
 end
@@ -89,10 +90,8 @@ e = exp(1)
 export e
 
 export unzip, rangeclamp
-export tangent, secant, D
+export tangent, secant, D, sign_chart
 export riemann
 export divergence, gradient, curl, ∇
-
-
 
 end # module

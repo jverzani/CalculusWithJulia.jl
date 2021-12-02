@@ -1,5 +1,4 @@
-
-
+# Test the package utilities
 @testset "multidimensional" begin
 
     x = [[1,2,3], [4,5,6]]
@@ -48,51 +47,5 @@ end
 
     @test riemann(sin, 0, pi, 10_000)  ≈ 2
 #    @test fubini((x,y) -> 1, (x->-sqrt(1-x^2), x->sqrt(1-x^2)), (-1,1)) ≈ pi
-
-end
-
-@testset "plot-utils" begin
-
-    if isinteractive()
-
-        pyplot()
-        f(x) = 1/x
-
-        plotif(f, f, -1, 1)
-        plotif(f, f', -1, 1)
-        trimplot(f, -1, 1)
-        signchart(f, -1, 1)
-
-        rr(theta) = cos(theta)
-        plot_polar(rr, 0, 2pi)
-
-        rr(t) = [sin(t), cos(t)]
-        plot_parametric_curve(rr, 0, 2pi)
-        arrow!(rr(2pi), rr'(2pi))
-
-        rr(t) = [sin(t), cos(t), t]
-        plot_parametric_curve(rr, 0, 2pi)
-        arrow!(rr(2pi), rr'(2pi))
-
-        F(u, v) = [u*cos(v), u*sin(v)]
-        us = range(0, 1, length=20)
-        vs = range(0, 2pi, length=20)
-        plot(legend=false)
-        plot!(unzip(F.(us, vs'))...) # constant angle, draws rays
-        plot!(unzip(F.(us', vs))...) # constant radii, draws circles
-
-        pyplot() # surface doesn't work with gr()
-        Phi(u,v) = [u*cos(v), u*sin(v), u]
-        us, vs = 0:.1:1, 0:pi/8:2pi
-        xs, ys, zs = unzip(Phi.(us, vs'))
-        surface(Phi, xlims=(0, 1), ylims=(0,2pi))
-
-        V(x,y) = [x, x-y]
-        vectorfieldplot(V, xlims=(-2,2))#, nx=8, ny=8) # ylim=(-5,5) plotly not happy, gr is
-
-        V(x,y,z) = [-y, x, 0]
-        vectorfieldplot3d(V, nx=4, ny=4, nz=3)
-
-    end
 
 end

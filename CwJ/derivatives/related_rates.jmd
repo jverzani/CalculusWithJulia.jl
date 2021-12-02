@@ -1,10 +1,20 @@
 # Related rates
 
+This section uses these add-on packaages:
+
+```julia
+using CalculusWithJulia
+using Plots
+using Roots
+using SymPy
+```
 
 ```julia; echo=false; results="hidden"
-using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
-using Plots
+import PyPlot
+pyplot()
+fig_size=(600, 400)
+
 nothing
 ```
 
@@ -25,13 +35,8 @@ The following is a typical "book" problem:
 > increasing when its dimensions are 12 cm by 8 cm?
 > [Source.](http://oregonstate.edu/instruct/mth251/cq/Stage9/Practice/ratesProblems.html)
 
-```julia; echo=false; cache=true
+```julia; hold=true; echo=false; cache=true
 ### {{{growing_rects}}}
-pyplot()
-fig_size=(600, 400)
-
-
-
 ## Secant line approaches tangent line...
 function growing_rects_graph(n)
     w = (t) -> 2 + 4t
@@ -65,7 +70,6 @@ end
 imgfile = tempname() * ".gif"
 gif(anim, imgfile, fps = 1)
 
-plotly()
 ImageFile(imgfile, caption)
 ```
 
@@ -74,30 +78,30 @@ $h$ are related *and* about the rate of how both $w$ and $h$ grow in
 time $t$. That means that we could express this growth in terms of
 some functions $w(t)$ and $h(t)$, then we can figure out that the area - as a function of $t$ - will be expressed as:
 
-$$~
+```math
 A(t) = w(t) \cdot h(t).
-~$$
+```
 
 We would get by the product rule that the *rate of change* of area with respect to time, $A'(t)$ is just:
 
-$$~
+```math
 A'(t) = w'(t) h(t) + w(t) h'(t).
-~$$
+```
 
 As an aside, it is fairly conventional to suppress the $(t)$ part of
 the notation $A=wh$ and to use the Leibniz notation for derivatives:
 
-$$~
+```math
 \frac{dA}{dt} = \frac{dw}{dt} h + w \frac{dh}{dt}.
-~$$
+```
 
 This relationship is true for all $t$, but the problem discusses a
 certain value of $t$ - when $w(t)=8$ and $h(t) = 12$. At this same
 value of $t$, we have $w'(t) = 4$ and so $h'(t) = 6$. Substituting these 4 values into the 4 unknowns in the formula for $A'(t)$ gives:
 
-$$~
+```math
 A'(t) = 4 \cdot 12 + 8 \cdot 6 = 96.
-~$$
+```
 
 Summarizing, from the relationship between $A$, $w$ and $t$, there is
 a relationship between their rates of growth with respect to $t$, a
@@ -141,9 +145,6 @@ time.
 Now to answer the question, when the width is 8, we must have that $t$ is:
 
 ```julia;
-using CalculusWithJulia
-using Plots
-using Roots
 tstar = find_zero(x -> w(x) - 8, [0, 4])  # or solve by hand to get 3/2
 ```
 
@@ -153,17 +154,16 @@ differentiation, the substituting in the value.
 
 Here we do so with the aid of `Julia`, though this problem could readily be done "by hand."
 
-We (again) re-express $A$ as a function of $t$ by composition, then differentiate that:
+We have expressed $A$ as a function of $t$ by composition, so can differentiate that:
 
 ```julia;
-A(t) = A(w(t), h(t))
-da_dt = A'(tstar)
+A'(tstar)
 ```
 
 
 ----
 
-So what? Why is 96 of any interest? It is if the value at a specific
+Now what? Why is 96 of any interest? It is if the value at a specific
 time is needed. But in general, a better question might be to
 understand if there is some pattern to the numbers in the figure,
 these being $6, 54, 150, 294, 486, 726$. Their differences are the
@@ -183,7 +183,6 @@ diff(ds)
 How can this relationship be summarized? Well, let's go back to what we know, though this time using symbolic math:
 
 ```julia;
-using SymPy
 @syms t
 diff(A(t), t)
 ```
@@ -208,16 +207,16 @@ in terms of $db/dt$.
 
 We have from implicitly differentiating in $t$ the equation $l^2 = h^2 + b^2$,  noting that $l$ is a constant, that:
 
-$$~
+```math
 0 = 2h \frac{dh}{dt} + 2b \frac{db}{dt}.
-~$$
+```
 
 
 Solving, yields:
 
-$$~
+```math
 \frac{dh}{dt} = -\frac{b}{h} \cdot \frac{db}{dt}.
-~$$
+```
 
 
 * If $l = 12$ and $db/dt = 2$ when $b=4$, find $dh/dt$.
@@ -228,21 +227,54 @@ But $h = \sqrt{l^2 - b^2}$, so the answer is:
 
 
 ```julia;
-l, b, dbdt = 12, 4, 2
-height = sqrt(l^2 - b^2)
--b/height * dbdt
+length, bottom, dbdt = 12, 4, 2
+height = sqrt(length^2 - bottom^2)
+-bottom/height * dbdt
 ```
 
 * What happens to the rate as $b$ goes to $l$?
 
-As $b$ goes to $l$, $h$ goes to 0, so $b/h$ blows up. Unless $db/dt$
+As $b$ goes to $l$, $h$ goes to ``0``, so $b/h$ blows up. Unless $db/dt$
 goes to $0$, the expression will become $-\infty$.
-
 
 
 ##### Example
 
-```julia; echo=false; cache=true
+![A man and woman walk towards the light](https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/derivatives/figures/long-shadow-noir.png)
+
+Shadows are a staple of film noir. In the photo, suppose a man and a woman walk towards a street light. As they approach the light the length of their shadow changes.
+
+Suppose, we focus on the ``5`` foot tall woman. Her shadow comes from a streetlight ``15`` feet high. She is walking at ``3`` feet per second towards the light. What is the rate of change of her shadow?
+
+The setup for this problem involves drawing a right triangle with height ``12`` and base given by the distance ``x`` from the light the woman is *plus* the length ``l`` of the shadow. There is a similar triangle formed by the woman's height with length ``l``. Equating the ratios of the sided gives:
+
+```math
+\frac{5}{l} = \frac{12}{x + l}
+```
+
+As we need to take derivatives, we work with the reciprocal relationship:
+
+```math
+\frac{l}{5} = \frac{x + l}{12}
+```
+
+Differentiating in ``t`` gives:
+
+```math
+\frac{l'}{5} = \frac{x' + l'}{12}
+```
+
+Or
+
+```math
+l' \cdot (\frac{1}{5} - \frac{1}{12}) =  \frac{x'}{12}
+```
+
+Solving for ``l'`` gives an answer in terms of ``x'`` the rate the woman is walking. In this description ``x`` is getting shorter, so ``x'`` would be ``-3`` feet per second and the shadow length would be decreasing at a rate proportional to the walking speed.
+
+##### Example
+
+```julia; hold=true; echo=false; cache=true
 ###{{{baseball_been_berry_good}}}
 ## Secant line approaches tangent line...
 pyplot()
@@ -265,7 +297,7 @@ function baseball_been_berry_good_graph(n)
 
     plt = plot(xs, ys, legend=false, size=fig_size, xlim=(0,150), ylim=(0,15))
     plot!(plt, [x(t), 100], [y(t), 0.0], color=:orange)
-    annotate!(plt, [(55, 4,"theta = $(round(Int, degrees)) degrees"),
+    annotate!(plt, [(55, 4,"θ = $(round(Int, degrees)) degrees"),
                     (x(t), y(t), "($(round(Int, x(t))), $(round(Int, y(t))))")])
 
 end
@@ -285,38 +317,37 @@ end
 imgfile = tempname() * ".gif"
 gif(anim, imgfile, fps = 1)
 
-plotly()
 ImageFile(imgfile, caption)
 ```
 
 
-A baseball player stands 100 meters from home base. A batter hits the
+A baseball player stands ``100`` meters from home base. A batter hits the
 ball directly at the player so that the distance from home plate is
 $x(t)$ and the height is $y(t)$.
 
 The player tracks the flight of the ball in terms of the angle
 $\theta$ made between the ball and the player. This will satisfy:
 
-$$~
+```math
 \tan(\theta) = \frac{y(t)}{100 - x(t)}.
-~$$
+```
 
 What is the rate of change of $\theta$ with respect to $t$ in terms of that of $x$ and $y$?
 
 We have by the chain rule and quotient rule:
 
-$$~
+```math
 \sec^2(\theta) \theta'(t) = \frac{y'(t) \cdot (100 - x(t)) - y(t) \cdot (-x'(t))}{(100 - x(t))^2}.
-~$$
+```
 
 If we have $x(t) = 50t$ and $y(t)=v_{0y} t - 5 t^2$ when is the rate of change of the angle happening most quickly?
 
 
 The formula for $\theta'(t)$ is
 
-$$~
+```math
 \theta'(t) = \cos^2(\theta) \cdot \frac{y'(t) \cdot (100 - x(t)) - y(t) \cdot (-x'(t))}{(100 - x(t))^2}.
-~$$
+```
 
 
 This question requires us to differentiate *again* in $t$. Since we
@@ -324,7 +355,7 @@ have fairly explicit function for $x$ and $y$, we will use `SymPy` to
 do this.
 
 ```julia;
-@syms t theta()
+@syms theta()
 
 v0 = 5
 x(t) = 50t
@@ -352,14 +383,14 @@ be $100 - x(t)$ divided by the length of the hypotenuse. So we can
 substitute:
 
 ```julia;
-dtheta = dtheta(cos(theta(t))^2 => (100 -x(t))^2/(y(t)^2 + (100-x(t))^2))
+dtheta₁ = dtheta(cos(theta(t))^2 => (100 -x(t))^2/(y(t)^2 + (100-x(t))^2))
 ```
 
 
 Plotting reveals some interesting things. For $v_{0y} < 10$ we have graphs that look like:
 
 ```julia;
-plot(dtheta, 0, v0/5)
+plot(dtheta₁, 0, v0/5)
 ```
 
 The ball will drop in front of the player, and the change in $d\theta/dt$ is monotonic.
@@ -368,15 +399,15 @@ The ball will drop in front of the player, and the change in $d\theta/dt$ is mon
 
 But let's rerun the code with $v_{0y} > 10$:
 
-```julia;
+```julia; hold=true
 v0 = 15
 x(t) = 50t
 y(t) = v0*t - 5 * t^2
 eqn = tan(theta(t)) - y(t) / (100 - x(t))
 thetap = diff(theta(t),t)
 dtheta = solve(diff(eqn, t), thetap)[1]
-dtheta = subs(dtheta, cos(theta(t))^2, (100 - x(t))^2/(y(t)^2 + (100 - x(t))^2))
-plot(dtheta, 0, v0/5)
+dtheta₁ = subs(dtheta, cos(theta(t))^2, (100 - x(t))^2/(y(t)^2 + (100 - x(t))^2))
+plot(dtheta₁, 0, v0/5)
 ```
 
 
@@ -402,24 +433,24 @@ The volume of a cone of height $h$ is $V(h) = \pi/3 h \cdot
 R^2$. From the geometry, $R = h\tan(\theta)$. The volume of the
 filter then is:
 
-$$~
+```math
 V = V(h) - V(h_0).
-~$$
+```
 
 What is $dV/dh$ in terms of $dR/dh$?
 
 Differentiating implicitly gives:
 
 
-$$~
+```math
 \frac{dV}{dh} = \frac{\pi}{3} ( R(h)^2 + h \cdot 2 R \frac{dR}{dh}).
-~$$
+```
 
 We see that it depends on $R$ and the change in $R$ with respect to $h$. However, we visualize $h$ - the height - so it is better to re-express. Clearly, $dR/dh = \tan\theta$ and using $R(h) = h \tan(\theta)$ we get:
 
-$$~
+```math
 \frac{dV}{dh} = \pi h^2 \tan^2(\theta).
-~$$
+```
 
 The rate of change goes down as $h$ gets smaller ($h \geq h_0$) and gets bigger for bigger $\theta$.
 
@@ -439,22 +470,24 @@ the cross-sections have more volume.
 By [Torricelli's](http://en.wikipedia.org/wiki/Torricelli's_law) law,
 the out velocity follows the law $v = \sqrt{2g(h-h_0)}$. This gives:
 
-$$~
+```math
 \frac{dh}{dt} = \frac{h_0^2}{h^2} \cdot v = \frac{h_0^2}{h^2} \sqrt{2g(h-h_0)}.
-~$$
+```
 
 If $h >> h_0$, then $\sqrt{h-h_0} = \sqrt{h}\sqrt(1 - h_0/h) \approx \sqrt{h}(1 - (1/2)(h_0/h)) \approx \sqrt{h}$. So the rate of change of height in time is like $1/h^{3/2}$.
 
 
 Now, by the chain rule, we have then the rate of change of volume with respect to time, $dV/dt$, is:
 
-$$~
-\frac{dV}{dt} =
-\frac{dV}{dh} \cdot \frac{dh}{dt} =
-\pi h^2 \tan^2(\theta) \cdot \frac{h_0^2}{h^2} \sqrt{2g(h-h_0)} =
-\pi \sqrt{2g} \cdot (r_0)^2 \cdot \sqrt{h-h_0}
-\approx \pi \sqrt{2g} \cdot r_0^2 \cdot \sqrt{h}
-~$$
+```math
+\begin{align*}
+\frac{dV}{dt} &=
+\frac{dV}{dh} \cdot \frac{dh}{dt}\\
+&= \pi h^2 \tan^2(\theta) \cdot \frac{h_0^2}{h^2} \sqrt{2g(h-h_0)}  \\
+&= \pi \sqrt{2g} \cdot (r_0)^2 \cdot \sqrt{h-h_0} \\
+&\approx \pi \sqrt{2g} \cdot r_0^2 \cdot \sqrt{h}.
+\end{align*}
+```
 
 
 
@@ -470,7 +503,7 @@ A batter hits a ball toward third base at ``75`` ft/sec and runs toward first ba
 We will answer this with `SymPy`. First we create some symbols for the movement of the ball towardsthird base, `b(t)`, the runner toward first base, `r(t)`, and the two velocities. We use symbolic functions for the movements, as we will be differentiating them in time:
 
 ```julia
-@syms t b() r() v_b v_r
+@syms b() r() v_b v_r
 d = sqrt(b(t)^2 + r(t)^2)
 ```
 
@@ -492,13 +525,25 @@ ddt = subs(dd, db => v_b, dr => v_r)
 Now, we can substitute in for `b(t)`, as it is `v_b*t`, etc.:
 
 ```julia
-ddt = subs(ddt, b(t) => v_b * t, r(t) => v_r * t)
+ddt₁ = subs(ddt, b(t) => v_b * t, r(t) => v_r * t)
 ```
 
 This finds the rate of change of time for any `t` with symbolic values of the velocities. (And shows how the answer doesn't actually depend on ``t``.) The problem's answer comes from a last substitution:
 
 ```julia
-ddt(t => 2, v_b => 75, v_r => 24)
+ddt₁(t => 2, v_b => 75, v_r => 24)
+```
+
+Were this done by "hand," it would be better to work with distance squared to avoid the expansion of complexity from the square root. That is, using implicit differentiation:
+
+```math
+\begin{align*}
+d^2 &= b^2 + r^2\\
+2d\cdot d' &= 2b\cdot b' + 2r\cdot r'\\
+d' &= (b\cdot b' + r \cdot r')/d\\
+d' &= (tb'\cdot b' + tr' \cdot r')/d\\
+d' &= \left((b')^2 + (r')^2\right) \cdot \frac{t}{d}.
+\end{align*}
 ```
 
 ## Questions
@@ -509,9 +554,9 @@ Supply and demand. Suppose demand for product $XYZ$ is $d(x)$ and supply
 is $s(x)$. The excess demand is $d(x) - s(x)$. Suppose this is positive. How does this influence
 price? Guess the "law" of economics that applies:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"The rate of change of price will be $0$",
+"The rate of change of price will be ``0``",
 "The rate of change of price will increase",
 "The rate of change of price will be positive and will depend on the rate of change of excess demand."
 ]
@@ -525,7 +570,7 @@ radioq(choices, ans, keep_order=true)
 
 Which makes more sense from an economic viewpoint?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 "If the rate of change of unemployment is negative, the rate of change of wages will be negative.",
 "If the rate of change of unemployment is negative, the rate of change of wages will be positive."
@@ -542,7 +587,7 @@ In chemistry there is a fundamental relationship between pressure
 ($P$), temperature ($T)$ and volume ($V$) given by $PV=cT$ where $c$
 is a constant. Which of the following would be true with respect to time?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 L"The rate of change of pressure is always increasing by $c$",
 "If volume is constant, the rate of change of pressure is proportional to the temperature",
@@ -555,11 +600,11 @@ radioq(choices, ans, keep_order=true)
 ###### Question
 
 A pebble is thrown into a lake causing ripples to form expanding
-circles. Suppose one of the circles expands at a rate of 1 foot per second and
-the radius of the circle is 10 feet, what is the rate of change of
+circles. Suppose one of the circles expands at a rate of ``1`` foot per second and
+the radius of the circle is ``10`` feet, what is the rate of change of
 the area enclosed by the circle?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 # a = pi*r^2
 # da/dt = pi * 2r * drdt
 r = 10; drdt = 1
@@ -570,10 +615,10 @@ numericq(val, units=L"feet$^2$/second")
 ###### Question
 
 A pizza maker tosses some dough in the air. The dough is formed in a
-circle with radius 10. As it rotates, its area increases at a rate of
-1 inch$^2$ per second. What is the rate of change of the radius?
+circle with radius ``10``. As it rotates, its area increases at a rate of
+``1`` inch$^2$ per second. What is the rate of change of the radius?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 # a = pi*r^2
 # da/dt = pi * 2r * drdt
 r = 10; dadt = 1
@@ -593,7 +638,7 @@ the gangster, how fast is the gangster moving? (In kilometers per minute.)
 [Source.](http://oregonstate.edu/instruct/mth251/cq/Stage9/Practice/ratesProblems.html)
 
 
-```julia; echo=false
+```julia; hold=true; echo=false
 ## tan(theta) = x/y
 ## sec^2(theta) dtheta/dt = 1/y dx/dt (y is constant)
 ## dxdt = y sec^2(theta) dtheta/dt
@@ -614,7 +659,7 @@ wall when he is 50 feet from the wall?
 [Source.](http://oregonstate.edu/instruct/mth251/cq/Stage9/Practice/ratesProblems.html)
 (As the question is written the answer should be positive.)
 
-```julia; echo=false
+```julia; hold=true; echo=false
 ## y/200 = 6/x
 ## dydt = 200 * 6 * -1/x^2 dxdt
 x0 = 200 - 50
@@ -633,12 +678,12 @@ increasing at a rate of $f(x)$ units/sec. If its $y$-coordinate is
 decreasing at a constant rate of $1$ unit/sec, what is $f(x)$?
 [Source.](http://oregonstate.edu/instruct/mth251/cq/Stage9/Practice/ratesProblems.html)
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"f(x) = 1/x",
-L"f(x) = x^0",
-L"f(x) = x",
-L"f(x) = x^2"
+"``f(x) = 1/x``",
+"``f(x) = x^0``",
+"``f(x) = x``",
+"``f(x) = x^2``"
 ]
 ans = 4
 radioq(choices, ans, keep_order=true)
@@ -651,7 +696,7 @@ a known formula, $V=4/3 \pi r^3$, for the volume. If the balloon is being filled
 change of volume per unit time is $2$ and the radius is $3$, what is
 rate of change of radius per unit time?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 r, dVdt = 3, 2
 drdt = dVdt / (4 * pi * r^2)
 numericq(drdt, units="units per unit time")
@@ -661,12 +706,12 @@ numericq(drdt, units="units per unit time")
 
 Consider the curve $f(x) = x^2 - \log(x)$. For a given $x$, the tangent line intersects the $y$ axis. Where?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"y = 1 - x^2 - \log(x)",
-L"y = 1 - x^2",
-L"y = 1 - \log(x)",
-L"y = x(2x - 1/x)"
+"``y = 1 - x^2 - \\log(x)``",
+"``y = 1 - x^2``",
+"``y = 1 - \\log(x)``",
+"``y = x(2x - 1/x)``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -674,18 +719,13 @@ radioq(choices, ans)
 
 If $dx/dt = -1$, what is $dy/dt$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"dy/dt = 2x + 1/x",
-L"dy/dt = 1 - x^2 - \log(x)",
-L"dy/dt = -2x - 1/x",
-L"dy/dt = 1"
+"``dy/dt = 2x + 1/x``",
+"``dy/dt = 1 - x^2 - \\log(x)``",
+"``dy/dt = -2x - 1/x``",
+"``dy/dt = 1``"
 ]
 ans=1
 radioq(choices, ans)
-```
-
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

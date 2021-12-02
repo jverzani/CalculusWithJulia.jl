@@ -80,8 +80,9 @@ end
 
 Show jsxgraph commands contained in file `f`.
 """
-function JSXGraph(f, caption="JSXGraph Demo"; ID="jsxgraph", CLASS="jsxgraph", WIDTH=600, HEIGHT=400)
-    JSXGRAPH(read(f, String),
+function JSXGraph(f, caption="JSXGraph Demo"; ID="jsxgraph", CLASS="jsxgraph", WIDTH=500, HEIGHT=300)
+    content = occursin(r"^http", f) ? read(download(f), String) : read(f, String)
+    JSXGRAPH(content,
              markdown(caption),
              ID, CLASS, WIDTH, HEIGHT)
 end
@@ -94,6 +95,8 @@ mutable struct JSXGRAPH  <: OutputOnlyType
     WIDTH
     HEIGHT
 end
+
+
 
 #<div class="card">
 #   <div class="card-header">{{{CAPTION}}}</div>
@@ -131,7 +134,10 @@ jsxgraph_tpl = Mustache.mt"""
 
 """
 
+
+
 Base.show(io::IO, ::MIME"text/html", x::JSXGRAPH) = Mustache.render(io, jsxgraph_tpl, x)
+
 Base.show(io::IO, x::JSXGRAPH) = print(io, "JSXGraph unavailable")
 
 ## Bootstrap things
@@ -370,102 +376,3 @@ function Base.show(io::IO, ::MIME"text/latex", x::NamedTable)
     d = markdown_to_latex.(x.x)
     println(io, df_to_table(d))
 end
-
-
-# show footer via
-#=
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.footer(@__FILE__, @__DIR__)
-```
-=#
-struct Footer
-    f
-    d
-end
-
-# compute from URL
-function previous_current_next(foot::Footer)
-    f₀ = Symbol(last(split(foot.f, "/"))[1:end-4])
-    d₀ = Symbol(split(foot.d, "/")[end])
-
-    toc_url = "../misc/toc.html"
-    suggest_url = "https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/$(d₀)/$(f₀).jmd"
-
-    prev_url = "https://calculuswithjulia.github.io"
-    next_url = "https://calculuswithjulia.github.io"
-
-    prev,nxt = prev_next(d₀, f₀)
-
-    if prev != nothing
-        d,f = prev
-        prev_url = "../$(d)/$(f).html"
-    end
-
-    if nxt != nothing
-        d,f = nxt
-        next_url = "../$(d)/$(f).html"
-    end
-
-    (base_url="https://calculuswithjulia.github.io",
-     toc_url=toc_url,
-     prev_url=prev_url,
-     next_url = next_url,
-     suggest_edit_url = suggest_url
-     )
-end
-
-function Base.show(io::IO, ::MIME"text/html", x::Footer)
-    Mustache.render(io, footer_html_tpl, previous_current_next(x))
-end
-
-# add suggest edit
-# <div class="container d-flex justify-content-end">
-#==
-==#
-footer_html_tpl = """
-<div class="card" style="">
-  <div class="card-header float-end text-muted">
-    <span class="text-muted  float-end align-middle">
-
-<a href="{{{:prev_url}}}"
-data-bs-toggle="tooltip"
-data-bs-placement="top"
-title="Previous section"
-aria-label="Previous section"
-class="bi bi-arrow-left-circle-fill">
-</a>
-
-&nbsp;
-
-<a href="{{{:next_url}}}"
-data-bs-toggle="tooltip"
-data-bs-placement="top"
-title="Next section"
-aria-label="Next section"
-class="bi bi-arrow-right-circle-fill">
-</a>
-
-&nbsp;
-
-<a href="{{{:suggest_edit_url}}}"
-data-bs-toggle="tooltip"
-data-bs-placement="top"
-title="Suggest an edit"
-aria-label="Suggest an edit"
-class="bi bi-pencil-square">
-</a>
-
-&nbsp;
-
-<a href="{{{:toc_url}}}"
-data-bs-toggle="tooltip"
-data-bs-placement="top"
-title="Table of contents"
-aria-label="Table of contents"
-class="bi bi-card-list">
-</a>
-
-    </span>
-  </div>
-</div>
-"""
