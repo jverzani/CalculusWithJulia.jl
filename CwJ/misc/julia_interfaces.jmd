@@ -16,14 +16,37 @@ nothing
 
 Base `Julia` comes with a `REPL` package, which  provides a means to interact with `Julia` at the command line.
 
-```julia; echo=false;
-ImageFile("figures/julia-repl.png")
+```julia; eval=false
+               _
+   _       _ _(_)_     |  Documentation: https://docs.julialang.org
+  (_)     | (_) (_)    |
+   _ _   _| |_  __ _   |  Type "?" for help, "]?" for Pkg help.
+  | | | | | | |/ _` |  |
+  | | |_| | | | (_| |  |  Version 1.7.0 (2021-11-30)
+ _/ |\__'_|_|_|\__'_|  |  Official https://julialang.org/ release
+|__/                   |
+
+julia> 2 + 2
+4
 ```
 
 The `julia>` prompt is where commands are typed. The `return` key will send a command to the interpreter and the results are displayed in the REPL terminal.
 
 The REPL has many features for editing, for interacting with the package manager, or interaction with the shell. However it is command-line based, which no support for mouse interaction. For that, other options are available.
 
+## `Pluto`
+
+The `Pluto` package provides a notebook interface for interacting with `Julia`, which has a few idiosyncrasies, as compared to other interfaces.
+
+Primarily, the variables in the notebook are **reactive**, meaning if a variable's value is modified, all references to that variables are also modified. This reactive nature makes it very easy to see the results of slight modifications and when coupled with HTML controls, allows easy user interfaces to be developed.
+
+As a result, a variable name may only be used once in the top-level scope. (Names can be reused inside functions, which create their own scope and in "`let`" blocks, a trick used within these notes.) In the notes, subscripting and unicode variants are used for symbols which are typically repurposed (e.g., `x` or `f`).
+
+Pluto cells may only contain one command, the result of which is displayed *above* the cell. This one command can be a `begin` or `let` block to join multiple statements.
+
+Pluto has a built-in package management system that manages the installation of packages on demand.
+
+The sections presented as `Pluto` notebooks can be easily run locally using `Pluto`.
 
 ## `IJulia`
 
@@ -48,10 +71,11 @@ Pkg.add("IJulia")
 ----
 
 
-The notebook interface has "cells" where one or more commands can be entered:
+The notebook interface has "cells" where one or more commands can be entered.
 
 ```julia; echo=false;
-ImageFile("figures/julia-jupyter.png")
+#ImageFile("figures/julia-jupyter.png")
+nothing
 ```
 
 
@@ -81,7 +105,8 @@ Notebooks can be saved (as `*.ipynb` files) for sharing or for reuse. Notebooks 
 JupyterLab has more features, commonly associated with an integrated development environment (IDE).
 
 ```julia; echo=false
-ImageFile("figures/julia_jupyterlab.png")
+#ImageFile("figures/julia_jupyterlab.png")
+nothing
 ```
 
 The figure shows a notebook and a menubar in the side menu. In addition to notebooks, JupyterLab offers the change to edit source files, for example, for project development.

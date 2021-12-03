@@ -49,7 +49,7 @@ end
 ## WeaveTpl
 function Base.show(io::IO, m::MIME"text/html", x::ImageFile)
     data = (read(x.f, String))
-    content = gif_to_imge(data=data, alt="figure")
+    content = gif_to_image(data=data, alt="figure")
     caption = sprint(io -> show(io, "text/html", x.caption))
 
     print(io, """<div class="d-flex justify-content-center">""")

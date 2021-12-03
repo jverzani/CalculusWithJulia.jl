@@ -8,6 +8,24 @@ Julia can be used through the internet for free using the [mybinder.org](https:/
 To do so, click on the `CalcululsWithJulia.ipynb` file after launching Binder by clicking on the badge.
 
 
+These notes are transitioning from HTML pages to Pluto HTML pages, meaning they can be downloaded and run as notebooks within Pluto. Pluto will handle the package management for add-on packages automatically, though `Pluto` itself must be installed. In a terminal session, the following commands will install `Pluto`:
+
+```julia; eval=false
+import Pkg
+Pkg.add("Pluto")
+```
+
+Installation happens once. Then each new *session*, `Pluto` must be loaded and run:
+
+```julia; eval=false
+using Pluto
+Pluto.run()
+```
+
+`Pluto` notebooks run in a web browser, the above command will open a landing page in the default browser.
+
+
+
 ----
 
 ```julia; echo=false; results="hidden"
@@ -45,6 +63,7 @@ Packages need only be installed once, but they must be loaded into *each* sessio
 ```julia;
 using CalculusWithJulia
 using Plots
+using SymPy
 ```
 
 Packages can also be loaded through `import PackageName`. Importing does not add the exported objects of a function into the namespace, so is used when there are possible name collisions.
@@ -185,7 +204,7 @@ The add-on `SymPy` package allows for symbolic expressions to be used. Symbolic 
 
 ```julia;
 using SymPy
-@syms x y z  
+@syms x y z
 x^2 + y^3 + z
 ```
 
@@ -504,11 +523,11 @@ f2(t) = exp(t/2pi) * sin(t)
 plot(f1, f2, 0, 2pi)
 ```
 
-* Using `plot_parametric_curve`. If the curve is described as a function of `t` with a vector output, then the `CalculusWithJulia` package provides `plot_parametric_curve` to produce a plot:
+* Using `plot_parametric`. If the curve is described as a function of `t` with a vector output, then the `CalculusWithJulia` package provides `plot_parametric` to produce a plot:
 
 ```julia;
 r(t) = exp(t/2pi) * [cos(t), sin(t)]
-plot_parametric_curve(r, 0, 2pi)
+plot_parametric(0..2pi, r)
 ```
 
 The low-level approach doesn't quite work as easily as desired:
@@ -528,7 +547,7 @@ ys = [vs[i][2] for i in eachindex(vs)]
 plot(xs, ys)
 ```
 
-This approach is faciliated by the `unzip` function in `CalculusWithJulia` (and used internally by `plot_parametric_curve`):
+This approach is faciliated by the `unzip` function in `CalculusWithJulia` (and used internally by `plot_parametric`):
 
 ```julia;
 plot(unzip(vs)...)
@@ -541,13 +560,10 @@ plot(unzip(vs)...)
 An arrow in 2D can be plotted with the `quiver` command. We show the `arrow(p, v)` (or `arrow!(p,v)` function) from the `CalculusWithJulia` package, which has an easier syntax (`arrow!(p, v)`, where `p` is a point indicating the placement of the tail, and `v` the vector to represent):
 
 ```julia;
-gr()
-plot_parametric_curve(r, 0, 2pi)
+plot_parametric(0..2pi, r)
 t0 = pi/8
 arrow!(r(t0), r'(t0))
 ```
-
-The `GR` package makes nicer arrows that `Plotly`.
 
 > Plotting a scalar function $f:R^2 \rightarrow R$
 
@@ -558,7 +574,6 @@ The `surface` and `contour` functions are available to visualize a scalar functi
 
 
 ```julia;
-plotly()    # The `plotly` backend allows for rotation by the mouse; otherwise the `camera` argument is used
 f(x, y) = 2 - x^2 + y^2
 xs = ys = range(-2,2, length=25)
 surface(xs, ys, f)
@@ -587,9 +602,16 @@ contour(xs, ys, f.(xs, ys'))
 ```
 
 
-* An implicit equation. The constraint $f(x,y)=c$ generates an implicit equation. While `contour` can be used for this type of plot - by adjusting the requested contours - the `ImplicitEquations` package can as well, and, perhaps. is easier. This package is loaded with `CalculusWithJulia`; loading it by itself will lead to naming conflicts with `SymPy`, so best not to do so. `ImplicitEquations` plots predicates formed by `Eq`, `Le`, `Lt`, `Ge`, and `Gt` (or some unicode counterparts). For example to plot when $f(x,y) =  \sin(xy) - \cos(xy) \leq 0$ we have:
+* An implicit equation. The constraint $f(x,y)=c$ generates an
+  implicit equation. While `contour` can be used for this type of
+  plot - by adjusting the requested contours - the `ImplicitEquations`
+  package can as well, and, perhaps. is easier.`ImplicitEquations`
+  plots predicates formed by `Eq`, `Le`, `Lt`, `Ge`, and `Gt` (or some
+  unicode counterparts). For example to plot when $f(x,y) = \sin(xy) -
+  \cos(xy) \leq 0$ we have:
 
 ```julia;
+using ImplicitEquations
 f(x,y) = sin(x*y) - cos(x*y)
 plot(Le(f, 0))     # or plot(f ≦ 0) using \leqq[tab] to create that symbol
 ```
@@ -599,11 +621,11 @@ plot(Le(f, 0))     # or plot(f ≦ 0) using \leqq[tab] to create that symbol
 
 
 
-The `plotly` (and `pyplot`) backends allow plotting of parameterized surfaces.
+The `pyplot` (and `plotly`) backends allow plotting of parameterized surfaces.
 
 The low-level `surface(xs,ys,zs)` is used, and can be specified directly as follows:
 
-```julia;eval=false
+```julia;
 X(theta, phi) = sin(phi)*cos(theta)
 Y(theta, phi) = sin(phi)*sin(theta)
 Z(theta, phi) = cos(phi)
@@ -613,15 +635,6 @@ surface(X.(thetas, phis'), Y.(thetas, phis'), Z.(thetas, phis'))
 ```
 
 
-The function `parametric_grid` from the `CalculusWithJulia` package will prepare the `xs`, `ys`, and `zs` to pass to `surface` when a vector-valued function is involved:
-
-```julia;eval=false
-Phi(theta, phi) = [sin(phi) * cos(theta), sin(phi) * sin(theta), cos(phi)]
-thetas, phis = range(0, pi/4, length=15), range(0, pi, length=20)
-xs, ys, zs = parametric_grid(thetas, phis, Phi)
-surface(xs, ys, zs)
-wireframe!(xs, ys, zs)
-```
 
 
 
@@ -877,12 +890,15 @@ For symbolic expressions, we have
 
 Numeric integration is provided by the `QuadGK` package, for univariate integrals, and the `HCubature` package for higher dimensional integrals.
 
+```julia;
+using QuadGK, HCubature
+```
+
 > Integrals of univariate functions
 
 A definite integral may be computed numerically using `quadgk`
 
 ```julia;
-using QuadGK
 quadgk(sin, 0, pi)
 ```
 
@@ -954,10 +970,10 @@ hcubature(integrand, (0.0,-pi/2), (1.0, pi/2))
 In `CalculusWithJulia` a `fubini` function is provided to compute numeric integrals over regions which can be described by curves represented by functions. E.g., for this problem:
 
 ```julia;
-fubini(f, (x -> -sqrt(1-x^2), x -> sqrt(1-x^2)), (0, 1))
+CalculusWithJulia.fubini(f, (x -> -sqrt(1-x^2), x -> sqrt(1-x^2)), (0, 1))
 ```
 
-This function is for convenience, but is not performant.
+This function is for convenience, but is not performant. It is not exported, so is used as above, through qualification.
 
 
 ----
