@@ -168,13 +168,31 @@ $( document ).ready(function() {
 <h2>The <code>REPL</code></h2>
 <p>Base <code>Julia</code> comes with a <code>REPL</code> package, which  provides a means to interact with <code>Julia</code> at the command line.</p>
 
-<pre class="julia-error">
-ERROR: SystemError: opening file &quot;figures/julia-repl.png&quot;: No such file or directory
+
+<pre class='hljl'>
+<span class='hljl-n'>_</span><span class='hljl-t'>
+   </span><span class='hljl-n'>_</span><span class='hljl-t'>       </span><span class='hljl-n'>_</span><span class='hljl-t'> </span><span class='hljl-nf'>_</span><span class='hljl-p'>(</span><span class='hljl-n'>_</span><span class='hljl-p'>)</span><span class='hljl-n'>_</span><span class='hljl-t'>     </span><span class='hljl-oB'>|</span><span class='hljl-t'>  </span><span class='hljl-n'>Documentation</span><span class='hljl-oB'>:</span><span class='hljl-t'> </span><span class='hljl-n'>https</span><span class='hljl-oB'>://</span><span class='hljl-n'>docs</span><span class='hljl-oB'>.</span><span class='hljl-n'>julialang</span><span class='hljl-oB'>.</span><span class='hljl-n'>org</span><span class='hljl-t'>
+  </span><span class='hljl-p'>(</span><span class='hljl-n'>_</span><span class='hljl-p'>)</span><span class='hljl-t'>     </span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>_</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>_</span><span class='hljl-p'>)</span><span class='hljl-t'>    </span><span class='hljl-oB'>|</span><span class='hljl-t'>
+   </span><span class='hljl-n'>_</span><span class='hljl-t'> </span><span class='hljl-n'>_</span><span class='hljl-t'>   </span><span class='hljl-n'>_</span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-oB'>|</span><span class='hljl-n'>_</span><span class='hljl-t'>  </span><span class='hljl-n'>__</span><span class='hljl-t'> </span><span class='hljl-n'>_</span><span class='hljl-t'>   </span><span class='hljl-oB'>|</span><span class='hljl-t'>  </span><span class='hljl-n'>Type</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;?&quot;</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-n'>help</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;]?&quot;</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-n'>Pkg</span><span class='hljl-t'> </span><span class='hljl-n'>help</span><span class='hljl-oB'>.</span><span class='hljl-t'>
+  </span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-oB'>|/</span><span class='hljl-t'> </span><span class='hljl-n'>_</span><span class='hljl-sb'>` |  |
+  | | |_| | | | (_| |  |  Version 1.7.0 (2021-11-30)
+ _/ |\__&#39;_|_|_|\__&#39;_|  |  Official https://julialang.org/ release
+|__/                   |
+
+julia&gt; 2 + 2
+4</span>
 </pre>
 
 
 <p>The <code>julia&gt;</code> prompt is where commands are typed. The <code>return</code> key will send a command to the interpreter and the results are displayed in the REPL terminal.</p>
 <p>The REPL has many features for editing, for interacting with the package manager, or interaction with the shell. However it is command-line based, which no support for mouse interaction. For that, other options are available.</p>
+<h2><code>Pluto</code></h2>
+<p>The <code>Pluto</code> package provides a notebook interface for interacting with <code>Julia</code>, which has a few idiosyncrasies, as compared to other interfaces.</p>
+<p>Primarily, the variables in the notebook are <strong>reactive</strong>, meaning if a variable&#39;s value is modified, all references to that variables are also modified. This reactive nature makes it very easy to see the results of slight modifications and when coupled with HTML controls, allows easy user interfaces to be developed.</p>
+<p>As a result, a variable name may only be used once in the top-level scope. &#40;Names can be reused inside functions, which create their own scope and in &quot;<code>let</code>&quot; blocks, a trick used within these notes.&#41; In the notes, subscripting and unicode variants are used for symbols which are typically repurposed &#40;e.g., <code>x</code> or <code>f</code>&#41;.</p>
+<p>Pluto cells may only contain one command, the result of which is displayed <em>above</em> the cell. This one command can be a <code>begin</code> or <code>let</code> block to join multiple statements.</p>
+<p>Pluto has a built-in package management system that manages the installation of packages on demand.</p>
+<p>The sections presented as <code>Pluto</code> notebooks can be easily run locally using <code>Pluto</code>.</p>
 <h2><code>IJulia</code></h2>
 <p>&quot;Project <a href="https://jupyter.org/">Jupyter</a>  exists to develop open-source software, open-standards, and services for interactive computing across dozens of programming languages.&quot; The <code>IJulia</code> package allows <code>Julia</code> to be one of these programming languages. This package must be installed prior to use.</p>
 <p>The Jupyter Project provides two web-based interfaces to <code>Julia</code>: the Jupyter notebook and the newer JupyterLab. The <a href="https://www.juliabox.com/">juliabox</a> project and the <a href="https://mybinder.org/">binder</a> project use Juptyer notebooks for their primary interface to <code>Julia</code>.</p>
@@ -197,11 +215,7 @@ ERROR: SystemError: opening file &quot;figures/julia-repl.png&quot;: No such fil
 
 
 <hr />
-<p>The notebook interface has &quot;cells&quot; where one or more commands can be entered:</p>
-
-<pre class="julia-error">
-ERROR: SystemError: opening file &quot;figures/julia-jupyter.png&quot;: No such file or directory
-</pre>
+<p>The notebook interface has &quot;cells&quot; where one or more commands can be entered.</p>
 
 
 <p>The notes have blocks of commands, as though they are entered in a notebook.</p>
@@ -216,10 +230,6 @@ ERROR: SystemError: opening file &quot;figures/julia-jupyter.png&quot;: No such 
 <p>Notebooks can be saved &#40;as <code>*.ipynb</code> files&#41; for sharing or for reuse. Notebooks can be printed at HTML pages, and if the proper underlying software is available, as formatted pages.</p>
 <hr />
 <p>JupyterLab has more features, commonly associated with an integrated development environment &#40;IDE&#41;.</p>
-
-<pre class="julia-error">
-ERROR: SystemError: opening file &quot;figures/julia_jupyterlab.png&quot;: No such file or directory
-</pre>
 
 
 <p>The figure shows a notebook and a menubar in the side menu. In addition to notebooks, JupyterLab offers the change to edit source files, for example, for project development.</p>
