@@ -19,14 +19,21 @@ pyplot()
 fig_size = (600, 400)
 
 # keep until CwJ bumps version
-using Downloads
-function JSXGraph(fname, caption)
-    url = "https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/derivatives/"
-    content = read(Downloads.download(joinpath(url, fname)), String)
-    CalculusWithJulia.WeaveSupport.JSXGRAPH(content, caption,
-                                            "jsxgraph", "jsxgraph",
-                                            500, 300)
+function _ImageFile(f, caption, alt="A figure", width=nothing)
+    data = CalculusWithJulia.WeaveSupport.base64encode(read(f, String))
+    content = CalculusWithJulia.WeaveSupport.Mustache.render(CalculusWithJulia.WeaveSupport.gif_to_img_tpl, data=data, alt=alt)
+    caption = CalculusWithJulia.WeaveSupport.Markdown.parse(caption)
+    CalculusWithJulia.WeaveSupport.ImageFile(f, caption, alt, width, content)
 end
+
+# using Downloads
+# function JSXGraph(fname, caption)
+#     url = "https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/derivatives/"
+#     content = read(Downloads.download(joinpath(url, fname)), String)
+#     CalculusWithJulia.WeaveSupport.JSXGRAPH(content, caption,
+#                                             "jsxgraph", "jsxgraph",
+#                                             500, 300)
+# end
 nothing
 ```
 
@@ -413,8 +420,9 @@ Illustration of the mean value theorem from https://jsxgraph.uni-bayreuth.de/.
 The polynomial function interpolates  the points ``A``,``B``,``C``, and ``D``. Adjusting these creates different functions. Regardless of the function -- which as a polynomial will always be continuous and differentiable -- the slope of the secant line between ``A`` and ``B`` is always matched by some tangent line betweent the points ``A`` and ``B``.
 """
 #CalculusWithJulia.WeaveSupport.JSXGraph(joinpath(@__DIR__, "mean-value.js"), caption)
-JSXGraph("mean-value.js", caption)
-nothing
+
+url = "https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/derivatives/mean-value.js"
+JSXGraph(url, caption)
 ```
 
 
@@ -516,7 +524,7 @@ end
 imgfile = tempname() * ".gif"
 gif(anim, imgfile, fps = 1)
 
-ImageFile(imgfile, caption)
+_ImageFile(imgfile, caption)
 ```
 
 

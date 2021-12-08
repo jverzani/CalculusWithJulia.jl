@@ -1,4 +1,6 @@
 ## formatting conveniences
+## JSXGraph
+## ImageFile
 abstract type OutputOnlyType end
 
 "markdown can leave wrapping p's"
@@ -79,6 +81,13 @@ end
     JSXGraph(f; [ID], [CLASS], [WIDTH], [HEIGHT]
 
 Show jsxgraph commands contained in file `f`.
+
+# Examples
+```
+JSXGraph(:integrals, "mean_value.js", "caption")
+JSXGraph("https://....", "caption")
+JSXGraph("/full/path/to/file.js", "caption")
+```
 """
 function JSXGraph(f, caption="JSXGraph Demo"; ID="jsxgraph", CLASS="jsxgraph", WIDTH=500, HEIGHT=300)
     content = occursin(r"^http", f) ? read(download(f), String) : read(f, String)
@@ -86,6 +95,14 @@ function JSXGraph(f, caption="JSXGraph Demo"; ID="jsxgraph", CLASS="jsxgraph", W
              markdown(caption),
              ID, CLASS, WIDTH, HEIGHT)
 end
+
+# read from CwJ directory
+function JSXGraph(dir::Symbol, f, caption="JSXGraph Demo"; kwargs...)
+    basedir = replace(dirname(@__DIR__), "/src" => "")
+    fname = joinpath(basedir, "CwJ", string(dir), f)
+    JSXGraph(f, caption; kwargs...)
+end
+
 
 mutable struct JSXGRAPH  <: OutputOnlyType
     FILE_CONTENTS
@@ -161,9 +178,17 @@ end
 
 warning(txt; kwargs...) = alert(txt; class="warning", kwargs...)
 note(txt; kwargs...) = alert(txt; class="info", kwargs...)
+hint(txt; kwargs...) = alert(txt; class="hint", kwargs...)
 
 
-function Base.show(io::IO, ::MIME"text/html", x::Alert)
+function Base.show(io::IO, m::MIME"text/html", x::Alert)
+    content = Markdown.parse(x.x).content
+    class = get(x.d, :class, "alert")
+    title = get(x.d, :title, uppercasefirst(class))
+    a = Markdown.MD(Markdown.Admonition(class, title, content))
+    show(io, m, a)
+    return nothing
+
     cls = haskey(x.d,:class) ? x.d[:class] : "success"
     txt = sprint(io -> show(io, "text/html", Markdown.parse(x.x)))
     tpl = """<div class="alert alert-$cls" role="alert">$txt</div>"""

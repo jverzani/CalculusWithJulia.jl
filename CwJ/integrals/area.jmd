@@ -1,13 +1,33 @@
 # Area under a curve
 
 
-```julia; echo=false; results="hidden"
+This section uses these add-on packages:
+
+```julia
 using CalculusWithJulia
-using CalculusWithJulia.WeaveSupport
 using Plots
+using QuadGK
+using Roots
+```
+
+```julia; echo=false; results="hidden"
+
+using CalculusWithJulia.WeaveSupport
+import PyPlot
+pyplot()
+fig_size = (600, 400)
+using Markdown, Mustache
+function _ImageFile(f, caption, alt="A figure", width=nothing)
+    data = CalculusWithJulia.WeaveSupport.base64encode(read(f, String))
+    content = Mustache.render(CalculusWithJulia.WeaveSupport.gif_to_img_tpl, data=data, alt=alt)
+    caption = Markdown.parse(caption)
+    CalculusWithJulia.WeaveSupport.ImageFile(f, caption, alt, width, content)
+end
+
 nothing
 ```
 
+----
 
 The question of area has long fascinated human culture. As children,
 we learn early on the formulas for the areas of some geometric
@@ -32,9 +52,7 @@ graph. That is, the area between $f(x)$ and the $x$-axis between $a
 For some functions, this area can be computed by geometry, for
 example, here we see the area under $f(x)$ is just $1$, as it is a triangle with base $2$ and height $1$:
 
-```julia;
-using CalculusWithJulia
-using Plots
+```julia; hold=true;
 f(x) = 1 - abs(x)
 plot(f, -1, 1)
 plot!(zero)
@@ -42,7 +60,7 @@ plot!(zero)
 
 Similarly, we know this area is also $1$, it being a square:
 
-```julia;
+```julia; hold=true;
 f(x) = 1
 plot(f, 0, 1)
 plot!(zero)
@@ -50,7 +68,7 @@ plot!(zero)
 
 This one, is simply $\pi/2$, it being half a circle of radius $1$:
 
-```julia;
+```julia; hold=true;
 f(x) = sqrt(1 - x^2)
 plot(f, -1, 1)
 plot!(zero)
@@ -58,7 +76,7 @@ plot!(zero)
 
 And this area can be broken into a sum of the area of square and the area of a rectangle, or $1 + 1/2$:
 
-```julia;
+```julia; hold=true;
 f(x) = x > 1 ? 2 - x : 1.0
 plot(f, 0, 2)
 plot!(zero)
@@ -70,10 +88,8 @@ But what of more complicated areas? Can these have their area computed?
 
 In a previous section, we saw this animation:
 
-```julia; echo=false; cache=true
+```julia; hold=true; echo=false; cache=true
 ## {{{archimedes_parabola}}}
-pyplot()
-fig_size = (600, 400)
 
 
 f(x) = x^2
@@ -126,8 +142,7 @@ The first triangle has area $1/2$, the second has area $1/8$, then $2$ have area
 With some algebra, the total area then should be $1/2 \cdot (1 + (1/4) + (1/4)^2 + \cdots) = 2/3$.
 """
 
-plotly()
-ImageFile(imgfile, caption)
+_ImageFile(imgfile, caption)
 ```
 
 This illustrates a method of
@@ -161,8 +176,11 @@ approximations by geometric figures with known area is the basis of
 Riemann sums.
 
 """
-ImageFile(imgfile, caption)
+#ImageFile(imgfile, caption)
+nothing
 ```
+
+![Figure of Beeckman (1618) showing a means to compute the area under a curve, in this example the line connecting points $A$ and $B$. Using approximations by geometric figures with known area is the basis of Riemann sums.](https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/integrals/figures/beeckman-1618.png)
 
 Beeckman actually did more than find the area. He generalized the
 relationship of rate $\times$ time $=$ distance. The line was interpreting a
@@ -199,9 +217,9 @@ largest of all the differences $\lvert x_i - x_{i-1} \rvert$. For a partition, c
 arbitrary selection of points $c_i$ satisfying $x_{i-1} \leq c_i \leq
 x_{i}$, $1 \leq i \leq n$. Then the following is a **Riemann sum**:
 
-$$~
+```math
 S_n  = f(c_1) \cdot (x_1 - x_0) + f(c_2) \cdot (x_2 - x_1) + \cdots + f(c_n) \cdot (x_n - x_{n-1}).
-~$$
+```
 
 Clearly for a given partition and choice of $c_i$, the above can be
 computed. Each term $f(c_i)\cdot(x_i-x_{i-1})$ can be visualized as
@@ -223,7 +241,7 @@ For Archimedes' problem - finding the area under $f(x)=x^2$ between
 $0$ and $1$ -  if we take as a partition $x_i = i/n$ and $c_i = x_i$,
 then the above sum becomes:
 
-$$~
+```math
 \begin{align*}
 S_n &= f(c_1) \cdot (x_1 - x_0) + f(c_2) \cdot (x_2 - x_1) + \cdots + f(c_n) \cdot (x_n - x_{n-1})\\
 &= (x_1)^2 \cdot \frac{1}{n} + (x_2)^2 \cdot \frac{1}{n} + \cdot + (x_n)^2 \cdot \frac{1}{n}\\
@@ -231,7 +249,7 @@ S_n &= f(c_1) \cdot (x_1 - x_0) + f(c_2) \cdot (x_2 - x_1) + \cdots + f(c_n) \cd
 &= \frac{1}{n^3} \cdot (1^2 + 2^2 + \cdots + n^2) \\
 &= \frac{1}{n^3} \cdot \frac{n\cdot(n-1)\cdot(2n+1)}{6}.
 \end{align*}
-~$$
+```
 
 The latter uses a well-known formula for the sum of squares of the
 first $n$ natural numbers.
@@ -250,15 +268,13 @@ the general statement there is a stretching of the formal concept of a limit.
 """)
 ```
 
-
-```julia; echo=false
-note(L"""
+----
 
 There is a more compact notation to $x_1 + x_2 + \cdots + x_n$, this using the *summation notation* or capital sigma. We have:
 
-$$~
+```math
 \Sigma_{i = 1}^n x_i = x_1 + x_2 + \cdots + x_n
-~$$
+```
 
 The notation includes three pieces of information:
 
@@ -269,8 +285,7 @@ The notation includes three pieces of information:
 - The term $x_i$ is a general term describing the $i$th entry, where it is understood that $i$ is just some arbitrary indexing value.
 
 With this notation, a Riemann sum can be written  as $\Sigma_{i=1}^n f(c_i)(x_i-x_{i-1})$.
-""")
-```
+
 
 ### Other sums
 
@@ -316,28 +331,18 @@ are integrable:
 > \rvert < \delta$ and for any choice of points $x_{i-1} \leq c_i \leq
 > x_{i}$ this is satisfied:
 >
-> $$~
+> ```math
 > \lvert \sum_{i=1}^n f(c_i)(x_{i} - x_{i-1}) - V \rvert < \epsilon.
-> ~$$
+> ```
 >
 > When the integral exists, it is written $V = \int_a^b f(x) dx$.
 
 
 
-```julia; echo=false
-note(L"""
+!!! info "History note"
 
-The expression $V = \int_a^b f(x) dx$ is known as the *definite
-integral* of $f$ over $[a,b]$.
-Much earlier than Riemann, Cauchy had defined the definite integral in terms of a sum of rectangular
-products beginning with $S=(x_1 - x_0) f(x_0) + (x_2 - x_1) f(x_1) +
-\cdots + (x_n - x_{n-1}) f(x_{n-1})$ (the left Riemann sum). He showed
-the limit was well defined for any continuous function. Riemann's
-formulation relaxes the choice of partition and the choice of the
-$c_i$ so that integrability can be better understood.
+    The expression $V = \int_a^b f(x) dx$ is known as the *definite integral* of $f$ over $[a,b]$. Much earlier than Riemann, Cauchy had defined the definite integral in terms of a sum of rectangular products beginning with $S=(x_1 - x_0) f(x_0) + (x_2 - x_1) f(x_1) + \cdots + (x_n - x_{n-1}) f(x_{n-1})$ (the left Riemann sum). He showed the limit was well defined for any continuous function. Riemann's formulation relaxes the choice of partition and the choice of the $c_i$ so that integrability can be better understood.
 
-""")
-```
 
 ### Some immediate consequences
 
@@ -395,19 +400,19 @@ Any partition $a =x_0 < x_1 < \cdots < x_n=b$ is related to a
 partition of $[a-c, b-c]$ through $a-c < x_0-c < x_1-c < \cdots <
 x_n - c = b-c$. Let $d_i=c_i-c$ denote this partition, then we have:
 
-$$~
+```math
 f(c_1 -c) \cdot (x_1 - x_0) + f(c_2 -c) \cdot (x_2 - x_1)  + \cdots + f(c_n -c) \cdot (x_n - x_{n-1}) =
 f(d_1) \cdot(x_1-c - (x_0-c)) + f(d_2) \cdot(x_2-c - (x_1-c)) + \cdots + f(d_n) \cdot(x_n-c - (x_{n-1}-c)).
-~$$
+```
 
 The left side will have a limit of $\int_a^b f(x-c) dx$ the right
 would have a "limit" of $\int_{a-c}^{b-c}f(x)dx$.
 
 Similarly, reflections don't effect the area under the curve, they just require a new parameterization:
 
-> $$~
+> ```math
 > \int_a^b f(x) dx = \int_{-b}^{-a} f(-x) dx
-> ~$$
+> ```
 
 The scaling operation ``g(x) = f(cx)`` has the following:
 
@@ -477,7 +482,7 @@ This is just the area of a trapezoid with heights $a$ and $b$ and side
   would be:
 
 
-$$~
+```math
 \begin{align*}
 S &= x_1 \cdot (x_1 - x_0) + x_2 \cdot (x_2 - x_1) + \cdots x_n \cdot (x_n - x_{n-1}) \\
 &= (a + 1\frac{b-a}{n}) \cdot \frac{b-a}{n} + (a + 2\frac{b-a}{n}) \cdot \frac{b-a}{n} + \cdots  (a + n\frac{b-a}{n}) \cdot \frac{b-a}{n}\\
@@ -486,7 +491,7 @@ S &= x_1 \cdot (x_1 - x_0) + x_2 \cdot (x_2 - x_1) + \cdots x_n \cdot (x_n - x_{
 & \rightarrow a \cdot(b-a) + \frac{(b-a)^2}{2} \\
 &= \frac{b^2}{2} - \frac{a^2}{2}.
 \end{align*}
-~$$
+```
 
 
 > $\int_a^b x^2 dx = \frac{b^3}{3} - \frac{a^3}{3}.$
@@ -498,7 +503,7 @@ This is similar to the Archimedes case with $a=0$ and $b=1$ shown above.
 Cauchy showed this using a *geometric series* for the partition, not the arithmetic series $x_i = a + i (b-a)/n$. The series defined by $1 + \alpha = (b/a)^{1/n}$, then $x_i = a \cdot (1 + \alpha)^i$. Here the bases $x_{i+1} - x_i$ simplify to $x_i \cdot \alpha$ and $f(x_i) = (a\cdot(1+\alpha)^i)^k = a^k (1+\alpha)^{ik}$, or $f(x_i)(x_{i+1}-x_i) = a^{k+1}\alpha[(1+\alpha)^{k+1}]^i$,
 so, using $u=(1+\alpha)^{k+1}=(b/a)^{(k+1)/n}$, $f(x_i) \cdot(x_{i+1} - x_i) = a^{k+1}\alpha u^i$. This gives
 
-$$~
+```math
 \begin{align*}
 S &= a^{k+1}\alpha u^0 + a^{k+1}\alpha u^1 + \cdots + a^{k+1}\alpha u^{n-1}
 &= a^{k+1} \cdot \alpha \cdot (u^0 + u^1 + \cdot u^{n-1}) \\
@@ -506,7 +511,7 @@ S &= a^{k+1}\alpha u^0 + a^{k+1}\alpha u^1 + \cdots + a^{k+1}\alpha u^{n-1}
 &= (b^{k+1} - a^{k+1}) \cdot \frac{\alpha}{(1+\alpha)^{k+1} - 1} \\
 &\rightarrow \frac{b^{k+1} - a^{k+1}}{k+1}.
 \end{align*}
-~$$
+```
 
 
 > $\int_a^b x^{-1} dx = \log(b) - \log(a), \quad (0 < a < b).$
@@ -514,15 +519,15 @@ S &= a^{k+1}\alpha u^0 + a^{k+1}\alpha u^1 + \cdots + a^{k+1}\alpha u^{n-1}
 
 Again, Cauchy showed this using a geometric series. The expression $f(x_i) \cdot(x_{i+1} - x_i)$ becomes just $\alpha$. So the approximating sum becomes:
 
-$$~
+```math
 S = f(x_0)(x_1 - x_0) + f(x_1)(x_2 - x_1) + \cdots + f(x_{n-1}) (x_n - x_{n-1}) = \alpha + \alpha + \cdots \alpha = n\alpha.
-~$$
+```
 
 But, letting $x = 1/n$, the limit above is just the limit of
 
-$$~
+```math
 \lim_{x \rightarrow 0+} \frac{(b/a)^x - 1}{x} = \log(b/a) = \log(b) - \log(a).
-~$$
+```
 
 (Using L'Hopital's rule to compute the limit.)
 
@@ -610,9 +615,7 @@ Our answer is not so close to the value of $1/3$, but what did we
 expect - we only used $n=5$ intervals. Trying again with $50,000$ gives
 us:
 
-```julia;
-a, b = 0, 1
-f(x) = x^2
+```julia; hold=true
 n = 50_000
 xs = a:(b-a)/n:b
 deltas = diff(xs)
@@ -642,9 +645,10 @@ function riemann(f::Function, a::Real, b::Real, n::Int; method="right")
         meth = f -> (lr -> begin l,r=lr; (1/6) * (f(l) + 4*(f((l+r)/2)) + f(r)) * (r-l) end)
     end
 
-    xs = a .+ (0:n) * (b-a)/n
+    xs = range(a, b, n+1)
+    pairs = zip(xs[begin:end-1], xs[begin+1:end]) # (x₀,x₁), …, (xₙ₋₁,xₙ)
+    sum(meth(f), pairs)
 
-    sum(meth(f), zip(xs[1:end-1], xs[2:end]))
 end
 ```
 
@@ -656,14 +660,14 @@ arguments...)`, so we pass in a function and arguments to describe the
 problem (`a`, `b`, and  `n` and, optionally, the `method`):
 
 ```julia;
-f(x) = exp(x)
-riemann(f, 0, 5, 10)   # S_10
+𝒇(x) = exp(x)
+riemann(𝒇, 0, 5, 10)   # S_10
 ```
 
 Or with more intervals in the partition
 
 ```julia;
-riemann(f, 0, 5, 50_000)
+riemann(𝒇, 0, 5, 50_000)
 ```
 
 (The answer is $e^5 - e^0 = 147.4131591025766\dots$, which shows that even $50,000$ partitions is not enough to guarantee many digits of accuracy.)
@@ -676,9 +680,9 @@ So far, we have had the assumption that $f(x) \geq 0$, as that allows
 us to define the concept of area. We can define the signed area
 between $f(x)$ and the $x$ axis through the definite integral:
 
-$$~
+```math
 A = \int_a^b f(x) dx.
-~$$
+```
 
 The right hand side is defined whenever the Riemann limit exists and
 in that case we call $f(x)$ Riemann integrable. (The definition does
@@ -687,33 +691,34 @@ not suppose $f$ is non-negative.)
 
 Suppose $f(a) = f(b) = 0$ for $a < b$ and for all $a < x < b$ we have $f(x) < 0$. Then we can see easily from the geometry (or from the Riemann sum approximation) that
 
-$$~
+```math
 \int_a^b f(x) dx = - \int_a^b \lvert f(x) \rvert dx.
-~$$
+```
 
 If we think of the area below the $x$ axis as "signed" area carrying a minus sign, then the total area can be seen again as a sum, only this time some of the summands may be negative.
 
 ##### Example
 
-Consider a function $f(x)$ defined through its piecewise linear graph:
+Consider a function $g(x)$ defined through its piecewise linear graph:
 
 ```julia; echo=false
-f(x) = abs(x) > 2 ? 1.0 : abs(x) - 1.0
-plot([f, zero], -3,3)
+g(x) = abs(x) > 2 ? 1.0 : abs(x) - 1.0
+plot(g, -3,3)
+plot!(zero)
 ```
 
-* Compute $\int_{-3}^{-1} f(x) dx$. The area comprised of a square of area $1$ and a triangle with area $1/2$, so should be $3/2$.
+* Compute $\int_{-3}^{-1} g(x) dx$. The area comprised of a square of area $1$ and a triangle with area $1/2$, so should be $3/2$.
 
-* Compute $\int_{-3}^{0} f(x) dx$. In addition to the above, there is a triangle with area $1/2$, but since the function is negative, this area is added in as $-1/2$. In total then we have $1 + 1/2 - 1/2 = 1$ for the answer.
+* Compute $\int_{-3}^{0} g(x) dx$. In addition to the above, there is a triangle with area $1/2$, but since the function is negative, this area is added in as $-1/2$. In total then we have $1 + 1/2 - 1/2 = 1$ for the answer.
 
-* Compute $\int_{-3}^{1} f(x) dx$:
+* Compute $\int_{-3}^{1} g(x) dx$:
 
 We could add the signed area over $[0,1]$ to the above, but instead see a square of area $1$, a triangle with area $1/2$ and a triangle with signed area $-1$. The total is then $1/2$.
 
-* Compute $\int_{-3}^{3} f(x) dx$:
+* Compute $\int_{-3}^{3} g(x) dx$:
 
 We could add the area, but let's use a symmetry trick. This is clearly
-twice our second answer, or $2$. (This is because $f(x)$ is an even
+twice our second answer, or $2$. (This is because $g(x)$ is an even
 function, as we can tell from the graph.)
 
 ##### Example
@@ -737,7 +742,7 @@ be `NaN` and not an approximate answer). We could define our function
 with a check:
 
 ```julia;
-f(x) = x > 0 ? x * log(x) : 0.0
+𝒉(x) = x > 0 ? x * log(x) : 0.0
 ```
 
 This is actually inefficient, as the check for the size of `x` will
@@ -746,15 +751,15 @@ would like to avoid this, if we can. In this case just using the right
 sum will work:
 
 ```julia;
-f(x) = x * log(x)
-riemann(f, 0, 2, 50_000, method="right")
+h(x) = x * log(x)
+riemann(h, 0, 2, 50_000, method="right")
 ```
 
 (The default is `"right"`, so no method specified would also work.)
 
 ##### Example
 
-Let $f(x) = \sqrt{1 - x^2}$. The area under the curve between $-1$ and
+Let $j(x) = \sqrt{1 - x^2}$. The area under the curve between $-1$ and
 $1$ is $\pi/2$. Using a Riemann sum with 4 equal subintervals and the
 midpoint, estimate $\pi$. How close are you?
 
@@ -762,21 +767,18 @@ midpoint, estimate $\pi$. How close are you?
 The partition is $-1 < -1/2 < 0 < 1/2 < 1$. The midpoints are $-3/4,
 -1/4, 1/4, 3/4$. We thus have that $\pi/2$ is approximately:
 
-```julia;
+```julia; hold=true
 xs = range(-1, 1, length=5)
 deltas = diff(xs)
 cs = [-3/4, -1/4, 1/4, 3/4]
-f(x) = sqrt(1 - x^2)
-a = sum(f(c)*delta for (c,delta) in zip(cs, deltas))
+j(x) = sqrt(1 - x^2)
+a = sum(j(c)*delta for (c,delta) in zip(cs, deltas))
+a, pi/2  # π ≈  2a
 ```
 
 (For variety, we used an alternate way to sum over two vectors.)
 
-So $\pi$ is about `2a`:
-
-```julia;
-2a
-```
+So $\pi$ is about `2a`.
 
 ##### Example
 
@@ -788,24 +790,24 @@ Applying this recursively to a partition with
 $a < b$ gives:
 
 
-$$~
+```math
 \begin{align*}
 \lvert f(c_1)(x_1-x_0) + f(c_2)(x_2-x_1) + \cdots + f(c_n) (x_n-x_1) \rvert
 & \leq
 \lvert f(c_1)(x_1-x_0) \rvert + \lvert f(c_2)(x_2-x_1)\rvert + \cdots +\lvert f(c_n) (x_n-x_1) \rvert \\
 &= \lvert f(c_1)\rvert (x_1-x_0) + \lvert f(c_2)\rvert (x_2-x_1)+ \cdots +\lvert f(c_n) \rvert(x_n-x_1).
 \end{align*}
-~$$
+```
 
 This suggests that the following inequality holds for integrals:
 
-> $$~ \lvert \int_a^b f(x) dx \rvert \leq \int_a^b \lvert f(x) \rvert dx.~$$
+> ``\lvert \int_a^b f(x) dx \rvert \leq \int_a^b \lvert f(x) \rvert dx``.
 
 This can be used to give bounds on the size of an integral. For example, suppose you know that $f(x)$ is continuous on $[a,b]$ and takes its maximum value of $M$ and minimum value of $m$. Letting $K$ be the larger of $\lvert M\rvert$ and $\lvert m \rvert$, gives this bound when $a < b$:
 
-$$~
+```math
 \lvert\int_a^b f(x) dx \rvert \leq \int_a^b \lvert f(x) \rvert dx \leq \int_a^b K dx = K(b-a).
-~$$
+```
 
 While such bounds are disappointing, often, when looking for specific
 values, they are very useful when establishing general truths, such as
@@ -820,7 +822,7 @@ function $f(x)$ is increasing, so that the right sum gives an upper
 estimate and the left sum a lower estimate, so the error in the
 estimate will be between these two values:
 
-$$~
+```math
 \begin{align*}
 \text{error} &\leq
 \left[
@@ -829,7 +831,7 @@ f(x_1) \cdot (x_{1} - x_0)  + f(x_2) \cdot  (x_{2} - x_1) + \cdots + f(x_{n-1})(
 &= \frac{b-a}{n} \cdot (\left[f(x_1) + f(x_2) + \cdots f(x_n)\right] - \left[f(x_0) + \cdots f(x_{n-1})\right]) \\
 &= \frac{b-a}{n} \cdot (f(b) - f(a)).
 \end{align*}
-~$$
+```
 
 We see the error goes to $0$ at a rate of $1/n$ with the constant
 depending on $b-a$ and the function $f$. In general, a similar bound
@@ -843,15 +845,15 @@ approximated by the quadratic polynomial going through $x_{i-1}$,
 $(x_i + x_{i-1})/2$, and $x_i$ and the exact area under that
 polynomial is used in the approximation. The explicit formula is:
 
-$$~
+```math
 A \approx \frac{b-a}{3n} (f(x_0) + 4 f(x_1) + 2f(x_2) + 4f(x_3) + \cdots + 2f(x_{n-2}) + 4f(x_{n-1}) + f(x_n)).
-~$$
+```
 
 The error in this approximation can be shown to be
 
-$$~
+```math
 \text{error} \leq \frac{(b-a)^5}{180n^4} \text{max}_{\xi \text{ in } [a,b]} \lvert f^{(4)}(\xi) \rvert.
-~$$
+```
 
 That is, the error is like $1/n^4$ with constants depending on the
 length of the interval, $(b-a)^5$, and the maximum value of the fourth
@@ -875,9 +877,9 @@ is Riemann integrable or not.
 
 The formula for Simpson's rule was the *composite* formula. If just a single rectangle is approximated over $[a,b]$ by a parabola interpolating the points $x_1=a$, $x_2=(a+b)/2$, and $x_3=b$, the formula is:
 
-$$~
+```math
 \frac{b-a}{6}(f(x_1) + 4f(x_2) + f(x_3)).
-~$$
+```
 
 This formula will actually be exact for any 3rd degree polynomial. In
 fact an entire family of similar approximations using $n$ points can
@@ -889,9 +891,9 @@ non-evenly spaced points, even better results can be found.
 The formulas for an approximation to the integral $\int_{-1}^1 f(x)
 dx$ discussed so far can be written as:
 
-$$~
+```math
 S = w_1 f(x_1) + w_2 f(x_2) + \cdots + w_n f(x_n).
-~$$
+```
 
 The $w$s are "weights" and the $x$s are nodes. A
 [Gaussian](http://en.wikipedia.org/wiki/Gaussian_quadrature)
@@ -918,8 +920,7 @@ trickier problems require a specification of an error threshold.
 
 To use the function, we have:
 
-```julia;
-using QuadGK
+```julia; hold=true
 f(x) = x * log(x)
 quadgk(f, 0, 2)
 ```
@@ -939,7 +940,7 @@ problem.
 
 The method should be exact for polynomial functions:
 
-```julia;
+```julia; hold=true
 f(x) = x^5 - x + 1
 quadgk(f, -2, 2)
 ```
@@ -969,8 +970,7 @@ quadgk(sin, 0, pi)
 ```
 
 ```julia;
-f(x) = x^x
-quadgk(f, 0, 2)
+quadgk(x -> x^x, 0, 2)
 ```
 
 ```math
@@ -986,14 +986,14 @@ When composing the answer with other functions it may be desirable to
 drop the error in the answer. Two styles can be used for this. The
 first is to just name the two returned values:
 
-```julia;
+```julia; hold=true
 A, err = quadgk(cos, 0, pi/4)
 A
 ```
 
 The second is to ask for just the first component of the returned value:
 
-```julia;
+```julia; hold=true
 A = quadgk(tan, 0, pi/4)[1] # or first(quadgk(tan, 0, pi/4))
 ```
 
@@ -1006,51 +1006,50 @@ are the range of the distribution. The
 [Von Mises](http://en.wikipedia.org/wiki/Von_Mises_distribution)
 distribution, takes the form
 
-$$~
-f(x) = C \cdot \exp(\cos(x)), \quad -\pi \leq x \leq \pi
-~$$
+```math
+k(x) = C \cdot \exp(\cos(x)), \quad -\pi \leq x \leq \pi
+```
 
 Compute $C$ (numerically).
 
 The fact that $1 = \int_{-\pi}^\pi C \cdot \exp(\cos(x)) dx = C \int_{-\pi}^\pi \exp(\cos(x)) dx$ implies that $C$ is the reciprocal of
 
 ```julia;
-f(x) = exp(cos(x))
-A,err = quadgk(f, -pi, pi)
+k(x) = exp(cos(x))
+A,err = quadgk(k, -pi, pi)
 ```
 
 So
 
 ```julia;
 C = 1/A
-f(x) = C * exp(cos(x))
+k₁(x) = C * exp(cos(x))
 ```
 
-The *cumulative distribution function* for $f(x)$ is $F(x) =
-\int_{-\pi}^x f(u) du$, $-\pi \leq x \leq \pi$. We just showed that $F(\pi) = 1$ and it is
-trivial that $F(-\pi) = 0$. The quantiles of the distribution are the
-values $q_1$, $q_2$, and $q_3$ for which $F(q_i) = i/4$. Can we find
+The *cumulative distribution function* for $k(x)$ is $K(x) =
+\int_{-\pi}^x k(u) du$, $-\pi \leq x \leq \pi$. We just showed that $K(\pi) = 1$ and it is
+trivial that $K(-\pi) = 0$. The quantiles of the distribution are the
+values $q_1$, $q_2$, and $q_3$ for which $K(q_i) = i/4$. Can we find
 these?
 
-First we define a function, that computes $F(x)$:
+First we define a function, that computes $K(x)$:
 
 ```julia;
-F(x) = quadgk(f, -pi, x)[1]
+K(x) = quadgk(k₁, -pi, x)[1]
 ```
 
 (The trailing `[1]` is so only the answer - and not the error - is returned.)
 
-The question asks us to solve $F(x) = 0.25$, $F(x) = 0.5$ and $F(x)
+The question asks us to solve $K(x) = 0.25$, $K(x) = 0.5$ and $K(x)
 = 0.75$. The `Roots` package can be used for such work, in particular
-`find_zero`. We will use a bracketing method, as clearly $F(x)$ is
-increasing, as $f(u)$ is positive, so we can just bracket our answer
-with $-\pi$ and $\pi$. (We solve $F(x) - p = 0$, so $F(\pi) - p > 0$ and $F(-\pi)-p < 0$.). The only trick below is the use of an anonymous
-function to write the function $h(x) = F(x) - p$ for $p$ taking one of
+`find_zero`. We will use a bracketing method, as clearly $K(x)$ is
+increasing, as $k(u)$ is positive, so we can just bracket our answer
+with $-\pi$ and $\pi$. (We solve $K(x) - p = 0$, so $K(\pi) - p > 0$ and $K(-\pi)-p < 0$.). The only trick below is the use of an anonymous
+function to write the function for $K(x) - p$ with $p$ taking one of
 three values:
 
 ```julia;
-using Roots
-[find_zero(x -> F(x) - p, (-pi, pi)) for p in [0.25, 0.5, 0.75]]
+[find_zero(x -> K(x) - p, (-pi, pi)) for p in [0.25, 0.5, 0.75]]
 ```
 
 The middle one is clearly $0$. This distribution is symmetric about
@@ -1065,11 +1064,11 @@ $0.809767$ and equal to $0.25$.
 
 Using geometry, compute the definite integral:
 
-$$~
+```math
 \int_{-5}^5 \sqrt{5^2 - x^2} dx.
-~$$
+```
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = sqrt(5^2 - x^2)
 val, _ = quadgk(f, -5,5)
 numericq(val)
@@ -1080,11 +1079,11 @@ numericq(val)
 
 Using geometry, compute the definite integral:
 
-$$~
+```math
 \int_{-2}^2 (2 - \lvert x\rvert) dx
-~$$
+```
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = 2- abs(x)
 a,b = -2, 2
 val, _ = quadgk(f, a,b)
@@ -1096,11 +1095,11 @@ numericq(val)
 
 Using geometry, compute the definite integral:
 
-$$~
+```math
 \int_0^3 3 dx + \int_3^9 (3 + 3(x-3)) dx
-~$$
+```
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = x <= 3 ? 3.0 : 3 + 3*(x-3)
 a,b = 0, 9
 val, _ = quadgk(f, a, b)
@@ -1112,13 +1111,13 @@ numericq(val)
 
 Using geometry, compute the definite integral:
 
-$$~
+```math
 \int_0^5 \lfloor x \rfloor dx
-~$$
+```
 
 (The notation $\lfloor x \rfloor$ is the integer such that $\lfloor x \rfloor \leq x < \lfloor x \rfloor + 1$.)
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = floor(x)
 a, b = 0, 5
 val, _ = quadgk(f, a, b)
@@ -1131,7 +1130,7 @@ numericq(val)
 
 Using geometry, compute the definite integral between $-3$ and $3$ of this graph comprised of lines and circular arcs:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 function f(x)
   if x < -1
     abs(x+1)
@@ -1146,7 +1145,7 @@ plot(f, -3, 3, aspect_ratio=:equal)
 
 The value is:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 val = (1/2 * 2 * 2) * 2 + pi*1^2/2
 numericq(val)
 ```
@@ -1159,7 +1158,7 @@ For the function $f(x) = \sin(\pi x)$, estimate the integral for $-1$
 to $1$ using a left-Riemann sum with the partition $-1 < -1/2 < 0 < 1/2
 < 1$.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = sin(x)
 xs = -1:1/2:1
 deltas = diff(xs)
@@ -1172,12 +1171,12 @@ numericq(val)
 
 Without doing any *real* work, find this integral:
 
-$$~
+```math
 \int_{-\pi/4}^{\pi/4} \tan(x) dx.
-~$$
+```
 
 
-```julia; echo=false
+```julia; hold=true; echo=false
 val = 0
 numericq(val)
 ```
@@ -1186,12 +1185,12 @@ numericq(val)
 
 Without doing any *real* work, find this integral:
 
-$$~
+```math
 \int_3^5 (1 - \lvert x-4 \rvert) dx
-~$$
+```
 
 
-```julia; echo=false
+```julia; hold=true; echo=false
 val = 1
 numericq(val)
 ```
@@ -1203,12 +1202,12 @@ Suppose you know that for the integrable function
 $\int_a^b f(u)du =1$ and $\int_a^c f(u)du = p$. If $a < c < b$ what is
 $\int_c^b f(u)du$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"1",
-L"p",
-L"1-p",
-L"p^2"]
+"``1``",
+"``p``",
+"``1-p``",
+"``p^2``"]
  ans = 3
 radioq(choices, ans)
 ```
@@ -1217,12 +1216,12 @@ radioq(choices, ans)
 
 What is $\int_0^2 x^4 dx$? Use the rule for integrating $x^n$.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"2^5 - 0^5",
-L"2^5/5 - 0^5/5",
-L"2^4/4 - 0^4/4",
-L"3\cdot 2^3 - 3 \cdot 0^3"]
+"``2^5 - 0^5``",
+"``2^5/5 - 0^5/5``",
+"``2^4/4 - 0^4/4``",
+"``3\\cdot 2^3 - 3 \\cdot 0^3``"]
 ans = 2
 radioq(choices, ans)
 ```
@@ -1232,11 +1231,11 @@ radioq(choices, ans)
 
 Solve for a value of $x$ for which:
 
-$$~
+```math
 \int_1^x \frac{1}{u}du = 1.
-~$$
+```
 
-```julia;echo=false
+```julia; hold=true;echo=false
 val = exp(1)
 numericq(val)
 ```
@@ -1245,11 +1244,11 @@ numericq(val)
 
 Solve for a value of $n$ for which
 
-$$~
+```math
 \int_0^1 x^n dx = \frac{1}{12}.
-~$$
+```
 
-```julia; echo=false
+```julia; hold=true; echo=false
 val = 11
 numericq(val)
 ```
@@ -1258,10 +1257,10 @@ numericq(val)
 
 Suppose $f(x) > 0$ and $a < c < b$. Define $F(x) = \int_a^x f(u) du$. What can be said about $F(b)$ and $F(c)$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 L"The area between $c$ and $b$ must be positive, so $F(c) < F(b)$.",
-L"F(b) - F(c) = F(a).",
+"``F(b) - F(c) = F(a).``",
 L" $F(x)$ is continuous, so between $a$ and $b$ has an extreme value, which must be at $c$. So $F(c) \geq F(b)$."
 ]
 ans = 1
@@ -1273,11 +1272,11 @@ radioq(choices, ans)
 
 For the right Riemann sum approximating $\int_0^{10} e^x dx$ with $n=100$ subintervals, what would  be a good estimate for the error?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"(10 - 0)/100 \cdot (e^{10} - e^{0})",
-L"10/100",
-L"(10 - 0) \cdot e^{10} / 100^4"
+"``(10 - 0)/100 \\cdot (e^{10} - e^{0})``",
+"``10/100``",
+"``(10 - 0) \\cdot e^{10} / 100^4``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -1288,11 +1287,11 @@ radioq(choices, ans)
 
 Use `quadgk` to find the following definite integral:
 
-$$~
+```math
 \int_1^4 x^x dx   .
-~$$
+```
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = x^x
 a, b = 1, 4
 val, _ = quadgk(f, a, b)
@@ -1304,11 +1303,11 @@ numericq(val)
 
 Use `quadgk` to find the following definite integral:
 
-$$~
+```math
 \int_0^3 e^{-x^2} dx   .
-~$$
+```
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = exp(-x^2)
 a, b = 0, 3
 val, _ = quadgk(f, a, b)
@@ -1320,11 +1319,11 @@ numericq(val)
 
 Use `quadgk` to find the following definite integral:
 
-$$~
+```math
 \int_0^{9/10} \tan(u \frac{\pi}{2}) du.   .
-~$$
+```
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = tan(x*pi/2)
 a, b = 0, 9/10
 val, _ = quadgk(f, a, b)
@@ -1336,11 +1335,11 @@ numericq(val)
 
 Use `quadgk` to find the following definite integral:
 
-$$~
+```math
 \int_{-1/2}^{1/2} \frac{1}{\sqrt{1 - x^2}} dx
-~$$
+```
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = 1/sqrt(1 - x^2)
 a, b =-1/2, 1/2
 val, _ = quadgk(f, a, b)
@@ -1351,11 +1350,13 @@ numericq(val)
 ###### Question
 
 
-```julia; echo=false
+```julia; hold=true; echo=false
 caption = """
 The area under a curve approximated by a Riemann sum.
 """
-CalculusWithJulia.WeaveSupport.JSXGraph(joinpath(@__DIR__, "riemann.js"), caption)
+url = "https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/integrals/riemann.js"
+#CalculusWithJulia.WeaveSupport.JSXGraph(joinpath(@__DIR__, "riemann.js"), caption)
+CalculusWithJulia.WeaveSupport.JSXGraph(url, caption)
 ```
 
 The interactive graphic shows the area of a right-Riemann sum for different partitions. The function is
@@ -1366,19 +1367,19 @@ f(x) = \frac{1}{\sqrt{ x^4 +  10x^2 - 60x + 100}}
 
 When ``n=5`` what is the area of the Riemann sum?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(0.1224)
 ```
 
 When ``n=50`` what is the area of the Riemann sum?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(0.1887)
 ```
 
 Using `quadgk` what is the area under the curve?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 g(x) = 1/sqrt(x^4 + 10x^2 - 60x + 100)
 val, tmp = quadgk(g, 0, 1)
 numericq(val)
@@ -1402,7 +1403,7 @@ wts = [0.347855, 0.652145, 0.652145, 0.347855]
 
 Use these to estimate the integral $\int_{-1}^1 \cos(\pi/2 \cdot x)dx$ with $w_1f(x_1) + w_2 f(x_2) + w_3 f(x_3) + w_4 f(x_4)$.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = cos(pi/2*x)
 val = sum([f(wi)*ni for (wi, ni) in zip(wts, ns)])
 numericq(val)
@@ -1410,7 +1411,7 @@ numericq(val)
 
 The actual answer is $4/\pi$. How far off is the approximation based on 4 points?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 L"around $10^{-1}$",
 L"around $10^{-2}$",
@@ -1425,18 +1426,8 @@ radioq(choices, ans, keep_order=true)
 
 Using the Gauss nodes and weights from the previous question, estimate the integral of $f(x) = e^x$ over $[-1, 1]$. The value is:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = exp(x)
 val = sum([f(wi)*ni for (wi, ni) in zip(wts, ns)])
 numericq(val)
-```
-
-<<<<<<< HEAD
-=======
-
-----
-
->>>>>>> master
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

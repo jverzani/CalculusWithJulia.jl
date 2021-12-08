@@ -21,7 +21,14 @@ centered_content_tpl = """
 
 Take an image file and encode it
 
-Caption uses LaTeX markup, not markdown.
+## Examples
+```
+ImageFile("http://...", "caption")
+ImageFile("/fullpath/to_file/", "caption")
+ImageFile(:integrals, "figures/pic.png", "caption")
+ImageFile(p, "caption") # p a Plot object
+```
+
 
 """
 mutable struct ImageFile
@@ -31,7 +38,18 @@ mutable struct ImageFile
     width
     content
 end
+# 2 args f, caption
 ImageFile(f,caption=""; alt="A Figure", width=nothing) = ImageFile(f, caption, alt, width)
+
+# 3 args dir, f, caption
+function ImageFile(dir::Symbol, f::AbstractString, caption;
+                   alt="A Figure", width=nothing)
+    basedir = replace(dirname(@__DIR__), "/src" => "")
+    fname = joinpath(basedir, "CwJ", string(dir), f)
+
+    ImageFile(fname, caption, alt, width)
+end
+# plot -> string for file
 function ImageFile(f, caption, alt, width)
     imgfile = tempname() * ".gif"
     io = open(imgfile, "w")
@@ -39,27 +57,36 @@ function ImageFile(f, caption, alt, width)
     close(io)
     ImageFile(imgfile, caption, alt, width)
 end
+
 function ImageFile(f::AbstractString, caption, alt, width)
-    data = base64encode(read(f, String))
+    fcontent = occursin(r"^http", f) ? read(download(f), String) : read(f, String)
+    data = base64encode(fcontent)
     content = Mustache.render(gif_to_img_tpl, data=data, alt=alt)
     caption = Markdown.parse(caption)
     ImageFile(f, caption, alt, width, content)
 end
 
+
+
+
 ## WeaveTpl
 function Base.show(io::IO, m::MIME"text/html", x::ImageFile)
-    data = (read(x.f, String))
-    content = gif_to_image(data=data, alt="figure")
+
+    content = x.content
+    if content == nothing
+        data = (read(x.f, String))
+        content = gif_to_image(data=data, alt="figure")
+    end
     caption = sprint(io -> show(io, "text/html", x.caption))
 
     print(io, """<div class="d-flex justify-content-center">""")
-    print(io, "<figure>")
+    print(io, "  <figure>")
     print(io, content)
-    print(io, "<figcaption>")
+    print(io, "    <figcaption>")
     print(io, caption)
     print(io, """
-</figcaption>
-</figure>
+    </figcaption>
+  </figure>
 </div>
 """)
 end
