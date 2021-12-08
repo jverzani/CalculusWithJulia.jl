@@ -56,7 +56,7 @@ end
 function previous_current_next(foot::Footer)
     f₀, d₀ = file_dir(foot.f, foot.d)
 
-    toc_url = "../misc/toc.html"
+    toc_url = "../index.html"
     suggest_url = "https://github.com/jverzani/CalculusWithJulia.jl/edit/master/CwJ/$(d₀)/$(f₀).jmd"
 
     prev_url = "https://calculuswithjulia.github.io"

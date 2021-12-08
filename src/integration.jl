@@ -25,9 +25,11 @@ function riemann(f::Function, a::Real, b::Real, n::Int; method="right")
         meth = f -> (lr -> begin l,r=lr; (1/6) * (f(l) + 4*(f((l+r)/2)) + f(r)) * (r-l) end)
     end
 
-    xs = a .+ (0:n) * (b-a)/n
 
-    sum(meth(f), zip(xs[1:end-1], xs[2:end]))
+    xs = range(a, b, n+1)
+    pairs = zip(xs[begin:end-1], xs[begin+1:end]) # (x₀,x₁), …, (xₙ₋₁,xₙ)
+    sum(meth(f), pairs)
+
 end
 
 
