@@ -71,7 +71,6 @@ end
 
 ## WeaveTpl
 function Base.show(io::IO, m::MIME"text/html", x::ImageFile)
-
     content = x.content
     if content == nothing
         data = (read(x.f, String))
