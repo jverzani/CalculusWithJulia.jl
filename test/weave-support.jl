@@ -31,6 +31,7 @@ function weave_file(folder, file; build_list=(:html,), force=false, kwargs...)
         end
     end
 
+
     Pkg.activate(dirname(tmp))
     Pkg.instantiate()
     args = Dict{Symbol,String}(:folder=>folder,:file=>file)
@@ -124,7 +125,7 @@ function Base.show(io::IO, ::MIME"text/html", x::T) where {T <: Polynomials.Abst
 end
 
                   end)
-
+        @show :weave, tmp, dir
 
         #weave(tmp,doctype = "md2html",out_path=dir,args=args; fig_ext=".svg", css=cssfile, kwargs...)
         weave(tmp;
