@@ -1,29 +1,40 @@
-# Average of a function and the mean value theorem for integrals
+# Mean value theorem for integrals
+
+This section uses these add-on packages:
+
+```julia
+using CalculusWithJulia
+using Plots
+using QuadGK
+```
 
 
 ```julia; echo=false; results="hidden"
-using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
-using Plots, QuadGK
+import PyPlot
+pyplot()
 nothing
 ```
 
+----
+
+## Average value of a function
 
 Let $f(x)$ be a continuous function over the interval $[a,b]$ with $a < b$.
 
 The average value of $f$ over $[a,b]$ is defined by:
 
-$$~
+```math
 \frac{1}{b-a} \int_a^b f(x) dx.
-~$$
+```
 
 If $f$ is a constant, this is just the contant value, as would be
 expected. If $f$ is *piecewise* linear, then this is the weighted
 average of these constants.
 
-## Examples
+#### Examples
 
-##### Average velocity
+##### Example: average velocity
 
 The average velocity between times $a < b$, is simply the
 change in position during the time interval divided by the change in
@@ -32,16 +43,16 @@ x'(t)$ is the velocity, then by the second part of the fundamental
 theorem of calculus, we have, in agreement with the definition above,
 that:
 
-$$~
+```math
 \text{average velocity} = \frac{x(b) - x(a)}{b-a} = \frac{1}{b-a} \int_a^b v(t) dt.
-~$$
+```
 
 
 The average speed is the change in *total* distance over time, which is given by
 
-$$~
+```math
 \text{average speed} =  \frac{1}{b-a} \int_a^b \lvert v(t)\rvert dt.
-~$$
+```
 
 
 
@@ -51,7 +62,7 @@ a constant ($\bar{v}$) times the time, as though we had a constant
 velocity.  This is an old intuition.
 [Bressoud](http://www.math.harvard.edu/~knill/teaching/math1a_2011/exhibits/bressoud/)
 comments on the special case known to scholars at Merton
-College around 1350 that the distance traveled by an object under
+College around ``1350`` that the distance traveled by an object under
 uniformly increasing velocity starting at $v_0$ and ending at $v_t$ is
 equal to the distance traveled by an object with constant velocity of
 $(v_0 + v_t)/2$.
@@ -60,15 +71,13 @@ $(v_0 + v_t)/2$.
 
 What is the average value of $f(x)=\sin(x)$ over $[0, \pi]$?
 
-$$~
+```math
 \text{average} = \frac{1}{\pi-0} \int_0^\pi \sin(x) dx = \frac{1}{\pi} (-\cos(x)) \big|_0^\pi = \frac{2}{\pi}
-~$$
+```
 
 Visually, we have:
 
 ```julia;
-using CalculusWithJulia
-using Plots
 plot(sin, 0, pi)
 plot!(x -> 2/pi)
 ```
@@ -84,12 +93,12 @@ Though not continuous, $f(x)$ is integrable as it contains only jumps. The integ
 
 What is the average value of the function $e^{-x}$ between $0$ and $\log(2)$?
 
-$$~
+```math
 \text{average} = \frac{1}{\log(2) - 0} \int_0^{\log(2)} e^{-x} dx
 = \frac{1}{\log(2)} (-e^{-x}) \big|_0^{\log(2)}
 = -\frac{1}{\log(2)} (\frac{1}{2} - 1)
 = \frac{1}{2\log(2)}.
-~$$
+```
 
 Visualizing, we have
 
@@ -103,24 +112,25 @@ plot!(x -> 1/(2*log(2)))
 If $f(x)$ is assumed integrable, the average value of $f(x)$ is
 defined, as above. Re-expressing gives that there exists a $K$ with
 
-$$~
+```math
 K \cdot (b-a) = \int_a^b f(x) dx.
-~$$
+```
 
 When we assume that $f(x)$ is continuous, we can describe $K$ as a value in the range of $f$:
 
 > **The mean value theorem for integrals**: Let $f(x)$ be a continuous
 > function on $[a,b]$ with $a < b$. Then there exists $c$ with $a \leq c \leq b$ with
-> $$~ f(c) \cdot (b-a) = \int_a^b f(x) dx.~$$
+>
+> ``f(c) \cdot (b-a) = \int_a^b f(x) dx.```
 
 The proof comes from the intermediate value theorem and the extreme
 value theorem. Since $f$ is continuous on a closed interval, there
 exists values $m$ and $M$ with $f(c_m) = m \leq f(x) \leq M=f(c_M)$,
 for some $c_m$ and $c_M$ in the interval $[a,b]$. Since $m \leq f(x) \leq M$, we must have:
 
-$$~
+```math
 m \cdot (b-a) \leq K\cdot(b-a) \leq M\cdot(b-a).
-~$$
+```
 
 So in particular $K$ is in $[m, M]$. But $m$ and $M$ correspond to
 values of $f(x)$, so by the intermediate value theorem, $K=f(c)$ for
@@ -137,9 +147,9 @@ define $F(x) = \int_a^x f(u) du$. Then the derivative of $F$ exists and is $f$.
 Let $h>0$. Then consider the forward difference $(F(x+h) -
 F(x))/h$. Rewriting gives:
 
-$$~
+```math
 \frac{\int_a^{x+h} f(u) du - \int_a^x f(u) du}{h}  =\frac{\int_x^{x+h} f(u) du}{h} = f(\xi(h)).
-~$$
+```
 
 The value $\xi(h)$ is just the $c$ corresponding to a given value in $[x, x+h]$
 guaranteed by the mean value theorem.  We only know that $x \leq \xi(h) \leq x+h$. But
@@ -154,9 +164,10 @@ want to prove. Repeating a similar argument when $h < 0$, finishes the proof.
 The basic notion used is simply that for small $h$, this expression is well
 approximated by the left Riemann sum taken over $[x, x+h]$:
 
-$$~
+```math
 f(\xi(h)) \cdot h = \int_x^{x+h} f(u) du.
-~$$
+```
+
 
 ## Questions
 
@@ -164,8 +175,7 @@ f(\xi(h)) \cdot h = \int_x^{x+h} f(u) du.
 
 Between $0$ and $1$ a function is constantly $1$. Between $1$ and $2$ the function is constantly $2$. What is the average value of the function over the interval $[0,2]$?
 
-```julia; echo=false
-using QuadGK
+```julia; hold=true; echo=false
 f(x) = x < 1 ? 1.0 : 2.0
 a,b = 0, 2
 val, _ = quadgk(f, a, b)
@@ -178,7 +188,7 @@ numericq(val/(b-a))
 
 Between $0$ and $2$ a function is constantly $1$. Between $2$ and $3$ the function is constantly $2$. What is the average value of the function over the interval $[0,3]$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = x < 2 ? 1.0 : 2.0
 a, b= 0, 2
 val, _ = quadgk(f, a, b)
@@ -194,11 +204,11 @@ velocity starting at $v_0$ and ending at $v_t$ is equal to the
 distance traveled by an object with constant velocity of $(v_0 +
 v_t)/2$.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"\int_0^t v(u) du = v^2/2 \big|_0^t",
-L"\int_0^t (v(0) + v(u))/2 du = v(0)/2\cdot t + x(u)/2\ \big|_0^t",
-L"(v(0) + v(t))/2 \cdot \int_0^t du = (v(0) + v(t))/2 \cdot t"
+"``\\int_0^t v(u) du = v^2/2 \\big|_0^t``",
+"``\\int_0^t (v(0) + v(u))/2 du = v(0)/2\\cdot t + x(u)/2\\ \\big|_0^t``",
+"``(v(0) + v(t))/2 \\cdot \\int_0^t du = (v(0) + v(t))/2 \\cdot t``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -209,7 +219,7 @@ radioq(choices, ans)
 
 Find the average value of $\cos(x)$ over the interval $[-\pi/2, \pi/2]$.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = cos(x)
 a,b = -pi/2,pi/2
 val, _ = quadgk(f, a, b)
@@ -222,7 +232,7 @@ numericq(val)
 
 Find the average value of $\cos(x)$ over the interval $[0, \pi]$.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = cos(x)
 a,b = 0, pi
 val, _ = quadgk(f, a, b)
@@ -234,7 +244,7 @@ numericq(val)
 
 Find the average value of $f(x) = e^{-2x}$ between $0$ and $2$.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = exp(-2x)
 a, b = 0, 2
 val, _ = quadgk(f, a, b)
@@ -247,7 +257,7 @@ numericq(val)
 Find the average value of $f(x) = \sin(x)^2$ over the $0$, $\pi$.
 
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = sin(x)^2
 a, b = 0, pi
 val, _ = quadgk(f, a, b)
@@ -260,7 +270,7 @@ numericq(val)
 Which is bigger? The average value of $f(x) = x^{10}$ or the average
 value of $g(x) = \lvert x \rvert$ over the interval $[0,1]$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 L"That of $f(x) = x^{10}$.",
 L"That of $g(x) = \lvert x \rvert$."]
@@ -276,10 +286,10 @@ Define a family of functions over the interval $[0,1]$ by $f(x; a,b) =
 x^a \cdot (1-x)^b$. Which has a greater average, $f(x; 2,3)$ or $f(x;
 3,4)$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"f(x; 2,3)",
-L"f(x; 3,4)"
+"``f(x; 2,3)``",
+"``f(x; 3,4)``"
 ]
 n1, _ = quadgk(x -> x^2 *(1-x)^3, 0, 1)
 n2, _ = quadgk(x -> x^3 *(1-x)^4, 0, 1)
@@ -291,7 +301,7 @@ radioq(choices, ans)
 
 Suppose the average value of $f(x)$ over $[a,b]$ is $100$. What is the average value of $100 f(x)$ over $[a,b]$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(100 * 100)
 ```
 
@@ -301,11 +311,11 @@ Suppose $f(x)$ is continuous and positive on $[a,b]$.
 
 * Explain why for any $x > a$ it must be that:
 
-$$~
+```math
 F(x) = \int_a^x f(x) dx > 0
-~$$
+```
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 L"Because the mean value theorem says this is $f(c) (x-a)$ for some $c$ and both terms are positive by the assumptions",
 "Because the definite integral is only defined for positive area, so it is always positive"
@@ -316,7 +326,7 @@ radioq(choices, ans)
 
 * Explain why $F(x)$ is increasing.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 L"By the extreme value theorem, $F(x)$ must reach its maximum, hence it must increase.",
 L"By the intermediate value theorem, as $F(x) > 0$, it must be true that $F(x)$ is increasing",
@@ -330,7 +340,7 @@ radioq(choices, ans)
 
 For $f(x) = x^2$, which is bigger: the average of the function $f(x)$ over $[0,1]$ or the geometric mean which is the exponential of the average of the logarithm of $f$ over the same interval?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = x^2
 a,b = 0, 1
 val1 = quadgk(f, a, b)[1] / (b-a)
@@ -342,11 +352,4 @@ L"The exponential of the average of $\log(f)$"
 ]
 ans = val1 > val2 ? 1 : 2
 radioq(choices, ans)
-```
-
-
-
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

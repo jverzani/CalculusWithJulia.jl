@@ -83,10 +83,10 @@ The monomial $a_n x^n$ is the **leading term**.
 
 For example, the polynomial $-16x^2 - 32x + 100$ has degree $2$,
 leading coefficient $-16$ and leading term $-16x^2$. It is not monic,
-as the leading coefficient is not 1.
+as the leading coefficient is not ``1``.
 
 Lower degree polynomials have special names: a degree $0$ polynomial
-($a_0$) is a non-zero constant, a degree 1 polynomial ($a_0+a_1x$) is called
+($a_0$) is a non-zero constant, a degree ``1`` polynomial ($a_0+a_1x$) is called
 linear, a degree $2$ polynomial is quadratic, and  a degree $3$ polynomial is called cubic.
 
 ## Linear polynomials
@@ -353,10 +353,10 @@ p = -16x^2 + 100
 N(p(2))
 ```
 
-Where `convert(T,x)` requires a specification of the type to convert `x` to, `N` attempts to match the data type used by SymPy to store the number. As such, the output type of `N` may very (rational, a BigFloat, a float, etc.)
+Where `convert(T,x)` requires a specification of the type to convert `x` to, `N` attempts to match the data type used by SymPy to store the number. As such, the output type of `N` may vary (rational, a BigFloat, a float, etc.)
 For getting more digits of accuracy, a
 precision can be passed to `N`. The following command will take
-the symbolic value for $\pi$, `PI`, and produce about 60 digits worth
+the symbolic value for $\pi$, `PI`, and produce about ``60`` digits worth
 as a `BigFloat` value:
 
 ```julia;
@@ -364,7 +364,7 @@ N(PI, 60)
 ```
 
 
-Conversion will fail if the value to be converted contains free
+Conversion by `N` will fail if the value to be converted contains free
 symbols, as would be expected.
 
 ### Converting symbolic expressions into Julia functions
@@ -575,15 +575,14 @@ only, then the factors are either linear or quadratic, as will be
 discussed later.
 
 There are values to each representation. One value of the expanded
-form is that polynomial addition and scalar multiplication is much easier in
-expanded form. For example, adding polynomials just requires matching
-up the monomials of similar powers. For the factored format, polynomial multiplication is much easier. For the factored form it is easy to read off *roots* of the polynomial (values of $x$ where $p$ is $0$), as
+form is that polynomial addition and scalar multiplication is much easier than in factored form. For example, adding polynomials just requires matching
+up the monomials of similar powers. For the factored form, polynomial multiplication is much easier than expanded form. For the factored form it is easy to read off *roots* of the polynomial (values of $x$ where $p$ is $0$), as
 a product is $0$ only if a term is $0$, so any zero must be a zero of
-a factor. Factored form has other advantages. For example,
+a factor. Factored form has other technical advantages. For example,
 the polynomial $(x-1)^{1000}$ can be compactly represented using the
-factored form, but would require 1001 coefficients to store in expanded
+factored form, but would require ``1001`` coefficients to store in expanded
 form. (As well, due to floating point differences, the two would
-evaluate quite differently as one would require over a 1000 operations
+evaluate quite differently as one would require over a ``1000`` operations
 to compute, the other just two.)
 
 Translating from factored form to expanded form can be done by

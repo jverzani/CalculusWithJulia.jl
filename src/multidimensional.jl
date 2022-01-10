@@ -9,6 +9,8 @@ Take a vector of points described by vectors (as returned by, say
 `r(t)=[sin(t),cos(t)], r.([1,2,3])`, and return a tuple of collected x
 values, y values, and optionally z values.
 
+Wrapper around the `invert` function of `SplitApplyCombine`.
+
 If the argument is specified as a comma separated collection of vectors, then these are combined and passed along.
 
 If the argument is a function and two end points, then the function is
@@ -33,7 +35,7 @@ p, v = r(t1), rp(t1)
 quiver!(unzip([p])..., quiver=unzip([v]))
 ```
 
-Based on `unzip` from the `Plots` package.
+Based on `unzip` from the `Plots` package. Implemented through `invert` of `SplitApplyCombine`
 
 Note: for a vector of points, `xs`, each of length `2`, a similar functionality would be `(first.(xs), last.(xs))`. If each point had length `3`, then with `second(x)=x[2]`, a similar functionality would be `(first.(xs), second.(xs), last.(xs))`.
 
@@ -45,7 +47,8 @@ function unzip(ws::Array; recursive=false)
     if recursive
         unzip([unzip(ws[:,j]) for j in 1:size(ws)[end]])
     else
-        Tuple(eltype(first(ws))[xyz[j] for xyz in ws] for j in eachindex(first(ws)))
+        SplitApplyCombine.invert(ws)
+        #Tuple(eltype(first(ws))[xyz[j] for xyz in ws] for j in eachindex(first(ws)))
     end
 end
 #unzip(vs) = (A=hcat(vs...); Tuple([A[i,:] for i in eachindex(vs[1])]))

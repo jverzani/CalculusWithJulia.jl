@@ -1,13 +1,18 @@
 # Partial Fractions
 
+```julia
+using CalculusWithJulia
+using SymPy
+```
+
 
 ```julia; echo=false; results="hidden"
-using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
-using Plots
 using LaTeXStrings
 nothing
 ```
+
+----
 
 Integration is facilitated when an antiderivative for $f$ can be found, as then definite integrals can be evaluated through the fundamental theorem of calculus.
 
@@ -15,7 +20,7 @@ However, despite integration being an algorithmic procedure,
 integration is not. There are "tricks" to try, such as substitution
 and integration by parts. These work in some cases. However, there are
 classes of functions for which algorithms exist. For example, the
-`SymPy` `integrate` function implements an algorithm that decides if
+`SymPy` `integrate` function mostly implements an algorithm that decides if
 an elementary function has an antiderivative. The
 [elementary](http://en.wikipedia.org/wiki/Elementary_function)
 functions include exponentials, their inverses (logarithms),
@@ -45,9 +50,9 @@ polynomial and $n_k$ a positive integer.
 
 > **Partial Fraction Decomposition**: There are unique polynomials $a_{ij}$ with degree $a_{ij} <$
 > degree $q_i$ such that
-> $$~
+> ```math
 > \frac{p(x)}{q(x)} = a(x) + \sum_{i=1}^k \sum_{j=1}^{n_i} \frac{a_{ij}(x)}{q_i(x)^j}.
-> ~$$
+> ```
 
 The method is attributed to John Bernoulli, one of the prolific
 Bernoulli brothers who put a stamp on several areas of math. This
@@ -55,9 +60,9 @@ Bernoulli was a mentor to Euler.
 
 This basically says that each factor $q_i(x)^{n_i}$ contributes a term like:
 
-$$~
+```math
 \frac{a_{i1}(x)}{q_i(x)^1} + \frac{a_{i2}(x)}{q_i(x)^2} + \cdots + \frac{a_{in_i}(x)}{q_i(x)^{n_i}},
-~$$
+```
 
 where each $a_{ij}(x)$ has degree less than the degree of $q_i(x)$.
 
@@ -80,8 +85,6 @@ decomposition when a factorization is available. For example, here we see $n_i$ 
 $q_i$
 
 ```julia;
-using CalculusWithJulia
-using SymPy
 @syms a::real b::real c::real A::real B::real x::real
 ```
 
@@ -104,22 +107,22 @@ Since $q(x)$ and $Q(x)$ share no factors,
 [Bezout's](http://tinyurl.com/kd6prns)
 identity says there exists polynomials $a(x)$ and $b(x)$  with:
 
-$$~
+```math
 a(x) Q(x) + b(x) q(x) = 1.
-~$$
+```
 
 
 Then dividing by $q^k(x)Q(x)$ gives the decomposition
 
-$$~
+```math
 \frac{1}{q(x)^k Q(x)} = \frac{a(x)}{q(x)^k} + \frac{b(x)}{q(x)^{k-1}Q(x)}.
-~$$
+```
 
 So we get by multiplying the $P(x)$:
 
-$$~
+```math
 \frac{P(x)}{q(x)^k Q(x)} = \frac{A(x)}{q(x)^k} + \frac{B(x)}{q(x)^{k-1}Q(x)}.
-~$$
+```
 
 This may look more complicated, but what it does is peel off one term
 (The first) and leave something which is smaller, in this case by a
@@ -140,7 +143,7 @@ and Cook we can see how. Recall the division algorithm, for example, says there 
 &= \frac{r_k}{q^k} + \frac{r_{k-1}}{q^{k-1}} + \frac{q_{k-1}}{q^{k-2}}\\
 &= \frac{r_k}{q^k} + \frac{r_{k-1}}{q^{k-1}} + \frac{q\cdot q_{k-2} + r_{k-2}}{q^{k-2}}\\
 &= \cdots\\
-&= \frac{r_k}{q^k} + \frac{r_{k-1}}{q^{k-1}} + \cdots + q_1
+&= \frac{r_k}{q^k} + \frac{r_{k-1}}{q^{k-1}} + \cdots + q_1.
 \end{align*}
 ```
 
@@ -150,7 +153,7 @@ So the term ``A(x)/q(x)^k`` can be expressed in terms of a sum where the numerat
 
 ## Integrating the terms in a partial fraction decomposition
 
-We discuss by example how each type of possible term in a partial
+We discuss, by example, how each type of possible term in a partial
 fraction decomposition has an antiderivative. Hence, rational
 functions will *always* have an antiderivative that can be computed.
 
@@ -186,15 +189,15 @@ $Ax + B$.
 
 The integral of the following general form is presented below:
 
-$$~
+```math
 \frac{Ax +B }{(ax^2  + bx + c)^j},
-~$$
+```
 
 With `SymPy`, we consider a few cases of the following form, which results from a shift of `x`
 
-$$~
+```math
 \frac{Ax + B}{((ax)^2 \pm 1)^j}
-~$$
+```
 
 This can be done by finding a $d$ so that $a(x-d)^2 + b(x-d) + c = dx^2 + e = e((\sqrt{d/e}x^2 \pm 1)$.
 
@@ -253,11 +256,11 @@ That is integrating ``f(x)/g(x)``, a rational function, will yield an output tha
 ```
 
 
-(Bronstein also sketches the modern method which is to use a Hermite reduction to express ``\int f/g dx = p/q + \int g/h dx``, where ``h`` is square free (the "`j`" are all ``1``). The latter can be written over the complex numbers as logarithmic terms of the form ``\log(x-a)``, that `a`s found following a method due to Trager and Lazard & Rioboo, which is mentioned in the SymPy documentation as the method used.)
+(Bronstein also sketches the modern method which is to use a Hermite reduction to express ``\int (f/g) dx = p/q + \int (g/h) dx``, where ``h`` is square free (the "`j`" are all ``1``). The latter can be written over the complex numbers as logarithmic terms of the form ``\log(x-a)``, the "`a`s"found following a method due to Trager and Lazard, and Rioboo, which is mentioned in the SymPy documentation as the method used.)
 
 
 
-## Examples
+#### Examples
 
 Find an antiderivative for $1/(x\cdot(x^2+1)^2)$.
 
@@ -281,14 +284,14 @@ Find an antiderivative of $1/(x^2 - 2x-3)$.
 We again just let `SymPy` do the work. A partial fraction decomposition is given by:
 
 ```julia;
-q =  (x^2 - 2x - 3)
-apart(1/q)
+𝒒 =  (x^2 - 2x - 3)
+apart(1/𝒒)
 ```
 
 We see what should yield two logarithmic terms:
 
 ```julia;
-integrate(1/q, x)
+integrate(1/𝒒, x)
 ```
 
 
@@ -306,7 +309,6 @@ generally, $\log(\lvert x\rvert)$ is one.
 The answers found can become quite involved. [Corless](https://arxiv.org/pdf/1712.01752.pdf), Moir, Maza, and Xie use this example which at first glance seems tame enough:
 
 ```julia
-@syms x::real
 ex = (x^2 - 1) / (x^4 + 5x^2 + 7)
 ```
 
@@ -324,14 +326,14 @@ The partial fraction decomposition of $1/(x(x-1))$ must be of the form $A/x + B/
 
 What is $A$? (Use `SymPy` or just put the sum over a common denominator and solve for $A$ and $B$.)
 
-```julia; echo=false
+```julia; hold=true; echo=false
 val = -1
 numericq(val)
 ```
 
 What is $B$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 val = 1
 numericq(val)
 ```
@@ -340,19 +342,19 @@ numericq(val)
 
 The following gives the partial fraction decomposition for a rational expression:
 
-$$~
+```math
 \frac{3x+5}{(1-2x)^2} = \frac{A}{1-2x} + \frac{B}{(1-2x)^2}.
-~$$
+```
 
 Find $A$ (being careful with the sign):
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(-3/2)
 ```
 
 Find $B$:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(13/2)
 ```
 
@@ -360,25 +362,25 @@ numericq(13/2)
 
 The following specifies the general partial fraction decomposition for a rational expression:
 
-$$~
+```math
 \frac{1}{(x+1)(x-1)^2} = \frac{A}{x+1} + \frac{B}{x-1} + \frac{C}{(x-1)^2}.
-~$$
+```
 
 Find $A$:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(1/4)
 ```
 
 Find $B$:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(-1/4)
 ```
 
 Find $C$:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(1/2)
 ```
 
@@ -387,13 +389,13 @@ numericq(1/2)
 
 Compute the following exactly:
 
-$$~
+```math
 \int_0^1 \frac{(x-2)(x-3)}{(x-4)^2\cdot(x-5)} dx
-~$$
+```
 
 Is $-6\log(5) - 5\log(3) - 1/6 + 11\log(4)$ the answer?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq("yes")
 ```
 
@@ -401,15 +403,15 @@ yesnoq("yes")
 
 In the assumptions for the partial fraction decomposition is the fact that $p(x)$ and $q(x)$ share no common factors. Suppose, this isn't the case and in fact we have:
 
-$$~
+```math
 \frac{p(x)}{q(x)} = \frac{(x-c)^m s(x)}{(x-c)^n t(x)}.
-~$$
+```
 
 Here $s$ and $t$ are polynomials such that $s(c)$ and $t(c)$ are non-zero.
 
 If $m > n$, then why can we cancel out the $(x-c)^n$ and not have a concern?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 "`SymPy` allows it.",
 L"The value $c$ is a removable singularity, so the integral will be identical.",
@@ -422,7 +424,7 @@ radioq(choices, ans, keep_order=true)
 
 If $m = n$, then why can we cancel out the $(x-c)^n$ and not have a concern?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 "`SymPy` allows it.",
 L"The value $c$ is a removable singularity, so the integral will be identical.",
@@ -435,7 +437,7 @@ radioq(choices, ans, keep_order=true)
 
 If $m < n$, then why can we cancel out the $(x-c)^n$ and not have a concern?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 "`SymPy` allows it.",
 L"The value $c$ is a removable singularity, so the integral will be identical.",
@@ -473,7 +475,7 @@ Integrating ``I`` leads to two logarithmic terms, which are combined to give:
 
 This involves no complex numbers, as:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["The complex numbers are complex conjugates, so the term in the logarithm will simply be ``x - 2\\alpha x + \\alpha^2 + \\beta^2``",
            "The ``\\beta`` are ``0``, as the polynomials in question are real"]
 radioq(choices, 1)
@@ -488,13 +490,8 @@ The term ``II`` benefits from this computation (attributed to Rioboo by [Corless
 
 Applying this with ``X=x - \alpha`` and ``Y=-\beta`` shows that ``\int II dx`` will be
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["``-2b\\arctan((x - \\alpha)/(\\beta))``",
            "``2b\\sec^2(-(x-\\alpha)/(-\\beta))``"]
 radioq(choices, 1)
-```
-
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

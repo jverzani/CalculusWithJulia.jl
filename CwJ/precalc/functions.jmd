@@ -8,7 +8,8 @@ using CalculusWithJulia, Plots
 
 ```julia; echo=false; results="hidden"
 using CalculusWithJulia.WeaveSupport
-__DIR__, __FILE__ = :precalc, :functions
+import PyPlot
+pyplot()
 nothing
 ```
 
@@ -214,7 +215,7 @@ bigger_10(x) = x > 10 ? x : 10.0
 
 (This could also utilize the `max` function: `f(x) = max(x, 10.0)`.)
 
-Or similarly, a function to represent a cell phone plan where the first 500 minutes are 20 dollars and every additional minute is 5 cents:
+Or similarly, a function to represent a cell phone plan where the first ``500`` minutes are ``20`` dollars and every additional minute is ``5`` cents:
 
 ```julia;
 cellplan(x) = x < 500 ? 20.0 : 20.0 + 0.05 * (x-500)
@@ -269,10 +270,10 @@ end
 The last value computed is returned unless the `function_body`
 contains an explicit `return` statement.
 
-For example, the following is a more verbose way to define $f(x) = x^2$:
+For example, the following is a more verbose way to define $u(x) = x^2$:
 
-```julia;hold=true
-function f(x)
+```julia;
+function u(x)
   return x^2
 end
 ```
@@ -431,20 +432,20 @@ Something similar is also true with `Julia`.  Consider the example of writing a 
 
 ```julia;
 m, b = 2, 3
-mxplusb(x) = m*x + b
+mxb(x) = m*x + b
 ```
 
 This will work as expected. For example, $f(0)$ will be $b$  and $f(2)$ will be $7$:
 
 ```julia;
-mxplusb(0), mxplusb(2)
+mxb(0), mxb(2)
 ```
 
 All fine, but what if somewhere later the values for $m$ and $b$ were *redefined*, say with ``m,b = 3,2``?
 
 
 Now what happens with $f(0)$? When $f$ was defined `b` was $3$, but
-now if we were to call `f`, `b` is 2. Which value will we get? More
+now if we were to call `f`, `b` is ``2``. Which value will we get? More
 generally, when `f` is being evaluated in what context does `Julia`
 look up the bindings for the variables it encounters? It could be that
 the values are assigned when the function is defined, or it could be
@@ -456,7 +457,7 @@ Before discussing this, let's just see in this case:
 
 ```julia;hold=true
 m, b = 3, 2
-mxplusb(0)
+mxb(0)
 ```
 
 So the `b` is found from the currently stored value. This fact can be exploited. we can write template-like functions, such as `f(x)=m*x+b` and reuse them just by updating the parameters separately.
@@ -491,7 +492,7 @@ convenient. For example, here is an alternate way of defining a line
 with parameters `m` and `b`:
 
 ```julia;
-mxb(x; m=1, b=0) = m*x + b
+mxplusb(x; m=1, b=0) = m*x + b
 ```
 
 The right-hand side is identical to before, but the left hand side is
@@ -503,7 +504,7 @@ value not be specified when the function is called.
 Calling a function with keyword arguments can be identical to before:
 
 ```julia;
-mxb(0)
+mxplusb(0)
 ```
 
 During this call, values for `m` and `b` are found from how the
@@ -512,7 +513,7 @@ specified so the defaults of $m=1$ and $b=0$ are used. Whereas, this
 call will use the user-specified values for `m` and `b`:
 
 ```julia;
-mxb(0, m=3, b=2)
+mxplusb(0, m=3, b=2)
 ```
 
 Keywords are used to mark the parameters whose values are to be changed from the default. Though one can use *positional arguments* for parameters - and there are good reasons to do so - using keyword arguments is a good practice if performance isn't paramount, as their usage is more explicit yet the defaults mean that a minimum amount of typing needs to be done.
@@ -530,14 +531,14 @@ trajectory(100)
 ```
 
 
-#### `f(x,p)` alternative
+### The `f(x,p)` style for parameterization
 
-An alternative to keyword arguments is to bundle the parameters into a container and pass them as a single argument to the function. This style is used in the `SciML` suite of packages.
+An alternative to keyword arguments is to bundle the parameters into a container and pass them as a single argument to the function. The idiom in `Julia` is to use the *second* argument for parameters, or `f(x, p)` for the function argument specifications. This style is used in the very popular `SciML` suite of packages.
 
 For example, here we use a *named tuple* to pass parameters to `f`:
 
 ```julia;hold=true
-function trajectory(x,p)
+function trajectory(x ,p)
     g,v0, theta, k = p.g, p.v0, p.theta, p.k # unpack parameters
 
     a = v0 * cos(theta)
@@ -602,7 +603,7 @@ is used.)
 
 As mentioned `Julia`'s multiple dispatch allows multiple functions with the same name. The function that gets selected depends not just on the type of the arguments, but also on the number of arguments given to the function. We can exploit this to simplify our tasks. For example, consider this optimization problem:
 
-> For all rectangles of perimeter 20, what is the one with largest area?
+> For all rectangles of perimeter ``20``, what is the one with largest area?
 
 The start of this problem is to represent the area in terms of one variable. We see next that composition can simplify this task, which when done by hand requires a certain amount of algebra.
 
@@ -644,10 +645,21 @@ plot(Area, 0, 10)
 From the graph, we can see that that width for maximum area is $w=5$ and so $h=5$ as well.
 
 
+## Function application
+
+The typical calling pattern for a function simply follows *mathematical* notation, that is `f(x)` calls the function `f` with the argument `x`. There are times -- especially with function composition -- that an alternative *piping* syntax is desirable. `Julia` provides the *infix* operation `|>` for piping, defining it by `|>(x, f) = f(x)`. This allows composition to work left to right, instead of right to left. For example, these two calls produce the same answer:
+
+```julia
+exp(sin(log(3))), 3 |> log |> sin |> exp
+```
 
 
+## Other types of functions
 
-## Anonymous functions
+`Julia` has both *generic* functions *and* *anonymous* functions. Generic functions participate in *multiple dispatch*, a central feature of `Julia`. Anonymous functions are very useful with higher-order programming (passing functions as arguments). These notes occasionally take advantage of anonymous functions for convenience.
+
+
+### Anonymous functions
 
 Simple mathematical functions have a domain and range which are a subset of the real numbers, and generally have a concrete mathematical rule. However, the definition of a function is much more abstract. We've seen that functions for computer languages can be more complicated too, with, for example, the possibility of multiple input values. Things can get more abstract still.
 
@@ -704,6 +716,7 @@ shift_right_alt(f; c=0) = x -> f(x-c)
 ```
 
 When the `->` is seen a function is being created.
+
 
 ```julia;echo=false;
 alert("""
@@ -763,6 +776,31 @@ secant(f,a,b)(3/2)
 ```
 
 The last line employs double parentheses. The first pair, `secant(f,a,b)`, returns a function and the second pair, `(3/2)`, are used to call the returned function.
+
+
+#### Closures
+
+One main use of anonymous functions is to make [closures](https://en.wikipedia.org/wiki/Closure_(computer_programming)). We've touched on two  concepts: functions with parameters *and* functions as arguments to other functions. The creation of a function for a given set of parameters may be needed. Anonymous functions are used to create **closures** which capture the values of the parameters. For a simple example, `mxplusb` parameterizes any line, but to use a function to represent a specific line, a new function can be created:
+
+```julia; hold=true
+mxplusb(x; m=0, b=0) = m*x + b
+specific_line(m,b) = x -> mxplusb(x; m=m, b=b)
+```
+
+The returned object will have its parameters (`m` and `b`) fixed when used.
+
+In `Julia`, the functions `Base.Fix1` and `Base.Fix2` are provided to take functions of two variables and create callable objects of just one variable, with the other argument fixed. This partial function application is provided by a some of the logical comparison operators. which can be useful with filtering, say.
+
+For example, `<(2)` is a funny looking way of expressing the function `x -> x < 2`. (Think of `x < y` as `<(x,y)` and the "fix" the value of `y` to be `2`.) This is useful with filtering by a predicate function, for example:
+
+```julia
+filter(<(2), 0:4)
+```
+
+which picks off the values of `0` and `1` in a somewhat obscure way but less verbose than `filter(x -> x < 2, 0:4)`.
+
+
+The `Fix2` function is also helpful when using the `f(x, p)` form for passing parameters to a function. The result of `Base.Fix2(f, p)` is a function with its parameters fixed that can be passed along for plotting or other uses.
 
 
 ### The `do` notation

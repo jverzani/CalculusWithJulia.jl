@@ -17,12 +17,10 @@ way. In this section we describe how.
 
 The following image is the calculator that Google presents upon searching for "calculator."
 
-![Screenshot of a calculator provided by the Google search engine.](https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/precalc/figures/calculator.png)
-
 ```julia; echo=false;
 imgfile = "figures/calculator.png"
 caption = "Screenshot of a calculator provided by the Google search engine."
-#ImageFile(imgfile, caption)
+ImageFile(:precalc, imgfile, caption)
 nothing
 ```
 
@@ -38,7 +36,7 @@ The goal here is to see the counterparts within `Julia` to these features.
 
 ----
 
-For an illustration of *really* basic calculator, have some fun watching this video:
+For an illustration of a *really* basic calculator, have some fun watching this video:
 
 ```julia; echo=false;
 txt = """
@@ -53,8 +51,8 @@ CalculusWithJulia.WeaveSupport.HTMLoutput(txt)
 ## Operations
 
 Performing a simple computation on the calculator typically involves
-hitting buttons in a sequence, such as "1", "+", "2", "`=`" to compute
-3 from adding 1 + 2. In `Julia`, the process is not so
+hitting buttons in a sequence, such as "`1`", "`+`", "`2`", "`=`" to compute
+`3` from adding `1 + 2`. In `Julia`, the process is not so
 different. Instead of pressing buttons, the various values are
 typed in. So, we would have:
 
@@ -355,7 +353,7 @@ texts.
 ```julia; echo=false;
 note("""
 
-In `Julia` many infix operations can be done using a prefix manner. For example `14 + 2` can also be evaluated by `+(14,2)`. There are very few *postfix* operations, though in these notes we will overload one, the `'` operation, to indicate a derivative."
+In `Julia` many infix operations can be done using a prefix manner. For example `14 + 2` can also be evaluated by `+(14,2)`. There are very few *postfix* operations, though in these notes we will overload one, the `'` operation, to indicate a derivative.
 
 """)
 ```

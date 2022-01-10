@@ -5,19 +5,13 @@
 ```julia; echo=false; results="hidden"
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
-__DIR__, __FILE__ = :precalc, :variables
 nothing
 ```
-
-![Screenshot of a calculator provided by the Google search engine.](
-https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/precalc/figures/calculator.png
-)
 
 ```julia; echo=false;
 imgfile = "figures/calculator.png"
 caption = "Screenshot of a calculator provided by the Google search engine."
-#ImageFile(imgfile, caption)
-nothing
+ImageFile(:precalc, imgfile, caption)
 ```
 
 
@@ -94,7 +88,7 @@ bottom = 5 - 6/7
 top/bottom
 ```
 
-### Examples
+#### Examples
 
 ##### Example
 
@@ -491,8 +485,8 @@ x = y = z = 3
 Will always:
 
 ```julia; hold=true; echo=false;
-choices = ["Assign all three variables at once to a value of 3",
-"Create 3 linked values that will stay synced when any value changes",
+choices = ["Assign all three variables at once to a value of `3`",
+"Create ``3`` linked values that will stay synced when any value changes",
 "Throw an error"
 ]
 ans = 1

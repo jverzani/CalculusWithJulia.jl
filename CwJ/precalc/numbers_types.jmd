@@ -3,8 +3,6 @@
 ```julia; echo=false; results="hidden"
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
-using Plots
-__DIR__, __FILE__ = :precalc, :numbers_types
 nothing
 ```
 
@@ -18,7 +16,7 @@ been introduced:
 * The real numbers, $\{x: -\infty < x < \infty\}$;
 * The complex numbers, $\{a + bi: a,b \text{ are real numbers and } i^2=-1\}$.
 
-On top of these, we have special subsets, such as the natural numbers $\{0, 1, 2, \dots\}$, the even numbers, the odd numbers, positive numbers, non-negative numbers, etc.
+On top of these, we have special subsets, such as the natural numbers $\{1, 2, \dots\}$ (sometimes including ``0``), the even numbers, the odd numbers, the positive numbers, the non-negative numbers, etc.
 
 Mathematically, these number systems are naturally nested within each
 other as integers are rational numbers which are real numbers, which
@@ -34,8 +32,8 @@ and within each type, specializations for how these values are stored.
 Most of the details will not be of interest to all, and will be described later.
 
 
-For now, let's consider the number 1. It can be viewed as either an integer, rational,
-real, or complex number. To construct "1" in each type within `Julia`
+For now, let's consider the number ``1``. It can be viewed as either an integer, rational,
+real, or complex number. To construct "``1``" in each type within `Julia`
 we have these different styles:
 
 ```julia;
@@ -72,7 +70,7 @@ exact representation of a number is also often just an
 model a much wider range of numbers.
 
 
-Now in nearly all cases, the differences are not noticed. Take for instance this simple calculation involving mixed types.
+Now in nearly all cases the differences are not noticable. Take for instance this simple calculation involving mixed types.
 
 
 ```julia;
@@ -141,7 +139,7 @@ defining this case as a domain error, but its usefulness led to
 special casing.
 
 
-## Some more details.
+## Additional details.
 
 
 What follows is only needed for those seeking more background.
@@ -248,11 +246,11 @@ Floating point values in scientific notation will always be normalized. This is 
 3e40 / 4e30
 ```
 
-The power in the first is 71, not 70 = 30+40, as the product of 3 and 4 as 12 or `1.2e^1`. (We also see the artifact of `1.2` not being exactly representable in floating point.)
+The power in the first is ``71``, not ``70 = 30+40``, as the product of ``3`` and ``4`` as ``12`` or `1.2e^1`. (We also see the artifact of `1.2` not being exactly representable in floating point.)
 
 ##### Example: 32-bit floating point
 
-In some uses, such as using a GPU, 32-bit floating point (single precision) is also
+In some uses, such as using a GPU, ``32``-bit floating point (single precision) is also
 common. These values may be specified with an `f` in place of the `e`
 in scientific notation:
 
@@ -389,7 +387,7 @@ table(d)
 
 
 
-## Complex numbers
+### Complex numbers
 
 Complex numbers in `Julia` are stored as two numbers, a real and imaginary part, each some type of `Real` number. The special constant `im` is used to represent $i=\sqrt{-1}$.  This makes the construction of complex numbers fairly standard:
 

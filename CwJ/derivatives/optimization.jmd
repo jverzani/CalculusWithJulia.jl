@@ -13,16 +13,7 @@ using SymPy
 using CalculusWithJulia.WeaveSupport
 import PyPlot
 pyplot()
-
-# keep until CwJ bumps version
-using Downloads
-function JSXGraph(fname, caption)
-    url = "https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/derivatives/"
-    content = read(Downloads.download(joinpath(url, fname)), String)
-    CalculusWithJulia.WeaveSupport.JSXGRAPH(content, caption,
-                                            "jsxgraph", "jsxgraph",
-                                            500, 300)
-end
+fig_size = (400, 400)
 nothing
 ```
 
@@ -40,9 +31,11 @@ For example,
 
 
 The main tool is the extreme value theorem of Bolzano and Fermat's
-theorem about critical points: If the function $f(x)$ is continuous on
-$[a,b]$ and differentiable on $(a,b)$, then the extrema exist and must
-occur at either an end point or a critical point.
+theorem about critical points, which combined say:
+
+> If the function $f(x)$ is continuous on $[a,b]$ and differentiable
+> on $(a,b)$, then the extrema exist and must
+> occur at either an end point or a critical point.
 
 
 Though not all of our problems lend themselves to a description of a
@@ -56,7 +49,7 @@ algorithmic prescription to find the absolute extrema of a function:
 3) Identify the largest and smallest values.
 
 With the computer we can take some shortcuts, as we will be able to
-graph our function to see where the extreme values will be.
+graph our function to see where the extreme values will be, and in particular if they occur at end points or critical points.
 
 ## Fixed perimeter and area
 
@@ -69,8 +62,6 @@ this perimeter and their respective areas.
 
 ```julia; hold=true; echo=false; cache=true
 ### {{{perimeter_area_graphic}}}
-pyplot()
-fig_size = (400, 400)
 
 
 function perimeter_area_graphic_graph(n)
@@ -146,7 +137,7 @@ abstraction. This was discussed in the section on
 function of both base and height:
 
 ```julia;
-A(b, h) = b*h
+A(b, h) = b * h
 ```
 
 Here we write area, quite naturally, as a function of two variables.
@@ -168,12 +159,15 @@ functions:
 A(b) = A(b, h(b))
 ```
 
-From this we can solve graphically as before, or numerically.
-We search for zeros of the derivative:
+From this we can solve graphically as before, or numerically, such as here where
+we search for zeros of the derivative:
 
 ```julia;
 find_zeros(A', 0, 10)   # find_zeros in `Roots`,
 ```
+
+(As a reminder, the notation `A'` is defined in `CalculusWithJulia` using the `derivative` function from the `ForwardDiff` package.)
+
 
 
 ```julia; echo=false
@@ -185,7 +179,7 @@ Look at the last definition of `A`. The function `A` appears on both sides, thou
 ```
 
 
-### Norman Windows
+#### Example: Norman windows
 
 Here is a similar, though more complicated, example where the analytic
 approach can be a bit more tedious, but the graphical one mostly
@@ -279,8 +273,6 @@ plot(Aᵣ', 5.5, 5.7)
 
 We confirm that the critical point is around $5.6$.
 
-(As a reminder, the notation `Aᵣ'` is defined in `CalculusWithJulia` using the `derivative` function from the `ForwardDiff` package.)
-
 #### Using `find_zero` to locate critical points.
 
 Rather than zoom in graphically, we now use a root-finding algorithm,
@@ -369,14 +361,21 @@ They are similar, except we solved for `h0` symbolically, rather than by hand, w
 caption = """
 The figure shows a trapezoid inscribed in a circle. By adjusting the point ``P_3 = (x,y)`` on the upper-half circle, the area of the trapezoid changes. What value of ``x`` will produce the maximum area for a given ``r`` (from ``P_4``, which can also be adjusted)? By playing around with different values of ``P_3`` and ``P_4`` the answer can be guessed.
 """
-#CalculusWithJulia.WeaveSupport.JSXGraph(joinpath(@__DIR__, "optimization-trapezoid.js"), caption)
-JSXGraph("optimization-trapezoid.js", caption)
+
+#JSXGraph(:derivatives, "optimization-trapezoid.js", caption)
 nothing
 ```
 
-----
+```julia; hold=true; echo=false
+function trapezoid(r)
+    plot(x -> sqrt(1 - x^2), -1, 1, legend=false, aspect_ratio=:equal)
+    plot!([-1,1,r,-r,-1], [0,0,sqrt(1-r^2), sqrt(1-r^2), 0], lw=3, color=:red)
+end
+trapezoid(0.75)
+```
 
-A trapezoid is *inscribed* in the upper-half circle of radius ``r``. The trapezoid is found be connecting the points ``(x,y)`` (in the first quadrant) with ``(r, 0)``, ``(-r,0)``, and ``(-x, y)``. Find the maximum area.
+
+A trapezoid is *inscribed* in the upper-half circle of radius ``r``. The trapezoid is found be connecting the points ``(x,y)`` (in the first quadrant) with ``(r, 0)``, ``(-r,0)``, and ``(-x, y)``. Find the maximum area. (The above figure has ``x=0.75`` and ``r=1``.)
 
 Here the constraint is simply ``r^2 = x^2 + y^2`` with ``x`` and ``y`` being non-negative. The area is then found through the average of the two lengths times the height. Using `height` for `y`, we have:
 
@@ -394,7 +393,7 @@ The other values of interest can be found through substitution. For example:
 hₜ(x => x0)
 ```
 
-## Trigonometry
+## Trigonometry problems
 
 Many maximization and minimization problems involve triangles, which
 in turn use trigonometry in their description. Here is an example, the
@@ -417,8 +416,8 @@ plot!(p, [0,14.53402874075368], [12.1954981558864, 0], linewidth=3)
 plot!(p, [0,5], [8,8], color=:orange)
 plot!(p, [5,5], [0,8], color=:orange)
 annotate!(p, [(13, 1/2, "θ"),
-              (2.5, 11, "l2"), (10, 5, "l1"), (2.5, 7.0, "l2 * cos(θ)"),
-	      (5.1, 5, "l1 * sin(θ)")])
+              (2.5, 11, "l₂"), (10, 5, "l₁"), (2.5, 7.0, "l₂ ⋅ cos(θ)"),
+	      (5.1, 4, "l₁ ⋅ sin(θ)")])
 ```
 
 
@@ -463,7 +462,7 @@ delta = 0.2
 plot(l, delta, pi/2 - delta)
 ```
 
-The minimum occurs between 0.5 and 1.0 radians, a bracket for the derivative. Here we find ``x`` and the minimum value:
+The graph shows the minimum occurs between ``0.50`` and ``1.00`` radians, a bracket for the derivative. Here we find ``x`` and the minimum value:
 
 ```julia; hold=true;
 x = find_zero(l', (0.5, 1.0))
@@ -472,7 +471,7 @@ x, l(x)
 
 That is, any ladder less than this length can get around the hallway.
 
-## Rate times time
+## Rate times time problems
 
 Ethan Hunt, a top secret spy, has a mission to chase a bad guy. Here
 is what we know:
@@ -548,7 +547,7 @@ $x=10$ down to an even smaller amount of $1/2$.  It may not look as
 impressive as a miles-long sprint, but Mr. Hunt is advised by Benji to drive
 the whole way.
 
-## Rate times time ... the origin story
+### Rate times time ... the origin story
 
 ```julia;hold=true; echo=false
 ### {{{lhopital_43}}}
@@ -567,10 +566,8 @@ http://www.ams.org/samplings/feature-column/fc-2016-05.)
 
 
 """
-#ImageFile(imgfile, caption)
+ImageFile(:derivatives, imgfile, caption)
 ```
-
-![Image number $43$ from l'Hospital's calculus book (the first). A traveler leaving location $C$ to go to location $F$ must cross two regions separated by the straight line $AEB$. We suppose that in the region on the side of $C$, he covers distance $a$ in time $c$, and that on the other, on the side of $F$, distance $b$ in the same time $c$. We ask through which point $E$ on the line $AEB$ he should pass, so as to take the least possible time to get from $C$ to $F$? (From http://www.ams.org/samplings/feature-column/fc-2016-05.)](https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/derivatives/figures/fcarc-may2016-fig43-250.gif)
 
 The last example is a modern day illustration of a problem of calculus
 dating back to l'Hospital. His parameterization is a bit
@@ -734,11 +731,11 @@ The maximum is then at
 f(c)
 ```
 
-### Minimize the surface area of a can
+##### Example: mMinimize the surface area of a can
 
 
 For a more applied problem of this type (infinite domain), consider a
-can of some soft drink that is to contain 355ml which is 355 cubic
+can of some soft drink that is to contain ``355``ml which is ``355`` cubic
 centimeters.  We use metric units, as the relationship between volume
 (cubic centimeters) and fluid amount (ml) is clear.  A can to hold
 this amount is produced in the shape of cylinder with radius $r$ and
@@ -746,13 +743,13 @@ height $h$. The materials involved give the surface area, which would
 be:
 
 ```math
-SA = h \cdot 2\pi r + 2 \cdot \pi r^2
+SA = h \cdot 2\pi r + 2 \cdot \pi r^2.
 ```
 
 The volume satisfies:
 
 ```math
-V = 355 = h \cdot \pi r^2
+V = 355 = h \cdot \pi r^2.
 ```
 
 Find the values of $r$ and $h$ which minimize the surface area.
@@ -780,14 +777,14 @@ This is minimized subject to the constraint that $r \geq 0$. A quick
 glance shows that as $r$ gets close to $0$, the can must get
 infinitely tall to contain that fixed volume, and would have infinite
 surface area as the $1/r^2$ in the first term implies. On the other
-hand, as $r$ goes to infinity, the height must go to 0 to make a
+hand, as $r$ goes to infinity, the height must go to ``0`` to make a
 really flat can. Again, we would have infinite surface area, as the
 $r^2$ term at the end indicates. With this observation, we can rule
 out the endpoints as possible minima, so any minima must occur at a
 critical point.
 
 We start by making a graph, making an educated guess that the answer
-is somewhere near a real life answer, or around 3-5 cms in radius:
+is somewhere near a real life answer, or around ``3``-``5`` cms in radius:
 
 
 ```julia;
@@ -1132,10 +1129,8 @@ caption = L"""
 Image number $40$ from l'Hospital's calculus book (the first calculus book). Among all the cones that can be inscribed in a sphere, determine which one has the largest lateral area. (From http://www.ams.org/samplings/feature-column/fc-2016-05)
 
 """
-#ImageFile(imgfile, caption)
+ImageFile(:derivatives, imgfile, caption)
 ```
-
-![Image number ``40`` from l'Hospital's calculus book (the first calculus book). Among all the cones that can be inscribed in a sphere, determine which one has the largest lateral area. (From http://www.ams.org/samplings/feature-column/fc-2016-05)](https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/derivatives/figures/fcarc-may2016-fig40-300.gif)
 
 The figure above poses a problem about cones in spheres, which can be reduced to a two-dimensional problem. Take a sphere of radius $r=1$, and imagine a secant line of length $l$ connecting $(-r, 0)$ to another point $(x,y)$ with $y>0$. Rotating that line around the $x$ axis produces a cone and its lateral surface is given by $SA=\pi \cdot y \cdot l$. Write $SA$ as a function of $x$ and solve.
 

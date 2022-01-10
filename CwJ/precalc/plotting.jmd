@@ -10,7 +10,8 @@ using Plots
 ```julia; echo=false; results="hidden"
 using CalculusWithJulia.WeaveSupport
 using Roots
-__DIR__, __FILE__ = :precalc, :plotting
+import PyPlot
+pyplot()
 nothing
 ```
 
@@ -25,7 +26,7 @@ A scalar, univariate function, such as $f(x) = 1 - x^2/2$, can be thought of in 
 
 * It can be thought of in terms of its properties: a polynomial, continuous, $U$-shaped, an approximation for $\cos(x)$ near $0$, $\dots$
 
-* it can be visualized graphically. This is useful for seeing the qualitative behaviour of a function.
+* it can be visualized graphically. This is useful for seeing the qualitative behavior of a function.
 
 
 
@@ -137,6 +138,24 @@ We could skip the first step of defining a function by using an *anonymous funct
 plot(x -> cos(x) - x, 0, pi/2)
 ```
 
+Anonymous functions are especially helpful when parameterized functions are involved:
+
+```julia;hold=true
+mxplusb(x; m=1, b=0)
+plot(x -> mxplusb(x; m=-1, b=1), -1, 2)
+```
+
+
+Had we parameterized using the `f(x,p)` style, the result would be similar:
+
+```julia
+function mxplusb(x, p)
+    m, b = p.m, p.b
+    x -> m * x + b
+end
+plot(x -> mxplusb(x, (m=-1, b=1)), -1, 2)
+```
+
 
 ```julia;echo=false
 note("""
@@ -246,7 +265,7 @@ $10$ points, we might do:
 𝒚s = sin.(𝒙s)
 ```
 
-Finally, to plot the set of points and connect with lines. If the collection of points are specified in place of a function, the graph is produced:
+Finally, to plot the set of points and connect with lines, the ``x`` and ``y`` values are passed along as vectors:
 
 ```julia;
 plot(𝒙s, 𝒚s)
@@ -475,7 +494,7 @@ current graph, though it is implicit. Both `plot!`, `scatter!`, and
 """)
 ```
 
-### Additional arguments to adjust a graphic
+## Additional arguments
 
 The `Plots` package provides many arguments for adjusting a graphic, here we mention just a few of the [attributes](https://docs.juliaplots.org/latest/attributes/):
 
@@ -486,7 +505,7 @@ The `Plots` package provides many arguments for adjusting a graphic, here we men
 * `plot(..., linestyle=:dash)`: will change the line style of the plotted lines to dashed lines. Also `:dot`, ...
 * `plot(..., aspect_ratio=:equal)`: will keep $x$ and $y$ axis on same scale so that squares look square.
 * `plot(..., legend=false)`: by default, different layers will be indicated with a legend, this will turn off this feature
-* `plot(..., label="a label")` the `label` attribute will show up when a legend is present.
+* `plot(..., label="a label")` the `label` attribute will show up when a legend is present. Using an empty string, `""`, will suppress add the layer to the legend.
 
 For plotting points with `scatter` or `scatter!` the markers can be adjusted via
 
@@ -497,10 +516,10 @@ Of course, zero, one, or more of these can be used on any given call to `plot`, 
 
 
 
-## Parametric graphs
+## Graphs of parametric equations
 
 If we have two functions $f(x)$ and $g(x)$ there are a few ways to
-investigate their joint behaviour. As just mentioned, we can graph
+investigate their joint behavior. As just mentioned, we can graph
 both $f$ and $g$ over the same interval using layers. Such a graph
 allows an easy comparison of the shape of the two functions and can be
 useful in solving $f(x) = g(x)$. For the latter, the graph of $h(x) =
@@ -620,7 +639,7 @@ Playing with the toy makes a few things become clear:
   equations $f(t) = c$  and $g(t) = \psi(t)$ for some $\psi$.
 
 * Drawing a line with a slope different from $0$ or $\infty$ requires
-  moving both knobs at the same time. A 45$^\circ$ line with slope $m=1$
+  moving both knobs at the same time. A ``45``$^\circ$ line with slope $m=1$
   can be made by twisting both at the same rate, say through $f(t) =
   ct$, $g(t)=ct$. It doesn't matter how big $c$ is, just that it is
   the same for both $f$ and $g$. Creating a different slope is done by
@@ -934,7 +953,7 @@ radioq(choices, ans, keep_order=true)
 
 ----
 
-### Technical note
+## Technical note
 
 The slow "time to first plot" in `Julia` is a well-known hiccup that is related to how `Julia` can be so fast. Loading Plots and the making the first plot are both somewhat time consuming, though the second and subsequent plots are speedy. Why?
 

@@ -3,8 +3,6 @@
 This section uses these add-on packages:
 
 
-Before beginning, we load the packages used in the following:
-
 ```julia
 using CalculusWithJulia
 using Plots
@@ -67,11 +65,11 @@ nothing
 
 ----
 
-This section explores properties of a function, ``f(x)``, that are described by properties of its first and second derivatives, ``f'(x)`` and ``f''(x)``. As part or the conversation two tests are discussed that characterize when a critical point is a relative maximum or minimum. (We know that any relative maximum or minimum occurs at a critical point, but it is not true that *any* critical point will be a relative maximum or minimum.)
+This section explores properties of a function, ``f(x)``, that are described by properties of its first and second derivatives, ``f'(x)`` and ``f''(x)``. As part of the conversation two tests are discussed that characterize when a critical point is a relative maximum or minimum. (We know that any relative maximum or minimum occurs at a critical point, but it is not true that *any* critical point will be a relative maximum or minimum.)
 
 
 
-## Positive and increasing on an interval
+## Positive or increasing on an interval
 
 We start with some vocabulary:
 
@@ -93,8 +91,8 @@ we'll see both are related to the zeros of some function. However,
 before proceeding to that it is usually helpful to get an idea of
 where the answer is using exploratory graphs.
 
-We will use a helper function, `plotif(f,g,a,b)` that plots the function `f` over `[a,b]` coloring it red when `g` is positive (and blue otherwise).
-Such a function is defined for us in the accompanying `CalculusWithJulia` package, which has been loaded.
+We will use a helper function, `plotif(f, g, a, b)` that plots the function `f` over `[a,b]` coloring it red when `g` is positive (and blue otherwise).
+Such a function is defined for us in the accompanying `CalculusWithJulia` package, which has been previously been loaded.
 
 
 To see where a function is positive, we simply pass the function
@@ -175,20 +173,18 @@ plotif(f, f', -2, 2)
 
 When a function changes from increasing to decreasing, or decreasing to increasing, it will have a peak or a valley. More formally, such points are relative extrema.
 
-When discussing the mean value thereom, we said $f(x)$ has a *relative
-maximum* at $c$ if there exists some interval $I=(a,b)$ with $a < c <
-b$ for which $f(c)$ is an absolute maximum for $f$ and $I$.
+When discussing the mean value thereom, we defined *relative
+extrema* :
 
-Alternatively, we could say
-
-> The function $f(x)$ has a *relative  maximum* at $c$ if the value $f(c)$ is an *absolute maximum* for some *open* interval containing $c$. Similarly, a *relative minimum* is defined, as having ``f(c)`` be an absolute minimum for *some* open interval about ``c``.
+> * The function $f(x)$ has a *relative  maximum* at $c$ if the value $f(c)$ is an *absolute maximum* for some *open* interval containing $c$.
+> * Similarly, ``f(x)`` has a *relative minimum* at ``c`` if the value ``f(c)`` is an absolute minimum for *some* open interval about ``c``.
 
 
 We know since [Fermat](http://tinyurl.com/nfgz8fz) that:
 
 > Relative maxima and minima *must* occur at *critical* points.
 
-However,
+Fermat says that *critical points* -- where the function is defined, but its derivative is either ``0`` or undefined -- are *interesting* points, however:
 
 > A critical point need not indicate a relative maxima or minima.
 
@@ -196,15 +192,18 @@ Again, $f(x)=x^3$ provides the example at $x=0$. This is a critical point, but c
 relative maximum or minimum - it is just a slight pause for a
 strictly increasing function.
 
-When will a critical point correspond to a relative maximum or minimum? That
-question can be answered by considering the first derivative.
+This leaves the question:
+
+> When will a critical point correspond to a relative maximum or minimum?
+
+This question can be answered by considering the first derivative.
 
 > *The first derivative test*: If $c$ is a critical point for $f(x)$ and
 > *if* $f'(x)$ changes sign at $x=c$, then $f(c)$ will be either a
-> relative maximum or a relative minimum. It will be a relative maximum if the
-> derivative changes sign from $+$ to $-$ and a relative minimum if the
-> derivative changes sign from $-$ to $+$. If $f'(x)$ does not change sign
-> at $c$, then $(c,f(c))$ is *not* a relative maximum or minimum.
+> relative maximum or a relative minimum.
+> * It will be a relative maximum if the derivative changes sign from $+$ to $-$.
+> * It will be a relative minimum if the derivative changes sign from $-$ to $+$.
+> * If $f'(x)$ does not change sign at $c$, then $f(c)$ is *not* a relative maximum or minimum.
 
 The classification part, should be clear: e.g., if the derivative is positive then
 negative, the function $f$ will increase to $(c,f(c))$ then decrease
@@ -215,7 +214,7 @@ the domain of $f$. With this assumption, vertical asymptotes are
 avoided. However, it need not be that $f'(c)$ exists. The absolute
 value function at $x=0$ provides an example: this point is a critical
 point where the derivative changes sign, but ``f'(x)`` is not defined  at exactly
-$x=0$. Regardless, it is guaranteed that $(c,f(c))$ will be a relative
+$x=0$. Regardless, it is guaranteed that $f(c)$ will be a relative
 minimum by the first derivative test.
 
 ##### Example
@@ -294,12 +293,11 @@ gcps = find_zeros(g', -2, 2)
 We see the three values $-1$, $0$, $1$ that correspond to the two
 zeros and the relative minimum of $x^2 - 1$. We could graph things,
 but instead we characterize these values using a sign chart. A
-continuous function only can change sign when it crosses $0$ and the
+piecewise continuous function can only change sign when it crosses $0$ or jumps over ``0``. The
 derivative will be continuous, except possibly at the three values
-above.
+above, so is piecewise continuous.
 
-We can then pick intermediate values to test for positive or negative
-values:
+A sign chart picks convenient values between crossing points to test if the function is  positive or negative over those intervals. When computing by hand, these would ideally be values for which the function is easily computed. On the computer, this isn't a concern; below the midpoint is chosen:
 
 ```julia;
 pts = sort(union(-2, gcps, 2))  # this includes the endpoints (a, b) and the critical points
@@ -307,19 +305,31 @@ test_pts = pts[1:end-1] + diff(pts)/2 # midpoints of intervals between pts
 [test_pts sign.(g'.(test_pts))]
 ```
 
+Such values are often summarized graphically on a number line using a *sign chart*:
+
+```julia; eval=false
+   -   ∞   +   0   -   ∞  +   g'
+<---- -1 ----- 0 ----- 1 ---->
+```
+
+(The values where the function is ``0`` or could jump over ``0`` are shown on the number line, and the sign between these points is indicated. So the first minus sign shows ``g'(x)`` is *negative* on ``(-\infty, -1)``, the second minus sign shows ``g'(x)`` is negative on ``(0,1)``.)
+
+
 Reading this we have:
 
-- the derivative changes sign from negative to postive at $x=-1$, so $f(x)$ will have a relative minimum.
+- the derivative changes sign from negative to postive at $x=-1$, so $g(x)$ will have a relative minimum.
 
-- the derivative changes sign from positive to negative at $x=0$, so $f(x)$ will have a relative maximum.
+- the derivative changes sign from positive to negative at $x=0$, so $g(x)$ will have a relative maximum.
 
-- the derivative changes sign from negative to postive at $x=1$, so $f(x)$ will have a relative minimum.
+- the derivative changes sign from negative to postive at $x=1$, so $g(x)$ will have a relative minimum.
 
-In the `CalculusWithJulia` package there is function `sign_chart` that will do such work for us:
+In the `CalculusWithJulia` package there is  `sign_chart` function that will do such work for us, though with a different display:
 
 ```julia
 sign_chart(g', -2, 2)
 ```
+
+(This function numerically identifies ``x``-values for the specified function which are zeros, infinities, or points where the function jumps ``0``. It then shows the resulting sign pattern of the function from left to right.)
 
 We did this all without graphs. But, let's look at the graph of the derivative:
 
@@ -361,7 +371,7 @@ We get values of $0$ and $2\pi$. Let's look at the derivative at these points:
 At $x=0$ we have to the left and right signs found by
 
 ```julia;
-fp.([-1/10, 1/10])
+fp(-pi/2), fp(pi/2)
 ```
 
 Both are negative. The derivative does not change sign at $0$, so the critical point is neither a relative minimum or maximum.
@@ -369,7 +379,7 @@ Both are negative. The derivative does not change sign at $0$, so the critical p
 What about at $2\pi$? We do something similar:
 
 ```julia;
-fp.(2*pi .+ [-1/10,  1/10])
+fp(2pi - pi/2), fp(2pi + pi/2)
 ```
 
 Again, both negative. The function $f(x)$ is just decreasing near
@@ -470,7 +480,7 @@ A similar definition exists for *concave down* where the secant lines
 lie below the graph.  Notationally, concave up says  for any $x$ in $[a,b]$:
 
 ```math
-f(a) + (f(b) - f(a))/(b-a) \cdot (x-a) \geq f(x) \quad\text{ (concave up) }
+f(a) + \frac{f(b) - f(a)}{b-a} \cdot (x-a) \geq f(x) \quad\text{ (concave up) }
 ```
 
 Replacing
@@ -479,11 +489,12 @@ will add the prefix "strictly." These definitions are useful for a
 general definition of
 [convex functions](https://en.wikipedia.org/wiki/Convex_function).
 
-We won't work with these definitions, rather we will characterize
+We won't work with these definitions in this section, rather we will characterize
 concavity for functions which have either a first or second
 derivative:
 
-> If $f'(x)$ exists and is *increasing* on $(a,b)$ then $f(x)$ is concave up on $(a,b)$. If ``f'(x)`` is *decreasing* on ``(a,b)``, then ``f(x)`` is concave *down*.
+> * If $f'(x)$ exists and is *increasing* on $(a,b)$, then $f(x)$ is concave up on $(a,b)$.
+> * If ``f'(x)`` is *decreasing* on ``(a,b)``, then ``f(x)`` is concave *down*.
 
 A proof of this makes use of the same trick used to establish the mean
 value theorem from Rolle's theorem. Assume ``f'`` is increasing and let
@@ -502,11 +513,12 @@ an endpoint. But this can't happen as $g'(x)$ is assumed to be
 increasing on the interval.
 
 
-The relationship between increasing functions and their derivatives -- if $f'(x) > 0 $ on $I$ it is increasing on $I$ --
+The relationship between increasing functions and their derivatives -- if $f'(x) > 0 $ on $I$, then ``f`` is increasing on $I$ --
 gives this second characterization of concavity when the second
 derivative exists:
 
-> If $f''(x)$ exists and is positive on $I$, then $f(x)$ is concave up on $I$.
+> * If $f''(x)$ exists and is positive on $I$, then $f(x)$ is concave up on $I$.
+> * If $f''(x)$ exists and is negative on $I$, then $f(x)$ is concave down on $I$.
 
 This follows,  as we can think of $f''(x)$ as just the first derivative
 of the function $f'(x)$, so the assumption will force $f'(x)$ to exist and be
@@ -542,9 +554,11 @@ relative minimum, where there is a ``U``-shape, the graph will be concave up; co
 at a relative maximum, where the graph has a downward ``\cap``-shape, the function will be concave down. This observation becomes:
 
 > The **second derivative test**: If $c$ is a critical point of $f(x)$
-> with $f''(c)$ existing in a neighborhood of $c$, then $(c,f(c))$
-> will be a relative maximum if $f''(c) > 0$ and a relative minimum if
-> $f''(c) < 0$.
+> with $f''(c)$ existing in a neighborhood of $c$, then
+> * The value $f(c)$ will be a relative maximum if $f''(c) > 0$,
+> * The value $f(c)$ will be a relative minimum if $f''(c) < 0$, and
+> * *if* ``f''(c) = 0`` the test is *inconclusive*.
+
 
 If $f''(c)$ is positive in an interval about $c$, then  $f''(c) > 0$ implies the function is
 concave up at $x=c$. In turn, concave up implies the derivative is increasing
@@ -632,9 +646,9 @@ changes sign. At an inflection point the derivative will change from
 increasing to decreasing (or vice versa) and the function will change
 from concave up to down (or vice versa).
 
-We can use the `find_zeros` function to find inflection points, by passing
-in the second derivative function. For example, consider the
-bell-shaped function
+We can use the `find_zeros` function to identify potential inflection
+points by passing in the second derivative function. For example,
+consider the bell-shaped function
 
 ```math
 k(x) = e^{-x^2/2}.
@@ -670,11 +684,13 @@ y(t) = 1 / (1 + exp(-t))
 y1(t) = y(2(t-1))
 y2(t) = y1(t) - y1(0)
 y3(t) = 1/y2(2) * y2(t)
-plot([v, w, y3], 0, 2)
+plot(v, 0, 2, label="f1")
+plot!(w, label="f2")
+plot!(y3, label="f3")
 ```
 
 All three graphs have the same *average* velocity which is just the
-$1/2$ miles per minute (30 miles an hour). But the instantaneous
+$1/2$ miles per minute (``30`` miles an hour). But the instantaneous
 velocity - which is given by the derivative of the position function)
 varies.
 
@@ -699,6 +715,8 @@ where the acceleration is *negative* the graph will be concave
 *down*. The point $t=1$ is an inflection point, and
 would be felt by most riders.
 
+
+
 ## Questions
 
 
@@ -714,10 +732,10 @@ On what intervals (roughly) is the function positive?
 
 ```julia; hold=true; echo=false
 choices=[
-"(-3.2,-1)",
-"(-5, -4.2)",
+"``(-3.2,-1)``",
+"``(-5, -4.2)``",
 "``(-5, -4.2)`` and ``(-2.5, 0)``",
-"(-4.2, -2.5)"]
+"``(-4.2, -2.5)``"]
 ans = 3
 radioq(choices, ans)
 ```
@@ -782,7 +800,7 @@ On what interval(s) is this function concave up?
 choices=[
 "``(0.1, 1.0)``",
 "``(-3.0, 3.0)``",
-"(-0.6, 0.6)",
+"``(-0.6, 0.6)``",
 " ``(-3.0, -0.6)`` and ``(0.6, 3.0)``"
 ]
 ans = 4

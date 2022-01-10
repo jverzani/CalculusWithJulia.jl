@@ -3,16 +3,15 @@
 This section will use the following add-on packages:
 
 ```julia
+import CalculusWithJulia
 using Plots
 using Polynomials
 using RealPolynomialRoots
+import SymPy # imported only: some functions, e.g. degree, need qualification
 ```
 
 ```julia; echo=false; results="hidden"
-import CalculusWithJulia
-import CalculusWithJulia.WeaveSupport
-import CalculusWithJulia.WeaveSupport: note, radioq, yesnoq, numericq
-__DIR__, __FILE__ = :precalc, :polynomials_package
+using CalculusWithJulia.WeaveSupport
 nothing
 ```
 
@@ -204,7 +203,7 @@ Polynomials.Multroot.multroot(p)
 ```
 
 
-Floating point error can also prevent the finding of real roots. For example, this polynomial has 3 real roots, but `roots` finds but 1, as the two nearby ones are identified as complex:
+Floating point error can also prevent the finding of real roots. For example, this polynomial has ``3`` real roots, but `roots` finds but ``1``, as the two nearby ones are identified as complex:
 
 ```julia; hold=true;
 x = variable()
@@ -212,7 +211,7 @@ p = -1 + 254x - 16129x^2 + x^9
 roots(p)
 ```
 
-The `RealPolynomialRoots` package, loaded at the top, can assist in the case of identifying real roots of square-free polynomials (no multiple roots). For example:
+The `RealPolynomialRoots` package, loaded at the top of this section, can assist in the case of identifying real roots of square-free polynomials (no multiple roots). For example:
 
 ```julia; hold=true;
 ps = coeffs(-1 + 254x - 16129x^2 + x^9)
@@ -229,11 +228,16 @@ The fact that two distinct points determine a line is well known. Deriving the l
 m = \frac{y_1 - y_0}{x_1 - x_0}, \quad x_1 \neq x_0
 ```
 
-The line is then given from the *point-slope* form by, say, ``y= y_0 + m\cdot (x-x_0)``. This all assumes, ``x_1 \neq x_0``, as were that the case the slope would be infinite (though the vertical line `x=x_0` would still be determined).
+The line is then given from the *point-slope* form by, say, ``y= y_0 + m\cdot (x-x_0)``. This all assumes, ``x_1 \neq x_0``, as were that the case the slope would be infinite (though the vertical line ``x=x_0`` would still be determined).
 
-A line, `y=mx+b` can be a linear polynomial or a constant depending on ``m``, so we could say ``2`` points determine a polynomial of degree ``1`` or less. Similarly, ``3`` distinct points determine a degree ``2`` polynomial or less, ``\dots``, ``n+1`` distinct points determine a degree ``n`` or less polynomial. Finding a polynomial, ``p``  that goes through ``n+1`` points (i.e., ``p(x_i)=y_i`` for each ``i``) is called  [polynomial interpolation](https://en.wikipedia.org/wiki/Polynomial_interpolation). The main theorem says if the ``x_i`` are distinct, there is a unique polynomial of degree ``n`` *or* less that will interpolate each of the points.
+A line, ``y=mx+b`` can be a linear polynomial or a constant depending on ``m``, so we could say ``2`` points determine a polynomial of degree ``1`` or less. Similarly, ``3`` distinct points determine a degree ``2`` polynomial or less, ``\dots``, ``n+1`` distinct points determine a degree ``n`` or less polynomial. Finding a polynomial, ``p``  that goes through ``n+1`` points (i.e., ``p(x_i)=y_i`` for each ``i``) is called  [polynomial interpolation](https://en.wikipedia.org/wiki/Polynomial_interpolation). The main theorem is:
 
-Knowing we can succeed, we approach the problem of ``3`` points, say ``(x_0, y_0)``, ``(x_1,y_1)``, and ``(x_2, y_2)``. There is a polynomial ``p = a\cdot x^2 + b\cdot x + c`` with ``p(x_i) = y_i``. This gives 3 equations for the 3 unknown values ``a``, ``b``, and ``c``:
+
+> *Polynomial interpolation theorem*: There exists a unique polynomial of degree ``n`` or less that interpolates the points ``(x_0,y_0), (x_1,y_1), \dots, (x_n, y_n)`` when the ``x_i`` are distinct.
+
+(Uniqueness follows as suppose ``p`` and ``q`` satisfy the above, then ``(p-q)(x) = 0`` at each of the ``x_i`` and is of degree ``n`` or less, so must be the ``0`` polynomial. Existence comes by construction. See the Lagrange basis in the questions.)
+
+Knowing we can succeed, we approach the problem of ``3`` points, say ``(x_0, y_0)``, ``(x_1,y_1)``, and ``(x_2, y_2)``. There is a polynomial ``p = a\cdot x^2 + b\cdot x + c`` with ``p(x_i) = y_i``. This gives ``3`` equations for the ``3`` unknown values ``a``, ``b``, and ``c``:
 
 ```math
 \begin{align*}
@@ -243,11 +247,8 @@ a\cdot x_2^2 + b\cdot x_2 + c &= y_2\\
 \end{align*}
 ```
 
-Solving this with `SymPy` is tractable. A comprehension is used below to create the ``3`` equations; the `zip` function is a simple means to iterate over 2 or more iterables simultaneously:
+Solving this with `SymPy` is tractable. A comprehension is used below to create the ``3`` equations; the `zip` function is a simple means to iterate over ``2`` or more iterables simultaneously:
 
-```julia
-import SymPy # imported only so some functions, e.g. degree, need qualification
-```
 
 ```julia
 SymPy.@syms a b c xs[0:2] ys[0:2]
@@ -264,7 +265,7 @@ fit(Polynomial, [1,2,3], [3,1,2])
 and we can compare that the two give the same answer with, for example:
 
 ```julia
-abc[b]((xs .=> [1,2,3])..., (ys .=>[3,1,2])...)
+abc[b]((xs .=> [1,2,3])..., (ys .=> [3,1,2])...)
 ```
 
 (Ignore the tricky way of substituting in each value of `xs` and `ys` for the symbolic values in `x` and `y`.)
@@ -283,7 +284,7 @@ abc[c]
 
 We can graphically see the result for the specific values of `xs` and `ys` as follows:
 
-```julia; hold=true;
+```julia; hold=true; echo=false
 SymPy.@syms a b c xs[0:2] ys[0:2]
 eqs = [a*yi^2 + b*yi + c ~ xi for (xi, yi) in zip(xs,ys)]
 abc = SymPy.solve(eqs, [a,b,c])

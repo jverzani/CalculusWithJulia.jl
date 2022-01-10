@@ -1,4 +1,4 @@
-# The mean value theorem and other facts about differentiable functions.
+# The mean value theorem for differentiable functions.
 
 This section uses these add-on packages:
 
@@ -17,36 +17,19 @@ using SymPy
 import PyPlot
 pyplot()
 fig_size = (600, 400)
-
-# keep until CwJ bumps version
-function _ImageFile(f, caption, alt="A figure", width=nothing)
-    data = CalculusWithJulia.WeaveSupport.base64encode(read(f, String))
-    content = CalculusWithJulia.WeaveSupport.Mustache.render(CalculusWithJulia.WeaveSupport.gif_to_img_tpl, data=data, alt=alt)
-    caption = CalculusWithJulia.WeaveSupport.Markdown.parse(caption)
-    CalculusWithJulia.WeaveSupport.ImageFile(f, caption, alt, width, content)
-end
-
-# using Downloads
-# function JSXGraph(fname, caption)
-#     url = "https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/derivatives/"
-#     content = read(Downloads.download(joinpath(url, fname)), String)
-#     CalculusWithJulia.WeaveSupport.JSXGRAPH(content, caption,
-#                                             "jsxgraph", "jsxgraph",
-#                                             500, 300)
-# end
 nothing
 ```
 
 ----
 
-A function is *continuous* at $c$ if $f(c+h) - f(c) \rightarrow 0$ as $h$ goes to $0$. We can right that as ``f(c+h) - f(x) = \epsilon_h``, with ``\epsilon_h`` denoting a function going to ``0`` as ``h \rightarrow 0``. With this notion, differentiability could be written as ``f(c+h) - f(c) - f'(c)h = \epsilon_h \cdot h``.  This is clearly a more demanding requirement that mere continuity at ``c``.
+A function is *continuous* at $c$ if $f(c+h) - f(c) \rightarrow 0$ as $h$ goes to $0$. We can write that as ``f(c+h) - f(x) = \epsilon_h``, with ``\epsilon_h`` denoting a function going to ``0`` as ``h \rightarrow 0``. With this notion, differentiability could be written as ``f(c+h) - f(c) - f'(c)h = \epsilon_h \cdot h``.  This is clearly a more demanding requirement that mere continuity at ``c``.
 
 We defined a function to be *continuous* on an interval $I=(a,b)$ if
 it was continuous at each point $c$ in $I$. Similarly, we define a
 function to be *differentiable* on the interval $I$ it it is differentiable
 at each point $c$ in $I$.
 
-This section looks at properties of differentiable functions. As there is a more stringent definitions, perhaps more properties are a consequence of the definition.
+This section looks at properties of differentiable functions. As there is a more stringent definition, perhaps more properties are a consequence of the definition.
 
 ## Differentiable is more restrictive than continuous.
 
@@ -131,13 +114,14 @@ other value in the interval. Just specifying a function and an
 interval does not guarantee an absolute maximum, but specifying a
 *continuous* function and a *closed* interval does, by the extreme value theorem.
 
-We say $f(x)$ has a *relative maximum* at $c$ if there exists some
-interval $I=(a,b)$ with $a < c < b$ for which $f(c)$ is an absolute
-maximum for $f$ and $I$.
+> *A relative maximum*: We say $f(x)$ has a *relative maximum* at $c$
+> if there exists *some* interval $I=(a,b)$ with $a < c < b$ for which
+> $f(c)$ is an absolute maximum for $f$ and $I$.
 
 The difference is a bit subtle, for an absolute maximum the interval
-must also  be specified, for a relative maximum there just needs to
-exist some interval, possibly really small, but must be bigger than a point.
+must also be specified, for a relative maximum there just needs to
+exist some interval, possibly really small, though it must be bigger
+than a point.
 
 ```julia; echo=false
 note("""
@@ -208,18 +192,13 @@ It is also the case that all relative extrema occur at a critical point, *howeve
 ### {{{lhopital_32}}}
 imgfile = "figures/lhopital-32.png"
 caption =  L"""
-Image number 32 from L'Hopitals calculus book (the first) showing that
+Image number ``32`` from L'Hopitals calculus book (the first) showing that
 at a relative minimum, the tangent line is parallel to the
 $x$-axis. This of course is true when the tangent line is well defined
 by Fermat's observation.
 """
-#ImageFile(imgfile, caption)
-nothing
+ImageFile(:derivatives, imgfile, caption)
 ```
-
-
-![Image number 32 from L'Hopitals calculus book (the first) showing that at a relative minimum, the tangent line is parallel to the $x$-axis. This of course is true when the tangent line is well defined by Fermat's observation.](https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/derivatives/figures/lhopital-32.png)
-
 
 
 ### Numeric derivatives
@@ -249,7 +228,7 @@ cps = find_zeros(f', -1, 6)     # find_zeros in `Roots`
 ```
 
 We get $0$ and $2$ are critical points. The endpoints are $0$ and
-$5$. So the absolute maximum over this interval is either at $0$, $2$
+$5$. So the absolute maximum over this interval is either at $0$, $2$,
 or $5$:
 
 ```julia;
@@ -419,11 +398,11 @@ caption = """
 Illustration of the mean value theorem from https://jsxgraph.uni-bayreuth.de/.
 The polynomial function interpolates  the points ``A``,``B``,``C``, and ``D``. Adjusting these creates different functions. Regardless of the function -- which as a polynomial will always be continuous and differentiable -- the slope of the secant line between ``A`` and ``B`` is always matched by some tangent line betweent the points ``A`` and ``B``.
 """
-#CalculusWithJulia.WeaveSupport.JSXGraph(joinpath(@__DIR__, "mean-value.js"), caption)
-
-url = "https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/derivatives/mean-value.js"
-JSXGraph(url, caption)
+#JSXGraph(:derivatives, "mean-value.js", caption)
+nothing
 ```
+
+An interactive example can be found at [jsxgraph](http://jsxgraph.uni-bayreuth.de/wiki/index.php?title=Mean_Value_Theorem).
 
 
 ##### Example
@@ -524,7 +503,7 @@ end
 imgfile = tempname() * ".gif"
 gif(anim, imgfile, fps = 1)
 
-_ImageFile(imgfile, caption)
+ImageFile(imgfile, caption)
 ```
 
 

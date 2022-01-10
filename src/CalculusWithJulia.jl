@@ -66,7 +66,7 @@ import EllipsisNotation: Ellipsis
 export ..
 import IntervalSets
 import IntervalSets: ClosedInterval
-
+import SplitApplyCombine
 
 
 

@@ -11,7 +11,7 @@ using SymPy
 ```julia; echo=false; results="hidden"
 using CalculusWithJulia.WeaveSupport
 import PyPlot
-__DIR__, __FILE__ = :precalc, :trig_functions
+pyplot()
 nothing
 ```
 
@@ -33,19 +33,18 @@ We measure angles in radians, where $360$ degrees is $2\pi$
 radians. By proportions, $180$ degrees is $\pi$ radian, $90$ degrees is $\pi/2$ radians, $60$ degrees is $\pi/3$ radians, etc. In general, $x$ degrees is $2\pi \cdot x / 360$ radians (or, with cancellation, ``x \cdot \frac{\pi}{180}``).
 
 For a right triangle with angles $\theta$, $\pi/2 - \theta$, and
-$\pi/2$ we call the side opposite $\theta$ the "opposite" side, the
+$\pi/2$ (``0 < \theta < \pi/2``) we call the side opposite $\theta$ the "opposite" side, the
 shorter adjacent side the "adjacent" side and the longer adjacent side
 the hypotenuse.
 
 
 ```julia; hide=true; echo=false
-pyplot()
 p = plot(legend=false, xlim=(0,5), ylim=(-1/2, 3),
          xticks=nothing, yticks=nothing, border=:none)
 plot!([0,4,4,0],[0,0,3,0], linewidth=3)
 del = .25
 plot!([4-del, 4-del,4], [0, del, del], color=:black, linewidth=3)
-annotate!([(.75, .35, "θ"), (4.0, 1.25, "opposite"), (2, -.25, "adjacent"), (1.5, 1.25, "hypotenuse")])
+annotate!([(.75, .25, "θ"), (4.0, 1.25, "opposite"), (2, -.25, "adjacent"), (1.5, 1.25, "hypotenuse")])
 ```
 
 
@@ -66,7 +65,7 @@ trigonometric functions are
 note("""Many students remember these through [SOH-CAH-TOA](http://mathworld.wolfram.com/SOHCAHTOA.html).""")
 ```
 
-Some algebra shows that $\tan(\theta) = \sin(\theta)/\cos(\theta)$. There are also 3 reciprocal functions, the cosecant, secant and cotangent.
+Some algebra shows that $\tan(\theta) = \sin(\theta)/\cos(\theta)$. There are also ``3`` reciprocal functions, the cosecant, secant and cotangent.
 
 
 These definitions in terms of sides only apply for $0 \leq \theta \leq \pi/2$. More generally, if we relate any angle taken in the counter clockwise direction for the $x$-axis with a point $(x,y)$ on the *unit* circle, then we can extend these definitions - the point $(x,y)$ is also $(\cos(\theta), \sin(\theta))$.
@@ -82,7 +81,7 @@ function plot_angle(m)
     r = m*pi
 
     ts = range(0, stop=2pi, length=100)
-    tit = "$m * pi -> ($(round(cos(r), digits=2)), $(round(sin(r), digits=2)))"
+    tit = "$m ⋅ pi -> ($(round(cos(r), digits=2)), $(round(sin(r), digits=2)))"
     p = plot(cos.(ts), sin.(ts), legend=false, aspect_ratio=:equal,title=tit)
     plot!(p, [-1,1], [0,0], color=:gray30)
     plot!(p,  [0,0], [-1,1], color=:gray30)
@@ -112,7 +111,7 @@ end
 
 imgfile = tempname() * ".gif"
 gif(anim, imgfile, fps = 1)
-caption = "An angle in radian measure corresponds to a point on the unit circle, whose coordinates define the sine and cosine of the angle. That is ``(x,y) = (\\cos(\\theta), \\sin(\\theta)``."
+caption = "An angle in radian measure corresponds to a point on the unit circle, whose coordinates define the sine and cosine of the angle. That is ``(x,y) = (\\cos(\\theta), \\sin(\\theta))``."
 
 ImageFile(imgfile, caption)
 ```
@@ -192,7 +191,7 @@ students. How might it be done? If a right triangle can be formed
 where the angle and adjacent side length are known, then the opposite
 side (the height of the tree) can be solved for with the tangent
 function. For example, if standing $100$ feet from the base of the
-tree the tip makes a 15 degree angle the height is given by:
+tree the tip makes a ``15`` degree angle the height is given by:
 
 ```julia; hold=true;
 theta = 15 * pi / 180
@@ -273,6 +272,117 @@ end
 pt
 ```
 
+
+##### Example sums of sines
+
+For the function ``f(x) = \sin(x)`` we have an understanding of the related family of functions defined by linear transformations:
+
+```math
+g(x) = a + b \sin((2\pi n)x)
+```
+
+That is ``g`` is shifted up by ``a`` units, scaled vertically by ``b`` units and has a period of ``1/n``. We see a simple plot here where we can verify the transformation:
+
+```julia
+g(x;  b=1,n=1) = b*sin(2pi*n*x)
+g1(x) = 1 + g(x, b=2, n=3)
+plot(g1, 0, 1)
+```
+
+We can consider the sum of such functions, for example
+
+```julia
+g2(x) = 1 + g(x, b=2, n=3) + g(x, b=4, n=5)
+plot(g2, 0, 1)
+```
+
+Though still periodic, we can see with this simple example that sums of different sine functions can have somewhat complicated graphs.
+
+Sine functions can be viewed as the `x` position of a point traveling around a circle so `g(x, b=2, n=3)` is the `x` position of point traveling around a circle of radius ``2`` that completes a circuit in ``1/3`` units of time.
+
+The superposition of the two sine functions that `g2` represents could be viewed as the position of a circle moving around a point that is moving around another circle. The following graphic, with ``b_1=1/3, n_1=3, b_2=1/4``, and ``n_2=4``, shows an example that produces the related cosine sum (moving right along the ``x`` axis), the sine sum (moving down along the ``y`` axis, *and* the trace of the position of the point generating these two plots.
+
+
+```julia; hold=true; echo=false; cache=true
+unzip(vs::Vector) = Tuple([[vs[i][j] for i in eachindex(vs)] for j in eachindex(vs[1])])
+function makegraph(t, b₁,n₁, b₂=0, n₂=1)
+
+    f₁ = x -> b₁*[sin(2pi*n₁*x), cos(2pi*n₁*x)]
+    f₂ = x -> b₂*[sin(2pi*n₂*x), cos(2pi*n₂*x)]
+    h = x -> f₁(x) + f₂(x)
+
+    ts = range(0, 2pi, length=1000)
+
+
+    ylims = (-b₁-b₂-2, b₁ + b₂)
+    xlims = (-b₁-b₂, b₁ + b₂ + 2)
+
+    p = plot(; xlim=xlims, ylim=ylims,
+             legend=false,
+             aspect_ratio=:equal)
+
+    α = 0.3
+    # circle 1
+    plot!(p, unzip(f₁.(range(0, 2pi/n₁, length=100))), alpha=α)
+    scatter!(p, unzip([f₁(t)]), markersize=1, alpha=α)
+
+    # circle 2
+    us, vs = unzip(f₂.(range(0, 2pi/n₂, length=100)))
+    a,b = f₁(t)
+    plot!(p, a .+ us, b .+ vs, alpha=α)
+    scatter!(p, unzip([h(t)]), markersize=5)
+
+    # graph of (x,y) over [0,t]
+    ts = range(0, t, length=200)
+    plot!(p, unzip(h.(ts)), linewidth=1, alpha=0.5, linestyle=:dash)
+
+    # graph of x over [0,t]
+    ys′ = -ts
+    xs′ = unzip(h.(ts))[1]
+    plot!(p, xs′, ys′, linewidth=2)
+
+    # graph of y over [0,t]
+    xs′ = ts
+    ys′ = unzip(h.(ts))[2]
+    plot!(p, xs′, ys′, linewidth=2)
+
+
+    p
+end
+
+# create animoation
+b₁=1/3; n₁=3; b₂=1/4; n₂=4
+pyplot()
+fig_size = (400, 300)
+anim = @animate for t ∈ range(0, 2.5, length=50)
+    makegraph(t, b₁, n₁, b₂, n₂)
+end
+
+imgfile = tempname() * ".gif"
+gif(anim, imgfile, fps = 5)
+
+caption = "Superposition of sines and cosines represented by an epicycle"
+
+ImageFile(imgfile, caption)
+```
+
+
+
+
+
+
+As can be seen, even a somewhat simple combination can produce complicated graphs (a fact known to [Ptolemy](https://en.wikipedia.org/wiki/Deferent_and_epicycle)) . How complicated can such a graph get? This won't be answered here, but for fun enjoy this video produced by the same technique using more moving parts from the [`Javis.jl`](https://github.com/Wikunia/Javis.jl/blob/master/examples/fourier.jl) package:
+
+```julia; echo=false;
+txt ="""
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rrmx2Q3sO1Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+"""
+tpl = CalculusWithJulia.WeaveSupport.centered_content_tpl
+txt = CalculusWithJulia.WeaveSupport.Mustache.render(tpl, content=txt, caption="Julia logo animated")
+CalculusWithJulia.WeaveSupport.HTMLoutput(txt)
+```
+
+
 ### Functions using degrees
 
 Trigonometric function are functions of angles which have two common descriptions: in terms of degrees or radians. Degrees are common when right triangles are considered, radians much more common in general, as the relationship with arc-length holds in that $r\theta = l$, where $r$ is the radius of a circle and $l$ the length of the arc formed by angle $\theta$.
@@ -294,9 +404,8 @@ using the values just involving $\beta$ and $\alpha$ separately?
 According to [Wikipedia](https://en.wikipedia.org/wiki/Trigonometric_functions#Identities) the following figure (from [mathalino.com](http://www.mathalino.com/reviewer/derivation-of-formulas/derivation-of-sum-and-difference-of-two-angles)) has ideas that date to Ptolemy:
 
 
-![Relations between angles](https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/precalc/figures/summary-sum-and-difference-of-two-angles.jpg)
 ```julia; echo=false
-#ImageFile("figures/summary-sum-and-difference-of-two-angles.jpg", "Relations between angles")
+ImageFile(:precalc, "figures/summary-sum-and-difference-of-two-angles.jpg", "Relations between angles")
 ```
 
 
@@ -429,7 +538,7 @@ delta = theta0 - alpha + asin(n * sin(alpha - asin(sin(theta0)/n)))
 delta, (n-1)*alpha
 ```
 
-The approximation error is about 2.7 percent.
+The approximation error is about ``2.7`` percent.
 
 
 ##### Example
@@ -491,119 +600,9 @@ Other properties of this polynomial family are not at all obvious. One is that a
 ```julia;
 T4(x) = (8x^4 - 8x^2 + 1) / 8
 q(x) = (x+3/5)*(x+1/5)*(x-1/5)*(x-3/5)
-plot(abs ∘ T4, -1,1)
-plot!(abs ∘ q, -1,1)
+plot(abs ∘ T4, -1,1, label="|T₄|")
+plot!(abs ∘ q, -1,1, label="|q|")
 ```
-
-##### Example sums of sines
-
-For the function ``f(x) = \sin(x)`` we have an understanding of the related family of functions defined by linear transformations:
-
-```math
-g(x) = a + b \sin((2\pi n)x)
-```
-
-That is ``g`` is shifted up by ``a`` units, scaled vertically by ``b`` units and has a period of ``1/n``. We see a simple plot here where we can verify the transformation:
-
-```julia
-g(x;  b=1,n=1) = b*sin(2pi*n*x)
-g1(x) = 1 + g(x, b=2, n=3)
-plot(g1, 0, 1)
-```
-
-We can consider the sum of such functions, for example
-
-```julia
-g2(x) = 1 + g(x, b=2, n=3) + g(x, b=4, n=5)
-plot(g2, 0, 1)
-```
-
-Though still periodic, we can see with this simple example that sums of different sine functions can have somewhat complicated graphs.
-
-Sine functions can be viewed as the `x` position of a point traveling around a circle so `g(x, b=2, n=3)` is the `x` position of point traveling around a circle of radius ``2`` that completes a circuit in ``1/3`` units of time.
-
-The superposition of the two sine functions that `g2` represents could be viewed as the position of a circle moving around a point that is moving around another circle. The following graphic, with ``b_1=1/3, n_1=3, b_2=1/4``, and ``n_2=4``, shows an example that produces the related cosine sum (moving right along the ``x`` axis), the sine sum (moving down along the ``y`` axis, *and* the trace of the position of the point generating these two plots.
-
-
-```julia; hold=true; echo=false; cache=true
-unzip(vs::Vector) = Tuple([[vs[i][j] for i in eachindex(vs)] for j in eachindex(vs[1])])
-function makegraph(t, b₁,n₁, b₂=0, n₂=1)
-
-    f₁ = x -> b₁*[sin(2pi*n₁*x), cos(2pi*n₁*x)]
-    f₂ = x -> b₂*[sin(2pi*n₂*x), cos(2pi*n₂*x)]
-    h = x -> f₁(x) + f₂(x)
-
-    ts = range(0, 2pi, length=1000)
-
-
-    ylims = (-b₁-b₂-2, b₁ + b₂)
-    xlims = (-b₁-b₂, b₁ + b₂ + 2)
-
-    p = plot(; xlim=xlims, ylim=ylims,
-             legend=false,
-             aspect_ratio=:equal)
-
-    α = 0.3
-    # circle 1
-    plot!(p, unzip(f₁.(range(0, 2pi/n₁, length=100))), alpha=α)
-    scatter!(p, unzip([f₁(t)]), markersize=1, alpha=α)
-
-    # circle 2
-    us, vs = unzip(f₂.(range(0, 2pi/n₂, length=100)))
-    a,b = f₁(t)
-    plot!(p, a .+ us, b .+ vs, alpha=α)
-    scatter!(p, unzip([h(t)]), markersize=5)
-
-    # graph of (x,y) over [0,t]
-    ts = range(0, t, length=200)
-    plot!(p, unzip(h.(ts)), linewidth=1, alpha=0.5, linestyle=:dash)
-
-    # graph of x over [0,t]
-    ys′ = -ts
-    xs′ = unzip(h.(ts))[1]
-    plot!(p, xs′, ys′, linewidth=2)
-
-    # graph of y over [0,t]
-    xs′ = ts
-    ys′ = unzip(h.(ts))[2]
-    plot!(p, xs′, ys′, linewidth=2)
-
-
-    p
-end
-
-# create animoation
-b₁=1/3; n₁=3; b₂=1/4; n₂=4
-pyplot()
-fig_size = (400, 300)
-anim = @animate for t ∈ range(0, 2.5, length=50)
-    makegraph(t, b₁, n₁, b₂, n₂)
-end
-
-imgfile = tempname() * ".gif"
-gif(anim, imgfile, fps = 5)
-
-caption = "Superposition of sines and cosines represented by an epicycle"
-
-ImageFile(imgfile, caption)
-```
-
-
-
-
-
-
-As can be seen, even a somewhat simple combination can produce complicated graphs (a fact known to [Ptolemy](https://en.wikipedia.org/wiki/Deferent_and_epicycle)) . How complicated can such a graph get? This won't be answered here, but for fun enjoy this video produced by the same technique using more moving parts from the [`Javis.jl`](https://github.com/Wikunia/Javis.jl/blob/master/examples/fourier.jl) package:
-
-```julia; echo=false;
-txt ="""
-<iframe width="560" height="315" src="https://www.youtube.com/embed/rrmx2Q3sO1Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-"""
-tpl = CalculusWithJulia.WeaveSupport.centered_content_tpl
-txt = CalculusWithJulia.WeaveSupport.Mustache.render(tpl, content=txt, caption="Julia logo animated")
-CalculusWithJulia.WeaveSupport.HTMLoutput(txt)
-```
-
 
 
 ## Hyperbolic trigonometric functions

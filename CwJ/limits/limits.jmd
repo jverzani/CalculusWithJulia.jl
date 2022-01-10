@@ -31,7 +31,6 @@ segments that cross the parabola.
 
 ```julia; hold=true; echo=false; cache=true
 ###{{{archimedes_parabola}}}
-pyplot()
 
 f(x) = x^2
 colors = [:black, :blue, :orange, :red, :green, :orange, :purple]
@@ -220,7 +219,7 @@ calculus considering two examples, the limit as ``x`` goes to ``0`` of
 
 These take the indeterminate forms $0/0$ and $1^\infty$, which are
 found by just putting $0$ in for $x$. An expression does not need to
-be defined at $c$, as these two aren't, to discuss its limit. Cauchy
+be defined at $c$, as these two aren't at ``c=0``, to discuss its limit. Cauchy
 illustrates two methods to approach the questions above. The first is
 to pull out an inequality:
 
@@ -259,12 +258,12 @@ imgfile = tempname() * ".png"
 savefig(p, imgfile)
 caption = "Triangle  ABD has less area than the shaded wedge, which has less area than triangle ACD. Their respective areas are ``(1/2)\\sin(\\theta)``, ``(1/2)\\theta``, and ``(1/2)\\tan(\\theta)``. The inequality used to show ``\\sin(x)/x`` is bounded below by ``\\cos(x)`` and above by ``1`` comes from a division by ``(1/2) \\sin(x)`` and taking reciprocals.
 "
-CalculusWithJulia.WeaveSupport.ImageFile(imgfile, caption)
+ImageFile(imgfile, caption)
 ```
 
 
 To discuss the case of $(1+x)^{1/x}$ it proved convenient to assume ``x = 1/m`` for integer values of ``m``. At the time of Cauchy, log tables were available to identify the approximate value of the limit. Cauchy computed the following value from logarithm tables.
-approximate value:
+
 
 ```julia; hold=true;
 x = 1/10000
@@ -292,7 +291,7 @@ This progression can be seen to be increasing. Cauchy, in his treatise, can see 
 These values are clearly increasing as ``m`` increases. Cauchy showed the value was bounded between ``2`` and ``3`` and had the approximate value above. Then he showed the restriction to integers was not necessary. Later we will use this definition for the exponential function:
 
 ```math
-e^x = \lim_{n \rightarrow \infty} (1 + x/n)^n,
+e^x = \lim_{n \rightarrow \infty} (1 + \frac{x}{n})^n,
 ```
 
 with a suitably defined limit.
@@ -451,7 +450,7 @@ Best, to see by example. Suppose we are asked to investigate
 \lim_{x \rightarrow 25} \frac{\sqrt{x} - 5}{\sqrt{x - 16} - 3}.
 ```
 
-We first define a function and check if there are issues at 25:
+We first define a function and check if there are issues at ``25``:
 
 ```julia;
 f(x) = (sqrt(x) - 5) / (sqrt(x-16) - 3)
@@ -462,7 +461,7 @@ c = 25
 f(c)
 ```
 
-So yes, an issue of the indeterminate form $0/0$. We investigate numerically by making a set of numbers getting close to $c$. This is most easily done making numbers getting close to $0$ and adding them to or subtracting them from $c$. Some natural candidates are negative powers of 10:
+So yes, an issue of the indeterminate form $0/0$. We investigate numerically by making a set of numbers getting close to $c$. This is most easily done making numbers getting close to $0$ and adding them to or subtracting them from $c$. Some natural candidates are negative powers of ``10``:
 
 ```julia;
 hs = [1/10^i for i in 1:8]
@@ -493,7 +492,7 @@ ys = f.(xs)
 
 Same story. The numeric evidence supports a limit of $L=0.6$.
 
-##### Example, the secant line
+##### Example: the secant line
 
 Let $f(x) = x^x$ and consider the ratio:
 
@@ -720,7 +719,7 @@ parameter and not others and these values aren't captured in the
 assumptions.)  So the user must be mindful that when parameters are
 involved, the answer may not reflect all possible cases.
 
-##### Example, floating point conversion issues
+##### Example: floating point conversion issues
 
 The Gruntz [algorithm](http://www.cybertester.com/data/gruntz.pdf)
 implemented in `SymPy` for symbolic limits is quite powerful. However,
@@ -739,8 +738,8 @@ j(pi/2)
 ```
 
 The value is not `NaN`, rather `Inf`. This is because `cos(pi/2)` is
-not exactly $0$ as it should be, as `pi/2` is rounded. This minor
-differaence is important. If we try and correct for this by using `PI` we have:
+not exactly $0$ as it should be mathematically, as `pi/2` is rounded to a floating point number. This minor
+difference is important. If we try and correct for this by using `PI` we have:
 
 ```julia;
 limit(j(x), x => PI/2)
@@ -846,7 +845,7 @@ These rules, together with the fact that our basic algebraic functions
 have limits that can be found by simple evaluation, mean that many
 limits are easy to compute.
 
-##### Example, composition
+##### Example: composition
 
 For example, consider for some non-zero $k$ the following limit:
 
@@ -868,7 +867,7 @@ Similarly,
 
 as this is the limit of ``f(g(x))`` with ``f`` as above and  ``g(x) = x^2``. We need ``x \rightarrow 0``, ``g``is only ``0`` at ``x=0``, which is the case.
 
-##### Example, products
+##### Example: products
 
 Consider this complicated limit found on this [Wikipedia](http://en.wikipedia.org/wiki/L%27H%C3%B4pital%27s_rule) page.
 
@@ -889,7 +888,7 @@ Putting together, we would get $1/2$. Which we could have done directly in this 
 limit(sin(PI*x)/(PI*x) * l(x), x => 1//2)
 ```
 
-##### Example, ratios
+##### Example: ratios
 
 Consider again the limit of $\cos(\pi x) / (1 - (2x)^2)$ at $c=1/2$. A graph of both the top and bottom functions shows the indeterminate, $0/0$, form:
 
@@ -919,7 +918,7 @@ So around $c=1/2$ the ratio should look like $-\pi (x-1/2) / ( -4(x -	 1/2)) = \
 This is the basis of L'Hôpital's rule, which we will return to once the derivative is discussed.
 
 
-##### Example sums
+##### Example: sums
 
 If it is known that the following limit exists by some means:
 
@@ -935,6 +934,40 @@ M = \lim_{x \rightarrow 0} \frac{e^{\csc(x)}}{e^{\cot(x)}}
 
 
 Why? We can express the function ``e^{\csc(x)}/e^{\cot(x)}`` as the above function plus the polynomial ``1 + x/2 + x^2/8``. The above is then the sum of two functions whose limits exist and are finite, hence, we can conclude that ``M = 0 + 1``.
+
+### The [squeeze](http://en.wikipedia.org/wiki/Squeeze_theorem) theorem
+
+We note one more limit law. Suppose we wish to compute ``\lim_{x \rightarrow c}f(x)`` and we have two other functions, ``l`` and ``u``, satisfying:
+
+* for all ``x`` near ``c`` (possibly not including ``c``) ``l(x) \leq f(x) \leq u(x)``.
+* These limits exist and are equal: ``L = \lim_{x \rightarrow c} l(x) = \lim_{x \rightarrow c} u(x)``.
+
+Then the limit of ``f`` must also  be ``L``.
+
+```julia; hold=true; echo=false
+
+function squeeze_example(x)
+	x₀ = 0.5
+	plot(cos, 0, x₀, label="cos")
+	plot!(x -> sin(x)/x, label = "sin(x)/x")
+	plot!(x -> 1, label = "y=1")
+	plot!([x,x], [ cos(x₀), 1], linestyle=:dash, label="")
+	scatter!([x,x,x], [cos(x), sin(x)/x, 1], label="")
+end
+
+anim = @animate for x ∈ (0.4, 0.3, 0.2, 0.1, 0.05, 0.01)
+    squeeze_example(x)
+end
+
+imgfile = tempname() * ".gif"
+gif(anim, imgfile, fps = 1)
+
+
+caption = """
+As ``x`` goes to ``0``, the values of ``sin(x)/x`` are squeezed between ``\\cos(x)`` and ``1`` which both converge to ``1``.
+"""
+ImageFile(imgfile, caption)
+```
 
 
 ## Limits from the definition
@@ -1447,11 +1480,6 @@ radioq(choices, ans)
 
 > In many languages (e.g. French, German, Italian, Hungarian and Russian), the squeeze theorem is also known as the two policemen (and a drunk) theorem, or some variation thereof. The story is that if two policemen are escorting a drunk prisoner between them, and both officers go to a cell, then (regardless of the path taken, and the fact that the prisoner may be wobbling about between the policemen) the prisoner must also end up in the cell.
 
-A slightly informal statement of the squeeze theorem might be:
-
-> Squeeze Theorem: Suppose for all ``x`` near ``c`` that ``l(x) \leq f(x) \leq u(x)``
-> and *both* ``l(x)`` and ``u(x)`` have a limit ``L`` at ``x=c``. Then
-> ``L = \lim_{x \rightarrow c}f(x)``.
 
 ###### Question
 

@@ -100,7 +100,7 @@ end
 function JSXGraph(dir::Symbol, f, caption="JSXGraph Demo"; kwargs...)
     basedir = replace(dirname(@__DIR__), "/src" => "")
     fname = joinpath(basedir, "CwJ", string(dir), f)
-    JSXGraph(f, caption; kwargs...)
+    JSXGraph(fname, caption; kwargs...)
 end
 
 

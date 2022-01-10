@@ -732,7 +732,7 @@ We can verify this does what we want through example with the previously defined
 
 ```julia;
 𝐩 = Polynomial([1, 2, 3, 4, 5])
-𝐪 = mobius_transformation(𝐩, 4, 5)
+𝐪 = mobius_transformation(𝐩, 4, 6)
 ```
 
 As contrasted with
@@ -807,20 +807,20 @@ More challenging problems can be readily handled by this package. The following 
 
 
 ```julia
-𝐱 = Polynomial([0,1]) # also just variable(Polynomial{Int})
-𝐩 = -1 + 254*𝐱 - 16129*𝐱^2 + 𝐱^15
+𝒔 = Polynomial([0,1]) # also just variable(Polynomial{Int})
+𝒖 = -1 + 254*𝒔 - 16129*𝒔^2 + 𝒔^15
 ```
 
 has three real roots, two of which are clustered very close to each other:
 
 ```julia
-𝐬𝐭 = ANewDsc(coeffs(𝐩))
+𝒔𝒕 = ANewDsc(coeffs(𝒖))
 ```
 
 and
 
 ```julia
-refine_roots(𝐬𝐭)
+refine_roots(𝒔𝒕)
 ```
 
 The SymPy package (`sympy.real_roots`) can accurately identify the
@@ -1027,7 +1027,10 @@ numericq(val)
 What is more accurate: the peak amount is
 
 ```julia; hold=true; echo=false
-choices = ["between 0 and 8 hours", "between 8 and 16 hours", "between 16 and 24 hours", "after one day"]
+choices = ["between ``0`` and ``8`` hours",
+           "between ``8`` and ``16`` hours",
+           "between ``16`` and ``24`` hours",
+           "after one day"]
 ans = 1
 radioq(choices, ans)
 ```

@@ -101,7 +101,7 @@ computer.
 
 We can easily make a graph of a function over a specified
 interval. What is not always so easy is to pick an interval that shows
-off the feature of interest. In the section on
+off the features of interest. In the section on
 [rational](../precalc/rational_functions.html) functions there was a
 discussion about how to draw graphs for rational functions so that
 horizontal and vertical asymptotes can be seen. These are properties
@@ -188,8 +188,8 @@ We can see the slant asymptote and hints of vertical asymptotes, but,
 we'd like to see more of the basic features of the graph.
 
 Previously, we have discussed rational functions and their
-asymptotes. This function has numerator of degree 3 and denominator of
-degree 2, so will have a slant asymptote. As well, the zeros of the
+asymptotes. This function has numerator of degree ``3`` and denominator of
+degree ``2``, so will have a slant asymptote. As well, the zeros of the
 denominator, $0$ and $-2$, will lead to vertical asymptotes.
 
 To identify how wide a viewing window should be, for the rational
@@ -234,7 +234,7 @@ V(t) = 170 * sin(2*pi*60*t)
 plot(V, -2pi, 2pi)
 ```
 
-Ahh, this periodic function is *too* rapidly oscillating to be plotted without care. We recognize this as being of the form ``V(t) = a\cdot\sin(c\cdot t)``, so where the sine functin has a period of ``2\pi``, this will have a period of ``2\pi/c``, or ``1/60``. So instead of using ``(-2\pi, 2\pi)`` as the interval to plot over, we need something much smaller:
+Ahh, this periodic function is *too* rapidly oscillating to be plotted without care. We recognize this as being of the form ``V(t) = a\cdot\sin(c\cdot t)``, so where the sine function has a period of ``2\pi``, this will have a period of ``2\pi/c``, or ``1/60``. So instead of using ``(-2\pi, 2\pi)`` as the interval to plot over, we need something much smaller:
 
 
 ```julia
@@ -246,7 +246,7 @@ plot(V, -1/60, 1/60)
 
 Plot the function ``f(x) = \ln(x/100)/x``.
 
-We guess that this function has a *vertical* asymptote at ``x=0+``  and a horizontal asymptote as ``x \rightarrow 0``, we verify through:
+We guess that this function has a *vertical* asymptote at ``x=0+``  and a horizontal asymptote as ``x \rightarrow \infty``, we verify through:
 
 ```julia
 @syms x
@@ -261,7 +261,7 @@ The ``\ln(x/100)`` part of ``f`` goes ``-\infty`` as ``x \rightarrow 0+``; yet `
 * capture the point where ``f(x)`` has a relative maximum
 * show enough past this maximum to indicate to the reader the eventual horizontal asyptote.
 
-For that, we need to get the ``x`` intercepts and the critical points. The ``x/100`` means this graph has some scaling to it, so we first look between ``0`` and ``200`:
+For that, we need to get the ``x`` intercepts and the critical points. The ``x/100`` means this graph has some scaling to it, so we first look between ``0`` and ``200``:
 
 ```julia
 find_zeros(ex, 0, 200)  # domain is (0, oo)
