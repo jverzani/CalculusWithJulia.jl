@@ -1172,3 +1172,25 @@ radioq(choices, 1)
 ```
 
 The functions are related: `findmax` returns the maximum value and an index in the collection for which the value will be largest; `argmax` returns an element of the set for which the function is largest, so `argmax(identify, itr)` should correspond to the index found by `findmax` (through `itr[findmax(itr)[2]`)
+
+###### Question
+
+Let ``f(x) = (a/x)^x`` for ``a,x > 0``. When is this maximized? The following might be helpful
+
+```julia; hold=true
+@syms x::positive a::postive
+diff((a/x)^x, x)
+```
+
+This can be `solve`d to discover the answer.
+
+```julia; hold=true; echo=false
+choices = [
+"``e``",
+"``a/e``",
+"``e/a``",
+"``a \\cdot e``"
+]
+ans=2
+radioq(choices, ans)
+```

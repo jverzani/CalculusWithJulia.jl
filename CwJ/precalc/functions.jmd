@@ -270,10 +270,10 @@ end
 The last value computed is returned unless the `function_body`
 contains an explicit `return` statement.
 
-For example, the following is a more verbose way to define $u(x) = x^2$:
+For example, the following is a more verbose way to define $sq(x) = x^2$:
 
 ```julia;
-function u(x)
+function sq(x)
   return x^2
 end
 ```

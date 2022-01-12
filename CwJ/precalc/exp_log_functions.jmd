@@ -165,6 +165,7 @@ $a>1$ and positive integer $n$ it is true that $a^x \gg x^n$.
 
 Later we will see an easy way to certify this statement.
 
+
 ##### The mathematical constant ``e``
 
 
@@ -205,6 +206,49 @@ f(n) = (a/n)^n
 ```
 
 We can see more clearly that ``n=2`` is the largest value for ``f`` and ``a/2`` is the closest value to ``e``. This would be the case for any ``a>0``, pick ``n`` so that ``a/n`` is closest to ``e``.
+
+
+##### Example: The limits to growth
+
+The 1972 book [The limits to growth](https://donellameadows.org/wp-content/userfiles/Limits-to-Growth-digital-scan-version.pdf) by Meadows et. al. discusses the implications of exponential growth. It begins stating their conclusion (emphasis added): "If the present *growth* trends in world population, industrialization, pollution, food production, and resource depletion  continue *unchanged*, the limits to growth on this planet will be reached sometime in the next *one hundred* years." They note it is possible to alter these growth trends. We are half way into this time period.
+
+Let's consider one of their examples, the concentration of carbon dioxide in the atmosphere. In their Figure ``15`` they show data from ``1860`` onward of CO``_2`` concentration extrapolated out to the year ``2000``. At [climate.gov](https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide) we can see actual measurements from ``1960`` to ``2020``. Numbers from each graph are read from the graphs, and plotted in the code below:
+
+
+```julia;
+co2_1970 = [(1860, 293), (1870, 293), (1880, 294), (1890, 295), (1900, 297),
+        (1910, 298), (1920, 300), (1930, 303), (1940, 305), (1950, 310),
+        (1960, 313), (1970, 320), (1980, 330), (1990, 350), (2000, 380)]
+co2_2021 = [(1960, 318), (1970, 325), (1980, 338), (1990, 358), (2000, 370),
+        (2010, 390), (2020, 415)]
+
+xs,ys = unzip(co2_1970)
+plot(xs, ys, legend=false)
+
+𝒙s, 𝒚s = unzip(co2_2021)
+plot!(𝒙s, 𝒚s)
+
+r = 0.002
+x₀, P₀ = 1960, 313
+plot!(x -> P₀ * exp(r * (x - x₀)), 1950, 1990, linewidth=5, alpha=0.25)
+
+𝒓 = 0.005
+𝒙₀, 𝑷₀ = 2000,  370
+plot!(x -> 𝑷₀ * exp(𝒓 * (x - 𝒙₀)), 1960, 2020, linewidth=5, alpha=0.25)
+```
+
+(The `unzip` function is from the `CalculusWithJulia` package and will be explained in a subsequent section.) We can see that the projections from the year ``1970`` hold up fairly well
+
+On this plot we added two *exponential* models. at ``1960`` we added a *roughly* ``0.2`` percent per year growth (a rate mentioned in an accompanying caption) and at ``2000`` a roughly ``0.5`` percent per year growth. The former barely keeping up with the data.
+
+The word **roughly** above could be made exact. Suppose we knew that between ``1960`` and ``1970`` the rate went from ``313`` to ``320``. If this followed an exponential model, then ``r`` above would satisfy:
+
+```math
+P_{1970} = P_{1960} e^{r * (1970 - 1960)}
+```
+
+or on division ``320/313 = e^{r\cdot 10}``. Solving for ``r`` can be done -- as explained next -- and yields ``0.002211\dots``.
+
 
 
 ## Logarithmic functions

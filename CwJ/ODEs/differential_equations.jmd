@@ -1,12 +1,29 @@
 # The `DifferentialEquations` suite
 
+This section uses these add-on packages:
+
+```julia
+using DifferentialEquations
+using Plots
+```
+
+```julia; echo=false; results="hidden"
+using CalculusWithJulia.WeaveSupport
+import PyPlot
+pyplot()
+fig_size = (600, 400)
+nothing
+```
+
+----
 
 The
 [`DifferentialEquations`](https://github.com/SciML/DifferentialEquations.jl)
 suite of packages contains solvers for a wide range of various
 differential equations. This section just briefly touches touch on ordinary differential
-equations (ODEs). For more detail on this type and many others covered by the suite of packages, ther are many other resources, including the [documentation](https://diffeq.sciml.ai/stable/) and accompanying [tutorials](https://github.com/SciML/SciMLTutorials.jl).
+equations (ODEs). For more detail on this type and many others covered by the suite of packages, there are many other resources, including the [documentation](https://diffeq.sciml.ai/stable/) and accompanying [tutorials](https://github.com/SciML/SciMLTutorials.jl).
 
+## SIR Model
 
 We follow along with an introduction to the SIR model for the spread of disease by [Smith and Moore](https://www.maa.org/press/periodicals/loci/joma/the-sir-model-for-spread-of-disease-introduction). This model received a workout due to the COVID-19 pandemic.
 
@@ -55,26 +72,27 @@ R(0) &= 0\\
 \end{align*}
 ```
 
+In `Julia` we define these, `N` to model the total population, and `u0` to be the proportions.
+
+```julia
+S0, I0, R0 = 7_900_000, 10, 0
+N = S0 + I0 + R0
+u0 = [S0, I0, R0]/N       # initial proportions
+```
+
 An *estimated* set of values for ``k`` and ``b`` are ``k=1/3``, coming from the average period of infectiousness being estimated at three days and ``b=1/2``, which seems low in normal times, but not for an infected person who may be feeling quite ill and staying at home. (The model for COVID would certainly have a larger ``b`` value).
 
 Okay, the mathematical modeling is done; now we try to solve for the unknown functions using `DifferentialEquations`.
 
 To warm up, if ``b=0`` then ``i'(t) = -k   \cdot i(t)`` describes the infected. (There is no circulation of people in this case.) The solution would be achieved through:
 
-```julia
-using DifferentialEquations
-using Plots
-plotly()
-
-S0, I0, R0 = 7_900_000, 10, 0
-N = S0 + I0 + R0
+```julia; hold=true
 k = 1/3
 
 f(u,p,t) = -k * u  # solving  u′(t) = - k u(t)
-u0 = I0 / N
 time_span = (0.0, 20.0)
 
-prob = ODEProblem(f, u0, time_span)
+prob = ODEProblem(f, I0/N, time_span)
 sol = solve(prob, Tsit5(), reltol=1e-8, abstol=1e-8)
 
 plot(sol)
@@ -127,9 +145,8 @@ The notation `du` is suggestive of both the derivative and a small increment. Th
 
 With the update function defined, the problem is setup and a solution found with in the same manner:
 
-```julia
+```julia;
 p = (k=1/3, b=1/2)        # parameters
-u0 = [S0, I0, R0]/N       # initial conditions
 time_span = (0.0, 150.0)  # time span to solve over, 5 months
 
 prob = ODEProblem(sir!, u0, time_span, p)
@@ -144,7 +161,7 @@ The lower graph shows the number of infected at each day over the five-month per
 
 Now we change the parameter ``b`` and observe the difference. We passed in a value `p` holding our two parameters, so we just need to change that and run the model again:
 
-```julia
+```julia; hold=true
 p = (k=1/2, b=2) # change b from 1/2 to 2 -- more daily contact
 prob = ODEProblem(sir!, u0, time_span, p)
 sol = solve(prob, Tsit5())
@@ -157,7 +174,7 @@ The graphs are somewhat similar, but the steady state is reached much more quick
 
 What about if ``k`` were bigger?
 
-```julia
+```julia; hold=true
 p = (k=2/3, b=1/2)
 prob = ODEProblem(sir!, u0, time_span, p)
 sol = solve(prob, Tsit5())
@@ -191,7 +208,7 @@ This very clearly shows the sharp dependence on the value of ``b``; below some l
 
 The function `recovered` is of two variables returning a single value. In subsequent sections we will see a few ``3``-dimensional plots that are common for such functions, here we skip ahead and show how to visualize multiple function plots at once using "`z`" values in a graph.
 
-```julia
+```julia; hold=true
 k, ks = 0.1, 0.2:0.1:0.9  # first `k` and then the rest
 bs = range(0, 2, length=100)
 zs = recovered.(k, bs)    # find values for fixed k, each of bs
@@ -221,7 +238,94 @@ This can be estimated from the curves once steady state has been reached (at the
 This equation does not depend on ``t``; ``s`` is the dependent variable. It could be solved numerically, but in this case affords an algebraic solution: ``i = -s + (1/c) \log(s) + q``, where ``q`` is some constant. The quantity ``q = i + s - (1/c) \log(s)`` does not depend on time, so is the same at time ``t=0`` as it is as ``t \rightarrow \infty``. At ``t=0`` we have ``s(0) \approx 1`` and ``i(0) \approx 0``, whereas ``t \rightarrow \infty``, ``i(t) \rightarrow 0`` and ``s(t)`` goes to the steady state value, which can be estimated. Solving with ``t=0``, we see ``q=0 + 1 - (1/c)\log(1) = 1``. In the limit them ``1 = 0 + s_{\infty} - (1/c)\log(s_\infty)`` or ``c = \log(s_\infty)/(1-s_\infty)``.
 
 
-```julia; echo=false
-import CalculusWithJulia
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
+## Trajectory with drag
+
+We now solve numerically the problem of a trajectory with a drag force from air resistance.
+
+The general model is:
+
+```math
+\begin{align*}
+x''(t) &= - W(t,x(t), x'(t), y(t), y'(t)) \cdot x'(t)\\
+y''(t) &= -g - W(t,x(t), x'(t), y(t), y'(t)) \cdot y'(t)\\
+\end{align*}
+```
+
+with initial conditions: ``x(0) = y(0) = 0`` and ``x'(0) = v_0 \cos(\theta), y'(0) = v_0 \sin(\theta)``.
+
+This into an ODE by a standard trick. Here we define our function for updating a step. As can be seen the vector `u` contains both ``\langle x,y \rangle``
+and ``\langle x',y' \rangle``
+
+```julia
+function xy!(du, u, p, t)
+	g, γ = p.g, p.k
+	x, y = u[1], u[2]
+	x′, y′ = u[3], u[4]  # unicode \prime[tab]
+
+    W = γ
+
+	du[1] = x′
+	du[2] = y′
+	du[3] =  0 - W * x′
+	du[4] = -g - W * y′
+end
+```
+
+This function ``W`` is just a constant above, but can be easily modified as desired.
+
+The initial conditions are specified through:
+
+```julia
+θ = pi/4
+v₀ = 200
+xy₀ = [0.0, 0.0]
+vxy₀ = v₀ * [cos(θ), sin(θ)]
+INITIAL = vcat(xy₀, vxy₀)
+```
+
+The time span can be computed using an *upper* bound of no drag, for which the classic physics formulas give (when ``y_0=0``) ``(0, 2v_{y0}/g)``
+
+```julia
+g = 9.8
+TSPAN = (0, 2*vxy₀[2] / g)
+```
+
+This allows us to define an `ODEProblem`:
+
+```julia
+trajectory_problem = ODEProblem(xy!, INITIAL, TSPAN)
+```
+
+When ``\gamma = 0`` there should be no drag and we expect to see a parabola:
+
+```julia; hold=true
+ps = (g=9.8, k=0)
+SOL = solve(trajectory_problem, Tsit5(); p = ps)
+
+plot(t -> SOL(t)[1], t -> SOL(t)[2], TSPAN...; legend=false)
+```
+
+The plot is a parametric plot of the ``x`` and ``y`` parts of the solution over the time span. We can see the expected parabolic shape.
+
+On a *windy* day, the value of ``k`` would be positive. Repeating the above with ``k=1/4`` gives:
+
+```julia; hold=true
+ps = (g=9.8, k=1/4)
+SOL = solve(trajectory_problem, Tsit5(); p = ps)
+
+plot(t -> SOL(t)[1], t -> SOL(t)[2], TSPAN...; legend=false)
+```
+
+We see that the ``y`` values have gone negative. The `DifferentialEquations` package can adjust for that with a *callback* which terminates the problem once ``y`` has gone negative. This can be implemented as follows:
+
+
+```julia; hold=true
+condition(u,t,integrator) = u[2] # called when `u[2]` is negative
+affect!(integrator) = terminate!(integrator) # stop the process
+cb = ContinuousCallback(condition, affect!)
+
+ps = (g=9.8, k = 1/4)
+SOL = solve(trajectory_problem, Tsit5(); p = ps, callback=cb)
+
+plot(t -> SOL(t)[1], t -> SOL(t)[2], TSPAN...; legend=false)
 ```
