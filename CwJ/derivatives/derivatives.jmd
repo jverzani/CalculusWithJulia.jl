@@ -80,21 +80,21 @@ plot(position, 0, 6)
 We can see with some effort that the slope is steady for the first three hours, is slightly less between $3$ and
 $3.5$ hours, then is a bit steeper for the next half hour. After that, it is flat for the
 about half an hour, then the slope continues on with same value as in the first
-3 hours. What does that say about our speed during our trip?
+``3`` hours. What does that say about our speed during our trip?
 
-Based on the graph, what was the average speed over the first three hours? Well, we traveled 180 miles, and took 3 hours:
+Based on the graph, what was the average speed over the first three hours? Well, we traveled ``180`` miles, and took ``3`` hours:
 
 ```julia
 180/3
 ```
 
-What about the next half hour? Squinting shows the amount traveled was 15 miles (195 - 180) and it took 1/2 an hour:
+What about the next half hour? Squinting shows the amount traveled was ``15`` miles (``195 - 180``) and it took ``1/2`` an hour:
 
 ```julia
 15/(1/2)
 ```
 
-And the half hour after that? The average speed is found from the distance traveled, 37.5 miles, divided by the time, 1/2 hour:
+And the half hour after that? The average speed is found from the distance traveled, ``37.5`` miles, divided by the time, ``1/2`` hour:
 
 ```julia
 37.5 / (1/2)
@@ -102,7 +102,7 @@ And the half hour after that? The average speed is found from the distance trave
 
 Okay, so there was some speeding involved.
 
-The next half hour the car did not move. What was the average speed? Well the change in position was 0, but the time was 1/2 hour, so the average was 0.
+The next half hour the car did not move. What was the average speed? Well the change in position was ``0``, but the time was ``1/2`` hour, so the average was ``0``.
 
 Perhaps a graph of the speed is a bit more clear. We can do this based on the above:
 
@@ -326,7 +326,7 @@ point, nor does it need only intersect the line in just one point.
 note("""
 This last point was certainly not obvious at
 first. [Barrow](http://www.maa.org/sites/default/files/0746834234133.di020795.02p0640b.pdf),
-who had Newton as a pupil and was the first to sketch a proof of part
+who had Newton as a pupil, and was the first to sketch a proof of part
 of the Fundamental Theorem of Calculus, understood a tangent line to
 be a line that intersects a curve at only one point.
 """)
@@ -352,8 +352,10 @@ plot!(tl, -pi/2, pi/2)
 The limit of the slope of the secant line gives an operation: for each
 $c$ in the domain of $f$ there is a number (the slope of the tangent
 line) or it does not exist. That is, there is a derived function from
-$f$. Call this function the *derivative* of $f$. There are many
-notations for the derivative, here we use the "prime" notation:
+$f$. Call this function the *derivative* of $f$.
+
+
+There are many notations for the derivative, mostly we use the "prime" notation:
 
 ```math
 f'(x) = \lim_{h \rightarrow 0} \frac{f(x+h) - f(x)}{h}.
@@ -459,7 +461,7 @@ for derivatives. Some are historical, some just add
 flexibility. We use the prime notation of Lagrange: ``f'(x)``, ``u'`` and ``[\text{expr}]'``,
 where the first emphasizes that the derivative is a function with a
 value at ``x``, the second emphasizes the derivative operates on
-functions, the last emphasize that we are taking the derivative of
+functions, the last emphasizes that we are taking the derivative of
 some expression.
 
 
@@ -479,9 +481,11 @@ f'(x) = \frac{d}{d\xi}(f(\xi)) \big|_{\xi=x}.
   derivative and evaluating the derivative at a specific value.
 
 - Euler used `D` for the operator `D(f)`. This was initially used by
-  [Argobast](http://jeff560.tripod.com/calculus.html).
+  [Argobast](http://jeff560.tripod.com/calculus.html). The notation `D(f)(c)` would be needed to evaluate the derivative at a point.
 
-- Newton used a "dot" above the variable, ``\dot{x}(t)``, which is still widely used in physics to indicate  a derivative in time.
+- Newton used a "dot" above the variable, ``\dot{x}(t)``, which is still widely used in physics to indicate  a derivative in time. This inidicates take the derivative and then plug in ``t``.
+
+- The notation ``[expr]'(c)`` or ``[expr]'\big|_{x=c}``would similarly mean, take the derivative of the expression and **then** evaluate at ``c``.
 
 
 
@@ -501,7 +505,7 @@ functions a matter of combining derivatives of the individual functions in some 
 
 We already have one such rule:
 
-### The power rule
+### Power rule
 
 We have seen for integer ``n \geq 0`` the formula:
 
@@ -547,10 +551,10 @@ f(x) = u(x) * v(x)
 limit((f(x+h) - f(x))/h, h => 0)
 ```
 
-The output uses some new notation to represent that the derivative of
-$u(x) \cdot v(x)$ is the $u$ times the derivative of $v$ plus $v$
-times the derivative of $u$. A common shorthand is $[uv]' = u'v +
-uv'$.
+The output uses the Leibniz notation to represent that the derivative
+of $u(x) \cdot v(x)$ is the $u$ times the derivative of $v$ evaluated
+at ``x`` plus $v$ times the derivative of $u$ evaluated at ``x``. A
+common shorthand is $[uv]' = u'v + uv'$.
 
 
 
@@ -637,6 +641,14 @@ With this, we can proceed. Each term $x-i$ has derivative $1$, so the answer to 
 
 ```math
 f'(x) = (x-2)(x-3)(x-4)(x-5) + (x-1)(x-3)(x-4)(x-5) + (x-1)(x-2)(x-4)(x-5) + (x-1)(x-2)(x-3)(x-5) + (x-1)(x-2)(x-3)(x-4).
+```
+
+----
+
+Find the derivative of ``x\sin(x)`` evaluated at ``\pi``.
+
+```math
+[x\sin(x)]'\big|_{x=\pi} = (1\sin(x) + x\cos(x))\big|_{x=\pi} = (\sin(\pi) + \pi \cdot \cos(\pi)) = -\pi.
 ```
 
 ### Chain rule
@@ -748,7 +760,15 @@ Find the derivative of ``e^{f(x)}``. The inner function has derivative ``f'(x)``
 
 This is a useful rule to remember for expressions involving exponentials.
 
+----
 
+Find the derivative of ``\sin(x)\cos(2x)`` at ``x=\pi``.
+
+```math
+[\sin(x)\cos(2x)]'\big|_{x=\pi} =
+(\cos(x)\cos(2x) + \sin(x)(-\sin(2x)\cdot 2))\big|_{x=\pi} =
+((-1)(1) + (0)(-0)(2)) = -1.
+```
 
 ##### Proof of the Chain Rule
 
@@ -785,15 +805,16 @@ the alternative definition of the derivative, showing $(f\circ g)'(a) = f'(g(a))
 
 ##### More examples
 
-- Find the derivative of $x^5 \cdot \sin(x)$.
+Find the derivative of $x^5 \cdot \sin(x)$.
 
 This is a product of functions, using $[u\cdot v]' = u'v + uv'$ we get:
 
 ```math
 5x^4 \cdot \sin(x) + x^5 \cdot \cos(x)
 ```
+----
 
-- Find the derivative of $x^5 / \sin(x)$.
+Find the derivative of $x^5 / \sin(x)$.
 
 This is a quotient of functions. Using $[u/v]' = (u'v - uv')/v^2$ we get
 
@@ -801,23 +822,28 @@ This is a quotient of functions. Using $[u/v]' = (u'v - uv')/v^2$ we get
 (5x^4 \cdot \sin(x) - x^5 \cdot \cos(x)) / (\sin(x))^2.
 ```
 
-- Find the derivative of $\sin(x^5)$. This is a composition of
-  functions $u(v(x))$ with $v(x) = x^5$. The chain rule says find the
-  derivative of $u$ ($\cos(x)$) and evaluate at $v(x)$ ($\cos(x^5)$)
-  then multiply by the derivative of $v$:
+----
+
+Find the derivative of $\sin(x^5)$. This is a composition of
+functions $u(v(x))$ with $v(x) = x^5$. The chain rule says find the
+derivative of $u$ ($\cos(x)$) and evaluate at $v(x)$ ($\cos(x^5)$)
+then multiply by the derivative of $v$:
 
 ```math
 \cos(x^5) \cdot 5x^4.
 ```
 
-- Similarly, but differently, find the derivative of $\sin(x)^5$. Now
-  $v(x) = \sin(x)$, so the derivative of $u(x)$ ($5x^4$) evaluated at
-  $v(x)$ is $5(\sin(x))^4$ so multiplying by $v'$ gives:
+----
+
+Similarly, but differently, find the derivative of $\sin(x)^5$. Now
+$v(x) = \sin(x)$, so the derivative of $u(x)$ ($5x^4$) evaluated at
+$v(x)$ is $5(\sin(x))^4$ so multiplying by $v'$ gives:
 
 ```math
 5(\sin(x))^4 \cdot \cos(x)
 ```
 
+----
 
 We can verify these with `SymPy`. Rather than take a limit, we will
 use `SymPy`'s `diff` function to compute derivatives.
@@ -849,16 +875,17 @@ expression.
 )
 ```
 
+----
 
-- The general product rule:  For any $n$ - not just integer values -  we can re-express $x^n$  using $e$: $x^n = e^{n \log(x)}$. Now the chain rule can be applied:
+The general product rule:  For any $n$ - not just integer values -  we can re-express $x^n$  using $e$: $x^n = e^{n \log(x)}$. Now the chain rule can be applied:
 
 ```math
 [x^n]' = [e^{n\log(x)}]' = e^{n\log(x)} \cdot (n \frac{1}{x}) = n x^n \cdot \frac{1}{x} = n x^{n-1}.
 ```
 
+----
 
-
-* Find the derivative of $f(x) = x^3 (1-x)^2$ using either the power rule or the sum rule.
+Find the derivative of $f(x) = x^3 (1-x)^2$ using either the power rule or the sum rule.
 
 The power rule expresses $f=u\cdot v$. With $u(x)=x^3$ and $v(x)=(1-x)^2$ we get:
 
@@ -872,8 +899,9 @@ $f'(x) = (3x^2)\cdot (1-x)^2 + x^3 \cdot (-2) \cdot (1-x)$.
 Otherwise, the polynomial can be expanded to give
 $f(x)=x^5-2x^4+x^3$ which has derivative $f'(x) = 5x^4 - 8x^3 + 3x^2$.
 
+----
 
-* Find the derivative of $f(x) = x \cdot e^{-x^2}$.
+Find the derivative of $f(x) = x \cdot e^{-x^2}$.
 
 Using the product rule and then the chain rule, we have:
 
@@ -887,7 +915,9 @@ f'(x) &= [x \cdot e^{-x^2}]'\\
 \end{align}
 ```
 
-* Find the derivative of $f(x) = e^{-ax} \cdot \sin(x)$.
+----
+
+Find the derivative of $f(x) = e^{-ax} \cdot \sin(x)$.
 
 Using the  product rule and then the chain rule, we have:
 
@@ -901,6 +931,15 @@ f'(x) &= [e^{-ax} \cdot \sin(x)]'\\
 \end{align}
 ```
 
+----
+
+Find the derivative of ``e^{-x^2/2}`` at ``x=1``.
+
+```math
+[e^{-x^2/2}]'\big|_{x=1} =
+(e^{-x^2/2} \cdot \frac{-2x}{2}) \big|_{x=1} =
+e^{-1/2} \cdot (-1) = -e^{-1/2}.
+```
 
 ##### Example: derivative of inverse functions
 

@@ -19,12 +19,12 @@ nothing
 
 Newton's method is not the only algorithm of its kind for identifying zeros of a function. In this section we discuss some alternatives.
 
-## `find_zero(f, x0)`
+## The `find_zero(f, x0)` function
 
 The  function `find_zero` from the `Roots` packages provides several different algorithms for finding a zero of a function, including some a derivative-free
-algorithms for finding roots  when started with an initial
+algorithms for finding zeros  when started with an initial
 guess. The default method is similar to Newton's method in that only a good initial
-guess is needed. However, the algorithm, while slower in terms of
+guess is needed. However, the algorithm, while possibly slower in terms of
 function evaluations and steps,  is engineered to be a bit more
 robust to the choice of initial estimate than Newton's method. (If it
 finds a bracket, it will use a bisection algorithm which is guaranteed to
@@ -50,8 +50,10 @@ is a bit less convenient as a bracketing interval must be pre-specified.
 
 The default `find_zero` method above uses a secant-like method unless a bracketing method is found. Here we place the secant method into a more general framework.
 
-One way to view Newton's method is through the inverse of ``f``, as if ``f(\alpha) = 0`` then -- when ``f^{-1}(x)`` exists -- ``\alpha = f^{-1}(0)``.
-If ``f`` has a simple zero at ``\alpha`` and is locally invertible (that is some ``f^{-1}`` exists) then the update step for Newton's method can be identified with: fitting a polynomial to the local inverse function of ``f`` going through through the point ``(f(x_0),x_0)``,  and matching the slope of `f` at the same point.
+One way to view Newton's method is through the inverse of ``f`` (assuming it exists): if ``f(\alpha) = 0`` then ``\alpha = f^{-1}(0)``.
+If ``f`` has a simple zero at ``\alpha`` and is locally invertible (that is some ``f^{-1}`` exists) then the update step for Newton's method can be identified with:
+* fitting a polynomial to the local inverse function of ``f`` going through through the point ``(f(x_0),x_0)``,
+* and matching the slope of `f` at the same point.
 
 That is, we can write ``g(y) = h_0 + h_1 (y-f(x_0))``. Then ``g(f(x0)) = x0 = h_0``, so ``h_0 = x_0``, and from ``g'(f(x_0)) = 1/f'(x_0)``, we get ``h_1 = 1/f'(x_0)``, so ``g(y) = x_0 + (y-f(x_0))/f'(x_0)``. At ``y=0``, we get the update step ``x_1 = g(0) = x_0 - f(x_0)/f'(x_0)``.
 
@@ -69,13 +71,13 @@ Substituting ``f(x_0)`` gives ``g(f(x_0)) = x_0 = x_1 + h_1(f(x_0)-f(x_1))``.  S
 x_{n+1} = x_n - f(x_n) \frac{x_n - x_{n-1}}{f(x_n) - f(x_{n-1})}.
 ```
 
-The secant method simply replaces ``f'(x_n)`` with the slope of the secant line between ``x_n`` and ``x_{n-1}``. The method is historic, dating back over ``3000`` years.
+That is, the secant method simply replaces ``f'(x_n)`` with the slope of the secant line between ``x_n`` and ``x_{n-1}``. The method is historic, dating back over ``3000`` years.
 
 
 We code the update step as `λ2`:
 
 ```julia;
-λ2(f0,f1,x0,x1) = x1 - f1 * (x1-x0)/(f1-f0)
+λ2(f0,f1,x0,x1) = x1 - f1 * (x1-x0) / (f1-f0)
 ```
 
 Then we can run a few steps to identify the zero of sine starting at ``3`` and ``4``
@@ -103,21 +105,21 @@ x1,f1
 ```
 
 
-Like Newton's method, the secant method coverges quickly for this problem (though its rate is less than the quadratic rate of Newton's method.)
+Like Newton's method, the secant method coverges quickly for this problem (though its rate is less than the quadratic rate of Newton's method).
 
 
 This method is included in `Roots` as `Secant()` (or `Order1()`):
 
 ```julia;
-find_zero(sin, (4,3), Secant(), verbose=true)
+find_zero(sin, (4,3), Secant())
 ```
 
 
 
-Though the derivative is related to the slope of the secant line, that is in the limit. The convergence of the secant method is not as fast as Newton's method, though at each step of the secant method, only ``1`` new function evaluation is needed, so it can be more efficient for functions that are expensive to compute or differentiate.
+Though the derivative is related to the slope of the secant line, that is in the limit. The convergence of the secant method is not as fast as Newton's method, though at each step of the secant method, only one new function evaluation is needed, so it can be more efficient for functions that are expensive to compute or differentiate.
 
 
-Let ``\epsilon_{n+1} = x_{n+1}-\alpha``, where ``\alpha`` is assumed to be a *simple* zero of ``f(x)`` that the secant method converges to. A [calculation](https://math.okstate.edu/people/binegar/4513-F98/4513-l08.pdf) shows that
+Let ``\epsilon_{n+1} = x_{n+1}-\alpha``, where ``\alpha`` is assumed to be the *simple* zero of ``f(x)`` that the secant method converges to. A [calculation](https://math.okstate.edu/people/binegar/4513-F98/4513-l08.pdf) shows that
 
 ```math
 \begin{align*}
@@ -316,7 +318,7 @@ One way to think about this is the difference between `x` and the next largest f
 For the specific example, `abs(b-a) <= 2eps(max(abs(a),abs(b)))` which in turn is bounded by `2max(abs(b),abs(a)) * eps()` means that the gap between `a` and `b` is essentially 2 floating point values.
 
 
-For bisection methods that is about as good as you can get. However, once floating values are understood, the best you can get for a bracketing interval would be
+For bisection methods that is about as good as you can get. However, once floating values are understood, the absolute best you can get for a bracketing interval would be
 * along the way, a value `f(c)` is found which is *exactly* `0.0`
 * the endpoints of the bracketing interval are *adjacent* floating point values, meaning the interval can not be bisected and `f` changes sign between the two values.
 
@@ -364,7 +366,7 @@ Assuming ``f`` has a derivative, the linear approximation gives:
 So we should consider `f(x_n)` an *approximate zero* when it is on the scale of
 ``f'(\alpha) \cdot \alpha \delta``.
 
-That ``\alpha`` means we consider a *relative* tolerance for `f`.
+That ``\alpha`` factor means we consider a *relative* tolerance for `f`.
 Also important -- when `x_n` is close to  `0`,
 is the need for an *absolute* tolerance, one not dependent on the size of `x`.
 So a good condition to check if `f(x_n)` is small is

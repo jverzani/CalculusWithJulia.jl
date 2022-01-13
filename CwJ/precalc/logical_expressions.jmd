@@ -1,6 +1,6 @@
 # Inequalities, Logical expressions
 
-In the following we use the following package:
+In this section we use the following package:
 
 ```julia
 using CalculusWithJulia    # loads the `SpecialFunctions` package
@@ -9,7 +9,8 @@ using CalculusWithJulia    # loads the `SpecialFunctions` package
 ```julia; echo=false; results="hidden"
 using CalculusWithJulia.WeaveSupport
 using Plots
-__DIR__, __FILE__ = :precalc, :logical_expressions
+import PyPlot
+pyplot()
 nothing
 ```
 
@@ -84,7 +85,7 @@ So adding or subtracting most any finite value from an inequality will preserve 
 
 What about addition and multiplication?
 
-Consider the case $a < b$ and $c > 0$. Then $ca < cb$. Here we investigate using 3 random values (which will be positive):
+Consider the case $a < b$ and $c > 0$. Then $ca < cb$. Here we investigate using ``3`` random values (which will be positive):
 
 ```julia;hold=true
 a,b,c = rand(3)   # 3 random numbers in [0,1)
@@ -126,7 +127,7 @@ In summary we investigated numerically that the following hold:
 
 - `a < b` if and only if `1/a > 1/b` for all finite, positive `a` and `b`.
 
-## Some examples
+#### Examples
 
 We now show some inequalities highlighted on this  [Wikipedia](http://en.wikipedia.org/wiki/Inequality_%28mathematics%29) page.
 
@@ -194,7 +195,7 @@ values of $x$ within $7$ units of $5$. This would be the values $-2< x < 12$.
 If this isn't immediately intuited, then formally $\lvert x - 5\rvert <7$
 is a compact representation of a chain of inequalities: $-7 < x-5 < 7$.
 (Which is really two combined inequalities: $-7 < x-5$ *and* $x-5 < 7$.)
-We can "add" 5 to each side to get $-2 < x < 12$, using the
+We can "add" ``5`` to each side to get $-2 < x < 12$, using the
 fact that adding by a finite number does not change the inequality
 sign.
 
@@ -214,13 +215,13 @@ This is to be expected, but we could also have written:
 -7 < x - 5 < 7
 ```
 
-Read aloud this would be "minus 7 is less than x minus 5 **and** x
-minus 5 is less than 7".
+Read aloud this would be "minus ``7`` is less than ``x`` minus ``5``
+**and** ``x`` minus ``5`` is less than ``7``".
 
 The "and" equations can be combined as above with a natural notation. However,
 an equation like $\lvert x - 5\rvert > 7$ would emphasize
-an **or** and be "x minus 5 less than minus 7 **or** x minus 5
-greater than 7". Expressing this requires some new notation.
+an **or** and be "``x`` minus ``5`` less than minus ``7`` **or** ``x`` minus ``5``
+greater than ``7``". Expressing this requires some new notation.
 
 
 The *boolean shortcut operators* `&&` and `||` implement "and" and "or." (There are also *bitwise* boolean operators `&` and `|`, but we only describe the former.)
@@ -247,7 +248,7 @@ One of [DeMorgan's Laws](http://en.wikipedia.org/wiki/De_Morgan%27s_laws) states
 "not (A and B)" is the same as "(not A) or (not B)". This is a kind of
 distributive law for "not", but note how the "and" changes to
 "or". We can verify this law systematically. For example, the
-following shows it true for 1 of the 4 possible cases for the pair
+following shows it true for ``1`` of the ``4`` possible cases for the pair
 `A`, `B` to take:
 
 ```julia;
@@ -271,7 +272,7 @@ To represent $\lvert x-5\rvert > 7$. Were the parentheses necessary? Let's just 
 x - 5 < -7 || x - 5 > 7
 ```
 
-So no, they were not.
+So no, they were not in this case.
 
 An operator (such as `<`, `>`, `||` above) has an associated associativity and precedence. The associativity is whether an expression like `a - b - c` is `(a-b) - c` or `a - (b-c)`. The former being left associative, the latter right. Of issue here is *precedence*, as in with two or more different operations, which happens first, second, ``\dots``.
 

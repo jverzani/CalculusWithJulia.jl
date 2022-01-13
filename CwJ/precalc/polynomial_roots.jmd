@@ -12,7 +12,6 @@ using SymPy
 using CalculusWithJulia.WeaveSupport
 using Roots
 import LinearAlgebra: norm
-__DIR__, __FILE__ = :precalc, :polynomial_roots
 nothing
 ```
 
@@ -34,12 +33,13 @@ The graph crosses the $x$-axis at both $0$ and $1$.
 
 What is known about polynomial roots? Some simple questions might be:
 
-* Will we always have a root?
+* Will a polynomial always have a root?
 * How many roots can there be?
 * How large can the roots be?
 
 We look at such questions here.
 
+### The factor theorem
 
 We begin with a comment that ties together two concepts related to
 polynomials. It allows us to speak of roots or factors interchangeably:
@@ -51,8 +51,8 @@ polynomials. It allows us to speak of roots or factors interchangeably:
 > $p$.
 
 Clearly, if $p$ is factored as $a(x-r_1) \cdot (x-r_2) \cdots (x -
-r_k)$ then each $r_i$ is a root, as a product involving at least one 0
-term will be 0. The other implication is a consequence of polynomial
+r_k)$ then each $r_i$ is a root, as a product involving at least one ``0``
+term will be ``0``. The other implication is a consequence of polynomial
 division.
 
 ### Polynomial Division
@@ -144,6 +144,8 @@ function horner(p, x)
 end
 ```
 
+Recording the different values of `Σ` would recover the polynomial `q`.
+
 
 `Julia` has a
 built-in method, `evalpoly`, to compute polynomial evaluations this
@@ -159,7 +161,6 @@ evalpoly(x, p)
 ```
 
 
-Recording the different values of `Σ` would recover the polynomial `q`.
 
 ----
 
@@ -184,7 +185,9 @@ quotient, remainder = divrem(x^4 + 2x^2 + 5, x - 2)
 The answer is a tuple containing the quotient and remainder. The quotient itself could be found with `div` or `÷` and the remainder with `rem`.
 
 ```julia; echo=false
-note("""For those who have worked with SymPy within Python, `divrem` is the `div` method renamed, as `Julia`'s `div` method has the generic meaning of returning the quotient.""")
+note("""
+For those who have worked with SymPy within Python, `divrem` is the `div` method renamed, as `Julia`'s `div` method has the generic meaning of returning the quotient.
+""")
 ```
 
 
@@ -203,7 +206,7 @@ The function `together` would combine such terms, as an "inverse" to
 when techniques of integration are looked at.
 
 
-### The rational root test
+### The rational root theorem
 
 Factoring polynomials to find roots is a task that most all readers
 here will recognize, and, perhaps, remember not so fondly. One helpful
@@ -252,7 +255,7 @@ factor(p)
 
 
 
-### Fundamental theorem of algebra
+### The fundamental theorem of algebra
 
 There is a basic fact about the roots of a polynomial of degree
 $n$. Before formally stating it, we consider the earlier observation
@@ -294,7 +297,7 @@ so will cross the $x$-axis as the line and this axis are not parallel.
 
 For the quadratic case, there is the famous
 [quadratic formula](http://en.wikipedia.org/wiki/Quadratic_formula) (known since
-2000 BC) to find the two roots guaranteed by the formula:
+``2000`` BC) to find the two roots guaranteed by the formula:
 
 ```math
 \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}.
@@ -306,7 +309,7 @@ the formula shows the two complex roots are conjugates. When the
 discriminant is $0$, then the root has multiplicity two, e.g., the
 polynomial will factor as $a_2(x-r)^2$. Finally, when the discriminant
 is positive, there will be two distinct, real roots. This figure shows
-the 3 cases, that are illustrated by $x^2 -1$, $x^2$ and $x^2 + 1$:
+the ``3`` cases, that are illustrated by $x^2 -1$, $x^2$ and $x^2 + 1$:
 
 ```julia;
 plot(x^2 - 1,  -2, 2, legend=false)  # two roots
@@ -320,13 +323,13 @@ There are similar formulas for the
 and
 [quartic](http://en.wikipedia.org/wiki/Quartic_function#General_formula_for_roots)
 cases. (The [cubic formula](http://arxiv.org/pdf/math/0005026v1.pdf)
-was known to Cardano in 1545, though through Tartagli, and the quartic
+was known to Cardano in ``1545``, though through Tartagli, and the quartic
 was solved by Ferrari, Cardano's roommate.)
 
 
-In general, there is no such formula using radicals for 5th degree
-polynomials or higher, a proof first given by Ruffini in 1803 with
-improvement by Abel in 1824. Even though the fundamental theorem shows
+In general, there is no such formula using radicals for ``5``th degree
+polynomials or higher, a proof first given by Ruffini in ``1803`` with
+improvement by Abel in ``1824``. Even though the fundamental theorem shows
 that any polynomial can be factored into linear and quadratic terms,
 there is no general method as to how. (It is the case that *some* such
 polynomials may be solvable by radicals, just not all of them.)
@@ -433,13 +436,13 @@ called the [Bring radical](http://en.wikipedia.org/wiki/Bring_radical).)
 
 Related to `solve` is the specialized `roots` function for identifying roots, Unlike solve, it will identify multiplicities.
 
-For a polynomial with only one ideterminate the usage is straightfoward:
+For a polynomial with only one indeterminate the usage is straight foward:
 
 ```julia
 roots((x-1)^2 * (x-2)^2)  # solve doesn't identify multiplicities
 ```
 
-For a polynomial with symbolic coefficients, the different between the symbol and the coefficients must be identified. `SymPy` has a `Poly` type to do so. The following call illustrates:
+For a polynomial with symbolic coefficients, the difference between the symbol and the coefficients must be identified. `SymPy` has a `Poly` type to do so. The following call illustrates:
 
 ```julia; hold=true
 @syms a b c
@@ -511,7 +514,7 @@ displace thinking - it only supplements it.
 
 
 For another example, consider the polynomial $(x-20)^5 - (x-20) + 1$. In this form
-we might think the roots are near 20. However, were we presented with
+we might think the roots are near ``20``. However, were we presented with
 this polynomial in expanded form: $x^5 - 100x^4 + 4000x^3 - 80000x^2 +
 799999x - 3199979$, we might be tempted to just graph it to find
 roots.  A naive graph might be to plot over $[-10, 10]$:
@@ -521,7 +524,7 @@ roots.  A naive graph might be to plot over $[-10, 10]$:
 plot(𝐩, -10, 10)
 ```
 
-This seems to indicate a root near 10. But look at the scale of the
+This seems to indicate a root near ``10``. But look at the scale of the
 $y$ axis. The value at $-10$ is around $-25,000,000$ so it is really
 hard to tell if $f$ is near $0$ when $x=10$, as the range is too
 large.
@@ -532,15 +535,15 @@ A graph over $[10,20]$ is still unclear:
 plot(𝐩, 10,20)
 ```
 
-We see that what looked like a zero near 10, was actually a number around $-100,000$.
+We see that what looked like a zero near ``10``, was actually a number around $-100,000$.
 
 
 Continuing, a plot over $[15, 20]$ still isn't that useful. It isn't
-until we get close to 18 that the large values of the polynomial
+until we get close to ``18`` that the large values of the polynomial
 allow a clear vision of the values near $0$. That being said, plotting
-anything bigger than 22 quickly makes the large values hide those near
+anything bigger than ``22`` quickly makes the large values hide those near
 $0$, and might make us think where the function dips back down there
-is a second or third zero, when only 1 is the case. (We know that, as this is the same $x^5 - x + 1$ shifted to the right by 20 units.)
+is a second or third zero, when only ``1`` is the case. (We know that, as this is the same $x^5 - x + 1$ shifted to the right by ``20`` units.)
 
 ```julia;
 plot(𝐩, 18, 22)
@@ -568,7 +571,7 @@ N.(solve(h))
 
 ```julia; echo=false
 note("""
-The difference of the two roots is around `1e-10`. For the graph over the interval of ``[-5,7]`` there are about 800 "pixels" used, so each pixel represents a size of about `1.5e-2`. So the cluster of roots would safely be hidden under a single "pixel."
+The difference of the two roots is around `1e-10`. For the graph over the interval of ``[-5,7]`` there are about ``800`` "pixels" used, so each pixel represents a size of about `1.5e-2`. So the cluster of roots would safely be hidden under a single "pixel."
 """)
 ```
 
@@ -587,7 +590,7 @@ used to narrow viewing windows when graphing polynomials.
 
 ### Descartes' rule of signs
 
-The study of polynomial roots is an old one. In 1637 Descartes
+The study of polynomial roots is an old one. In ``1637`` Descartes
 published a *simple* method to determine an upper bound on the number
 of *positive* real roots of a polynomial.
 
@@ -610,7 +613,7 @@ all non-negative will have no positive real roots.
 
 Applying this to the polynomial $x^5 -x + 1$ we get that the sign
 pattern is `+`, `-`, `+` which has two changes of sign. The number of
-*positive* real roots is either 2 or 0. In fact there are $0$ for this
+*positive* real roots is either ``2`` or ``0``. In fact there are $0$ for this
 case.
 
 What about negative roots? Cleary, any negative root of $p$ is a
@@ -629,10 +632,10 @@ by a count of the sign changes.
 
 
 For another example, if we looked at $f(x) = x^5 - 100x^4 + 4000x^3 -
-80000x^2 + 799999x - 3199979$ again, we see that there could be 1, 3,
-or 5 *positive* roots. However, changing the signs of the odd powers
+80000x^2 + 799999x - 3199979$ again, we see that there could be ``1``, ``3``,
+or ``5`` *positive* roots. However, changing the signs of the odd powers
 leaves all "-" signs, so there are $0$ negative roots. From the graph,
-we saw just 1 real root, not 3 or 5. We can verify numerically with:
+we saw just ``1`` real root, not ``3`` or ``5``. We can verify numerically with:
 
 ```julia;
 j =  x^5 - 100x^4 + 4000x^3 - 80000x^2 + 799999x - 3199979
@@ -652,16 +655,18 @@ expressed in different ways.)
 To see precisely
 [why](https://captainblack.wordpress.com/2009/03/08/cauchys-upper-bound-for-the-roots-of-a-polynomial/)
 this bound works, suppose $x$ is a root with $|x| > 1$ and let $h$ be
-the bound. Then since $x$ is a root, we can solve for $x^n$ as:
+the bound. Then since $x$ is a root, we can solve
+``a_0 + a_1x + \cdots + 1 \cdot x^n = 0``
+for $x^n$ as:
 
 ```math
-x_n = -(a_0 + a_1 x + \cdots a_{n-1}x^{n-1})
+x^n = -(a_0 + a_1 x + \cdots a_{n-1}x^{n-1})
 ```
 
 Which after taking absolute values of both sides, yields:
 
 ```math
-|x_n| \leq |a_0| + |a_1||x| + |a_2||x^2| + \cdots |a_{n-1}| |x^{n-1}| \leq (h-1) (1 + |x| + |x^2| + \cdots |x^{n-1}|).
+|x^n| \leq |a_0| + |a_1||x| + |a_2||x^2| + \cdots |a_{n-1}| |x^{n-1}| \leq (h-1) (1 + |x| + |x^2| + \cdots |x^{n-1}|).
 ```
 
 The last sum can be computed using a formula for geometric sums,
@@ -1002,8 +1007,8 @@ Let `var(p)` be the number of sign changes and `pos(p)` the number of positive r
 
 First: For a monic ``p`` if  ``p_0 < 0`` then `var(p)` is odd and if ``p_0 > 0`` then `var(p)` is even.
 
-This is true for degree ``n=1`` the two sign patterns under the assumption are `+-` (``p_0 < 0``) or `++` (``p_0 > 0``). If it is true for degree ``n-1``, then the we can consider the sign pattern of such a ``n`` degree polynomial having one of these patterns:
-`+....+-` or `+...--` (if ``p_0 < 0``) or `+...++` or `+...-+` if (``p_0>0``). An induction step applied to all but the last sign for these four patterns leads to even, odd, even, odd as the number of sign changes. Incorporating the last sign leads to odd, odd, even, even as the number of sign changes.
+This is true for degree ``n=1`` the two sign patterns under the assumption are `+-` (``p_0 < 0``) or `++` (``p_0 > 0``). If it is true for degree ``n-1``, then the we can consider the sign pattern of such an ``n`` degree polynomial having one of these patterns:
+`+...+-` or `+...--` (if ``p_0 < 0``) or `+...++` or `+...-+` if (``p_0>0``). An induction step applied to all but the last sign for these four patterns leads to even, odd, even, odd as the number of sign changes. Incorporating the last sign leads to odd, odd, even, even as the number of sign changes.
 
 
 Second: For a monic ``p`` if `p_0 < 0` then `pos(p)` is *odd*, if `p_0 > 0` then `pos(p)` is even.

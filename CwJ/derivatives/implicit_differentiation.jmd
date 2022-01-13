@@ -6,8 +6,6 @@ This section uses these add-on packages:
 using CalculusWithJulia
 using Plots
 using ImplicitEquations
-import IntervalArithmetic
-using IntervalConstraintProgramming
 using Roots
 using SymPy
 ```
@@ -16,7 +14,6 @@ using SymPy
 
 ```julia; echo=false; results="hidden"
 using CalculusWithJulia.WeaveSupport
-using LaTeXStrings
 import PyPlot
 pyplot()
 nothing
@@ -31,6 +28,7 @@ equality with two (or more) variables. An example might be ``x^2 + y^2
 
 The **solutions** to an equation in the variables ``x`` and ``y`` are all
 points ``(x,y)`` which satisfy the equation.
+
 
 The **graph** of an equation is just the set of solutions to the equation represented in the Cartesian plane.
 
@@ -124,35 +122,35 @@ are blocky. Pass larger values of ``N=M`` (with defaults of ``10``) to
 
 ### The IntervalConstraintProgramming package
 
-The `IntervalConstraintProgramming` package also can be used to graph implicit equations. For certain problem descriptions it is significantly faster and makes better graphs. The usage is slightly more involved:
+The `IntervalConstraintProgramming` package also can be used to graph implicit equations. For certain problem descriptions it is significantly faster and makes better graphs. The usage is slightly more involved. We show the commands, but don't run them here, as there are minor conflicts with the `CalculusWithJulia`package.
 
 We specify a problem using the `@constraint` macro. Using a macro
 allows expressions to involve free symbols, so the problem is
 specified in an equation-like manner:
 
-```julia;
+```julia; eval=false
 S = @constraint x^2 + y^2 <= 2
 ```
 
 
 The right hand side must be a number.
 
-The area to plot over must be specified as an `IntervalBox`, basically a pair of intervals. The interval ``[a,b]`` is expressed through `a..b`, though, as `CalculusWithJulia` co-opts that notation, the following workaround is needed:
+The area to plot over must be specified as an `IntervalBox`, basically a pair of intervals. The interval ``[a,b]`` is expressed through `a..b`:
 
-```julia;
-J = IntervalArithmetic.Interval(-3, 3)  # can use -3..3 as it conflicts
+```julia; eval=false
+J = -3..3
 X = IntervalArithmetic.IntervalBox(J, J)
 ```
 
+The `pave` command does the heavy lifting:
 
-
-```julia;
+```julia; eval=false
 region = IntervalConstraintProgramming.pave(S, X)
 ```
 
-We can plot either the boundary, the interior, or both.
+A plot can be made of either the boundary, the interior, or both.
 
-```julia;
+```julia; eval=false
 plot(region.inner)       # plot interior; use r.boundary for boundary
 ```
 
@@ -460,7 +458,7 @@ plot(Eq(lambdify(H), 0), xlims=(-5,5), ylims=(-5,5))
 plot!(y0 + 𝒎 * (x-x0))
 ```
 
-Basically all the same steps as if done "by hand." Some effort could have been saved in plotting, had
+Basically this includes all the same steps as if done "by hand." Some effort could have been saved in plotting, had
 values for the parameters been substituted initially, but not doing so
 shows their dependence in the derivative.
 
@@ -551,7 +549,6 @@ As [mentioned](../precalc/inversefunctions.html), an [inverse](http://en.wikiped
 
 In short, both ``f \circ g`` and ``g \circ f`` are identify functions on their respective domains.
 As inverses are unique, their notation, ``f^{-1}(x)``, reflects the name of the related function.
-function.
 
 The chain rule can be used to give the derivative of an inverse
 function when applied to ``f(f^{-1}(x)) = x``. Solving gives,
@@ -566,7 +563,7 @@ Consider the inverse function for the tangent, which exists when the domain of t
 \sec(y)^2 \frac{dy}{dx} = 1.
 ```
 
-But ``\sec(y)^2 = 1 + x^2``, as can be seen by right-triangle trigonometry. This yields the formula ``dy/dx = [\tan^{-1}(x)]' = 1 / (1 + x^2)``.
+But ``\sec(y)^2 = 1 + \tan(y)^2 = 1 + x^2``, as can be seen by right-triangle trigonometry. This yields the formula ``dy/dx = [\tan^{-1}(x)]' = 1 / (1 + x^2)``.
 
 ##### Example
 
@@ -593,7 +590,7 @@ But ``\sec^2(\theta(t)) = (r(t)/x(t))^2 = (x(t)^2 + y(t)^2) / x(t)^2``, so movin
 
 This could have been made easier, had we leveraged the result of the previous example.
 
-## Example from physics
+#### Example: from physics
 
 Many problems are best done with implicit derivatives. A video showing
 such a problem along with how to do it analytically is
@@ -612,13 +609,22 @@ the ring that hold the rope taught. Then we have this picture:
 
 
 ```julia; hold=true; echo=false
-imgfile = "figures/extrema-ring-string.png"
-caption = "Ring on string figure."
-nothing
-#ImageFile(imgfile, caption)
+
+	P = (4,1)
+	Q = (1, -3)
+	scatter([0,4], [0,1], legend=false, xaxis=nothing, yaxis=nothing)
+	plot!([0,1,4],[0,-3,1])
+	a,b = .05, .25
+	ts = range(0, 2pi, length=100)
+	plot!(1 .+ a*sin.(ts), -3 .+ b*cos.(ts), color=:gold)
+	annotate!((4-0.3,1,"(a,b)"))
+	plot!([0,1,1],[0,0,-3], color=:gray, alpha=0.25)
+	plot!([1,1,4],[0,1,1], color=:gray, alpha=0.25)
+	Δ = 0.15
+	annotate!([(1/2, 0-Δ, "x"), (5/2, 1 - Δ, "a-x"), (1-Δ, -1, "|y|"), (1+Δ, -1, "b-y")])
 ```
 
-![Ring on string figure.](https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/derivatives/figures/extrema-ring-string.png)
+
 
 Since the length of the rope does not change, we must have for any admissible ``(x,y)`` that:
 
@@ -673,7 +679,8 @@ eqn_2 = solve(eqn_1, diff(u(x), x))[1]
 dydx₂  = eqn_2(u(x) => y)
 ```
 
-We are looking for when the tangent line has 0 slope, or when `dydx` is 0:
+We are looking for when the tangent line has ``0`` slope, or when
+`dydx` is ``0``:
 
 ```julia;
 cps = solve(dydx₂, x)
@@ -681,9 +688,9 @@ cps = solve(dydx₂, x)
 
 There are two answers, as we could guess from the graph, but we want the one for the smallest value of ``y``, which is the second.
 
-The values of dydx depend on any pair (x,y), but our solution must
-also satisfy the equation. That is for our value of x, we need to find
-the corresponding y. This should be possible by substituting:
+The values of `dydx` depend on any pair ``(x,y)``, but our solution must
+also satisfy the equation. That is for our value of ``x``, we need to find
+the corresponding ``y``. This should be possible by substituting:
 
 ```julia;
 eqn1 = eqn(x => cps[2])
@@ -736,13 +743,13 @@ make this work? Well, no. But convince yourself by doing the above for
 different values of ``b``.
 
 
-### Numeric approach
+----
 
 In the above, we started with ``F(x,y) = L`` and solved symbolically for ``y=f(x)`` so that ``F(x,f(x)) = L``. Then we took a derivative of ``f(x)`` and set this equal to ``0`` to solve for the minimum ``y`` values.
 
 Here we try the same problem numerically, using a zero-finding approach to identify ``f(x))``.
 
-Starting with ``F(x,y) = sqrt(x^2 + y^2) + sqrt((x-1)^2 + (b-2)^2)`` and ``L=3``, we have:
+Starting with ``F(x,y) = \sqrt{x^2 + y^2} + \sqrt{(x-1)^2 + (b-2)^2}`` and ``L=3``, we have:
 
 ```julia
 F₁(x,y) = F₀(x,y, 1, 2) # a,b,L = 1,2,3
@@ -765,7 +772,7 @@ findmin([f₀(x) for x ∈ range(-0.5, 1.5, length=100)])
 
 This shows the smallest value is around ``-0.414`` and occurs in the ``33``rd position of the sampled ``x`` values. Pretty good, but we can do better. We just need to differentiate ``f``, solve for ``f'(x) = 0`` and then put that value back into ``f`` to find the smallest ``y``.
 
-**However** there is one subtle point. Using automatic differentiation, as implemented in `ForwardDiff`, with `find_zero` requires the `x0` initial value to have a certain type. In this case, the same type as the "`x`" passed into ``f(x)``. So rather than use an initial value of ``0``, we must use an initial value ``zero(x)``! (Otherwise, there will be an error "`no method matching Float64(::ForwardDiff.Dual{...`".)
+**However** there is one subtle point. Using automatic differentiation, as implemented in `ForwardDiff`, with `find_zero` requires the `x0` initial value to have a certain type. In this case, the same type as the "`x`" passed into ``f(x)``. So rather than use an initial value of ``0``, we must use an initial value `zero(x)`! (Otherwise, there will be an error "`no method matching Float64(::ForwardDiff.Dual{...`".)
 
 With this slight modification, we have:
 
@@ -926,15 +933,14 @@ radioq(choices, ans)
 ```julia; hold=true; echo=false
 ### {{{lhopital_35}}}
 imgfile = "figures/fcarc-may2016-fig35-350.gif"
-caption = raw"""
+caption = """
 Image number 35 from L'Hospitals calculus book (the first). Given a description of the curve, identify the point ``E`` which maximizes the height.
 """
+#ImageFile(:derivatives, imgfile, caption)
 nothing
-#ImageFile(imgfile, caption)
 ```
 
 ![Image number 35 from L'Hospitals calculus book (the first). Given a description of the curve, identify the point ``E`` which maximizes the height.](https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/derivatives/figures/fcarc-may2016-fig35-350.gif)
-
 
 The figure above shows a problem appearing in L'Hospital's first calculus book. Given a function defined implicitly by ``x^3 + y^3 = axy``  (with ``AP=x``, ``AM=y`` and ``AB=a``) find the point ``E`` that maximizes the height. In the [AMS feature column](http://www.ams.org/samplings/feature-column/fc-2016-05) this problem is illustrated and solved in the historical manner, with the comment that the concept of implicit differentiation wouldn't have occurred to L'Hospital.
 

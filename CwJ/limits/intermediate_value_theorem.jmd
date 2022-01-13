@@ -178,8 +178,8 @@ real-number situation. In this case, due to the ultimate granularity of the
 approximation of floating point values to the real numbers, the
 bracketing interval eventually can't be subdivided, that is no $c$ is found over
 the floating point numbers with $a < c < b$. So there is a natural
-stopping criteria: stop when there is an exact zero, or when the
-bracketing interval gets too small to subdivide.
+stopping criteria: stop when there is an exact zero, when the
+bracketing interval gets too small to subdivide, or when the interval is as small as desired.
 
 We can write a relatively simple program to implement this algorithm:
 
@@ -331,17 +331,17 @@ We see from the graph that it is clearly between $0$ and $2$, so all we need is 
 find_zero(𝒉, 0..2)
 ```
 
-#### Using parameterized function (`f(x,p)`) with `find_zero`
+#### Using parameterized functions (`f(x,p)`) with `find_zero`
 
-Geometry will tell us that ``\cos(x) = x/p`` for *one* ``x`` in ``[0,pi/2]`` when ever ``p>0``. We could set up finding this value for a given ``p`` by making ``p`` part of the function definition, but as an illustration of passing parameters, we leave `p` as a parameter (in this case, as a second value with default of ``1``):
+Geometry will tell us that ``\cos(x) = x/p`` for *one* ``x`` in ``[0, \pi/2]`` whenever ``p>0``. We could set up finding this value for a given ``p`` by making ``p`` part of the function definition, but as an illustration of passing parameters, we leave `p` as a parameter (in this case, as a second value with default of ``1``):
 
 ```julia; hold=true;
 f(x, p=1) = cos(x) - x/p
 I = 0..pi/2
-find_zero(f, I), find_zero(f,I, p=2)
+find_zero(f, I), find_zero(f, I, p=2)
 ```
 
-The second number the solution when `p=2`.
+The second number is the solution when `p=2`.
 
 
 
@@ -349,9 +349,9 @@ The second number the solution when `p=2`.
 
 We wish to compare two trash collection plans
 
-* Plan 1: You pay 47.49 plus 0.77 per bag.
+* Plan 1: You pay ``47.49`` plus ``0.77`` per bag.
 
-* Plan 2: You pay 30.00 plus 2.00 per bag.
+* Plan 2: You pay ``30.00`` plus ``2.00`` per bag.
 
 There are some cases where plan 1 is cheaper and some where plan 2 is. Categorize them.
 
@@ -364,7 +364,7 @@ plan2(x) = 30.00 + 2.00x
 ```
 
 Assuming this is a realistic problem and an average American household
-might produce 10-20 bags of trash a month (yes, that seems too much!)
+might produce ``10``-``20`` bags of trash a month (yes, that seems too much!)
 we plot in that range:
 
 ```julia;
@@ -373,8 +373,8 @@ plot!(plan2)
 ```
 
 
-We can see the intersection point is around 14 and that if a family
-generates between 0-14 bags of trash per month that plan 2 would be
+We can see the intersection point is around ``14`` and that if a family
+generates between ``0``-``14`` bags of trash per month that plan ``2`` would be
 cheaper.
 
 Let's get a numeric value, using a simple bracket and an anonymous function:
@@ -634,11 +634,11 @@ The Extreme Value Theorem is another consequence of continuity.
 
 To discuss the extreme value theorem, we define an *absolute maximum*.
 
-> The absolute maximum of $f(x)$ over an interval $I$ is the value $f(c)$, $c$ in $I$,
+> The absolute maximum of $f(x)$ over an interval $I$, when it exists, is the value $f(c)$, $c$ in $I$,
 > where $f(x) \leq f(c)$ for any $x$ in $I$.
 >
 > Similarly, an *absolute minimum* of
-> $f(x)$ over an interval $I$ can be defined by a value ``f(c)`` where ``c`` is in ``I`` *and*
+> $f(x)$ over an interval $I$ can be defined, when it exists, by a value ``f(c)`` where ``c`` is in ``I`` *and*
 > ``f(c) \leq f(x)`` for any ``x`` in ``I``.
 
 
@@ -648,7 +648,7 @@ Related but different is the concept of a relative of *local extrema*:
 
 The term *local extrema* is used to describe either a local maximum or local minimum.
 
-The key point, is the extrema are values in the *range* that are realized by some value in the domain (possibly more than one.)
+The key point, is the extrema are values in the *range* that are realized by some value in the *domain* (possibly more than one.)
 
 This chart of the [Hardrock 100](http://hardrock100.com/) illustrates the two concepts.
 
@@ -659,11 +659,8 @@ caption = """
 Elevation profile of the  Hardrock 100 ultramarathon. Treating the elevation profile as a function, the absolute maximum is just about 14,000 feet and the absolute minimum about 7600 feet. These are of interest to the runner for different reasons. Also of interest would be each local maxima and local minima - the peaks and valleys of the graph - and the total elevation climbed - the latter so important/unforgettable its value makes it into the chart's title.
 """
 
-#ImageFile(imgfile, caption)
-nothing
+ImageFile(:limits, imgfile, caption)
 ```
-
-![Elevation profile of the  Hardrock 100 ultramarathon. Treating the elevation profile as a function, the absolute maximum is just about 14,000 feet and the absolute minimum about 7600 feet. These are of interest to the runner for different reasons. Also of interest would be each local maxima and local minima - the peaks and valleys of the graph - and the total elevation climbed - the latter so important/unforgettable its value makes it into the chart's title.](https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/limits/figures/hardrock-100.png)
 
 
 The extreme value theorem discusses an assumption that ensures
@@ -733,7 +730,7 @@ The two intervals ``(a,b)`` and ``[a,b]`` differ as the latter includes the endp
 
 In particular, if ``f`` is continuous and ``I = [a,b]`` with ``a`` and ``b`` finite (``I`` is *closed* and bounded) then the *image* of ``I`` sometimes denoted ``f(I) = \{y: y=f(x) \text{ for } x \in I\}`` has the property that it will be an interval and will include its endpoints (also closed and bounded).
 
-That ``f(I)`` is an interval is a consequence of the Intermediate Value Theorem. That ``f(I)`` contains its endpoints is the Extreme Value Theorem.
+That ``f(I)`` is an interval is a consequence of the intermediate value theorem. That ``f(I)`` contains its endpoints is the extreme value theorem.
 
 On the real line, sets that are closed and bounded are "compact," a term that generalizes to other settings.
 
@@ -846,16 +843,12 @@ radioq(choices, ans)
 
 ```julia; hold=true;  echo=false
 ### {{{cannonball_img}}}
-figure= "figure/cannonball.j;b"
+figure= "figures/cannonball.jpg"
 caption = """
 Trajectories of potential cannonball fires with air-resistance included. (http://ej.iop.org/images/0143-0807/33/1/149/Full/ejp405251f1_online.jpg)
 """
-#ImageFile(figure, caption)
-nothing
+ImageFile(:limits, figure, caption)
 ```
-
-![Trajectories of potential cannonball fires with air-resistance included. [Ref.](http://ej.iop.org/images/0143-0807/33/1/149/Full/ejp405251f1_online.jpg)
-](https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/limits/figures/cannonball.jpg)
 
 In 1638, according to Amir D. [Aczel](http://books.google.com/books?id=kvGt2OlUnQ4C&pg=PA28&lpg=PA28&dq=mersenne+cannon+ball+tests&source=bl&ots=wEUd7e0jFk&sig=LpFuPoUvODzJdaoug4CJsIGZZHw&hl=en&sa=X&ei=KUGcU6OAKJCfyASnioCoBA&ved=0CCEQ6AEwAA#v=onepage&q=mersenne%20cannon%20ball%20tests&f=false),
 an experiment was performed in the French Countryside. A monk, Marin
@@ -1091,7 +1084,7 @@ plot(t -> a * cos(k_x *t), t-> b * sin(k_y * t), 0, 4pi)
 
 ----
 
-## Using `IntervalRootFinding` to identify all zeros in an interval
+## Using `IntervalRootFinding` to identify zeros
 
 The `IntervalRootFinding` package provides a more *rigorous* alternative to `find_zeros`. This packages leverages the interval arithmetic features of `IntervalArithmetic`.
 The `IntervalRootFinding` package provides a function `roots`, with usage similar to `find_zeros`. Intervals are specified with the notation `a..b`. In the following, we *qualify* `roots` to not conflict with the `roots` function from `SymPy`, which has already been loaded:

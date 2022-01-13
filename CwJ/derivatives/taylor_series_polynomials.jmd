@@ -244,7 +244,7 @@ converge to $(1/2!) \cdot f^{(2)}(c)$, as $f^{(2)}(\xi)$ converges to $f^{(2)}(c
 A proof based on Rolle's theorem appears in the appendix.
 
 
-## Quadratic approximations
+## Quadratic approximations; interpolating polynomials
 
 Why the fuss? The answer comes from a result of Newton on
 *interpolating* polynomials. Consider a function $f$ and $n+1$ points
@@ -350,11 +350,11 @@ approximation?
 The Cauchy mean value theorem, as in the case of the tangent line, will guarantee the existence of $\xi$ between $c$ and $x$, for which
 
 ```math
-f(x) - \left(f(c) + f'(c) \cdot(x-c) + (1/2)\cdot f''(c) \cdot (x-c)^2 \right) =
+f(x) - \left(f(c) + f'(c) \cdot(x-c) + \frac{1}{2}\cdot f''(c) \cdot (x-c)^2 \right) =
 \frac{1}{3!}f'''(\xi) \cdot (x-c)^3.
 ```
 
-In this sense, the above quadratic polynomial, called the Taylor Polynomial of degree 2, is the best *quadratic* approximation to $f$, as the difference goes to $0$.
+In this sense, the above quadratic polynomial, called the Taylor Polynomial of degree 2, is the best *quadratic* approximation to $f$, as the difference goes to $0$ at a rate of ``(x-c)^3``.
 
 
 The graphs of the secant line and approximating parabola for $h=1/4$ are similar:
@@ -379,7 +379,7 @@ p
 ```
 
 Though similar, the graphs are **not** identical, as the interpolating
-polynomials aren't the best approximations.  For example, in the
+	polynomials aren't the best approximations.  For example, in the
 tangent-line graph the parabola only intersects the cosine graph at
 $x=0$, whereas for the secant-line graph - by definition - the
 parabola intersects the graph at least $2$ times and the
@@ -455,7 +455,35 @@ parameterization) as $\theta(t)=A\cos \left(\omega t+\phi
 oscillator](https://en.wikipedia.org/wiki/Harmonic_oscillator), a
 model for a simple pendulum.
 
-## The Taylor polynomial of degree $n$
+#### Example: optimization
+
+Consider the following approach to finding the minimum or maximum of a function:
+
+* At ``x_k`` fit a quadratic polynomial to ``f(x)`` matching the derivative and second derivative of ``f``.
+* Let ``x_{k+1}`` be at the vertex of this fitted quadratic polynomial
+* Iterate to convergence
+
+
+The polynomial in question will be the Taylor polynomial of degree ``2``:
+
+```math
+T_2(x_k) = f(x_k) + f'(x_k)(x-x_k) + \frac{f''(x_k)}{2}(x - x_k)^2
+```
+
+The vertex of this quadratic polynomial will be when its derivative is ``0`` which can be solved for ``x_{k+1}`` giving:
+
+```math
+x_{k+1} = x_k - \frac{f'(x_k)}{f''(x_k)}.
+```
+
+This assumes ``f''(x_k)`` is non-zero.
+
+On inspection, it is seen that this is Newton's method applied to
+``f'(x)``. This method, when convergent, finds a zero of ``f'(x)``. We
+know that should the algorithm converge, it will have found a critical
+point, not necessarily a value for a local extrema.
+
+## The Taylor polynomial of degree ``n``
 
 
 Starting with the Newton form of the interpolating polynomial of smallest degree:
@@ -624,7 +652,7 @@ included, the Taylor polynomial becomes a better approximation over a wider
 range of values.
 
 
-##### Example: Period of an orbiting satellite
+##### Example: period of an orbiting satellite
 
 Kepler's third [law](http://tinyurl.com/y7oa4x2g) of planetary motion states:
 
@@ -738,7 +766,7 @@ We see `Preal` has the right units - the units of mass and distance cancel leavi
 
 
 
-##### Example Computing $\log(x)$
+##### Example: computing $\log(x)$
 
 Where exactly does the value assigned to $\log(5)$ come from? The
 value needs to be computed. At some level, many questions resolve down
@@ -833,14 +861,14 @@ be found over a given interval, which can be cleverly utilized to
 solve for all applicable values.
 
 
-##### Example Higher order derivatives of the inverse function
+##### Example: higher order derivatives of the inverse function
 
 For notational purposes, let ``g(x)`` be the inverse function for ``f(x)``. Assume *both* functions have a Taylor polynomial expansion:
 
 ```math
 \begin{align*}
-f(x_0 + \Delta_x) &= f(x_0) + a_1 \Delta_x + a_2 (\Delta_x)^2 + \cdots a_n (\Delta_x)^n + \dots\\
-g(y_0 + \Delta_y) &= g(y_0) + b_1 \Delta_y + b_2 (\Delta_y)^2 + \cdots b_n (\Delta_y)^n + \dots
+f(x_0 + \Delta_x) &= f(x_0) + a_1 \Delta_x + a_2 (\Delta_x)^2 + \cdots a_n + (\Delta_x)^n + \dots\\
+g(y_0 + \Delta_y) &= g(y_0) + b_1 \Delta_y + b_2 (\Delta_y)^2 + \cdots b_n + (\Delta_y)^n + \dots
 \end{align*}
 ```
 
@@ -939,7 +967,7 @@ radioq(choices, ans)
 
 ###### Question
 
-Compute the Taylor polynomial  of degree 10 for $e^x$ about $c=0$ using `SymPy`. Based on the form, which formula seems appropriate:
+Compute the Taylor polynomial  of degree ``10`` for $e^x$ about $c=0$ using `SymPy`. Based on the form, which formula seems appropriate:
 
 ```julia; hold=true; echo=false
 choices = [
@@ -956,7 +984,7 @@ radioq(choices, ans)
 
 ###### Question
 
-Compute the Taylor polynomial  of degree 10 for $1/(1-x)$ about $c=0$ using `SymPy`. Based on the form, which formula seems appropriate:
+Compute the Taylor polynomial  of degree ``10`` for $1/(1-x)$ about $c=0$ using `SymPy`. Based on the form, which formula seems appropriate:
 
 ```julia; hold=true; echo=false
 choices = [
@@ -971,7 +999,7 @@ radioq(choices, ans)
 
 ###### Question
 
-Let $T_5(x)$ be the Taylor polynomial of degree 5 for the function $\sqrt{1+x}$ about $x=0$. What is the coefficient of the $x^5$ term?
+Let $T_5(x)$ be the Taylor polynomial of degree ``5`` for the function $\sqrt{1+x}$ about $x=0$. What is the coefficient of the $x^5$ term?
 
 ```julia; hold=true; echo=false
 choices = [
@@ -986,7 +1014,7 @@ radioq(choices, ans)
 
 ###### Question
 
-The 5th order Taylor polynomial for $\sin(x)$ about $c=0$ is: $x - x^3/3! + x^5/5!$. Use this to find the first 3 terms of the Taylor polynomial of $\sin(x^2)$ about $c=0$.
+	The ``5``th order Taylor polynomial for $\sin(x)$ about $c=0$ is: $x - x^3/3! + x^5/5!$. Use this to find the first ``3`` terms of the Taylor polynomial of $\sin(x^2)$ about $c=0$.
 
 They are:
 
@@ -1022,12 +1050,12 @@ radioq(choices, ans)
 
 ###### Question
 
-How big an error is there in approximating $e^x$ by its 5th degree Taylor polynomial about $c=0$, $1 + x + x^2/2! + x^3/3! + x^4/4! + x^5/5!$?, over $[-1,1]$.
+How big an error is there in approximating $e^x$ by its ``5``th degree Taylor polynomial about $c=0$, $1 + x + x^2/2! + x^3/3! + x^4/4! + x^5/5!$, over $[-1,1]$?
 
 The error is known to be $(  f^{(6)}(\xi)/6!) \cdot x^6$ for some $\xi$ in $[-1,1]$.
 
 
-* The 6th derivative of $e^x$ is still $e^x$:
+* The ``6``th derivative of $e^x$ is still $e^x$:
 
 ```julia; hold=true; echo=false
 yesnoq(true)
@@ -1094,7 +1122,7 @@ f(k) = 1/factorial(k+1) * exp(1/2) * (1/2)^(k+1)
 (f(13) > 1e-16 && f(14) < 1e-16) && numericq(14)
 ```
 
-* The function $f(x) = (1 - x + x^2) \cdot e^x$ has a Taylor polynomial about 0 such that all coefficients are rational numbers. Is it true that the numerators are all either 1 or prime? (From the 2014 [Putnam](http://kskedlaya.org/putnam-archive/2014.pdf) exam.)
+* The function $f(x) = (1 - x + x^2) \cdot e^x$ has a Taylor polynomial about ``0`` such that all coefficients are rational numbers. Is it true that the numerators are all either ``1`` or prime? (From the 2014 [Putnam](http://kskedlaya.org/putnam-archive/2014.pdf) exam.)
 
 Here is one way to get all the values bigger than 1:
 
@@ -1116,10 +1144,21 @@ yesnoq(true)
 
 ## Appendix
 
-We mentioned two facts that could use a proof: the Newton form of the interpolating polynomial and the mean value theorem for divided differences. Our explanation tries to emphasize a parallel with the secant line's relationship with the tangent line. The standard way to discuss  Taylor polynomials is different and so these two proofs are not in most calculus texts.
+We mentioned two facts that could use a proof: the Newton form of the interpolating polynomial and the mean value theorem for divided differences. Our explanation tries to emphasize a parallel with the secant line's relationship with the tangent line. The standard way to discuss  Taylor polynomials is different (also more direct) and so these two proofs are not in most calculus texts.
 
-A [proof](https://www.math.uh.edu/~jingqiu/math4364/interpolation.pdf) of the Newton form can be done knowing that the interpolating polynomial is unique and can be expressed either as $g(x)=a_0 + a_1 (x-x_0) + \cdots + a_n (x-x_0)\cdot\cdots\cdot(x-x_{n-1})$ *or* in this reversed form
-$h(x)=b_0 + b_1 (x-x_n) + b_2(x-x_n)(x-x_{n-1}) + \cdots + b_n (x-x_n)(x-x_{n-1})\cdot\cdots\cdot(x-x_1).$ These two polynomials are of degree $n$ at most and have $u(x) = h(x)-g(x)=0$, by uniqueness. So the coefficients of $u(x)$ are $0$. We have that the coefficient of $x^n$ must be $a_n-b_n$ so $a_n=b_n$. Our goal is to express $a_n$ in terms of $a_{n-1}$ and $b_{n-1}$. Focusing on the $x^{n-1}$ term, we have:
+A [proof](https://www.math.uh.edu/~jingqiu/math4364/interpolation.pdf) of the Newton form can be done knowing that the interpolating polynomial is unique and can be expressed either as
+
+```math
+g(x)=a_0 + a_1 (x-x_0) + \cdots + a_n (x-x_0)\cdot\cdots\cdot(x-x_{n-1})
+```
+
+*or* in this reversed form
+
+```math
+h(x)=b_0 + b_1 (x-x_n) + b_2(x-x_n)(x-x_{n-1}) + \cdots + b_n (x-x_n)(x-x_{n-1})\cdot\cdots\cdot(x-x_1).
+```
+
+These two polynomials are of degree $n$ or less and have $u(x) = h(x)-g(x)=0$, by uniqueness. So the coefficients of $u(x)$ are $0$. We have that the coefficient of $x^n$ must be $a_n-b_n$ so $a_n=b_n$. Our goal is to express $a_n$ in terms of $a_{n-1}$ and $b_{n-1}$. Focusing on the $x^{n-1}$ term, we have:
 
 ```math
 \begin{align*}

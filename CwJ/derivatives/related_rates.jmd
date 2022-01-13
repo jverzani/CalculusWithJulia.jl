@@ -24,7 +24,7 @@ other, also so do their rates - change with respect to some variable
 which is often time, though exactly how remains to be
 discovered. Hence the name "related rates."
 
-## Examples
+#### Examples
 
 The following is a typical "book" problem:
 
@@ -150,7 +150,7 @@ tstar = find_zero(x -> w(x) - 8, [0, 4])  # or solve by hand to get 3/2
 
 The question is to find the rate the area is increasing at the given
 time $t$, which is $A'(t)$ or $dA/dt$. We get this by performing the
-differentiation, the substituting in the value.
+differentiation, then substituting in the value.
 
 Here we do so with the aid of `Julia`, though this problem could readily be done "by hand."
 
@@ -163,7 +163,7 @@ A'(tstar)
 
 ----
 
-Now what? Why is 96 of any interest? It is if the value at a specific
+Now what? Why is ``96`` of any interest? It is if the value at a specific
 time is needed. But in general, a better question might be to
 understand if there is some pattern to the numbers in the figure,
 these being $6, 54, 150, 294, 486, 726$. Their differences are the
@@ -240,7 +240,12 @@ goes to $0$, the expression will become $-\infty$.
 
 ##### Example
 
-![A man and woman walk towards the light](https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/derivatives/figures/long-shadow-noir.png)
+```julia; hold=true; echo=false
+caption = "A man and woman walk towards the light."
+
+imgfile = "figures/long-shadow-noir.png"
+ImageFile(:derivatives, imgfile, caption)
+```
 
 Shadows are a staple of film noir. In the photo, suppose a man and a woman walk towards a street light. As they approach the light the length of their shadow changes.
 
@@ -272,12 +277,64 @@ l' \cdot (\frac{1}{5} - \frac{1}{12}) =  \frac{x'}{12}
 
 Solving for ``l'`` gives an answer in terms of ``x'`` the rate the woman is walking. In this description ``x`` is getting shorter, so ``x'`` would be ``-3`` feet per second and the shadow length would be decreasing at a rate proportional to the walking speed.
 
+
+
+##### Example
+
+A batter hits a ball toward third base at ``75`` ft/sec and runs toward first base at a rate of ``24`` ft/sec. At what rate does the distance between the ball and the batter change when ``2`` seconds have passed?
+
+
+We will answer this with `SymPy`. First we create some symbols for the movement of the ball towardsthird base, `b(t)`, the runner toward first base, `r(t)`, and the two velocities. We use symbolic functions for the movements, as we will be differentiating them in time:
+
+```julia
+@syms b() r() v_b v_r
+d = sqrt(b(t)^2 + r(t)^2)
+```
+
+The distance formula applies to give ``d``. As the ball and runner are moving in a perpendicular direction, the formula is easy to apply.
+
+We can differentiate `d` in terms of `t` and in process we also find the derivatives of `b` and `r`:
+
+```julia
+db, dr = diff(b(t),t), diff(r(t),t) # b(t), r(t) -- symbolic functions
+dd = diff(d,t)                      # d -- not d(t) -- an expression
+```
+
+The slight difference in the commands is due to `b` and `r` being symbolic functions, whereas `d` is a symbolic expression. Now we begin substituting. First, from the problem `db` is just the velocity in the ball's direction, or `v_b`. Similarly for `v_r`:
+
+```julia
+ddt = subs(dd, db => v_b, dr => v_r)
+```
+
+Now, we can substitute in for `b(t)`, as it is `v_b*t`, etc.:
+
+```julia
+ddt₁ = subs(ddt, b(t) => v_b * t, r(t) => v_r * t)
+```
+
+This finds the rate of change of time for any `t` with symbolic values of the velocities. (And shows how the answer doesn't actually depend on ``t``.) The problem's answer comes from a last substitution:
+
+```julia
+ddt₁(t => 2, v_b => 75, v_r => 24)
+```
+
+Were this done by "hand," it would be better to work with distance squared to avoid the expansion of complexity from the square root. That is, using implicit differentiation:
+
+```math
+\begin{align*}
+d^2 &= b^2 + r^2\\
+2d\cdot d' &= 2b\cdot b' + 2r\cdot r'\\
+d' &= (b\cdot b' + r \cdot r')/d\\
+d' &= (tb'\cdot b' + tr' \cdot r')/d\\
+d' &= \left((b')^2 + (r')^2\right) \cdot \frac{t}{d}.
+\end{align*}
+```
+
 ##### Example
 
 ```julia; hold=true; echo=false; cache=true
 ###{{{baseball_been_berry_good}}}
 ## Secant line approaches tangent line...
-pyplot()
 function baseball_been_berry_good_graph(n)
 
     v0 = 15
@@ -424,7 +481,7 @@ attention to the how the ball is being tracked.
 
 Hipster pour-over coffee is made with a conical coffee filter. The
 cone is actually a [frustum](http://en.wikipedia.org/wiki/Frustum) of
-a cone with small diameter, say $r_0$ chopped off. We will parameterize
+a cone with small diameter, say $r_0$, chopped off. We will parameterize
 our cone by a value $h \geq 0$ on the $y$ axis and an angle $\theta$
 formed by a side and the $y$ axis. Then the coffee filter is the part
 of the cone between some $h_0$ (related  $r_0=h_0 \tan(\theta)$) and $h$.
@@ -495,56 +552,6 @@ This rate depends on the square of the size of the
 opening ($r_0^2$) and the square root of the height ($h$), but not the
 angle of the cone.
 
-##### Example
-
-A batter hits a ball toward third base at ``75`` ft/sec and runs toward first base at a rate of ``24`` ft/sec. At what rate does the distance between the ball and the batter change when ``2`` seconds have passed?
-
-
-We will answer this with `SymPy`. First we create some symbols for the movement of the ball towardsthird base, `b(t)`, the runner toward first base, `r(t)`, and the two velocities. We use symbolic functions for the movements, as we will be differentiating them in time:
-
-```julia
-@syms b() r() v_b v_r
-d = sqrt(b(t)^2 + r(t)^2)
-```
-
-The distance formula applies to give ``d``. As the ball and runner are moving in a perpendicular direction, the formula is easy to apply.
-
-We can differentiate `d` in terms of `t` and in process we also find the derivatives of `b` and `r`:
-
-```julia
-db, dr = diff(b(t),t), diff(r(t),t) # b(t), r(t) -- symbolic functions
-dd = diff(d,t)                      # d -- not d(t) -- an expression
-```
-
-The slight difference in the commands is due to `b` and `r` being symbolic functions, whereas `d` is a symbolic expression. Now we begin substituting. First, from the problem `db` is just the velocity in the ball's direction, or `v_b`. Similarly for `v_r`:
-
-```julia
-ddt = subs(dd, db => v_b, dr => v_r)
-```
-
-Now, we can substitute in for `b(t)`, as it is `v_b*t`, etc.:
-
-```julia
-ddt₁ = subs(ddt, b(t) => v_b * t, r(t) => v_r * t)
-```
-
-This finds the rate of change of time for any `t` with symbolic values of the velocities. (And shows how the answer doesn't actually depend on ``t``.) The problem's answer comes from a last substitution:
-
-```julia
-ddt₁(t => 2, v_b => 75, v_r => 24)
-```
-
-Were this done by "hand," it would be better to work with distance squared to avoid the expansion of complexity from the square root. That is, using implicit differentiation:
-
-```math
-\begin{align*}
-d^2 &= b^2 + r^2\\
-2d\cdot d' &= 2b\cdot b' + 2r\cdot r'\\
-d' &= (b\cdot b' + r \cdot r')/d\\
-d' &= (tb'\cdot b' + tr' \cdot r')/d\\
-d' &= \left((b')^2 + (r')^2\right) \cdot \frac{t}{d}.
-\end{align*}
-```
 
 ## Questions
 
