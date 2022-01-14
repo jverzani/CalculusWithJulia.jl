@@ -35,12 +35,17 @@ f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}.
 ```
 
 Though in general they are different, they are both
-approximations. The central difference is a bit more accurate for the
+approximations. The central difference is usually more accurate for the
 same size $h$. However, both are susceptible to round-off errors. The
 numerator is a subtraction of like-size numbers - a perfect
-opportunity to lose precision. As such there is a balancing act: if
-$h$ is too small the round-off errors are problematic, if $h$ is too
-big, the approximation to the limit is not good. For the forward
+opportunity to lose precision.
+
+As such there is a balancing act:
+
+* if $h$ is too small the round-off errors are problematic,
+* if $h$ is too big, the approximation to the limit is not good.
+
+For the forward
 difference $h$ values around $10^{-8}$ are typically good, for the central
 difference, values around $10^{-6}$ are typically good.
 
@@ -64,7 +69,7 @@ factual = N(df(c))
 abs(factual - fapprox)
 ```
 
-The error is about 1 part in 100 million.
+The error is about ``1`` part in ``100`` million.
 
 The central difference is better here:
 
@@ -81,7 +86,7 @@ The [FiniteDifferences](https://github.com/JuliaDiff/FiniteDifferences.jl) and [
 ### Automatic derivatives
 
 There are some other ways to compute derivatives numerically that give
-much more accuracy at the expense of some increased computing
+much more accuracy at the expense of slightly increased computing
 time. Automatic differentiation is the general name for a few
 different approaches. These approaches promise less complexity - in
 some cases - than symbolic derivatives and more accuracy than
@@ -92,7 +97,7 @@ The `ForwardDiff` package provides one of [several](https://juliadiff.org/) ways
 
 
 The `ForwardDiff` package was loaded in this section; in general its features are available when the `CalculusWithJulia` package is loaded, as that package provides a more convenient interface.
-The `derivative` function is not exported, so its usage requires qualification. To illustrate, to find the derivative of $f(x)$ at a *point* we have this syntax:
+The `derivative` function is not exported  by `FiniteDiff`, so its usage requires qualification. To illustrate, to find the derivative of $f(x)$ at a *point* we have this syntax:
 
 ```julia
 ForwardDiff.derivative(f, c)   # derivative is qualified by a module name

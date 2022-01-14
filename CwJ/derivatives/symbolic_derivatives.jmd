@@ -15,7 +15,7 @@ the proper "outside" function is usually most of the battle when finding derivat
 
 In the following example, we provide a sketch of a framework to differentiate expressions by a chosen symbol to illustrate how the outer function drives the task of differentiation.
 
-The `Symbolics` package provides native symbolic manipulation abilities for `Julia`, similar to `SymPy`, though without the dependence on `Python`. The `TermInterface` package provides a generic interface for expression manipulation for this package that *also* is implemented for `Julia`'s expressions and symbols.
+The `Symbolics` package provides native symbolic manipulation abilities for `Julia`, similar to `SymPy`, though without the dependence on `Python`. The `TermInterface` package, used by `Symbolics`, provides a generic interface for expression manipulation for this package that *also* is implemented for `Julia`'s expressions and symbols.
 
 An expression is an unevaluated portion of code that for our purposes
 below contains other expressions, symbols, and numeric literals. They
@@ -36,7 +36,7 @@ We see the `sin` function, referred to  by a symbol (`:sin`).
 The `:(...)` above *quotes* the argument, and does not evaluate it, hence `x` need not be defined above. (The `:` notation is used to create both symbols and expressions.)
 
 
-The arguments are the terms that the outside function is called on. For our purposes there may be ``1`` (*unary*), ``2`` (*binary*), or more than ``2`` (*nary*) arguments. For example:
+The arguments are the terms that the outside function is called on. For our purposes there may be ``1`` (*unary*), ``2`` (*binary*), or more than ``2`` (*nary*) arguments. (We ignore zero-argument functions.) For example:
 
 ```julia
 arguments(:(-x)), arguments(:(pi^2)), arguments(:(1 + x + x^2))
@@ -57,8 +57,7 @@ end
 
 
 Differentiation must distinguish between expressions, variables, and
-numbers.  Mathematically expressions have an "outer" function, where
-as variables and numbers can be directly differentiated.  The `istree`
+numbers.  Mathematically expressions have an "outer" function, whereas variables and numbers can be directly differentiated.  The `istree`
 function in `TermInterface` returns `true` when passed an expression,
 and `false` when passed a symbol or numeric literal. The latter two
 may be distinguished by `isa(..., Symbol)`.
@@ -117,27 +116,30 @@ The *product rule* is similar to addition, in that ``3`` cases are considered:
 D(op::Val{:*}, ::Val{:unary}, args, var) = D(first(args), var)
 
 function D(::Val{:*}, ::Val{:binary}, args, var)
-    a,b = args
+    a, b = args
     a′, b′ = D.(args, var)
     :($a′ * $b + $a * $b′)
 end
 
 function D(op::Val{:*}, ::Val{:nary}, args, var)
     a, bs... = args
-    b = :(*($bs...))
-    b′ = D(op, bs, var)
+    b = :(*($(bs...)))
+	a′ = D(a, var)
+    b′ = D(b, var)
 	:($a′ * $b + $a * $b′)
 end
 ```
 
+The *nary* case above just peels off the first factor and then uses the binary product rule.
+
 Division is only a binary operation, so here we have the *quotient rule*:
 
 ```julia
-	function D(::Val{:/}, ::Val{:binary}, args, var)
-	   	u,v = args
-		u′, v′ = D(u, var), D(v, var)
-		:( ($u′*$v - $u*$v′)/$v^2 )
-	end
+function D(::Val{:/}, ::Val{:binary}, args, var)
+	u,v = args
+	u′, v′ = D(u, var), D(v, var)
+	:( ($u′*$v - $u*$v′)/$v^2 )
+end
 ```
 
 Powers are handled a bit differently. The power rule would require checking if the exponent does not contain the variable of differentiation, exponential derivatives would require checking the base does not contain the variable of differentation. Trying to implement both would be tedious, so we use the fact that ``x = \exp(\log(x))`` (for `x` in the domain of `log`, more care is necessary if `x` is negative) to differentiate:

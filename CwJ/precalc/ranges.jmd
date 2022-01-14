@@ -1,12 +1,13 @@
 # Ranges and Sets
 
+
 ```julia; echo=false; results="hidden"
 using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
-using Plots
-__DIR__, __FILE__ = :precalc, :ranges
 nothing
 ```
+
+## Arithmetic sequences
 
 Sequences of numbers are prevalent in math. A simple one is just counting by ones:
 
@@ -38,7 +39,7 @@ any other $0 \leq m \leq n$ with $a_n = a_m + (n-m)\cdot h$.
 
 
 A typical question might be: The first term of an arithmetic sequence
-is equal to 200 and the common difference is equal to -10. Find the
+is equal to ``200`` and the common difference is equal to ``-10``. Find the
 value of $a_{20}$. We could find this using $a_n = a_0 + n\cdot h$:
 
 ```julia;hold=true
@@ -47,8 +48,8 @@ a0 + n * h
 ```
 
 More complicated questions involve an unknown first value, as
-with: an arithmetic sequence has a common difference equal to 10 and
-its 6th term is equal to 52. Find its 15th term, $a_{15}$. Here we have to
+with: an arithmetic sequence has a common difference equal to ``10`` and
+its ``6``th term is equal to ``52``. Find its ``15``th term, $a_{15}$. Here we have to
 answer: $a_0 + 15 \cdot 10$. Either we could find $a_0$ (using $52 = a_0 +
 6\cdot(10)$) or use the above formula
 
@@ -57,6 +58,7 @@ a6, h, m, n = 52, 10, 6, 15
 a15 = a6 + (n-m)*h
 ```
 
+### The colon operator
 
 Rather than express sequences by the $a_0$, $h$, and $n$, `Julia` uses
 the starting point (`a`), the difference (`h`) and a *suggested*
@@ -79,7 +81,7 @@ collect(1:10)
 
 
 When a non-default step size is needed, it goes in the middle, as in
-`a:h:b`. For example, counting by sevens from 1 to 50 is achieved by:
+`a:h:b`. For example, counting by sevens from ``1`` to ``50`` is achieved by:
 
 ```julia;
 collect(1:7:50)
@@ -91,7 +93,7 @@ Or counting down from 100:
 collect(100:-7:1)
 ```
 
-In this last example, we said end with 1, but it ended with 2. The
+In this last example, we said end with ``1``, but it ended with ``2``. The
 ending value in the range is a suggestion to go up to, but not exceed. Negative values for `h`  are used to make decreasing sequences.
 
 ### The range function
@@ -101,7 +103,7 @@ specify is $n$ evenly spaced points between $a$ and $b$. We can mimic
 creating this set with the range operation by solving for the correct
 step size. We have $a_0=a$ and $a_0 + (n-1) \cdot h = b$. (Why $n-1$
 and not $n$?) Solving yields $h = (b-a)/(n-1)$. To be concrete we
-might ask for 9 points between $-1$ and $1$:
+might ask for ``9`` points between $-1$ and $1$:
 
 ```julia;hold=true
 a, b, n = -1, 1, 9
@@ -133,7 +135,7 @@ evenly_spaced(1/5, 3/5, 3)
 It seems to work as expected. But looking just at the algorithm it isn't quite so clear:
 
 ```julia;
-1/5, 1/5 + 1*1/5, 1/5 + 2*1/5
+1/5 + 2*1/5 # last value
 ```
 
 Floating point roundoff leads to the last value *exceeding* `0.6`, so should it be included? Well, here it is pretty clear it *should* be, but
@@ -147,7 +149,7 @@ collected to realize the values.
 The number of points is specified with keyword arguments, as in:
 
 ```julia;
-xs = range(-1, 1, length=9)
+xs = range(-1, 1, length=9)  # or simply range(-1, 1, 9)
 ```
 
 and
@@ -158,17 +160,19 @@ collect(xs)
 
 ```julia;echo=false
 note("""
-There is also the `LinRange(a,b,n)` function which can be more performant than `range`, as it doesn't try to correct for floating point errors.
+There is also the `LinRange(a, b, n)` function which can be more performant than `range`, as it doesn't try to correct for floating point errors.
 """)
 ```
 
-## Filtering and modifying arithmetic progressions
+## Modifying sequences
 
 Now we concentrate on some more
 general styles to modify a sequence to produce a new sequence.
 
-For example, another way to get the values between 0 and 100 that are
-multiples of 7 is to start with all 101 values and throw out those
+### Filtering
+
+For example, another way to get the values between ``0`` and ``100`` that are
+multiples of ``7`` is to start with all ``101`` values and throw out those
 that don't match. To check if a number is divisible by $7$, we could
 use the `rem` function. It gives the remainder upon division.
 Multiples of `7` match `rem(m, 7) == 0`. Checking for divisibility by
@@ -192,12 +196,12 @@ filter(iseven, 0:25)
 ```
 
 
-To get the numbers between 1 and 100 that are divisible by $7$
+To get the numbers between ``1`` and ``100`` that are divisible by $7$
 requires us to write a function akin to `iseven`, which isn't hard (e.g.,
-`is_seven(x)=x%7==0`), but isn't something we continue with just yet.
+`is_seven(x) = x%7 == 0` or if being fancy `Base.Fix2(iszero∘rem, 7)`), but isn't something we continue with just yet.
 
 For another example, here is an inefficient way to list the prime
-numbers between 100 and 200. This uses the `isprime`
+numbers between ``100`` and ``200``. This uses the `isprime`
 function from the `Primes` package
 
 
@@ -214,14 +218,14 @@ illustrate that we can start with a regular set of numbers and then
 modify or filter them. The function takes on more value once we discuss how
 to write predicate functions.
 
-## Comprehensions
+### Comprehensions
 
-Let's return to the case of the set of even numbers between 0 and 100. We have many ways to describe this set:
+Let's return to the case of the set of even numbers between ``0`` and ``100``. We have many ways to describe this set:
 
 - The collection of numbers $0, 2, 4, 6 \dots, 100$, or the arithmetic
-  sequence with step size 2, which is returned by `0:2:100`.
+  sequence with step size ``2``, which is returned by `0:2:100`.
 
-- The numbers between 0 and 100 that are even, that is `filter(iseven, 0:100)`.
+- The numbers between ``0`` and ``100`` that are even, that is `filter(iseven, 0:100)`.
 
 - The set of numbers $\{2k: k=0, \dots, 50\}$.
 
@@ -270,25 +274,25 @@ of values, `0:50`. The syntax is basically identical to how the math
 expression is typically read aloud.
 
 
-For some other examples, here is how we can create the first 10 numbers divisible by 7:
+For some other examples, here is how we can create the first ``10`` numbers divisible by ``7``:
 
 ```julia;
 [7k for k in 1:10]
 ```
 
-Here is how we can square the numbers between 1 and 10:
+Here is how we can square the numbers between ``1`` and ``10``:
 
 ```julia;
 [x^2 for x in 1:10]
 ```
 
-To generate other progressions, such as powers of 2, we could do:
+To generate other progressions, such as powers of ``2``, we could do:
 
 ```julia;
 [2^i for i in 1:10]
 ```
 
-Here are decreasing powers of 2:
+Here are decreasing powers of ``2``:
 
 ```julia;
 [1/2^i for i in 1:10]
@@ -303,9 +307,9 @@ the extra prefix of `T[]` can be used, where `T` is the desired
 type. We will see that this will be needed at times with symbolic math.
 
 
-## Generators
+### Generators
 
-A typical pattern would be to generate a collection of numbers and then apply a function to them. For example, here is one way to sum the powers of `2`:
+A typical pattern would be to generate a collection of numbers and then apply a function to them. For example, here is one way to sum the powers of ``2``:
 
 ```julia;
 sum([2^i for i in 1:10])
@@ -322,7 +326,7 @@ sum(2^i for i in 1:10)
 
 (The difference being no intermediate object is created to store the collection of all values specified by the generator.)
 
-### Filtering generated expressions - the "if" keyword in a generator
+### Filtering generated expressions
 
 Both comprehensions and generators allow for filtering through the keyword `if`. The following shows *one* way to add the prime numbers in $[1,100]$:
 
@@ -387,7 +391,7 @@ ways = [(q, d, n, p) for q = 0:25:100 for d = 0:10:(100 - q) for n = 0:5:(100 - 
 length(ways)
 ```
 
-We see 242 cases, each distinct. The first $3$ are:
+We see ``242`` cases, each distinct. The first $3$ are:
 
 ```julia;
 ways[1:3]
@@ -405,7 +409,11 @@ our condition is simply expressed: `q > d > n > p`:
 
 
 ```julia;
-[(q, d, n, p) for q = 0:25:100 for d = 0:10:(100 - q) for n = 0:5:(100 - q - d) for p = (100 - q - d - n) if q > d > n > p]
+[(q, d, n, p) for q = 0:25:100
+ for d = 0:10:(100 - q)
+ for n = 0:5:(100 - q - d)
+ for p = (100 - q - d - n)
+ if q > d > n > p]
 ```
 
 ## Random numbers
@@ -431,20 +439,20 @@ rand()
 ```
 
 
-This call will return a vector of 10 such random numbers:
+This call will return a vector of ``10`` such random numbers:
 
 ```julia;
 rand(10)
 ```
 
-The `rand` function is easy to use. The only common source of confusion is the subtle distinction between `rand()` and `rand(1)`, as the latter is a vector of 1 random number and the former just 1 random number.
+The `rand` function is easy to use. The only common source of confusion is the subtle distinction between `rand()` and `rand(1)`, as the latter is a vector of ``1`` random number and the former just ``1`` random number.
 
 
 ## Questions
 
 ###### Question
 
-Which of these will produce the odd numbers between 1 and 99?
+Which of these will produce the odd numbers between ``1`` and ``99``?
 
 ```julia; hold=true;echo=false;
 choices = [

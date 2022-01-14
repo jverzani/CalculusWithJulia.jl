@@ -12,21 +12,10 @@ using Roots
 
 ```julia; echo=false; results="hidden"
 using CalculusWithJulia.WeaveSupport
+using ImplicitEquations
 import PyPlot
 pyplot()
-using ImplicitEquations
 fig_size = (600, 400)
-
-# keep until CwJ bumps version
-using Downloads
-function JSXGraph(fname, caption)
-    url = "https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/derivatives/"
-    content = read(Downloads.download(joinpath(url, fname)), String)
-    CalculusWithJulia.WeaveSupport.JSXGRAPH(content, caption,
-                                            "jsxgraph", "jsxgraph",
-                                            500, 300)
-end
-
 nothing
 ```
 
@@ -101,17 +90,17 @@ xₙ = reduce((x, step) -> babylon(x), 1:6, init=2.0)
 xₙ, xₙ^2
 ```
 
-We see that the algorithm - to the precision offered by floating
+We can see that the algorithm - to the precision offered by floating
 point numbers - has resulted in an answer `1.414213562373095`. This
 answer is an *approximation* to the actual answer. Approximation is necessary,
 as $\sqrt{2}$ is an irrational number and so can never be exactly
-represented in floating point. That being said, we see that the value
+represented in floating point. That being said, we can see that the value
 of $f(x)$ is accurate to the last decimal place, so our approximation
 is very close and is achieved in a few steps.
 
 ## Newton's generalization
 
-Let $f(x) = x^3 - 2x -5$. The value of 2 is almost a zero, but not quite, as $f(2) =
+Let $f(x) = x^3 - 2x -5$. The value of ``2`` is almost a zero, but not quite, as $f(2) =
 -1$. We can check that there are no *rational* roots. Though there is
 a method to solve the cubic it may be difficult to compute and will
 not be as generally applicable as some algorithm like the Babylonian
@@ -241,7 +230,7 @@ method.
 """)
 ```
 
-## Examples
+#### Examples
 
 ##### Example: visualizing convergence
 
@@ -396,7 +385,7 @@ plot!(q -> 1/17 * (48 - 32q), label="linear approximation")
 
 
 It can be shown that we have for any $q$ in $[1/2, 1]$ with initial guess $x_0 =
-48/17 - 32/17\cdot q$ that Newton's method will converge to 16 digits in no more
+48/17 - 32/17\cdot q$ that Newton's method will converge to ``16`` digits in no more
 than this many steps:
 
 ```math
@@ -550,7 +539,7 @@ find_zero((r',r''), 1.2, Roots.Newton())
 
 
 
-## Convergence
+## Convergence rates
 
 Newton's method is famously known to have "quadratic convergence." What
 does this mean? Let the error in the $i$th step be called $e_i = x_i -
@@ -612,7 +601,7 @@ This convergence to ``\alpha`` will be quadratic *if*:
 - The initial guess $x_0$ is not too far from $\alpha$, so $e_0$ is
   managed.
 
-- The derivative at $\alpha$ is not too close to $0$, hence, by continuity ``f'(x\_i`)`` is not too close to ``0``. (As it appears in
+- The derivative at $\alpha$ is not too close to $0$, hence, by continuity ``f'(x_i)`` is not too close to ``0``. (As it appears in
   the denominator). That is, the function can't be too flat, which
   should make sense, as then the tangent line is nearly parallel to
   the $x$ axis and would intersect far away.
@@ -623,7 +612,7 @@ This convergence to ``\alpha`` will be quadratic *if*:
   A large second derivative means the function is very concave,
   which means it is "turning" a lot. In this case, the function turns
   away from the tangent line quickly, so the tangent line's zero is
-  not necessarily a better approximation to the actual zero, $\alpha$.
+  not necessarily a good approximation to the actual zero, $\alpha$.
 
 
 ```julia; echo=false
@@ -731,7 +720,7 @@ is much bigger than $1$, the ratio $f(x)/f'(x) \approx
 x^{20}/(20x^{19}) = x/20$, so $x_i - x_{i-1} \approx (19/20)x_i$
 yielding slow, linear convergence until $f''(x_i)$ is moderate. For
 this function, starting at $x_0=8/9$ takes 11 steps, at $x_0=7/8$
-takes 13 steps, at $x_0=3/4$ takes 55 steps, and at $x_0=1/2$ it takes
+takes 13 steps, at $x_0=3/4$ takes ``55`` steps, and at $x_0=1/2$ it takes
 $204$ steps.
 
 """
@@ -948,17 +937,23 @@ numericq(val)
 
 ###### Question
 
-Consider the following interactive illustration of Newton's method
+
 
 ```julia; hold=true;echo=false
+##Consider the following illustration of Newton's method:
 caption = """
 Illustration of Newton's method. Moving the point ``x_0`` shows different behaviours of the algorithm.
 """
-#CalculusWithJulia.WeaveSupport.JSXGraph(joinpath(@__DIR__, "newtons-method.js"), caption)
-
-JSXGraph("newtons-method.js", caption)
+## JSXGraph(:derivatives, "newtons-method.js", caption)
+nothing
 ```
 
+For the following graph, graphically consider the algorithm for a few different starting points.
+
+```julia; hold=true; echo=false
+# placeholder until CWJ bumps up a version?
+plot(x -> x^5 - x - 1, -1, 2)
+```
 
 If ``x_0`` is ``1`` what occurs?
 

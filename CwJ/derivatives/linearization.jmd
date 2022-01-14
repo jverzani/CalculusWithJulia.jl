@@ -7,6 +7,7 @@ using CalculusWithJulia
 using Plots
 using SymPy
 using TaylorSeries
+using DualNumbers
 ```
 
 ```julia; echo=false; results="hidden"
@@ -16,6 +17,8 @@ import PyPlot
 pyplot()
 nothing
 ```
+
+----
 
 The derivative of $f(x)$ has the interpretation as the slope of the
 tangent line. The tangent line is the line that best approximates the
@@ -60,6 +63,12 @@ f(x) \approx f(c) + f'(c) \cdot (x-c)
 
 with the understanding this applies for $x$ "close" to $c$.
 
+Usually for the applications herein, instead of ``x`` and ``c`` the two points are ``x+\Delta_x`` and ``x``. This gives:
+
+> *Linearization*:  ``\Delta_y = f(x +\Delta_x) - f(x) \approx f'(x) \Delta_x``, for small ``\Delta_x``.
+
+
+
 This section gives some implications of this fact and quantifies what
 "close" can mean.
 
@@ -90,6 +99,16 @@ plot(f, -1/2, 1/2)
 plot!(tangent(f, 0))
 ```
 
+* That ``(1+x)^n \approx 1 + nx`` around ``x = 0``. For example, with ``n=5``
+
+```julia; hold=true;
+n = 5
+f(x) = (1+x)^n  # f'(0) = n = n(1+x)^(n-1) at x=0
+plot(f, -1/2, 1/2)
+plot!(tangent(f, 0))
+```
+
+
 In each of these  cases, a more complicated non-linear function
 is well approximated in a region of interest by a simple linear
 function.
@@ -103,17 +122,16 @@ a, b = -1/4, pi/2
 p = plot(f, a, b, legend=false);
 plot!(p, x->x, a, b);
 plot!(p, [0,1,1], [0, 0, 1], color=:brown);
-plot!(p, [0,1,1], [0, 0, sin(1)], color=:green);
-annotate!(p, collect(zip([1/2,1+.05, 1/2-1/8], [.05, sin(1)/2, .75], ["Δx", "Δy", "m=dy/dx"])));
+plot!(p, [1,1], [0, sin(1)], color=:green, linewidth=4);
+annotate!(p, collect(zip([1/2, 1+.075, 1/2-1/8], [.05, sin(1)/2, .75], ["Δx", "Δy", "m=dy/dx"])));
 p
-
 ```
 
 The plot shows the tangent line with slope $dy/dx$ and the actual
 change in $y$, $\Delta y$, for some specified $\Delta x$. The small
 gap above the sine curve is the error were the value of the sine approximated using the drawn tangent line. We can see that approximating
 the value of $\Delta y = \sin(c+\Delta x) - \sin(c)$ with the often
-easier to compute $f'(c)\Delta x$ - for small enough values of
+easier to compute $(dy/dx) \cdot \Delta x = f'(c)\Delta x$ - for small enough values of
 $\Delta x$ -  is not going to be too far off provided $\Delta x$ is not too large.
 
 This approximation is known as linearization. It can be used both in
@@ -134,15 +152,45 @@ The values are pretty close. But what is $0.1$ radians? Lets use degrees. Suppos
 
 ```julia;
 deltax⁰ = 10*pi/180
-actual=f(c + deltax⁰) - f(c)
+actual = f(c + deltax⁰) - f(c)
 approx = f'(c) * deltax⁰
 actual, approx
 ```
+
 
 They agree until the third decimal value. The *percentage error* is just $1/2$ a percent:
 
 ```julia;
 (approx - actual) / actual * 100
+```
+
+
+### Relative error or relative change
+
+The relative error is defined by
+
+```math
+\big| \frac{\text{actual} - \text{approximate}}{\text{actual}} \big|.
+```
+
+However, typically with linearization, we talk about the *relative change*, not relative error, as the denominator is easier to compute. This is
+
+```math
+\frac{f(x + \Delta_x) - f(x)}{f(x)} = \frac{\Delta_y}{f(x)} \approx
+\frac{f'(x) \cdot \Delta_x}{f(x)}
+```
+
+The *percentage change* multiplies by ``100``.
+
+
+##### Example
+
+What is the relative change in surface area of a sphere if the radius changes from ``r`` to ``r + dr``?
+
+We have ``S = 4\pi r^2`` so the approximate relative change, ``dy/S`` is given, using the derivative ``dS/dr = 8\pi r``, by
+
+```math
+\frac{8\pi\cdot r\cdot dr}{4\pi r^2} = 2r\cdot dr.
 ```
 
 
@@ -211,7 +259,26 @@ The manufacturer may be interested instead in comparing the volume of the actual
 
 This is off by about $3$ percent. Not so bad for some applications, devastating for others.
 
-##### Example from physics
+
+##### Example: Eratosthenes and the circumference of the earth
+
+[Eratosthenes](https://en.wikipedia.org/wiki/Eratosthenes) is said to have been the first person to estimate the radius (or by relation the circumference) of the earth. The basic idea is based on the difference of shadows cast by the sun. Suppose Eratosthenes sized the circumference as ``252,000`` *stadia*. Taking 1 stadia as ``160`` meters and the actual radius of the earth as ``6378.137`` kilometers, we can convert to see that Eratosthenes estimated the radius as ``6417``.
+
+
+If Eratosthenes were to have estimated the volume of a spherical earth, what would be his approximate percentage change between his estimate and the actual?
+
+Using ``V = 4/3 \pi r^3`` we get ``V' = 4\pi r^2``:
+
+```julia
+rₑ = 6417
+rₐ = 6378.137
+Δᵣ = rₑ - rₐ
+Vₛ(r) = 4/3 * pi * r^3
+Δᵥ = Vₛ'(rₑ) * Δᵣ
+Δᵥ / Vₛ(rₑ) * 100
+```
+
+##### Example: a simple pendulum
 
 A *simple* pendulum is comprised of a massless "bob" on a rigid "rod"
 of length $l$. The rod swings back and forth making an angle $\theta$
@@ -239,7 +306,7 @@ $\theta''(t) = -g/l \cdot t$. Without getting too involved in why,
 we can verify by taking two derivatives that $\theta_0\sin(\sqrt{g/l}\cdot t)$ will be a solution to this
 modified equation.
 
-This says the motion is periodic with constant amplitude (assuming frictionless behaviour), as
+With this solution, the motion is periodic with constant amplitude (assuming frictionless behaviour), as
 the sine function is. More surprisingly, the period is found from $T =
 2\pi/(\sqrt{g/l}) = 2\pi \sqrt{l/g}$. It depends on $l$ - longer
 "rods" take more time to swing back and forth - but does not depend
@@ -248,10 +315,24 @@ is not so big the approximation of $\sin(x) \approx x$ fails). This
 latter fact may be surprising, though not to Galileo who discovered
 it.
 
+## Differentials
+
+The Leibniz notation for a derivative is ``dy/dx`` indicating the
+change in ``y`` as ``x`` changes. It proves convenient to decouple
+this using *differentials* ``dx`` and ``dy``. What do these notations
+mean? They measure change along the tangent line in same way
+``\Delta_x`` and ``\Delta_y`` measure change for the function. The differential ``dy`` depends on both ``x`` and ``dx``, it being defined by ``dy=f'(x)dx``. As tangent lines locally represent a function, ``dy`` and ``dx`` are often associated with an *infinitesimal* difference.
+
+Taking ``dx = \Delta_x``, as in the previous graphic, we can compare ``dy`` -- the change along the tangent line given by ``dy/dx \cdot dx`` -- and ``\Delta_y`` -- the change along the function given by ``f(x + \Delta_x) - f(x)``. The linear approximation, ``f(x + \Delta_x) - f(x)\approx f'(x)dx``, says that
+
+```math
+\Delta_y \approx dy; \quad \text{ when } \Delta_x = dx
+```
 
 
 
-## The actual error
+
+## The error in approximation
 
 How good is the approximation? Graphically we can see it is pretty
 good for the graphs we choose, but are there graphs out there for
@@ -471,17 +552,31 @@ sin(t)/exp(t), exp(sin(t))
 
 ##### Example: Automatic differentiation
 
-Automatic differentiation (forward mode) essentially uses this technique. When a function is evaluated, both ``(f(x), f'(x))`` are found. if "``x``" were there result of some other function computation, say ``(g(y), g'(y))``, then the computation of ``f'`` is possible with this information, it being ``f'(g(y)) \cdot g'(y)``. The values ``(f(x), f'(x))`` and ``(g(x),g'(x))`` can also be added and multiplied, as by the sum and product rules
-``(f(x),f'(x)) \oplus (g(x),g'(x)) = (f(x)+g(x), f'(x) + g'(x))`` and
-``(f(x),f'(x)) \otimes (g(x),g'(x)) = (f(x)+g(x), f'(x)\cdot g(x) + f(x)\cdot g'(x))``. These are the rules for derivatives, but also the ones for tangent line approximations.
+Automatic differentiation (forward mode) essentially uses this technique. A "dual" is introduced which has terms ``a +b\epsilon`` where ``\epsilon^2 = 0``.
+The ``\epsilon`` is like ``x`` in a linear expansion, so the `a` coefficient encodes the value and the `b` coefficient reflects the derivative at the value. Numbers are treated like a variable, so their "b coefficient" is a `1`. Here then is how `0` is encoded:
 
-So with rules to compute the mathematical functions (`Julia` has these in the [ChainRules.jl](https://github.com/JuliaDiff/ChainRules.jl) package) and identifying a number, say ``2``, as ``(2,0)`` then we can compute derivatives at ``2``. Take the function ``f(x)=\exp(\sin(x))``. To find ``f'(2)`` the steps would involve
+```julia; hold=true
+Dual(0, 1)
+```
 
-* begin with ``(2,0)``
-* the sine would be computed as ``(\sin(2), \cos(2))`` using the rule for derivative of ``\sin``
-* the exponential computed on ``(\sin(2),\cos(2))`` would be ``(\exp(\sin(2)), \exp(\sin(2)) \cdot \cos(2))``. To compute some ``g(x)``, such as ``\exp(x)``, the ability to evaluate both ``g(x)`` and ``g'(x)`` is needed, the chain rule used above then uses just details of ``(\sin(2), \cos(2))``, ``(\exp(\sin(2)), \exp(\sin(2)))`` -- which are the pieces available.
+Then what is ``sin(x)``? It should reflect both ``(sin(0), cos(0))`` the latter being the derivative of ``\sin``. We can see this is *almost* what is computed behind the scenes through:
 
-In the end, the computation carries both the function evaluation and the derivative evaluation at ``2``, both built up step by step. As seen, it should be exact as floating point allows and requires *essentially* twice the work, as two steps are needed for each function evaluation.
+```julia; hold=true
+x = Dual(0, 1)
+@code_lowered sin(x)
+```
+
+This output of `@code_lowered` can be confusing, but this simple case needn't be. Working from the end we see an assignment to a variable named `%7` of `Dual(%3, %6)`. The value of `%3` is `sin(x)` where `x` is the value `0` above. The value of `%6` is `cos(x)` *times* the value `1` above (the `xp`), which reflects the *chain* rule being used. (The derivative of `sin(u)` is `cos(u)*du`.) So this dual number encodes both the function value at `0` and the derivative of the function at `0`.)
+
+Similarly, we can see what happens to `log(x)` at `1` (encoded by `Dual(1,1)`):
+
+```julia; hold=true
+x = Dual(1, 1)
+@code_lowered log(x)
+```
+
+We can see the derivative again reflects the chain rule, it being given by `1/x * xp` where `xp` acts like `dx` (from assignments `%5` and `%4`). Comparing the two outputs, we see only the assignment to `%4` differs, it reflecting the derivative of the function.
+
 
 
 

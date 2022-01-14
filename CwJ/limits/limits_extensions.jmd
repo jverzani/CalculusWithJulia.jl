@@ -267,7 +267,7 @@ limit((x^2 - 2x +2)/(4x^2 + 3x - 2), x=>oo)
 ```
 ----
 
-Though rational functions can have only one (at most) horizontal asymptote, this isn't true for all functions. Consider the following $f(x) = x / \sqrt{x^2 + 4}$. It has different limits depending if ``x`` goes to ``\intfy`` or negative ``\infty``:
+Though rational functions can have only one (at most) horizontal asymptote, this isn't true for all functions. Consider the following $f(x) = x / \sqrt{x^2 + 4}$. It has different limits depending if ``x`` goes to ``\infty`` or negative ``\infty``:
 
 ```julia;hold=true;
 f(x) = x / sqrt(x^2 + 4)
@@ -418,7 +418,7 @@ e^x = \lim_{n \rightarrow \infty} (1 + \frac{x}{n})^n,
 we can establish the limit using the squeeze theorem. First,
 
 ```math
-A = |(1 + \frac{x}{n})^2 - 1 - x| = |\Sigma_{k=0}^n {n \choose k}(\frac{x}{n})^k - 1 - x| = |\Sigma_{k=2}^n {n \choose k}(\frac{x}{n})^k|,
+A = |(1 + \frac{x}{n})^n - 1 - x| = |\Sigma_{k=0}^n {n \choose k}(\frac{x}{n})^k - 1 - x| = |\Sigma_{k=2}^n {n \choose k}(\frac{x}{n})^k|,
 ```
 
 the first two sums cancelling off. The above comes from the binomial expansion theorem for a polynomial. Now ``{n \choose k} \leq n^k``so we have
@@ -589,7 +589,7 @@ A negative test for compatability is the following: if
 \lim_{x \rightarrow \infty} \frac{\log(|f(x)|)}{\log(|g(x)|)} = 0,
 ```
 
-Then ``f`` and ``g`` are not compatible (and ``g`` grows faster than ``f``. Applying this to the last two values of ``f`` and ``g``, we have
+Then ``f`` and ``g`` are not compatible (and ``g`` grows faster than ``f``). Applying this to the last two values of ``f`` and ``g``, we have
 
 ```math
 \lim_{x \rightarrow \infty}\frac{\log(\exp(x)^2)}{\log(\exp(x^2))} =

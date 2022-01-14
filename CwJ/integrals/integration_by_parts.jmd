@@ -1,13 +1,24 @@
 # Integration By Parts
 
 
-```julia; echo=false; results="hidden"
+This section uses these add-on packages:
+
+```julia
 using CalculusWithJulia
-using CalculusWithJulia.WeaveSupport
 using Plots
+using SymPy
+
+```
+
+```julia; echo=false; results="hidden"
+using CalculusWithJulia.WeaveSupport
+import PyPlot
+pyplot()
+using QuadGK
 nothing
 ```
 
+----
 
 So far we have seen that the *derivative* rules lead to *integration rules*. In particular:
 
@@ -26,7 +37,7 @@ Now we turn our attention to the implications of the *product rule*: $[uv]' = u'
 The following illustrates integration by parts of the integral $(uv)'$ over
 $[a,b]$ [original](http://en.wikipedia.org/wiki/Integration_by_parts#Visualization).
 
-```julia; echo=false
+```julia; hold=true echo=false
 ## parts picture
 u(x) = sin(x*pi/2)
 v(x) = x
@@ -57,17 +68,17 @@ $u v'$, the integral of $u' v$ and the value $u(b)v(b) - u(a)v(a)$.
 
 
 
-In terms of formulas:
+In terms of formulas, by the fundamental theorem of calculus:
 
-$$~
-u(x)\cdot v(x)\mid_a^b = \int_a^b [u(x) v(x)]' dx = \int_a^b u'(x) \cdot v(x) dx + \int_a^b u(x) \cdot v'(x) dx.
-~$$
+```math
+u(x)\cdot v(x)\big|_a^b = \int_a^b [u(x) v(x)]' dx = \int_a^b u'(x) \cdot v(x) dx + \int_a^b u(x) \cdot v'(x) dx.
+```
 
 This is re-expressed as
 
-$$~
-\int_a^b u(x) \cdot v'(x) dx = u(x) \cdot v(x)\mid_a^b -  \int_a^b v(x) \cdot u'(x) dx,
-~$$
+```math
+\int_a^b u(x) \cdot v'(x) dx = u(x) \cdot v(x)\big|_a^b -  \int_a^b v(x) \cdot u'(x) dx,
+```
 
 Or, more informally, as $\int udv = uv - \int v du$.
 
@@ -75,9 +86,9 @@ Or, more informally, as $\int udv = uv - \int v du$.
 
 This can sometimes be confusingly written as:
 
-$$~
+```math
 \int f(x) g'(x) dx = f(x)g(x) - \int f'(x) g(x) dx.
-~$$
+```
 
 (The confusion coming from the fact that the indefinite integrals are only defined up to a constant.)
 
@@ -85,25 +96,25 @@ How does this help? It allows us to differentiate parts of an integral in hopes 
 
 An illustration can clarify.
 
-Consider the integral $\int_0^\pi x\sin(x) dx$. If we let $u=x$ and $dv=\sin(x) dx$, the $du = 1dx$ and $v=-\cos(x)$. The above then says:
+Consider the integral $\int_0^\pi x\sin(x) dx$. If we let $u=x$ and $dv=\sin(x) dx$, then $du = 1dx$ and $v=-\cos(x)$. The above then says:
 
-$$~
+```math
 \begin{align*}
 \int_0^\pi x\sin(x) dx &= \int_0^\pi u dv\\
-&= uv\mid_0^\pi - \int_0^\pi v du\\
-&= x \cdot (-\cos(x)) \mid_0^\pi - \int_0^\pi (-\cos(x)) dx\\
+&= uv\big|_0^\pi - \int_0^\pi v du\\
+&= x \cdot (-\cos(x)) \big|_0^\pi - \int_0^\pi (-\cos(x)) dx\\
 &= \pi (-\cos(\pi)) - 0(-\cos(0)) + \int_0^\pi \cos(x) dx\\
-&= \pi + \sin(x)\mid_0^\pi\\
+&= \pi + \sin(x)\big|_0^\pi\\
 &= \pi.
 \end{align*}
-~$$
+```
 
 The technique means one part is differentiated and one part
 integrated. The art is to break the integrand up into a piece that gets
 easier through differentiation and a piece that doesn't get much
 harder through integration.
 
-## Examples
+#### Examples
 
 Consider $\int_1^2 x \log(x) dx$. We might try differentiating the $\log(x)$ term, so we set
 ```math
@@ -118,19 +129,19 @@ du = \frac{1}{x} dx \text{ and } v = \frac{x^2}{2}.
 
 Putting together gives:
 
-$$~
+```math
 \begin{align*}
 \int_1^2 x \log(x) dx
-&= (\log(x) \cdot \frac{x^2}{2}) \mid_1^2 - \int_1^2 \frac{x^2}{2} \frac{1}{x} dx\\
-&= (2\log(2) - 0) - (\frac{x^2}{4})\mid_1^2\\
+&= (\log(x) \cdot \frac{x^2}{2}) \big|_1^2 - \int_1^2 \frac{x^2}{2} \frac{1}{x} dx\\
+&= (2\log(2) - 0) - (\frac{x^2}{4})\big|_1^2\\
 &= 2\log(2) - (1 - \frac{1}{4}) \\
 &= 2\log(2) - \frac{3}{4}.
 \end{align*}
-~$$
+```
 
 ##### Example
 
-This related problem uses the same idea, though perhaps harder to see at first glance, as setting `dv=dx` is almost too simple to try:
+This related problem, ``\int \log(x) dx``, uses the same idea, though perhaps harder to see at first glance, as setting `dv=dx` is almost too simple to try:
 
 ```math
 \begin{align*}
@@ -140,7 +151,7 @@ du &= \frac{1}{x}dx & v &= x
 ```
 
 
-$$~
+```math
 \begin{align*}
 \int \log(x) dx
 &= \int u dv\\
@@ -149,44 +160,42 @@ $$~
 &= x \log(x) - \int dx\\
 &= x \log(x) - x
 \end{align*}
-~$$
+```
 
 Were this a definite integral problem, we would have written:
 
-$$~
-\int_a^b \log(x) dx = (x\log(x))\mid_a^b - \int_a^b dx = (x\log(x) - x)\mid_a^b.
-~$$
+```math
+\int_a^b \log(x) dx = (x\log(x))\big|_a^b - \int_a^b dx = (x\log(x) - x)\big|_a^b.
+```
 
 ##### Example
 
 Sometimes integration by parts is used two or more times. Here we let $u=x^2$ and $dv = e^x dx$:
 
 
-$$~
-\int_a^b x^2 e^x dx = (x^2 \cdot e^x)\mid_a^b - \int_a^b 2x e^x dx.
-~$$
+```math
+\int_a^b x^2 e^x dx = (x^2 \cdot e^x)\big|_a^b - \int_a^b 2x e^x dx.
+```
 
 
 But we can do $\int_a^b x e^xdx$ the same way:
 
-$$~
-\int_a^b x e^x = (x\cdot e^x)\mid_a^b - \int_a^b 1 \cdot e^xdx = (xe^x - e^x)\mid_a^b.
-~$$
+```math
+\int_a^b x e^x = (x\cdot e^x)\big|_a^b - \int_a^b 1 \cdot e^xdx = (xe^x - e^x)\big|_a^b.
+```
 
 Combining gives the answer:
 
-$$~
+```math
 \int_a^b x^2 e^x dx
-= (x^2 \cdot e^x)\mid_a^b - 2( (xe^x - e^x)\mid_a^b ) =
-e^x(x^2  - 2x - 1) \mid_a^b.
-~$$
+= (x^2 \cdot e^x)\big|_a^b - 2( (xe^x - e^x)\big|_a^b ) =
+e^x(x^2  - 2x - 1) \big|_a^b.
+```
 
 
 In fact, it isn't hard to see that an integral of $x^m e^x$, $m$ a positive integer, can be handled in this manner. For example, when $m=10$, `SymPy` gives:
 
 ```julia;
-using CalculusWithJulia
-using SymPy
 @syms x
 integrate(x^10 * exp(x), x)
 ```
@@ -199,48 +208,48 @@ polynomial of degree $n$.
 
 The same technique is attempted for  this integral, but ends differently. First in the following we let $u=\sin(x)$ and $dv=e^x dx$:
 
-$$~
+```math
 \int e^x \sin(x)dx = \sin(x) e^x - \int \cos(x) e^x dx.
-~$$
+```
 
 Now we let $u = \cos(x)$ and again $dv=e^x dx$:
 
-$$~
+```math
 \int e^x \sin(x)dx = \sin(x) e^x - \int \cos(x) e^x dx = \sin(x)e^x - \cos(x)e^x - \int (-\sin(x))e^x dx.
-~$$
+```
 
 But simplifying this gives:
 
-$$~
+```math
 \int e^x \sin(x)dx = - \int e^x \sin(x)dx +  e^x(\sin(x) - \cos(x)).
-~$$
+```
 
 Solving for the "unknown" $\int e^x \sin(x) dx$ gives:
 
-$$~
+```math
 \int e^x \sin(x) dx = \frac{1}{2} e^x (\sin(x) - \cos(x)).
-~$$
+```
 
 ##### Example
 
 Positive integer powers of trigonometric functions can be addressed by this technique. Consider
 $\int \cos(x)^n dx$. We let $u=\cos(x)^{n-1}$ and $dv=\cos(x) dx$. Then $du = (n-1)\cos(x)^{n-2}(-\sin(x))dx$ and $v=\sin(x)$. So,
 
-$$~
+```math
 \begin{align*}
 \int \cos(x)^n dx &= \cos(x)^{n-1} \cdot (\sin(x)) - \int (\sin(x)) ((n-1)\sin(x) \cos(x)^{n-2}) dx \\
 &= \sin(x) \cos(x)^{n-1} + (n-1)\int \sin^2(x) \cos(x)^{n-1} dx\\
 &= \sin(x) \cos(x)^{n-1} + (n-1)\int (1 - \cos(x)^2) \cos(x)^{n-2} dx\\
 &= \sin(x) \cos(x)^{n-1} + (n-1)\int \cos(x)^{n-2}dx - (n-1)\int \cos(x)^n dx.
 \end{align*}
-~$$
+```
 
 We can then solve for the unknown ($\int \cos(x)^{n}dx$) to get this *reduction formula*:
 
 
-$$~
+```math
 \int \cos(x)^n dx = \frac{1}{n}\sin(x) \cos(x)^{n-1} + \frac{n-1}{n}\int \cos(x)^{n-2}dx.
-~$$
+```
 
 This is called a reduction formula as it reduces the problem from an
 integral with a power of $n$ to one with a power of $n - 2$, so could
@@ -261,22 +270,26 @@ The visual interpretation of integration by parts breaks area into two pieces, t
 Let $uv = x f^{-1}(x)$. Then we have $[uv]' = u'v + uv' = f^{-1}(x) + x [f^{-1}(x)]'$.
 So, up to a constant ``uv = \int [uv]'dx = \int f^{-1}(x) + \int  x [f^{-1}(x)]'``. Re-expressing gives:
 
-$$~
+```math
 \begin{align*}
 \int f^{-1}(x) dx
 &= xf^{-1}(x) - \int x [f^{-1}(x)]' dx\\
 &= xf^{-1}(x) - \int f(u) du.\\
 \end{align*}
-~$$
+```
 
 The last line follows from the $u$-substitution:
 $u=f^{-1}(x)$ for then $du = [f^{-1}(x)]' dx$ and $x=f(u)$.
 
 We use this to find an antiderivative for $\sin^{-1}(x)$:
 
-$$~
-\int \sin^{-1}(x) = x \sin^{-1}(x) - \int \sin(u) du =  x \sin^{-1}(x) + \cos(u) = x \sin^{-1}(x) + \cos(\sin^{-1}(x)).
-~$$
+```math
+\begin{align*}
+\int \sin^{-1}(x) dx &= x \sin^{-1}(x) - \int \sin(u) du \\
+&=  x \sin^{-1}(x) + \cos(u) \\
+&= x \sin^{-1}(x) + \cos(\sin^{-1}(x)).
+\end{align*}
+```
 
 Using right triangles to simplify, the last value
 $\cos(\sin^{-1}(x))$ can otherwise be written as $\sqrt{1 - x^2}$.
@@ -292,7 +305,9 @@ this area is used in the estimation: $(1/2)\cdot (f(x_i) + f(x_i+h))
 
 Even though we suggest just using `quadgk` for numeric integration,
 estimating the error in this approximation is still of some
-theoretical interest. Recall, just using *either* $x_i$ or $x_{i-1}$
+theoretical interest.
+
+Recall, just using *either* $x_i$ or $x_{i-1}$
 for $c_i$ gives an error that is "like" $1/n$, as $n$ gets large, though the exact rate depends on the function and the length of the interval.
 
 This [proof](http://www.math.ucsd.edu/~ebender/20B/77_Trap.pdf) for the
@@ -306,69 +321,69 @@ dt$. For analyzing this we integrate once by parts using $u=f(t+x_i)$ and
 $dv=dt$. But instead of letting $v=t$, we choose to add - as is our prerogative - a constant of integration
 $A$, so $v=t+A$:
 
-$$~
+```math
 \begin{align*}
-\int_0^h f(t + x_i) dt &= uv \mid_0^h - \int_0^h v du\\
-&= f(t+x_i)(t+A)\mid_0^h - \int_0^h (t + A) f'(t + x_i) dt.
+\int_0^h f(t + x_i) dt &= uv \big|_0^h - \int_0^h v du\\
+&= f(t+x_i)(t+A)\big|_0^h - \int_0^h (t + A) f'(t + x_i) dt.
 \end{align*}
-~$$
+```
 
-We choose $A$ to be $-h/2$, any constant is possible, for then the term $f(t+x_i)(t+A)\mid_0^h$
+We choose $A$ to be $-h/2$, any constant is possible, for then the term $f(t+x_i)(t+A)\big|_0^h$
 becomes $(1/2)(f(x_i+h) + f(x_i)) \cdot h$, or the trapezoid
 approximation. This means, the error over this interval - actual minus estimate - satisfies:
 
-$$~
+```math
 \text{error}_i = \int_{x_i}^{x_i+h}f(x) dx - \frac{f(x_i+h) -f(x_i)}{2} \cdot h  = - \int_0^h (t + A) f'(t + x_i) dt.
-~$$
+```
 
 For this, we *again* integrate by parts with
 
 ```math
 \begin{align*}
-u &= f'(t + x_i) & dv &= (t + A)dt\\
-du &= f''(t + x_i) & v = \frac{(t + A)^2}{2} + B
+u  &= f'(t + x_i)  & dv &= (t + A)dt\\
+du &= f''(t + x_i) & v  &= \frac{(t + A)^2}{2} + B
 \end{align*}
 ```
 
 Again we added a constant of integration, ``B``, to  $v$.
 The  error becomes:
 
-$$~
-\text{error}_i = -(\frac{(t+A)^2}{2} + B)f'(t+x_i)\mid_0^h + \int_0^h (\frac{(t+A)^2}{2} + B) \cdot f''(t+x_i) dt.
-~$$
+```math
+\text{error}_i = -(\frac{(t+A)^2}{2} + B)f'(t+x_i)\big|_0^h + \int_0^h (\frac{(t+A)^2}{2} + B) \cdot f''(t+x_i) dt.
+```
 
 With $A=-h/2$, $B$ is chosen so ``(t+A)^2/2 + B = 0``, or  $B=-h^2/8$.
 The error becomes
 
-$$~
+```math
 \text{error}_i = \int_0^h \left(\frac{(t-h/2)^2}{2} - \frac{h^2}{8}\right) \cdot f''(t + x_i) dt.
-~$$
+```
 
 Now, we assume the $\lvert f''(t)\rvert$ is bounded by $K$ for any $a \leq t \leq b$. This
 will be true, for example, if the second derivative is assumed to exist and be continuous.  Using this fact about definite integrals
 $\lvert \int_a^b g dx\rvert \leq \int_a^b \lvert g \rvert dx$ we have:
 
 
-$$~
+```math
 \lvert \text{error}_i  \rvert \leq K \int_0^h \lvert (\frac{(t-h/2)^2}{2} - \frac{h^2}{8}) \rvert dt.
-~$$
+```
 
 But what is the function in the integrand? Clearly it is a quadratic in $t$. Expanding gives $1/2 \cdot
 (t^2 - ht)$.  This is negative over $[0,h]$ (and $0$ at these
 endpoints, so the integral above is just:
 
-$$~
-\frac{1}{2}\int_0^h (ht - t^2)dt = \frac{1}{2} (\frac{ht^2}{2} - \frac{t^3}{3})\mid_0^h = \frac{h^3}{12}
-~$$
+```math
+\frac{1}{2}\int_0^h (ht - t^2)dt = \frac{1}{2} (\frac{ht^2}{2} - \frac{t^3}{3})\big|_0^h = \frac{h^3}{12}
+```
 
 This gives the bound: $\vert \text{error}_i \rvert \leq K h^3/12$. The
 *total* error may be less, but is not more than the value found by
 adding up the error over each of the $n$ intervals. As our bound does not
 depend on the $i$, we have this sum satisfies:
 
-$$~
+```math
 \lvert \text{error}\rvert \leq n \cdot \frac{Kh^3}{12} = \frac{K(b-a)^3}{12}\frac{1}{n^2}.
-~$$
+```
 
 So the error is like $1/n^2$, in contrast to the $1/n$ error of the
 Riemann sums. One way to see this, for the Riemann sum it takes twice
@@ -385,11 +400,11 @@ many.
 
 In the integral of $\int \log(x) dx$ we let $u=\log(x)$ and $dv=dx$. What are $du$ and $v$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"du=1/x dx \quad v = x",
-L"du=x\log(x) dx\quad v = 1",
-L"du=1/x dx\quad v = x^2/2"]
+"``du=1/x dx \\quad v = x``",
+"``du=x\\log(x) dx\\quad v = 1``",
+"``du=1/x dx\\quad v = x^2/2``"]
 ans = 1
 radioq(choices, ans)
 ```
@@ -398,11 +413,11 @@ radioq(choices, ans)
 
 In the integral $\int \sec(x)^3 dx$ we let $u=\sec(x)$ and $dv = \sec(x)^2 dx$. What are $du$ and $v$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"du=\sec(x)\tan(x)dx \quad v=\tan(x)",
-L"du=\csc(x) dx \quad v=\sec(x)^3 / 3",
-L"du=\tan(x)  dx \quad v=\sec(x)\tan(x)"
+"``du=\\sec(x)\\tan(x)dx \\quad v=\\tan(x)``",
+"``du=\\csc(x) dx \\quad v=\\sec(x)^3 / 3``",
+"``du=\\tan(x)  dx \\quad v=\\sec(x)\\tan(x)``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -414,11 +429,11 @@ radioq(choices, ans)
 In the integral $\int e^{-x} \cos(x)dx$ we let $u=e^{-x}$ and $dv=\cos(x) dx$.
 What are $du$ and $v$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"du=-e^{-x} dx \quad v=\sin(x)",
-L"du=-e^{-x} dx \quad v=-\sin(x)",
-L"du=\sin(x)dx \quad v=-e^{-x}"
+"``du=-e^{-x} dx \\quad v=\\sin(x)``",
+"``du=-e^{-x} dx \\quad v=-\\sin(x)``",
+"``du=\\sin(x)dx \\quad v=-e^{-x}``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -428,8 +443,7 @@ radioq(choices, ans)
 
 Find the value of $\int_1^4 x \log(x) dx$. You can integrate by parts.
 
-```julia; echo=false
-using QuadGK
+```julia; hold=true; echo=false
 f(x) = x*log(x)
 a,b = 1,4
 val,err = quadgk(f, a, b)
@@ -440,7 +454,7 @@ numericq(val)
 
 Find the value of $\int_0^{\pi/2} x\cos(2x) dx$. You can integrate by parts.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = x*cos(2x)
 a,b = 0, pi/2
 val,err = quadgk(f, a, b)
@@ -453,7 +467,7 @@ numericq(val)
 
 Find the value of $\int_1^e (\log(x))^2 dx$. You can integrate by parts.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 f(x) = log(x)^2
 a,b = 1,exp(1)
 val,err = quadgk(f, a, b)
@@ -466,11 +480,11 @@ numericq(val)
 
 Integration by parts can be used to provide "reduction" formulas, where an antiderivative is written in terms of another antiderivative with a lower power. Which is the proper reduction formula for $\int (\log(x))^n dx$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"x(\log(x))^n - n \int (\log(x))^{n-1} dx",
-L"\int (\log(x))^{n+1}/(n+1) dx",
-L"x(\log(x))^n - \int (\log(x))^{n-1} dx"
+"``x(\\log(x))^n - n \\int (\\log(x))^{n-1} dx``",
+"``\\int (\\log(x))^{n+1}/(n+1) dx``",
+"``x(\\log(x))^n - \\int (\\log(x))^{n-1} dx``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -486,7 +500,7 @@ good candidate to be "$u$": **L**og function, **I**nverse functions,
 
 Consider the integral $\int x \cos(x) dx$. Which letter should be tried first?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["L", "I", "A", "T", "E"]
 ans = 3
 radioq(choices, ans, keep_order=true)
@@ -497,7 +511,7 @@ radioq(choices, ans, keep_order=true)
 
 Consider the integral $\int x^2\log(x) dx$. Which letter should be tried first?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["L", "I", "A", "T", "E"]
 ans = 1
 radioq(choices, ans, keep_order=true)
@@ -508,7 +522,7 @@ radioq(choices, ans, keep_order=true)
 
 Consider the integral $\int x^2 \sin^{-1}(x) dx$. Which letter should be tried first?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["L", "I", "A", "T", "E"]
 ans = 2
 radioq(choices, ans, keep_order=true)
@@ -520,7 +534,7 @@ radioq(choices, ans, keep_order=true)
 
 Consider the integral $\int e^x \sin(x) dx$. Which letter should be tried first?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = ["L", "I", "A", "T", "E"]
 ans = 4
 radioq(choices, ans, keep_order=true)
@@ -530,18 +544,11 @@ radioq(choices, ans, keep_order=true)
 
 Find an antiderivative for $\cos^{-1}(x)$ using the integration by parts formula.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"x\cos^{-1}(x)-\sqrt{1 - x^2}",
-L"x^2/2 \cos^{-1}(x) - x\sqrt{1-x^2}/4 - \cos^{-1}(x)/4",
-L"-\sin^{-1}(x)"]
+"``x\\cos^{-1}(x)-\\sqrt{1 - x^2}``",
+"``x^2/2 \\cos^{-1}(x) - x\\sqrt{1-x^2}/4 - \\cos^{-1}(x)/4``",
+"``-\\sin^{-1}(x)``"]
 ans = 1
 radioq(choices, ans)
-```
-
-
-
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```
