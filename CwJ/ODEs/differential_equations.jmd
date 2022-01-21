@@ -3,8 +3,9 @@
 This section uses these add-on packages:
 
 ```julia
-using DifferentialEquations
+using OrdinaryDiffEq
 using Plots
+using ModelingToolkit
 ```
 
 ```julia; echo=false; results="hidden"
@@ -20,8 +21,13 @@ nothing
 The
 [`DifferentialEquations`](https://github.com/SciML/DifferentialEquations.jl)
 suite of packages contains solvers for a wide range of various
-differential equations. This section just briefly touches touch on ordinary differential
-equations (ODEs). For more detail on this type and many others covered by the suite of packages, there are many other resources, including the [documentation](https://diffeq.sciml.ai/stable/) and accompanying [tutorials](https://github.com/SciML/SciMLTutorials.jl).
+differential equations. This section just briefly touches touch on
+ordinary differential equations (ODEs), and so relies only on
+`OrdinaryDiffEq` part of the suite. For more detail on this type and
+many others covered by the suite of packages, there are many other
+resources, including the
+[documentation](https://diffeq.sciml.ai/stable/) and accompanying
+[tutorials](https://github.com/SciML/SciMLTutorials.jl).
 
 ## SIR Model
 
@@ -141,6 +147,12 @@ end
 ```
 
 The notation `du` is suggestive of both the derivative and a small increment. The mathematical formulation follows the derivative, the numeric solution uses a time step and increments the solution over this time step. The `Tsit5()` solver, used here, adaptively chooses a time step, `dt`; were the `Euler` method used, this time step would need to be explicit.
+
+```julia; echo=false
+note("""
+The `sir!` function has the trailing `!` indicating -- by convention -- it *mutates* its first value, `du`. In this case, through an assignment, as in `du[1]=ds`. This could use some explanation. The *binding* `du` refers to the *container* holding the ``3`` values, whereas `du[1]` refers to the first value in that container. So `du[1]=ds` changes the first value, but not the *binding* of `du` to the container. That is, `du` mutates. This would be quite different were the call `du = [ds,di,dr]` which would create a new *binding* to a new container and not mutate the values in the original container.
+""", title="Mutation not re-binding")
+```
 
 
 With the update function defined, the problem is setup and a solution found with in the same manner:
@@ -273,6 +285,13 @@ end
 
 This function ``W`` is just a constant above, but can be easily modified as desired.
 
+```julia; echo=false
+note("""
+The "standard" trick is to take a second order ODE like ``u''(t)=u`` and turn this into two coupled ODEs by using a new name: ``v=u'(t)`` and then ``v'(t) = u(t)``. In this application, there are ``4`` equations, as we have *both* ``x''`` and ``y''`` being so converted. The first and second components of ``du`` are new variables, the third and fourth show the original equation.
+""", title="A second-order ODE is a coupled first-order ODE")
+```
+
+
 The initial conditions are specified through:
 
 ```julia
@@ -329,3 +348,33 @@ SOL = solve(trajectory_problem, Tsit5(); p = ps, callback=cb)
 
 plot(t -> SOL(t)[1], t -> SOL(t)[2], TSPAN...; legend=false)
 ```
+
+
+Finally, we note that the `ModelingToolkit` package provides symbolic-numeric computing. This allows the equations to be set up symbolically, as in `SymPy` before being passed off to `DifferentialEquations` to solve numerically. The above example with no wind resistance could be translated into the following:
+
+```julia; hold=true
+@parameters t γ g
+@variables x(t) y(t)
+D = Differential(t)
+
+eqs = [D(D(x)) ~ -γ * D(x),
+       D(D(y)) ~ -g - γ * D(y)]
+
+@named sys = ODESystem(eqs)
+sys = ode_order_lowering(sys) # turn 2nd order into 1st
+
+u0 = [D(x) => vxy₀[1],
+      D(y) => vxy₀[2],
+      x => 0.0,
+      y => 0.0]
+
+p  = [γ => 0.0,
+      g => 9.8]
+
+prob = ODEProblem(sys, u0, TSPAN, p, jac=true)
+sol = solve(prob,Tsit5())
+
+plot(t -> sol(t)[3], t -> sol(t)[4], TSPAN..., legend=false)
+```
+
+The toolkit will automatically generate fast functions and can perform transformations (such as is done by `ode_order_lowering`) before passing along to the numeric solves.
