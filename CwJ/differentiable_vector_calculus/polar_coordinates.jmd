@@ -1,28 +1,37 @@
 # Polar Coordinates and Curves
 
-```julia; echo=false; results="hidden"
+This section uses these add-on packages:
+
+```julia;
 using CalculusWithJulia
-using CalculusWithJulia.WeaveSupport
 using Plots
+using SymPy
+using Roots
+using QuadGK
+```
+
+```julia; echo=false; results="hidden"
+using CalculusWithJulia.WeaveSupport
+import PyPlot
+pyplot()
+using LaTeXStrings
+
 nothing
 ```
 
+----
 
 The description of the $x$-$y$ plane via Cartesian coordinates is not
 the only possible way, though one that is most familiar. Here we discuss
 a different means. Instead of talking about over and up from an
 origin, we focus on a direction and a distance from the origin.
 
-We begin by loading our package providing access to the necessary packages:
-
-
 
 ## Definition of polar coordinates
 
 Polar coordinates parameterize the plane though an angle $\theta$ made from the positive ray of the $x$ axis and a radius $r$.
 
-```julia; echo=false
-gr()
+```julia; hold=true; echo=false
 theta = pi/6
 rr = 1
 
@@ -48,9 +57,9 @@ annotate!([
 
 To recover the Cartesian coordinates from the pair $(r,\theta)$, we have these formulas from [right](http://en.wikipedia.org/wiki/Polar_coordinate_system#Converting_between_polar_and_Cartesian_coordinates) triangle geometry:
 
-$$~
+```math
 x = r \cos(\theta),~ y = r \sin(\theta).
-~$$
+```
 
 Each point $(x,y)$ corresponds to several possible values of
 $(r,\theta)$, as any integer multiple of $2\pi$ added to $\theta$ will
@@ -60,9 +69,9 @@ when we restrict to $r > 0$ and $0 \leq \theta < 2\pi$.
 For values in the first and fourth quadrants (the range of
 $\tan^{-1}(x)$), we have:
 
-$$~
+```math
 r = \sqrt{x^2 + y^2},~ \theta=\tan^{-1}(y/x).
-~$$
+```
 
 For the other two quadrants, the signs of $y$ and $x$ must be
 considered. This is done with the function `atan` when two arguments are used.
@@ -83,22 +92,19 @@ rad*cos(theta), rad*sin(theta)
 
 This figure illustrates:
 
-```julia; echo=false
-gr()
+```julia; hold=true; echo=false
 
-using LaTeXStrings
 p = plot([-5,5], [0,0],  color=:blue, legend=false)
 plot!([0,0],  [-5,5], color=:blue)
 plot!([-3,0], [4,0])
 scatter!([-3], [4])
 title!("(-3,4) Cartesian or (5, 2.21...) polar")
 
-plotly()
 p
 ```
 
 
-The case where $r < 0$ is handled by going 180 degrees in the opposite direction, in other
+The case where $r < 0$ is handled by going ``180`` degrees in the opposite direction, in other
 words the point $(r, \theta)$ can be described as well by $(-r,\theta+\pi)$.
 
 ## Parameterizing curves using polar coordinates
@@ -115,18 +121,17 @@ constant function.
 The circle centered at $(r_0, \gamma)$ (in polar coordinates) with
 radius $R$ has a more involved description in polar coordinates:
 
-$$~
+```math
 r(\theta) = r_0 \cos(\theta - \gamma)  + \sqrt{R^2 - r_0^2\sin^2(\theta - \gamma)}.
-~$$
+```
 
 The case where $r_0 > R$ will not be defined for all values of $\theta$, only when $|\sin(\theta-\gamma)| \leq R/r_0$.
 
-## Examples
+#### Examples
 
 The `Plots.jl` package provides a means to visualize polar plots through `plot(thetas, rs, proj=:polar)`. For example, to plot a circe with $r_0=1/2$ and $\gamma=\pi/6$ we would have:
 
-```julia;
-using Plots
+```julia; hold=true
 R, r0, gamma = 1, 1/2, pi/6
 r(theta) = r0 * cos(theta-gamma) + sqrt(R^2 - r0^2*sin(theta-gamma)^2)
 ts = range(0, 2pi, length=100)
@@ -142,9 +147,9 @@ As `Plots` will make a parametric plot when called as `plot(function, function, 
 function creates two such functions using the relationship $x=r\cos(\theta)$ and $y=r\sin(\theta)$.
 
 
-Using `plot_polar`,  we can plot circles with the following. We have to be a bit careful for the general circle, as when center is farther away from the origin that the radius ($R$), then not all angles will be acceptable and there are two functions needed to describe the radius, as this comes from a quadratic equation and both the "plus" and "minus" terms are used.
+Using `plot_polar`,  we can plot circles with the following. We have to be a bit careful for the general circle, as when the center is farther away from the origin that the radius ($R$), then not all angles will be acceptable and there are two functions needed to describe the radius, as this comes from a quadratic equation and both the "plus" and "minus" terms are used.
 
-```julia;
+```julia; hold=true
 R=4; r(t) = R;
 
 function plot_general_circle!(r0, gamma, R)
@@ -175,11 +180,11 @@ There are many interesting examples of curves described by polar coordinates. An
 
 The [rhodenea](http://www-history.mcs.st-and.ac.uk/Curves/Rhodonea.html) curve has
 
-$$~
+```math
 r(\theta) = a \sin(k\theta)
-~$$
+```
 
-```julia;
+```julia; hold=true
 a, k = 4, 5
 r(theta) = a * sin(k * theta)
 plot_polar(0..pi, r)
@@ -198,15 +203,15 @@ related to values within $0$ to $\pi$ via the relation $(r,\pi
 The [folium](http://www-history.mcs.st-and.ac.uk/Curves/Folium.html)
 is a somewhat similar looking curve, but has this description:
 
-$$~
+```math
 r(\theta) = -b \cos(\theta) + 4a \cos(\theta) \sin(2\theta)
-~$$
+```
 
 
 ```julia;
-a, b = 4, 2
-r(theta) = -b * cos(theta) + 4a * cos(theta) * sin(2theta)
-plot_polar(0..2pi, r)
+𝒂, 𝒃 = 4, 2
+𝒓(theta) = -𝒃 * cos(theta) + 4𝒂 * cos(theta) * sin(2theta)
+plot_polar(0..2pi, 𝒓)
 ```
 
 The folium has radial part $0$ when $\cos(\theta) = 0$ or
@@ -216,21 +221,21 @@ $b/4a = 1/8$, when $\sin(2\theta) = 1/8$ which happens at
 $a_0=\sin^{-1}(1/8)/2=0.0626...$ and $\pi/2 - a_0$, $\pi+a_0$ and $3\pi/2 - a_0$. The first folium can be plotted with:
 
 ```julia;
-a0 = (1/2) * asin(1/8)
-plot_polar(a0..(pi/2-a0), r)
+𝒂0 = (1/2) * asin(1/8)
+plot_polar(𝒂0..(pi/2-𝒂0), 𝒓)
 ```
 
 
 The second - which is too small to appear in the initial plot without zooming in - with
 
 ```julia;
-plot_polar((pi/2 - a0)..(pi/2), r)
+plot_polar((pi/2 - 𝒂0)..(pi/2), 𝒓)
 ```
 
 The third with
 
 ```julia;
-plot_polar((pi/2)..(pi + a0), r)
+plot_polar((pi/2)..(pi + 𝒂0), 𝒓)
 ```
 
 The plot repeats from there, so the initial plot could have been made over $[0, \pi + a_0]$.
@@ -239,11 +244,11 @@ The plot repeats from there, so the initial plot could have been made over $[0, 
 
 The [Limacon of Pascal](http://www-history.mcs.st-and.ac.uk/Curves/Limacon.html) has
 
-$$~
+```math
 r(\theta) = b + 2a\cos(\theta)
-~$$
+```
 
-```julia;
+```julia; hold=true
 a,b = 4, 2
 r(theta) = b + 2a*cos(theta)
 plot_polar(0..2pi, r)
@@ -255,7 +260,7 @@ Some curves require a longer parameterization, such as this where we
 plot over $[0, 8\pi]$ so that the cosine term can range over an entire
 half period:
 
-```julia;
+```julia; hold=true
 r(theta) = sqrt(abs(cos(theta/8)))
 plot_polar(0..8pi, r)
 ```
@@ -264,7 +269,7 @@ plot_polar(0..8pi, r)
 
 Consider the [cardioid](http://www-history.mcs.st-and.ac.uk/Curves/Cardioid.html) described by $r(\theta) = 2(1 + \cos(\theta))$:
 
-```julia;
+```julia; hold=true
 r(theta) = 2(1 + cos(theta))
 plot_polar(0..2pi, r)
 ```
@@ -277,8 +282,7 @@ solution.
 
 The area can be approximated by wedges (not rectangles). For example, here we see that the area over a given angle is well approximated by the wedge for each of the sectors:
 
-```julia; echo=false
-gr()
+```julia; hold=true; echo=false
 r(theta) = 1/(1 + (1/3)cos(theta))
 p = plot_polar(0..pi/2, r,  legend=false, linewidth=3, aspect_ratio=:equal)
 t0, t1, t2, t3 = collect(range(pi/12, pi/2 - pi/12, length=4))
@@ -310,14 +314,14 @@ Then the wedge of radius $r(\phi_i)$ with angle between $t_{i-1}$ and $t_i$ will
 over the partition gives a Riemann sum approximation for the integral $(1/2)\int_a^b
 r(\theta)^2 d\theta$. This limit of this sum defines the area in polar coordinates.
 
-> Area of polar regions. Let $R$ denote the region bounded by the curve $r(\theta)$ and bounded by the rays
-> $\theta=a$ and $\theta=b$ with $b-a \leq 2\pi$, then the area of $R$ is given by
-> $$~A = \frac{1}{2}\int_a^b r(\theta)^2 d\theta.~$$
+> *Area of polar regions*. Let $R$ denote the region bounded by the curve $r(\theta)$ and bounded by the rays
+> $\theta=a$ and $\theta=b$ with $b-a \leq 2\pi$, then the area of $R$ is given by:
+>
+> ``A = \frac{1}{2}\int_a^b r(\theta)^2 d\theta.``
 
 So the area of the cardioid, which is parameterized over $[0, 2\pi]$ is found by
 
-```julia;
-using SymPy
+```julia; hold=true
 r(theta) = 2(1 + cos(theta))
 @syms theta
 (1//2) * integrate(r(theta)^2, (theta, 0, 2PI))
@@ -334,16 +338,16 @@ that leaf?
 An antiderivative exists for arbitrary $a$ and $b$:
 
 ```julia;
-@syms a b
-r(theta) = -b*cos(theta) + 4a*cos(theta)*sin(theta)^2
-integrate(r(theta)^2, theta) / 2
+@syms 𝐚 𝐛 𝐭heta
+𝐫(theta) = -𝐛*cos(theta) + 4𝐚*cos(theta)*sin(theta)^2
+integrate(𝐫(𝐭heta)^2, 𝐭heta) / 2
 ```
 
 For our specific values, the answer can be computed with:
 
 ```julia;
-ex = integrate(r(theta)^2, (theta, PI/6, PI/2)) / 2
-ex(a => 1, b=>1)
+ex = integrate(𝐫(𝐭heta)^2, (𝐭heta, PI/6, PI/2)) / 2
+ex(𝐚 => 1, 𝐛=>1)
 ```
 
 
@@ -354,7 +358,7 @@ Pascal's
 like the cardioid, but contains an extra loop. When $a=1$ and $b=1$ we
 have this graph.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 a,b = 1,1
 r(theta) = b + 2a*cos(theta)
 p = plot(t->r(t)*cos(t), t->r(t)*sin(t), 0, pi/2 + pi/6,  legend=false, color=:blue)
@@ -373,23 +377,23 @@ $\cos(\theta) = -1/2$. This is $\pi/2 + \pi/6$ and $3\pi/2 -
 \pi/6$. The inner loop is traversed between those values and has area:
 
 ```julia;
-@syms a b
-r(theta) =  b + 2a*cos(theta)
-ex = integrate(r(theta)^2 / 2, (theta, PI/2 + PI/6, 3PI/2 - PI/6))
-inner = ex(a=>1, b=>1)
+@syms 𝖺 𝖻 𝗍heta
+𝗋(theta) =  𝖻 + 2𝖺*cos(𝗍heta)
+𝖾x = integrate(𝗋(𝗍heta)^2 / 2, (𝗍heta, PI/2 + PI/6, 3PI/2 - PI/6))
+𝗂nner = 𝖾x(𝖺=>1, 𝖻=>1)
 ```
 
 The outer area (including the inner loop) is the integral from $0$ to $\pi/2 + \pi/6$ plus that from $3\pi/2 - \pi/6$ to $2\pi$. These areas are equal, so we double the first:
 
 ```julia;
-ex = 2 * integrate(r(theta)^2 / 2, (theta, 0, PI/2 + PI/6))
-outer = ex(a=>1, b=>1)
+𝖾x1 = 2 * integrate(𝗋(𝗍heta)^2 / 2, (𝗍heta, 0, PI/2 + PI/6))
+𝗈uter = 𝖾x1(𝖺=>1, 𝖻=>1)
 ```
 
 The answer is the difference:
 
 ```julia;
-outer - inner
+𝗈uter - 𝗂nner
 ```
 
 ## Arc length
@@ -402,20 +406,20 @@ approximated by the line segment connecting the points. Expressing the
 points in Cartesian coordinates and simplifying gives the distance
 squared as:
 
-$$~
+```math
 \begin{align}
 d_i^2 &= (r(t_i) \cos(t_i) - r(t_{i-1})\cos(t_{i-1}))^2 + (r(t_i) \sin(t_i) - r(t_{i-1})\sin(t_{i-1}))^2\\
 &= r(t_i)^2 - 2r(t_i)r(t_{i-1}) \cos(t_i - t_{i-1}) +  r(t_{i-1})^2 \\
 &\approx r(t_i)^2 - 2r(t_i)r(t_{i-1}) (1 - \frac{(t_i - t_{i-1})^2}{2})+  r(t_{i-1})^2 \quad(\text{as} \cos(x) \approx 1 - x^2/2)\\
 &= (r(t_i) - r(t_{i-1}))^2 + r(t_i)r(t_{i-1}) (t_i - t_{i-1})^2.
 \end{align}
-~$$
+```
 
 As was done with arc length we multiply $d_i$ by $(t_i - t_{i-1})/(t_i - t_{i-1})$
 and move the bottom factor under the square root:
 
 
-$$~
+```math
 \begin{align}
 d_i
 &= d_i \frac{t_i - t_{i-1}}{t_i - t_{i-1}} \\
@@ -423,15 +427,16 @@ d_i
 \frac{r(t_i)r(t_{i-1}) (t_i - t_{i-1})^2}{(t_i - t_{i-1})^2}} \cdot (t_i - t_{i-1})\\
 &= \sqrt{(r'(\xi_i))^2 + r(t_i)r(t_{i-1})} \cdot (t_i - t_{i-1}).\quad(\text{the mean value theorem})
 \end{align}
-~$$
+```
 
 Adding the approximations to the $d_i$ looks like a Riemann sum approximation to the
 integral $\int_a^b \sqrt{(r'(\theta)^2) + r(\theta)^2} d\theta$ (with
 the extension to the Riemann sum formula needed to derive the arc
 length for a parameterized curve). That is:
 
-> Arc length of a polar curve. The arc length of the curve described in polar coordinates by $r(\theta)$ for $a \leq \theta \leq b$ is given by
-> $$~\int_a^b \sqrt{r'(\theta)^2 + r(\theta)^2} d\theta.~$$
+> *Arc length of a polar curve*. The arc length of the curve described in polar coordinates by $r(\theta)$ for $a \leq \theta \leq b$ is given by:
+>
+> ``\int_a^b \sqrt{r'(\theta)^2 + r(\theta)^2} d\theta.``
 
 We test this out on a circle with $r(\theta) = R$, a constant. The
 integrand simplifies to just $\sqrt{R^2}$ and the integral is from $0$
@@ -442,18 +447,11 @@ the circumference.
 
 A cardioid is described by $r(\theta) = 2(1 + \cos(\theta))$. What is the arc length from $0$ to $2\pi$?
 
-The integrand is integrable
+The integrand is integrable with antiderivative $4\sqrt{2\cos(\theta) + 2} \cdot \tan(\theta/2)$,
+but `SymPy` isn't able to find the integral. Instead we give a numeric answer:
 
-```julia;
+```julia; hold=true
 r(theta) = 2*(1 + cos(theta))
-ds = sqrt(diff(r(theta), theta)^2 + r(theta)^2) |> simplify
-```
-
-with antiderivative $4\sqrt{2\cos(\theta) + 2} \cdot \tan(\theta/2)$,
-but `SymPy` isn't able to find it. Instead we give a numeric answer:
-
-```julia;
-using QuadGK
 quadgk(t -> sqrt(r'(t)^2 + r(t)^2), 0, 2pi)[1]
 ```
 
@@ -461,17 +459,18 @@ quadgk(t -> sqrt(r'(t)^2 + r(t)^2), 0, 2pi)[1]
 
 The [equiangular](http://www-history.mcs.st-and.ac.uk/Curves/Equiangular.html) spiral has polar representation
 
-$$~
+```math
 r(\theta) = a e^{\theta \cot(b)}
-~$$
+```
 
 With $a=1$ and $b=\pi/4$, find the arc length traced out from $\theta=0$ to $\theta=1$.
 
-```julia;
-a, b= 1, PI/4
+```julia; hold=true
+a, b = 1, PI/4
+@syms θ
 r(theta) = a * exp(theta * cot(b))
-ds = sqrt(diff(r(theta), theta)^2 + r(theta)^2)
-integrate(ds, (theta, 0, 1))
+ds = sqrt(diff(r(θ), θ)^2 + r(θ)^2)
+integrate(ds, (θ, 0, 1))
 ```
 
 
@@ -479,9 +478,9 @@ integrate(ds, (theta, 0, 1))
 
 An Archimedean [spiral](http://en.wikipedia.org/wiki/Archimedean_spiral) is defined in polar form by
 
-$$~
+```math
 r(\theta) = a + b \theta
-~$$
+```
 
 That is, the radius increases linearly. The crossings of the positive $x$ axis occur at $a + b n 2\pi$, so are evenly spaced out by $2\pi b$. These could be a model for such things as coils of materials of uniform thickness.
 
@@ -498,14 +497,13 @@ $r(2\pi n) = d_{\text{outer}}/2 = d_{\text{inner}}/2 + b (2\pi n)$. Solving for 
 $n = ( d_{\text{outer}} - d_{\text{inner}})/2 / (2\pi b)$. With this, the following must hold as the total arc length is $3700$ inches.
 
 
-$$~
+```math
 \int_0^{n\cdot 2\pi} \sqrt{r(\theta)^2 + r'(\theta)^2} d\theta = 3700
-~$$
+```
 
 Numerically then we have:
 
-```julia;
-using Roots
+```julia; hold=true
 
 dinner = 1 + 5/8
 douter = 5 + 1/4
@@ -514,13 +512,10 @@ rp(b,t) = b
 integrand(b,t) = sqrt((r(b,t))^2 + rp(b,t)^2)  # sqrt(r^2 + r'^2)
 n(b) = (douter - dinner)/2/(2*pi*b)
 b = find_zero(b -> quadgk(t->integrand(b,t), 0, n(b)*2*pi)[1] - 3700, (1/100000, 1/100))
+b, b*25.4
 ```
 
-This gives a value in inches, in millimeters this is about a $.02mm$ thickness per sheet:
-
-```julia;
-b * 25.4
-```
+The value `b` gives a value in inches, the latter in millimeters.
 
 
 ## Questions
@@ -529,14 +524,14 @@ b * 25.4
 
 Let $r=3$ and $\theta=\pi/8$. In Cartesian coordinates what is $x$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 x,y = 3 * [cos(pi/8), sin(pi/8)]
 numericq(x)
 ```
 
 What is $y$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 numericq(y)
 ```
 
@@ -544,7 +539,7 @@ numericq(y)
 
 A point in Cartesian coordinates is given by $(-12, -5)$. In has a polar coordinate representation with an angle $\theta$ in $[0,2\pi]$ and $r > 0$. What is $r$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 x,y = -12, -5
 r1, theta1 = sqrt(x^2 + y^2), atan(y,x)
 numericq(r1)
@@ -552,7 +547,9 @@ numericq(r1)
 
 What is $\theta$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
+x,y = -12, -5
+r1, theta1 = sqrt(x^2 + y^2), atan(y,x)
 numericq(theta1)
 ```
 
@@ -560,28 +557,29 @@ numericq(theta1)
 
 Does $r(\theta) = a \sec(\theta - \gamma)$ describe a line for $0$ when $a=3$ and $\gamma=\pi/4$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq("yes")
 ```
 
 If yes, what is the $y$ intercept
 
-```julia; echo=false
-r(theta) == 3 * sec(theta -pi/4)
+```julia; hold=true; echo=false
+r(theta) = 3 * sec(theta -pi/4)
 val = r(pi/2)
 numericq(val)
 ```
 
 What is slope of the line?
 
-```julia; echo=false
+```julia; hold=true; echo=false
+r(theta) == 3 * sec(theta -pi/4)
 val = (r(pi/2)*sin(pi/2) - r(pi/4)*sin(pi/4)) / (r(pi/2)*cos(pi/2) - r(pi/4)*cos(pi/4))
 numericq(val)
 ```
 
 Does this seem likely: the slope is $-1/\tan(\gamma)$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq("yes")
 ```
 
@@ -589,21 +587,21 @@ yesnoq("yes")
 
 The polar curve $r(\theta) = 2\cos(\theta)$ has tangent lines at most points. This differential representation of the chain rule
 
-$$~
+```math
 \frac{dy}{dx} = \frac{dy}{d\theta} / \frac{dx}{d\theta},
-~$$
+```
 
 allows the slope to be computed when $y$ and $x$ are the Cartesian
 form of the polar curve. For this curve, we have
 
-$$~
+```math
 \frac{dy}{d\theta} = \frac{d}{d\theta}(2\cos(\theta) \cdot \cos(\theta)),~ \text{ and }
 \frac{dx}{d\theta} = \frac{d}{d\theta}(2\sin(\theta) \cdot \cos(\theta)).
-~$$
+```
 
 Numerically, what is the slope of the tangent line when $\theta = \pi/4$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 r(theta) = 2cos(theta)
 g(theta) = r(theta)*cos(theta)
 f(theta) = r(theta)*sin(theta)
@@ -616,15 +614,15 @@ numericq(val)
 
 For different values $k > 0$ and $e > 0$ the polar equation
 
-$$~
+```math
 r(\theta) = \frac{ke}{1 + e\cos(\theta)}
-~$$
+```
 
 has a familiar form. The value of $k$ is just a scale factor, but different values of $e$ yield different shapes.
 
 When $0 < e < 1$ what is the shape of the curve? (Answer by making a plot and guessing.)
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 "an ellipse",
 "a parabola",
@@ -639,7 +637,7 @@ radioq(choices, ans, keep_order=true)
 
 When $e = 1$ what is the shape of the curve?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 "an ellipse",
 "a parabola",
@@ -654,7 +652,7 @@ radioq(choices, ans, keep_order=true)
 
 When $1 < e$ what is the shape of the curve?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 "an ellipse",
 "a parabola",
@@ -673,11 +671,11 @@ Find the area of a lobe of the
 curve traced out by $r(\theta) = \sqrt{\cos(2\theta)}$ between
 $-\pi/4$ and $\pi/4$. What is the answer?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"1/2",
-L"\pi/2",
-L"1"
+"``1/2``",
+"``\\pi/2``",
+"``1``"
 ]
 ans=1
 radioq(choices, ans)
@@ -687,7 +685,7 @@ radioq(choices, ans)
 
 Find the area of a lobe of the [eight](http://www-history.mcs.st-and.ac.uk/Curves/Eight.html) curve traced out by $r(\theta) = \cos(2\theta)\sec(\theta)^4$ from $-\pi/4$ to $\pi/4$. Do this numerically.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 r(theta) = sqrt(cos(2theta) * sec(theta)^4)
 val, _ = quadgk(t -> r(t)^2/2, -pi/4, pi/4)
 numericq(val)
@@ -700,7 +698,7 @@ Find the arc length of a lobe of the
 curve traced out by $r(\theta) = \sqrt{\cos(2\theta)}$ between
 $-\pi/4$ and $\pi/4$. What is the answer (numerically)?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 r(theta) = sqrt(cos(2theta))
 val, _ = quadgk(t -> sqrt(D(r)(t)^2 + r(t)^2), -pi/4, pi/4)
 numericq(val)
@@ -711,14 +709,8 @@ numericq(val)
 
 Find the arc length of a lobe of the [eight](http://www-history.mcs.st-and.ac.uk/Curves/Eight.html) curve traced out by $r(\theta) = \cos(2\theta)\sec(\theta)^4$ from $-\pi/4$ to $\pi/4$. Do this numerically.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 r(theta) = sqrt(cos(2theta) * sec(theta)^4)
 val, _ = quadgk(t -> sqrt(D(r)(t)^2 + r(t)^2), -pi/4, pi/4)
 numericq(val)
-```
-
-
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

@@ -36,16 +36,17 @@ which can be solved with `SymPy`:
 
 ```julia;
 @syms x, y, u()
+D = Differential(x)
 x0, y0 = 1, 1
 F(y,x) = y*x
 
-dsolve(u'(x) - F(u(x), x))
+dsolve(D(u)(x) - F(u(x), x))
 ```
 
 With the given initial condition, the solution becomes:
 
 ```julia;
-out = dsolve(u'(x) - F(u(x),x), u(x), ics=(u, x0, y0))
+out = dsolve(D(u)(x) - F(u(x),x), u(x), ics=Dict(u(x0) => y0))
 ```
 
 
@@ -323,7 +324,7 @@ We graphically compare our approximate answer with the exact one:
 
 ```julia;
 plot(𝒇, 𝒙0, 𝒙n)
-𝒐ut = dsolve(u'(x) - 𝑭(u(x),x), u(x), ics = (u, 𝒙0, 𝒚0))
+𝒐ut = dsolve(D(u)(x) - 𝑭(u(x),x), u(x), ics = Dict(u(𝒙0) => 𝒚0))
 plot(rhs(𝒐ut), 𝒙0, 𝒙n)
 plot!(𝒇, 𝒙0, 𝒙n)
 ```
@@ -343,7 +344,7 @@ First, the `SymPy` solution:
 
 ```julia;
 𝐅(y,x) = sin(x*y)
-𝐞qn = u'(x) - 𝐅(u(x), x)
+𝐞qn = D(u)(x) - 𝐅(u(x), x)
 𝐨ut = dsolve(𝐞qn, hint="1st_power_series")
 ```
 
@@ -352,7 +353,7 @@ First, the `SymPy` solution:
 If we assume $y(0) = 1$, we can continue:
 
 ```julia;
-𝐨ut1 = dsolve(𝐞qn, u(x), ics=(u, 0, 1), hint="1st_power_series")
+𝐨ut1 = dsolve(𝐞qn, u(x), ics=Dict(u(0) => 1), hint="1st_power_series")
 ```
 
 The approximate value given by the Euler method is
