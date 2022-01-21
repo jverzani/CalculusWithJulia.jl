@@ -1,10 +1,20 @@
 # Functions $R^n \rightarrow R^m$
 
+This section uses these add-on packages:
+
+```julia
+using CalculusWithJulia
+using Plots
+using SymPy
+using ForwardDiff
+using LinearAlgebra
+```
+
 
 ```julia; echo=false; results="hidden"
-using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
-using Plots
+import PyPlot
+pyplot()
 nothing
 ```
 
@@ -28,8 +38,6 @@ discuss differentiation in general for a multivariable functions.
 We have seen that the gradient of a scalar function, $f:R^2 \rightarrow R$, takes a point in $R^2$ and associates a vector in $R^2$. As such $\nabla{f}:R^2 \rightarrow R^2$ is a vector field. A vector field  can be visualized by sampling a region and representing the field at those points. The details, as previously mentioned, are in the `vectorfieldplot` function of `CalculusWithJulia`.
 
 ```julia;
-using CalculusWithJulia
-using Plots
 F(u,v) = [-v, u]
 vectorfieldplot(F, xlim=(-5,5), ylim=(-5,5), nx=10, ny=10)
 ```
@@ -49,7 +57,7 @@ the field.
 
 The three dimensional vector field is one way to illustrate a vector field, but there is an alternate using field lines. Like Euler's method, imagine starting at some point, $\vec{r}$ in $R^3$. The field at that point is a vector indicating a direction of motion. Follow that vector for some infinitesimal amount, $d\vec{r}$. From here repeat. The field curve would satisfy $\vec{r}'(t) = F(\vec{r}(t))$. Field curves only show direction, to indicate magnitude at a point, the convention is to use denser lines when the field is stronger.
 
-```julia;echo=false
+```julia; hold=true; echo=false
 #out download("https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/VFPt_Earths_Magnetic_Field_Confusion.svg/320px-VFPt_Earths_Magnetic_Field_Confusion.svg.png")
 #cp(out, "figures/magnetic-field.png")
 
@@ -58,7 +66,7 @@ caption = """
 Illustration of the magnetic field of the earth using field lines to indicate the field. From
 [Wikipedia](https://en.wikipedia.org/wiki/Magnetic_field).
 """
-ImageFile(imgfile, caption)
+ImageFile(:differentiable_vector_calculus, imgfile, caption)
 ```
 
 ---
@@ -74,8 +82,7 @@ coordinates to cartesian coordinates $F(r, \theta) = r
 in blue fixed values of $r$ (circles) and in red fixed values of
 $\theta$ (rays).
 
-```julia;
-gr()
+```julia; hold=true
 F(r,theta) = r*[cos(theta), sin(theta)]
 F(v) = F(v...)
 
@@ -110,9 +117,9 @@ We pick a familiar case, to make this concrete: the unit sphere in $R^3$. We hav
 
 * It can be described in terms of [spherical coordinates](https://en.wikipedia.org/wiki/Spherical_coordinate_system):
 
-$$~
+```math
 \Phi(\theta, \phi) = \langle \sin(\phi)\cos(\theta), \sin(\phi)\sin(\theta), \cos(\phi) \rangle,
-~$$
+```
 
 with $\theta$ the *azimuthal* angle and $\phi$ the polar angle (measured down from the $z$ axis).
 
@@ -145,7 +152,7 @@ Y(theta,phi) = sin(phi) * sin(theta)
 Z(theta,phi) = cos(phi)
 ```
 
-Only *some* backends for `Plots` will produce this type of plot. Both `plotly()` and `pyplot()` will, but not `gr()`.
+Then:
 
 ```julia;
 thetas = range(0, stop=pi/2, length=50)
@@ -155,9 +162,14 @@ xs = [X(theta, phi) for theta in thetas, phi in phis]
 ys = [Y(theta, phi) for theta in thetas, phi in phis]
 zs = [Z(theta, phi) for theta in thetas, phi in phis]
 
-plotly()
 surface(xs, ys, zs)  ## see note
 ```
+
+```julis; echo=false
+note("""Only *some* backends for `Plots` will produce this type of plot. Both `plotly()` and `pyplot()` will, but not `gr()`.
+""")
+```
+
 
 ```julia; echo=false
 note("""Note: PyPlot can  be used directly to make these surface plots: `import PyPlot; PyPlot.plot_surface(xs,ys,zs)`""")
@@ -166,7 +178,6 @@ note("""Note: PyPlot can  be used directly to make these surface plots: `import 
 Instead of the comprehension, broadcasting can be used
 
 ```julia;
-pyplot()  # for variety to compare to plotly()
 surface(X.(thetas, phis'), Y.(thetas, phis'), Z.(thetas, phis'))
 ```
 
@@ -183,18 +194,17 @@ surface(unzip(Phi.(thetas, phis'))...)
 
 The partial derivatives of each component, $\partial{\Phi}/\partial{\theta}$ and $\partial{\Phi}/\partial{\phi}$, can be computed directly:
 
-$$~
-\begin{align}
+```math
+\begin{align*}
 \partial{\Phi}/\partial{\theta} &= \langle -\sin(\phi)\sin(\theta), \sin(\phi)\cos(\theta),0 \rangle,\\
 \partial{\Phi}/\partial{\phi} &= \langle \cos(\phi)\cos(\theta), \cos(\phi)\sin(\theta), -\sin(\phi) \rangle.
-\end{align}
-~$$
+\end{align*}
+```
 
 Using `SymPy`, we can compute through:
 
 
-```julia; eval=false
-using SymPy
+```julia;
 @syms theta phi
 out = [diff.(Phi(theta, phi), theta) diff.(Phi(theta, phi), phi)]
 ```
@@ -202,28 +212,26 @@ out = [diff.(Phi(theta, phi), theta) diff.(Phi(theta, phi), phi)]
 
 At the point $(\theta, \phi) = (\pi/12, \pi/6)$ this evaluates to the following.
 
-```julia; eval=false
+```julia;
 subs.(out, theta.=> PI/12, phi.=>PI/6) .|> N
 ```
 
 We found numeric values, so that we can
 compare to the numerically identical values computed by the `jacobian` function from `ForwardDiff`:
 
-```julia; eval=false
-using ForwardDiff
-Phi(v) = Phi(v...)    # need Phi(v) defined, not Phi(theta, phi)
+```julia;
 pt = [pi/12, pi/6]
-out = ForwardDiff.jacobian(Phi, pt)
+out₁ = ForwardDiff.jacobian(v -> Phi(v...), pt)
 ```
 
 What this function computes exactly will be described next, but here we visualize the partial derivatives and see they lie in the tangent plane at the point:
 
-```julia; eval=false
-us, vs = range(0, pi/2, length=25); range(0, pi, length=25)
+```julia; hold=true
+us, vs = range(0, pi/2, length=25), range(0, pi, length=25)
 xs, ys, zs = unzip(Phi.(us, vs'))
 surface(xs, ys, zs, legend=false)
-arrow!(Phi(pt), out[:,1], linewidth=3)
-arrow!(Phi(pt), out[:,2], linewidth=3)
+arrow!(Phi(pt...), out₁[:,1], linewidth=3)
+arrow!(Phi(pt...), out₁[:,2], linewidth=3)
 ```
 
 
@@ -234,9 +242,9 @@ Informally, the [total derivative](https://en.wikipedia.org/wiki/Total_derivativ
 
 For a function $F: R^n \rightarrow R^m$ we have the total derivative at $\vec{a}$ (a point or vector in $R^n$) is a matrix $J$ (a linear transformation)  taking vectors in $R^n$ and returning, under multiplication, vectors in $R^m$ (this matrix will be $m \times n$), such that for some neighborhood of $\vec{a}$, we have:
 
-$$~
+```math
 \lim_{\vec{x} \rightarrow \vec{a}} \frac{\|F(\vec{x}) - F(\vec{a}) - J\cdot(\vec{x}-\vec{a})\|}{\|\vec{x} - \vec{a}\|} = \vec{0}.
-~$$
+```
 
 (That is $ \|F(\vec{x}) - F(\vec{a}) - J\cdot(\vec{x}-\vec{a})\|=\mathcal{o}(\|\vec{x}-\vec{a}\|)$.)
 
@@ -244,34 +252,34 @@ If for some $J$ the above holds, the function $F$ is said to be totally differen
 
 For a multivariable function $F:R^n \rightarrow R^m$, we may express the function in vector-valued form $F(\vec{x}) = \langle f_1(\vec{x}), f_2(\vec{x}),\dots,f_m(\vec{x})\rangle$, each component a scalar function. Then, if the total derivative exists, it can be expressed by the [Jacobian](https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant):
 
-$$~
+```math
 J = \left[
-\begin{align}{}
+\begin{align*}
 \frac{\partial f_1}{\partial x_1} &\quad \frac{\partial f_1}{\partial x_2} &\dots&\quad\frac{\partial f_1}{\partial x_n}\\
 \frac{\partial f_2}{\partial x_1} &\quad \frac{\partial f_2}{\partial x_2} &\dots&\quad\frac{\partial f_2}{\partial x_n}\\
 &&\vdots&\\
 \frac{\partial f_m}{\partial x_1} &\quad \frac{\partial f_m}{\partial x_2} &\dots&\quad\frac{\partial f_m}{\partial x_n}
-\end{align}
+\end{align*}
 \right].
-~$$
+```
 
 This may also be viewed as:
 
-$$~
+```math
 J = \left[
-\begin{align}{}
+\begin{align*}
 &\nabla{f_1}'\\
 &\nabla{f_2}'\\
 &\quad\vdots\\
 &\nabla{f_m}'
-\end{align}
+\end{align*}
 \right] =
 \left[
 \frac{\partial{F}}{\partial{x_1}}\quad
 \frac{\partial{F}}{\partial{x_2}} \cdots
 \frac{\partial{F}}{\partial{x_n}}
 \right].
-~$$
+```
 
 The latter representing a matrix of $m$ row vectors, each with $n$ components or as a matrix of $n$ column vectors, each with $m$ components.
 
@@ -284,32 +292,32 @@ After specializing the total derivative to the cases already discussed, we have:
 * Vector-valued functions $\vec{f}(t) = \langle f_1(t), f_2(t), \dots, f_m(t) \rangle$, each component univariate. Then the derivative, $\vec{f}'(t) = \langle \frac{df_1}{dt}, \frac{df_2}{dt}, \dots, \frac{df_m}{dt} \rangle$. The total derivative in this case, is a a $m \times 1$ vector of partial derivatives, and since there is only $1$ variable, would be written without partials. So the two agree.
 
 * Scalar functions $f(\vec{x}) = a$ of type $R^n \rightarrow R$. The definition of differentiability for $f$ involved existence of the partial derivatives and moreover, the fact that a limit like the above held with $ \nabla{f}(C) \cdot \vec{h}$ in place of $J\cdot(\vec{x}-\vec{a})$. Here $\vec{h}$ and $\vec{x}-\vec{a}$ are vectors in $R^n$. Were the dot product in $ \nabla{f}(C) \cdot \vec{h}$ expressed in matrix multiplication we would have for this case a $1 \times n$ matrix of the correct form:
-$$~
+```math
 J = [\nabla{f}'].
-~$$
+```
 
 
 * For $f:R^2 \rightarrow R$, the Hessian matrix, was the matrix of 2nd partial derivatives. This may be viewed as the total derivative of the the gradient function, $\nabla{f}$:
 
-$$~
+```math
 \text{Hessian} =
 \left[
-\begin{align}{}
+\begin{align*}
 \frac{\partial^2 f}{\partial x^2}          &\quad \frac{\partial^2 f}{\partial x \partial y}\\
 \frac{\partial^2 f}{\partial y \partial x} &\quad \frac{\partial^2 f}{\partial y \partial y}
-\end{align}
+\end{align*}
 \right]
-~$$
+```
 
 This is equivalent to:
-$$~
+```math
 \left[
-\begin{align}{}
+\begin{align*}
 \frac{\partial \frac{\partial f}{\partial x}}{\partial x} &\quad \frac{\partial \frac{\partial f}{\partial x}}{\partial y}\\
 \frac{\partial \frac{\partial f}{\partial y}}{\partial x} &\quad \frac{\partial \frac{\partial f}{\partial y}}{\partial y}\\
-\end{align}
+\end{align*}
 \right].
-~$$
+```
 
 
 As such, the total derivative is a generalization of what we have previously discussed.
@@ -317,13 +325,12 @@ As such, the total derivative is a generalization of what we have previously dis
 
 ## The chain rule
 
-If $G:R^k \rightarrow R^n$ and $F:R^n \rightarrow R^m$, then the composition $F\circ G$ takes $R^k \rightarrow R^m$. If all three functions are totally differentiable, then a chain rule will hold:
+If $G:R^k \rightarrow R^n$ and $F:R^n \rightarrow R^m$, then the composition $F\circ G$ takes $R^k \rightarrow R^m$. If all three functions are totally differentiable, then a chain rule will hold (total derivative of $F\circ G$ at point $a$):
 
-$$~
-d(F\circ G)_a =
-\text{ total derivative of $F\circ G$ at point $a$ }
-= dF_{G(a)} \cdot dG_a.
-~$$
+```math
+d(F\circ G)_a = dF_{G(a)} \cdot dG_a
+
+```
 
 If correct, this has the same formulation as the chain rule for the univariate case: derivative of outer at the inner *times* the derivative of the inner.
 
@@ -331,34 +338,35 @@ First we check that the dimensions are correct: We have $dF_{G(a)}$ (the total d
 
 The proof that the formula is correct uses the definition of totally differentiable written as
 
-$$~
+```math
 F(b + \vec{h}) - F(b) - dF_b\cdot \vec{h} = \epsilon(\vec{h}) \vec{h},
-~$$
+```
 
 where $\epsilon(h) \rightarrow \vec{0}$ as $h \rightarrow \vec{0}$.
 
 We have, using this for *both* $F$ and $G$:
 
-$$~
-\begin{align}
+```math
+\begin{align*}
 F(G(a + \vec{h})) - F(G(a)) &=
 F(G(a) + (dG_a \cdot \vec{h} + \epsilon_G \vec{h})) - F(G(a))\\
-&= F(G(a)) + dF_{G(a)} \cdot (dG_a \cdot \vec{h} + \epsilon_G \vec{h}) + \epsilon_F (dG_a \cdot \vec{h} + \epsilon_G \vec{h}) - F(G(a))\\
+&= F(G(a)) + dF_{G(a)} \cdot (dG_a \cdot \vec{h} + \epsilon_G \vec{h}) \\
+&+ \quad\epsilon_F (dG_a \cdot \vec{h} + \epsilon_G \vec{h}) - F(G(a))\\
 &= dF_{G(a)} \cdot (dG_a \cdot \vec{h})  +  dF_{G(a)} \cdot (\epsilon_G \vec{h}) + \epsilon_F (dG_a \cdot \vec{h}) + (\epsilon_F \cdot \epsilon_G\vec{h})
-\end{align}
-~$$
+\end{align*}
+```
 
 The last line uses the linearity of $dF$ to isolate $dF_{G(a)} \cdot (dG_a \cdot \vec{h})$. Factoring out $\vec{h}$ and taking norms gives:
 
 
-$$~
-\begin{align}
+```math
+\begin{align*}
 \frac{\| F(G(a+\vec{h})) - F(G(a)) - dF_{G(a)}dG_a \cdot \vec{h} \|}{\| \vec{h} \|} &=
 \frac{\|  dF_{G(a)}\cdot(\epsilon_G\vec{h}) + \epsilon_F (dG_a\cdot \vec{h}) + (\epsilon_F\cdot\epsilon_G\vec{h}) \|}{\| \vec{h} \|} \\
-&\leq \|  dF_{G(a)}\cdot\epsilon_F + \epsilon_F (dG_a) + \epsilon_F\cdot\epsilon_G \|\frac{\|\vec{h}\|}{\| \vec{h} \|}\\
+&\leq \|  dF_{G(a)}\cdot\epsilon_G + \epsilon_F (dG_a) + \epsilon_F\cdot\epsilon_G \|\frac{\|\vec{h}\|}{\| \vec{h} \|}\\
 &\rightarrow 0.
-\end{align}
-~$$
+\end{align*}
+```
 
 
 
@@ -371,22 +379,21 @@ Our main use of the total derivative will be the change of variables in integrat
 
 A point $(a,b)$ in the plane can be described in polar coordinates by a radius $r$ and polar angle $\theta$. We can express this formally by $F:(a,b) \rightarrow (r, \theta)$ with
 
-$$~
+```math
 r(a,b) = \sqrt{a^2 + b^2}, \quad
 \theta(a,b) = \tan^{-1}(b/a),
-~$$
+```
 
 the latter assuming the point is in quadrant I or IV (though `atan(y,x)` will properly handle the other quadrants). The Jacobian of this transformation may be found with
 
 ```julia;
-using SymPy, LinearAlgebra   # done by CalculusWithJulia
 @syms a::real b::real
 
-r = sqrt(a^2 + b^2)
-theta = atan(b/a)
+rⱼ = sqrt(a^2 + b^2)
+θⱼ = atan(b/a)
 
-Jac = Sym[diff.(r, [a,b])';        # [∇f_1'; ∇f_2']
-          diff.(theta, [a,b])']
+Jac = Sym[diff.(rⱼ, [a,b])';        # [∇f_1'; ∇f_2']
+          diff.(θⱼ, [a,b])']
 
 simplify.(Jac)
 ```
@@ -394,7 +401,7 @@ simplify.(Jac)
 `SymPy` array objects have a `jacobian` method to make this easier to do. The calling style is Python-like, using `object.method(...)`:
 
 ```julia;
-[r, theta].jacobian([a, b])
+[rⱼ, θⱼ].jacobian([a, b])
 ```
 
 
@@ -458,12 +465,17 @@ function cartesian_from_cylindrical(r, theta, z)
     z = z
     [x, y, z]
 end
+
+spherical_from_cartesian(v) = spherical_from_cartesian(v...)
+cartesian_from_spherical(v) = cartesian_from_spherical(v...)
+cylindrical_from_cartesian(v)= cylindrical_from_cartesian(v...)
+cartesian_from_cylindrical(v) = cartesian_from_cylindrical(v...)
 ```
 
 The Jacobian of a transformation can be found from these conversions. For example, the conversion from spherical to cartesian would have Jacobian computed by:
 
 ```julia;
-@syms r::real theta::real phi::real
+@syms r::real
 
 ex1 = cartesian_from_spherical(r, theta, phi)
 J1 = ex1.jacobian([r, theta, phi])
@@ -478,9 +490,9 @@ det(J1) |> simplify
 There is no function to convert from spherical to cylindrical above, but clearly one can be made by *composition*:
 
 ```julia;
-cylindrical_from_cartesian(v) = cylindrical_from_cartesian(v...)   # allow a vector of arguments
-
-cylindrical_from_spherical(r, theta, phi) = (cylindrical_from_cartesian ∘ cartesian_from_spherical)(r, theta, phi)
+cylindrical_from_spherical(r, theta, phi) =
+    cylindrical_from_cartesian(cartesian_from_spherical(r, theta, phi)...)
+cylindrical_from_spherical(v) = cylindrical_from_spherical(v...)
 ```
 
 From this composition, we could compute the Jacobian directly, as with:
@@ -530,7 +542,7 @@ gradient(f::Function) = x -> ForwardDiff.gradient(f, x)
 
 With this, defining a Jacobian function *could* be done like:
 
-```julia;
+```julia; eval=false
 function Jacobian(F, x)
     n = length(F(x...))
     grads = [gradient(x -> F(x...)[i])(x) for i in 1:n]
@@ -545,16 +557,12 @@ Using the above functions, we can verify the last example at a point:
 
 ```julia;
 rtp = [1, pi/3, pi/4]
-cylindrical_from_spherical(v) = cylindrical_from_spherical(v...)
-
 ForwardDiff.jacobian(cylindrical_from_spherical, rtp)
 ```
 
 The chain rule gives the same answer up to roundoff error:
 
 ```julia;
-cartesian_from_spherical(v) = cartesian_from_spherical(v...)
-
 ForwardDiff.jacobian(cylindrical_from_cartesian, cartesian_from_spherical(rtp)) * ForwardDiff.jacobian(cartesian_from_spherical, rtp)
 ```
 
@@ -568,9 +576,9 @@ For a change of variable problem, $F:R^n \rightarrow R^n$, the determinant of th
 
 Assuming $F^{-1}$ exists, we can verify the last part from the chain rule, in an identical manner to the univariate case, starting with $F^{-1} \circ F$ being the identity, we would have:
 
-$$~
+```math
 J_{F^{-1}\circ F}(p) = I,
-~$$
+```
 
 where $I$ is the *identity* matrix with entry $a_{ij} = 1$ when $i=j$ and $0$ otherwise.
 
@@ -581,9 +589,6 @@ The theorem is an existential theorem, in that it implies $F^{-1}$ exists, but d
 The transformation examples have inverses indicated. Using one of these we can verify things at a point, as done in the following:
 
 ```julia;
-cartesian_from_spherical(v) = cartesian_from_spherical(v...) # F
-spherical_from_cartesian(v) = spherical_from_cartesian(v...) # F⁻¹
-
 p = [1, pi/3, pi/4]
 q = cartesian_from_spherical(p)
 
@@ -606,8 +611,8 @@ det(A1), 1/det(A2)
 
 The technique of *implicit differentiation* is a useful one, as it allows derivatives of more complicated expressions to be found. The main idea, expressed here with three variables is if an equation may be viewed as $F(x,y,z) = c$, $c$ a constant, then $z=\phi(x,y)$ may be viewed as a function of $x$ and $y$. Hence, we can use the chain rule to find: $\partial z / \partial x$ and $\partial z /\partial x$. Let $G(x,y) = \langle x, y, \phi(x,y) \rangle$ and then differentiation $(F \circ G)(x,y) = c$:
 
-$$~
-\begin{align}
+```math
+\begin{align*}
 0 &= dF_{G(x,y)} \circ dG_{\langle x, y\rangle}\\
 &= [\frac{\partial F}{\partial x}\quad \frac{\partial F}{\partial y}\quad \frac{\partial F}{\partial z}](G(x,y)) \cdot
 \left[\begin{array}{}
@@ -615,15 +620,15 @@ $$~
 0 & 1\\
 \frac{\partial \phi}{\partial x} & \frac{\partial \phi}{\partial y}
 \end{array}\right].
-\end{align}
-~$$
+\end{align*}
+```
 
 Solving yields
 
-$$~
+```math
 \frac{\partial \phi}{\partial x} = -\frac{\partial F/\partial x}{\partial F/\partial z},\quad
 \frac{\partial \phi}{\partial y} = -\frac{\partial F/\partial y}{\partial F/\partial z}.
-~$$
+```
 
 Where the right hand side of each is evaluated at $G(x,y)$.
 
@@ -633,23 +638,23 @@ The [Implicit Function Theorem](https://en.wikipedia.org/wiki/Implicit_function_
 
 > Let $F:R^{n+m} \rightarrow R^m$ be a continuously differentiable function and let $R^{n+m}$ have (compactly defined) coordinates $\langle \vec{x}, \vec{y} \rangle$, Fix a point $\langle \vec{a}, \vec{b} \rangle$ with $F(\vec{a}, \vec{b}) = \vec{0}$. Let $J_{F, \vec{y}}(\vec{a}, \vec{b})$ be the Jacobian restricted to *just* the $y$ variables. ($J$ is $m \times m$.) If this matrix has non-zero determinant (it is invertible), then there exists an open set $U$ containing $\vec{a}$ and a *unique* continuously differentiable function $G: U \subset R^n \rightarrow R^m$ such that $G(\vec{a}) = \vec{b}$, $F(\vec{x}, G(\vec{x})) = 0$ for $\vec x$ in $U$. Moreover, the partial derivatives of $G$ are given by the matrix product:
 >
-$$~
+```math
 \frac{\partial G}{\partial x_j}(\vec{x}) = - [J_{F, \vec{y}}(x, F(\vec{x}))]^{-1} \left[\frac{\partial F}{\partial x_j}(x, G(\vec{x}))\right].
-~$$
+```
 
 ----
 
 Specializing to our case above, we have $f:R^{2+1}\rightarrow R^1$ and $\vec{x} = \langle a, b\rangle$ and $\phi:R^2 \rightarrow R$. Then
 
-$$~
+```math
 [J_{f, \vec{y}}(x, g(\vec{x}))] = [\frac{\partial f}{\partial z}(a, b, \phi(a,b)],
-~$$
+```
 
 a $1\times 1$ matrix, identified as a scalar, so inversion is just the reciprocal. So the formula, becomes, say for $x_1 = x$:
 
-$$~
+```math
 \frac{\partial \phi}{\partial x}(a, b) = - \frac{\frac{\partial{f}}{\partial{x}}(a, b,\phi(a,b))}{\frac{\partial{f}}{\partial{z}}(a, b, \phi(a,b))},
-~$$
+```
 
 as expressed above. Here invertibility is simply a non-zero value, and is needed for the division. In general, we see inverse (the $J^{-1}$) is necessary to express the answer.
 
@@ -660,18 +665,18 @@ Let $x^2/a^2 + y^2/b^2 + z^2/c^2 = 1$ be an equation describing an ellipsoid. De
 
 We would like to express the tangent plane in terms of $\partial{z}/\partial{x}$ and $\partial{z}/\partial{y}$, which we can do through:
 
-$$~
+```math
 \frac{2x}{a^2} + \frac{2z}{c^2} \frac{\partial{z}}{\partial{x}} = 0, \quad
 \frac{2y}{a^2} + \frac{2z}{c^2} \frac{\partial{z}}{\partial{y}} = 0.
-~$$
+```
 
 Solving, we get
 
-$$~
+```math
 \frac{\partial{z}}{\partial{x}} = -\frac{2x}{a^2}\frac{c^2}{2z},
 \quad
 \frac{\partial{z}}{\partial{y}} = -\frac{2y}{a^2}\frac{c^2}{2z},
-~$$
+```
 
 *provided* $z \neq 0$. At $z=0$ the tangent plane exists, but we can't describe it in this manner, as it is vertical. However, the choice of variables to use is not fixed in the theorem, so if $x \neq 0$ we can express $x = x(y,z)$ and express the tangent plane in terms of $\partial{x}/\partial{y}$ and $\partial{x}/\partial{z}$. The answer is similar to the above, and we won't repeat. Similarly, should $x = z = 0$, the $y \neq 0$ and we can use an implicit definition $y = y(x,z)$ and express the tangent plane through  $\partial{y}/\partial{x}$ and $\partial{y}/\partial{z}$.
 
@@ -682,9 +687,9 @@ $k < n$ constraints $g_1(\vec{x}) = c_1, g_2(\vec{x}) = c_2, \dots, g_{k}(\vec{x
 
 The same thing holds in dimension $n > 2$: Let $\vec{x}_0$ be a point where $f(\vec{x})$ is maximum subject to the $p$ constraints. We want to show that $\vec{x}_0$ must satisfy:
 
-$$~
+```math
 \nabla{f}(\vec{x}_0) = \sum \lambda_i \nabla{g_i}(\vec{x}_0).
-~$$
+```
 
 By considering $-f$, the same holds for a minimum.
 
@@ -701,9 +706,9 @@ If we consider $f(\vec{x}_0 + h \vec{b})$ for small $h$, then unless $\vec{b} \c
 That is, $\vec{x}_0$ would not be a maximum on the constraint. So at $\vec{x}_0$ this directional derivative is $0$.
 
 Then we have the directional derivative in the direction of $b$ is $\vec{0}$, as the gradient
-$$~
+```math
 \vec{0} = \vec{b} \cdot \nabla{f}(\vec{x}_0) = \vec{b} \cdot (\vec{a} + \vec{b}) = \vec{b}\cdot \vec{a} + \vec{b}\cdot\vec{b} = \vec{b}\cdot\vec{b},
-~$$
+```
 
 or $\| \vec{b} \| = 0$ and $\nabla{f}(\vec{x}_0)$ must lie in the plane $A$.
 
@@ -740,9 +745,9 @@ so $\vec{r}$ and $\vec{b}$ must be parallel.
 
 We apply this to two problems, also from Sawyer. First, let $n > 1$ and $f(x_1, \dots, x_n) = \sum x_i^2$. Minimize this subject to the constraint $\sum x_i = 1$. This one constraint means an answer must satisfy $\nabla{L} = \vec{0}$ where
 
-$$~
+```math
 L(x_1, \dots, x_n, \lambda) = \sum x_i^2 + \lambda \sum x_i - 1.
-~$$
+```
 
 Taking $\partial/\partial{x_i}$ we have $2x_i + \lambda = 0$, so $x_i = \lambda/2$, a constant. From the constraint, we see $x_i = 1/n$. This does not correspond to a  maximum, but a minimum. A maximum would be at point on the constraint such as $\langle 1, 0, \dots, 0\rangle$, which gives a value of $1$ for $f$, not $n \times 1/n^2 = 1/n$.
 
@@ -758,9 +763,9 @@ The BLUE *minimizes* the *variance* of the estimator. (This is the *B*est part o
 
 Going from statistics to mathematics, we use formulas for *independent* random variables to restate this problem mathematically as:
 
-$$~
+```math
 \text{Minimize } \sum a_i^2 \sigma_i^2 \text{ subject to } \sum a_i = 1.
-~$$
+```
 
 This problem is similar now to the last one, save the sum to minimize includes the sigmas. Set $L = \sum a_i^2 \sigma_i^2  + \lambda\sum a_i - 1$
 
@@ -780,20 +785,19 @@ For the special case of a common variance, $\sigma_i=\sigma$, the above simplifi
 
 The following plots a surface defined by a (hidden) function $F: R^2 \rightarrow R^3$:
 
-```julia; echo=false; results="hidden"
-F(u, v) = [u*cos(v), u*sin(v), 2v]
-plotly()
+```julia; echo=false;
+𝑭(u, v) = [u*cos(v), u*sin(v), 2v]
 ```
 
-```julia;
+```julia; hold=true;
 us, vs = range(0, 1, length=25), range(0, 2pi, length=25)
-xs, ys, zs = unzip(F.(us, vs'))
+xs, ys, zs = unzip(𝑭.(us, vs'))
 surface(xs, ys, zs)
 ```
 
 Is this the surface generated by $F(u,v) = \langle u\cos(v), u\sin(v), 2v\rangle$? This function's surface is termed a helicoid.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq(true)
 ```
 
@@ -801,20 +805,20 @@ yesnoq(true)
 
 The following plots a surface defined by a (hidden) function $F: R^2 \rightarrow R^3$ of the form $F(u,v) = \langle r(u)\cos(v), r(u)\sin(v), u\rangle$
 
-```julia; echo=false
-rad(u) = 1 + u^2
-F(u, v) = [rad(u)*cos(v), rad(u)*sin(v), u]
+```julia;
+𝓇ad(u) = 1 + u^2
+ℱ(u, v) = [𝓇ad(u)*cos(v), 𝓇ad(u)*sin(v), u]
 ```
 
-```julia;
+```julia; hold=true;
 us, vs = range(-1, 1, length=25), range(0, 2pi, length=25)
-xs, ys, zs = unzip(F.(us, vs'))
+xs, ys, zs = unzip(ℱ.(us, vs'))
 surface(xs, ys, zs)
 ```
 
 Is this the surface generated by $r(u) = 1+u^2$? This form of a function is for a surface of revolution about the $z$ axis.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq(true)
 ```
 
@@ -822,16 +826,16 @@ yesnoq(true)
 
 The transformation $F(x, y) = \langle 2x + 3y + 1, 4x + y + 2\rangle$ is an example of an affine transformation. Is this the *Jacobian* of $F$
 
-$$~
+```math
 J = \left[
 \begin{array}{}
 2 & 4\\
 3 & 1
 \end{array}
 \right].
-~$$
+```
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 "Yes",
 "No, it is the transpose"
@@ -844,17 +848,17 @@ radioq(choices, ans, keep_order=true)
 
 Does the transformation $F(u,v) = \langle u^2 - v^2, u^2 + v^2 \rangle$ have Jacobian
 
-$$~
+```math
 J = \left[
 \begin{array}{}
 2u & -2v\\
 2u & 2v
 \end{array}
 \right]?
-~$$
+```
 
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 "Yes",
 "No, it is the transpose"
@@ -866,14 +870,14 @@ radioq(choices, ans, keep_order=true)
 ###### Question
 
 Fix constants $\lambda_0$ and $\phi_0$ and define a transformation
-$$~
+```math
 F(\lambda, \phi) = \langle \cos(\phi)\sin(\lambda - \lambda_0),
 \cos(\phi_0)\sin(\phi) - \sin(\phi_0)\cos(\phi)\cos(\lambda - \lambda_0) \rangle
-~$$
+```
 
 What does the following `SymPy` code compute?
 
-```julia;
+```julia; hold=true;
 @syms lambda lambda_0 phi phi_0
 F(lambda,phi) = [cos(phi)*sin(lambda-lambda_0), cos(phi_0)*sin(phi) - sin(phi_0)*cos(phi)*cos(lambda-lambda_0)]
 
@@ -881,7 +885,7 @@ out = [diff.(F(lambda, phi), lambda) diff.(F(lambda, phi), phi)]
 det(out) |> simplify
 ```
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 "The determinant of the Jacobian.",
 "The determinant of the Hessian.",
@@ -894,7 +898,7 @@ radioq(choices, ans, keep_order=true)
 
 What would be a more direct method:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 "`det(F(lambda, phi).jacobian([lambda, phi]))`",
 "`det(hessian(F(lambda, phi), [lambda, phi]))`",
@@ -908,11 +912,11 @@ radioq(choices, ans, keep_order=true)
 
 Let $z\sin(z) = x^3y^2 + z$. Compute $\partial{z}/\partial{x}$ implicitly.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"3x^2y^2/(z\cos(z) + \sin(z) + 1)",
-L"2x^3y/ (z\cos(z) + \sin(z) + 1)",
-L"3x^2y^2"
+    raw"`` 3x^2y^2/(z\cos(z) + \sin(z) + 1)``",
+    raw"`` 2x^3y/ (z\cos(z) + \sin(z) + 1)``",
+    raw"`` 3x^2y^2``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -923,11 +927,11 @@ radioq(choices, ans)
 
 Let $x^4 + y^4 + z^4 + x^2y^2z^2 = 1$. Compute $\partial{z}/\partial{y}$ implicitly.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"\frac{y \left(- x^{2} z^{2}{\left (x,y \right )} + 2 y^{2}\right)}{\left(x^{2} y^{2} - 2 z^{2}{\left (x,y \right )}\right) z{\left (x,y \right )}}",
-L"\frac{x \left(2 x^{2} - y^{2} z^{2}{\left (x,y \right )}\right)}{\left(x^{2} y^{2} - 2 z^{2}{\left (x,y \right )}\right) z{\left (x,y \right )}}",
-L"\frac{x \left(2 x^{2} - z^{2}{\left (x,y \right )}\right)}{\left(x^{2} - 2 z^{2}{\left (x,y \right )}\right) z{\left (x,y \right )}}"
+    raw"`` \frac{y \left(- x^{2} z^{2}{\left (x,y \right )} + 2 y^{2}\right)}{\left(x^{2} y^{2} - 2 z^{2}{\left (x,y \right )}\right) z{\left (x,y \right )}}``",
+    raw"`` \frac{x \left(2 x^{2} - y^{2} z^{2}{\left (x,y \right )}\right)}{\left(x^{2} y^{2} - 2 z^{2}{\left (x,y \right )}\right) z{\left (x,y \right )}}``",
+    raw"`` \frac{x \left(2 x^{2} - z^{2}{\left (x,y \right )}\right)}{\left(x^{2} - 2 z^{2}{\left (x,y \right )}\right) z{\left (x,y \right )}}``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -939,11 +943,11 @@ Consider the vector field $R:R^2 \rightarrow R^2$ defined by $R(x,y) = \langle x
 
 What is $\nabla{r}$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"R/r",
-L"S/r",
-L"R"
+    raw"`` R/r``",
+    raw"`` S/r``",
+    raw"`` R``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -951,11 +955,11 @@ radioq(choices, ans)
 
 Let $\phi = r^k$. What is $\nabla{\phi}$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"k r^{k-2} R",
-L"kr^k R",
-L"k r^{k-2} S"
+    raw"`` k r^{k-2} R``",
+    raw"`` kr^k R``",
+    raw"`` k r^{k-2} S``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -963,17 +967,17 @@ radioq(choices, ans)
 
 Based on your last answer, are all radial fields $R/r^n$, $n\geq 0$ gradients of scalar functions?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 yesnoq(true)
 ```
 
 Let $\phi = \tan^{-1}(y/x)$. What is $\nabla{\phi}$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"S/r^2",
-L"S/r",
-L"S"
+    raw"`` S/r^2``",
+    raw"`` S/r``",
+    raw"`` S``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -981,7 +985,8 @@ radioq(choices, ans)
 
 Express $S/r^n = \langle F_x, F_y\rangle$. For which $n$ is $\partial{F_y}/\partial{x} - \partial{F_x}/\partial{y} = 0$?
 
-```julia; echo=false
+
+```julia; hold=true; echo=false
 choices = [
 L"As the left-hand side becomes $(-n+2)r^{-n}$, only $n=2$.",
 L"All $n \geq 0$",
@@ -992,9 +997,3 @@ radioq(choices, ans)
 ```
 
 (The latter is of interest, as only when the expression is $0$ will the vector field be the gradient of a scalar function.)
-
-
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
-```

@@ -42,7 +42,7 @@ Note: for a vector of points, `xs`, each of length `2`, a similar functionality 
 ```
 
 """
-unzip(vs::Vector) = Tuple([[vs[i][j] for i in eachindex(vs)] for j in eachindex(vs[1])])
+unzip(vs::Vector) = SplitApplyCombine.invert(vs) #Tuple([[vs[i][j] for i in eachindex(vs)] for j in eachindex(vs[1])])
 function unzip(ws::Array; recursive=false)
     if recursive
         unzip([unzip(ws[:,j]) for j in 1:size(ws)[end]])
