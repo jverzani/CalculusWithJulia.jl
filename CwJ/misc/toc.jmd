@@ -286,11 +286,13 @@ Here is a quick review of the math topics discussed on vector calculus.
 
 - [Review of vector calculus](integral_vector_calculus/review.html)
 
-For reference purposes, there are examples of creating graphics for `Plots` and `Makie`.
+For reference purposes, there are examples of creating graphics for `Plots`,`Makie`, and `PlotlyLight`.
 
-- [Two- and three-dimensional graphics with Plots](differentiable_vector_calculus/plots-plotting.html)
+- [Two- and three-dimensional graphics with Plots](differentiable_vector_calculus/plots_plotting.html)
 
-- [Two- and three-dimensional graphics with Makie](alternatives/makie-plotting.html)
+- [Two- and three-dimensional graphics with Makie](alternatives/makie_plotting.html)
+
+- [Two- and three-dimensional graphics with PlotlyLight](alternatives/plotly_plotting.html)
 
 
 ## Bibliography
