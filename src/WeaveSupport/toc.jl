@@ -65,6 +65,7 @@ table_of_contents = [
     :differentiable_vector_calculus		:vector_fields;
     :differentiable_vector_calculus		:plots_plotting;
     :alternatives		:makie_plotting;
+    :alternatives		:plotly_plotting;
 
     :integral_vector_calculus		:double_triple_integrals;
     :integral_vector_calculus		:line_inegrals;

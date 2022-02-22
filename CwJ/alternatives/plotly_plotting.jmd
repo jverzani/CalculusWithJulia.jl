@@ -15,7 +15,7 @@ using SplitApplyCombine
 
 ----
 
-`Julia` has different interfaces to a few JavaScript plotting libraries, notably the [vega](https://vega.github.io/vega/) and [vega-lite](https://vega.github.io/vega-lite/)  through the [VegaLite.jl](https://github.com/queryverse/VegaLite.jl) package, and [plotly](https://plotly.com/javascript/) through several interfaces: `Plots.jl`, `PlotlyJS.jl`, and `PlotlyLight.jl`.
+`Julia` has different interfaces to a few JavaScript plotting libraries, notably the [vega](https://vega.github.io/vega/) and [vega-lite](https://vega.github.io/vega-lite/)  through the [VegaLite.jl](https://github.com/queryverse/VegaLite.jl) package, and [plotly](https://plotly.com/javascript/) through several interfaces: `Plots.jl`, `PlotlyJS.jl`, and `PlotlyLight.jl`. These all make web-based graphics, for display through a web browser.
 
 The `Plots.jl` interface is a backend for the familiar `Plots` package, making the calling syntax familiar, as is used throughout these notes. The `plotly()` command, from `Plots`, switches to this backend.
 
