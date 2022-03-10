@@ -114,7 +114,7 @@ The equation for the tangent plane is often expressed in a more explicit form. F
 f(a,b) + \frac{\partial f}{\partial x} dx + \frac{\partial f}{\partial y} dy,
 ```
 
-which is a common form for the equation, though possibly confusing, as $\partial x$ and $dx$ need to be distinguished. For $n > 2$, additional terms follow this pattern. This explicit form is helpful when doing calculations by hand, but much less so when working on the computer, say with `Julia`, as the representations using vectors (or matrices) can be readily implemented and their representation much closer to the formulas. For example, consider these two possible functions to find the tangent plane (returned as a function) at a point in 2 dimensions
+which is a common form for the equation, though possibly confusing, as $\partial x$ and $dx$ need to be distinguished. For $n > 2$, additional terms follow this pattern. This explicit form is helpful when doing calculations by hand, but much less so when working on the computer, say with `Julia`, as the representations using vectors (or matrices) can be readily implemented and their representation much closer to the formulas. For example, consider these two possible functions to find the tangent plane (returned as a function) at a point in ``2`` dimensions
 
 ```julia;
 function tangent_plane_1st_crack(f, pt)
@@ -149,7 +149,7 @@ generalization agrees on the easier case.
 
 For clarity:
 
-* The scalar function $z = f(x,y)$ describes a surface, $(x,y,f(x,y)$; the gradient, $\nabla{f}$ is $2$ dimensional and points in the direction of greatest ascent for the surface.
+* The scalar function $z = f(x,y)$ describes a surface, $(x,y,f(x,y))$; the gradient, $\nabla{f}$, is $2$ dimensional and points in the direction of greatest ascent for the surface.
 * The scalar function $f(x,y,z)$ *also* describes a surface, through level curves $f(x,y,z) = c$, for some *constant* $c$. The gradient $\nabla{f}$ is $3$ dimensional and *orthogonal* to the surface.
 
 
@@ -171,7 +171,7 @@ vars = [x, y]
 gradf = diff.(f(x,y), vars)  # or use gradient(f, vars) or ∇((f,vars))
 
 pt = [PI/4, PI/3]
-gradfa = subs.(gradf, x.=>pt[1], y.=>pt[2])
+gradfa = subs.(gradf, x=>pt[1], y=>pt[2])
 
 f(pt) + gradfa ⋅ (vars - pt)
 ```
@@ -208,7 +208,7 @@ t = 1/2
 
 #### Plotting level curves of $F(x,y,z) = c$
 
-The `wireframe` plot can be used to a surface of the type `z=f(x,y)`, as previously illustrated. However we have no way of plotting $3$-dimensional implicit surfaces (of the type $F(x,y,z)=c$) as we do for $2$-dimensional implicit surfaces with `Plots`. (The `MDBM` or  `IntervalConstraintProgramming` packages can be used along with `Makie` plotting package to produce one.)
+The `wireframe` plot can be used to visualize a surface of the type `z=f(x,y)`, as previously illustrated. However we have no way of plotting $3$-dimensional implicit surfaces (of the type $F(x,y,z)=c$) as we do for $2$-dimensional implicit surfaces with `Plots`. (The `MDBM` or  `IntervalConstraintProgramming` packages can be used along with `Makie` plotting package to produce one.)
 
 The `CalculusWithJulia` package provides a stop-gap function, `plot_implicit_surface` for this task.
 The basic idea is to slice an axis, by default the $z$ axis up and for each level plot the contours of $(x,y) \rightarrow f(x,y,z)-c$, which becomes a $2$-dimensional problem. The function allows any of 3 different axes to be chosen to slice over, the default being just the $z$ axis.
@@ -217,8 +217,8 @@ The basic idea is to slice an axis, by default the $z$ axis up and for each leve
 We demonstrate with an example from a February 14, 2019 article in the [New York Times](https://www.nytimes.com/2019/02/14/science/math-algorithm-valentine.html). It shows an equation for a "heart," as the graphic will illustrate:
 
 ```julia; hold=true
-a,b = 1,3
-f(x,y,z) = (x^2+((1+b)*y)^2+z^2-1)^3-x^2*z^3-a*y^2*z^3
+a, b = 1, 3
+f(x,y,z) = (x^2 + ((1+b) * y)^2 + z^2 - 1)^3 - x^2 * z^3 - a * y^2 * z^3
 
 CalculusWithJulia.plot_implicit_surface(f, xlim=-2..2, ylim=-1..1, zlim=-1..2)
 ```
@@ -272,7 +272,7 @@ Using linear approximation with $dx=0.1$ and $dy=-0.1$, this is
 f(1,1) + \nabla{f}(1,1) \cdot \langle 0.1, -0.1\rangle,
 ```
 
-where $f(1,1) = sin(\pi) = 0$ and $\nabla{f} = \langle y^2\cos(\pi x y^2), \cos(\pi x y^2) 2y\rangle = \cos(\pi x y^2)\langle x,2y\rangle$. So, the answer is:
+where $f(1,1) = \sin(\pi) = 0$ and $\nabla{f} = \langle y^2\cos(\pi x y^2), \cos(\pi x y^2) 2y\rangle = \cos(\pi x y^2)\langle x,2y\rangle$. So, the answer is:
 
 ```math
 0 + \cos(\pi) \langle 1,2\rangle\cdot \langle 0.1, -0.1 \rangle =
@@ -328,7 +328,7 @@ to the answer, and the process is iterated to get a *good enough*
 approximation, as defined through some tolerance.
 
 Consider the functions $f(x,y) =2 - x^2 - y^2$ and
-$g(x,y) = 3 - 2x^2 - (1/3)y^2$. These graphs show their surfaces with the level sets for $c=0$ drawn and just the levels sets, showing they intersect in 4 places.
+$g(x,y) = 3 - 2x^2 - (1/3)y^2$. These graphs show their surfaces with the level sets for $c=0$ drawn and just the levels sets, showing they intersect in ``4`` places.
 
 
 ```julia; hold=true; echo=false
@@ -430,7 +430,7 @@ The new function values are
 𝒇(𝒙₁), 𝒈(𝒙₁)
 ```
 
-We can get better approximations by iterating. Here we hard code 4 more steps:
+We can get better approximations by iterating. Here we hard code ``4`` more steps:
 
 ```julia;
 𝒙₂ = newton_step(𝒇, 𝒈, 𝒙₁)
@@ -595,7 +595,7 @@ This function is differentiable and the gradient is given by:
 \nabla{f} = -2/5e^{-(x^2 + y^2)/5} (5\sin(x^2 + y^2) + \cos(x^2 + y^2)) \langle x, y \rangle.
 ```
 
-This is zero at the origin, or when $ 5\sin(x^2 + y^2) = -\cos(x^2 + y^2)$. The latter is $0$ on circles of radius $r$ where $5\sin(r) = \cos(r)$ or $r = \tan^{-1}(-1/5) + k\pi$ for $k = 1, 2, \dots$. This matches the graph, where the extrema are on circles by symmetry. Imagine now, picking a value where the function takes a maximum and adding the tangent plane. As the gradient is $\vec{0}$, this will be flat. The point at the origin will have the surface fall off from the tangent plane in each direction, whereas the other points, will have a circle where the tangent plane rests on the surface, but otherwise will fall off from the tangent plane. Characterizing this "falling off" will help to identify local maxima that are distinct.
+This is zero at the origin, or when $5\sin(x^2 + y^2) = -\cos(x^2 + y^2)$. The latter is $0$ on circles of radius $r$ where $5\sin(r) = \cos(r)$ or $r = \tan^{-1}(-1/5) + k\pi$ for $k = 1, 2, \dots$. This matches the graph, where the extrema are on circles by symmetry. Imagine now, picking a value where the function takes a maximum and adding the tangent plane. As the gradient is $\vec{0}$, this will be flat. The point at the origin will have the surface fall off from the tangent plane in each direction, whereas the other points, will have a circle where the tangent plane rests on the surface, but otherwise will fall off from the tangent plane. Characterizing this "falling off" will help to identify local maxima that are distinct.
 
 ----
 
@@ -631,9 +631,9 @@ The generalization of the *second* derivative test is more concrete though. Reca
 ----
 
 
-The intuition behind a  proof follows. The case when $f_{xx} > 0$ and $d > 0$ uses a consequence of these assumptions that for any non-zero vector $\vec{x}$ it *must* be that $x\cdot(Hx) > 0$ ([positive definite](https://en.wikipedia.org/wiki/Definiteness_of_a_matrix)) *and* the quadratic approximation $f(\vec{a}+d\vec{x}) \approx f(\vec{a}) + \nabla{f}(\vec{a}) \cdot d\vec{x} + d\vec{x} \cdot (Hd\vec{x}) = f(\vec{a}) + d\vec{x} \cdot (Hd\vec{x})$, so for any $d\vec{x}$ small enough, $f(\vec{a}+d\vec{x}) \geq f(\vec{a})$. That is $f(\vec{a})$ is a local minimum. Similarly, a proof for the local maximum follows by considering $-f$. Finally, if $d < 0$, then there are vectors, $d\vec{x}$, for which  $ d\vec{x} \cdot (Hd\vec{x})$ will have different signs, and along these vectors the function will be concave up/concave down.
+The intuition behind a  proof follows. The case when $f_{xx} > 0$ and $d > 0$ uses a consequence of these assumptions that for any non-zero vector $\vec{x}$ it *must* be that $x\cdot(Hx) > 0$ ([positive definite](https://en.wikipedia.org/wiki/Definiteness_of_a_matrix)) *and* the quadratic approximation $f(\vec{a}+d\vec{x}) \approx f(\vec{a}) + \nabla{f}(\vec{a}) \cdot d\vec{x} + d\vec{x} \cdot (Hd\vec{x}) = f(\vec{a}) + d\vec{x} \cdot (Hd\vec{x})$, so for any $d\vec{x}$ small enough, $f(\vec{a}+d\vec{x}) \geq f(\vec{a})$. That is $f(\vec{a})$ is a local minimum. Similarly, a proof for the local maximum follows by considering $-f$. Finally, if $d < 0$, then there are vectors, $d\vec{x}$, for which  $d\vec{x} \cdot (Hd\vec{x})$ will have different signs, and along these vectors the function will be concave up/concave down.
 
-Apply this to $f(x,y) = xy$ at $\vec{a} = \vec{0}$ we have $f_{xx} = f_{yy} = 0$ and $f_{xy} = 1$, so the determinant of the Hessian is $-1$. By the second partial derivative test, this critical point is a saddle point, as seen from the previous graph.
+Apply this to $f(x,y) = xy$ at $\vec{a} = \vec{0}$ we have $f_{xx} = f_{yy} = 0$ and $f_{xy} = 1$, so the determinant of the Hessian is $-1$. By the second partial derivative test, this critical point is a saddle point, as seen from a previous graph.
 
 
 Applying this to $f(x,y) = e^{-(x^2 + y^2)/5} \cos(x^2 + y^2)$, we will use `SymPy` to compute the derivatives, as they get a bit involved:
@@ -785,7 +785,7 @@ The extrema are identified by the enclosing regions, in this case the one around
 
 This is from [Strang](https://ocw.mit.edu/resources/res-18-001-calculus-online-textbook-spring-2005/textbook/MITRES_18_001_strang_13.pdf) p 506.
 
-We have three points in the plane, $(x_1, y_1)$, $(x_2, y_2)$, and $(x_3,y_3)$. A point $p=(p_x, p_y)$ will have $3$ distances $d_1$, $d_2$, and $d_3$. Broadly speaking we want to minimize to find the point $p$ "nearest" the three fixed points within the triangle. Locating a facility so that it can service 3 separate cities might be one application. The answer depends on the notion of what measure of distance to use.
+We have three points in the plane, $(x_1, y_1)$, $(x_2, y_2)$, and $(x_3,y_3)$. A point $p=(p_x, p_y)$ will have $3$ distances $d_1$, $d_2$, and $d_3$. Broadly speaking we want to minimize to find the point $p$ "nearest" the three fixed points within the triangle. Locating a facility so that it can service ``3`` separate cities might be one application. The answer depends on the notion of what measure of distance to use.
 
 If the measure is the Euclidean distance, then $d_i^2 = (p_x - x_i)^2 + (p_y - y_i)^2$. If we sought to minimize $d_1^2 + d_2^2 + d_3^2$, then we would proceed as follows:
 
@@ -1101,7 +1101,7 @@ function newton_stepₚ(f, x)
 end
 ```
 
-We perform 3 steps of Newton's method, and see that it has found a critical point.
+We perform ``3`` steps of Newton's method, and see that it has found a critical point.
 
 ```julia;
 xₚ = [0, 1.5]

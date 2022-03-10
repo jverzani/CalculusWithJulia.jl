@@ -484,7 +484,7 @@ r(\theta) = a + b \theta
 
 That is, the radius increases linearly. The crossings of the positive $x$ axis occur at $a + b n 2\pi$, so are evenly spaced out by $2\pi b$. These could be a model for such things as coils of materials of uniform thickness.
 
-For example, a roll of toilet paper promises 1000 sheets with the
+For example, a roll of toilet paper promises ``1000`` sheets with the
 [smaller](http://www.phlmetropolis.com/2011/03/the-incredible-shrinking-toilet-paper.php)
 $4.1 \times 3.7$ inch size. This $3700$ inch long connected sheet of
 paper is wrapped around a paper tube in an Archimedean spiral with
@@ -572,7 +572,7 @@ numericq(val)
 What is slope of the line?
 
 ```julia; hold=true; echo=false
-r(theta) == 3 * sec(theta -pi/4)
+r(theta) = 3 * sec(theta -pi/4)
 val = (r(pi/2)*sin(pi/2) - r(pi/4)*sin(pi/4)) / (r(pi/2)*cos(pi/2) - r(pi/4)*cos(pi/4))
 numericq(val)
 ```

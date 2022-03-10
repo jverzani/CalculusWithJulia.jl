@@ -1384,3 +1384,101 @@ What is ``[\csc(x)]'``? (Use ``\csc(x) = 1/\sin(x)``.)
 ```julia; echo=false
 radioq(trig_choices, 4)
 ```
+
+##### Question
+
+Consider this picture of composition:
+
+```julia; hold=true; echo=false
+f(x) = sin(x)
+g(x) = exp(x)
+a,b = 0, 1.6
+xs = range(a, b, length=100)
+ys = g.(xs)
+us = range(extrema(ys)..., length=100)
+vs = f.(us)
+pf = plot(vs, us, ylim=extrema(ys), ymirror=true, legend=false)
+xs′ = range(0.5, 1.5, length=100)
+us′ = g.(xs′)
+vs′ = [f(g(1) + g'(1)*(x-1)) for x ∈ xs′]
+plot!(pf, vs′, us′)
+
+plot!(pf, [1, f(g(1)), f(g(1))], [g(1), g(1), 1])
+quiver!(pf, [.75, f(g(1))], [g(1), 2], quiver=([-.01, 0],[0, -0.1]))
+pg = plot(xs, ys, ylim=extrema(ys), legend=false)
+plot!(pg, [1,1,0],[1, g(1),g(1)])
+quiver!(pg, [1, 0.5], [2, g(1)], quiver=([0, -0.1],[0.1, 0]))
+plot!(tangent(g,1))
+l = @layout [a b]
+plot(pf, pg, layout=l)
+```
+
+The right graph is of ``g(x) = \exp(x)`` at ``x=1``, the left graph of ``f(x) = \sin(x)`` *rotated* ``90`` degrees counter-clockwise. Chasing the arrows shows graphically how ``f(g(1))`` can be computed. The nearby values ``f(g(1+h))`` are -- using the tangent line of ``g`` at ``x-1`` -- approximated by ``f(g(1) + g'(1)\cdot h)``, as shown in the graph segment on the left.
+
+Assuming the approximation gets better for ``h`` close to ``0``, as it visually does, the derivative at ``1`` for ``f(g(x))`` should be given by this limit:
+
+
+```math
+\begin{align*}
+\frac{d(f\circ g)}{dx}\mid_{x=1}
+&= \lim_{h\rightarrow 0} \frac{f(g(1) + g'(1)h)-f(g(1))}{h}\\
+&= \lim_{h\rightarrow 0} \frac{f(g(1) + g'(1)h)-f(g(1))}{h}\\
+&= \lim_{h\rightarrow 0} \frac{f(g(1) + g'(1)h)-f(g(1))}{g'(1)h} \cdot g'(1)\\
+&= \lim_{h\rightarrow 0} (f\circ g)'(1) \cdot g'(1).
+\end{align*
+```
+
+Whta limit law (described below assuming all limits exist) allows the last equals sign?
+
+```julia; hold=true; echo=false
+choices = [
+"""
+The limit of a sum is the sum of the limits:
+``\lim_{x\rightarrow c}(af(x)+bg(x)) = a\lim_{x\rightarrow c}f(x) + b\lim_{x\rightarrow c}g(x)``
+""",
+"""
+The limit of a product is the product of the limits:
+``\lim_{x\rightarrow c}(f(x)\cdot g(x)) = \lim_{x\rightarrow c}f(x) \cdot \lim_{x\rightarrow c}g(x)``
+""",
+"""
+The limit of a composition (``f`` is continuous):
+``\lim_{x \rightarrow c}f(g(x)) = \lim_{v \rightarrow \lim_{x \rightarrow c}g(x)} f(v)``.
+"""
+]
+radioq(choices, 3, keep_order=true)
+```
+
+
+Consider the function ``k(x) = f(a + bx)``. We can directly find the ``k'(0)`` using a limit (as an alternative to using the chain rule):
+
+```math
+\begin{align*}
+g'(x) &= \lim_{h\rightarrow 0} \frac{k(h) - k(0)}{h}\\
+&= \lim_{h\rightarrow 0} \frac{f(a + b\cdot h) - f(a)}{h}\\
+&= \lim_{h\rightarrow 0} \frac{f(a+ bh)) - f(a)}{bh} \cdot b\\
+&= \lim_{v\rightarrow 0} \frac{f(a+ v)) - f(a)}{v} \cdot b \quad\text{where } v = bh\\
+&= f'(a) \cdot b
+\end{align*
+```
+
+Which, with ``a = g(x)`` and ``b=g'(x)`` shows heuristically that ``(f\circ g)'(x) = f'(g(x)) \cdot g'(x)``.
+
+What limit law (described below assuming all limits exist) allows the second to last equals sign?
+
+```julia; hold=true; echo=false
+choices = [
+"""
+The limit of a sum is the sum of the limits:
+``\lim_{x\rightarrow c}(af(x)+bg(x)) = a\lim_{x\rightarrow c}f(x) + b\lim_{x\rightarrow c}g(x)``
+""",
+"""
+The limit of a product is the product of the limits:
+``\lim_{x\rightarrow c}(f(x)\cdot g(x)) = \lim_{x\rightarrow c}f(x) \cdot \lim_{x\rightarrow c}g(x)``
+""",
+"""
+The limit of a composition (``f`` is continuous):
+``\lim_{x \rightarrow c}f(g(x)) = \lim_{v \rightarrow \lim_{x \rightarrow c}g(x)} f(v)``.
+"""
+]
+radioq(choices, 3, keep_order=true)
+```
