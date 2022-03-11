@@ -391,6 +391,97 @@ as many terms to half an error estimate, but for the trapezoid rule
 only $\sqrt{2}$ as many, and for Simpson's rule, only $2^{1/4}$ as
 many.
 
+## Area related to parameterized curves
+
+The figure introduced to motivate the integration by parts formula also suggests that areas described parametrically (by a pair of functions ``x=u(t), y=v(t)`` for ``a \le t \le b``) can have their area computed.
+
+When ``u(t)`` is strictly *increasing*, and hence having an inverse function, then re-parameterizing by ``\phi(t) = u^{-1}(t)`` gives a ``x=u(u^{-1}(t))=t, y=v(u^{-1}(t))`` and integrating this gives the area by ``A=\int_a^b v(t) u'(t) dt``
+
+However, the correct answer requires understanding a minus sign.  Consider the area enclosed by ``x(t) = \cos(t), y(t) = \sin(t)``:
+
+```julia; hold=true; echo=false
+r(t) = [cos(t), sin(t)]
+p=plot_parametric(0..2pi, r, aspect_ratio=:equal, legend=false)
+for t ∈ (pi/4, 3pi/4, 5pi/4, 7pi/4)
+	quiver!(unzip([r(t)])..., quiver=Tuple(unzip([0.1*r'(t)])))
+end
+ti, tj = pi/3, pi/3+0.1
+plot!([cos(tj), cos(ti), cos(ti), cos(tj), cos(tj)], [0,0,sin(tj), sin(tj),0])
+quiver!([0],[0], quiver=Tuple(unzip([r(ti)])))
+quiver!([0],[0], quiver=Tuple(unzip([r(tj)])))
+p
+```
+
+
+We added a rectangle for a Riemann sum for ``t_i = \pi/3`` and ``t_{i+1} = \pi/3 + \pi/8``. The height of this rectangle if ``y(t_i)``, the base is of length ``x(t_i) - x(t_{i+1})`` *given* the orientation of how the circular curve is parameterized (counter clockwise here).
+
+
+Taking this Riemann sum approach, we can approximate the area under the curve parameterized by ``(u(t), v(t))`` over the time range ``[t_i, t_{i+1}]`` as a rectangle with height ``y(t_i)`` and base ``x(t_{i}) - x(t_{i+1})``. Then we get, as expected:
+
+```math
+\begin{align*}
+A &\approx \sum_i y(t_i) \cdot (x(t_{i}) - x(t_{i+1}))\\
+  &= - \sum_i y(t_i) \cdot (x(t_{i+1}) - x(t_{i}))\\
+  &= - \sum_i y(t_i) \cdot \frac{x(t_{i+1}) - x(t_i)}{t_{i+1}-t_i} \cdot (t_{i+1}-t_i)\\
+  &\approx -\int_a^b y(t) x'(t) dt.
+\end{align*}
+```
+
+So with a counterclockwise rotation, the actual answer for the area includes a minus sign. If the area is traced out in a *clockwise* manner, there is no minus sign.
+
+
+This is a case of [Green's Theorem](https://en.wikipedia.org/wiki/Green%27s_theorem#Area_calculation) to be taken up in [Green's Theorem, Stokes' Theorem, and the Divergence Theorem](file:///Users/verzani/julia/CalculusWithJulia/html/integral_vector_calculus/stokes_theorem.html).
+
+##### Example
+
+Apply the formula to a parameterized circle to ensure, the signed area is properly computed. If we use ``x(t) = r\cos(t)`` and ``y(t) = r\sin(t)`` then we have the motion is counterclockwise:
+
+```julia; hold=true
+@syms r t
+x(t) = r*cos(t)
+y(t) = r*sin(t)
+-integrate(y(t) * diff(x(t), t), (t, 0, 2PI))
+```
+
+We see the expected answer for the area of a circle.
+
+
+##### Example
+
+Apply the formula to find the area under one arch of a cycloid, parameterized by ``x(t) = t - \sin(t), y(t) = 1 - \cos(t)``.
+
+Working symbolically, we have one arch given by the following described in a *clockwise* manner, so we use ``\int y(t) x'(t) dt``:
+
+```julia; hold=true
+@syms t
+x = t - sin(t)
+y = 1 - cos(t)
+integrate(y * diff(x, t), (t, 0, 2PI))
+```
+
+([Galileo](https://mathshistory.st-andrews.ac.uk/Curves/Cycloid/) was thwarted in finding this answer exactly and resorted to constructing one from metal to *estimate* the value.)
+
+##### Example
+
+Consider the example ``x(t) = \cos(t) + t\sin(t), y(t) = \sin(t) - t\cos(t)`` for ``0 \leq t \leq 2\pi``.
+
+```julia; hold=true; echo=false
+x(t) = cos(t) + t*sin(t)
+y(t) = sin(t) - t*cos(t)
+ts = range(0,2pi, length=100)
+plot(x.(ts), y.(ts))
+```
+
+How much area is enclosed by this curve and the ``x`` axis? The area is described in a counterclockwise manner, so we have:
+
+```julia; hold=true
+x(t) = cos(t) + t*sin(t)
+y(t) = sin(t) - t*cos(t)
+yx′(t) = -y(t) * x'(t)  # yx\prime[tab]
+quadgk(yx′, 0, 2pi)
+```
+
+This particular problem could also have been done symbolically, but many curves will need to have a numeric approximation used.
 
 
 ## Questions
