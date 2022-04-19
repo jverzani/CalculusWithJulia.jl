@@ -10,13 +10,13 @@ import Markdown
 using JSON
 using Reexport
 @reexport using LaTeXStrings
-
+@reexport using QuizQuestions
 
 using Pkg
 
 include("formatting.jl")
 include("bootstrap.jl")
-include("questions.jl")
+#include("questions.jl")
 
 include("logo.jl")
 include("toc.jl")
@@ -33,7 +33,7 @@ export ImageFile, Verbatim, Invisible, Outputonly, HTMLonly, JSXGraph
 export alert, warning, note
 export example, popup, table
 export gif_to_data
-export numericq, radioq, booleanq, yesnoq, shortq, longq, multiq
+#export numericq, radioq, booleanq, yesnoq, shortq, longq, multiq
 
 
 end # module
