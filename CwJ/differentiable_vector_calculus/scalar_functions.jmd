@@ -22,6 +22,8 @@ pyplot()
 nothing
 ```
 
+----
+
 Consider a function $f: R^n \rightarrow R$. It has multiple arguments for its input (an $x_1, x_2, \dots, x_n$) and only one, *scalar*, value for an output. Some simple examples might be:
 
 ```math
@@ -73,7 +75,7 @@ Alternatively, the function may be defined using a vector argument:
 f(v) = v[1]^2 + v[2]^2
 ```
 
-A style required for other packages within the `Julia` ecosystem, as there are many advantages to passing containers of values: they can have arbitrary length, they can be modified more cheaply, the functions can be more generic, etc.
+A style required for other packages within the `Julia` ecosystem, as there are many advantages to passing containers of values: they can have arbitrary length, they can be modified inside a function, the functions can be more generic, etc.
 
 More verbosely, but avoiding index notation, we can use multiline functions:
 
@@ -131,7 +133,7 @@ We will see alternatives for describing surfaces beyond through a function of th
 
 In `Julia`, plotting such a surface requires a generalization to plotting a univariate function where, typically, a grid of evenly spaced values is given between some $a$ and $b$, the corresponding $y$ or $f(x)$ values are found, and then the points are connected in a dot-to-dot manner.
 
-Here, a two-dimensional grid of $x$-$y$ values needs specifying, and the corresponding $z$ values found. As the grid will be assumed to be regular only the $x$ and $y$ values need specifying, the set of pairs can be computed. The $z$ values, it will be seen, are easily computed. This cloud of points is plotted and each cell in the $x$-$y$ plane is plotted with a surface giving the $x$-$y$-$z$, 3-dimensional, view. One way to plot such a surface is to tessalate the cell and then for each triangle, represent a plane made up of the ``3`` boundary points.
+Here, a two-dimensional grid of $x$-$y$ values needs specifying, and the corresponding $z$ values found. As the grid will be assumed to be regular only the $x$ and $y$ values need specifying, the set of pairs can be computed. The $z$ values, it will be seen, are easily computed. This cloud of points is plotted and each cell in the $x$-$y$ plane is plotted with a surface giving the $x$-$y$-$z$, ``3``-dimensional, view. One way to plot such a surface is to tessalate the cell and then for each triangle, represent a plane made up of the ``3`` boundary points.
 
 
 Here is an example:
@@ -180,7 +182,8 @@ surface(xs, ys, 𝒇.(xs', ys))
 
 An alternate to `surface` is `wireframe` -- which may not use shading in all backenends. This displays a grid in the $x$-$y$ plane mapped to the surface:
 
-```julia;
+```julia; hold=true
+xs = ys = range(-2,2, length=10) # downsample to see the frame
 wireframe(xs, ys, 𝒇)   # gr() or pyplot() wireplots render better than plotly()
 ```
 
@@ -218,7 +221,7 @@ surface(xs, ys, f)
 ```
 
 
-### Contour plots
+### Contour plots and heatmaps
 
 ```julia; echo=false
 #n,m = 25,50
@@ -336,7 +339,7 @@ surface(xsₛ, ysₛ, zzsₛ)
 
 This shows a bit of the topography. If we look at the region from directly above, the graph looks different:
 
-```julia; hold=true
+```julia;
 surface(xsₛ, ysₛ, zzsₛ, camera=(0, 90))
 ```
 
@@ -344,7 +347,7 @@ The rendering uses different colors to indicate height. A more typical graph, th
 
 For a scalar function, Define a *level curve* as the solutions to the equations $f(x,y) = c$ for a given $c$. (Or more generally $f(\vec{x}) = c$ for a vector if dimension $2$ or more.) Plotting a selection of level curves yields a *contour* graph. These are produced with `contour` and called as above. For example, we have:
 
-```julia; hold=true
+```julia;
 contour(xsₛ, ysₛ, zzsₛ)
 ```
 
@@ -353,11 +356,11 @@ Were one to walk along one of the contour lines, then there would be no change i
 
 The $c$ values for the levels drawn may be specified through the `levels` argument:
 
-```julia; hold=true
+```julia;
 contour(xsₛ, ysₛ, zzsₛ, levels=[50,75,100, 125, 150, 175])
 ```
 
-That shows the 50m, 75m, ... contours.
+That shows the ``50``m, ``75``m, ... contours.
 
 If a fixed number of evenly spaced levels is desirable, then the `nlevels` argument is available.
 
@@ -414,7 +417,7 @@ We can see that at the minimum of the surface, the contour lines are nested clos
 ##### Example
 
 
-The figure shows a weather map from 1943 with contour lines based on atmospheric pressure. These are also know as *isolines*.
+The figure shows a weather map from ``1943`` with contour lines based on atmospheric pressure. These are also know as *isolines*.
 
 ```julia; hold=true; echo=false
 imgfile = "figures/daily-map.jpg"
@@ -476,9 +479,9 @@ The notion of a limit for a univariate function: as $x$ gets close to $c$ then $
 
 > Let $f: R^n \rightarrow R$ and $C$ be a point in $R^n$. Then $\lim_{P \rightarrow C}f(P) = L$ if for every $\epsilon > 0$ there exists a $\delta > 0$ such that $|f(P) - L| < \epsilon$ whenever $0 < \| P - C \| < \delta$.
 
-(If $P=(x1, x2, \dots, x_n)$ we use $f(P) = f(x1, x2, \dots, x_n)$.)
+(If $P=(x_1, x_2, \dots, x_n)$ we use $f(P) = f(x_1, x_2, \dots, x_n)$.)
 
-This says, informally, for any scale about $L$ there is a "ball" about $C$ for which the images of $f$ always sit in the ball.
+This says, informally, for any scale about $L$ there is a "ball" about $C$ (not including ``C``) for which the images of $f$ always sit in the ball.
 Formally we define a ball of radius $r$ about a point $C$ to be all points $P$ with distance between $P$ and $C$ less than $r$. A ball is an *open* set. An [open](https://en.wikipedia.org/wiki/Open_set#Euclidean_space) is a set $U$ such that for any $x$ in $U$, there is a radius $r$ such that the ball of radius $r$ about $x$ is *still* within $U$. An open set generalizes an open interval. A *closed* set generalizes a *closed* interval. These are [defined](https://en.wikipedia.org/wiki/Closed_set) by a set that contains its boundary. Boundary points are any points that can be approached in the limit by points within the set.
 
 
@@ -503,7 +506,7 @@ h(w, x,y,z) = \sqrt{w^2 + x^2 + y^2 + z^2}.
 
 
 
-Not all functions will have a limit though. Consider $f(x,y) = 2x^2/(x^2+y^2)$ and $C=(0,0)$. It is not defined at $C$, but may have a limit. Consider the path $x=0$ (the $y$ axis) parameterized by $\vec\gamma(t) = \langle 0, t\rangle$. Along this path $f\circ \vec\gamma(t) = 0/t^2 = 0$ so will have a limit of $0$. If the limit of $f$ exists it must be $0$. But, along  the line $y=0$ (the $x$ axis) parameterized by $\vec{\gamma}(t) = \langle t, 0 \rangle$, the function simplifies to $f\circ\vec\gamma(t)=2$, so would have a limit of $2$. As the limit along different paths is different, this function has no limit in general.
+Not all functions will have a limit though. Consider $f(x,y) = 2x^2/(x^2+y^2)$ and $C=(0,0)$. It is not defined at $C$ (dividing by ``0``), but may have a limit at ``C``. Consider the path $x=0$ (the $y$-axis) parameterized by $\vec\gamma(t) = \langle 0, t\rangle$. Along this path $(f\circ \vec\gamma)(t) = 0/t^2 = 0$ so will have a limit of $0$. If the limit of $f$ exists it must be $0$. But, along  the line $y=0$ (the $x$ axis) parameterized by $\vec{\gamma}(t) = \langle t, 0 \rangle$, the function simplifies to $(f\circ\vec\gamma)(t)=2$, so would have a limit of $2$. As the limit along different paths is different, this function has no limit in general.
 
 
 ##### Example
@@ -526,7 +529,7 @@ At $\vec{0}$ this will not have a limit. However, along any line $y=mx$ we have 
 
 ## Partial derivatives and the gradient
 
-Discussing the behaviour of a scalar function along a path is described mathematically through composition. If $\vec\gamma(t)$ is a path in $R^n$, then the composition $f \circ \vec\gamma$ will be a univariate function. When $n=2$, we can visualize this composition directly, or as a 3D path on the surface given by $\vec{r}(t) = \langle \gamma_1(t), \gamma_2(t), \dots, \gamma_n(t), (f \circ \vec\gamma)(t) \rangle$.
+Discussing the behaviour of a scalar function along a path is described mathematically through composition. If $\vec\gamma(t)$ is a path in $R^n$, then the composition $f \circ \vec\gamma$ will be a univariate function. When $n=2$, we can visualize this composition directly, or as a ``3``-D path on the surface given by $\vec{r}(t) = \langle \gamma_1(t), \gamma_2(t), \dots, \gamma_n(t), (f \circ \vec\gamma)(t) \rangle$.
 
 ```julia;
 f₁(x,y) = 2 - x^2 - 3y^2
@@ -542,7 +545,7 @@ plot_parametric!(0..1/2, r2₁, linewidth=5, color=:black) # in the $x$-$y$ plan
 ```
 
 
-The vector valued function `r3(t) = [γ(t)..., f(γ(t))]` takes the 2-dimensional path specified by $\vec\gamma(t)$ and adds a third, $x$, direction by composing the position with `f`. In this way, a 2D path is visualized with a 3D path. This viewpoint can be reversed, as desired.
+The vector valued function `r3(t) = [γ(t)..., f(γ(t))]` takes the ``2``-dimensional path specified by $\vec\gamma(t)$ and adds a third, $x$, direction by composing the position with `f`. In this way, a ``2``-D path is visualized with a ``3``-D path. This viewpoint can be reversed, as desired.
 
 However, the composition,  $f\circ\vec\gamma$, is a univariate function, so this can also be visualized by
 
@@ -588,7 +591,7 @@ These are called the *partial* derivatives of $f$. The symbol $\partial$, read a
 \frac{\partial f}{\partial x}, \quad f_x, \quad \partial_x f,
 ```
 
-and more generally, when $n$ may be 2 or more,
+and more generally, when $n$ may be ``2`` or more,
 
 ```math
 \frac{\partial f}{\partial x_i}, \quad f_{x_i}, \quad f_i, \quad \partial_{x_i} f, \quad \partial_i f.

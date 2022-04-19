@@ -16,6 +16,7 @@ using QuadGK
 using CalculusWithJulia.WeaveSupport
 import PyPlot
 pyplot()
+import PlutoUI
 nothing
 ```
 
@@ -97,9 +98,9 @@ In `Plots`, the command `plot(xs, ys)`, where, say, `xs=[x1, x2, ..., xn]` and `
 Similarly, were a third vector, ` zs`, for $z$ components used, `plot(xs, ys, zs)` will make a ``3``-dimensional connect the dot plot
 
 However, our representation of vector-valued functions naturally generates a vector of points: `[[x1,y1], [x2, y2], ..., [xn, yn]]`, as this comes from broadcasting `f` over some time values.
-That is, for a collection of time values, `ts` the command `f.(ts)` will produce a vector of points. (Technically a vector of vectors, but points if you identify the ``2-d`` vectors as points.)
+That is, for a collection of time values, `ts` the command `f.(ts)` will produce a vector of points. (Technically a vector of vectors, but points if you identify the ``2``-``d`` vectors as points.)
 
-To get the `xs` and `ys` from this, is conceptually easy: just iterate over all the points and extract the corresponding component. For example, to get `xs` we would have a command like `[p[1] for p in f.(ts)]`. Similarly, the `ys` would use `p[2]` in place of `p[1]`. The `unzip` function from the `CalculusWithJulia` package does this for us. The name comes from how the `zip` function in base `Julia` takes two vectors and returns a vector of the values paired off. This is the reverse. As previously mentioned, `unzip` uses the `invert` function of the `SplitApplyCombine` package to invert the indexing (the ``j``th component of the ``i``th point can be referenced by `vs[i][j]` or `invert(vs)[j][i]`).
+To get the `xs` and `ys` from this is conceptually easy: just iterate over all the points and extract the corresponding component. For example, to get `xs` we would have a command like `[p[1] for p in f.(ts)]`. Similarly, the `ys` would use `p[2]` in place of `p[1]`. The `unzip` function from the `CalculusWithJulia` package does this for us. The name comes from how the `zip` function in base `Julia` takes two vectors and returns a vector of the values paired off. This is the reverse. As previously mentioned, `unzip` uses the `invert` function of the `SplitApplyCombine` package to invert the indexing (the ``j``th component of the ``i``th point can be referenced by `vs[i][j]` or `invert(vs)[j][i]`).
 
 Visually, we have `unzip` performing this reassociation:
 
@@ -130,7 +131,7 @@ arrow!([0, 0], f(1))
 The trace of the plot is an ellipse. If we describe the components as $\vec{f}(t) = \langle x(t), y(t) \rangle$, then we have $x(t)^2 + y(t)^2/4 = 1$. That is, for any value of $t$, the resulting point satisfies the equation $x^2 + y^2/4 =1$ for an ellipse.
 
 
-The plot of $g$ needs ``3``-dimensions to render. For most plotting backends, the following should work with no differences, save the additional vector is anchored in 3 dimensions now:
+The plot of $g$ needs ``3``-dimensions to render. For most plotting backends, the following should work with no differences, save the additional vector is anchored in ``3`` dimensions now:
 
 ```julia; hold=true
 ts = range(0, 6pi, length=200)
@@ -297,6 +298,88 @@ spiro(4pi)
 
 Whether the curve will have a period or not is decided by the ratio of $R/r$ being rational or irrational.
 
+##### Example
+
+In 1935 [Marcel Duchamp](https://arthur.io/art/marcel-duchamp/rotorelief-no-10-cage-modele-depose-verso) showed a collection of "Rotorelief" discs at a French fair for inventors. Disk number 10 is comprised of several nested, off-center circles on disk that would be rotated to give a sense of movement. To mimic the effect:
+
+* ``3`` points for each circle where selected using a mouse from an
+  image and their pixels recorded;
+* as ``3`` points determine a circle, the center and radius of each circle can be solved for
+* the exterior of the disc is drawn (the last specified circle below);
+* each nested circle is drawn after its center is rotated by ``\theta`` radian;
+* an animation captures the movement for display.
+
+```julia; hold=true
+# https://exploratorium.tumblr.com/post/33140874462/marcel-duchamp-rotoreliefs-duchamp-recognized
+
+# coordinates and colors selected by gimp from
+# https://arthur.io/art/marcel-duchamp/rotorelief-no-10-cage-modele-depose-verso
+circs = [466 548 513 505 556 554 # x₁,y₁,x₂,y₂,x₂,y₃
+         414 549 511 455 595 549
+         365 545 507 408 635 548
+         319 541 506 361 673 546
+         277 543 509 317 711 546
+         236 539 507 272 747 551
+         201 541 504 230 781 550
+         166 541 503 189 816 544
+         140 542 499 153 848 538
+         116 537 496 119 879 538
+         96 539 501 90 905 534
+         81 530 500 67 930 530
+         72 525 498 51 949 529
+         66 520 500 36 966 527
+         60 515 499 25 982 526
+         35 509 499 11 1004 525 # outer edge, c₀
+]
+
+greenblue= RGB(8/100, 58/100, 53/100)
+grey = RGB(76/100, 74/100, 72/100)
+white = RGB(88/100, 85/100, 81/100)
+
+# solve for center of circle, radius for each
+@syms h::positive k::positive r::positive
+function solve_i(i)
+    eqs = [(p[1] - h)^2 + (p[2]-k)^2 ~ r^2 for
+		p ∈ (circs[i,1:2], circs[i,3:4], circs[i,5:6])]
+    d = solve(eqs)[1]
+    (x=float(d[h]), y=float(d[k]), r=float(d[r]))
+end
+c₀, cs... = solve_i.(16:-1:1) # c₀ is centered
+
+function rotorelief_10(θ)
+    p = plot(legend=false,
+		axis=nothing, xaxis=false, yaxis=false,
+		aspect_ratio=:equal)
+
+    O = [c₀.x, c₀.y]
+    θ̂ = [cos(θ), sin(θ)]
+
+	circle!(O, c₀.r, # outer ring is c₀
+		linewidth=2,
+		color=grey, fill=white,
+		seriestype=:shape)
+
+    for (i,c) ∈ enumerate(cs)   # add nested rings
+	    rᵢ = sqrt((c₀.x - c.x)^2+(c₀.y - c.y)^2)
+		P = O + rᵢ * θ̂  # rotate about origin by θ
+		circle!(P, c.r,
+			linewidth = i == 1 ? 1 : i <= 3 ? 2 : 3,
+			color=greenblue)
+    end
+
+    p
+
+end
+
+# animate using Plots.@animate macro
+anim = @animate for θ ∈ range(0, -2π, length=60)
+	duchamp_rotorelief_10(θ)
+end
+
+fname = tempname() * ".gif"
+gif(anim, fname, fps = 40)
+PlutoUI.LocalResource(fname) # to display w/in Pluto
+```
 
 ##### Example
 
@@ -473,7 +556,6 @@ plot_parametric(0..t_0, xpos)
 ```
 
 
-##### Example: a tractrix
 
 ```julia; echo=false;
 # https://en.wikipedia.org/wiki/Tractrix
@@ -483,6 +565,8 @@ plot_parametric(0..t_0, xpos)
 # https://projecteuclid.org/download/pdf_1/euclid.em/1259158427
 nothing
 ```
+
+##### Example: a tractrix
 
 A [tractrix](https://en.wikipedia.org/wiki/Tractrix), studied by Perrault, Newton, Huygens, and many others, is the curve along which an object moves when pulled in a horizontal plane by a line segment attached to a pulling point (Wikipedia). If the object is placed at $(a,0)$ and the puller at the origin, and the puller moves along the positive $x$ axis, then the line will always be tangent to the curve and of fixed length, so determinable from the motion of the puller. In this example $dy/dx = -\sqrt{a^2-x^2}/x$.
 
@@ -529,8 +613,8 @@ F(t) = \vec{B}(t) + a \frac{\vec{B'(t)}}{\|\vec{B}'(t)\|}.
 We don't discuss when a differential equation has a solution, or if it
 is unique when it does, but note that the differential equation above
 may be solved numerically, in a manner somewhat similar to what was
-discussed in [ODEs](../ODEs/odes.html). Though here we will use the
-`DifferentialEquations` package for finding the numeric solution.
+discussed in [ODEs](../ODEs/odes.html). Here we will use the
+`DifferentialEquations` package for finding numeric solutions.
 
 We can define our equation as follows, using `p` to pass in the two parameters: the wheel-base length $a$, and $F(t)$, the parameterization of the front wheel in time:
 
@@ -566,7 +650,7 @@ out₁ = solve(prob₁, reltol=1e-6, Tsit5())
 
 The object `out` holds the answer. This object is callable, in that `out(t)` will return the numerically computed value for the answer to our equation at time point `t`.
 
-To plot the two trajectories, we could use that `out.u` holds the $x$ and $y$ components of the computed trajectory, but more simply, we  call `out` like a function.
+To plot the two trajectories, we could use that `out.u` holds the $x$ and $y$ components of the computed trajectory, but more simply, we can just call `out` like a function.
 
 ```julia;
 plt₁ = plot_parametric(t₀..t₁, F₁, legend=false)
@@ -843,14 +927,14 @@ c^2 &= \|\vec{c}\|^2 \\
 \end{align}
 ```
 
-Solving, this gives the radial distance in the form of an ellipse:
+Solving, this gives the first law. That is, the radial distance is in the form of an ellipse:
 
 ```math
 r = \frac{c^2}{GM + d\cos(\theta)} =
 \frac{c^2/(GM)}{1 + (d/GM) \cos(\theta)}.
 ```
 
-
+----
 
 Kepler's second law can also be derived from vector calculus. This derivation follows that given at [MIT OpenCourseWare](https://ocw.mit.edu/courses/mathematics/18-02sc-multivariable-calculus-fall-2010/1.-vectors-and-matrices/part-c-parametric-equations-for-curves/session-21-keplers-second-law/MIT18_02SC_MNotes_k.pdf) and [OpenCourseWare](https://ocw.mit.edu/courses/mathematics/18-02sc-multivariable-calculus-fall-2010/index.htm).
 
@@ -877,6 +961,7 @@ If we divide through by $\Delta t$, and take a limit we have:
 
 But we saw above, that for the motion of a planet, that $\vec{x} \times \vec{v} = \vec{c}$, a constant. This says, $dA$ is a constant independent of $t$, and consequently, the area swept out over a duration of time will not depend on the particular times involved, just the duration.
 
+----
 
 The third law relates the period to a parameter of the ellipse. We have from the above a strong suggestion that area of the ellipse can be found by integrating $dA$ over the period, say $T$. Assuming that is the case and letting $a$ be the semi-major axis length, and $b$ the semi-minor axis length, then
 
@@ -911,7 +996,7 @@ T^2 = \frac{(2\pi)^2}{GM} \frac{a^4}{a} = \frac{(2\pi)^2}{GM} a^3.
 The above shows how Newton might have derived Kepler's observational facts. Next we show, that assuming the laws of Kepler can anticipate Newton's equation for gravitational force. This follows [Wikipedia](https://en.wikipedia.org/wiki/Kepler%27s_laws_of_planetary_motion#Planetary_acceleration).
 
 Now let $\vec{r}(t)$ be the position of the planet relative to the Sun at the origin, in two dimensions (we used $\vec{x}(t)$ above). Assume $\vec{r}(0)$ points in the $x$ direction.
-Write $\vec{r} = r \hat{r}$. Define $\hat{\theta(t)}$ to be the mapping from time $t$ to the angle  defined by $\hat{r}$ through the unit circle.
+Write $\vec{r} = r \hat{r}$. Define $\hat{\theta}(t)$ to be the mapping from time $t$ to the angle  defined by $\hat{r}$ through the unit circle.
 
 Then we express the velocity ($\dot{\vec{r}}$) and acceleration ($\ddot{\vec{r}}$) in terms of the orthogonal vectors $\hat{r}$ and $\hat{\theta}$, as follows:
 
@@ -986,7 +1071,7 @@ Using $p/r = 1 + \epsilon\cos(\theta)$, we have the radial acceleration is $C^2/
 
 
 
-### Moving frames of reference
+## Moving frames of reference
 
 In the last example, it proved useful to represent vectors in terms of
 other unit vectors, in that case $\hat{r}$ and $\hat{\theta}$. Here we
@@ -1002,7 +1087,10 @@ To discuss properties intrinsic to the curve, the unit vector is considered:
 ```
 
 
-The function $\hat{T}(t)$ is the unit tangent vector.
+
+
+The function $\hat{T}(t)$ is the unit tangent vector. An assumption of  regularity ensures the denominator is never ``0``.
+
 Now define the unit *normal*, $\hat{N}(t)$, by:
 
 ```math
@@ -1089,6 +1177,103 @@ The torsion is defined for smooth curves by
 
 For the torsion to be defined, the cross product $\vec{r}' \times \vec{r}''$ must be non zero, that is the two must not be parallel or zero.
 
+##### Example: Tubular surface
+
+This last example comes from a collection of several [examples](https://github.com/empet/3D-Viz-with-PlotlyJS.jl/blob/main/5-Tubular-surface.ipynb) provided by Discourse user `@empet` to illustrate `plotlyjs`. We adopt it to `Plots` with some minor changes below.
+
+The task is to illustrate a space curve, ``c(t)``, using a tubular surface. At each time point ``t``, assume the curve has tangent, ``e_1``; normal, ``e_2``; and binormal, ``e_3``. (This assumes the defining derivatives exist and are non-zero and the cross product in the torsion is non zero.) The tubular surface is a circle of radius ``\epsilon`` in the plane determined by the normal and binormal. This curve would be parameterized by
+``r(t,u) = c(t) + \epsilon (e_2(t) \cdot \cos(u) + e_3(t) \cdot \sin(u))`` for varying ``u``.
+
+The Frenet-Serret equations setup a system of differential equations driven by the curvature and torsion. We use the `DifferentialEquations` package to solve this equation for two specific functions and a given initial condition. The equations when expanded into coordinates become ``12`` different equations:
+
+```julia
+# e₁, e₂, e₃, (x,y,z)
+function Frenet_eq!(du, u, p, s)  #system of ODEs
+    κ, τ = p
+    du[1] =  κ(s) * u[4]               # e₁′ = κ ⋅ e₂
+    du[2] =  κ(s) * u[5]
+    du[3] =  κ(s) * u[6]
+    du[4] = -κ(s) * u[1] + τ(s) * u[7] # e₂′ = - κ ⋅ e₁ + τ ⋅ e₃
+    du[5] = -κ(s) * u[2] + τ(s) * u[8]
+    du[6] = -κ(s) * u[3] + τ(s) * u[9]
+    du[7] = -τ(s) * u[4]               # e₃′ = - τ ⋅ e₂
+    du[8] = -τ(s) * u[5]
+    du[9] = -τ(s) * u[6]
+    du[10] = u[1]                      # c′ = e₁
+    du[11] = u[2]
+    du[12] = u[3]
+end
+```
+
+The last set of equations describe the motion of the spine. It follows from specifying the tangent to the curve is ``e_1``, as desired; it is parameterized by arc length, as ``\mid c'(t) \mid = 1``.
+
+Following the example of `@empet`, we define a curvature function and torsion function, the latter a constant:
+
+```julia
+κ(s) = 3 * sin(s/10) * sin(s/10)
+τ(s) = 0.35
+```
+
+The initial condition and time span are set with:
+
+```julia
+e₁₀, e₂₀, e₃₀ = [1,0,0], [0,1,0], [0,0,1]
+u₀ = [0, 0, 0]
+u0 = vcat(e₁₀, e₂₀, e₃₀, u₀) # initial condition for the system of ODE
+t_span = (0.0,  150.0)          # time interval for solution
+```
+
+With this set up, the problem can be solved:
+
+```julia
+prob = ODEProblem(Frenet_eq!, u0, t_span, (κ, τ))
+sol = solve(prob, Tsit5());
+```
+
+The "spine" is the center axis of the tube and is the ``10``th, ``11``th, and ``12``th coordinates:
+
+```julia
+spine(t) = sol(t)[10:12]
+```
+
+The tangent, normal, and binormal can be similarly defined using the other ``9`` indices:
+
+```julia
+e₁(t) = sol(t)[1:3]
+e₂(t) = sol(t)[4:6]
+e₃(t) = sol(t)[7:9]
+```
+
+We fix a small time range and show the trace of the spine and the frame at a single point in time:
+
+
+```julia
+a_0, b_0 = 50, 60
+ts_0 = range(a_0, b_0, length=251)
+
+t_0 = (a_0 + b_0) / 2
+ϵ = 1/5
+
+plot_parametric(a_0..b_0, spine)
+
+arrow!(spine(t_0), e₁(t_0))
+arrow!(spine(t_0), e₂(t_0))
+arrow!(spine(t_0), e₃(t_0))
+
+r_0(t, θ) = spine(t) + ϵ * (e₂(t)*cos(θ) + e₃(t)*sin(θ))
+plot_parametric!(0..2pi, θ -> r_0(t_0, θ))
+```
+
+The `ϵ` value determines the radius of the tube; we see it above as the radius of the drawn circle.
+The function `r` for a fixed `t` traces out such a circle centered at a point on the spine. For a fixed `θ`, the function `r` describes a line on the surface of the tube paralleling the spine.
+
+The tubular surface is now ready to be rendered along the entire time span using a pattern for parametrically defined surfaces:
+
+```julia; hold=true
+ts = range(t_span..., length=1001)
+θs = range(0, 2pi, length=100)
+surface(unzip(r_0.(ts, θs'))...)
+```
 
 ## Arc length
 
@@ -1309,7 +1494,7 @@ k &= \frac{\tan(\alpha)}{a}.
 \end{align*}
 ```
 
-The first equation relates the steering angle with the curvature. If the steering angle is not changed ($d\alpha/du=0$) then the curvature is constant and the motion is circular. It will be greater for larger angles (up to $\pi/2$). As the curvature is the reciprocal of the radius, this means the radius of the circular trajectory will be smaller. For the same constant steering angle, the curvature will be smaller for longer wheelbases, meaning the circular trajectory will have a larger radius. For cars, which have similar dynamics, this means longer wheelbase cars will take more room to make a U turn.
+The first equation relates the steering angle with the curvature. If the steering angle is not changed ($d\alpha/du=0$) then the curvature is constant and the motion is circular. It will be greater for larger angles (up to $\pi/2$). As the curvature is the reciprocal of the radius, this means the radius of the circular trajectory will be smaller. For the same constant steering angle, the curvature will be smaller for longer wheelbases, meaning the circular trajectory will have a larger radius. For cars, which have similar dynamics, this means longer wheelbase cars will take more room to make a U-turn.
 
 The second equation may be interpreted in ratio of arc lengths. The infinitesimal arc length of the rear wheel is proportional to that of the front wheel only scaled down by $\cos(\alpha)$. When $\alpha=0$ - the bike is moving in a straight line - and the two are the same. At the other extreme - when $\alpha=\pi/2$ - the bike must be pivoting on its rear wheel and the rear wheel has no arc length. This cosine, is related to the speed of the back wheel relative to the speed of the front wheel, which was used in the initial differential equation.
 
@@ -1318,7 +1503,7 @@ The last equation, relates the curvature of the back wheel track to the steering
 
 To derive the first one, we have previously noted that
 when a curve is parameterized by arc length, the curvature is more directly computed: it is the magnitude of the derivative of the tangent vector.
-The tangent vector is of unit length, when parametrized by arc length. This implies it's derivative will be orthogonal. If $\vec{r}(t)$ is a parameterization by arc length, then the curvature formula simplifies as:
+The tangent vector is of unit length, when parametrized by arc length. This implies its derivative will be orthogonal. If $\vec{r}(t)$ is a parameterization by arc length, then the curvature formula simplifies as:
 
 ```math
 \kappa(s) = \frac{\| \vec{r}'(s) \times \vec{r}''(s) \|}{\|\vec{r}'(s)\|^3} =
@@ -1363,7 +1548,7 @@ a (-\kappa) \vec{U} \sin(\alpha) + a \vec{V} \cos(\alpha) \alpha' \\
 \end{align}
 ```
 
-Extend the ``2``-dimensional vectors to ``3``-D, by adding a zero $z$ component, then:
+Extend the ``2``-dimensional vectors to ``3`` dimensions, by adding a zero $z$ component, then:
 
 ```math
 \begin{align}
@@ -1422,7 +1607,7 @@ From this $\|\vec{B}(u)\| = |\cos(\alpha)\|$. But $1 = \|d\vec{B}/dv\| = \|d\vec
 nothing
 ```
 
-##### Example: evolutes and involutes
+## Evolutes and involutes
 
 Following [Fuchs](https://doi.org/10.4169/amer.math.monthly.120.03.217) we discuss a geometric phenomenon known and explored by Huygens, and likely earlier. We stick to the two-dimensional case, Fuchs extends this to three dimensions. The following figure
 
@@ -1560,7 +1745,7 @@ p
 This lends itself to this mathematical description, if $\vec\gamma(t)$ parameterizes the planar curve, then an involute for $\vec\gamma(t)$ is described by:
 
 ```math
-\vec\beta(t) = \vec\gamma(t) + \left(a - \int_{t_0}^t \| \vec\gamma'(t)\| dt) \hat{T}(t)\right),
+\vec\beta(t) = \vec\gamma(t) + \left((a - \int_{t_0}^t \| \vec\gamma'(t)\| dt) \hat{T}(t)\right),
 ```
 
 where $\hat{T}(t) = \vec\gamma'(t)/\|\vec\gamma'(t)\|$ is the unit tangent vector. The above uses two parameters ($a$ and $t_0$), but only one is needed, as there is an obvious redundancy (a point can *also* be expressed by $t$ and the shortened length of string). [Wikipedia](https://en.wikipedia.org/wiki/Involute) uses this definition for $a$ and $t$ values in an interval $[t_0, t_1]$:
@@ -1616,7 +1801,7 @@ With these two identifications and using $\vec\gamma'(s) = \hat{T}_{\vec\gamma(s
 \end{align*}
 ```
 
-That is the evolute an an involute of $\vec\gamma(s)$ is $\vec\gamma(s)$.
+That is the evolute of an involute of $\vec\gamma(s)$ is $\vec\gamma(s)$.
 
 
 We have:
@@ -1666,105 +1851,53 @@ plot_parametric!(0..4pi, u -> SymPy.N.(subs.(ex, t .=> u)))
 
 The expression `ex` is secretly `[t + sin(t), 3 + cos(t)]`, another cycloid.
 
+##### Example: goats
 
-##### Example: Tubular surface
+An old problem of calculus is called the [goat problem](https://en.wikipedia.org/wiki/Goat_problem). This formulation -- with horses -- is from 1748:
 
-This last example comes from a collection of several [examples](https://github.com/empet/3D-Viz-with-PlotlyJS.jl/blob/main/5-Tubular-surface.ipynb) provided by Discourse user `@empet` to illustrate `plotlyjs`. We adopt it to `Plots` with some minor changes below.
+> Observing a horse tied to feed in a gentlemen’s park, with one end of a rope to his fore foot, and the other end to one of the circular iron rails, inclosing a pond, the circumference of which rails being 160 yards, equal to the length of the rope, what quantity of ground at most, could the horse feed?
 
-The task is to illustrate a space curve, ``c(t)``, using a tubular surface. At each time point ``t``, assume the curve has tangent, ``e_1``; normal, ``e_2``; and binormal, ``e_3``. (This assumes the defining derivatives exist and are non-zero and the cross product in the torsion is non zero.) The tubular surface is a circle of radius ``\epsilon`` in the plane determined by the normal and binormal. This curve would be parameterized by
-``r(t,u) = c(t) + \epsilon (e_2(t) \cdot \cos(u) + e_3(t) \cdot \sin(u))`` for varying ``u``.
+Let ``r`` be the radius of a circle and for concreteness we position it at ``(-r, 0)``. Let ``R`` be the length of a rope, and suppose ``R \ge \pi r``. (It is equal in the problem). Then the question can be rephrased as what is *twice* the area suggested by this graphic which is drawn in pieces:
 
-The Frenet-Serret equations setup a system of differential equations driven by the curvature and torsion. We use the `DifferentialEquations` package to solve this equation for two specific functions and a given initial condition. The equations when expanded into coordinates become ``12`` different equations:
+* Between angles ``0`` and ``\pi/2`` the horse has unconstrained access, so they can graze a wedge of radius ``R``.
+* Between angles ``\pi/2`` and until the horse's ``y`` position is ``0`` when the tether is taut the boundary of what can be eaten is described by the involute.
+* The horse can't eat from withing the circle or radius ``r``.
 
-```julia
-# e₁, e₂, e₃, (x,y,z)
-function Frenet_eq!(du, u, p, s)  #system of ODEs
-    κ, τ = p
-    du[1] =  κ(s) * u[4]               # e₁′ = κ ⋅ e₂
-    du[2] =  κ(s) * u[5]
-    du[3] =  κ(s) * u[6]
-    du[4] = -κ(s) * u[1] + τ(s) * u[7] # e₂′ = - κ ⋅ e₁ + τ ⋅ e₃
-    du[5] = -κ(s) * u[2] + τ(s) * u[8]
-    du[6] = -κ(s) * u[3] + τ(s) * u[9]
-    du[7] = -τ(s) * u[4]               # e₃′ = - τ ⋅ e₂
-    du[8] = -τ(s) * u[5]
-    du[9] = -τ(s) * u[6]
-    du[10] = u[1]                      # c′ = e₁
-    du[11] = u[2]
-    du[12] = u[3]
-end
+```julia; hold=true; echo=false
+r,R = 1, 10
+R = max(R, pi*r) # R ≥ 1/2 circumference
+
+γ(θ) = -2r*cos(θ) * [cos(θ), sin(θ)] # parameterize the circle of radius r
+involute(t) = γ(t) + γ'(t)/norm(γ'(t))* (R - quadgk(u -> norm(γ'(u)), pi/2, t)[1])
+t₀ = find_zero(t -> round(involute(t)[2], digits=4), (3pi/4, pi))
+
+p = plot(; legend=false)
+plot_polar!(0..(pi/2), t -> R) # unobstructed -> quarter circle
+plot_parametric!((pi/2)..t₀, involute)
+plot_parametric!((pi/2)..pi, γ)
+plot!([0,R],[0,0])
 ```
 
-The last set of equations describe the motion of the spine. It follows from specifying the tangent to the curve is ``e_1``, as desired; it is parameterized by arc length, as ``\mid c'(t) \mid = 1``.
-
-Following the example of `@empet`, we define a curvature function and torsion function, the latter a constant:
-
-```julia
-κ(s) = 3 * sin(s/10) * sin(s/10)
-τ(s) = 0.35
-```
-
-The initial condition and time span are set with:
-
-```julia
-e₁₀, e₂₀, e₃₀ = [1,0,0], [0,1,0], [0,0,1]
-u₀ = [0, 0, 0]
-u0 = vcat(e₁₀, e₂₀, e₃₀, u₀) # initial condition for the system of ODE
-t_span = (0.0,  150.0)          # time interval for solution
-```
-
-With this set up, the problem can be solved:
-
-```julia
-prob = ODEProblem(Frenet_eq!, u0, t_span, (κ, τ))
-sol = solve(prob, Tsit5());
-```
-
-The "spine" is the center axis of the tube and is the ``10``th, ``11``th, and ``12``th coordinates:
-
-```julia
-spine(t) = sol(t)[10:12]
-```
-
-The tangent, normal, and binormal can be similarly defined using the other ``9`` indices:
-
-```julia
-e₁(t) = sol(t)[1:3]
-e₂(t) = sol(t)[4:6]
-e₃(t) = sol(t)[7:9]
-```
-
-We fix a small time range and show the trace of the spine and the frame at a single point in time:
-
-
-```julia
-a_0, b_0 = 50, 60
-ts_0 = range(a_0, b_0, length=251)
-
-t_0 = (a_0 + b_0) / 2
-ϵ = 1/5
-
-plot_parametric(a_0..b_0, spine)
-
-arrow!(spine(t_0), e₁(t_0))
-arrow!(spine(t_0), e₂(t_0))
-arrow!(spine(t_0), e₃(t_0))
-
-r_0(t, θ) = spine(t) + ϵ * (e₂(t)*cos(θ) + e₃(t)*sin(θ))
-plot_parametric!(0..2pi, θ -> r_0(t_0, θ))
-```
-
-The `ϵ` value determines the radius of the tube; we see it above as the radius of the drawn circle.
-The function `r` for a fixed `t` traces out such a circle centered at a point on the spine. For a fixed `θ`, the function `r` describes a line on the surface of the tube paralleling the spine.
-
-The tubular surface is now ready to be rendered along the entire time span using a pattern for parametrically defined surfaces:
+To solve for the area we parameterize the circle of radius ``r`` between ``\pi/2`` and when the involute would cross the ``x`` axis. We use `find_zero` to identify the value.
 
 ```julia; hold=true
-ts = range(t_span..., length=1001)
-θs = range(0, 2pi, length=100)
-surface(unzip(r_0.(ts, θs'))...)
+r,R = 160/(2π), 160
+R = max(R, pi*r) # R ≥ 1/2 circumference
+γ(θ) = -2r*cos(θ) * [cos(θ), sin(θ)]
+## find *involute*: r - r'/|r'| * int(|r'|, a, t)
+involute(t) = γ(t) + γ'(t)/norm(γ'(t))* (R - quadgk(u -> norm(γ'(u)), pi/2, t)[1])
+
+t₀ = find_zero(t -> round(involute(t)[2], digits=4), (3pi/4, pi))
+
+A₁ = π * R^2 / 4
+y(t) = involute(t)[2]
+x′(t) = (h=1e-4; (involute(t+h)[1]-involute(t-h)[1])/(2h))
+A₂ = quadgk(t -> -y(t)*x′(t), pi/2, t₀)[1]  # A₂ = -∫ y dx, as counterclockwise parameterization
+A₃ = (1/2) * π * r^2
+2 * (A₁ + A₂ - A₃)
 ```
 
+The calculation for ``A_1`` and ``A_3`` are from the familiar formula for the area of a circle. However, ``A_2`` requires the formula for area above the ``x`` axis when the curve is parameterized: ``A = -\int_a^b y(t) x'(t) dt``, given how the curve is parameterized. As written, the automatic derivative of the numeric integral gives an error, so a central-difference approximation is used for ``x'(t)``.
 
 ## Questions
 

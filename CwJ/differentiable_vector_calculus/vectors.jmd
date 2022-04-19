@@ -30,22 +30,22 @@ is $0$.) Vectors are typically visualized with an arrow, where the
 anchoring of the arrow is context dependent and is not particular to a
 given vector.
 
-Vectors and points are related, but distinct. Let's focus on ``3`` dimensions. Mathematically, the notation for a point is $p=(x,y,z)$ while the notation for a vector is $\vec{v} = \langle x, y, z \rangle$. The $i$th component in a vector is referenced by a subscript: $v_i$. With this, we may write a typical vector as $\vec{v} = \langle v_1, v_2, \dots, v_n \rangle$ and a vector in $n=3$ as $\vec{v} =\langle v_1, v_2, v_3 \rangle$.
-The different grouping notation distinguishes the two objects. As another example, the notation $\{x, y, z\}$ indicates a set. Vectors and points may be *identified* by anchoring the vector at the origin. Set's are quite different from both, as the order of their entries is not unique.
+Vectors and points are related, but distinct. They are identified when the tail of the vector is taken to be the origin. Let's focus on ``3`` dimensions. Mathematically, the notation for a point is $p=(x,y,z)$ while the notation for a vector is $\vec{v} = \langle x, y, z \rangle$. The $i$th component in a vector is referenced by a subscript: $v_i$. With this, we may write a typical vector as $\vec{v} = \langle v_1, v_2, \dots, v_n \rangle$ and a vector in $n=3$ as $\vec{v} =\langle v_1, v_2, v_3 \rangle$.
+The different grouping notation distinguishes the two objects. As another example, the notation $\{x, y, z\}$ indicates a set. Vectors and points may be *identified* by anchoring the vector at the origin. Sets are quite different from both, as the order of their entries is not unique.
 
 
 
 
-In `Julia`, the notation to define a point and a vector would be identical, using square brackets to group like-type values: `[x, y, z]`. The notation `(x,y,z)` would form a [tuple](https://en.wikipedia.org/wiki/Euclidean_vector) which though similar in many respects, tuples do not have the operations associated with a point or a vector defined for them.
+In `Julia`, the notation to define a point and a vector would be identical, using square brackets to group like-type values: `[x, y, z]`. The notation `(x,y,z)` would form a [tuple](https://en.wikipedia.org/wiki/Euclidean_vector) which though similar in many respects, are different, as tuples do not have the operations associated with a point or a vector defined for them.
 
 The square bracket constructor has some subtleties:
 
 * `[x,y,z]` calls `vect` and creates a 1-dimensional array
-* `[x; y; z]` calls `vcat` to **v**ertically con**cat**enate values together. With simple numbers the two are identical, but not in other cases. (For example, is `A` is a matrix then `[A, A]` is a vector of matrices, `[A; A]` is a matrix combined from the two pieces.
+* `[x; y; z]` calls `vcat` to **v**ertically con**cat**enate values together. With simple (scalar) values `[x,y,z]` and `[x; y; z]` are identical, but not in other cases. (For example, is `A` is a matrix then `[A, A]` is a vector of matrices, `[A; A]` is a matrix combined from the two pieces.
 * `[x y z]`	 calls `hcat` to **h**orizontally con**cat**enate values together. If `x`, `y` are numbers then `[x y]` is *not* a vector, but rather a ``2``D array with a single row and two columns.
 * finally `[w x; y z]` calls `hvcat` to horizontally and vertically concatenate values together to create a container in two dimensions, like a matrix.
 
-(A vector, mathematically, is a one-dimensional collection of numbers, a matrix a two-dimensional *rectangular* collection of numbers, and an array an $n$-dimensional rectangular-like collection of numbers. In `Julia`, a vector can hold a collection of objects of arbitrary type, though generally all of the same type.)
+(A vector, mathematically, is a one-dimensional collection of numbers, a matrix a two-dimensional *rectangular* collection of numbers, and an array an $n$-dimensional rectangular-like collection of numbers. In `Julia`, a vector can hold a collection of objects of arbitrary type, though each will be promoted to a common type.)
 
 
 ## Vector addition, scalar multiplication
@@ -54,7 +54,7 @@ As seen earlier, vectors have some arithmetic operations defined for them. As a 
 
 Another operation for vectors is *scalar* multiplication. Geometrically this changes the magnitude, but not the direction of a vector, when the *scalar* is positive. Scalar multiplication is defined component wise, like addition so the $i$th component of $c \vec{v}$ is $c$ times the $i$th component of $\vec{v}$. When the scalar is negative, the direction is "reversed."
 
-To illustrate we first load our package and define two ``3``D vectors:
+To illustrate we define two ``3``-dimensional vectors:
 
 ```julia;
 u, v = [1, 2, 3], [4, 3, 2]
@@ -85,14 +85,14 @@ If a vector $\vec{v} = \langle v_1, v_2, \dots, v_n\rangle$ then the *norm* (als
 
 
 The definition of a norm leads to a few properties. First, if $c$ is a scalar, $\| c\vec{v} \| = |c| \| \vec{v} \|$ - which says scalar multiplication by $c$ changes the length by $|c|$. (Sometimes, scalar multiplication is described as "scaling by....")
-The other property is an analog of the triangle inequality, in which for any two vectors $\| \vec{v} + \vec{w} \| \leq \| \vec{v} \| + \| \vec{w} \|$. The right hand side is equal only when the two vectors are parallel and addition is viewed as laying them end to end.
+The other property is an analog of the triangle inequality, in which for any two vectors $\| \vec{v} + \vec{w} \| \leq \| \vec{v} \| + \| \vec{w} \|$. The right hand side is equal only when the two vectors are parallel.
 
 
 A vector with length $1$ is called a *unit* vector. Dividing a non-zero vector by its norm will yield a unit vector, a consequence of the first property above. Unit vectors are often written with a "hat:" $\hat{v}$.
 
 
-The direction indicated by $\vec{v}$ can be visualized as an angle in ``2`` or ``3`` dimensions, but in higher dimensions, visualization is harder. For ``2``-dimensions, we might
-associate with a vector, it's unit vector. This in turn may be identified with a point on the unit circle, which from basic trigonometry can be associated with an angle. Something similar, can be done in ``3`` dimensions, using two angles. However, the "direction" of a vector is best thought of in terms of its associated unit vector. With this, we have a decomposition of a vector $\vec{v}$ into a magnitude  and a direction when we write $\vec{v} = \|\vec{v}\| \cdot (\vec{v} / \|\vec{v}\|)=\|\vec{v}\| \hat{v}$.
+The direction indicated by $\vec{v}$ can be visualized as an angle in ``2``- or ``3``-dimensions, but in higher dimensions, visualization is harder. For ``2``-dimensions, we might
+associate with a vector, it's unit vector. This in turn may be identified with a point on the unit circle, which from basic trigonometry can be associated with an angle. Something similar, can be done in ``3`` dimensions, using two angles. However, the "direction" of a vector is best thought of in terms of its associated unit vector. With this, we have a decomposition of a non-zero vector $\vec{v}$ into a magnitude  and a direction when we write $\vec{v} = \|\vec{v}\| \cdot (\vec{v} / \|\vec{v}\|)=\|\vec{v}\| \hat{v}$.
 
 
 ## Visualization of vectors
@@ -109,9 +109,9 @@ quiver([0],[0], quiver=([1],[2]))
 The cumbersome syntax is typical here. We naturally describe vectors and points using `[a,b,c]` to combine them, but the plotting functions want to plot many such at a time and expect vectors containing just the `x` values, just the `y` values, etc. The above usage looks a bit odd, as these vectors of `x` and `y` values have only one entry. Converting from the one representation to the other requires reshaping the data. We will use the `unzip` function from `CalculusWithJulia` which in turn just uses the the `invert` function of the `SplitApplyCombine` package ("return a new nested container by reversing the order of the nested container") for the bulk of its work.
 
 
-This function takes a vector of vectors, and returns a vector containing the `x` values, the `y` values, etc. So if  `u=[1,2,3]` and `v=[4,5,6]`, then `unzip([u,v])` becomes `[[1,4],[2,5],[3,6]]`, etc. (The `zip` function in base does essentially the reverse operation, hence the name). Notationally, `A = [u,v]` can have the thirrd element of the first vector (`u`) accessed by `A[1][3]`, where as `unzip(A)[3][1]` will do the same. We use`unzip([u])` in the following, which for this `u` returns `([1],[2],[3])`. (Note the `[u]` to make a vector of a vector.)
+This function takes a vector of vectors, and returns a vector containing the `x` values, the `y` values, etc. So if  `u=[1,2,3]` and `v=[4,5,6]`, then `unzip([u,v])` becomes `[[1,4],[2,5],[3,6]]`, etc. (The `zip` function in base does essentially the reverse operation, hence the name.) Notationally, `A = [u,v]` can have the third element of the first vector (`u`) accessed by `A[1][3]`, where as `unzip(A)[3][1]` will do the same. We use `unzip([u])` in the following, which for this `u` returns `([1],[2],[3])`. (Note the `[u]` to make a vector of a vector.)
 
-With `unzip` defined, we can plot a ``2``D vector `v` anchored at point `p` through `quiver(unzip([p])..., quiver=unzip([v]))`.
+With `unzip` defined, we can plot a ``2``-dimensional vector `v` anchored at point `p` through `quiver(unzip([p])..., quiver=unzip([v]))`.
 
 To illustrate, the following defines ``3`` vectors (the third through addition), then graphs all three, though in different starting points to emphasize the geometric interpretation of vector addition.
 
@@ -127,7 +127,7 @@ quiver!(unzip([p])..., quiver=unzip([w]))
 
 
 
-Plotting a 3-d vector is not supported in all toolkits with
+Plotting a ``3``-d vector is not supported in all toolkits with
 `quiver`. A line segment may be substituted and can be produced
 with `plot(unzip([p,p+v])...)`. To avoid all these details, the `CalculusWithJulia` provides the `arrow!` function to *add* a vector to an existing plot. The function requires a point, `p`, and the vector, `v`:
 
@@ -162,7 +162,7 @@ arrow!(p, u, linewidth=5)
 ```
 
 
-The `norm` function is in the standard library, `LinearAlgebra`, which must be loaded first through the command `using LinearAlgebra`. (Though here it is redundant, as that package is loaded when the `CalculusWithJulia` package is loaded.)
+The `norm` function is in the standard library, `LinearAlgebra`, which must be loaded first through the command `using LinearAlgebra`. (Though here it is redundant, as that package is loaded and reexported when the `CalculusWithJulia` package is loaded.)
 
 ## Aside: review of `Julia`'s use of dots to work with containers
 
@@ -270,7 +270,7 @@ v = [2, -1]
 u ⋅ v
 ```
 
-In two dimensions, we learn that a perpendicular line to a line with slope $m$ will have slope $-1/m$. From a 2-dimensional vector, say $\vec{u} = \langle u_1, u_2 \rangle$ the slope is $u_2/u_1$ so a perpendicular vector to $\vec{u}$ will be $\langle u_2, -u_1 \rangle$, as above. For higher dimensions, where the angle is harder to visualize, the dot product defines perpendicularness, or *orthogonality*.
+In two dimensions, we learn that a perpendicular line to a line with slope $m$ will have slope $-1/m$. From a ``2``-dimensional vector, say $\vec{u} = \langle u_1, u_2 \rangle$, the slope is $u_2/u_1$ so a perpendicular vector to $\vec{u}$ will be $\langle u_2, -u_1 \rangle$, as above. For higher dimensions, where the angle is harder to visualize, the dot product defines perpendicularness, or *orthogonality*.
 
 For example, these two vectors are orthogonal, as their dot product is $0$, even though we can't readily visualize them:
 
@@ -369,17 +369,17 @@ We can find a vector from `v` orthogonal to `u` using:
 unit_vec(u) = u / norm(u)
 projection(u, v) = (u ⋅ unit_vec(v)) * unit_vec(v)
 
-v⃗orth = v⃗ - projection(v⃗, u⃗)
-w⃗orth = w⃗ - projection(w⃗, u⃗) - projection(w⃗, v⃗orth)
+v⃗⟂ = v⃗ - projection(v⃗, u⃗)
+w⃗⟂ = w⃗ - projection(w⃗, u⃗) - projection(w⃗, v⃗⟂)
 ```
 
 We can verify the orthogonality through:
 
 ```julia;
-u⃗ ⋅ v⃗orth, u⃗ ⋅ w⃗orth, v⃗orth ⋅ w⃗orth
+u⃗ ⋅ v⃗⟂, u⃗ ⋅ w⃗⟂, v⃗⟂ ⋅ w⃗⟂
 ```
 
-This only works when the three vectors do not all lie in the same plane. In general, this is the beginnings of the [Gram-Schmidt](https://en.wikipedia.org/wiki/Gram-Schmidt_process) process for creating *orthogonal* vectors from a collection of vectors.
+This only works when the three vectors do not all lie in the same plane. In general, this is the beginning of the [Gram-Schmidt](https://en.wikipedia.org/wiki/Gram-Schmidt_process) process for creating *orthogonal* vectors from a collection of vectors.
 
 
 
@@ -395,7 +395,7 @@ The dot product is similar to multiplication, but different, as it is an operati
 
 The last two can be combined: $\vec{u}\cdot(s \vec{v} + t \vec{w}) = s(\vec{u}\cdot\vec{v}) + t (\vec{u}\cdot\vec{w})$.
 
-But associative does not make sense, as $(\vec{u} \cdot \vec{v}) \cdot \vec{w}$ does not make sense as two dot products: the result of the first is not a vector, but a scalar.
+But the associative property does not make sense, as $(\vec{u} \cdot \vec{v}) \cdot \vec{w}$ does not make sense as two dot products: the result of the first is not a vector, but a scalar.
 
 ## Matrices
 
@@ -439,7 +439,7 @@ diagonal are called upper triangular; square matrices with $0$ entries
 above the diagonal are called lower triangular matrices; square
 matrices which are $0$ except possibly along the diagonal are diagonal
 matrices; and a diagonal matrix whose diagonal entries are all $1$ is
-called an identify matrix.
+called an *identity matrix*.
 
 
 Matrices, like vectors, have scalar multiplication defined for them. then scalar multiplication of a matrix $M$ by $c$ just multiplies each entry by $c$, so the new matrix would have components defined by $cm_{ij}$.
@@ -517,14 +517,14 @@ As mentioned previously, a matrix in `Julia` is defined component by component w
 
 Space is the separator, which means computing a component during definition (i.e., writing `2 + 3` in place of `5`) can be problematic, as no space can be used in the computation, lest it be parsed as a separator.
 
-Vectors are defined similarly. As they are identified with *column* vectors, we use a semicolon (or a comma) to separate:
+Vectors are defined similarly. As they are identified with *column* vectors, we use a semicolon (or a comma with simple numbers) to separate:
 
 ```julia;
 𝒷 = [10, 11, 12]   # not 𝒷 = [10 11 12], which would be a row vector.
 ```
 
 
-In `Julia`, entries in a matrix (or a vector) are stored in a container with a type wide enough accomodate each entry. Here the type is SymPy's `Sym` type:
+In `Julia`, entries in a matrix (or a vector) are stored in a container with a type wide enough accomodate each entry. In this example, the type is SymPy's `Sym` type:
 
 ```julia;
 @syms x1 x2 x3
@@ -584,7 +584,7 @@ Here we use `SymPy` to verify the above:
 ℬ = [symbols("B$i$j", real=true) for i in 1:2, j in 1:2]
 ```
 
-The matrix product has the expected size: the number of rows of `A` (3) by the number of columns of `B` (2):
+The matrix product has the expected size: the number of rows of `A` (``3``) by the number of columns of `B` (``2``):
 
 ```julia;
 𝒜 * ℬ
@@ -606,7 +606,7 @@ When the multiplication is broadcasted though, with `.*`, the operation will be 
 ----
 
 
-The determinant is found through `det` provided by the built-in `LinearAlgebra` package:
+The determinant is found by `det` provided by the `LinearAlgebra` package:
 
 ```julia;
 det(ℳ)
@@ -678,7 +678,7 @@ Let $\vec{u}$ and $\vec{v}$ be two ``3``-dimensional vectors, then the *cross* p
 
 with $\theta$ being the angle in $[0, \pi]$ between $\vec{u}$ and $\vec{v}$. Consequently, $\sin(\theta) \geq 0$.
 
-The direction of the cross product is such that it is *orthogonal* to *both* $\vec{u}$ and $\vec{v}$. To identify this, the [right-hand rule](https://en.wikipedia.org/wiki/Cross_product#Definition) is used. This rule points the right hand fingers in the direction of $\vec{u}$ and curls them towards $\vec{v}$ (so that the angle between the two vectors is in $[0, \pi]$). The thumb will point in the direction. Call this direction $\hat{n}$, a normal unit vector. Then the cross product can be defined by:
+The direction of the cross product is such that it is *orthogonal* to *both* $\vec{u}$ and $\vec{v}$. There are two such directions, to identify which is correct, the [right-hand rule](https://en.wikipedia.org/wiki/Cross_product#Definition) is used. This rule points the right hand fingers in the direction of $\vec{u}$ and curls them towards $\vec{v}$ (so that the angle between the two vectors is in $[0, \pi]$). The thumb will point in the direction. Call this direction $\hat{n}$, a normal unit vector. Then the cross product can be defined by:
 
 ```math
 \vec{u} \times \vec{v} =  \| \vec{u} \| \| \vec{v} \| \sin(\theta) \hat{n}.
@@ -712,14 +712,14 @@ There is a matrix notation that can simplify this computation. If we *formally* 
 u_1   & u_2   & u_3\\
 v_1   & v_2   & v_3
 \end{array}
-\right] =
+\right]
 ```
 
 From the $\sin(\theta)$ term in the definition, we see that $\vec{u}\times\vec{u}=0$. In fact, the cross product is $0$ only if the two vectors involved are parallel or there is a zero vector.
 
 
 
-In `Julia`, the `cross` function from the `LinearAlgebra` package (part of the standard library) implements the cross product. For example:
+In `Julia`, the `cross` function from the `LinearAlgebra` package implements the cross product. For example:
 
 ```julia;
 𝓪 = [1, 2, 3]
@@ -746,7 +746,7 @@ Using vectors of size different than $n=3$ produces a dimension mismatch error:
 [1, 2] × [3, 4]
 ```
 
-(It can prove useful to pad 2-dimensional vectors into 3-dimensional vectors by adding a $0$ third component. We will see this in the discussion on curvature in the plane.)
+(It can prove useful to pad ``2``-dimensional vectors into ``3``-dimensional vectors by adding a $0$ third component. We will see this in the discussion on curvature in the plane.)
 
 
 Let's see that the matrix definition will be identical (after identifications) to `cross`:

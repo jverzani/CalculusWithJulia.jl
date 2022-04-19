@@ -246,7 +246,7 @@ p
     v = [v0...]; dv = [dv0...]
     if length(v) == 2
         seriestype := :quiver
-        quiver := unzip([dv])
+        quiver := Tuple(unzip([dv]))
         x,y = unzip([v])
         x := x
         y := y
