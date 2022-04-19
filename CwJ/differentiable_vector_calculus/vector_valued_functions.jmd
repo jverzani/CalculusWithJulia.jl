@@ -16,7 +16,6 @@ using QuadGK
 using CalculusWithJulia.WeaveSupport
 import PyPlot
 pyplot()
-import PlutoUI
 nothing
 ```
 
@@ -302,14 +301,14 @@ Whether the curve will have a period or not is decided by the ratio of $R/r$ bei
 
 In 1935 [Marcel Duchamp](https://arthur.io/art/marcel-duchamp/rotorelief-no-10-cage-modele-depose-verso) showed a collection of "Rotorelief" discs at a French fair for inventors. Disk number 10 is comprised of several nested, off-center circles on disk that would be rotated to give a sense of movement. To mimic the effect:
 
-* ``3`` points for each circle where selected using a mouse from an
+* for each circle,  ``3`` points  where selected using a mouse from an
   image and their pixels recorded;
 * as ``3`` points determine a circle, the center and radius of each circle can be solved for
 * the exterior of the disc is drawn (the last specified circle below);
 * each nested circle is drawn after its center is rotated by ``\theta`` radian;
 * an animation captures the movement for display.
 
-```julia; hold=true
+```julia; hold=true;
 # https://exploratorium.tumblr.com/post/33140874462/marcel-duchamp-rotoreliefs-duchamp-recognized
 
 # coordinates and colors selected by gimp from
@@ -346,7 +345,7 @@ function solve_i(i)
 end
 c₀, cs... = solve_i.(16:-1:1) # c₀ is centered
 
-function rotorelief_10(θ)
+function duchamp_rotorelief_10(θ)
     p = plot(legend=false,
 		axis=nothing, xaxis=false, yaxis=false,
 		aspect_ratio=:equal)
@@ -725,7 +724,7 @@ plot_parametric!(t₀₄..t₁₄, t -> out₄(t), linewidth=3)
 Later we will characterize when there are cusps in the rear-wheel trajectory.
 
 
-## Derivative rules.
+## Derivative rules
 
 From the definition, as it is for univariate functions, for vector-valued functions $\vec{f}, \vec{g}: R \rightarrow R^n$:
 
@@ -1853,9 +1852,9 @@ The expression `ex` is secretly `[t + sin(t), 3 + cos(t)]`, another cycloid.
 
 ##### Example: goats
 
-An old problem of calculus is called the [goat problem](https://en.wikipedia.org/wiki/Goat_problem). This formulation -- with horses -- is from 1748:
+An old problem of calculus is called the [goat problem](https://en.wikipedia.org/wiki/Goat_problem). This formulation -- with horses -- is from ``1748``:
 
-> Observing a horse tied to feed in a gentlemen’s park, with one end of a rope to his fore foot, and the other end to one of the circular iron rails, inclosing a pond, the circumference of which rails being 160 yards, equal to the length of the rope, what quantity of ground at most, could the horse feed?
+> Observing a horse tied to feed in a gentlemen’s park, with one end of a rope to his fore foot, and the other end to one of the circular iron rails, inclosing a pond, the circumference of which rails being ``160`` yards, equal to the length of the rope, what quantity of ground at most, could the horse feed?
 
 Let ``r`` be the radius of a circle and for concreteness we position it at ``(-r, 0)``. Let ``R`` be the length of a rope, and suppose ``R \ge \pi r``. (It is equal in the problem). Then the question can be rephrased as what is *twice* the area suggested by this graphic which is drawn in pieces:
 

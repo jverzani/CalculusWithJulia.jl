@@ -1,6 +1,6 @@
 name = "CalculusWithJulia"
 uuid = "a2e0e22d-7d4c-5312-9169-8b992201a882"
-version = "0.0.16"
+version = "0.0.17"
 
 [deps]
 Base64 = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
@@ -38,7 +38,7 @@ PlotUtils = "1"
 RecipesBase = "0.7, 0.8, 1.0"
 Reexport = "1"
 Requires = "1"
-Roots = "1"
+Roots = "1, 2"
 SpecialFunctions = "1"
 SplitApplyCombine = "1"
 julia = "1"

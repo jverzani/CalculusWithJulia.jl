@@ -246,7 +246,7 @@ For a function $F: R^n \rightarrow R^m$ we have the total derivative at $\vec{a}
 \lim_{\vec{x} \rightarrow \vec{a}} \frac{\|F(\vec{x}) - F(\vec{a}) - J\cdot(\vec{x}-\vec{a})\|}{\|\vec{x} - \vec{a}\|} = \vec{0}.
 ```
 
-(That is $ \|F(\vec{x}) - F(\vec{a}) - J\cdot(\vec{x}-\vec{a})\|=\mathcal{o}(\|\vec{x}-\vec{a}\|)$.)
+(That is $\|F(\vec{x}) - F(\vec{a}) - J\cdot(\vec{x}-\vec{a})\|=\mathcal{o}(\|\vec{x}-\vec{a}\|)$.)
 
 If for some $J$ the above holds, the function $F$ is said to be totally differentiable, and the matrix $J =J_F=dF_a$ is the total derivative.
 
@@ -291,13 +291,21 @@ After specializing the total derivative to the cases already discussed, we have:
 
 * Vector-valued functions $\vec{f}(t) = \langle f_1(t), f_2(t), \dots, f_m(t) \rangle$, each component univariate. Then the derivative, $\vec{f}'(t) = \langle \frac{df_1}{dt}, \frac{df_2}{dt}, \dots, \frac{df_m}{dt} \rangle$. The total derivative in this case, is a a $m \times 1$ vector of partial derivatives, and since there is only $1$ variable, would be written without partials. So the two agree.
 
-* Scalar functions $f(\vec{x}) = a$ of type $R^n \rightarrow R$. The definition of differentiability for $f$ involved existence of the partial derivatives and moreover, the fact that a limit like the above held with $ \nabla{f}(C) \cdot \vec{h}$ in place of $J\cdot(\vec{x}-\vec{a})$. Here $\vec{h}$ and $\vec{x}-\vec{a}$ are vectors in $R^n$. Were the dot product in $ \nabla{f}(C) \cdot \vec{h}$ expressed in matrix multiplication we would have for this case a $1 \times n$ matrix of the correct form:
+* Scalar functions $f(\vec{x}) = a$ of type $R^n \rightarrow R$. The
+definition of differentiability for $f$ involved existence of the
+partial derivatives and moreover, the fact that a limit like the above
+held with $\nabla{f}(C) \cdot \vec{h}$ in place of
+$J\cdot(\vec{x}-\vec{a})$. Here $\vec{h}$ and $\vec{x}-\vec{a}$ are
+vectors in $R^n$. Were the dot product in $\nabla{f}(C) \cdot \vec{h}$
+expressed in matrix multiplication we would have for this case a $1
+\times n$ matrix of the correct form:
+
 ```math
 J = [\nabla{f}'].
 ```
 
 
-* For $f:R^2 \rightarrow R$, the Hessian matrix, was the matrix of 2nd partial derivatives. This may be viewed as the total derivative of the the gradient function, $\nabla{f}$:
+* For $f:R^2 \rightarrow R$, the Hessian matrix, was the matrix of ``2``nd partial derivatives. This may be viewed as the total derivative of the the gradient function, $\nabla{f}$:
 
 ```math
 \text{Hessian} =
@@ -419,10 +427,13 @@ The determinant is of interest, as the linear mapping represented by the Jacobia
 
 ##### Example Spherical Coordinates
 
-In 3 dimensions a point can be described by (among other ways):
+In ``3`` dimensions a point can be described by (among other ways):
 
 * Cartesian coordinates: three coordinates relative to the $x$, $y$, and $z$ axes as $(a,b,c)$.
-* Spherical coordinates: a radius, $r$, an azimuthal angle $\theta$, and a polar angle $\phi measured down from the $z$ axes.  (We use the mathematics naming convention, the physics one has $\phi$ and $\theta$ reversed.)
+
+* Spherical coordinates: a radius, $r$, an azimuthal angle $\theta$, and a polar angle
+$\phi$ measured down from the $z$ axes.  (We use the mathematics naming convention, the physics one has $\phi$ and $\theta$ reversed.)
+
 * Cylindrical coordinates: a radius, $r$, a polar angle $\theta$, and height $z$.
 
 
@@ -514,7 +525,7 @@ J3 = ex3.jacobian([x,y,z])
 The chain rule is not simply `J3 * J1` in the notation above, as the `J3` matrix must be evaluated at "`G(a)`", which is `ex1` from above:
 
 ```julia;
-J3_Ga = subs.(J3, x .=> ex1[1], y .=> ex1[2], z .=> ex1[3]) .|> simplify  # the dots are important
+J3_Ga = subs.(J3, x => ex1[1], y => ex1[2], z => ex1[3]) .|> simplify  # the dots are important
 ```
 
 The chain rule now says this product should be equivalent to `J2` above:
@@ -638,9 +649,9 @@ The [Implicit Function Theorem](https://en.wikipedia.org/wiki/Implicit_function_
 
 > Let $F:R^{n+m} \rightarrow R^m$ be a continuously differentiable function and let $R^{n+m}$ have (compactly defined) coordinates $\langle \vec{x}, \vec{y} \rangle$, Fix a point $\langle \vec{a}, \vec{b} \rangle$ with $F(\vec{a}, \vec{b}) = \vec{0}$. Let $J_{F, \vec{y}}(\vec{a}, \vec{b})$ be the Jacobian restricted to *just* the $y$ variables. ($J$ is $m \times m$.) If this matrix has non-zero determinant (it is invertible), then there exists an open set $U$ containing $\vec{a}$ and a *unique* continuously differentiable function $G: U \subset R^n \rightarrow R^m$ such that $G(\vec{a}) = \vec{b}$, $F(\vec{x}, G(\vec{x})) = 0$ for $\vec x$ in $U$. Moreover, the partial derivatives of $G$ are given by the matrix product:
 >
-```math
-\frac{\partial G}{\partial x_j}(\vec{x}) = - [J_{F, \vec{y}}(x, F(\vec{x}))]^{-1} \left[\frac{\partial F}{\partial x_j}(x, G(\vec{x}))\right].
-```
+>
+> ``\frac{\partial G}{\partial x_j}(\vec{x}) = - [J_{F, \vec{y}}(x, F(\vec{x}))]^{-1} \left[\frac{\partial F}{\partial x_j}(x, G(\vec{x}))\right].``
+
 
 ----
 
@@ -726,9 +737,9 @@ tangent planes is any vector $\vec{h}$ satisfying $J_G(\vec{x}_0)
 \vec{h} = 0$. Let $k = n - 1 - p$. If $k > 0$, there will be $k$
 vectors *orthogonal* to each of $\nabla{g_i}$ and $\vec{b}$. Call
 these $\vec{v}_j$. Then define additional constraints $h_j(\vec{x}) = \vec{v}_j
-\cdot \vec{x} = 0$. Let $H(x1, x2, \dots, x_n) = \langle g_1, g_2, \dots,
+\cdot \vec{x} = 0$. Let $H(x_1, x_2, \dots, x_n) = \langle g_1, g_2, \dots,
 g_p, h_1, \dots, h_{n-1-p}\rangle$. $H:R^{1 + (n-1)} \rightarrow
-R^{n-1}$. Let $H(x1, \dots, x_n) = H(x, \vec{y})$ The $H$ *restricted*
+R^{n-1}$. Let $H(x_1, \dots, x_n) = H(x, \vec{y})$ The $H$ *restricted*
 to the $\vec{y}$ variables is a function from $R^{n-1}\rightarrow
 R^{n-1}$. *If* this restricted function has a Jacobian with non-zero determinant, then there
 exists a $\vec\phi(x): R \rightarrow R^{n-1}$ with $H(x, \vec\phi(x)) =
@@ -805,7 +816,7 @@ yesnoq(true)
 
 The following plots a surface defined by a (hidden) function $F: R^2 \rightarrow R^3$ of the form $F(u,v) = \langle r(u)\cos(v), r(u)\sin(v), u\rangle$
 
-```julia;
+```julia; echo=false
 𝓇ad(u) = 1 + u^2
 ℱ(u, v) = [𝓇ad(u)*cos(v), 𝓇ad(u)*sin(v), u]
 ```

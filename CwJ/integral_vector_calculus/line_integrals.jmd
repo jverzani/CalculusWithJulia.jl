@@ -253,7 +253,7 @@ $$~
 If we integrate, we see:
 
 $$~
-W = \int_a^b = \nabla{f}(\vec{r}(t)) \cdot \frac{d\vec{r}}{dt} dt =
+W = \int_a^b  \nabla{f}(\vec{r}(t)) \cdot \frac{d\vec{r}}{dt} dt =
 \int_a^b \frac{d(f \circ \vec{r})}{dt} dt =
 (f\circ\vec{r})\mid_{t = a}^b =
 (f\circ\vec{r})(b) - (f\circ\vec{r})(a),
@@ -262,7 +262,7 @@ using the Fundamental Theorem of Calculus.
 
 The main point above is that *if* the vector field is the gradient of a scalar field, then the work done depends *only* on the endpoints of the path and not the path itself.
 
-> Conservative vector field
+> **Conservative vector field**:
 >  If $F$ is a vector field defined in an *open* region $R$; $A$ and $B$ are points in $R$ and *if* for *any* curve $C$ in $R$ connecting $A$ to $B$, the line integral of $F \cdot \vec{T}$ over $C$ depends *only* on the endpoint $A$ and $B$ and not the path, then the line integral is called *path indenpendent* and the field is called a *conservative field*.
 
 The force of gravity is the gradient of a scalar field. As such, the two integrals above which yield $0$ could have been computed more directly. The particular scalar field is $f = -GMm/\|\vec{r}\|$, which goes by the name the gravitational *potential* function. As seen, $f$ depends only on magnitude, and as the endpoints of the path in the example have the same distance to the origin, the work integral, $(f\circ\vec{r})(b) - (f\circ\vec{r})(a)$ will be $0$.

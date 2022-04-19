@@ -1,34 +1,28 @@
 # 2D and 3D plots in Julia with Plots
 
+This section uses these add-on packages:
+
+```julia
+using CalculusWithJulia
+using Plots
+import Contour: contours, levels, level, lines, coordinates
+using LinearAlgebra
+using ForwardDiff
+```
 
 ```julia; echo=false; results="hidden"
-using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
-using Plots
+import PyPlot
+pyplot()
 nothing
 ```
 
+----
+
 This covers plotting the typical 2D and 3D plots in Julia with the `Plots` package.
 
+We will make use of some helper functions that will simplify plotting provided by the `CalculusWithJulia` package. As well, we will need to manipulate contours directly, so pull in the `Contours` package, using `import` to avoid name collisions and explicitly listing the methods we will use.
 
-```julia
-using Plots
-```
-
-We will make use of some helper functions that will simplify plotting provided by the `CalculusWithJulia` package.
-
-We will need to manipulate contours directly, so pull in the `Contours` package, using `import` to avoid name collisions and explicitly listing the methods we will use:
-
-```julia
-using CalculusWithJulia
-import Contour: contours, levels, lines, coordinates
-```
-
-Finally, we need some features for vectors:
-
-```julia
-using LinearAlgebra, ForwardDiff
-```
 
 ## Parametrically described curves in space
 
@@ -43,14 +37,14 @@ An example helps illustrate. Suppose $r(t) = \langle \sin(t), 2\cos(t) \rangle$ 
 Let's see this with 5 points, the first and last being identical due to the curve:
 
 ```julia
-r(t) = [sin(t), 2cos(t)]
+r₂(t) = [sin(t), 2cos(t)]
 ts = range(0, stop=2pi, length=5)
 ```
 
 Then we can create the $5$ points easily through broadcasting:
 
 ```julia
-vs = r.(ts)
+vs = r₂.(ts)
 ```
 
 This returns a vector of points (stored as vectors). The plotting function wants two collections: the set of $x$ values for the points and the set of $y$ values. The data needs to be generated differently or reshaped. The function `unzip` above takes data in this style and returns the desired format, returning a tuple with the $x$ values and $y$ values pulled out:
@@ -67,15 +61,15 @@ plot(unzip(vs)...)
 
 This  basic plot is lacking, of course, as there are not enough points. Using more initially is a remedy.
 
-```julia
+```julia; hold=true
 ts = range(0, 2pi, length=100)
-plot(unzip(r.(ts))...)
+plot(unzip(r₂.(ts))...)
 ```
 
 As a convenience, `CalculusWithJulia` provides `plot_parametric` to produce this plot. The interval is specified with the  `a..b` notation, the points to plot are adaptively chosen:
 
 ```julia
-plot_parametric(0..2pi, r)  # interval first
+plot_parametric(0..2pi, r₂)  # interval first
 ```
 
 
@@ -83,9 +77,9 @@ plot_parametric(0..2pi, r)  # interval first
 
 A parametrically described curve in 3D is similarly created. For example, a helix is described mathematically by $r(t) = \langle \sin(t), \cos(t), t \rangle$. Here we graph two turns:
 
-```julia
-r(t) = [sin(t), cos(t), t]
-plot_parametric(0..4pi, r)
+```julia;
+r₃(t) = [sin(t), cos(t), t]
+plot_parametric(0..4pi, r₃)
 ```
 
 ### Adding a vector
@@ -94,11 +88,11 @@ The tangent vector indicates the instantaneous direction one would travel were t
 
 Here is how we can visualize the tangent vector at a few points on the helix:
 
-```julia
-plot_parametric(0..4pi, r, legend=false)
+```julia; hold=true
+plot_parametric(0..4pi, r₃, legend=false)
 ts = range(0, 4pi, length=5)
 for t in ts
-   arrow!(r(t), r'(t))
+   arrow!(r₃(t), r₃'(t))
 end
 ```
 
@@ -125,7 +119,7 @@ surface(xs, ys, f)
 
 Rather than pass in a function, values can be passed in. Here they are generated with a list comprehension. The `y` values are innermost to match the graphic when passing in a function object:
 
-```julia
+```julia; hold=true
 zs = [f(x,y) for y in ys, x in xs]
 surface(xs, ys, zs)
 ```
@@ -144,16 +138,17 @@ surface(xs, ys, f.(xs', ys))
 
 This graph shows the tessalation algorithm. Here only the grid in the $x$-$y$ plane is just one cell:
 
-```julia
-xs = [-1,1]; ys = [-1,1]
+```julia; hold=true
+xs = ys = range(-1, 1, length=2)
 f(x,y) = x*y
-surface(xs, ys, f.(xs', ys))
+surface(xs, ys, f)
 ```
 
 A more accurate graph, can be seen here:
 
-```julia
-xs = ys = range(-2,2, length=100)
+```julia; hold=true
+xs = ys = range(-1, 1, length=100)
+f(x,y) = x*y
 surface(xs, ys, f)
 ```
 
@@ -167,7 +162,9 @@ Returning to the
 The contour plot of $f:R^2 \rightarrow R$ draws level curves, $f(x,y)=c$, for different values of $c$ in the $x-y$ plane.
 They are produced in a similar manner as the surface plots:
 
-```julia
+```julia; hold=true
+xs = ys = range(-2,2, length=100)
+f(x,y) = x*y
 contour(xs, ys, f)
 ```
 
@@ -175,23 +172,30 @@ The cross in the middle corresponds to $c=0$, as when $x=0$ or $y=0$ then $f(x,y
 
 Similarly, computed values for $f(x,y)$ can be passed in. Here we change the function:
 
-```julia
+```julia; hold=true
 f(x,y) = 2 - (x^2 + y^2)
+xs = ys = range(-2,2, length=100)
+
 zs = [f(x,y) for y in ys, x in xs]
+
 contour(xs, ys, zs)
 ```
 
 The chosen levels can be specified by the user through the `levels` argument, as in:
 
-```julia
-gr()
+```julia; hold=true
+f(x,y) = 2 - (x^2 + y^2)
+xs = ys = range(-2,2, length=100)
+
+zs = [f(x,y) for y in ys, x in xs]
+
 contour(xs, ys, zs, levels = [-1.0, 0.0, 1.0])
 ```
 
-If only a single level is desired, as scalar value can be specified. For example, this next graphic shows the $0$-level of the [devil](http://www-groups.dcs.st-and.ac.uk/~history/Curves/Devils.html)'s curve.
+If only a single level is desired, as scalar value can be specified. Though not with all backends for `Plots`. For example, this next graphic shows the $0$-level of the [devil](http://www-groups.dcs.st-and.ac.uk/~history/Curves/Devils.html)'s curve.
 
-```julia
-gr()
+```julia; hold=true
+gr()  # PyPlot, our default, has issues with just 1 level
 a, b = -1, 2
 f(x,y) = y^4 - x^4 + a*y^2 + b*x^2
 xs = ys = range(-5, stop=5, length=100)
@@ -201,7 +205,8 @@ contour(xs, ys, f, levels=[0.0])
 
 Contour plots are well known from the presence of contour lines on many maps. Contour lines indicate constant elevations. A peak is characterized by a series of nested closed paths. The following graph shows this for the peak at $(x,y)=(0,0)$.
 
-```julia
+```julia; hold=true
+pyplot()
 xs = ys = range(-pi/2, stop=pi/2, length=100)
 f(x,y) = sinc(sqrt(x^2 + y^2))   # sinc(x) is sin(x)/x
 contour(xs, ys, f)
@@ -209,8 +214,11 @@ contour(xs, ys, f)
 
 Contour plots can be filled with colors through the `contourf` function:
 
-```julia
-contourf(xs, ys, zs)
+```julia; hold=true
+xs = ys = range(-pi/2, stop=pi/2, length=100)
+f(x,y) = sinc(sqrt(x^2 + y^2))
+
+contourf(xs, ys, f)
 ```
 
 
@@ -220,16 +228,16 @@ contourf(xs, ys, zs)
 In `PyPlot` it is possible to add a contour lines to the surface, or projected onto an axis.
 To replicate something similar, though not as satisfying, in `Plots` we use the `Contour` package.
 
-```julia
-import Contour
-xs = ys = range(-2, stop=2, length=100)
+```julia; hold=true
 f(x,y) = 2 + x^2 + y^2
+xs = ys = range(-2, stop=2, length=100)
 zs = [f(x,y) for y in ys, x in xs]
+
 p = surface(xs, ys, zs, legend=false, fillalpha=0.5)
 
 ## we add to the graphic p, then plot
 for cl in levels(contours(xs, ys, zs))
-    lvl = Contour.level(cl) # the z-value of this contour level
+    lvl = level(cl) # the z-value of this contour level
     for line in lines(cl)
         _xs, _ys = coordinates(line) # coordinates of this line segment
         _zs = 0 * _xs
@@ -247,7 +255,7 @@ There is no hidden line calculuation, in place we give the contour lines a trans
 
 The surface plot of $f: R^2 \rightarrow R$ plots $(x, y, f(x,y))$ as a surface. The *gradient* of $f$ is $\langle \partial f/\partial x, \partial f/\partial y\rangle$. It is a two-dimensional object indicating the direction at a point $(x,y)$ where the surface has the greatest ascent. Illurating the gradient and the surface on the same plot requires embedding the 2D gradient into the 3D surface. This can be done by adding a constant $z$ value to the gradient, such as $0$.
 
-```julia
+```julia; hold=true
 f(x,y) = 2 - (x^2 + y^2)
 xs = ys = range(-2, stop=2, length=100)
 zs = [f(x,y) for y in ys, x in xs]
@@ -272,27 +280,28 @@ arrow!(p, v)
 
 Let $z = f(x,y)$ describe a surface, and $F(x,y,z) = f(x,y) - z$. The the gradient of $F$ at a point $p$ on the surface, $\nabla F(p)$, will be normal to the surface and for a function, $f(p) + \nabla f \cdot (x-p)$ describes the tangent plane. We can visualize each, as follows:
 
-```julia
+```julia; hold=true
 f(x,y) = 2 - x^2 - y^2
+f(v) = f(v...)
 F(x,y,z) = z - f(x,y)
-F(x) = F(x...)
+F(v) = F(v...)
 p = [1/10, -1/10]
-p1 = vcat(p, f(p...)) # note F(p1) == 0
-n = ForwardDiff.gradient(F, p1)
-tl(x) = f(p) +  ForwardDiff.gradient(f, p) ⋅ (x - p)
+global p1 = vcat(p, f(p...)) # note F(p1) == 0
+global n⃗ = ForwardDiff.gradient(F, p1)
+global tl(x) = f(p) +  ForwardDiff.gradient(f, p) ⋅ (x - p)
 tl(x,y) = tl([x,y])
 
 xs = ys = range(-2, stop=2, length=100)
 surface(xs, ys, f)
 surface!(xs, ys, tl)
-arrow!(p1, 5n)
+arrow!(p1, 5n⃗)
 ```
 
 From some viewing angles, the normal does not look perpendicular to the tangent plane. This is a quick verification for a randomly chosen point in the $x-y$ plane:
 
 ```julia
 a, b = randn(2)
-dot(n, (p1-[a,b,tl(a,b)]))
+dot(n⃗, (p1 - [a,b, tl(a,b)]))
 ```
 
 
@@ -315,8 +324,7 @@ Z(r,theta,phi) = r * cos(theta)
 
 We can parameterize the sphere by plotting values for $x$, $y$, and $z$ produced by a sequence of values for $\theta$ and $\phi$, holding $r=1$:
 
-```julia
-pyplot()
+```julia; hold=true
 thetas = range(0, stop=pi,   length=50)
 phis   = range(0, stop=pi/2, length=50)
 
@@ -333,7 +341,7 @@ note("The above may not work with all backends for `Plots`, even if those that s
 
 For convenience, the `plot_parametric` function from `CalculusWithJulia` can produce these plots using interval notation and a function:
 
-```juliajulia
+```julia; hold=true
 F(theta, phi) = [X(1, theta, phi), Y(1, theta, phi), Z(1, theta, phi)]
 plot_parametric(0..pi, 0..pi/2, F)
 ```
@@ -346,7 +354,7 @@ There is no built in functionality in `Plots` to create surface described by $F(
 
 To use it, we see what happens when a sphere if rendered:
 
-```julia
+```julia; hold=true
 f(x,y,z) = x^2 + y^2 + z^2 - 25
 CalculusWithJulia.plot_implicit_surface(f)
 ```
@@ -354,13 +362,8 @@ CalculusWithJulia.plot_implicit_surface(f)
 
 This figure comes from a February 14, 2019 article in the [New York Times](https://www.nytimes.com/2019/02/14/science/math-algorithm-valentine.html). It shows an equation for a "heart," as the graphic will illustrate:
 
-```julia
+```julia; hold=true
 a,b = 1,3
 f(x,y,z) = (x^2+((1+b)*y)^2+z^2-1)^3-x^2*z^3-a*y^2*z^3
 CalculusWithJulia.plot_implicit_surface(f, xlim=-2..2, ylim=-1..1, zlim=-1..2)
-```
-
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```
