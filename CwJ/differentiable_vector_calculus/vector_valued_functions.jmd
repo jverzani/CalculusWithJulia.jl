@@ -16,6 +16,7 @@ using QuadGK
 using CalculusWithJulia.WeaveSupport
 import PyPlot
 pyplot()
+import PlutoUI
 nothing
 ```
 

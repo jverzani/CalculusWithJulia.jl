@@ -1393,6 +1393,7 @@ Consider this picture of composition:
 f(x) = sin(x)
 g(x) = exp(x)
 a,b = 0, 1.55
+
 xs = range(a, b, length=100)
 ys = g.(xs)
 us = range(extrema(ys)..., length=100)
