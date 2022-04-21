@@ -1,38 +1,21 @@
 # The Gradient, Divergence, and Curl
 
+This section uses these add-on packages:
+
+
+```julia
+using CalculusWithJulia
+using Plots
+using SymPy
+```
 
 ```julia; echo=false; results="hidden"
-using CalculusWithJulia
 using CalculusWithJulia.WeaveSupport
-using Plots
-nothing
-```
-
-
-The gradient of a scalar function $f:R^n \rightarrow R$ is a vector field of partial derivatives. In $R^2$, we have:
-
-$$~
-\nabla{f} = \langle \frac{\partial{f}}{\partial{x}},
-\frac{\partial{f}}{\partial{y}} \rangle.
-~$$
-
-It has the interpretation of pointing out the direction of greatest ascent for the surface $z=f(x,y)$.
-
-We move now to two other operations, the divergence and the curl, which combine to give a language to describe vector fields in $R^3$.
-
-
-```julia;
-using CalculusWithJulia
-using Plots
-```
-
-## The divergence
-
-Let $F:R^3 \rightarrow R^3 = \langle F_x, F_y, F_z\rangle$  be a vector field. Consider now a small box-like region, $R$, with surface, $S$, on the cartesian grid, with sides of length $\Delta x$, $\Delta y$, and $\Delta z$ with $(x,y,z)$ being one corner. The outward pointing unit normals are $\pm \hat{i}, \pm\hat{j},$ and $\pm\hat{k}$.
-
-```julia; echo=false
+import PyPlot
 pyplot()
-using LaTeXStrings
+nothing
+
+## used in other blocks
 _bar(x) = sum(x)/length(x)
 _shrink(x, xbar, offset) = xbar .+ (1-offset/100)*(x .- xbar)
 function _poly!(plt::Plots.Plot, ps; offset=5, kwargs...)
@@ -52,6 +35,47 @@ function _poly!(plt::Plots.Plot, ps; offset=5, kwargs...)
 end
 _poly!(ps;offset=5,kwargs...) = _poly!(Plots.current(), ps; offset=offset, kwargs...)
 
+function apoly!(plt::Plots.Plot, ps; offset=5, kwargs...)
+    xs, ys = unzip(ps)
+    xbar, ybar = _bar.((xs, ys))
+    xs, ys = _shrink.(xs, xbar, offset), _shrink.(ys, ybar, offset)
+
+    plot!(plt, xs, ys; kwargs...)
+    xn = [xs[end],ys[end]]
+    x0 = [xs[1], ys[1]]
+    dxn = 0.95*(x0 - xn)
+
+    arrow!(plt, xn, dxn; kwargs...)
+
+    plt
+end
+apoly!(ps;offset=5,kwargs...) = apoly!(Plots.current(), ps; offset=offset, kwargs...)
+
+nothing
+```
+
+
+----
+
+The gradient of a scalar function $f:R^n \rightarrow R$ is a vector field of partial derivatives. In $R^2$, we have:
+
+$$~
+\nabla{f} = \langle \frac{\partial{f}}{\partial{x}},
+\frac{\partial{f}}{\partial{y}} \rangle.
+~$$
+
+It has the interpretation of pointing out the direction of greatest ascent for the surface $z=f(x,y)$.
+
+We move now to two other operations, the divergence and the curl, which combine to give a language to describe vector fields in $R^3$.
+
+
+## The divergence
+
+Let $F:R^3 \rightarrow R^3 = \langle F_x, F_y, F_z\rangle$  be a vector field. Consider now a small box-like region, $R$, with surface, $S$, on the cartesian grid, with sides of length $\Delta x$, $\Delta y$, and $\Delta z$ with $(x,y,z)$ being one corner. The outward pointing unit normals are $\pm \hat{i}, \pm\hat{j},$ and $\pm\hat{k}$.
+
+
+
+```julia; hold=true; echo=false
 dx = .5
 dy = .250
 offset=5
@@ -149,25 +173,7 @@ The latter being a bit inefficient, as all $n^2$ partial derivatives are found, 
 
 Before considering the curl for $n=3$, we derive a related quantity in $n=2$. The "curl" will be a measure of the microscopic circulation of a vector field. To that end we consider a microscopic box-region in $R^2$:
 
-```julia; echo=false
-gr()
-using LaTeXStrings
-function apoly!(plt::Plots.Plot, ps; offset=5, kwargs...)
-    xs, ys = unzip(ps)
-    xbar, ybar = _bar.((xs, ys))
-    xs, ys = _shrink.(xs, xbar, offset), _shrink.(ys, ybar, offset)
-
-    plot!(plt, xs, ys; kwargs...)
-    xn = [xs[end],ys[end]]
-    x0 = [xs[1], ys[1]]
-    dxn = 0.95*(x0 - xn)
-
-    arrow!(plt, xn, dxn; kwargs...)
-
-    plt
-end
-apoly!(ps;offset=5,kwargs...) = apoly!(Plots.current(), ps; offset=offset, kwargs...)
-
+```julia; hold=true; echo=false
 p = plot(legend=false, xticks=nothing, yticks=nothing, border=:none, xlim=(-1/4, 1+1/4),ylim=(-1/4, 1+1/4))
 apoly!([[0,0],[1,0], [1,1], [0, 1]], linewidth=3, color=:blue)
 
@@ -220,9 +226,7 @@ The scalar function on the right hand side is called the (two-dimensional) curl 
 Consider now a similar scenario for the $n=3$ case. Let $F=\langle F_x, F_y,F_z\rangle$ be a vector field and  $S$ a box-like region with side lengths $\Delta x$, $\Delta y$, and $\Delta z$, anchored at $(x,y,z)$.
 
 
-```julia; echo=false
-pyplot()
-
+```julia; hold=true; echo=false
 dx = .5
 dy = .250
 offset=5
@@ -259,8 +263,7 @@ p
 The box-like volume in space with the top area, with normal $\hat{k}$, designated as $S_1$. The curve $C_1$ traces around $S_1$ in a counter clockwise manner, consistent with the right-hand rule pointing in the outward normal direction.
 The face $S_1$ with unit normal $\hat{k}$ looks like:
 
-```julia; echo=false
-pyplot()
+```julia; hold=true; echo=false
 p = plot(xlim=(-.1,1.25), ylim=(-.2, 1.25),legend=false, xticks=nothing, yticks=nothing, border=:none)
 ps = [[1,0],[1,1],[0,1],[0,0]]
 #push!(ps, first(ps))
@@ -291,7 +294,6 @@ annotate!([
 		(1-2dx, 2dx, "S₁")
         ])
 
-plotly()
 p
 ```
 
@@ -472,14 +474,16 @@ Mathematically operators have not been seen previously, but the concept of an op
 
 In the `CalculusWithJulia` package, the constant `\nabla[\tab]`, producing $\nabla$ implements this operator for functions and symbolic expressions.
 
+```julia
+@syms x::real y::real z::real
+```
+
 ```julia;
 f(x,y,z) = x*y*z
 f(v) = f(v...)
 F(x,y,z) = [x, y, z]
 F(v) = F(v...)
 
-using SymPy
-@syms x y z
 ∇(f(x,y,z))  # symbolic operation on the symbolic expression f(x,y,z)
 ```
 
@@ -556,15 +560,14 @@ Let $F(x,y,z) = [x, 0, 0]$, a vector field pointing in just the $\hat{i}$ direct
 
 The radial vector field $F(x,y,z) = \langle x, y, z \rangle$ is also an example of a divergent field. The divergence is:
 
-```julia;
+```julia; hold=true
 F(x,y,z) = [x,y,z]
-@syms x::real y::real z::real
 ∇ ⋅ F(x,y,z)
 ```
 
 There is a constant outward flow, emanating from the origin. Here we picture the field when $z=0$:
 
-```julia; echo=false
+```julia; hold=true; echo=false
 gr()
 F12(x,y) = [x,y]
 F12(v) = F12(v...)
@@ -577,7 +580,6 @@ plot!(p, unzip(r -> r * [cos(t0+dt), sin(t0+dt)], r0, r0 + dr)..., linewidth=3)
 plot!(p, unzip(t -> r0 * [cos(t), sin(t)], t0, t0 + dt)..., linewidth=3)
 plot!(p, unzip(t -> (r0+dr) * [cos(t), sin(t)], t0, t0 + dt)..., linewidth=3)
 
-plotly()
 p
 ```
 
@@ -592,8 +594,7 @@ In the vector field above, the shape along the curved edges has constant magnitu
 
 Now, were the field on the right edge less, it might be that the two balance out and there is no divergence. This occurs with the inverse square laws, such as for gravity and electric field:
 
-```julia;
-@syms x::real y::real z::real
+```julia; hold=true
 R = [x,y,z]
 Rhat = R/norm(R)
 VF = (1/norm(R)^2) * Rhat
@@ -611,8 +612,7 @@ curl([-y,x,0], [x,y,z])
 
 This vector field rotates as seen in  this figure showing slices for different values of $z$:
 
-```julia; echo=false
-gr()
+```julia; hold=true; echo=false
 V(x,y,z) = [-y, x,0]
 V(v) = V(v...)
 p = plot([NaN],[NaN],[NaN], legend=false)
@@ -629,7 +629,7 @@ This is a bit misleading though, the curl is defined by a limit, and not in term
 
 Consider a related field where the strength gets smaller as the point gets farther away but otherwise has the same circular rotation pattern
 
-```julia;
+```julia; hold=true
 R = [-y, x, 0]
 VF = R / norm(R)^2
 curl(VF, [x,y,z]) .|> simplify
@@ -641,8 +641,7 @@ This example isn't typical, as dividing by `norm(R)` with a power greater than $
 
 The curl of the  vector field $F(x,y,z) = \langle 0, 1+y^2, 0\rangle$ is $0$, as there is clearly no rotation as seen in this slice where $z=0$:
 
-```julia; echo=false
-gr()
+```julia; hold=true; echo=false
 vectorfieldplot((x,y) -> [0, 1+y^2], xlim=(-1,1), ylim=(-1,1), nx=10, ny=8)
 ```
 
@@ -654,8 +653,7 @@ curl(Sym[0,1+y^2,0], [x,y,z])
 
 Now consider a similar field  $F(x,y,z) = \langle 0, 1+x^2, 0,\rangle$. A slice is somewhat similar, in that the flow lines are all in the $\hat{j}$ direction:
 
-```julia; echo=false
-gr()
+```julia; hold=true; echo=false
 vectorfieldplot((x,y) -> [0, 1+x^2], xlim=(-1,1), ylim=(-1,1), nx=10, ny=8)
 ```
 
@@ -672,8 +670,8 @@ Following Strang, in general the curl can point in any direction, so the amount 
 
 If $\vec{a}$ is some vector and $\hat{r} = \langle x, y, z\rangle$ is the radial vector, then $\vec{a} \times \vec{r}$ has a curl, which is given by:
 
-```julia;
-@syms x y z a1 a2 a3
+```julia; hold=true
+@syms a1 a2 a3
 a = [a1, a2, a3]
 r = [x, y, z]
 curl(a × r, [x,y, z])
@@ -694,7 +692,7 @@ We will see that this can be anticipated, as $F = (1/2) \nabla(x^2+y^2+z^2)$ is 
 
 In fact, the curl of any radial field will be $\vec{0}$. Here we represent a radial field as a scalar function of $\vec{r}$ time $\hat{r}$:
 
-```julia;
+```julia; hold=true
 @syms H()
 R = sqrt(x^2 + y^2 + z^2)
 Rhat = [x, y, z]/R
@@ -833,8 +831,7 @@ This is zero under the assumption that the second partial derivatives are contin
 
 From the microscopic picture of a box this can also be seen. Again we focus on just the appearance of the $F_z$ component function. Let the faces with normals $\hat{i}, \hat{j},-\hat{i}, -\hat{j}$ be labeled $A, B, C$, and $D$. This figure shows $A$ (enclosed in blue) and $B$ (enclosed in green):
 
-```julia; echo=false
-gr()
+```julia; hold=true; echo=false
 
 dx = .5
 dy = .250
@@ -862,11 +859,11 @@ p
 
 We will get from the *approximate* surface integral of the *approximate* curl the following terms:
 
-```julia;
+```julia; hold=true
 @syms x y z Δx Δy Δz
 p1, p2, p3, p4=(x, y, z), (x + Δx, y, z), (x + Δx, y + Δy, z), (x, y + Δy, z)
 @syms F_z()
-ex = (-F_z(p2...) + F_z(p3...))*Δz +   # face A
+global exₐ = (-F_z(p2...) + F_z(p3...))*Δz +   # face A
 (-F_z(p3...) + F_z(p4...))*Δz +   # face B
 (F_z(p1...) - F_z(p4...))*Δz  +   # face C
 (F_z(p2...) - F_z(p1...))*Δz      # face D
@@ -877,7 +874,7 @@ The term for face $A$, say, should be divided by $\Delta{y}\Delta{z}$ for the cu
 The expression above simplifies to:
 
 ```julia;
-simplify(ex)
+simplify(exₐ)
 ```
 
 This is because of how the line integrals are oriented so that the right-hand rule gives outward pointing normals. For each up stroke for one face, there is a downstroke for a different face, and so the corresponding terms cancel each other out. So providing the limit of these two approximations holds, the vanishing identity can be anticipated from the microscopic picture.
@@ -1021,8 +1018,7 @@ r \cos(\phi)
 The following figure draws curves starting at $(r_0, \theta_0, \phi_0)$ formed by holding $2$ of the $3$ variables constant. The tangent vectors are added in blue. The surface $S_r$ formed by a constant value of $r$ is illustrated.
 
 
-```julia; echo=false
-plotly()
+```julia; hold=true; echo=false
 Fx(r, theta, phi) = r * cos(theta) * sin(phi)
 Fy(r, theta, phi) = r * sin(theta) * sin(phi)
 Fz(r, theta, phi) = r * cos(phi)
@@ -1085,8 +1081,7 @@ dV = r^2\sin(\phi) drd\theta d\phi.
 
 The following visualizes the volume and the surface elements.
 
-```julia; echo=false
-plotly()
+```julia; hold=true; echo=false
 Fx(r, theta, phi) = r * cos(theta) * sin(phi)
 Fy(r, theta, phi) = r * sin(theta) * sin(phi)
 Fz(r, theta, phi) = r * cos(phi)
@@ -1260,7 +1255,7 @@ As $F$ represents a vector field that rotates about the $z$ axis at a constant r
 
 Numerically find the divergence of $F(x,y,z) = \langle xy, yz, zx\rangle$ at the point $\langle 1,2,3\rangle$.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 F(x,y,z) = [x*y, y*z, z*x]
 pt = [1,2,3]
 Jac = ForwardDiff.jacobian(pt -> F(pt...), pt)
@@ -1272,7 +1267,7 @@ numericq(val)
 
 Numerically find the curl of $F(x,y,z) = \langle xy, yz, zx\rangle$ at the point $\langle 1,2,3\rangle$. What is the $x$ component?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 F(x,y,z) = [x*y, y*z, z*x]
 F(v) = F(v...)
 pt = [1,2,3]
@@ -1286,11 +1281,11 @@ numericq(val)
 
 Let $F(x,y,z) = \langle \sin(x), e^{xy}, xyz\rangle$. Find the divergence of $F$ symbolically.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"x y + x e^{x y} + \cos{\left (x \right )}",
-L"x y + x e^{x y}",
-L"x e^{x y} + \cos{\left (x \right )}"
+raw" ``x y + x e^{x y} + \cos{\left (x \right )}``",
+raw" ``x y + x e^{x y}``",
+raw" ``x e^{x y} + \cos{\left (x \right )}``"
 ]
 ans=1
 radioq(choices, ans)
@@ -1302,11 +1297,11 @@ radioq(choices, ans)
 
 Let $F(x,y,z) = \langle \sin(x), e^{xy}, xyz\rangle$. Find the curl of $F$ symbolically. What is the $x$ component?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"xz",
-L"-yz",
-L"ye^{xy}"
+raw" ``xz``",
+raw" ``-yz``",
+raw" ``ye^{xy}``"
 ]
 ans = 1
 radioq(choices, ans)
@@ -1316,11 +1311,11 @@ radioq(choices, ans)
 
 Let $\phi(x,y,z) = x + 2y + 3z$. We know that $\nabla\times\nabla{\phi}$ is zero by the vanishing property. Compute $\nabla\cdot\nabla{\phi}$.
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices=[
-L"0",
-L"\vec{0}",
-L"6"
+raw" ``0``",
+raw" ``\vec{0}``",
+raw" ``6``"
 ]
 ans=1
 radioq(choices, ans)
@@ -1339,7 +1334,7 @@ $$~
 \frac{\partial{\frac{\partial{f}}{\partial{x}}}}{\partial{y}}.
 ~$$
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
 L"This is $0$ if the partial derivatives are continuous by Schwarz's (Clairault's) theorem",
 L"This is $0$ for any $f$, as $\nabla\times\nabla$ is $0$ since the cross product of vector with itself is the $0$ vector."
@@ -1353,7 +1348,7 @@ radioq(choices, ans)
 
 Based on this vector-field plot
 
-```julia; echo=false
+```julia; hold=true; echo=false
 gr()
 F(x,y) = [-y,x]/sqrt(0.0000001 + x^2+y^2)
 vectorfieldplot(F, xlim=(-5,5),ylim=(-5,5), nx=15, ny=15)
@@ -1361,7 +1356,7 @@ vectorfieldplot(F, xlim=(-5,5),ylim=(-5,5), nx=15, ny=15)
 
 which seems likely
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices=[
 "The field is incompressible (divergence free)",
 "The field is irrotational (curl free)",
@@ -1376,7 +1371,7 @@ radioq(choices, ans, keep_order=true)
 
 Based on this vectorfield plot
 
-```julia; echo=false
+```julia; hold=true; echo=false
 gr()
 F(x,y) = [x,y]/sqrt(0.0000001 + x^2+y^2)
 vectorfieldplot(F, xlim=(-5,5),ylim=(-5,5), nx=15, ny=15)
@@ -1384,7 +1379,7 @@ vectorfieldplot(F, xlim=(-5,5),ylim=(-5,5), nx=15, ny=15)
 
 which seems likely
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices=[
 "The field is incompressible (divergence free)",
 "The field is irrotational (curl free)",
@@ -1399,7 +1394,7 @@ radioq(choices, ans, keep_order=true)
 The electric field $E$ (by Maxwell's equations) satisfies:
 
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices=[
 "The field is incompressible (divergence free)",
 "The field is irrotational (curl free)",
@@ -1415,7 +1410,7 @@ radioq(choices, ans, keep_order=true)
 The magnetic field $B$ (by Maxwell's equations) satisfies:
 
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices=[
 "The field is incompressible (divergence free)",
 "The field is irrotational (curl free)",
@@ -1445,17 +1440,12 @@ F_r & r\sin\phi F_\theta & r F_\phi
 
 For a *radial* function $F = h(r)e_r$. (That is $F_r = h(r)$, $F_\theta=0$, and $F_\phi=0$. What is the curl of $F$?
 
-```julia; echo=false
+```julia; hold=true; echo=false
 choices = [
-L"\vec{0}",
-L"re_\phi",
-L"rh'(r)e_\phi"
+raw" ``\vec{0}``",
+raw" ``re_\phi``",
+raw" ``rh'(r)e_\phi``"
 ]
 ans=1
 radioq(choices, ans)
-```
-
-
-```julia; echo=false
-CalculusWithJulia.WeaveSupport.Footer(@__FILE__, @__DIR__)
 ```

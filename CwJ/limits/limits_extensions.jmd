@@ -652,7 +652,9 @@ annotate!(p4,[(1,0,"a")])
 
 l = @layout[a b; c d]
 p = plot(p1, p2, p3, p4, layout=l)
-hotspotq(p, (1/2,1), (1/2,1))
+imgfile = tempname() * ".png"
+savefig(p, imgfile)
+hotspotq(imgfile, (1/2,1), (1/2,1))
 ```
 
 ###### Question
@@ -683,7 +685,9 @@ plot!(p4, zero, linestyle=:dash)
 
 l = @layout[a b; c d]
 p = plot(p1, p2, p3, p4, layout=l)
-hotspotq(p, (1/2,1), (1/2,1))
+imgfile = tempname() * ".png"
+savefig(p, imgfile)
+hotspotq(imgfile, (1/2,1), (1/2,1))
 ```
 
 

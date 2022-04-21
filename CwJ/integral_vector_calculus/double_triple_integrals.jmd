@@ -15,8 +15,6 @@ using HCubature
 using CalculusWithJulia.WeaveSupport
 import PyPlot
 pyplot()
-using LaTeXStrings
-
 nothing
 ```
 

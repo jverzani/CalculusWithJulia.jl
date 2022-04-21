@@ -68,7 +68,7 @@ table_of_contents = [
     :alternatives		:plotly_plotting;
 
     :integral_vector_calculus		:double_triple_integrals;
-    :integral_vector_calculus		:line_inegrals;
+    :integral_vector_calculus		:line_integrals;
     :integral_vector_calculus		:div_grad_curl;
     :integral_vector_calculus		:stokes_theorem;
     :integral_vector_calculus		:review;
