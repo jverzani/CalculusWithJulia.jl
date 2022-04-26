@@ -141,7 +141,7 @@ plot(x -> cos(x) - x, 0, pi/2)
 Anonymous functions are especially helpful when parameterized functions are involved:
 
 ```julia;hold=true
-mxplusb(x; m=1, b=0)
+mxplusb(x; m=1, b=0) = m*x + b
 plot(x -> mxplusb(x; m=-1, b=1), -1, 2)
 ```
 
@@ -151,7 +151,7 @@ Had we parameterized using the `f(x,p)` style, the result would be similar:
 ```julia
 function mxplusb(x, p)
     m, b = p.m, p.b
-    x -> m * x + b
+    m * x + b
 end
 plot(x -> mxplusb(x, (m=-1, b=1)), -1, 2)
 ```
@@ -238,7 +238,7 @@ pts_needed(x -> 10x, 0, 10), pts_needed(x -> sin(10x), 0, 10)
 
 ##### Example
 
-This demo shows more points are needed as the function becomes more "curvy." There are the minimum of ``21`` for a straight line, ``37`` for a half period, ``45`` for a full period, etc.
+This demo (which is interactive within a `Pluto` session) shows more points are needed as the function becomes more "curvy." There are the minimum of ``21`` for a straight line, ``37`` for a half period, ``45`` for a full period, etc.
 
 ```julia; echo=false
 md"""

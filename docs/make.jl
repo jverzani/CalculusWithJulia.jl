@@ -5,15 +5,12 @@ using Pkg
 Pkg.test("CalculusWithJulia", test_args=["folder=:precalc"])
 Pkg.test("CalculusWithJulia", test_args=["folder=:limits"])
 Pkg.test("CalculusWithJulia", test_args=["folder=:derivatives"])
+Pkg.test("CalculusWithJulia", test_args=["folder=:integrals"])
+Pkg.test("CalculusWithJulia", test_args=["folder=:ODEs"])
+Pkg.test("CalculusWithJulia", test_args=["folder=:differentiable_vector_calculus"])
+Pkg.test("CalculusWithJulia", test_args=["folder=:integral_vector_calculus"])
 
-Pkg.test("CalculusWithJulia", test_args=["folder=:integrals",
-                                         "target=:weave_html"])
-Pkg.test("CalculusWithJulia", test_args=["folder=:ODEs",
-                                         "target=:weave_html"])
-Pkg.test("CalculusWithJulia", test_args=["folder=:differentiable_vector_calculus",
-                                         "target=:weave_html"])
-Pkg.test("CalculusWithJulia", test_args=["folder=:integral_vector_calculus",
-                                         "target=:weave_html"])
+
 Pkg.test("CalculusWithJulia", test_args=["folder=:alternatives",
                                          "target=:weave_html"])
 Pkg.test("CalculusWithJulia", test_args=["folder=:misc",
@@ -41,8 +38,7 @@ cp(toc, joinpath(builddir,"index.html"), force=true)
 # See "Hosting Documentation" and deploydocs() in the Documenter manual
 # for more information.
 
-#import Documenter
-#Documenter.deploydocs(repo = "github.com/CalculusWithJulia/CalculusWithJulia.jl.git")
-#=deploydocs(
-    repo = "<repository url>"
-)=#
+import Documenter
+Documenter.deploydocs(
+    repo = "github.com/CalculusWithJulia/CalculusWithJulia.jl.git""
+#
