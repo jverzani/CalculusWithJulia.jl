@@ -16,8 +16,7 @@ using Pkg
 
 include("formatting.jl")
 include("bootstrap.jl")
-#include("questions.jl")
-
+@reexport using QuizQuestions
 include("logo.jl")
 include("toc.jl")
 
