@@ -40,5 +40,5 @@ cp(toc, joinpath(builddir,"index.html"), force=true)
 
 import Documenter
 Documenter.deploydocs(
-    repo = "github.com/CalculusWithJulia/CalculusWithJulia.jl.git""
-#
+    repo = "github.com/CalculusWithJulia/CalculusWithJulia.jl.git"
+)
