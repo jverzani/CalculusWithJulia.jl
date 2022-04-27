@@ -10,15 +10,13 @@ import Markdown
 using JSON
 using Reexport
 @reexport using LaTeXStrings
-
+@reexport using QuizQuestions
 
 using Pkg
 
 include("formatting.jl")
 include("bootstrap.jl")
-#include("questions.jl")
 @reexport using QuizQuestions
-
 include("logo.jl")
 include("toc.jl")
 
