@@ -354,7 +354,7 @@ scatter!(xs, ys)
 ```
 
 The $y$ values of the graph seem to go to $1$ as the $x$ values get
-close to 0. (That the graph looks defined at $0$ is due to the fact
+close to ``0``. (That the graph looks defined at $0$ is due to the fact
 that the points sampled to graph do not include $0$, as shown through the `scatter!` command -- which can be checked via `minimum(abs, xs)`.)
 
 We can also verify Euler's intuition through this graph:
@@ -1150,6 +1150,42 @@ val = 0
 numericq(val, 1e-2)
 ```
 
+###### Question
+
+Select the graph for which there is no limit at ``a``.
+
+```julia; hold=true; echo=false
+p1 = plot(;axis=nothing, legend=false)
+title!(p1, "(a)")
+plot!(p1, x -> x^2, 0, 2, color=:black)
+plot!(p1, zero, linestyle=:dash)
+annotate!(p1,[(1,0,"a")])
+
+p2 = plot(;axis=nothing, legend=false)
+title!(p2, "(b)")
+plot!(p2, x -> 1/(1-x), 0, .95, color=:black)
+plot!(p2, x-> -1/(1-x), 1.05, 2, color=:black)
+plot!(p2, zero, linestyle=:dash)
+annotate!(p2,[(1,0,"a")])
+
+p3 = plot(;axis=nothing, legend=false)
+title!(p3, "(c)")
+plot!(p3, sinpi, 0, 2, color=:black)
+plot!(p3, zero, linestyle=:dash)
+annotate!(p3,[(1,0,"a")])
+
+p4 = plot(;axis=nothing, legend=false)
+title!(p4, "(d)")
+plot!(p4, x -> x^x, 0, 2, color=:black)
+plot!(p4, zero, linestyle=:dash)
+annotate!(p4,[(1,0,"a")])
+
+l = @layout[a b; c d]
+p = plot(p1, p2, p3, p4, layout=l)
+imgfile = tempname() * ".png"
+savefig(p, imgfile)
+hotspotq(imgfile, (1/2,1), (1/2,1))
+```
 
 ###### Question
 
@@ -1511,5 +1547,6 @@ Using the above, find the limit of `upper` and `lower`. Are the two equal and eq
 ```julia; hold=true; echo=false
 yesnoq("yes")
 ```
+
 
 (If so, then the squeeze theorem would say that ``\pi`` is the common limit.)

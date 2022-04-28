@@ -1014,7 +1014,7 @@ radioq(choices, ans)
 
 ###### Question
 
-	The ``5``th order Taylor polynomial for $\sin(x)$ about $c=0$ is: $x - x^3/3! + x^5/5!$. Use this to find the first ``3`` terms of the Taylor polynomial of $\sin(x^2)$ about $c=0$.
+The ``5``th order Taylor polynomial for $\sin(x)$ about $c=0$ is: $x - x^3/3! + x^5/5!$. Use this to find the first ``3`` terms of the Taylor polynomial of $\sin(x^2)$ about $c=0$.
 
 They are:
 
