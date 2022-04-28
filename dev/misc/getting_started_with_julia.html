@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+
+<style>
+.julia {display: block; font-family: "Source Code Pro";
+        color:#0033CC;
+        }
+.hljl {font-family: "Source Code Pro";
+        color:#0033CC;
+      }
+.output, .julia-error {
+    border-left: thick solid #ff0000;
+    padding: 5px;
+    padding-left: 10px;
+    margin-bottom: 15px;
+    background-color: #f5f5f5;
+}
+body { padding-top: 60px;
+}
+.output {color:#0033CC;}
+h5:before {content:"\2746\ ";}
+h6:before {content:"\2742\ ";}
+pre {display: block;}
+th, td {
+  padding: 5px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+tr:hover {background-color: #f5f5f5;}
+
+.admonition-title:before {content:"\2746\ ";}
+.admonition-title { color:#0033CC}
+
+main > .container {
+  padding: 60px 15px 0;
+}
+
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+</style>
+
+<!--   padding: 0.5em 10px; .julia:before {content: "julia> "} -->
+
+<style></style>
+
+<script src="https://code.jquery.com/jquery.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/katex.min.css" integrity="sha384-ThssJ7YtjywV52Gj4JE/1SQEDoMEckXyhkFVwaf4nDSm5OBlXeedVYjuuUd0Yua+" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/katex.min.js" integrity="sha384-Bi8OWqMXO1ta+a4EPkZv7bYGIes7C3krGSZoTGNTAnAn5eYQc7IIXrJ/7ck1drAi" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.3/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+	onload="renderMathInElement(document.body);"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          // customised options
+          // • auto-render specific keys, e.g.:
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true},
+	      {left: "\\begin{equation}", right: "\\end{equation}", display: true},
+              {left: "\\begin{align}", right: "\\end{align}", display: true},
+	      {left: "\\begin{alignat}", right: "\\end{alignat}", display: true},
+	      {left: "\\begin{gather}", right: "\\end{gather}", display: true}
+          ],
+          // • rendering keys, e.g.:
+          throwOnError : false
+        });
+    });
+</script>
+<script>
+window.PlotlyConfig = {MathJaxConfig: 'local'}
+</script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<!-- highlight Julia Code -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/julia.min.js"></script>
+
+<script type="text/javascript">
+$( document ).ready(function() {
+  $("h1").each(function(index) {
+       var title = $( this ).text()
+       $("#page_title").html("<strong>" + title + "</strong>");
+       document.title = title
+  });
+  $( "h2" ).each(function( index ) {
+    var nm =  $( this ).text();
+    var id = $.trim(nm).replace(/ /g,'');
+    this.id = id
+    $("#page_dropdown").append("<li><a class='dropdown-item' href='#" + id + "'>" + nm + "</a></li>");
+  });
+    $('[data-toggle="popover"]').popover();
+});
+</script>
+
+<link rel="shortcut icon" href="https://raw.githubusercontent.com/jverzani/CalculusWithJulia.jl/master/CwJ/misc/logo.png" type="image/x-icon" />
+
+</head>
+
+
+<body data-spy="scroll" >
+
+  <header class="navbar navbar-expand-md navbar-dark bd-navbar">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top navbar-nav">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="https://juliahub.com/docs/CalculusWithJulia/">
+      <img src="data:image/gif;base64,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"/>
+      Calculus with Julia</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <ul class="nav navbar-nav navbar-right">
+      <li class="nav-item dropdown dropstart">
+	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+	   role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Jump to...
+          </a>
+
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" role="menu" id="page_dropdown"></ul>
+      </li>
+    </ul>
+
+    </div>
+  </div>
+</nav>
+
+</header>
+          <div class="title">
+            
+            
+            
+          </div>
+
+
+
+<div class="container-fluid">
+  <div class="span10 offset1">
+    <h1>Getting started with Julia</h1>
+
+
+<p>Julia is a freely available, open-source programming language aimed at technical computing.</p>
+<p>As it is open source, indeed with a liberal MIT license, it can be installed for free on many types of computers &#40;though not phones or tablets&#41;.</p>
+<p><a href="https://mybinder.org/v2/gh/CalculusWithJulia/CwJScratchPad.git/master">lauch binder</a></p>
+<h3>Installing Julia locally</h3>
+<p>There is the service <a href="https://mybinder.org">Binder</a>, which provides a web-based interface to <code>Julia</code> built around <code>Jupyter</code>, a wildly succesful platform for interacting with different open-source software programs. Clicking the launch button above will open a web page which provides a blank notebook, save for a package used by these notes. However, <code>Binder</code> is nowhere near as reliable as a local installation.</p>
+<p>Installing <code>Julia</code> locally is not more difficult than installing other softward.</p>
+<p>Binaries of <code>Julia</code> are provided at <a href="http://julialang.org/downloads/">julialang.org</a>. Julia has an official released version and a developmental version. Unless there is a compelling reason, the latest released version should be downloaded and installed for use.</p>
+<p>For Windows users, there is a <code>juliaup</code> program for managing the installation of Julia.</p>
+<p>The base <code>Julia</code> provides a <em>command-line interface</em>, or REPL &#40;read-evaluate-parse&#41;.</p>
+<h3>Basic interactive usage</h3>
+<p>Once installed, <code>Julia</code> can be started by clicking on an icon or typing <code>julia</code> at the command line. Either will open a <em>command line interface</em> for a user to interact with a <code>Julia</code> process. The basic workflow is easy: commands are typed then sent to a <code>Julia</code> process when the &quot;return&quot; key is pressed for a complete expression. Then the output is displayed.</p>
+<p>A command is typed following the <em>prompt</em>. An example might be <code>2 &#43; 2</code>. To send the command to the <code>Julia</code> interpreter the &quot;return&quot; key is pressed. A complete expression or expressions will then be parsed and evaluated &#40;executed&#41;. If the expression is not complete, <code>julia</code>&#39;s prompt will still accept input to complete the expression. Type <code>2 &#43;</code> to see. &#40;The expression <code>2 &#43;</code> is not complete, as the infix operator <code>&#43;</code> expects two arguments, one on its left and one on its right.&#41;</p>
+
+
+<pre class='hljl'>
+<span class='hljl-n'>_</span><span class='hljl-t'>
+   </span><span class='hljl-n'>_</span><span class='hljl-t'>       </span><span class='hljl-n'>_</span><span class='hljl-t'> </span><span class='hljl-nf'>_</span><span class='hljl-p'>(</span><span class='hljl-n'>_</span><span class='hljl-p'>)</span><span class='hljl-n'>_</span><span class='hljl-t'>     </span><span class='hljl-oB'>|</span><span class='hljl-t'>  </span><span class='hljl-n'>Documentation</span><span class='hljl-oB'>:</span><span class='hljl-t'> </span><span class='hljl-n'>https</span><span class='hljl-oB'>://</span><span class='hljl-n'>docs</span><span class='hljl-oB'>.</span><span class='hljl-n'>julialang</span><span class='hljl-oB'>.</span><span class='hljl-n'>org</span><span class='hljl-t'>
+  </span><span class='hljl-p'>(</span><span class='hljl-n'>_</span><span class='hljl-p'>)</span><span class='hljl-t'>     </span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>_</span><span class='hljl-p'>)</span><span class='hljl-t'> </span><span class='hljl-p'>(</span><span class='hljl-n'>_</span><span class='hljl-p'>)</span><span class='hljl-t'>    </span><span class='hljl-oB'>|</span><span class='hljl-t'>
+   </span><span class='hljl-n'>_</span><span class='hljl-t'> </span><span class='hljl-n'>_</span><span class='hljl-t'>   </span><span class='hljl-n'>_</span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-oB'>|</span><span class='hljl-n'>_</span><span class='hljl-t'>  </span><span class='hljl-n'>__</span><span class='hljl-t'> </span><span class='hljl-n'>_</span><span class='hljl-t'>   </span><span class='hljl-oB'>|</span><span class='hljl-t'>  </span><span class='hljl-n'>Type</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;?&quot;</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-n'>help</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;]?&quot;</span><span class='hljl-t'> </span><span class='hljl-k'>for</span><span class='hljl-t'> </span><span class='hljl-n'>Pkg</span><span class='hljl-t'> </span><span class='hljl-n'>help</span><span class='hljl-oB'>.</span><span class='hljl-t'>
+  </span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-oB'>|</span><span class='hljl-t'> </span><span class='hljl-oB'>|/</span><span class='hljl-t'> </span><span class='hljl-n'>_</span><span class='hljl-sb'>` |  |
+  | | |_| | | | (_| |  |  Version 1.7.0 (2021-11-30)
+ _/ |\__&#39;_|_|_|\__&#39;_|  |  Official https://julialang.org/ release
+|__/                   |
+
+julia&gt; 2 + 2
+4</span>
+</pre>
+
+
+<p>Above, <code>julia&gt;</code> is the prompt.  These notes will not include the prompt, so that copying-and-pasting can be more easily used. Input and output cells display similarly, though with differences in coloring. For example:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span>
+</pre>
+
+
+<pre class="output">
+4
+</pre>
+
+
+<p>Other interfaces to <code>Julia</code> are described briefly in  <a href="./julia_interfaces.html">Julia interfaces</a>. The notebook interface provided through <code>IJulia</code> most closely matches the style of the notes.</p>
+<h2>Add-on packages</h2>
+<p><code>Julia</code> has well over a 1000 external, add-on packages that enhance the offerings of base <code>Julia</code>. We refer to one, <code>CalculusWithJulia</code>, that is designed to accompany these notes. This package installs several other packages that provide the needed functionality. The package &#40;and its dependencies&#41; can be installed through:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>Pkg</span><span class='hljl-t'>
+</span><span class='hljl-n'>Pkg</span><span class='hljl-oB'>.</span><span class='hljl-nf'>add</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;CalculusWithJulia&quot;</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<p>&#40;Or the one liner <code>&#93; add CalculusWithJulia</code>. Some additional details on packages is provided <a href="./calculus_with_julia.html">here</a>.&#41;</p>
+<p>Installation only needs to be done once, but to use a package it must be loaded into each new session. This can be done with this command:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>CalculusWithJulia</span>
+</pre>
+
+
+
+<h2>The basics of working with Pluto</h2>
+<p>The <code>Pluto</code> notebook interface is a Julia-specific interface that is started by:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>Pluto</span><span class='hljl-t'>
+</span><span class='hljl-n'>Pluto</span><span class='hljl-oB'>.</span><span class='hljl-nf'>run</span><span class='hljl-p'>()</span>
+</pre>
+
+
+<p>These commands will cause a tab in a web browser to open to <code>Pluto</code>&#39;s landing page. From here a new or existing notebook can be opened. Notebooks can even be opened from urls or from Pluto-generated HTML pages, such as some of the sections of these notes.</p>
+<p>Pluto cells are reactive, so modifications of a variable in the top-level scope will propagate to all references of that variable. This is very useful for explorations, but does require unique variable names in the top-level scope. &#40;Names can be reused in functions and <code>let</code> blocks.&#41;</p>
+<p>A Pluto cell holds a single command, which may be a  block holding multiple statements. Cells are executed, typically, by typing &quot;shift-enter&quot;. The output of the cell appears <em>above</em> the cell.</p>
+<h2>The basics of working with IJulia</h2>
+<p>The <strong>very</strong> basics of the Jupyter notebook interface provided by <code>IJulia</code> are covered here.</p>
+<p>An <code>IJulia</code> notebook is made up of cells. Within a cell a collection of commands may be typed &#40;one or more&#41;.</p>
+<p>When a cell is executed &#40;by the triangle icon or under the Cell menu&#41; the contents of the cell are evaluated by the <code>Julia</code> kernel and any output is displayed below the cell. Typically this is just the output of the last command.</p>
+
+
+<pre class='hljl'>
+<span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-t'>
+</span><span class='hljl-ni'>3</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-ni'>3</span>
+</pre>
+
+
+<pre class="output">
+6
+</pre>
+
+
+<p>If the last commands are separated by commas, then a &quot;tuple&quot; will be formed and each output will be displayed, separated by commas.</p>
+
+
+<pre class='hljl'>
+<span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>3</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-ni'>3</span>
+</pre>
+
+
+<pre class="output">
+&#40;4, 6&#41;
+</pre>
+
+
+<p>Comments can be made in a cell. Anything after a <code>#</code> will be ignored.</p>
+
+
+<pre class='hljl'>
+<span class='hljl-ni'>2</span><span class='hljl-t'> </span><span class='hljl-oB'>+</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-t'>  </span><span class='hljl-cs'># this is a comment, you can ignore me...</span>
+</pre>
+
+
+<pre class="output">
+4
+</pre>
+
+
+<p>Graphics are provided by external packages. There is no built-in graphing. We use the <code>Plots</code> package and its default backend. The <code>Plots</code> package provides a common interface to several different backends, so this choice is easily changed. The <code>pyplot</code> backend is used in these notes, though for interactive use both the <code>GR</code> and <code>Plotly</code> backends have advantages.</p>
+
+
+<pre class='hljl'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>CalculusWithJulia</span><span class='hljl-t'>
+</span><span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>Plots</span>
+</pre>
+
+
+
+<pre class="julia-error">
+ERROR: ArgumentError: Package PyPlot not found in current path:
+- Run &#96;import Pkg; Pkg.add&#40;&quot;PyPlot&quot;&#41;&#96; to install the PyPlot package.
+
+</pre>
+
+
+<p>With that in hand, to make a graph of a function over a range, we follow this pattern:</p>
+
+
+<pre class='hljl'>
+<span class='hljl-nf'>plot</span><span class='hljl-p'>(</span><span class='hljl-n'>sin</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>0</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>2</span><span class='hljl-n'>pi</span><span class='hljl-p'>)</span>
+</pre>
+
+
+<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTc2IiBoZWlnaHQ9IjM4NCIgdmlld0JveD0iMCAwIDIzMDQgMTUzNiI+CjxkZWZzPgogIDxjbGlwUGF0aCBpZD0iY2xpcDE5MCI+CiAgICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMjMwNCIgaGVpZ2h0PSIxNTM2Ii8+CiAgPC9jbGlwUGF0aD4KPC9kZWZzPgo8cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDE5MCkiIGQ9IgpNMCAxNTM2IEwyMzA0IDE1MzYgTDIzMDQgMCBMMCAwICBaCiAgIiBmaWxsPSIjZmZmZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIvPgo8ZGVmcz4KICA8Y2xpcFBhdGggaWQ9ImNsaXAxOTEiPgogICAgPHJlY3QgeD0iNDYwIiB5PSIwIiB3aWR0aD0iMTYxNCIgaGVpZ2h0PSIxNTM2Ii8+CiAgPC9jbGlwUGF0aD4KPC9kZWZzPgo8cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDE5MCkiIGQ9IgpNMTkyLjk3NiAxNDIzLjA5IEwyMjU2Ljc2IDE0MjMuMDkgTDIyNTYuNzYgNDcuMjQ0MSBMMTkyLjk3NiA0Ny4yNDQxICBaCiAgIiBmaWxsPSIjZmZmZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIvPgo8ZGVmcz4KICA8Y2xpcFBhdGggaWQ9ImNsaXAxOTIiPgogICAgPHJlY3QgeD0iMTkyIiB5PSI0NyIgd2lkdGg9IjIwNjUiIGhlaWdodD0iMTM3NyIvPgogIDwvY2xpcFBhdGg+CjwvZGVmcz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDoyOyBzdHJva2Utb3BhY2l0eTowLjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAyNTEuMzg1LDE0MjMuMDkgMjUxLjM4NSw0Ny4yNDQxIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAxOTIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjI7IHN0cm9rZS1vcGFjaXR5OjAuMTsgZmlsbDpub25lIiBwb2ludHM9IgogIDU2MS4yNTQsMTQyMy4wOSA1NjEuMjU0LDQ3LjI0NDEgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDE5MikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6Mjsgc3Ryb2tlLW9wYWNpdHk6MC4xOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgODcxLjEyMiwxNDIzLjA5IDg3MS4xMjIsNDcuMjQ0MSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDoyOyBzdHJva2Utb3BhY2l0eTowLjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxMTgwLjk5LDE0MjMuMDkgMTE4MC45OSw0Ny4yNDQxIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAxOTIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjI7IHN0cm9rZS1vcGFjaXR5OjAuMTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE0OTAuODYsMTQyMy4wOSAxNDkwLjg2LDQ3LjI0NDEgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDE5MikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6Mjsgc3Ryb2tlLW9wYWNpdHk6MC4xOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTgwMC43MywxNDIzLjA5IDE4MDAuNzMsNDcuMjQ0MSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDoyOyBzdHJva2Utb3BhY2l0eTowLjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAyMTEwLjYsMTQyMy4wOSAyMTEwLjYsNDcuMjQ0MSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkwKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTkyLjk3NiwxNDIzLjA5IDIyNTYuNzYsMTQyMy4wOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkwKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMjUxLjM4NSwxNDIzLjA5IDI1MS4zODUsMTQwNC4xOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkwKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgNTYxLjI1NCwxNDIzLjA5IDU2MS4yNTQsMTQwNC4xOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkwKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgODcxLjEyMiwxNDIzLjA5IDg3MS4xMjIsMTQwNC4xOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkwKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTE4MC45OSwxNDIzLjA5IDExODAuOTksMTQwNC4xOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkwKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTQ5MC44NiwxNDIzLjA5IDE0OTAuODYsMTQwNC4xOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkwKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTgwMC43MywxNDIzLjA5IDE4MDAuNzMsMTQwNC4xOSAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkwKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMjExMC42LDE0MjMuMDkgMjExMC42LDE0MDQuMTkgCiAgIi8+CjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkwKSIgZD0iTTI1MS4zODUgMTQ1My4yNCBRMjQ3Ljc3NCAxNDUzLjI0IDI0NS45NDUgMTQ1Ni44IFEyNDQuMTQgMTQ2MC4zNSAyNDQuMTQgMTQ2Ny40NyBRMjQ0LjE0IDE0NzQuNTggMjQ1Ljk0NSAxNDc4LjE1IFEyNDcuNzc0IDE0ODEuNjkgMjUxLjM4NSAxNDgxLjY5IFEyNTUuMDE5IDE0ODEuNjkgMjU2LjgyNSAxNDc4LjE1IFEyNTguNjUzIDE0NzQuNTggMjU4LjY1MyAxNDY3LjQ3IFEyNTguNjUzIDE0NjAuMzUgMjU2LjgyNSAxNDU2LjggUTI1NS4wMTkgMTQ1My4yNCAyNTEuMzg1IDE0NTMuMjQgTTI1MS4zODUgMTQ0OS41MyBRMjU3LjE5NSAxNDQ5LjUzIDI2MC4yNTEgMTQ1NC4xNCBRMjYzLjMyOSAxNDU4LjcyIDI2My4zMjkgMTQ2Ny40NyBRMjYzLjMyOSAxNDc2LjIgMjYwLjI1MSAxNDgwLjgxIFEyNTcuMTk1IDE0ODUuMzkgMjUxLjM4NSAxNDg1LjM5IFEyNDUuNTc1IDE0ODUuMzkgMjQyLjQ5NiAxNDgwLjgxIFEyMzkuNDQgMTQ3Ni4yIDIzOS40NCAxNDY3LjQ3IFEyMzkuNDQgMTQ1OC43MiAyNDIuNDk2IDE0NTQuMTQgUTI0NS41NzUgMTQ0OS41MyAyNTEuMzg1IDE0NDkuNTMgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAxOTApIiBkPSJNNTUxLjYzNiAxNDgwLjc4IEw1NTkuMjc0IDE0ODAuNzggTDU1OS4yNzQgMTQ1NC40MiBMNTUwLjk2NCAxNDU2LjA5IEw1NTAuOTY0IDE0NTEuODMgTDU1OS4yMjggMTQ1MC4xNiBMNTYzLjkwNCAxNDUwLjE2IEw1NjMuOTA0IDE0ODAuNzggTDU3MS41NDMgMTQ4MC43OCBMNTcxLjU0MyAxNDg0LjcyIEw1NTEuNjM2IDE0ODQuNzIgTDU1MS42MzYgMTQ4MC43OCBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDE5MCkiIGQ9Ik04NjUuNzc1IDE0ODAuNzggTDg4Mi4wOTQgMTQ4MC43OCBMODgyLjA5NCAxNDg0LjcyIEw4NjAuMTUgMTQ4NC43MiBMODYwLjE1IDE0ODAuNzggUTg2Mi44MTIgMTQ3OC4wMyA4NjcuMzk1IDE0NzMuNCBRODcyLjAwMiAxNDY4Ljc1IDg3My4xODIgMTQ2Ny40MSBRODc1LjQyOCAxNDY0Ljg4IDg3Ni4zMDcgMTQ2My4xNSBRODc3LjIxIDE0NjEuMzkgODc3LjIxIDE0NTkuNyBRODc3LjIxIDE0NTYuOTQgODc1LjI2NiAxNDU1LjIxIFE4NzMuMzQ0IDE0NTMuNDcgODcwLjI0MyAxNDUzLjQ3IFE4NjguMDQzIDE0NTMuNDcgODY1LjU5IDE0NTQuMjMgUTg2My4xNTkgMTQ1NSA4NjAuMzgxIDE0NTYuNTUgTDg2MC4zODEgMTQ1MS44MyBRODYzLjIwNiAxNDUwLjY5IDg2NS42NTkgMTQ1MC4xMSBRODY4LjExMyAxNDQ5LjUzIDg3MC4xNSAxNDQ5LjUzIFE4NzUuNTIgMTQ0OS41MyA4NzguNzE1IDE0NTIuMjIgUTg4MS45MDkgMTQ1NC45MSA4ODEuOTA5IDE0NTkuNCBRODgxLjkwOSAxNDYxLjUzIDg4MS4wOTkgMTQ2My40NSBRODgwLjMxMiAxNDY1LjM0IDg3OC4yMDUgMTQ2Ny45NCBRODc3LjYyNyAxNDY4LjYxIDg3NC41MjUgMTQ3MS44MyBRODcxLjQyMyAxNDc1LjAyIDg2NS43NzUgMTQ4MC43OCBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDE5MCkiIGQ9Ik0xMTg1LjI0IDE0NjYuMDkgUTExODguNTkgMTQ2Ni44IDExOTAuNDcgMTQ2OS4wNyBRMTE5Mi4zNyAxNDcxLjM0IDExOTIuMzcgMTQ3NC42NyBRMTE5Mi4zNyAxNDc5Ljc5IDExODguODUgMTQ4Mi41OSBRMTE4NS4zMyAxNDg1LjM5IDExNzguODUgMTQ4NS4zOSBRMTE3Ni42NyAxNDg1LjM5IDExNzQuMzYgMTQ4NC45NSBRMTE3Mi4wNyAxNDg0LjUzIDExNjkuNjEgMTQ4My42OCBMMTE2OS42MSAxNDc5LjE2IFExMTcxLjU2IDE0ODAuMyAxMTczLjg3IDE0ODAuODggUTExNzYuMTkgMTQ4MS40NiAxMTc4LjcxIDE0ODEuNDYgUTExODMuMTEgMTQ4MS40NiAxMTg1LjQgMTQ3OS43MiBRMTE4Ny43MiAxNDc3Ljk4IDExODcuNzIgMTQ3NC42NyBRMTE4Ny43MiAxNDcxLjYyIDExODUuNTYgMTQ2OS45MSBRMTE4My40MyAxNDY4LjE3IDExNzkuNjEgMTQ2OC4xNyBMMTE3NS41OSAxNDY4LjE3IEwxMTc1LjU5IDE0NjQuMzMgTDExNzkuOCAxNDY0LjMzIFExMTgzLjI1IDE0NjQuMzMgMTE4NS4wOCAxNDYyLjk2IFExMTg2LjkxIDE0NjEuNTcgMTE4Ni45MSAxNDU4Ljk4IFExMTg2LjkxIDE0NTYuMzIgMTE4NS4wMSAxNDU0LjkxIFExMTgzLjEzIDE0NTMuNDcgMTE3OS42MSAxNDUzLjQ3IFExMTc3LjY5IDE0NTMuNDcgMTE3NS40OSAxNDUzLjg5IFExMTczLjI5IDE0NTQuMyAxMTcwLjY2IDE0NTUuMTggTDExNzAuNjYgMTQ1MS4wMiBRMTE3My4zMiAxNDUwLjI4IDExNzUuNjMgMTQ0OS45MSBRMTE3Ny45NyAxNDQ5LjUzIDExODAuMDMgMTQ0OS41MyBRMTE4NS4zNSAxNDQ5LjUzIDExODguNDYgMTQ1MS45NyBRMTE5MS41NiAxNDU0LjM3IDExOTEuNTYgMTQ1OC40OSBRMTE5MS41NiAxNDYxLjM2IDExODkuOTEgMTQ2My4zNSBRMTE4OC4yNyAxNDY1LjMyIDExODUuMjQgMTQ2Ni4wOSBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDE5MCkiIGQ9Ik0xNDkzLjg3IDE0NTQuMjMgTDE0ODIuMDYgMTQ3Mi42OCBMMTQ5My44NyAxNDcyLjY4IEwxNDkzLjg3IDE0NTQuMjMgTTE0OTIuNjQgMTQ1MC4xNiBMMTQ5OC41MiAxNDUwLjE2IEwxNDk4LjUyIDE0NzIuNjggTDE1MDMuNDUgMTQ3Mi42OCBMMTUwMy40NSAxNDc2LjU3IEwxNDk4LjUyIDE0NzYuNTcgTDE0OTguNTIgMTQ4NC43MiBMMTQ5My44NyAxNDg0LjcyIEwxNDkzLjg3IDE0NzYuNTcgTDE0NzguMjcgMTQ3Ni41NyBMMTQ3OC4yNyAxNDcyLjA2IEwxNDkyLjY0IDE0NTAuMTYgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAxOTApIiBkPSJNMTc5MS4wMSAxNDUwLjE2IEwxODA5LjM2IDE0NTAuMTYgTDE4MDkuMzYgMTQ1NC4xIEwxNzk1LjI5IDE0NTQuMSBMMTc5NS4yOSAxNDYyLjU3IFExNzk2LjMxIDE0NjIuMjIgMTc5Ny4zMyAxNDYyLjA2IFExNzk4LjM0IDE0NjEuODcgMTc5OS4zNiAxNDYxLjg3IFExODA1LjE1IDE0NjEuODcgMTgwOC41MyAxNDY1LjA0IFExODExLjkxIDE0NjguMjIgMTgxMS45MSAxNDczLjYzIFExODExLjkxIDE0NzkuMjEgMTgwOC40NCAxNDgyLjMxIFExODA0Ljk2IDE0ODUuMzkgMTc5OC42NCAxNDg1LjM5IFExNzk2LjQ3IDE0ODUuMzkgMTc5NC4yIDE0ODUuMDIgUTE3OTEuOTYgMTQ4NC42NSAxNzg5LjU1IDE0ODMuOTEgTDE3ODkuNTUgMTQ3OS4yMSBRMTc5MS42MyAxNDgwLjM0IDE3OTMuODUgMTQ4MC45IFExNzk2LjA4IDE0ODEuNDYgMTc5OC41NSAxNDgxLjQ2IFExODAyLjU2IDE0ODEuNDYgMTgwNC44OSAxNDc5LjM1IFExODA3LjIzIDE0NzcuMjQgMTgwNy4yMyAxNDczLjYzIFExODA3LjIzIDE0NzAuMDIgMTgwNC44OSAxNDY3LjkxIFExODAyLjU2IDE0NjUuODEgMTc5OC41NSAxNDY1LjgxIFExNzk2LjY4IDE0NjUuODEgMTc5NC44IDE0NjYuMjIgUTE3OTIuOTUgMTQ2Ni42NCAxNzkxLjAxIDE0NjcuNTIgTDE3OTEuMDEgMTQ1MC4xNiBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDE5MCkiIGQ9Ik0yMTExIDE0NjUuNTggUTIxMDcuODUgMTQ2NS41OCAyMTA2IDE0NjcuNzMgUTIxMDQuMTcgMTQ2OS44OCAyMTA0LjE3IDE0NzMuNjMgUTIxMDQuMTcgMTQ3Ny4zNiAyMTA2IDE0NzkuNTMgUTIxMDcuODUgMTQ4MS42OSAyMTExIDE0ODEuNjkgUTIxMTQuMTUgMTQ4MS42OSAyMTE1Ljk4IDE0NzkuNTMgUTIxMTcuODMgMTQ3Ny4zNiAyMTE3LjgzIDE0NzMuNjMgUTIxMTcuODMgMTQ2OS44OCAyMTE1Ljk4IDE0NjcuNzMgUTIxMTQuMTUgMTQ2NS41OCAyMTExIDE0NjUuNTggTTIxMjAuMjggMTQ1MC45MiBMMjEyMC4yOCAxNDU1LjE4IFEyMTE4LjUyIDE0NTQuMzUgMjExNi43MiAxNDUzLjkxIFEyMTE0Ljk0IDE0NTMuNDcgMjExMy4xOCAxNDUzLjQ3IFEyMTA4LjU1IDE0NTMuNDcgMjEwNi4wOSAxNDU2LjYgUTIxMDMuNjYgMTQ1OS43MiAyMTAzLjMyIDE0NjYuMDQgUTIxMDQuNjggMTQ2NC4wMyAyMTA2Ljc0IDE0NjIuOTYgUTIxMDguOCAxNDYxLjg3IDIxMTEuMjggMTQ2MS44NyBRMjExNi40OSAxNDYxLjg3IDIxMTkuNSAxNDY1LjA0IFEyMTIyLjUzIDE0NjguMTkgMjEyMi41MyAxNDczLjYzIFEyMTIyLjUzIDE0NzguOTYgMjExOS4zOCAxNDgyLjE3IFEyMTE2LjIzIDE0ODUuMzkgMjExMSAxNDg1LjM5IFEyMTA1LjAxIDE0ODUuMzkgMjEwMS44NCAxNDgwLjgxIFEyMDk4LjY2IDE0NzYuMiAyMDk4LjY2IDE0NjcuNDcgUTIwOTguNjYgMTQ1OS4yOCAyMTAyLjU1IDE0NTQuNDIgUTIxMDYuNDQgMTQ0OS41MyAyMTEyLjk5IDE0NDkuNTMgUTIxMTQuNzUgMTQ0OS41MyAyMTE2LjUzIDE0NDkuODggUTIxMTguMzQgMTQ1MC4yMyAyMTIwLjI4IDE0NTAuOTIgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDoyOyBzdHJva2Utb3BhY2l0eTowLjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxOTIuOTc2LDEzODQuMyAyMjU2Ljc2LDEzODQuMyAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkyKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDoyOyBzdHJva2Utb3BhY2l0eTowLjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxOTIuOTc2LDEwNTkuNzcgMjI1Ni43NiwxMDU5Ljc3IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAxOTIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjI7IHN0cm9rZS1vcGFjaXR5OjAuMTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE5Mi45NzYsNzM1LjI0IDIyNTYuNzYsNzM1LjI0IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAxOTIpIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjI7IHN0cm9rZS1vcGFjaXR5OjAuMTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE5Mi45NzYsNDEwLjcxMiAyMjU2Ljc2LDQxMC43MTIgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDE5MikiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6Mjsgc3Ryb2tlLW9wYWNpdHk6MC4xOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTkyLjk3Niw4Ni4xODMgMjI1Ni43Niw4Ni4xODMgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDE5MCkiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE5Mi45NzYsMTQyMy4wOSAxOTIuOTc2LDQ3LjI0NDEgCiAgIi8+Cjxwb2x5bGluZSBjbGlwLXBhdGg9InVybCgjY2xpcDE5MCkiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDsgc3Ryb2tlLWxpbmVjYXA6YnV0dDsgc3Ryb2tlLWxpbmVqb2luOnJvdW5kOyBzdHJva2Utd2lkdGg6NDsgc3Ryb2tlLW9wYWNpdHk6MTsgZmlsbDpub25lIiBwb2ludHM9IgogIDE5Mi45NzYsMTM4NC4zIDIxMS44NzQsMTM4NC4zIAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAxOTApIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxOTIuOTc2LDEwNTkuNzcgMjExLjg3NCwxMDU5Ljc3IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAxOTApIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxOTIuOTc2LDczNS4yNCAyMTEuODc0LDczNS4yNCAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkwKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTkyLjk3Niw0MTAuNzEyIDIxMS44NzQsNDEwLjcxMiAKICAiLz4KPHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkwKSIgc3R5bGU9InN0cm9rZTojMDAwMDAwOyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMTkyLjk3Niw4Ni4xODMgMjExLjg3NCw4Ni4xODMgCiAgIi8+CjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkwKSIgZD0iTTUxLjQ3MjEgMTM4NC43NSBMODEuMTQ3OSAxMzg0Ljc1IEw4MS4xNDc5IDEzODguNjggTDUxLjQ3MjEgMTM4OC42OCBMNTEuNDcyMSAxMzg0Ljc1IFoiIGZpbGw9IiMwMDAwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbC1vcGFjaXR5PSIxIiAvPjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkwKSIgZD0iTTkyLjA1MDYgMTM5Ny42NCBMOTkuNjg5NSAxMzk3LjY0IEw5OS42ODk1IDEzNzEuMjggTDkxLjM3OTMgMTM3Mi45NCBMOTEuMzc5MyAxMzY4LjY4IEw5OS42NDMyIDEzNjcuMDIgTDEwNC4zMTkgMTM2Ny4wMiBMMTA0LjMxOSAxMzk3LjY0IEwxMTEuOTU4IDEzOTcuNjQgTDExMS45NTggMTQwMS41OCBMOTIuMDUwNiAxNDAxLjU4IEw5Mi4wNTA2IDEzOTcuNjQgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAxOTApIiBkPSJNMTIxLjQwMiAxMzk1LjcgTDEyNi4yODcgMTM5NS43IEwxMjYuMjg3IDE0MDEuNTggTDEyMS40MDIgMTQwMS41OCBMMTIxLjQwMiAxMzk1LjcgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAxOTApIiBkPSJNMTQ2LjQ3MiAxMzcwLjEgUTE0Mi44NjEgMTM3MC4xIDE0MS4wMzIgMTM3My42NiBRMTM5LjIyNiAxMzc3LjIgMTM5LjIyNiAxMzg0LjMzIFExMzkuMjI2IDEzOTEuNDQgMTQxLjAzMiAxMzk1IFExNDIuODYxIDEzOTguNTUgMTQ2LjQ3MiAxMzk4LjU1IFExNTAuMTA2IDEzOTguNTUgMTUxLjkxMSAxMzk1IFExNTMuNzQgMTM5MS40NCAxNTMuNzQgMTM4NC4zMyBRMTUzLjc0IDEzNzcuMiAxNTEuOTExIDEzNzMuNjYgUTE1MC4xMDYgMTM3MC4xIDE0Ni40NzIgMTM3MC4xIE0xNDYuNDcyIDEzNjYuMzkgUTE1Mi4yODIgMTM2Ni4zOSAxNTUuMzM3IDEzNzEgUTE1OC40MTYgMTM3NS41OCAxNTguNDE2IDEzODQuMzMgUTE1OC40MTYgMTM5My4wNiAxNTUuMzM3IDEzOTcuNjcgUTE1Mi4yODIgMTQwMi4yNSAxNDYuNDcyIDE0MDIuMjUgUTE0MC42NjEgMTQwMi4yNSAxMzcuNTgzIDEzOTcuNjcgUTEzNC41MjcgMTM5My4wNiAxMzQuNTI3IDEzODQuMzMgUTEzNC41MjcgMTM3NS41OCAxMzcuNTgzIDEzNzEgUTE0MC42NjEgMTM2Ni4zOSAxNDYuNDcyIDEzNjYuMzkgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAxOTApIiBkPSJNNTIuNDY3NSAxMDYwLjIyIEw4Mi4xNDMzIDEwNjAuMjIgTDgyLjE0MzMgMTA2NC4xNiBMNTIuNDY3NSAxMDY0LjE2IEw1Mi40Njc1IDEwNjAuMjIgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAxOTApIiBkPSJNMTAyLjIzNiAxMDQ1LjU3IFE5OC42MjQ3IDEwNDUuNTcgOTYuNzk2IDEwNDkuMTMgUTk0Ljk5MDQgMTA1Mi42NyA5NC45OTA0IDEwNTkuOCBROTQuOTkwNCAxMDY2LjkxIDk2Ljc5NiAxMDcwLjQ4IFE5OC42MjQ3IDEwNzQuMDIgMTAyLjIzNiAxMDc0LjAyIFExMDUuODcgMTA3NC4wMiAxMDcuNjc2IDEwNzAuNDggUTEwOS41MDQgMTA2Ni45MSAxMDkuNTA0IDEwNTkuOCBRMTA5LjUwNCAxMDUyLjY3IDEwNy42NzYgMTA0OS4xMyBRMTA1Ljg3IDEwNDUuNTcgMTAyLjIzNiAxMDQ1LjU3IE0xMDIuMjM2IDEwNDEuODYgUTEwOC4wNDYgMTA0MS44NiAxMTEuMTAxIDEwNDYuNDcgUTExNC4xOCAxMDUxLjA1IDExNC4xOCAxMDU5LjggUTExNC4xOCAxMDY4LjUzIDExMS4xMDEgMTA3My4xNCBRMTA4LjA0NiAxMDc3LjcyIDEwMi4yMzYgMTA3Ny43MiBROTYuNDI1NiAxMDc3LjcyIDkzLjM0NjkgMTA3My4xNCBROTAuMjkxNCAxMDY4LjUzIDkwLjI5MTQgMTA1OS44IFE5MC4yOTE0IDEwNTEuMDUgOTMuMzQ2OSAxMDQ2LjQ3IFE5Ni40MjU2IDEwNDEuODYgMTAyLjIzNiAxMDQxLjg2IFoiIGZpbGw9IiMwMDAwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbC1vcGFjaXR5PSIxIiAvPjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkwKSIgZD0iTTEyMi4zOTggMTA3MS4xNyBMMTI3LjI4MiAxMDcxLjE3IEwxMjcuMjgyIDEwNzcuMDUgTDEyMi4zOTggMTA3Ny4wNSBMMTIyLjM5OCAxMDcxLjE3IFoiIGZpbGw9IiMwMDAwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbC1vcGFjaXR5PSIxIiAvPjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkwKSIgZD0iTTEzNy41MTMgMTA0Mi40OSBMMTU1Ljg3IDEwNDIuNDkgTDE1NS44NyAxMDQ2LjQyIEwxNDEuNzk2IDEwNDYuNDIgTDE0MS43OTYgMTA1NC45IFExNDIuODE0IDEwNTQuNTUgMTQzLjgzMyAxMDU0LjM5IFExNDQuODUxIDEwNTQuMiAxNDUuODcgMTA1NC4yIFExNTEuNjU3IDEwNTQuMiAxNTUuMDM2IDEwNTcuMzcgUTE1OC40MTYgMTA2MC41NCAxNTguNDE2IDEwNjUuOTYgUTE1OC40MTYgMTA3MS41NCAxNTQuOTQ0IDEwNzQuNjQgUTE1MS40NzIgMTA3Ny43MiAxNDUuMTUyIDEwNzcuNzIgUTE0Mi45NzYgMTA3Ny43MiAxNDAuNzA4IDEwNzcuMzUgUTEzOC40NjIgMTA3Ni45OCAxMzYuMDU1IDEwNzYuMjQgTDEzNi4wNTUgMTA3MS41NCBRMTM4LjEzOCAxMDcyLjY3IDE0MC4zNjEgMTA3My4yMyBRMTQyLjU4MyAxMDczLjc5IDE0NS4wNiAxMDczLjc5IFExNDkuMDY0IDEwNzMuNzkgMTUxLjQwMiAxMDcxLjY4IFExNTMuNzQgMTA2OS41NyAxNTMuNzQgMTA2NS45NiBRMTUzLjc0IDEwNjIuMzUgMTUxLjQwMiAxMDYwLjI0IFExNDkuMDY0IDEwNTguMTQgMTQ1LjA2IDEwNTguMTQgUTE0My4xODUgMTA1OC4xNCAxNDEuMzEgMTA1OC41NSBRMTM5LjQ1OCAxMDU4Ljk3IDEzNy41MTMgMTA1OS44NSBMMTM3LjUxMyAxMDQyLjQ5IFoiIGZpbGw9IiMwMDAwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZmlsbC1vcGFjaXR5PSIxIiAvPjxwYXRoIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkwKSIgZD0iTTEwMS4yNCA3MjEuMDM5IFE5Ny42MjkzIDcyMS4wMzkgOTUuODAwNiA3MjQuNjA0IFE5My45OTUgNzI4LjE0NiA5My45OTUgNzM1LjI3NSBROTMuOTk1IDc0Mi4zODIgOTUuODAwNiA3NDUuOTQ2IFE5Ny42MjkzIDc0OS40ODggMTAxLjI0IDc0OS40ODggUTEwNC44NzUgNzQ5LjQ4OCAxMDYuNjggNzQ1Ljk0NiBRMTA4LjUwOSA3NDIuMzgyIDEwOC41MDkgNzM1LjI3NSBRMTA4LjUwOSA3MjguMTQ2IDEwNi42OCA3MjQuNjA0IFExMDQuODc1IDcyMS4wMzkgMTAxLjI0IDcyMS4wMzkgTTEwMS4yNCA3MTcuMzM1IFExMDcuMDUxIDcxNy4zMzUgMTEwLjEwNiA3MjEuOTQyIFExMTMuMTg1IDcyNi41MjUgMTEzLjE4NSA3MzUuMjc1IFExMTMuMTg1IDc0NC4wMDIgMTEwLjEwNiA3NDguNjA4IFExMDcuMDUxIDc1My4xOTIgMTAxLjI0IDc1My4xOTIgUTk1LjQzMDIgNzUzLjE5MiA5Mi4zNTE1IDc0OC42MDggUTg5LjI5NiA3NDQuMDAyIDg5LjI5NiA3MzUuMjc1IFE4OS4yOTYgNzI2LjUyNSA5Mi4zNTE1IDcyMS45NDIgUTk1LjQzMDIgNzE3LjMzNSAxMDEuMjQgNzE3LjMzNSBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDE5MCkiIGQ9Ik0xMjEuNDAyIDc0Ni42NDEgTDEyNi4yODcgNzQ2LjY0MSBMMTI2LjI4NyA3NTIuNTIgTDEyMS40MDIgNzUyLjUyIEwxMjEuNDAyIDc0Ni42NDEgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAxOTApIiBkPSJNMTQ2LjQ3MiA3MjEuMDM5IFExNDIuODYxIDcyMS4wMzkgMTQxLjAzMiA3MjQuNjA0IFExMzkuMjI2IDcyOC4xNDYgMTM5LjIyNiA3MzUuMjc1IFExMzkuMjI2IDc0Mi4zODIgMTQxLjAzMiA3NDUuOTQ2IFExNDIuODYxIDc0OS40ODggMTQ2LjQ3MiA3NDkuNDg4IFExNTAuMTA2IDc0OS40ODggMTUxLjkxMSA3NDUuOTQ2IFExNTMuNzQgNzQyLjM4MiAxNTMuNzQgNzM1LjI3NSBRMTUzLjc0IDcyOC4xNDYgMTUxLjkxMSA3MjQuNjA0IFExNTAuMTA2IDcyMS4wMzkgMTQ2LjQ3MiA3MjEuMDM5IE0xNDYuNDcyIDcxNy4zMzUgUTE1Mi4yODIgNzE3LjMzNSAxNTUuMzM3IDcyMS45NDIgUTE1OC40MTYgNzI2LjUyNSAxNTguNDE2IDczNS4yNzUgUTE1OC40MTYgNzQ0LjAwMiAxNTUuMzM3IDc0OC42MDggUTE1Mi4yODIgNzUzLjE5MiAxNDYuNDcyIDc1My4xOTIgUTE0MC42NjEgNzUzLjE5MiAxMzcuNTgzIDc0OC42MDggUTEzNC41MjcgNzQ0LjAwMiAxMzQuNTI3IDczNS4yNzUgUTEzNC41MjcgNzI2LjUyNSAxMzcuNTgzIDcyMS45NDIgUTE0MC42NjEgNzE3LjMzNSAxNDYuNDcyIDcxNy4zMzUgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBhdGggY2xpcC1wYXRoPSJ1cmwoI2NsaXAxOTApIiBkPSJNMTAyLjIzNiAzOTYuNTEgUTk4LjYyNDcgMzk2LjUxIDk2Ljc5NiA0MDAuMDc1IFE5NC45OTA0IDQwMy42MTcgOTQuOTkwNCA0MTAuNzQ2IFE5NC45OTA0IDQxNy44NTMgOTYuNzk2IDQyMS40MTggUTk4LjYyNDcgNDI0Ljk1OSAxMDIuMjM2IDQyNC45NTkgUTEwNS44NyA0MjQuOTU5IDEwNy42NzYgNDIxLjQxOCBRMTA5LjUwNCA0MTcuODUzIDEwOS41MDQgNDEwLjc0NiBRMTA5LjUwNCA0MDMuNjE3IDEwNy42NzYgNDAwLjA3NSBRMTA1Ljg3IDM5Ni41MSAxMDIuMjM2IDM5Ni41MSBNMTAyLjIzNiAzOTIuODA3IFExMDguMDQ2IDM5Mi44MDcgMTExLjEwMSAzOTcuNDEzIFExMTQuMTggNDAxLjk5NyAxMTQuMTggNDEwLjc0NiBRMTE0LjE4IDQxOS40NzMgMTExLjEwMSA0MjQuMDggUTEwOC4wNDYgNDI4LjY2MyAxMDIuMjM2IDQyOC42NjMgUTk2LjQyNTYgNDI4LjY2MyA5My4zNDY5IDQyNC4wOCBROTAuMjkxNCA0MTkuNDczIDkwLjI5MTQgNDEwLjc0NiBROTAuMjkxNCA0MDEuOTk3IDkzLjM0NjkgMzk3LjQxMyBROTYuNDI1NiAzOTIuODA3IDEwMi4yMzYgMzkyLjgwNyBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDE5MCkiIGQ9Ik0xMjIuMzk4IDQyMi4xMTIgTDEyNy4yODIgNDIyLjExMiBMMTI3LjI4MiA0MjcuOTkyIEwxMjIuMzk4IDQyNy45OTIgTDEyMi4zOTggNDIyLjExMiBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDE5MCkiIGQ9Ik0xMzcuNTEzIDM5My40MzIgTDE1NS44NyAzOTMuNDMyIEwxNTUuODcgMzk3LjM2NyBMMTQxLjc5NiAzOTcuMzY3IEwxNDEuNzk2IDQwNS44MzkgUTE0Mi44MTQgNDA1LjQ5MiAxNDMuODMzIDQwNS4zMyBRMTQ0Ljg1MSA0MDUuMTQ1IDE0NS44NyA0MDUuMTQ1IFExNTEuNjU3IDQwNS4xNDUgMTU1LjAzNiA0MDguMzE2IFExNTguNDE2IDQxMS40ODcgMTU4LjQxNiA0MTYuOTA0IFExNTguNDE2IDQyMi40ODMgMTU0Ljk0NCA0MjUuNTg0IFExNTEuNDcyIDQyOC42NjMgMTQ1LjE1MiA0MjguNjYzIFExNDIuOTc2IDQyOC42NjMgMTQwLjcwOCA0MjguMjkzIFExMzguNDYyIDQyNy45MjIgMTM2LjA1NSA0MjcuMTgyIEwxMzYuMDU1IDQyMi40ODMgUTEzOC4xMzggNDIzLjYxNyAxNDAuMzYxIDQyNC4xNzIgUTE0Mi41ODMgNDI0LjcyOCAxNDUuMDYgNDI0LjcyOCBRMTQ5LjA2NCA0MjQuNzI4IDE1MS40MDIgNDIyLjYyMSBRMTUzLjc0IDQyMC41MTUgMTUzLjc0IDQxNi45MDQgUTE1My43NCA0MTMuMjkzIDE1MS40MDIgNDExLjE4NiBRMTQ5LjA2NCA0MDkuMDggMTQ1LjA2IDQwOS4wOCBRMTQzLjE4NSA0MDkuMDggMTQxLjMxIDQwOS40OTYgUTEzOS40NTggNDA5LjkxMyAxMzcuNTEzIDQxMC43OTMgTDEzNy41MTMgMzkzLjQzMiBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDE5MCkiIGQ9Ik05Mi4wNTA2IDk5LjUyNzkgTDk5LjY4OTUgOTkuNTI3OSBMOTkuNjg5NSA3My4xNjIzIEw5MS4zNzkzIDc0LjgyODkgTDkxLjM3OTMgNzAuNTY5NyBMOTkuNjQzMiA2OC45MDMgTDEwNC4zMTkgNjguOTAzIEwxMDQuMzE5IDk5LjUyNzkgTDExMS45NTggOTkuNTI3OSBMMTExLjk1OCAxMDMuNDYzIEw5Mi4wNTA2IDEwMy40NjMgTDkyLjA1MDYgOTkuNTI3OSBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDE5MCkiIGQ9Ik0xMjEuNDAyIDk3LjU4MzQgTDEyNi4yODcgOTcuNTgzNCBMMTI2LjI4NyAxMDMuNDYzIEwxMjEuNDAyIDEwMy40NjMgTDEyMS40MDIgOTcuNTgzNCBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDE5MCkiIGQ9Ik0xNDYuNDcyIDcxLjk4MTcgUTE0Mi44NjEgNzEuOTgxNyAxNDEuMDMyIDc1LjU0NjUgUTEzOS4yMjYgNzkuMDg4MiAxMzkuMjI2IDg2LjIxNzggUTEzOS4yMjYgOTMuMzI0MiAxNDEuMDMyIDk2Ljg4OSBRMTQyLjg2MSAxMDAuNDMxIDE0Ni40NzIgMTAwLjQzMSBRMTUwLjEwNiAxMDAuNDMxIDE1MS45MTEgOTYuODg5IFExNTMuNzQgOTMuMzI0MiAxNTMuNzQgODYuMjE3OCBRMTUzLjc0IDc5LjA4ODIgMTUxLjkxMSA3NS41NDY1IFExNTAuMTA2IDcxLjk4MTcgMTQ2LjQ3MiA3MS45ODE3IE0xNDYuNDcyIDY4LjI3OCBRMTUyLjI4MiA2OC4yNzggMTU1LjMzNyA3Mi44ODQ1IFExNTguNDE2IDc3LjQ2NzggMTU4LjQxNiA4Ni4yMTc4IFExNTguNDE2IDk0Ljk0NDYgMTU1LjMzNyA5OS41NTEgUTE1Mi4yODIgMTA0LjEzNCAxNDYuNDcyIDEwNC4xMzQgUTE0MC42NjEgMTA0LjEzNCAxMzcuNTgzIDk5LjU1MSBRMTM0LjUyNyA5NC45NDQ2IDEzNC41MjcgODYuMjE3OCBRMTM0LjUyNyA3Ny40Njc4IDEzNy41ODMgNzIuODg0NSBRMTQwLjY2MSA2OC4yNzggMTQ2LjQ3MiA2OC4yNzggWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PHBvbHlsaW5lIGNsaXAtcGF0aD0idXJsKCNjbGlwMTkyKSIgc3R5bGU9InN0cm9rZTojMDA5YWY5OyBzdHJva2UtbGluZWNhcDpidXR0OyBzdHJva2UtbGluZWpvaW46cm91bmQ7IHN0cm9rZS13aWR0aDo0OyBzdHJva2Utb3BhY2l0eToxOyBmaWxsOm5vbmUiIHBvaW50cz0iCiAgMjUxLjM4NSw3MzUuMjQgMjYwLjg5Miw3MTUuMzMgMjcwLjM5OSw2OTUuNDM5IDM1OC4zMDMsNTE1LjcwNSA0NDYuMjA3LDM1My41MiA0OTkuMDM0LDI2OS45OTMgNTUxLjg2MSwxOTkuOTU2IDU3NC4xOTQsMTc0LjkxMyA1OTYuNTI2LDE1Mi43OCA2MTguODU4LDEzMy42NyAKICA2NDEuMTksMTE3LjY4MyA2ODkuNzA4LDk0LjA5IDczOC4yMjcsODYuMTgzMSA3ODIuOTU2LDkyLjk2NCA4MjcuNjg1LDExMy4xMDUgODc1LjY0LDE0OS4wNTUgOTIzLjU5NSwxOTkuMDE3IDk3OS4xNTUsMjcyLjgzNCAxMDM0LjcyLDM2MS40NzggMTA4NC4wOSw0NTAuNDA5IAogIDExMzMuNDcsNTQ2LjU1NiAxMTc2Ljc2LDYzNC44ODkgMTIyMC4wNiw3MjUuMTc3IDEyNjcuMjcsODIzLjc3OSAxMzE0LjQ3LDkyMC4zMyAxMzYxLjk2LDEwMTMuMTIgMTQwOS40NSwxMDk5LjQxIDE0NjEuOTUsMTE4NC43OSAxNTE0LjQ1LDEyNTcuMyAxNTY0LjQxLDEzMTIuNDMgCiAgMTYxNC4zNiwxMzUyLjYgMTY0MC4zMywxMzY3LjIgMTY2Ni4zLDEzNzcuMzcgMTY5Mi4yNywxMzgzLjA0IDE3MTguMjUsMTM4NC4xNSAxNzYxLjk3LDEzNzUuNzQgMTgwNS42OSwxMzU0LjYxIDE4NTkuMDcsMTMxMi4xNyAxOTEyLjQ2LDEyNTIuNjYgMTk2Mi42NCwxMTgyLjcxIAogIDIwMTIuODIsMTEwMS4wNSAyMDkzLjIxLDk1MS4yNjIgMjE3My42LDc4Ny4wMTUgMjE4NS45Nyw3NjEuMTQ4IDIxOTguMzUsNzM1LjI0IAogICIvPgo8cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDE5MCkiIGQ9IgpNMTkwNi4yMiAxOTYuNzg2IEwyMTg3Ljk2IDE5Ni43ODYgTDIxODcuOTYgOTMuMTA1NiBMMTkwNi4yMiA5My4xMDU2ICBaCiAgIiBmaWxsPSIjZmZmZmZmIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAxOTApIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxOTA2LjIyLDE5Ni43ODYgMjE4Ny45NiwxOTYuNzg2IDIxODcuOTYsOTMuMTA1NiAxOTA2LjIyLDkzLjEwNTYgMTkwNi4yMiwxOTYuNzg2IAogICIvPgo8cG9seWxpbmUgY2xpcC1wYXRoPSJ1cmwoI2NsaXAxOTApIiBzdHlsZT0ic3Ryb2tlOiMwMDlhZjk7IHN0cm9rZS1saW5lY2FwOmJ1dHQ7IHN0cm9rZS1saW5lam9pbjpyb3VuZDsgc3Ryb2tlLXdpZHRoOjQ7IHN0cm9rZS1vcGFjaXR5OjE7IGZpbGw6bm9uZSIgcG9pbnRzPSIKICAxOTI5LjE1LDE0NC45NDYgMjA2Ni43NCwxNDQuOTQ2IAogICIvPgo8cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDE5MCkiIGQ9Ik0yMTAzLjUxIDE2NC42MzMgUTIxMDEuNzEgMTY5LjI2MyAyMTAwIDE3MC42NzUgUTIwOTguMjggMTcyLjA4NyAyMDk1LjQxIDE3Mi4wODcgTDIwOTIuMDEgMTcyLjA4NyBMMjA5Mi4wMSAxNjguNTIyIEwyMDk0LjUxIDE2OC41MjIgUTIwOTYuMjcgMTY4LjUyMiAyMDk3LjI0IDE2Ny42ODggUTIwOTguMjEgMTY2Ljg1NSAyMDk5LjM5IDE2My43NTMgTDIxMDAuMTYgMTYxLjgwOSBMMjA4OS42NyAxMzYuMyBMMjA5NC4xOSAxMzYuMyBMMjEwMi4yOSAxNTYuNTc3IEwyMTEwLjM5IDEzNi4zIEwyMTE0LjkgMTM2LjMgTDIxMDMuNTEgMTY0LjYzMyBaIiBmaWxsPSIjMDAwMDAwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGwtb3BhY2l0eT0iMSIgLz48cGF0aCBjbGlwLXBhdGg9InVybCgjY2xpcDE5MCkiIGQ9Ik0yMTIyLjE5IDE1OC4yOSBMMjEyOS44MyAxNTguMjkgTDIxMjkuODMgMTMxLjkyNSBMMjEyMS41MiAxMzMuNTkxIEwyMTIxLjUyIDEyOS4zMzIgTDIxMjkuNzkgMTI3LjY2NiBMMjEzNC40NiAxMjcuNjY2IEwyMTM0LjQ2IDE1OC4yOSBMMjE0Mi4xIDE1OC4yOSBMMjE0Mi4xIDE2Mi4yMjYgTDIxMjIuMTkgMTYyLjIyNiBMMjEyMi4xOSAxNTguMjkgWiIgZmlsbD0iIzAwMDAwMCIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWxsLW9wYWNpdHk9IjEiIC8+PC9zdmc+Cg=="  />
+
+<p>A few things:</p>
+<ul>
+<li><p>Cells are numbered in the order they were evaluated.</p>
+</li>
+<li><p>This order need not be from top to bottom of the notebook.</p>
+</li>
+<li><p>The evaluation of a cell happens within the state of the workspace, which depends on what was evaluated earlier.</p>
+</li>
+<li><p>The workspace can be cleared by the &quot;Restart&quot; menu item under &quot;Kernel&quot;. After restarting the &quot;Run All&quot; menu item under &quot;Cell&quot; can be used to re-run all the commands in the notebook - from top to bottom. &quot;Run all&quot; will also reload any packages.</p>
+</li>
+</ul>
+
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('pre.hljl').forEach(el => {   // first, find all the div.code blocks
+  hljs.highlightElement(el);                              // then highlight each
+  });
+
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+  var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+  var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
+  });
+</script>
+
+
+</body>
+</html>
