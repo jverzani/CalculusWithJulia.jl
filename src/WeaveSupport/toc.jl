@@ -78,7 +78,7 @@ table_of_contents = [
     :misc           :bibliography;
     :misc           :quick_notes;
     :misc           :julia_interfaces;
-    :misc           :calculus_with_juila;
+    :misc           :calculus_with_julia;
     :misc           :unicode
 ]
 # return :d,:f for previous and next
