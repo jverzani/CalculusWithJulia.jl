@@ -21,3 +21,4 @@ pdf/*
 script/*
 .travis.yml
 appveyor.yml
+pluto/

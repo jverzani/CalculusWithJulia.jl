@@ -236,7 +236,7 @@ end
         outfile = joinpath(dir, bnm*ext)
         build_file(file, outfile, force=force) || return nothing
 
-        md2jl(file, outfile)
+        md2jl(tmp, outfile)
     end
 
 end
