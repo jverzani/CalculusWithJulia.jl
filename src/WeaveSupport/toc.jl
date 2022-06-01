@@ -74,7 +74,7 @@ table_of_contents = [
     :integral_vector_calculus		:review;
 
     :alternatives   :symbolics;
-    :misc           :getting_started_with_juila
+    :misc           :getting_started_with_julia
     :misc           :bibliography;
     :misc           :quick_notes;
     :misc           :julia_interfaces;
