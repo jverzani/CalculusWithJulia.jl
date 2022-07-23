@@ -1,11 +1,10 @@
 name = "CalculusWithJulia"
 uuid = "a2e0e22d-7d4c-5312-9169-8b992201a882"
-version = "0.0.21"
+version = "0.0.22"
 
 [deps]
 Base64 = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
 Contour = "d38c429a-6771-53c6-b99e-75d170b6e991"
-EllipsisNotation = "da5c29d0-fa7d-589e-88eb-ea29b0a81949"
 ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
 HCubature = "19dc6840-f33b-545b-b366-655c7e3ffd49"
 IntervalSets = "8197267c-284f-5f27-9208-e0e47529a953"
@@ -28,7 +27,6 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
 Contour = "0.5"
-EllipsisNotation = "1"
 ForwardDiff = "0.10"
 HCubature = "1"
 IntervalSets = "0.5"

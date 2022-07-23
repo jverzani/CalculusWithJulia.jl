@@ -44,6 +44,8 @@ ImageFile(f,caption=""; alt="A Figure", width=nothing) = ImageFile(f, caption, a
 # 3 args dir, f, caption
 function ImageFile(dir::Symbol, f::AbstractString, caption;
                    alt="A Figure", width=nothing)
+
+
     basedir = replace(dirname(@__DIR__), "/src" => "")
     fname = joinpath(basedir, "CwJ", string(dir), f)
 
