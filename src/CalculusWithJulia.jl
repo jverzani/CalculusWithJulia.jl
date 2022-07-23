@@ -61,9 +61,9 @@ using Roots
 @reexport using LinearAlgebra
 @reexport using SpecialFunctions
 
-using EllipsisNotation
-import EllipsisNotation: Ellipsis
-export ..
+# using EllipsisNotation
+# import EllipsisNotation: Ellipsis
+# export ..
 import IntervalSets
 import IntervalSets: ClosedInterval
 import SplitApplyCombine
