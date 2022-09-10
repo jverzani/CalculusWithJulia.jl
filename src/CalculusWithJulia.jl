@@ -53,6 +53,7 @@ module CalculusWithJulia
 
 using Reexport
 using RecipesBase
+import Contour
 import PlotUtils
 import ForwardDiff
 export ForwardDiff
@@ -63,9 +64,6 @@ using Roots
 @reexport using IntervalSets
 
 import SplitApplyCombine
-
-
-
 
 include("multidimensional.jl")
 include("derivatives.jl")
@@ -79,7 +77,7 @@ using Requires
 function __init__()
     @require SymPy="24249f21-da20-56a4-8eb1-6a02cf4ae2e6" include("sympy.jl")
     @require Plots="91a5bcdd-55d7-5caf-9e0b-520d859cae80" include("plots.jl")
-    @require MDBM="ea0cff06-48de-41e3-bd0e-d3c1feffd247" include("implicit_equation.jl")
+#    @require MDBM="ea0cff06-48de-41e3-bd0e-d3c1feffd247" include("implicit_equation.jl") # replaced in notes, and not supported
 end
 
 e = exp(1)
@@ -89,5 +87,6 @@ export unzip, rangeclamp
 export tangent, secant, D, sign_chart
 export riemann
 export divergence, gradient, curl, ∇
+export implicit_plot, implicit_plot!
 
 end # module
