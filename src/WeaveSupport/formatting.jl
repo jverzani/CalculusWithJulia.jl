@@ -92,7 +92,7 @@ JSXGraph("/full/path/to/file.js", "caption")
 function JSXGraph(f, caption="JSXGraph Demo"; ID="jsxgraph", CLASS="jsxgraph", WIDTH=500, HEIGHT=300)
     content = occursin(r"^http", f) ? read(download(f), String) : read(f, String)
     JSXGRAPH(content,
-             markdown(caption),
+             sprint(Markdown.html, Markdown.parse(caption)),
              ID, CLASS, WIDTH, HEIGHT)
 end
 
