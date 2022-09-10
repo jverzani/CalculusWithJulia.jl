@@ -330,3 +330,52 @@ vectorfieldplot3d(F, xlims=(-4,4), ylims=(-4,4), zlims=(0,3))
     legend := false
     [[x,dx] for (x,dx) in zip(xs, xs+dxs)],    [[y,dy] for (y,dy) in zip(ys, ys+dys)],    [[z,dz] for (z,dz) in zip(zs, zs+dzs)]
 end
+
+
+## the ImplicitPlots.jl package has a lot of packages that need updating
+## This copies over the necessary bits, leaving the fancier for later
+## Copied from the MIT licensed
+## https://github.com/saschatimme/ImplicitPlots.jl/blob/master/src/ImplicitPlots.jl
+struct ImplicitFunction{N,F}
+    f::F
+end
+ImplicitFunction{N}(f) where {N} = ImplicitFunction{N,typeof(f)}(f)
+(IF::ImplicitFunction{2})(x, y) = IF.f(x, y)
+ImplicitFunction(f) = ImplicitFunction{2}(f)
+
+@recipe function implicit(f::ImplicitFunction{2}; aspect_ratio = :equal, resolution = 400)
+    xlims --> (-5.0, 5.0)
+    xlims = plotattributes[:xlims]
+    ylims --> xlims
+    ylims = plotattributes[:ylims]
+
+    linewidth --> 1
+    grid --> true
+    aspect_ratio := aspect_ratio
+
+    rx = range(xlims[1]; stop = xlims[2], length = resolution)
+    ry = range(ylims[1]; stop = ylims[2], length = resolution)
+    z = [f(x, y) for x in rx, y in ry]
+
+    nplot = plotattributes[:plot_object].n
+    lvl = Contour.contour(collect(rx), collect(ry), z, 0.0)
+    lines = Contour.lines(lvl)
+    !isempty(lines) || return p
+
+    clr = get(plotattributes, :linecolor, :dodgerblue)
+    for (k, line) in enumerate(lines)
+        xs, ys = Contour.coordinates(line)
+        @series begin
+            seriestype := :path
+            linecolor --> clr
+            if k > 1
+                label := ""
+            end
+            xs, ys
+        end
+    end
+end
+implicit_plot(f; kwargs...) = RecipesBase.plot(ImplicitFunction(f); kwargs...)
+implicit_plot!(f; kwargs...) = RecipesBase.plot!(ImplicitFunction(f); kwargs...)
+implicit_plot!(p::RecipesBase.AbstractPlot, f; kwargs...) =
+    RecipesBase.plot!(p, ImplicitFunction(f); kwargs...)
