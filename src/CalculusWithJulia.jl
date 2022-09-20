@@ -38,15 +38,15 @@ Several plot recipes are provided to ease the creation of plots in the notes.
 `vectorfieldplot` and `vectorfieldplot3d` can be used to plot vector fields; and
 `arrow` is a simplified interface to `quiver` that also indicates 3D vectors.
 
-* `MDBM`: the  `MDBM` package is useful for finding contours in ``2`` or ``3`` dimensions.
+The `plot_implicit` function can plot `2D` implicit plots. (It is borrowed from [ImplicitPlots.jl](https://github.com/saschatimme/ImplicitPlots.jl), which is avoided, as it has dependencies that hold other packages back.)
 
-## Other packages with recurring roles in the notes
+## Other packages with a recurring role in the accompanying notes:
 
 * `Roots` is used to find zeros of univariate functions
 
-* `QuadGK` and `HCubature` are used for numeric integration
+* `SymPy` for symbolic math
 
-* `ImplicitEquations` is used to make 2-dimesional plots of implicit equations.
+* `QuadGK` and `HCubature` are used for numeric integration
 
 """
 module CalculusWithJulia
@@ -70,7 +70,6 @@ include("derivatives.jl")
 include("integration.jl")
 include("plot-utils.jl")
 include("plot-recipes.jl")
-include("WeaveSupport/WeaveSupport.jl")
 
 using Requires
 
