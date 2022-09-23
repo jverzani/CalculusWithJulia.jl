@@ -47,7 +47,6 @@ end
 
 
 
-
 """
     plotif(f, g, a, b)
 
