@@ -9,7 +9,8 @@ This package does two things:
 
 * It defines a handful of functions for convenience. The exported ones
 are `e`, `unzip`, `rangeclamp` `tangent`, `secant`, `D` (and the prime
-notation), `divergence`, `gradient`, `curl`, and `∇`.
+notation), `divergence`, `gradient`, `curl`, and `∇`, along with some plotting
+functions
 
 
 ## Packages loaded by `CalculusWithJulia`
@@ -75,8 +76,7 @@ using Requires
 
 function __init__()
     @require SymPy="24249f21-da20-56a4-8eb1-6a02cf4ae2e6" include("sympy.jl")
-    @require Plots="91a5bcdd-55d7-5caf-9e0b-520d859cae80" include("plots.jl")
-#    @require MDBM="ea0cff06-48de-41e3-bd0e-d3c1feffd247" include("implicit_equation.jl") # replaced in notes, and not supported
+    @require Plots="91a5bcdd-55d7-5caf-9e0b-520d859cae80" include("plots.jl") # could deprecate...
 end
 
 e = exp(1)
