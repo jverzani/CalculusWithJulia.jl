@@ -9,7 +9,8 @@ This package does two things:
 
 * It defines a handful of functions for convenience. The exported ones
 are `e`, `unzip`, `rangeclamp` `tangent`, `secant`, `D` (and the prime
-notation), `divergence`, `gradient`, `curl`, and `∇`.
+notation), `divergence`, `gradient`, `curl`, and `∇`, along with some plotting
+functions
 
 
 ## Packages loaded by `CalculusWithJulia`
@@ -38,15 +39,15 @@ Several plot recipes are provided to ease the creation of plots in the notes.
 `vectorfieldplot` and `vectorfieldplot3d` can be used to plot vector fields; and
 `arrow` is a simplified interface to `quiver` that also indicates 3D vectors.
 
-* `MDBM`: the  `MDBM` package is useful for finding contours in ``2`` or ``3`` dimensions.
+The `plot_implicit` function can plot `2D` implicit plots. (It is borrowed from [ImplicitPlots.jl](https://github.com/saschatimme/ImplicitPlots.jl), which is avoided, as it has dependencies that hold other packages back.)
 
-## Other packages with recurring roles in the notes
+## Other packages with a recurring role in the accompanying notes:
 
 * `Roots` is used to find zeros of univariate functions
 
-* `QuadGK` and `HCubature` are used for numeric integration
+* `SymPy` for symbolic math
 
-* `ImplicitEquations` is used to make 2-dimesional plots of implicit equations.
+* `QuadGK` and `HCubature` are used for numeric integration
 
 """
 module CalculusWithJulia
@@ -70,14 +71,12 @@ include("derivatives.jl")
 include("integration.jl")
 include("plot-utils.jl")
 include("plot-recipes.jl")
-include("WeaveSupport/WeaveSupport.jl")
 
 using Requires
 
 function __init__()
     @require SymPy="24249f21-da20-56a4-8eb1-6a02cf4ae2e6" include("sympy.jl")
-    @require Plots="91a5bcdd-55d7-5caf-9e0b-520d859cae80" include("plots.jl")
-#    @require MDBM="ea0cff06-48de-41e3-bd0e-d3c1feffd247" include("implicit_equation.jl") # replaced in notes, and not supported
+    @require Plots="91a5bcdd-55d7-5caf-9e0b-520d859cae80" include("plots.jl") # could deprecate...
 end
 
 e = exp(1)

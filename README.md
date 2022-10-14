@@ -1,5 +1,6 @@
 # CalculusWithJulia
 
+[![Documentation](https://img.shields.io/badge/docs-dev-blue.svg)](https://jverzani.github.io/CalculusWithJulia.jl/dev/)
 [![Build Status](https://travis-ci.com/jverzani/CalculusWithJulia.jl.svg?branch=master)](https://travis-ci.com/jverzani/CalculusWithJulia.jl)
 
 `Julia` package to provide notes and features for using `Julia` to address typical problems from the undergraduate calculus sequence.
