@@ -10,9 +10,6 @@ The notes may be read at [calculuswithjulia.github.io](https://calculuswithjulia
 
 The notes expect that this package is installed, as it also provides a handful of conveniences for the task.
 
-In addition to the html pages, there are other versions of the same material that can be generated, such as `ipynb` notebooks or `pdf` files. See the `runtests.jl` file for details.
-
-
 
 ## Contributing
 
