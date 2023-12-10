@@ -1,7 +1,7 @@
 """
     CalculusWithJulia
 
-A package to accompany [notes](calculuswithjulia.github.io) on using Julia with calculus.
+A package to accompany notes at `https://calculuswithjulia.github.io` on using Julia with calculus.
 
 This package does two things:
 
