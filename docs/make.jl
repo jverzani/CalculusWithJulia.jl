@@ -2,9 +2,10 @@ using Documenter
 using CalculusWithJulia
 
 makedocs(
-sitename="Calculus with Julia",
-format = Documenter.HTML(),
-modules = [CalculusWithJulia]
+    sitename="Calculus with Julia",
+    format = Documenter.HTML(),
+    modules = [CalculusWithJulia],
+    warnonly = Documenter.except(:autodocs_block)
 )
 
 
@@ -13,5 +14,5 @@ modules = [CalculusWithJulia]
 # for more information.
 
 deploydocs(
-    repo = "github.com/jverzani/CalculusWithJulia.jl"
+    repo = "github.com/jverzani/CalculusWithJulia.jl.git"
 )
