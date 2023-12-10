@@ -6,7 +6,7 @@
 `Julia` package to provide notes and features for using `Julia` to address typical problems from the undergraduate calculus sequence.
 
 
-The notes may be read at [calculuswithjulia.github.io](calculuswithjulia.github.io)
+The notes may be read at [calculuswithjulia.github.io](calculuswithjulia.github.io). Any suggested edits for the notes should be in a pull request to the repository [https://github.com/jverzani/CalculusWithJuliaNotes.jl/](https://github.com/jverzani/CalculusWithJuliaNotes.jl/).
 
 The notes expect that this package is installed, as it also provides a handful of conveniences for the task.
 

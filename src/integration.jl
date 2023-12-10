@@ -15,21 +15,20 @@ riemann(f, 0, 1, 1000, method="simpsons")   # use Simpson's rule
 
 """
 function riemann(f::Function, a::Real, b::Real, n::Int; method="right")
-    if method == "right"
-        meth = f -> (lr -> begin l,r = lr; f(r) * (r-l) end)
-    elseif method == "left"
-        meth = f -> (lr -> begin l,r = lr; f(l) * (r-l) end)
-    elseif method == "trapezoid"
-        meth = f -> (lr -> begin l,r = lr; (1/2) * (f(l) + f(r)) * (r-l) end)
-    elseif method == "simpsons"
-        meth = f -> (lr -> begin l,r=lr; (1/6) * (f(l) + 4*(f((l+r)/2)) + f(r)) * (r-l) end)
-    end
+    Ms = (left = (f,a,b) -> f(a),
+      right= (f,a,b) -> f(b),
+      mid  = (f,a,b) -> f(a/2 + b/2),
+      m̃    = (f,a,b) -> first(findmin(f, range(a,b,10))),
+      M̃    = (f,a,b) -> first(findmax(f, range(a,b,10))),
+      trapezoid = (f,a,b) -> (f(a) + f(b))/2,
+      simpsons  = (f,a,b) -> (c = a/2 + b/2;(1/6) * (f(a) + 4*f(c) + f(b))),
+      ct = (f,a,b)-> (c = a/2+b/2; (f(a)+f(b))/2 + 1/12 * (f'(b)-f'(a))*(b-a))
+      )
 
-
+    F = Ms[Symbol(method)]
     xs = range(a, b, n+1)
-    pairs = zip(xs[begin:end-1], xs[begin+1:end]) # (x₀,x₁), …, (xₙ₋₁,xₙ)
-    sum(meth(f), pairs)
-
+    xs′ = zip(Iterators.drop(xs, 1), Iterators.rest(xs, 1))
+    sum(F(f, a, b) * (b-a) for (a,b) ∈ xs′)
 end
 
 
