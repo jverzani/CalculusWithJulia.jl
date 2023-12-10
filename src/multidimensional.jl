@@ -1,9 +1,9 @@
 # helpful bits for working with n ≥ 2
 
 """
-    `unzip(vs)`
-    `unzip(v1, v2, ...)`
-    `unzip(r::Function, a, b)`
+    unzip(vs)
+    unzip(v1, v2, ...)
+    unzip(r::Function, a, b)
 
 Take a vector of points described by vectors (as returned by, say
 `r(t)=[sin(t),cos(t)], r.([1,2,3])`, and return a tuple of collected x

@@ -3,7 +3,14 @@
 [![Documentation](https://img.shields.io/badge/docs-dev-blue.svg)](https://jverzani.github.io/CalculusWithJulia.jl/dev/)
 [![Build Status](https://travis-ci.com/jverzani/CalculusWithJulia.jl.svg?branch=master)](https://travis-ci.com/jverzani/CalculusWithJulia.jl)
 
-`Julia` package to provide support for accompanying notes written to demonstrate the use of `Julia` as a tool to address typical problems from the undergraduate calculus sequence.
+`Julia` package to provide notes and features for using `Julia` to address typical problems from the undergraduate calculus sequence.
+
+
+The notes may be read at [calculuswithjulia.github.io](calculuswithjulia.github.io). Any suggested edits for the notes should be in a pull request to the repository [https://github.com/jverzani/CalculusWithJuliaNotes.jl/](https://github.com/jverzani/CalculusWithJuliaNotes.jl/).
+
+The notes expect that this package is installed, as it also provides a handful of conveniences for the task.
+
+In addition to the html pages, there are other versions of the same material that can be generated, such as `ipynb` notebooks or `pdf` files. See the `runtests.jl` file for details.
 
 The notes may be read at [calculuswithjulia.github.io](https://calculuswithjulia.github.io).
 
