@@ -27,9 +27,9 @@ function riemann(f::Function, a::Real, b::Real, n::Int; method="right")
 
     F = Ms[Symbol(method)]
     xs = range(a, b, n+1)
-    xs′ = zip(Iterators.drop(xs, 1), Iterators.rest(xs, 1))
-    sum(F(f, a, b) * (b-a) for (a,b) ∈ xs′)
-end
+    xs′ = zip(Iterators.take(xs, n), Iterators.drop(xs, 1))
+    sum(F(f, xᵢ₋₁, xᵢ) * (xᵢ-xᵢ₋₁) for (xᵢ₋₁, xᵢ) ∈ xs′)
+    end
 
 
 """
