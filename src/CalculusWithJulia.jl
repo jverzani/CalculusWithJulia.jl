@@ -1,7 +1,7 @@
 """
     CalculusWithJulia
 
-A package to accompany [notes](calculuswithjulia.github.io) on using Julia with calculus.
+A package to accompany notes at [https://calculuswithjulia.github.io](https://calculuswithjulia.github.io) on using Julia for topics from the calculus sequence.
 
 This package does two things:
 
@@ -79,7 +79,7 @@ function __init__()
     @require Plots="91a5bcdd-55d7-5caf-9e0b-520d859cae80" include("plots.jl") # could deprecate...
 end
 
-e = exp(1)
+const e = exp(1)
 export e
 
 export unzip, rangeclamp
