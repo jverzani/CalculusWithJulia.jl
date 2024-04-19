@@ -20,7 +20,7 @@ functions
 * The `ForwardDiff` package is loaded giving access to its  `derivative`,  `gradient`, `jacobian`, and `hessian` functions for finding automatic derivatives of functions. In addition, this package defines `'` (for functions) to return a derivative (which commits [type piracy](https://docs.julialang.org/en/v1/manual/style-guide/index.html#Avoid-type-piracy-1)), `∇` to find the gradient (`∇(f)`), the divergence (`∇⋅F`). and the curl (`∇×F`), along with `divergence` and `curl`.
 
 
-* The `LinearAlgebra` package is loaded for access to several of its functions for working with vectors `norm`, `cdot` (`⋅`), `cross` (`×`), `det`.
+* The `LinearAlgebra` package is loaded for access to several of its functions fr working with vectors `norm`, `cdot` (`⋅`), `cross` (`×`), `det`.
 
 * The `PlotUtils` package is loaded so that its `adapted_grid` function is available.
 
@@ -52,14 +52,13 @@ The `plot_implicit` function can plot `2D` implicit plots. (It is borrowed from 
 """
 module CalculusWithJulia
 
-using Reexport
-using RecipesBase
 import Contour
 import PlotUtils
 import ForwardDiff
 export ForwardDiff
-using Roots
 
+using Reexport
+@reexport using Roots
 @reexport using LinearAlgebra
 @reexport using SpecialFunctions
 @reexport using IntervalSets
@@ -67,22 +66,21 @@ using Roots
 import SplitApplyCombine
 
 include("multidimensional.jl")
+include("limits.jl")
 include("derivatives.jl")
 include("integration.jl")
 include("plot-utils.jl")
-include("plot-recipes.jl")
+include("plots.jl")
 
-using Requires
 
-function __init__()
-    @require SymPy="24249f21-da20-56a4-8eb1-6a02cf4ae2e6" include("sympy.jl")
-    @require Plots="91a5bcdd-55d7-5caf-9e0b-520d859cae80" include("plots.jl") # could deprecate...
-end
+#include("plot-recipes.jl")
+
 
 const e = exp(1)
 export e
 
 export unzip, rangeclamp
+export lim
 export tangent, secant, D, sign_chart
 export riemann
 export divergence, gradient, curl, ∇
