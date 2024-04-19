@@ -1,4 +1,26 @@
 ## Derivative related code
+
+"""
+    D(f)
+
+Function interface to `ForwardDiff.derivative`.
+
+Also *overrides* `f'` to take take a derivative.
+"""
+function D(f, n::Int=1)
+    n < 0 && throw(ArgumentError("n is a non-negative integer"))
+    n == 0 && return f
+    n == 1 && return t -> ForwardDiff.derivative(f, float(t))
+    D(D(f), n-1)
+end
+
+## Create r' to mean the derivative for functions
+## warning, this would be odd for [sin, cos]' as
+## is it [sin', cos'] or the transpose...
+Base.adjoint(r::Function) = D(r)
+
+
+## -----
 struct TangentLine{F,R} <: Function
     f::F
     c::R
@@ -72,25 +94,7 @@ sl(0)
 secant(f, a, b) = SecantLine(f, a, b)
 
 
-
-"""
-    D(f)
-
-Function interface to `ForwardDiff.derivative`.
-
-Also *overrides* `f'` to take take a derivative.
-"""
-function D(f, n::Int=1)
-    n < 0 && throw(ArgumentError("n is a non-negative integer"))
-    n == 0 && return f
-    n == 1 && return t -> ForwardDiff.derivative(f, float(t))
-    D(D(f), n-1)
-end
-
-## Create r' to mean the derivative for functions
-## warning, this would be odd for [sin, cos]' as
-## is it [sin', cos'] or the transpose...
-Base.adjoint(r::Function) = D(r)
+## ===== sign_chart =====
 
 function _is_f_approx_0(f, x, atol, rtol)
     tol = min(abs(x)*rtol, atol)
@@ -105,11 +109,15 @@ Create a sign chart for `f` over `(a,b)`. Returns a tuple with an identified zer
 # Example
 
 ```
-julia> sign_chart(x -> x/(x-1)^2, -5, 5)
-2-element Vector{NamedTuple{(:∞0, :sign_change), Tuple{Float64, String}}}:
- (∞0 = 0.0, sign_change = "- → +")
- (∞0 = 1.0000000000000002, sign_change = "+ → +")
+julia> sign_chart(x -> (x-1/2)/(x*(1-x)), 0, 1)
+3-element Vector{NamedTuple{(:DNE_0_∞, :sign_change)}}:
+ (DNE_0_∞ = 0, sign_change = an endpoint)
+ (DNE_0_∞ = 0.5, sign_change = - → +)
+ (DNE_0_∞ = 1, sign_change = an endpoint)
 ```
+
+!!! note "Warning"
+    This uses `find_zeros` to find zeros of `f` and `x -> 1/f(x)`. The `find_zeros` function is a hueristic and can miss answers.
 
 """
 function sign_chart(f, a, b; atol=1e-6)
@@ -125,15 +133,24 @@ function sign_chart(f, a, b; atol=1e-6)
     pm(x) = x < 0 ? "-" : x > 0 ? "+" : "0"
     summarize(f,cp,d) = (DNE_0_∞ = cp, sign_change = pm(cp-d, cp+d))
 
-    if _is_f_approx_0(f(a),a, eps(), eps()) ||
-        _is_f_approx_0(f(b), b, eps(), eps())
-        return "Sorry, the endpoints must not be zeros for the function"
+
+    # zeros of f
+    zs = find_zeros(f, (a, b))
+
+    azero, bzero = nothing, nothing
+    if !isempty(zs) && first(zs) ≈ a
+        popfirst!(zs)
+        azero = a
+    end
+    if !isempty(zs) && last(zs) ≈ b
+        pop!(zs)
+        bzero = b
     end
 
-    zs = find_zeros(f, a, b)
+    # zeros of x -> 1 / f(x)
     pts = vcat(a, zs, b)
     for (u,v) ∈ zip(pts[1:end-1], pts[2:end])
-        zs′ = find_zeros(x -> 1/f(x), u, v)
+        zs′ = find_zeros(x -> 1/f(x), (u, v))
         for z′ ∈ zs′
             flag = false
             for z ∈ zs
@@ -142,24 +159,43 @@ function sign_chart(f, a, b; atol=1e-6)
                     break
                 end
             end
-            !flag && push!(zs, z′)
+            !flag && (push!(zs, z′); sort!(zs))
         end
     end
 
+    ainf, binf = nothing, nothing
+    if !isempty(zs) && first(zs) ≈ a
+        popfirst!(zs)
+        ainf = a
+    end
+    if !isempty(zs) && last(zs) ≈ b
+        pop!(zs)
+        binf = b
+    end
 
-    if isempty(zs)
+    if isempty(zs) && isnan(something(azero, ainf, bzero, binf, NaN))
 	fc = f(a + (b-a)/2)
 	return "No sign change, always " * (fc > 0 ? "positive" : iszero(fc) ? "zero" : "negative")
     end
 
-    sort!(zs)
-    m,M = extrema(zs)
-    d = min((m-a)/2, (b-M)/2)
-    if length(zs) > 1
-        d′ = minimum(diff(zs))/2
-        d = min(d, d′ )
+    if !isempty(zs)
+        sort!(zs)
+        m,M = extrema(zs)
+        d = min((m-a)/2, (b-M)/2)
+        if length(zs) > 1
+            d′ = minimum(diff(zs))/2
+            d = min(d, d′ )
+        end
+        u = tuple(summarize.(f, zs, d)...)
+    else
+        u = ()
     end
-    summarize.(f, zs, d)
+    !isnothing(azero) && (u = ((DNE_0_∞ = a, sign_change=ZZ()), u...))
+    !isnothing(ainf) && (u = ((DNE_0_∞ = a, sign_change=ZZ()), u...))
+    !isnothing(bzero) && (u = (u...,(DNE_0_∞ = b, sign_change=ZZ())))
+    !isnothing(binf) && (u = (u...,(DNE_0_∞ = b, sign_change=ZZ())))
+
+    collect(u)
 end
 
 abstract type SignChange end
@@ -172,4 +208,4 @@ Base.show(io::IO, ::PM) = print(io, "+ → -")
 Base.show(io::IO, ::MP) = print(io, "- → +")
 Base.show(io::IO, ::PP) = print(io, "+ → +")
 Base.show(io::IO, ::MM) = print(io, "- → -")
-Base.show(io::IO, ::ZZ) = print(io, "a zero")
+Base.show(io::IO, ::ZZ) = print(io, "an endpoint")
