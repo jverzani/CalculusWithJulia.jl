@@ -1,16 +1,10 @@
 
-# just show body, not standalone
-function Plots._show(io::IO, ::MIME"text/html", plt::Plots.Plot{Plots.PlotlyBackend})
-    write(io, Plots.html_body(plt))
-end
-
 ## -----
 
 export plotif, trimplot, signchart,
        plot_polar, plot_polar!,
        plot_parametric,   plot_parametric!,
        vectorfieldplot,   vectorfieldplot!,
-       vectorfieldplot3d, vectorfieldplot3d,
        arrow, arrow!
 
 export newton_vis
@@ -25,51 +19,24 @@ export newton_vis
 
 Plot f over [a,b] but break graph if it exceeds c in absolute value.
 """
-function trimplot(f, a, b, c=20; color=:black, legend=false, kwargs...)
-    F = (a,b) -> begin
-        fa, fb = f(a), f(b)
-        M = max(fa, fb)
-        m = min(fa, fb)
-        m < -c && return false
-        M > c && return false
-        true
-    end
-    xs = range(a, b, length=251)
-    cols = find_colors(F, xs, (color, :transparent, :red))
-    Plots.plot(xs, f.(xs), colors=cols, legend=legend, kwargs...)
-end
-
+function trimplot end
 
 """
     plotif(f, g, a, b)
 
-Plot f colored depending on g >= 0 or not.
+Plot f colored depending on g ≥ 0 or not.
 """
-function plotif(f, g, a, b)
-    xs = range(a, b, length=251)
-    cols = identify_colors(g, xs)
-    Plots.plot(xs, f.(xs), color=cols, legend=false)
-end
+function plotif end
 
 """
    signchart(f, a, b)
 
 Plot f over a,b with different color when negative.
 """
-function signchart(f, a, b)
-    p = plotif(f, f, a, b)
-    Plots.plot!(p, zero)
-    p
-end
+function signchart end
 
 ## --- parametric plots
 
-adapted_grid = CalculusWithJulia.PlotUtils.adapted_grid
-function xyzs(ab::ClosedInterval, r)
-    a, b = abs = extrema(ab)
-    xs = sort(union([adapted_grid(t -> r(t)[i], abs)[1] for i in eachindex(r(a))]...))
-    unzip(r.(xs))
-end
 
 """
     plot_parametric(ab, r; kwargs...)
@@ -81,32 +48,13 @@ Make a parametric plot of a space curve or parametrized surface
 
 The intervals to plot over are specifed using `a..b` notation, from IntervalSets
 """
-plot_parametric(ab::ClosedInterval, r; kwargs...) = Plots.plot(xyzs(ab, r)...; kwargs...)
-plot_parametric!(ab::ClosedInterval, r; kwargs...) = Plots.plot!(xyzs(ab, r)...; kwargs...)
-
-plot_polar(ab::ClosedInterval, r; kwargs...) =
-    plot_parametric(ab, t->[r(t)*cos(t), r(t)*sin(t)]; kwargs...)
-plot_polar!(ab::ClosedInterval, r; kwargs...) =
-    plot_parametric!(ab, t->[r(t)*cos(t), r(t)*sin(t)]; kwargs...)
-
+function plot_parametric  end
+function plot_parametric! end
+function plot_polar  end
+function plot_polar! end
 ## ----
 
-function XYZs(u::ClosedInterval, v::ClosedInterval, r; n=51)
-    us = range(extrema(u)..., length=n)
-    vs = range(extrema(v)..., length=n)
-    unzip(r.(us', vs))  # Plots.jl style; flip for Makie
-end
 
-# needs plotly(); not gr()
-plot_parametric(u::ClosedInterval, v::ClosedInterval, F;  kwargs...) =
-    Plots.surface(XYZs(u,v,F)...;  kwargs..., )
-plot_parametric!(u::ClosedInterval, v::ClosedInterval, F; kwargs...) =
-    Plots.surface!(XYZs(u,v,F)...;  kwargs...)
-
-
-
-
-import Contour
 
 """
     Visualize `F(x,y,z) = c` by plotting assorted contour lines
@@ -129,77 +77,9 @@ Note: Idea [from](https://stackoverflow.com/questions/4680525/plotting-implicit-
 
 Not exported.
 """
-function plot_implicit_surface(F, c=0;
-                       xlim=(-5,5), ylim=xlim, zlim=xlim,
-                       nlevels=25,         # number of levels in a direction
-                       slices=Dict(:z => :blue), # Dict(:x => :color, :y=>:color, :z=>:color)
-                       kwargs...          # passed to initial `plot` call
-                       )
-
-    _linspace(rng, n=150) = range(extrema(rng)[1], stop=extrema(rng)[2], length=n)
-
-    X1, Y1, Z1 = _linspace(xlim), _linspace(ylim), _linspace(zlim)
-
-    p = Plots.plot(;legend=false,kwargs...)
-
-    if :x ∈ keys(slices)
-        for x in _linspace(xlim, nlevels)
-            local X1 = [F(x,y,z) for y in Y1, z in Z1]
-            cnt = Contour.contours(Y1,Z1,X1, [c])
-            for line in Contour.lines(Contour.levels(cnt)[1])
-                ys, zs = Contour.coordinates(line) # coordinates of this line segment
-                Plots.plot!(p, x .+ 0 * ys, ys, zs, color=slices[:x])
-          end
-        end
-    end
-
-    if :y ∈ keys(slices)
-        for y in _linspace(ylim, nlevels)
-            local Y1 = [F(x,y,z) for x in X1, z in Z1]
-            cnt = Contour.contours(Z1,X1,Y1, [c])
-            for line in Contour.lines(Contour.levels(cnt)[1])
-                xs, zs = Contour.coordinates(line) # coordinates of this line segment
-                Plots.plot!(p, xs, y .+ 0 * xs, zs, color=slices[:y])
-            end
-        end
-    end
-
-    if :z ∈ keys(slices)
-        for z in _linspace(zlim, nlevels)
-            local Z1 = [F(x, y, z) for x in X1, y in Y1]
-            cnt = Contour.contours(X1, Y1, Z1, [c])
-            for line in Contour.lines(Contour.levels(cnt)[1])
-                xs, ys = Contour.coordinates(line) # coordinates of this line segment
-                Plots.plot!(p, xs, ys, z .+ 0 * xs, color=slices[:z])
-            end
-        end
-    end
-
-
-    p
-end
+function plot_implicit_surface end
 
 ## ----
-
-## 3D Arrow function by Rafael Guerra https://discourse.julialang.org/t/plot-with-sticks-or-arrows/68422/14; modified for
-## See comment here about possible issue: https://discourse.julialang.org/t/tube-plots/65999/9
-# as: arrow head size 0-1 (fraction of arrow length)
-# la: arrow alpha transparency 0-1
-function arrow3d!(p, x, y, z,  u, v, w; as=0.1, lc=:black, la=1, lw=0.4, scale=:identity)
-    (as < 0) && (nv0 = -maximum(norm.(eachrow([u v w]))))
-    for (x,y,z, u,v,w) in zip(x,y,z, u,v,w)
-        nv = sqrt(u^2 + v^2 + w^2)
-        v1, v2 = -[u,v,w]/nv, nullspace([u v w])[:,1]
-        v4 = (3*v1 + v2)/3.1623  # sqrt(10) to get unit vector
-        v5 = v4 - 2*(v4'*v2)*v2
-        (as < 0) && (nv = nv0)
-        v4, v5 = -as*nv*v4, -as*nv*v5
-        Plots.plot!(p, [x,x+u], [y,y+v], [z,z+w], lc=lc, la=la, lw=lw, scale=scale, label=false)
-        Plots.plot!(p, [x+u,x+u-v5[1]], [y+v,y+v-v5[2]], [z+w,z+w-v5[3]], lc=lc, la=la, lw=lw, label=false)
-        Plots.plot!(p, [x+u,x+u-v4[1]], [y+v,y+v-v4[2]], [z+w,z+w-v4[3]], lc=lc, la=la, lw=lw, label=false)
-    end
-    p
-end
 
 
 
@@ -219,20 +99,10 @@ t0 = 1
 arrow!(r(t0), rp(t0))
 ```
 """
-function arrow!(plt, p, v; kwargs...)
-  if length(p) == 2
-      Plots.quiver!(plt, unzip([p])..., quiver=Tuple(unzip([v])); kwargs...)
-  elseif length(p) == 3
-      # 3d quiver needs support
-      # https://github.com/JuliaPlots/Plots.jl/issues/319#issue-159652535
-      # headless arrow instead
-      #Plots.plot!(plt, unzip(p, p+v)...; kwargs...)
-      ## use the above instead
-      arrow3d!(plt, unzip(p,p+v)...; kwargs...)
-  end
-end
-arrow!(p,v; kwargs...) = arrow!(Plots.current(), p, v; kwargs...)
-
+function arrow end
+function arrow! end
+function arrow3d end
+function arrow3d! end
 
 
 
@@ -253,40 +123,13 @@ vectorfield_plot!(p, V)
 p
 ```
 """
-function vectorfieldplot!(plt, V; xlim=(-5,5), ylim=(-5,5), n=10, kwargs...)
-
-    dx, dy = (xlim[2]-xlim[1])/n, (ylim[2]-ylim[1])/n
-    xs, ys = xlim[1]:dx:xlim[2], ylim[1]:dy:ylim[2]
-
-    ps = [[x,y] for x in xs for y in ys]
-    vs = V.(ps)
-    λ = 0.9 * min(dx, dy) /maximum(norm.(vs))
-
-    Plots.quiver!(plt, unzip(ps)..., quiver=unzip(λ * vs))
-
-end
-vectorfieldplot!(V; kwargs...) = vectorfieldplot!(Plots.current(), V; kwargs...)
-
+function vectorfieldplot end
+function vectorfieldplot! end
 
 
 ##
 # visualize newtons method
-function newton_vis(f, x0, a=Inf,b=-Inf; steps=5, kwargs...)
-    xs = Float64[x0]
-    for i in 1:steps
-        push!(xs, xs[end] - f(xs[end]) / f'(xs[end]))
-    end
-
-    m,M = extrema(xs)
-    m = min(m, a)
-    M = max(M, b)
-
-    p = Plots.plot(f, m, M; linewidth=3, legend=false, kwargs...)
-    Plots.plot!(p, zero)
-    for i in 1:steps
-        Plots.plot!(p, [xs[i],xs[i],xs[i+1]], [0,f(xs[i]), 0])
-        Plots.scatter!(p, xs[i:i],[0])
-    end
-    Plots.scatter!(p, [xs[steps+1]], [0])
-    p
-end
+"""
+    newton_vis(f, x0, a=Inf, b=-Inf; steps=5, kwargs...)
+"""
+function newton_vis end

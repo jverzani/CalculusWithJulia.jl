@@ -2,15 +2,19 @@
 
 
 """
-riemann: compute Riemann sum approximations to a definite integral. As well, implement trapezoid and Simpson's rule.
+    riemann(f, a, b, n; method="right"
+
+Compute an approximations to the definite integral of `f` over `[a,b]` using an equal-sized partition of size `n+1`.
+
+method: `"right"` (default), `"left"`, `"trapezoid"`, `"simpsons"`, `"ct"`, `"m̃"` (minimum over interval), `"M̃"` (maximum over interval)
 
 Example:
 ```
 f(x) = exp(x^2)
 riemann(f, 0, 1, 1000)   # default right-Riemann sums
-riemann(f, 0, 1, 1000, method="left")       # left sums
-riemann(f, 0, 1, 1000, method="trapezoid")  # use trapezoid rule
-riemann(f, 0, 1, 1000, method="simpsons")   # use Simpson's rule
+riemann(f, 0, 1, 1000; method="left")       # left sums
+riemann(f, 0, 1, 1000; method="trapezoid")  # use trapezoid rule
+riemann(f, 0, 1, 1000; method="simpsons")   # use Simpson's rule
 ```
 
 """
@@ -52,9 +56,9 @@ f(x,y,z) = x*y^2*z^3
 fubini(f, (0,(x,y) ->  x+ y), (0, x -> x), (0,1))
 ```
 
-Note: This code relies on `quadgk` which isn't loaded in this package. It won't run unless defined elsewhere, say by copy-and-paste.
 
-Note: This uses nested calls to `quadgk`. The use of `hcubature` is recommended, typically after a change of variables to make a rectangular domain. The relative tolerance increases at each nested level.
+!!! Note
+    This uses nested calls to `quadgk`. The use of `hcubature` is recommended, typically after a change of variables to make a rectangular domain. The relative tolerance increases at each nested level.
 """
 fubini(@nospecialize(f), dx; rtol=missing, kws...) =
     quadgk(f, dx...; rtol=first(skipmissing((rtol, nothing))), kws...)[1]

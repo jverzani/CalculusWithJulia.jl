@@ -1,4 +1,40 @@
 ## Derivative related code
+struct TangentLine{F,R} <: Function
+    f::F
+    c::R
+end
+
+function Base.show(io::IO,  ::MIME"text/plain", T::TangentLine{F,R})  where {F, R}
+    print(io, "Function of `x` to compute tangent line of `f` at `c`:\n",
+          "\tf(c) + f'(c) * (x-c)")
+end
+
+
+(F::TangentLine)(x) = begin
+    (; f,c ) = F
+    f(c) + f'(c) * (x-c)
+end
+
+
+struct SecantLine{F,R,S} <: Function
+    f::F
+    a::R
+    b::S
+end
+
+function Base.show(io::IO,  ::MIME"text/plain", T::SecantLine{F,R,S})  where {F, R,S}
+    print(io, "Function of `x` to compute secant line of `f` between `a` and `b`:\n",
+          "\tf(a) + ((f(b)-f(a)) / (b-a)  * (x-a)"
+          )
+end
+
+
+(F::SecantLine)(x) = begin
+    (; f, a, b ) = F
+    m = (f(b) - f(a)) / (b - a)
+    f(a) + m * (x-a)
+end
+
 
 """
     tangent(f::Function, c)
@@ -15,7 +51,7 @@ tl(0)
 Uses the automatic derivative of `f` to find the slope of the tangent line at `x=c`.
 
 """
-tangent(f,c) = x -> f(c) + f'(c) * (x-c)
+tangent(f,c) = TangentLine(f,c)
 
 """
     secant(f::Function, a, b)
@@ -33,7 +69,7 @@ sl(0)
 
 
 """
-secant(f, a, b) = x -> f(a) + (f(b) - f(a)) / (b-a) * (x - a)
+secant(f, a, b) = SecantLine(f, a, b)
 
 
 
@@ -77,8 +113,17 @@ julia> sign_chart(x -> x/(x-1)^2, -5, 5)
 
 """
 function sign_chart(f, a, b; atol=1e-6)
+    pm(a,b) = begin
+        fa,fb = f(a), f(b)
+        fa < 0 && fb < 0 && return MM()
+        fa < 0 && fb > 0 && return MP()
+        fa > 0 && fb < 0 && return PM()
+        fa > 0 && fb > 0 && return PP()
+        ZZ
+    end
+
     pm(x) = x < 0 ? "-" : x > 0 ? "+" : "0"
-    summarize(f,cp,d) = (DNE_0_∞=cp, sign_change=pm(f(cp-d)) * " → " * pm(f(cp+d)))
+    summarize(f,cp,d) = (DNE_0_∞ = cp, sign_change = pm(cp-d, cp+d))
 
     if _is_f_approx_0(f(a),a, eps(), eps()) ||
         _is_f_approx_0(f(b), b, eps(), eps())
@@ -116,3 +161,15 @@ function sign_chart(f, a, b; atol=1e-6)
     end
     summarize.(f, zs, d)
 end
+
+abstract type SignChange end
+struct PM <: SignChange end
+struct MP <: SignChange end
+struct PP <: SignChange end
+struct MM <: SignChange end
+struct ZZ <: SignChange end
+Base.show(io::IO, ::PM) = print(io, "+ → -")
+Base.show(io::IO, ::MP) = print(io, "- → +")
+Base.show(io::IO, ::PP) = print(io, "+ → +")
+Base.show(io::IO, ::MM) = print(io, "- → -")
+Base.show(io::IO, ::ZZ) = print(io, "a zero")
