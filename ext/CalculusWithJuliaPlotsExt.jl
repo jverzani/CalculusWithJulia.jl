@@ -6,6 +6,7 @@ import CalculusWithJulia:
     find_colors, identify_colors,
     plotif, trimplot, signchart,
     plot_polar, plot_polar!,
+    implicit_plot, implicit_plot!,
     plot_parametric, plot_parametric!,
     plot_implicit_surface,
     vectorfieldplot,   vectorfieldplot!,

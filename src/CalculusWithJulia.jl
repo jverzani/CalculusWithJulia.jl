@@ -84,6 +84,5 @@ export lim
 export tangent, secant, D, sign_chart
 export riemann
 export divergence, gradient, curl, ∇, uvec
-export implicit_plot, implicit_plot!
 
 end # module

@@ -2,10 +2,11 @@
 ## -----
 
 export plotif, trimplot, signchart,
-       plot_polar, plot_polar!,
-       plot_parametric,   plot_parametric!,
-       vectorfieldplot,   vectorfieldplot!,
-       arrow, arrow!
+    plot_polar, plot_polar!,
+    plot_parametric,   plot_parametric!,
+    implicit_plot, implicit_plot!,
+    vectorfieldplot,   vectorfieldplot!,
+    arrow, arrow!
 
 export newton_vis
 
@@ -53,6 +54,9 @@ function plot_parametric! end
 function plot_polar  end
 function plot_polar! end
 ## ----
+
+function implicit_plot end
+function implicit_plot! end
 
 
 
