@@ -3,18 +3,24 @@ module CalculusWithJuliaPlotsExt
 using CalculusWithJulia
 import CalculusWithJulia:
     ClosedInterval,
-    find_colors, identify_colors,
+    find_colors, identify_colors
+import CalculusWithJulia:
     plotif, trimplot, signchart,
     plot_polar, plot_polar!,
-    implicit_plot, implicit_plot!,
     plot_parametric, plot_parametric!,
     plot_implicit_surface,
     vectorfieldplot,   vectorfieldplot!,
-    arrow, arrow!,
     arrow3d,
-    newton_vis
+    newton_vis, newton_plot!,
+    riemann_plot, riemann_plot!,
+    implicit_plot, implicit_plot!,
+    arrow, arrow!
 
 import Plots
+import Plots: plot, plot!, scatter, scatter!, Shape, current,
+    surface, surface!,
+    quiver, quiver!
+
 using Plots.RecipesBase
 import Contour
 
@@ -25,7 +31,7 @@ end
 
 # -----
 
-
+# use rangeclamp
 function trimplot(f, a, b, c=20; color=:black, legend=false, kwargs...)
     F = (a,b) -> begin
         fa, fb = f(a), f(b)
@@ -37,18 +43,18 @@ function trimplot(f, a, b, c=20; color=:black, legend=false, kwargs...)
     end
     xs = range(a, b, length=251)
     cols = find_colors(F, xs, (color, :transparent, :red))
-    Plots.plot(xs, f.(xs), colors=cols, legend=legend, kwargs...)
+    plot(xs, f.(xs), colors=cols, legend=legend, kwargs...)
 end
 
 function plotif(f, g, a, b)
     xs = range(a, b, length=251)
     cols = identify_colors(g, xs)
-    Plots.plot(xs, f.(xs), color=cols, legend=false)
+    plot(xs, f.(xs), color=cols, legend=false)
 end
 
 function signchart(f, a, b)
     p = plotif(f, f, a, b)
-    Plots.plot!(p, zero)
+    plot!(p, zero)
     p
 end
 
@@ -59,8 +65,8 @@ function xyzs(ab::ClosedInterval, r)
     unzip(r.(xs))
 end
 
-plot_parametric(ab::ClosedInterval, r; kwargs...) = Plots.plot(xyzs(ab, r)...; kwargs...)
-plot_parametric!(ab::ClosedInterval, r; kwargs...) = Plots.plot!(xyzs(ab, r)...; kwargs...)
+plot_parametric(ab::ClosedInterval, r; kwargs...) = plot(xyzs(ab, r)...; kwargs...)
+plot_parametric!(ab::ClosedInterval, r; kwargs...) = plot!(xyzs(ab, r)...; kwargs...)
 
 plot_polar(ab::ClosedInterval, r; kwargs...) =
     plot_parametric(ab, t->[r(t)*cos(t), r(t)*sin(t)]; kwargs...)
@@ -75,9 +81,9 @@ end
 
 # needs plotly(); not gr()
 plot_parametric(u::ClosedInterval, v::ClosedInterval, F;  kwargs...) =
-    Plots.surface(XYZs(u,v,F)...;  kwargs..., )
+    surface(XYZs(u,v,F)...;  kwargs..., )
 plot_parametric!(u::ClosedInterval, v::ClosedInterval, F; kwargs...) =
-    Plots.surface!(XYZs(u,v,F)...;  kwargs...)
+    surface!(XYZs(u,v,F)...;  kwargs...)
 
 
 function plot_implicit_surface(F, c=0;
@@ -87,11 +93,11 @@ function plot_implicit_surface(F, c=0;
                        kwargs...          # passed to initial `plot` call
                        )
 
-    _linspace(rng, n=150) = range(extrema(rng)[1], stop=extrema(rng)[2], length=n)
+    _linspace(rng, n=150) = range(extrema(rng)..., n)
 
     X1, Y1, Z1 = _linspace(xlim), _linspace(ylim), _linspace(zlim)
 
-    p = Plots.plot(;legend=false,kwargs...)
+    p = plot(;legend=false,kwargs...)
 
     if :x ∈ keys(slices)
         for x in _linspace(xlim, nlevels)
@@ -99,7 +105,7 @@ function plot_implicit_surface(F, c=0;
             cnt = Contour.contours(Y1,Z1,X1, [c])
             for line in Contour.lines(Contour.levels(cnt)[1])
                 ys, zs = Contour.coordinates(line) # coordinates of this line segment
-                Plots.plot!(p, x .+ 0 * ys, ys, zs, color=slices[:x])
+                plot!(p, x .+ 0 * ys, ys, zs, color=slices[:x])
           end
         end
     end
@@ -110,7 +116,7 @@ function plot_implicit_surface(F, c=0;
             cnt = Contour.contours(Z1,X1,Y1, [c])
             for line in Contour.lines(Contour.levels(cnt)[1])
                 xs, zs = Contour.coordinates(line) # coordinates of this line segment
-                Plots.plot!(p, xs, y .+ 0 * xs, zs, color=slices[:y])
+                plot!(p, xs, y .+ 0 * xs, zs, color=slices[:y])
             end
         end
     end
@@ -121,7 +127,7 @@ function plot_implicit_surface(F, c=0;
             cnt = Contour.contours(X1, Y1, Z1, [c])
             for line in Contour.lines(Contour.levels(cnt)[1])
                 xs, ys = Contour.coordinates(line) # coordinates of this line segment
-                Plots.plot!(p, xs, ys, z .+ 0 * xs, color=slices[:z])
+                plot!(p, xs, ys, z .+ 0 * xs, color=slices[:z])
             end
         end
     end
@@ -144,26 +150,26 @@ function arrow3d!(p, x, y, z,  u, v, w; as=0.1, lc=:black, la=1, lw=0.4, scale=:
         v5 = v4 - 2*(v4'*v2)*v2
         (as < 0) && (nv = nv0)
         v4, v5 = -as*nv*v4, -as*nv*v5
-        Plots.plot!(p, [x,x+u], [y,y+v], [z,z+w], lc=lc, la=la, lw=lw, scale=scale, label=false)
-        Plots.plot!(p, [x+u,x+u-v5[1]], [y+v,y+v-v5[2]], [z+w,z+w-v5[3]], lc=lc, la=la, lw=lw, label=false)
-        Plots.plot!(p, [x+u,x+u-v4[1]], [y+v,y+v-v4[2]], [z+w,z+w-v4[3]], lc=lc, la=la, lw=lw, label=false)
+        plot!(p, [x,x+u], [y,y+v], [z,z+w], lc=lc, la=la, lw=lw, scale=scale, label=false)
+        plot!(p, [x+u,x+u-v5[1]], [y+v,y+v-v5[2]], [z+w,z+w-v5[3]], lc=lc, la=la, lw=lw, label=false)
+        plot!(p, [x+u,x+u-v4[1]], [y+v,y+v-v4[2]], [z+w,z+w-v4[3]], lc=lc, la=la, lw=lw, label=false)
     end
     p
 end
 
 function arrow!(plt, p, v; kwargs...)
   if length(p) == 2
-      Plots.quiver!(plt, unzip([p])..., quiver=Tuple(unzip([v])); kwargs...)
+      quiver!(plt, unzip([p])..., quiver=Tuple(unzip([v])); kwargs...)
   elseif length(p) == 3
       # 3d quiver needs support
       # https://github.com/JuliaPlots/Plots.jl/issues/319#issue-159652535
       # headless arrow instead
-      #Plots.plot!(plt, unzip(p, p+v)...; kwargs...)
+      #plot!(plt, unzip(p, p+v)...; kwargs...)
       ## use the above instead
       arrow3d!(plt, unzip(p,p+v)...; kwargs...)
   end
 end
-arrow!(p,v; kwargs...) = arrow!(Plots.current(), p, v; kwargs...)
+arrow!(p,v; kwargs...) = arrow!(current(), p, v; kwargs...)
 
 function vectorfieldplot!(plt, V; xlim=(-5,5), ylim=(-5,5), n=10, kwargs...)
 
@@ -174,30 +180,10 @@ function vectorfieldplot!(plt, V; xlim=(-5,5), ylim=(-5,5), n=10, kwargs...)
     vs = V.(ps)
     λ = 0.9 * min(dx, dy) /maximum(norm.(vs))
 
-    Plots.quiver!(plt, unzip(ps)..., quiver=unzip(λ * vs))
+    quiver!(plt, unzip(ps)..., quiver=unzip(λ * vs))
 
 end
-vectorfieldplot!(V; kwargs...) = vectorfieldplot!(Plots.current(), V; kwargs...)
-
-function newton_vis(f, x0, a=Inf,b=-Inf; steps=5, kwargs...)
-    xs = Float64[x0]
-    for i in 1:steps
-        push!(xs, xs[end] - f(xs[end]) / f'(xs[end]))
-    end
-
-    m,M = extrema(xs)
-    m = min(m, a)
-    M = max(M, b)
-
-    p = Plots.plot(f, m, M; linewidth=3, legend=false, kwargs...)
-    Plots.plot!(p, zero)
-    for i in 1:steps
-        Plots.plot!(p, [xs[i],xs[i],xs[i+1]], [0,f(xs[i]), 0])
-        Plots.scatter!(p, xs[i:i],[0])
-    end
-    Plots.scatter!(p, [xs[steps+1]], [0])
-    p
-end
+vectorfieldplot!(V; kwargs...) = vectorfieldplot!(current(), V; kwargs...)
 
 
 # various recipes for Plots.jl
@@ -578,6 +564,94 @@ implicit_plot!(f; kwargs...) = Plots.RecipesBase.plot!(ImplicitFunction(f); kwar
 implicit_plot!(p::Plots.RecipesBase.AbstractPlot, f; kwargs...) =
     Plots.RecipesBase.plot!(p, ImplicitFunction(f); kwargs...)
 
+
+## simple visualization
+## ----
+# don't like should just provide ! method
+function newton_vis(f, x0, a=Inf,b=-Inf; steps=5, kwargs...)
+    xs = Float64[x0]
+    for i in 1:steps
+        push!(xs, xs[end] - f(xs[end]) / f'(xs[end]))
+    end
+
+    m,M = extrema(xs)
+    m = min(m, a)
+    M = max(M, b)
+
+    p = plot(f, m, M; linewidth=3, legend=false, kwargs...)
+    plot!(p, zero)
+    for i in 1:steps
+        plot!(p, [xs[i],xs[i],xs[i+1]], [0,f(xs[i]), 0])
+        scatter!(p, xs[i:i],[0])
+    end
+    scatter!(p, [xs[steps+1]], [0])
+    p
+end
+
+function newton_plot!(f, x0; steps=5, annotate_steps::Int=0,
+                     fill=nothing,kwargs...)
+    xs, ys = Float64[x0], [0.0]
+    for i in 1:steps
+        xᵢ = xs[end]
+        xᵢ₊₁ = xᵢ - f(xᵢ)/f'(xᵢ)
+        append!(xs, [xᵢ, xᵢ₊₁]), append!(ys, [f(xᵢ), 0])
+    end
+    plot!(xs, ys; fill, kwargs...)
+
+    if annotate_steps > 0
+        anns = [(x,0,text("x$(i-1)", :top)) for
+                (i,x) ∈ enumerate(xs[1:2:2annotate_steps])]
+        annotate!(anns)
+    end
+    current()
+end
+
+
+function riemann_plot(f, a, b, n; method="right", fill=nothing, kwargs...)
+    plot(f, a, b; legend=false, kwargs...)
+    riemann_plot!(f, a, b, n; method, fill, kwargs...)
+end
+
+# riemann_plot!(sin, 0, pi/2, 2; method="simpsons", fill=(:green, 0.25, 0))
+function riemann_plot!(f, a, b, n; method="right",
+                      linecolor=:black, fill=nothing, kwargs...)
+    if method == "right"
+        shape = (l, r, f) -> begin
+            Δ = r - l
+            Shape(l .+ [0, Δ, Δ, 0, 0], [0, 0, f(r), f(r), 0])
+        end
+    elseif method == "left"
+        shape = (l, r, f) -> begin
+            Δ = r - l
+            Shape(l .+ [0, Δ, Δ, 0, 0], [0, 0, f(l), f(l), 0])
+        end
+    elseif method == "trapezoid"
+        shape = (l, r, f) -> begin
+            Δ = r - l
+            Shape(l .+ [0, Δ, Δ, 0, 0], [0, 0, f(r), f(l), 0])
+        end
+    elseif method == "simpsons"
+        shape = (l, r, f) -> begin
+            Δ = r - l
+            a, b, m = l, r, l + (r-l)/2
+            parabola = x -> begin
+                tot =  f(a) * (x-m) * (x-b) / (a-m) / (a-b)
+                tot += f(m) * (x-a) * (x-b) / (m-a) / (m-b)
+                tot += f(b) * (x-a) * (x-m) / (b-a) / (b-m)
+                tot
+            end
+            xs = range(0, Δ, 3)
+            Shape(l .+ vcat(reverse(xs), xs, Δ),
+                  vcat(zero.(xs), parabola.(l .+ xs), 0))
+        end
+    end
+    xs = range(a, b, n + 1)
+    ls, rs = Base.Iterators.take(xs, n), Base.Iterators.rest(xs, 1)
+    for (l, r) ∈ zip(ls, rs)
+        plot!(shape(l, r, f); linecolor, fill, kwargs...)
+    end
+    current()
+end
 
 
 end

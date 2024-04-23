@@ -8,7 +8,7 @@ export plotif, trimplot, signchart,
     vectorfieldplot,   vectorfieldplot!,
     arrow, arrow!
 
-export newton_vis
+export newton_vis, newton_plot!, riemann_plot, riemann_plot!
 
 
 ##
@@ -135,3 +135,26 @@ function vectorfieldplot! end
     newton_vis(f, x0, a=Inf, b=-Inf; steps=5, kwargs...)
 """
 function newton_vis end
+"""
+    newton_plot!(f, x0; steps=5, annotate_steps::Int=0, kwargs...)
+
+Add trace of Newton's method to plot.
+
+* `steps`: how many steps from `x0` to illustrate
+* `annotate_steps::Int`: how may steps to annotate
+"""
+function newton_plot! end
+
+# visualize Riemann sum
+"""
+    riemann_plot!(f, a, b, n; method="method", fill, kwargs...)
+    riemann_plot(f, a, b, n; method="method", fill, kwargs...)
+
+Add visualization of riemann sum in a layer.
+
+* `method`: one of `right`, `left`, `trapezoid`, `simpsons`
+* `fill`: to specify fill color, something like `("green", 0.25, 0)` will fill in green with an alpha transparency.
+
+"""
+function riemann_plot! end
+function riemann_plot end
