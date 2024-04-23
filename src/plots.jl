@@ -58,8 +58,6 @@ function plot_polar! end
 function implicit_plot end
 function implicit_plot! end
 
-
-
 """
     Visualize `F(x,y,z) = c` by plotting assorted contour lines
 

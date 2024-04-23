@@ -110,10 +110,17 @@ Create a sign chart for `f` over `(a,b)`. Returns a collection of named tuples, 
 
 ```
 julia> sign_chart(x -> (x-1/2)/(x*(1-x)), 0, 1)
+<<<<<<< HEAD
 3-element Vector{NamedTuple{(:zero_oo_NaN, :sign_change)}}:
  (zero_oo_NaN = 0.0, sign_change = an endpoint)
  (zero_oo_NaN = 0.5, sign_change = - to +)
  (zero_oo_NaN = 1.0, sign_change = an endpoint)
+=======
+3-element Vector{NamedTuple{(:DNE_0_∞, :sign_change)}}:
+ (DNE_0_∞ = 0, sign_change = an endpoint)
+ (DNE_0_∞ = 0.5, sign_change = - → +)
+ (DNE_0_∞ = 1, sign_change = an endpoint)
+>>>>>>> master
 ```
 
 !!! note "Warning"
@@ -131,8 +138,12 @@ function sign_chart(f, a, b; atol=1e-6)
     end
 
     pm(x) = x < 0 ? "-" : x > 0 ? "+" : "0"
+<<<<<<< HEAD
     rnd(x) = round(x, sigdigits=12)
     summarize(f,cp,d) = (zero_oo_NaN = rnd(cp), sign_change = pm(cp-d, cp+d))
+=======
+    summarize(f,cp,d) = (DNE_0_∞ = cp, sign_change = pm(cp-d, cp+d))
+>>>>>>> master
 
 
     # zeros of f
