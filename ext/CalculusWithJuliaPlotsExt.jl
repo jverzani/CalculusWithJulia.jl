@@ -17,7 +17,7 @@ import CalculusWithJulia:
     arrow, arrow!
 
 import Plots
-import Plots: plot, plot!, scatter, scatter!, Shape, current, text,
+import Plots: plot, plot!, scatter, scatter!, Shape, current, text, annotate!,
     surface, surface!,
     quiver, quiver!
 
@@ -588,6 +588,7 @@ function newton_vis(f, x0, a=Inf,b=-Inf; steps=5, kwargs...)
     p
 end
 
+subscript(i) = string.(collect("₀₁₂₃₄₅₆₇₈₉"))[i+1]
 function newton_plot!(f, x0; steps=5, annotate_steps::Int=0,
                      fill=nothing,kwargs...)
     xs, ys = Float64[x0], [0.0]
@@ -598,8 +599,12 @@ function newton_plot!(f, x0; steps=5, annotate_steps::Int=0,
     end
     plot!(xs, ys; fill, kwargs...)
 
+    scatter!(xs[1:1], ys[1:1]; marker=:diamond, markersize=8)
+    pts = xs[3:2:end]
+    scatter!(pts, zero.(pts); marker=:circle, markersize=4)
+
     if annotate_steps > 0
-        anns = [(x,0,text("x$(i-1)", :top)) for
+        anns = [(x,0,text("x"*subscript(i-1), :top)) for
                 (i,x) ∈ enumerate(xs[1:2:2annotate_steps])]
         annotate!(anns)
     end

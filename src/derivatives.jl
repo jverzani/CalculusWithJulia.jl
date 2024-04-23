@@ -27,7 +27,7 @@ struct TangentLine{F,R} <: Function
 end
 
 function Base.show(io::IO,  ::MIME"text/plain", T::TangentLine{F,R})  where {F, R}
-    print(io, "Function of `x` to compute tangent line of `f` at `c`:\n",
+    print(io, "Function of `x` to compute the tangent line of `f` at `c`:\n",
           "\tf(c) + f'(c) * (x-c)")
 end
 
@@ -45,7 +45,7 @@ struct SecantLine{F,R,S} <: Function
 end
 
 function Base.show(io::IO,  ::MIME"text/plain", T::SecantLine{F,R,S})  where {F, R,S}
-    print(io, "Function of `x` to compute secant line of `f` between `a` and `b`:\n",
+    print(io, "Function of `x` to compute the secant line of `f` between `a` and `b`:\n",
           "\tf(a) + ((f(b)-f(a)) / (b-a)  * (x-a)"
           )
 end
