@@ -17,7 +17,7 @@ import CalculusWithJulia:
     arrow, arrow!
 
 import Plots
-import Plots: plot, plot!, scatter, scatter!, Shape, current,
+import Plots: plot, plot!, scatter, scatter!, Shape, current, text,
     surface, surface!,
     quiver, quiver!
 

@@ -204,8 +204,14 @@ struct MP <: SignChange end
 struct PP <: SignChange end
 struct MM <: SignChange end
 struct ZZ <: SignChange end
-Base.show(io::IO, ::PM) = print(io, "+ to -")
-Base.show(io::IO, ::MP) = print(io, "- to +")
-Base.show(io::IO, ::PP) = print(io, "+ to +")
-Base.show(io::IO, ::MM) = print(io, "- to -")
+
+function emphasize(io, a, b)
+    printstyled(io, string(a); bold=true)
+    print(io, " to ")
+    printstyled(io, string(b); bold=true)
+end
+Base.show(io::IO, ::PM) = emphasize(io, +, -)
+Base.show(io::IO, ::MP) = emphasize(io, -, +)
+Base.show(io::IO, ::PP) = emphasize(io, +, +)
+Base.show(io::IO, ::MM) = emphasize(io, -, -)
 Base.show(io::IO, ::ZZ) = print(io, "an endpoint")
