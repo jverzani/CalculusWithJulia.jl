@@ -27,7 +27,7 @@ struct TangentLine{F,R} <: Function
 end
 
 function Base.show(io::IO,  ::MIME"text/plain", T::TangentLine{F,R})  where {F, R}
-    print(io, "Function of `x` to compute tangent line of `f` at `c`:\n",
+    print(io, "Function of `x` to compute the tangent line of `f` at `c`:\n",
           "\tf(c) + f'(c) * (x-c)")
 end
 
@@ -45,7 +45,7 @@ struct SecantLine{F,R,S} <: Function
 end
 
 function Base.show(io::IO,  ::MIME"text/plain", T::SecantLine{F,R,S})  where {F, R,S}
-    print(io, "Function of `x` to compute secant line of `f` between `a` and `b`:\n",
+    print(io, "Function of `x` to compute the secant line of `f` between `a` and `b`:\n",
           "\tf(a) + ((f(b)-f(a)) / (b-a)  * (x-a)"
           )
 end
@@ -104,16 +104,16 @@ end
 """
    sign_chart(f, a, b; atol=1e-4)
 
-Create a sign chart for `f` over `(a,b)`. Returns a tuple with an identified zero or vertical asymptote and the corresponding sign change. The tolerance is used to disambiguate numerically found values.
+Create a sign chart for `f` over `(a,b)`. Returns a collection of named tuples, each with an identified zero or vertical asymptote and the corresponding sign change. The tolerance is used to disambiguate numerically found values.
 
 # Example
 
 ```
 julia> sign_chart(x -> (x-1/2)/(x*(1-x)), 0, 1)
-3-element Vector{NamedTuple{(:DNE_0_∞, :sign_change)}}:
- (DNE_0_∞ = 0, sign_change = an endpoint)
- (DNE_0_∞ = 0.5, sign_change = - → +)
- (DNE_0_∞ = 1, sign_change = an endpoint)
+3-element Vector{NamedTuple{(:zero_oo_NaN, :sign_change)}}:
+ (zero_oo_NaN = 0.0, sign_change = an endpoint)
+ (zero_oo_NaN = 0.5, sign_change = - to +)
+ (zero_oo_NaN = 1.0, sign_change = an endpoint)
 ```
 
 !!! note "Warning"
@@ -131,8 +131,8 @@ function sign_chart(f, a, b; atol=1e-6)
     end
 
     pm(x) = x < 0 ? "-" : x > 0 ? "+" : "0"
-    summarize(f,cp,d) = (DNE_0_∞ = cp, sign_change = pm(cp-d, cp+d))
-
+    rnd(x) = round(x, sigdigits=12)
+    summarize(f,cp,d) = (zero_oo_NaN = rnd(cp), sign_change = pm(cp-d, cp+d))
 
     # zeros of f
     zs = find_zeros(f, (a, b))
@@ -190,10 +190,10 @@ function sign_chart(f, a, b; atol=1e-6)
     else
         u = ()
     end
-    !isnothing(azero) && (u = ((DNE_0_∞ = a, sign_change=ZZ()), u...))
-    !isnothing(ainf) && (u = ((DNE_0_∞ = a, sign_change=ZZ()), u...))
-    !isnothing(bzero) && (u = (u...,(DNE_0_∞ = b, sign_change=ZZ())))
-    !isnothing(binf) && (u = (u...,(DNE_0_∞ = b, sign_change=ZZ())))
+    !isnothing(azero) && (u = ((zero_oo_NaN = rnd(a), sign_change=ZZ()), u...))
+    !isnothing(ainf) && (u = ((zero_oo_NaN = rnd(a), sign_change=ZZ()), u...))
+    !isnothing(bzero) && (u = (u...,(zero_oo_NaN = rnd(b), sign_change=ZZ())))
+    !isnothing(binf) && (u = (u...,(zero_oo_NaN = rnd(b), sign_change=ZZ())))
 
     collect(u)
 end
@@ -204,8 +204,14 @@ struct MP <: SignChange end
 struct PP <: SignChange end
 struct MM <: SignChange end
 struct ZZ <: SignChange end
-Base.show(io::IO, ::PM) = print(io, "+ → -")
-Base.show(io::IO, ::MP) = print(io, "- → +")
-Base.show(io::IO, ::PP) = print(io, "+ → +")
-Base.show(io::IO, ::MM) = print(io, "- → -")
+
+function emphasize(io, a, b)
+    printstyled(io, string(a); bold=true)
+    print(io, " to ")
+    printstyled(io, string(b); bold=true)
+end
+Base.show(io::IO, ::PM) = emphasize(io, +, -)
+Base.show(io::IO, ::MP) = emphasize(io, -, +)
+Base.show(io::IO, ::PP) = emphasize(io, +, +)
+Base.show(io::IO, ::MM) = emphasize(io, -, -)
 Base.show(io::IO, ::ZZ) = print(io, "an endpoint")

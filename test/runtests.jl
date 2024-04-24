@@ -1,61 +1,53 @@
 using CalculusWithJulia
 using Test
 
-# conditional on args
-#=
-using Pkg
-Pkg.test("CalculusWithJulia") # basic tests
-test_args = ["plots=true"] # run plot tests
-test_args = ["force=true"] # generate all html pages
-test_args = ["force=true", "target=:pdf"] # generate all as pdf
-test_args = ["folder=:all", "target=:pdf"] # generate all modified ones as pdf
-test_args = ["folder=:precalc"] # make folder as needed
-test_args = ["folder=:precalc", "force=true"] # make all in folder
-test_args = ["folder=:precalc", "file=:functions"]
-Pkg.test("CalculusWithJulia", test_args=test_args)
-=#
+
+## test package
+@testset "test packages" begin
+
+    ## Roots
+    @test fzero(sin, 3, 4)  ≈ pi
+    @test fzero(sin, 3.0)  ≈ pi
+
+    ## ForwardDiff
+    f(x) = sin(x)
+    @test f'(2)  ≈ cos(2)
+    @test f''(2)  ≈ -sin(2)
 
 
-
-if isempty(ARGS)
-    @info "running package tests"
-    include("package-test.jl")
 end
 
-if "plots=true" ∈ ARGS
-    @info "running plots-tests"
-    include("test-plots.jl")
+@testset "test functions" begin
+
+    f(x) = sin(x)
+    c = pi/4
+    fn = tangent(f, c)
+    @test fn(1)  ≈ f(c) + f'(c)*(1 - c)
+
+    fn = secant(f, pi/6, pi/3)
+    @test fn(pi/4) <= f(pi/4)
+
+    out = lim(x -> sin(x)/x, 0)
+    @test_broken out[end, 2]  ≈ 1 # an iterator now
+
+
+    out = sign_chart(x -> (x-1)*(x-2)/(x-3), 0, 4)
+    @test all([o[1] for o ∈ out] .≈[1,2,3])
+
+    @test riemann(sin, 0, pi, 10_000)  ≈ 2
 end
 
-function parse_args(ARGS)
-    force, folder, file, target = false, nothing, nothing, :html
-    for arg ∈ ARGS
-        if "force=true" == arg
-            force=true
-        end
-        m = match(r"^folder=:(.*)", arg)
-        if m != nothing
-            folder = m.captures[1]
-        end
 
-        m = match(r"^file=:(.*)", arg)
-        if m != nothing
-            file = m.captures[1]
-        end
+@testset "2d" begin
 
-        m = match(r"^target=:(.*)", arg)
-        if m != nothing
-            target = Symbol(m.captures[1])
-        end
+    x = [[1,2,3], [4,5,6]]
+    @test unzip(x)[1] == [1, 4]
+    @test unzip(x)[2] == [2, 5]
+    @test unzip(x)[3] == [3, 6]
 
-    end
+    @test length(unzip(x -> x, 0, 1)[1])  <= 50 # 21
+    @test length(unzip(x-> sin(10pi*x), 0, 1)[1]) >= 50 # 233
 
-    return(folder=folder, file=file, force=force, target=target)
-end
+    @test uvec([2,2]) == 1/sqrt(2) * [1,1]
 
-folder, file, force, target = parse_args(ARGS)
-
-if folder != nothing || file != nothing || force
-    include("build-pages.jl")
-    build_pages(folder, file, target, force)
 end
