@@ -13,7 +13,6 @@ By Gunter Fuchs.
 """
 fisheye(f) = atan ∘ f ∘ tan
 
-
 ## ---
 # for plotif. This identifies a vector of colors
 function identify_colors(g, xs, colors=(:red, :blue, :black))

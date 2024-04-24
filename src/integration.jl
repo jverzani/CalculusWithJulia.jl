@@ -35,7 +35,6 @@ function riemann(f::Function, a::Real, b::Real, n::Int; method="right")
     sum(F(f, xᵢ₋₁, xᵢ) * (xᵢ-xᵢ₋₁) for (xᵢ₋₁, xᵢ) ∈ xs′)
     end
 
-
 """
     fubini(f, [zs], [ys], xs; rtol=missing, kws...)
 
