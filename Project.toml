@@ -33,6 +33,7 @@ Plots = "1"
 Reexport = "1"
 Roots = "1, 2"
 SpecialFunctions = "1, 2"
+SplitApplyCombine = "1"
 julia = "1"
 
 
