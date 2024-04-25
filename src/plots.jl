@@ -6,6 +6,7 @@ export plotif, trimplot, signchart,
     plot_parametric,   plot_parametric!,
     implicit_plot, implicit_plot!,
     vectorfieldplot,   vectorfieldplot!,
+    vectorfieldplot3d,   vectorfieldplot3d!,
     arrow, arrow!
 
 export newton_vis, newton_plot!, riemann_plot, riemann_plot!
@@ -127,6 +128,8 @@ p
 """
 function vectorfieldplot end
 function vectorfieldplot! end
+function vectorfieldplot3d end
+function vectorfieldplot3d! end
 
 
 ##
