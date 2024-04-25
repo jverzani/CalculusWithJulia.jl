@@ -50,20 +50,23 @@ _l8(x) = length(string(x)) ÷ 8
 function Base.show(io::IO, L::Limit)
     (; f,c,n,m,dir) = L
 
+    ms = maximum(length ∘ string, (c-1/10^n, c+1/10^n))
+    sc = (sign(c-m) * sign(c+m) < 0)
+
     h = 1/10^n
     nt = 2 + maximum(_l8, (c-h, c+h)) + (n ÷ 8)
 
     if dir == "+" || dir == "+-" || dir == "±"
-        show₊(io, L; nt)
+        show₊(io, L; sc, ms)
     end
-
+    print_dots(io, "c", "L?"; sc, ms)
     if dir == "-" || dir == "--" || dir == "+-" || dir == "±"
-        show₋(io, L; nt)
+        show₋(io, L; sc, ms)
     end
     nothing
 end
 
-function show₊(io::IO, L::Limit; nt=4)
+function show₊(io::IO, L::Limit; sc=false, ms=0)
 
     (; f,c,n,m,dir) = L
 
@@ -74,16 +77,16 @@ function show₊(io::IO, L::Limit; nt=4)
     last_y = nothing
 
     for (x,y) ∈ zip(xsᵣ, ysᵣ)
-        print_next(io, nt, x, y, last_y)
+        print_next(io, x, y, last_y; sc, ms)
         last_y = y
         println(io, "")
     end
 
-    println(io, "    :" * "\t"^nt * "    :")
+    print_dots(io; sc, ms)
 end
 
 # show - case
-function show₋(io::IO, L::Limit; nt=4)
+function show₋(io::IO, L::Limit; sc=false, ms=0)
     (; f,c,n,m,dir) = L
 
     hs = [1/10^i for i in n:-1:m] # close to 0
@@ -94,7 +97,8 @@ function show₋(io::IO, L::Limit; nt=4)
 
     i, l = 1, length(ysₗ)
     nl = true
-    dir == "-" && println(io, "    :" * "\t"^nt * "    :")
+    #dir == "-" && print_dots(io; sc, ms)
+    print_dots(io; sc, ms)
     for (x, y) ∈ zip(xsₗ, ysₗ)
         if i == l
             last_y = nothing
@@ -103,17 +107,27 @@ function show₋(io::IO, L::Limit; nt=4)
             last_y = ysₗ[i+1]
             i += 1
         end
-        print_next(io, nt, x, y, last_y)
+        print_next(io, x, y, last_y; sc, ms)
         nl && println(io, "")
     end
 
 end
 
+# print dots or c L
+function print_dots(io::IO, l="⋮", r="⋮"; sc, ms)
+    d = ms ÷ 2
+    println(io, " "^d, l, " "^(4 +2d), r)
+end
+
+
 # print next number referring to last one for styling
-function print_next(io::IO, nt, x, y, last_y=nothing)
-    print(io, x)
-    m = _l8(x)
-    print(io, "\t"^(nt-m))
+function print_next(io::IO, x, y, last_y=nothing; sc=false, ms=0)
+    xₛ = string(x)
+    sc && x > 0 && (xₛ = " " * xₛ)
+
+    print(io, xₛ)
+    l = length(xₛ)
+    print(io, " "^(ms - l + 5))
     if isnothing(last_y)
         print(io, y)
     else
