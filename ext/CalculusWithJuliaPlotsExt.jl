@@ -10,6 +10,7 @@ import CalculusWithJulia:
     plot_parametric, plot_parametric!,
     plot_implicit_surface,
     vectorfieldplot,   vectorfieldplot!,
+    vectorfieldplot3d,   vectorfieldplot3d!,
     arrow3d,
     newton_vis, newton_plot!,
     riemann_plot, riemann_plot!,
