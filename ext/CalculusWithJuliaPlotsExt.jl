@@ -48,11 +48,47 @@ function trimplot(f, a, b, c=20; color=:black, legend=false, kwargs...)
     plot(xs, f.(xs), colors=cols, legend=legend, kwargs...)
 end
 
-function plotif(f, g, a, b)
-    xs = range(a, b, length=251)
-    cols = identify_colors(g, xs)
-    plot(xs, f.(xs), color=cols, legend=false)
+function plotif(f, g, a::Real, b::Real;
+                colors=(:orange, :black, "#d35100"),
+                title="Plot of f colored when g ≥ 0",
+                kwargs...)
+    xs = range(a, b, 251)
+    h = x -> g(x) ≥ 0 ? f(x) : NaN
+    plot(f, a, b; title, legend=false,
+         linecolor=colors[1], linestyle=:solid, linewidth=3)
+    plot!(h;
+         linecolor=colors[2],
+         linestyle=:dot,
+         linewidth=5,
+         kwargs...)
+    plot!(zero)
+    xs = find_zeros(g, a, b)
+    if !isapprox(a, first(xs), atol=1e-6, rtol=1e-8)
+        pushfirst!(xs, a)
+    end
+    if !isapprox(b, last(xs), atol=1e-6, rtol=1e-8)
+        push!(xs, b)
+    end
+    n = length(xs)
+    inds = Int[]
+    x,X = eltype(xs)[], eltype(xs)[]
+    for i in 2:n
+        u,v = xs[i-1],xs[i]
+        w = (u+v)/2
+        if g(w) ≥ 0
+            push!(x,u); push!(X,v)
+        end
+    end
+
+    Plots.vspan!(collect(Base.Iterators.flatten(zip(x,X))),
+           fill=(colors[3], 0.1, Plots.stroke(0)))
 end
+
+# function plotif(f, g, a, b)
+#     xs = range(a, b, length=251)
+#     cols = identify_colors(g, xs)
+#     plot(xs, f.(xs), color=cols, legend=false)
+# end
 
 function signchart(f, a, b)
     p = plotif(f, f, a, b)
