@@ -21,7 +21,8 @@ import Plots
 import Plots: plot, plot!, scatter, scatter!, Shape, current,
     text, annotate!,
     surface, surface!,
-    quiver, quiver!
+    quiver, quiver!,
+    stroke, vspan!
 
 using Plots.RecipesBase
 import Contour
@@ -49,46 +50,48 @@ function trimplot(f, a, b, c=20; color=:black, legend=false, kwargs...)
 end
 
 function plotif(f, g, a::Real, b::Real;
-                colors=(:orange, :black, "#d35100"),
-                title="Plot of f colored when g ≥ 0",
+                linecolor=(:orange, :black),
+                linewidth=(3,5),
+                linestyle=(:solid, :dot),
+                fill=(:red, 0.10, stroke(0)),
+                title = "Plot of f highlighting when g ≥ 0",
+                legend=false,
                 kwargs...)
-    xs = range(a, b, 251)
-    h = x -> g(x) ≥ 0 ? f(x) : NaN
-    plot(f, a, b; title, legend=false,
-         linecolor=colors[1], linestyle=:solid, linewidth=3)
-    plot!(h;
-         linecolor=colors[2],
-         linestyle=:dot,
-         linewidth=5,
-         kwargs...)
-    plot!(zero)
-    xs = find_zeros(g, a, b)
-    if !isapprox(a, first(xs), atol=1e-6, rtol=1e-8)
-        pushfirst!(xs, a)
-    end
-    if !isapprox(b, last(xs), atol=1e-6, rtol=1e-8)
-        push!(xs, b)
-    end
-    n = length(xs)
-    inds = Int[]
-    x,X = eltype(xs)[], eltype(xs)[]
-    for i in 2:n
-        u,v = xs[i-1],xs[i]
-        w = (u+v)/2
-        if g(w) ≥ 0
-            push!(x,u); push!(X,v)
+
+    # get shading
+    xs, ys = unzip(x -> g(x) ≥ 0 ? f(x) : NaN, a, b)
+    ls,rs = eltype(xs)[], eltype(xs)[]
+
+    left = true
+    for (x,y) ∈ zip(xs, ys)
+        if left
+            if !isnan(y)
+                push!(ls, x); push!(rs, x)
+                left = false
+            end
+        else
+            if isnan(y)
+            left = true
+            else
+                rs[end] = x
+            end
         end
     end
 
-    Plots.vspan!(collect(Base.Iterators.flatten(zip(x,X))),
-           fill=(colors[3], 0.1, Plots.stroke(0)))
+    # make plot
+    plot(f, a, b; linecolor=linecolor[1],
+         linewidth=linewidth[1],
+         linestyle=linestyle[1],
+         title=title,
+         legend=legend,
+         kwargs...)
+    plot!(xs, ys; linecolor=linecolor[2],
+          linewidth=linewidth[2],
+          linestyle=linestyle[2])
+    vspan!(collect(Base.Iterators.flatten(zip(ls,rs))),
+           fill=fill)
 end
 
-# function plotif(f, g, a, b)
-#     xs = range(a, b, length=251)
-#     cols = identify_colors(g, xs)
-#     plot(xs, f.(xs), color=cols, legend=false)
-# end
 
 function signchart(f, a, b)
     p = plotif(f, f, a, b)
