@@ -50,7 +50,7 @@ end
 """
     plotif(f, g, a, b)
 
-Plot f colored depending on g < 0 or not.
+Plot of `f` over `[a,b]` with the intervals where `g ≥ 0` highlighted.
 """
 @userplot PlotIf
 @recipe function __(a::PlotIf)
