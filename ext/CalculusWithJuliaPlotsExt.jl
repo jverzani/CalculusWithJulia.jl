@@ -1,9 +1,7 @@
 module CalculusWithJuliaPlotsExt
 
 using CalculusWithJulia
-import CalculusWithJulia:
-    ClosedInterval,
-    find_colors, identify_colors
+import CalculusWithJulia: ClosedInterval
 import CalculusWithJulia:
     plotif, trimplot, signchart,
     plot_polar, plot_polar!,
@@ -59,7 +57,7 @@ function plotif(f, g, a::Real, b::Real;
                 kwargs...)
 
     # get shading
-    xs, ys = unzip(x -> g(x) ≥ 0 ? f(x) : NaN, a, b)
+    xs, ys = unzip(x -> g(x) ≥ -Base.rtoldefault(Float64) ? f(x) : NaN, a, b)
     ls,rs = eltype(xs)[], eltype(xs)[]
 
     left = true
