@@ -118,18 +118,18 @@ end
 # print dots or c L
 function print_dots(io::IO, l="⋮", r="⋮"; sc, ms)
     d = ms ÷ 2
+    d = 5
     println(io, " "^d, l, " "^(4 +2d), r)
 end
 
 
 # print next number referring to last one for styling
 function print_next(io::IO, x, y, last_y=nothing; sc=false, ms=0)
-    xₛ = string(x)
-    sc && x > 0 && (xₛ = " " * xₛ)
-
-    print(io, xₛ)
+    xₛ = x#string(x)
+    sc && x >= 0 && print(io, " ")
+    @printf(io, "%.6f", xₛ)
     l = length(xₛ)
-    print(io, " "^(ms - l + 5))
+    print(io, " "^5) #(max(1, ms - l + 5)))
     if isnothing(last_y)
         print(io, y)
     else
