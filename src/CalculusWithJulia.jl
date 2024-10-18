@@ -52,6 +52,7 @@ The `plot_implicit` function can plot `2D` implicit plots. (It is borrowed from 
 """
 module CalculusWithJulia
 
+using Printf
 import Contour
 import PlotUtils
 import ForwardDiff
