@@ -66,7 +66,7 @@ Returns a function describing the tangent line to the graph of `f` at `x=c`.
 Example. Where does the tangent line intersect the y axis?
 ```
 f(x) = sin(x)
-tl(x) = tangent(f, pi/4)(x)  # or tl = tangent(f, pi/3) to use a non-generic function
+tl = tangent(f, pi/4)  # or tl(x) = tangent(f, pi/3)(x) to use a generic function
 tl(0)
 ```
 
@@ -85,7 +85,7 @@ Example. Where does the secant line intersect the `y` axis?
 ```
 f(x) = sin(x)
 a, b = pi/4, pi/3
-sl(x) = secant(f, a, b)(x)  # or sl = sl(f, a, b) to use a non-generic function
+sl = secant(f, a, b)  # or sl(x) = secant(f, a, b)(x) to use a generic function
 sl(0)
 ```
 
