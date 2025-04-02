@@ -5,7 +5,7 @@
 
 Function interface to `ForwardDiff.derivative`.
 
-Also *overrides* `f'` to take take a derivative.
+A method for `adjoint` for functions dispatches to `D`, so that the notation `f'` can be used to take the derivative of a function. (This is type piracy.)
 """
 function D(f, n::Int=1)
     n < 0 && throw(ArgumentError("n is a non-negative integer"))
