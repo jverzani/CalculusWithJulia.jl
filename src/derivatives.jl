@@ -21,43 +21,6 @@ Base.adjoint(r::Function) = D(r)
 
 
 ## -----
-struct TangentLine{F,R} <: Function
-    f::F
-    c::R
-end
-
-function Base.show(io::IO,  ::MIME"text/plain", T::TangentLine{F,R})  where {F, R}
-    print(io, "Function of `x` to compute the tangent line of `f` at `c`:\n",
-          "\tf(c) + f'(c) * (x-c)")
-end
-
-
-(F::TangentLine)(x) = begin
-    (; f,c ) = F
-    f(c) + f'(c) * (x-c)
-end
-
-
-struct SecantLine{F,R,S} <: Function
-    f::F
-    a::R
-    b::S
-end
-
-function Base.show(io::IO,  ::MIME"text/plain", T::SecantLine{F,R,S})  where {F, R,S}
-    print(io, "Function of `x` to compute the secant line of `f` between `a` and `b`:\n",
-          "\tf(a) + ((f(b)-f(a)) / (b-a)  * (x-a)"
-          )
-end
-
-
-(F::SecantLine)(x) = begin
-    (; f, a, b ) = F
-    m = (f(b) - f(a)) / (b - a)
-    f(a) + m * (x-a)
-end
-
-
 """
     tangent(f::Function, c)
 
@@ -74,6 +37,25 @@ Uses the automatic derivative of `f` to find the slope of the tangent line at `x
 
 """
 tangent(f,c) = TangentLine(f,c)
+
+struct TangentLine{F,R} <: Function
+    f::F
+    c::R
+end
+
+function Base.show(io::IO,  ::MIME"text/plain", T::TangentLine{F,R})  where {F, R}
+    print(io, "Function of `x` to compute the tangent line of `f` at `c`:\n",
+          "\tf(c) + f'(c) * (x-c)")
+end
+
+
+(F::TangentLine)(x) = begin
+    f,c = F.f, F.c
+    f(c) + f'(c) * (x-c)
+end
+
+
+## ===== secant line =====
 
 """
     secant(f::Function, a, b)
@@ -92,6 +74,26 @@ sl(0)
 
 """
 secant(f, a, b) = SecantLine(f, a, b)
+
+struct SecantLine{F,R,S} <: Function
+    f::F
+    a::R
+    b::S
+end
+
+function Base.show(io::IO,  ::MIME"text/plain", T::SecantLine{F,R,S})  where {F, R,S}
+    print(io, "Function of `x` to compute the secant line of `f` between `a` and `b`:\n",
+          "\tf(a) + ((f(b)-f(a)) / (b-a)  * (x-a)"
+          )
+end
+
+
+(F::SecantLine)(x) = begin
+    f,a,b = F.f, F.a, F.b
+    m = (f(b) - f(a)) / (b - a)
+    f(a) + m * (x-a)
+end
+
 
 
 ## ===== sign_chart =====
@@ -122,7 +124,7 @@ julia> sign_chart(x -> (x-1/2)/(x*(1-x)), 0, 1)
 """
 function sign_chart(f, a, b; atol=1e-6)
     pm(a,b) = begin
-        fa,fb = f(a), f(b)
+        fa,f b = f(a), f(b)
         fa < 0 && fb < 0 && return MM()
         fa < 0 && fb > 0 && return MP()
         fa > 0 && fb < 0 && return PM()
