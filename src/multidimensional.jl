@@ -14,7 +14,7 @@ Wrapper around the `invert` function of `SplitApplyCombine`.
 If the argument is specified as a comma separated collection of vectors, then these are combined and passed along.
 
 If the argument is a function and two end points, then the function is
-evaluated at 100 points between `a` and `b`.
+evaluated at points between `a` and `b`; for the univaraite case, the  points are chosen adaptively.
 
 This is useful for plotting when the data is more conveniently
 represented in terms of vectors, but the plotting interface requires the x and y values collected.

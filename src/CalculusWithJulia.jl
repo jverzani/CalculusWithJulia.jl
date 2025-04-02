@@ -8,9 +8,9 @@ This package does two things:
 * It loads a few other packages making it easier to use (and install) the functionality provided by them and
 
 * It defines a handful of functions for convenience. The exported ones
-are `e`, `unzip`, `rangeclamp` `tangent`, `secant`, `D` (and the prime
+are `unzip`, `rangeclamp` `tangent`, `secant`, `D` (and the prime
 notation), `divergence`, `gradient`, `curl`, and `∇`, along with some plotting
-functions
+functions. The constant `e` is assigned to `exp(1)`.
 
 
 ## Packages loaded by `CalculusWithJulia`
@@ -20,13 +20,13 @@ functions
 * The `ForwardDiff` package is loaded giving access to its  `derivative`,  `gradient`, `jacobian`, and `hessian` functions for finding automatic derivatives of functions. In addition, this package defines `'` (for functions) to return a derivative (which commits [type piracy](https://docs.julialang.org/en/v1/manual/style-guide/index.html#Avoid-type-piracy-1)), `∇` to find the gradient (`∇(f)`), the divergence (`∇⋅F`). and the curl (`∇×F`), along with `divergence` and `curl`.
 
 
-* The `LinearAlgebra` package is loaded for access to several of its functions fr working with vectors `norm`, `cdot` (`⋅`), `cross` (`×`), `det`.
+* The `LinearAlgebra` package is loaded for access to several of its functions for working with vectors `norm`, `cdot` (`⋅`), `cross` (`×`), `det`.
 
 * The `PlotUtils` package is loaded so that its `adapted_grid` function is available.
 
 ## Packages with extra features added when loaded
 
-The `Julia` package `Requires` allows for additional code to be run when another package is loaded. The following packages have additional code to load:
+Either through extensions or through the `Julia` package `Requires` there is  additional code to be run when the following packages load:
 
 * `SymPy`: for symbolic math.
 

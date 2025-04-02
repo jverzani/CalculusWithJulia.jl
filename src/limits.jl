@@ -50,7 +50,7 @@ end
 _l8(x) = length(string(x)) ÷ 8
 
 function Base.show(io::IO, L::Limit)
-    (; f,c,n,m,dir) = L
+    f,c,n,m,dir = L.f, L.c, L.n, L.m, L.dir
 
     ms = maximum(length ∘ string, (c-1/10^n, c+1/10^n))
     sc = (sign(c-m) * sign(c+m) < 0)
@@ -70,7 +70,7 @@ end
 
 function show₊(io::IO, L::Limit; sc=false, ms=0)
 
-    (; f,c,n,m,dir) = L
+    f,c,n,m,dir = L.f, L.c, L.n, L.m, L.dir
 
     hs = [1/10^i for i in m:n] # close to 0
     xsᵣ = c .+ hs
@@ -89,7 +89,7 @@ end
 
 # show - case
 function show₋(io::IO, L::Limit; sc=false, ms=0)
-    (; f,c,n,m,dir) = L
+    f,c,n,m,dir = L.f, L.c, L.n, L.m, L.dir
 
     hs = [1/10^i for i in n:-1:m] # close to 0
     xsₗ = c .- hs
