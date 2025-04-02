@@ -124,7 +124,7 @@ julia> sign_chart(x -> (x-1/2)/(x*(1-x)), 0, 1)
 """
 function sign_chart(f, a, b; atol=1e-6)
     pm(a,b) = begin
-        fa,f b = f(a), f(b)
+        fa, fb = f(a), f(b)
         fa < 0 && fb < 0 && return MM()
         fa < 0 && fb > 0 && return MP()
         fa > 0 && fb < 0 && return PM()
