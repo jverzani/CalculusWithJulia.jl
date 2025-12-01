@@ -82,7 +82,7 @@ export e
 
 export unzip, rangeclamp
 export lim
-export tangent, secant, D, sign_chart
+export tangent, secant, D, sign_chart, SignChart
 export riemann
 export divergence, gradient, curl, ∇, uvec
 
