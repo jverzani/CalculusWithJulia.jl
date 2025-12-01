@@ -225,6 +225,25 @@ Base.show(io::IO, ::ZZ) = print(io, "an endpoint")
 Numerically identifies values of `x` in `[a,b]` where `f` is `0`, `oo`, or undefined.
 
 Displays the output as a sideways interval displaying the sign of `f` in between these values.
+
+# Example
+```
+julia> SignChart((x -> sqrt(1 - x^2))', -1, 1)
+         ↑
+         ⋮
+        1.0         is infinite
+         ⋮
+         +
+         ⋮
+        0.0         a zero
+         ⋮
+         -
+         ⋮
+       -1.0         is infinite
+         ⋮
+         ↓
+
+```
 """
 struct SignChart
     u
@@ -247,7 +266,7 @@ end
 
 function _show_pt(fx)
     fx = abs(fx)
-    (isinf(fx) || fx >= 1e4 + fx * 1e4) && return "is oo"
+    (isinf(fx) || fx >= 1e4 + fx * 1e4) && return "is infinite"
     fx <= (1e-4 + fx*1e-4) && return "a zero"
     return "undefined"
 end
