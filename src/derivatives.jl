@@ -217,3 +217,108 @@ Base.show(io::IO, ::MP) = emphasize(io, -, +)
 Base.show(io::IO, ::PP) = emphasize(io, +, +)
 Base.show(io::IO, ::MM) = emphasize(io, -, -)
 Base.show(io::IO, ::ZZ) = print(io, "an endpoint")
+
+
+"""
+    SignChart(f, a, b)
+
+Numerically identifies values of `x` in `[a,b]` where `f` is `0`, `oo`, or undefined.
+
+Displays the output as a sideways interval displaying the sign of `f` in between these values.
+
+# Example
+```
+julia> SignChart((x -> sqrt(1 - x^2))', -1, 1)
+         ↑
+         ⋮
+        1.0         is infinite
+         ⋮
+         +
+         ⋮
+        0.0         a zero
+         ⋮
+         -
+         ⋮
+       -1.0         is infinite
+         ⋮
+         ↓
+
+```
+"""
+struct SignChart
+    u
+    a::Number
+    b::Number
+end
+
+_fmt(x::Number) = _fmt(convert(Float64, x))
+function _fmt(x::Float64)
+    N = 16
+    nd = length(Base.Ryu.writeshortest(abs(x) - trunc(abs(x)))) - 2
+    if nd <= 8
+        a = @sprintf("%*.*f", N - (6-nd), nd, x) * " "^(6-nd+3)
+    else
+        a = @sprintf("%*.*f", N, 6, x) * "..."
+    end
+    a
+end
+
+
+function _show_pt(fx)
+    fx = abs(fx)
+    (isinf(fx) || fx >= 1e4 + fx * 1e4) && return "is infinite"
+    fx <= (1e-4 + fx*1e-4) && return "a zero"
+    return "undefined"
+end
+
+function Base.show(io::IO, s::SignChart)
+    f,a,b = s.u, s.a, s.b
+    u = sign_chart(f, a, b)
+    if isa(u, String)
+        u = ()
+    end
+
+    right_endpoint = " "^9 * "↑"
+    space          = " "^8 * " ⋮"
+    left_endpoint  = " "^9 * "↓"
+
+    lz = length(u) > 0 && first(u)[2] isa ZZ && isapprox(first(u)[1], a; atol=1e-8, rtol = 1e-8)
+    rz = length(u) > 0 && last(u)[2] isa ZZ && isapprox(last(u)[1], b; atol=1e-8, rtol = 1e-8)
+
+    lz && (u = u[2:end])
+    rz && (u = u[1:end-1])
+
+    println(right_endpoint)
+    println(space)
+    println(_fmt(b), rz ? " " * _show_pt(f(b)) : " an endpoint")
+    if length(u) > 0
+        v = reverse(u)
+        v₁, vᵣ... = v
+
+        c,t = v₁
+        println(space)
+        println(" "^9, t isa Union{PM, PP} ? "+" : "-")
+        println(space)
+        println(_fmt(c), " ", _show_pt(f(c)) )
+        println(space)
+        println(" "^9, v₁[2] isa Union{MP, PP} ? "+" : "-")
+        println(space)
+
+        for vᵢ in vᵣ
+            c, t = vᵢ
+            println(_fmt(c), " ", _show_pt(f(c)))
+            println(space)
+            println(" "^9, vᵢ[2] isa Union{MP, PP} ? "+" : "-")
+            println(space)
+        end
+    else
+        println(space)
+        println(" "^9, (f(a/2 + b/2)) > 0 ? "+" : "-")
+        println(space)
+    end
+
+    println(_fmt(a), lz ? " " * _show_pt(f(a)) : " an endpoint")
+    println(space)
+    println(left_endpoint)
+
+end
