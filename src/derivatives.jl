@@ -129,7 +129,7 @@ function sign_chart(f, a, b; atol=1e-6)
         fa < 0 && fb > 0 && return MP()
         fa > 0 && fb < 0 && return PM()
         fa > 0 && fb > 0 && return PP()
-        ZZ
+        ZZ()
     end
 
     pm(x) = x < 0 ? "-" : x > 0 ? "+" : "0"
@@ -216,7 +216,7 @@ Base.show(io::IO, ::PM) = emphasize(io, +, -)
 Base.show(io::IO, ::MP) = emphasize(io, -, +)
 Base.show(io::IO, ::PP) = emphasize(io, +, +)
 Base.show(io::IO, ::MM) = emphasize(io, -, -)
-Base.show(io::IO, ::ZZ) = print(io, "an endpoint")
+Base.show(io::IO, ::ZZ) = emphasize(io, "0", "0")
 
 
 """
